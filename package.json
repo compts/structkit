@@ -1,0 +1,38 @@
+{
+  "name": "structkit",
+  "version": "1.0.1",
+  "description": "JS dom support",
+  "main": "dist/node.cjs.js",
+  "module": "dist/node.es.js",
+  "sideEffects": false,
+  "bin": {
+    "structkit": "./bin/structkit"
+  },
+  "scripts": {
+    "es_linter": "eslint src/function/*.js",
+    "test_esm": "mocha -r esm test/esm/*.test.js",
+    "test_cjs": "mocha test/cjs/*.test.js",
+    "validate": "npm run style && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compts/structkit.git"
+  },
+  "keywords": [
+    "structkit"
+  ],
+  "author": "Pein Freccs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/compts/structkit/issues"
+  },
+  "homepage": "https://github.com/compts/structkit#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "esm": "^3.2.25",
+    "mocha": "^5.2.0"
+  }
+}

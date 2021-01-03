@@ -1,0 +1,8 @@
+node_modules/*
+node_modules
+compts-labs/*
+compts-labs
+src_old_copy/*
+src_old_copy
+node.cjs.js
+node.es.js
