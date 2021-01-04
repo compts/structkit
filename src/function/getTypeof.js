@@ -24,7 +24,7 @@ function getTypeof (objectValue) {
 
     }
 
-    return typeof s;
+    return typeof objectValue;
 
 }
 export default getTypeof;

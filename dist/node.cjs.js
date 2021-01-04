@@ -1,6 +1,44 @@
 let _stk=exports;
 
 
+
+/**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array} arrayObject The second number in an addition.
+ * @param {number} delimeter The second number in an addition.
+ * @returns {float} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ */
+function arraySum (arrayObject, delimeter) {
+
+    let sum=0;
+    const defaultLimitDecimal = 3;
+    const arrayObjects=arrayObject||[];
+    const delimeters=delimeter||defaultLimitDecimal;
+
+    each(arrayObjects, function (ak, av) {
+
+        if (has(av)) {
+
+            sum+=parseFloat(av);
+
+        }
+
+    });
+
+    return sum.toFixed(delimeters);
+
+}
+
+
+
+
 /**
  * Check if object or value
  *
@@ -31,6 +69,36 @@ function append (objectValue, val, key) {
     }
 
     return objectValue;
+
+}
+
+
+
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number|Object|string} arrayObject The second number in an addition.
+ * @param {number|Object|string} arrayValue The second number in an addition.
+ * @returns {Array} Returns the total.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    const return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
 
 }
 
@@ -81,68 +149,45 @@ function appendIsArrayExist (arrayObject, value) {
 
 
 
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {number|Object|string} arrayObject The second number in an addition.
- * @param {number|Object|string} arrayValue The second number in an addition.
- * @returns {Array} Returns the total.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    const return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-
-
-
 
 
 /**
- * Array Sum
+ * Delimiter
  *
  * @since 1.0.1
  * @category Seq
- * @param {array} arrayObject The second number in an addition.
- * @param {number} delimeter The second number in an addition.
- * @returns {float} Returns the total.
+ * @param {array|object} objectValue The second number in an addition.
+ * @param {integer} min The second number in an addition.
+ * @param {integer} max The second number in an addition.
+ * @returns {string} Returns the total.
  * @example
  *
- * arraySum([1,2], 2)
- * // => 3.00
+ * delimiter([1,2])
+ * // => 2
  */
-function arraySum (arrayObject, delimeter) {
+function delimiter (objectValue, min, max) {
 
-    let sum=0;
-    const defaultLimitDecimal = 3;
-    const arrayObjects=arrayObject||[];
-    const delimeters=delimeter||defaultLimitDecimal;
+    let ran_var=[];
+    const defaultValueZero=0;
+    const ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    const ran_max=has(max)
+        ?max+ran_min
+        :count(objectValue);
+    const math_random=Math.round(Math.random()*ran_max);
 
-    each(arrayObjects, function (ak, av) {
+    each(objectValue, function (key, value) {
 
-        if (has(av)) {
+        if (math_random===key) {
 
-            sum+=parseFloat(av);
+            ran_var=value;
 
         }
 
     });
 
-    return sum.toFixed(delimeters);
+    return ran_var;
 
 }
 
@@ -247,51 +292,6 @@ function count (objectValue, bol) {
     }
 
     return cnt;
-
-}
-
-
-
-
-
-
-/**
- * Delimiter
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {integer} min The second number in an addition.
- * @param {integer} max The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * delimiter([1,2])
- * // => 2
- */
-function delimiter (objectValue, min, max) {
-
-    let ran_var=[];
-    const defaultValueZero=0;
-    const ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    const ran_max=has(max)
-        ?max+ran_min
-        :count(objectValue);
-    const math_random=Math.round(Math.random()*ran_max);
-
-    each(objectValue, function (key, value) {
-
-        if (math_random===key) {
-
-            ran_var=value;
-
-        }
-
-    });
-
-    return ran_var;
 
 }
 
@@ -547,6 +547,37 @@ function getData (objectValue, split_str) {
 }
 
 
+/**
+ * Get JSON Variable
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * getTypeof([])
+ * => array
+ */
+function getTypeof (objectValue) {
+
+    if (Object.prototype.toString.call(objectValue)==="[object Object]") {
+
+        return "json";
+
+    }
+
+    if (Object.prototype.toString.call(objectValue)==="[object Array]") {
+
+        return "array";
+
+    }
+
+    return typeof objectValue;
+
+}
+
+
 
 
 /**
@@ -602,37 +633,6 @@ function getKey (objectValue) {
 
 
 /**
- * Get JSON Variable
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * getTypeof([])
- * => array
- */
-function getTypeof (objectValue) {
-
-    if (Object.prototype.toString.call(objectValue)==="[object Object]") {
-
-        return "json";
-
-    }
-
-    if (Object.prototype.toString.call(objectValue)==="[object Array]") {
-
-        return "array";
-
-    }
-
-    return typeof s;
-
-}
-
-
-/**
  * Get unique value
  *
  * @since 1.0.1
@@ -654,6 +654,47 @@ function getUniq () {
         .substr(defaultRandomValue);
 
     return str_rand1;
+
+}
+
+
+
+
+/**
+ * Check if is undefined
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The first number in an addition.
+ * @param {number|object|string} value1 The first number in an addition.
+ * @param {number|object|string} value2 The second number in an addition.
+ * @returns {number|object|string} Returns the total.
+ * @example
+ *
+ * ifUndefined({'as':1}, 'as','as2')
+ * // => 1
+ */
+function ifUndefined (objectValue, value1, value2) {
+
+    if (!has(value2)) {
+
+        if (has(objectValue)) {
+
+            return objectValue;
+
+        }
+
+        return value1;
+
+    }
+
+    if (has(objectValue, value1)) {
+
+        return objectValue[value1];
+
+    }
+
+    return value2;
 
 }
 
@@ -707,41 +748,42 @@ function has (value, key) {
 
 
 
+
+
 /**
- * Check if is undefined
+ * Insert Value
  *
  * @since 1.0.1
  * @category Seq
  * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value1 The first number in an addition.
- * @param {number|object|string} value2 The second number in an addition.
+ * @param {number|object|string} value The first number in an addition.
  * @returns {number|object|string} Returns the total.
  * @example
  *
  * ifUndefined({'as':1}, 'as','as2')
  * // => 1
  */
-function ifUndefined (objectValue, value1, value2) {
+function insert (objectValue, value) {
 
-    if (!has(value2)) {
+    if (has(objectValue)) {
 
-        if (has(objectValue)) {
+        const jsn_type=getTypeof(value);
 
-            return objectValue;
+        if (jsn_type==="json") {
+
+            each(value, function (key, _value) {
+
+                objectValue[key]=_value;
+
+            });
+
+        } else {
+
+            objectValue.push(value);
 
         }
 
-        return value1;
-
     }
-
-    if (has(objectValue, value1)) {
-
-        return objectValue[value1];
-
-    }
-
-    return value2;
 
 }
 
@@ -786,67 +828,6 @@ function indexOf (objectValue, value) {
     }
 
     return indexOfDefaultValue;
-
-}
-
-
-
-
-
-
-/**
- * Insert Value
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value The first number in an addition.
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * ifUndefined({'as':1}, 'as','as2')
- * // => 1
- */
-function insert (objectValue, value) {
-
-    if (has(objectValue)) {
-
-        const jsn_type=getTypeof(value);
-
-        if (jsn_type==="json") {
-
-            each(value, function (key, _value) {
-
-                objectValue[key]=_value;
-
-            });
-
-        } else {
-
-            objectValue.push(value);
-
-        }
-
-    }
-
-}
-
-
-/**
- * Is empty
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * isEmpty('')
- * // => true
- */
-function isEmpty (value) {
-
-    return (/^\s*$/gmi).test(value);
 
 }
 
@@ -941,6 +922,25 @@ function isExact (objectValue1, objectValue2, isExist) {
 }
 
 
+/**
+ * Is empty
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value The first number in an addition.
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+function isEmpty (value) {
+
+    return (/^\s*$/gmi).test(value);
+
+}
+
+
 
 
 
@@ -1001,6 +1001,45 @@ function jsonToArray (objectValue, value) {
 function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index");
+
+}
+
+
+
+
+
+/**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+
+    const emptyDefaultValue=0;
+    const incrementDefaultValue=1;
+    const value_arry=[];
+    let cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            value_arry.push(func(value, key, cnt));
+            cnt+=incrementDefaultValue;
+
+        }
+
+    });
+
+    return value_arry;
 
 }
 
@@ -1071,45 +1110,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
 
 /**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-
-    const emptyDefaultValue=0;
-    const incrementDefaultValue=1;
-    const value_arry=[];
-    let cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            value_arry.push(func(value, key, cnt));
-            cnt+=incrementDefaultValue;
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-
-
-
-
-
-/**
  * Number format
  *
  * @since 1.0.1
@@ -1168,37 +1168,47 @@ function numberFormat (objectValue, value1, value2) {
 }
 
 
+
+
+
+
 /**
- * Parse Json
+ * Random
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} value The second number in an addition.
- * @returns {array|object} Returns the total.
+ * @param {array|object} valueArray The second number in an addition.
+ * @param {number} minValue The second number in an addition.
+ * @param {number} maxValue The second number in an addition.
+ * @returns {string|number} Returns the total.
  * @example
  *
- * parseJson('{}' )
- *=>{}
+ * random([1,2,3],1,2 )
+ *=>'{}'
  */
-function parseJson (value) {
+function random (valueArray, minValue, maxValue) {
 
+    let ran_var=[];
     const emptyDefaultValue=0;
-    const stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
-    let returnValue=null;
+    const ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
 
-    if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
-        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    each(valueArray, function (key, value) {
 
-        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
+        if (math_random===key) {
 
-            returnValue = eval('(' + stripValue + ')');
+            ran_var = value;
 
         }
 
-    }
+    });
 
-    return returnValue;
+    return ran_var;
 
 }
 
@@ -1354,47 +1364,37 @@ function parseString (value) {
 
 
 
-
-
-
-
 /**
- * Random
+ * Parse Json
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} valueArray The second number in an addition.
- * @param {number} minValue The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {string} value The second number in an addition.
+ * @returns {array|object} Returns the total.
  * @example
  *
- * random([1,2,3],1,2 )
- *=>'{}'
+ * parseJson('{}' )
+ *=>{}
  */
-function random (valueArray, minValue, maxValue) {
+function parseJson (value) {
 
-    let ran_var=[];
     const emptyDefaultValue=0;
-    const ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
+    const stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+    let returnValue=null;
 
-    each(valueArray, function (key, value) {
+    if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
+        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
-        if (math_random===key) {
+        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
 
-            ran_var = value;
+            returnValue = eval('(' + stripValue + ')');
 
         }
 
-    });
+    }
 
-    return ran_var;
+    return returnValue;
 
 }
 
@@ -1435,6 +1435,37 @@ function range (maxValue, minValue) {
     }
 
     return output;
+
+}
+
+
+/**
+ * Repeat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @param {number} valueRepetion The second number in an addition.
+ * @returns {string|number} Returns the total.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    const emptyDefaultValue=0;
+    const onceDefaultValue=1;
+    const nm_rpt=valueRepetion||emptyDefaultValue;
+    const nm_str=value||"";
+
+    if (nm_rpt>emptyDefaultValue) {
+
+        return new Array(nm_rpt+onceDefaultValue).join(nm_str);
+
+    }
+
+    return "";
 
 }
 
@@ -1506,37 +1537,6 @@ function remove (objectValue, value) {
     }
 
     return reslt;
-
-}
-
-
-/**
- * Repeat
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value The second number in an addition.
- * @param {number} valueRepetion The second number in an addition.
- * @returns {string|number} Returns the total.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
-
-    if (nm_rpt>emptyDefaultValue) {
-
-        return new Array(nm_rpt+onceDefaultValue).join(nm_str);
-
-    }
-
-    return "";
 
 }
 
@@ -1904,6 +1904,69 @@ function toArray (value) {
 
 
 
+
+
+
+
+function whereLoopExecution(jsn,whr,func,is_where){
+	
+	
+	var jsn_val={};
+	
+	var jsn_s=(count(jsn,true)==0)?((getTypeof(jsn)=="array")?jsn:[jsn]):jsn;
+	var whr_s=whr||{};
+	var variable=getJSONVariable(jsn);
+	
+	each(jsn_s,function(jk,jv){
+		
+		if(getTypeof(jsn)=="array"){
+			filter = [jv];
+		}else{
+			var filter = {};
+			filter[jk]=jv;
+		}
+		
+		if(isExact(filter,whr_s,is_where)){
+			
+			append(variable,jv,jk);
+			if(has(func)){
+				func(jv,jk);
+			}
+			
+		}
+	});
+	
+	return variable;
+	
+}
+
+
+
+/**
+ * Where
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} objectValue The second number in an addition.
+ * @param {object} objectValueWhere The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @returns {array|object} Returns the total.
+ * @example
+ *
+ * where({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+function where (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true);
+
+}
+
+
+
+
+
+
 /**
  * Var extend
  *
@@ -1968,69 +2031,6 @@ function varExtend (objectValue, objectValueReplace) {
 
 
 
-
-
-
-
-
-
-function whereLoopExecution(jsn,whr,func,is_where){
-	
-	
-	var jsn_val={};
-	
-	var jsn_s=(count(jsn,true)==0)?((getTypeof(jsn)=="array")?jsn:[jsn]):jsn;
-	var whr_s=whr||{};
-	var variable=getJSONVariable(jsn);
-	
-	each(jsn_s,function(jk,jv){
-		
-		if(getTypeof(jsn)=="array"){
-			filter = [jv];
-		}else{
-			var filter = {};
-			filter[jk]=jv;
-		}
-		
-		if(isExact(filter,whr_s,is_where)){
-			
-			append(variable,jv,jk);
-			if(has(func)){
-				func(jv,jk);
-			}
-			
-		}
-	});
-	
-	return variable;
-	
-}
-
-
-
-/**
- * Where
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} objectValue The second number in an addition.
- * @param {object} objectValueWhere The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * where({"s1":1},{"s1":2})
- *=>{"s1":2}
- */
-function where (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true);
-
-}
-
-
-
-
 /**
  * Where Not
  *
@@ -2053,44 +2053,44 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 
 
-_stk.append=append
-_stk.appendIsArrayExist=appendIsArrayExist
-_stk.arrayConcat=arrayConcat
 _stk.arraySum=arraySum
+_stk.append=append
+_stk.arrayConcat=arrayConcat
+_stk.appendIsArrayExist=appendIsArrayExist
+_stk.delimiter=delimiter
 _stk.clone=clone
 _stk.count=count
-_stk.delimiter=delimiter
 _stk.each=each
 _stk.filter=filter
 _stk.first=first
 _stk.getData=getData
+_stk.getTypeof=getTypeof
 _stk.getJSONVariable=getJSONVariable
 _stk.getKey=getKey
-_stk.getTypeof=getTypeof
 _stk.getUniq=getUniq
+_stk.ifUndefined=ifUndefined
 _stk.getValue=getValue
 _stk.has=has
-_stk.ifUndefined=ifUndefined
-_stk.indexOf=indexOf
 _stk.insert=insert
-_stk.isEmpty=isEmpty
+_stk.indexOf=indexOf
 _stk.isExact=isExact
+_stk.isEmpty=isEmpty
 _stk.jsonToArray=jsonToArray
 _stk.last=last
-_stk.limit=limit
 _stk.map=map
+_stk.limit=limit
 _stk.numberFormat=numberFormat
-_stk.parseJson=parseJson
-_stk.parseString=parseString
 _stk.random=random
+_stk.parseString=parseString
+_stk.parseJson=parseJson
 _stk.range=range
-_stk.remove=remove
 _stk.repeat=repeat
+_stk.remove=remove
 _stk.roundDecimal=roundDecimal
 _stk.shuffle=shuffle
 _stk.sort=sort
 _stk.templateValue=templateValue
 _stk.toArray=toArray
-_stk.varExtend=varExtend
 _stk.where=where
+_stk.varExtend=varExtend
 _stk.whereNot=whereNot

@@ -4,3 +4,7 @@ compts-labs/*
 compts-labs
 src_old_copy/*
 src_old_copy
+.DS_Store
+dist/.DS_Store
+src/.DS_Store
+test/.DS_Store
