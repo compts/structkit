@@ -1,7 +1,6 @@
 # Structkit
-## Use Cases
-
 [![NPM version][npm-image]][npm-url] 
+## Use Cases
 
 ## Requirement
 You need to install this in your machine to compile in your machine
