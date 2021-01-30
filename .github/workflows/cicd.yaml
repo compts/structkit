@@ -3,18 +3,7 @@ name: Node.js CI
 on: [push, pull_request]
 
 jobs:
-  verify_files:
-    name: Verify Files
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-    - name: Install Packages
-      run: npm install
-    - name: Install ESLinter
-      run: npm install -g eslint     
-
-  tests:
+  test_on_node:
     runs-on: ubuntu-latest
 
     strategy:
