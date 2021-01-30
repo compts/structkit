@@ -27,6 +27,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm run es_linter
-    - run: npm run test_esm
-    - run: npm run test_cjs    
+    - run: ./node_modules/eslint/bin/eslint.js src/function/*.js
+    - run: ./node_modules/mocha/bin/mocha -r esm test/esm/*.test.js
+    - run: ./node_modules/mocha/bin/mocha test/cjs/*.test.js  
