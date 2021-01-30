@@ -24,9 +24,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - name: Install Packages
+      run: npm install
+    - name: Install ESLinter
+      run: npm install -g eslint      
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: ./node_modules/eslint/bin/eslint.js src/function/*.js
-    - run: ./node_modules/mocha/bin/mocha -r esm test/esm/*.test.js
-    - run: ./node_modules/mocha/bin/mocha test/cjs/*.test.js  
+    - run: npm run es_linter
+    - run: npm run test_esm
+    - run: npm run test_cjs    
