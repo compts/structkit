@@ -9,9 +9,9 @@
     "structkit": "./bin/structkit"
   },
   "scripts": {
-    "es_linter": "eslint src/function/*.js",
-    "test_esm": "mocha -r esm test/esm/*.test.js",
-    "test_cjs": "mocha test/cjs/*.test.js",
+    "es_linter": "./node_modules/eslint/bin/eslint.js src/function/*.js",
+    "test_esm": "./node_modules/mocha/bin/mocha -r esm test/esm/*.test.js",
+    "test_cjs": "./node_modules/mocha/bin/mocha test/cjs/*.test.js",
     "validate": "npm run style && npm run test"
   },
   "repository": {
