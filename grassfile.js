@@ -15,18 +15,7 @@ exports.module=function(grassconf){
     
     
     return grassconf.src(list_package_utility_js)
-    //    .pipe(grass_composer( {
-    //      "banner":{
-    //        "header":"(function(window){ \n" +
-    //        " /** \n" +
-    //        " /* This program was writtern by pein freccs. \n" +
-    //        " /* Please check my repository for more details and update \n" +
-    //        " /* https://github.com/compts/compts \n"+
-    //        " **/ \n",
-    //        "footer":"\n })(window);"
-    //        
-    //      }//,main_file:__dirname+"/src/a_test_import.js"
-    //    } ) )
+  
     .pipe(compts_script_interpreter.esm_to_cjs( {
         "isWeb":false,
     }))
@@ -44,18 +33,7 @@ exports.module=function(grassconf){
     
     
     return grassconf.src(list_package_utility_js)
-    //    .pipe(grass_composer( {
-    //      "banner":{
-    //        "header":"(function(window){ \n" +
-    //        " /** \n" +
-    //        " /* This program was writtern by pein freccs. \n" +
-    //        " /* Please check my repository for more details and update \n" +
-    //        " /* https://github.com/compts/compts \n"+
-    //        " **/ \n",
-    //        "footer":"\n })(window);"
-    //        
-    //      }//,main_file:__dirname+"/src/a_test_import.js"
-    //    } ) )
+    
     .pipe(compts_script_interpreter.esm( {
       
     }))
@@ -72,18 +50,7 @@ exports.module=function(grassconf){
     
     
     return grassconf.src(list_package_utility_js)
-    //    .pipe(grass_composer( {
-    //      "banner":{
-    //        "header":"(function(window){ \n" +
-    //        " /** \n" +
-    //        " /* This program was writtern by pein freccs. \n" +
-    //        " /* Please check my repository for more details and update \n" +
-    //        " /* https://github.com/compts/compts \n"+
-    //        " **/ \n",
-    //        "footer":"\n })(window);"
-    //        
-    //      }//,main_file:__dirname+"/src/a_test_import.js"
-    //    } ) )
+   
     .pipe(compts_script_interpreter.esm_to_cjs( {
         "isWeb":true,
     }))

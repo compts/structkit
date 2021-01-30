@@ -1,0 +1,36 @@
+name: Node.js CI
+
+on: [push, pull_request]
+
+jobs:
+  verify_files:
+    name: Verify Files
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - name: Install Packages
+      run: npm install
+    - name: Lint Files
+      run: node Makefile lint
+    - name: Check Rule Files
+      run: node Makefile checkRuleFiles
+    - name: Check Licenses
+      run: node Makefile checkLicenses
+
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x, 14.x, 13.x, 12.x, 10.x, "10.12.0"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm es_linter
+    - run: npm test_esm
+    - run: npm test_cjs    
