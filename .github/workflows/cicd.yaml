@@ -11,6 +11,8 @@ jobs:
     - uses: actions/setup-node@v1
     - name: Install Packages
       run: npm install
+     - name: Install ESLinter
+      run: npm install -g eslint     
 
   tests:
     runs-on: ubuntu-latest
