@@ -11,12 +11,6 @@ jobs:
     - uses: actions/setup-node@v1
     - name: Install Packages
       run: npm install
-    - name: Lint Files
-      run: node Makefile lint
-    - name: Check Rule Files
-      run: node Makefile checkRuleFiles
-    - name: Check Licenses
-      run: node Makefile checkLicenses
 
   tests:
     runs-on: ubuntu-latest
