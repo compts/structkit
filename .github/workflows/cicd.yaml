@@ -17,14 +17,14 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [15.x, 14.x, 13.x, 12.x, 10.x, "10.12.0"]
+        node-version: [ 14.x]
 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm es_linter
-    - run: npm test_esm
-    - run: npm test_cjs    
+    - run: npm run es_linter
+    - run: npm run test_esm
+    - run: npm run test_cjs    
