@@ -25,6 +25,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm es_linter
-    - run: npm test_esm
-    - run: npm test_cjs    
+    - name: ES linter
+    - run: npm run es_linter
+    - name: Test esm    
+    - run: npm run test_esm
+    - name: Test cjs    
+    - run: npm run test_cjs    
