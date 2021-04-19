@@ -10,8 +10,8 @@ import has from './has';
  * @returns {string|number} Returns the total.
  * @example
  *
- * random([1,2,3],1,2 )
- *=>'{}'
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
  */
 function range (maxValue, minValue) {
 

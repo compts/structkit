@@ -15,7 +15,7 @@ import count from './count';
  * @example
  *
  * limit([1,2],1,2 )
- *=>[2]
+ *=>{'1':2}
  */
 function limit (objectValue, minValue, maxValue, func) {
 
@@ -35,7 +35,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
         if (cnt>=minValueReserve && cnt<=maxValueReserve) {
 
-            glo_jsn[key]=meth;
 
             if (has(func)) {
 
@@ -46,6 +45,10 @@ function limit (objectValue, minValue, maxValue, func) {
                     glo_jsn[key]=glo_indtfd;
 
                 }
+
+            } else {
+
+                glo_jsn[key]=meth;
 
             }
 

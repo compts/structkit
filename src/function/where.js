@@ -11,12 +11,12 @@ import whereLoopExecution from '../core/whereLoopExecution';
  * @returns {array|object} Returns the total.
  * @example
  *
- * where({"s1":1},{"s1":2})
- *=>{"s1":2}
+ * where({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
  */
 function where (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true);
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
 
 }
 export default where;

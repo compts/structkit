@@ -1,7 +1,7 @@
 import count from './count';
 
 /**
- * Range
+ * Random Decimal
  *
  * @since 1.0.1
  * @category Seq
@@ -11,7 +11,7 @@ import count from './count';
  * @returns {number} Returns the total.
  * @example
  *
- * random([1,2,3],1,2 )
+ * roundDecimal([1,2,3],1,2 )
  *=>'{}'
  */
 function roundDecimal (value, minValue, maxValue) {

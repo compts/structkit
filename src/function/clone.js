@@ -7,12 +7,12 @@ import append from './append';
  *
  * @since 1.0.1
  * @category Seq
- * @param {array} objectValue The second number in an addition.
+ * @param {array|object} objectValue The second number in an addition.
  * @returns {float} Returns the total.
  * @example
  *
- * arraySum([1,2], 2)
- * // => 3.00
+ * clone([1,2])
+ * // => [1,2]
  */
 function clone (objectValue) {
 

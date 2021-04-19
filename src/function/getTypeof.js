@@ -23,6 +23,11 @@ function getTypeof (objectValue) {
         return "array";
 
     }
+    if (Object.prototype.toString.call(objectValue)==="[object RegExp]") {
+
+        return "regexp";
+
+    }
 
     return typeof objectValue;
 

@@ -15,7 +15,7 @@ import count from './count';
  * @returns {boolean} Returns the total.
  * @example
  *
- * isExact('')
+ * isExact({"test": 11,"test2": 11}, {"test2": 11})
  * // => true
  */
 function isExact (objectValue1, objectValue2, isExist) {

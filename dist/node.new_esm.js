@@ -1,4 +1,3 @@
-const _stk=exports;
 
 
 /**
@@ -111,24 +110,54 @@ function arrayConcat (arrayObject, arrayValue) {
 
 
 /**
+ * Array Clone
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array} objectValue The second number in an addition.
+ * @returns {float} Returns the total.
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    const variable=getJSONVariable(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+
+
+
+
+/**
  * Array Count
  *
  * @since 1.0.1
  * @category Seq
  * @param {array} objectValue The second number in an addition.
- * @param {boolean} json_is_empty_check The second number in an addition.
+ * @param {boolean} bol The second number in an addition.
  * @returns {int} Returns the total.
  * @example
  *
  * count([1,2])
  * // => 2
  */
-function count (objectValue, json_is_empty_check) {
+function count (objectValue, bol) {
 
     let cnt=0;
     const incByOne=1;
     const defaultValueForFalse=0;
-    const json_is_empty_check_default=json_is_empty_check||false;
+    const bol_d=bol||false;
     const get_json=getTypeof(objectValue);
 
     if (has(objectValue)===false) {
@@ -159,7 +188,7 @@ function count (objectValue, json_is_empty_check) {
 
     }
 
-    if (get_json==="json"&&json_is_empty_check_default===true) {
+    if (get_json==="json"&&bol_d===true) {
 
         const jsn_parse=objectValue;
         let cnts=0;
@@ -342,128 +371,6 @@ function each (objectValue, func) {
 
 
 
-/**
- * Array Clone
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {float} Returns the total.
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    const variable=getJSONVariable(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
-
-}
-
-
-
-
-
-const one =1,
-    zero =0;
-
-/**
- * Get key value
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {boolean} typ The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * getKeyVal({"s1":1,"s2":1},"key")
- *=>{"s1":1,"s2":1}
- */
-function getKeyVal (jsn, typ) {
-
-
-    const ky=[],
-        vl=[];
-    const list_raw = [];
-
-    each(jsn, function (kk, vv) {
-
-        ky.push(kk);
-        vl.push(vv);
-        list_raw.push({
-            "key": kk,
-            "value": vv
-        });
-
-    });
-    if (indexOf([
-        "key",
-        "value"
-    ], typ)>-one) {
-
-        const ars=typ==="key"
-            ?ky
-            :vl;
-
-
-        return count(ars)===one
-            ?ars[zero]
-            :ars;
-
-    }
-    if (typ ==="first_index") {
-
-        return count(list_raw)>zero
-            ?list_raw[zero]
-            :null;
-
-    }
-    if (typ ==="last_index") {
-
-        return count(list_raw)>zero
-            ?list_raw[count(list_raw)-one]
-            :null;
-
-    }
-
-    return null;
-
-}
-
-
-
-
-/**
- * First
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * first([1,2],(key,value) )
- *=>1
- */
-function first (objectValue) {
-
-    return getKeyVal(objectValue, "first_index");
-
-}
-
-
-
-
-
 
 
 /**
@@ -509,6 +416,26 @@ function filter (objectValue, func) {
     });
 
     return jsn_var;
+
+}
+
+
+
+/**
+ * First
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * first([1,2],(key,value) )
+ *=>1
+ */
+function first (objectValue) {
+
+    return getKeyVal(objectValue, "first_index");
 
 }
 
@@ -655,11 +582,6 @@ function getTypeof (objectValue) {
     if (Object.prototype.toString.call(objectValue)==="[object Array]") {
 
         return "array";
-
-    }
-    if (Object.prototype.toString.call(objectValue)==="[object RegExp]") {
-
-        return "regexp";
 
     }
 
@@ -861,15 +783,12 @@ function insert (objectValue, value) {
 
 }
 
-
-
-
 /**
  * Is empty
  *
  * @since 1.0.1
  * @category Seq
- * @param {string|object} value The first number in an addition.
+ * @param {string} value The first number in an addition.
  * @returns {boolean} Returns the total.
  * @example
  *
@@ -877,14 +796,6 @@ function insert (objectValue, value) {
  * // => true
  */
 function isEmpty (value) {
-
-    const zero =0;
-
-    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
-
-        return count(value, true)===zero;
-
-    }
 
     return (/^\s*$/gmi).test(value);
 
@@ -907,7 +818,7 @@ function isEmpty (value) {
  * @returns {boolean} Returns the total.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
+ * isExact('')
  * // => true
  */
 function isExact (objectValue1, objectValue2, isExist) {
@@ -982,99 +893,6 @@ function isExact (objectValue1, objectValue2, isExist) {
 
 
 
-
-/**
- * Is Exact by Regexp
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} objectValue1 The first number in an addition.
- * @param {string} objectValue2 The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * isExactbyRegExp('')
- * // => true
- */
-function isExactbyRegExp (objectValue1, objectValue2) {
-
-    const zero =0;
-
-    if (objectValue2===null) {
-
-        return false;
-
-    }
-
-
-    if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
-
-        return false;
-
-    }
-
-
-    const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
-        ?objectValue1
-        :[objectValue1];
-    let cnt=0;
-    const incrementDefaultValue=1;
-    let local_is_valid = null;
-
-    each(key_s, function (kk, kv) {
-
-        if (getTypeof(objectValue2)==="json") {
-
-            if (has(objectValue2[kk])) {
-
-                if (getTypeof(objectValue2[kk])==="regexp") {
-
-                    local_is_valid = objectValue2[kk];
-
-                } else {
-
-                    local_is_valid = new RegExp(objectValue2[kk]);
-
-                }
-                if (local_is_valid.test(kv)) {
-
-                    cnt+=incrementDefaultValue;
-
-                }
-
-            }
-
-        } else {
-
-            if (getTypeof(objectValue2)==="regexp") {
-
-                local_is_valid = objectValue2;
-
-            } else {
-
-                local_is_valid = new RegExp(objectValue2);
-
-            }
-            if (local_is_valid.test(kv)) {
-
-                cnt+=incrementDefaultValue;
-
-            }
-
-        }
-
-    });
-
-
-    return cnt >zero;
-
-}
-
-
-
-
-
-
 /**
  * Json To Array
  *
@@ -1085,25 +903,20 @@ function isExactbyRegExp (objectValue1, objectValue2) {
  * @returns {boolean} Returns the total.
  * @example
  *
- * jsonToArray({"a":1,"b":2},"a")
- * => []
+ * jsonToArray({})
+ * // => true
  */
 function jsonToArray (objectValue, value) {
 
     const arry=[];
 
-
     each(objectValue, function (_key, _value) {
 
         if (has(value)) {
 
+            if (has(_value, value)) {
 
-            const valueData = getData(_value, value);
-
-
-            if (isEmpty(valueData) ===false) {
-
-                arry.push(valueData);
+                arry.push(_value[value]);
 
             }
 
@@ -1143,118 +956,6 @@ function last (objectValue) {
 
 
 
-
-
-
-
-
-
-/**
- * Where Loop Execution
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {object} whr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {boolean} isExist The second number in an addition.
- * @param {string} types The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function whereLoopExecution (jsn, whr, func, isExist, types) {
-
-    const zero =0;
-
-    const json_convertion = getTypeof(jsn) === "array"
-        ? jsn
-        : [jsn];
-    const jsn_s= count(jsn, true) ===zero
-        ? json_convertion
-        : jsn;
-    const whr_s=whr||{};
-    const variable=getJSONVariable(jsn);
-    let filter = {};
-
-    each(jsn_s, function (jk, jv) {
-
-
-        if (getTypeof(jsn)==="array") {
-
-            filter = jv;
-
-        }
-        if (getTypeof(jsn)==="json") {
-
-
-            filter[jk]=jv;
-
-        }
-
-        if (types === "where") {
-
-            if (isExact(filter, whr_s, isExist)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-        if (types === "like") {
-
-            if (isExactbyRegExp(filter, whr_s)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return variable;
-
-}
-
-
-
-/**
- * Like
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} objectValue The second number in an addition.
- * @param {object} objectValueWhere The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-
-
-
-
 /**
  * Limit
  *
@@ -1268,7 +969,7 @@ function like (objectValue, objectValueWhere, func) {
  * @example
  *
  * limit([1,2],1,2 )
- *=>{'1':2}
+ *=>[2]
  */
 function limit (objectValue, minValue, maxValue, func) {
 
@@ -1288,6 +989,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         if (cnt>=minValueReserve && cnt<=maxValueReserve) {
 
+            glo_jsn[key]=meth;
 
             if (has(func)) {
 
@@ -1298,10 +1000,6 @@ function limit (objectValue, minValue, maxValue, func) {
                     glo_jsn[key]=glo_indtfd;
 
                 }
-
-            } else {
-
-                glo_jsn[key]=meth;
 
             }
 
@@ -1654,8 +1352,8 @@ function random (valueArray, minValue, maxValue) {
  * @returns {string|number} Returns the total.
  * @example
  *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
+ * random([1,2,3],1,2 )
+ *=>'{}'
  */
 function range (maxValue, minValue) {
 
@@ -1784,7 +1482,7 @@ function repeat (value, valueRepetion) {
 
 
 /**
- * Random Decimal
+ * Range
  *
  * @since 1.0.1
  * @category Seq
@@ -1794,7 +1492,7 @@ function repeat (value, valueRepetion) {
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal([1,2,3],1,2 )
+ * random([1,2,3],1,2 )
  *=>'{}'
  */
 function roundDecimal (value, minValue, maxValue) {
@@ -1891,14 +1589,13 @@ function shuffle (objectValue) {
  * @param {array|object} objectValue The second number in an addition.
  * @param {number} index The second number in an addition.
  * @param {boolean} order The second number in an addition.
- * @param {function} func The second number in an addition.
  * @returns {string|number} Returns the total.
  * @example
  *
  * sort([2,3,1])
  *=>[1,2,3]
  */
-function sort (objectValue, index, order, func) {
+function sort (objectValue, index, order) {
 
     let jsonn=objectValue;
     const asc=has(order)
@@ -1910,11 +1607,6 @@ function sort (objectValue, index, order, func) {
 
     jsonn=js_m.sort(function (orderA, orderB) {
 
-        if (has(func)) {
-
-            return func(orderA, orderB);
-
-        }
         if (asc) {
 
             return orderA[index] > orderB[index];
@@ -1923,103 +1615,9 @@ function sort (objectValue, index, order, func) {
 
         return orderB[index] > orderA[index];
 
-
     });
 
     return jsonn;
-
-}
-
-
-
-/**
- * To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {number|string|object} value The second number in an addition.
- * @returns {array} Returns the total.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-
-    let return_val = value;
-
-    if (getTypeof(return_val)!=="array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
-
-}
-
-
-
-
-
-/**
- * Var extend
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} objectValue The second number in an addition.
- * @param {object} objectValueReplace The second number in an addition.
- * @returns {array} Returns the total.
- * @example
- *
- * varExtend({"s1":1},{"s1":2})
- *=>{"s1":2}
- */
-function varExtend (objectValue, objectValueReplace) {
-
-    const onceDefaultValue=1;
-
-    if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
-
-        const jsn_s={};
-
-        for (const key in objectValue) {
-
-            if (indexOf([
-                'true',
-                'false'
-            ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
-
-                const jsn_bool={
-                    "false": false,
-                    "true": true
-                };
-
-                jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
-
-            } else {
-
-                jsn_s[key]=objectValue[key];
-
-            }
-
-        }
-
-        for (const key in objectValueReplace) {
-
-            if (has(jsn_s, key)) {
-
-                jsn_s[key]=objectValueReplace[key];
-
-            }
-
-        }
-
-        return jsn_s;
-
-    }
-
-    return objectValue;
 
 }
 
@@ -2209,6 +1807,71 @@ function templateValue (templateString, data, option) {
 
 
 
+
+
+/**
+ * Var extend
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} objectValue The second number in an addition.
+ * @param {object} objectValueReplace The second number in an addition.
+ * @returns {array} Returns the total.
+ * @example
+ *
+ * varExtend({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+function varExtend (objectValue, objectValueReplace) {
+
+    const onceDefaultValue=1;
+
+    if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
+
+        const jsn_s={};
+
+        for (const key in objectValue) {
+
+            if (indexOf([
+                'true',
+                'false'
+            ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
+
+                const jsn_bool={
+                    "false": false,
+                    "true": true
+                };
+
+                jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+
+            } else {
+
+                jsn_s[key]=objectValue[key];
+
+            }
+
+        }
+
+        for (const key in objectValueReplace) {
+
+            if (has(jsn_s, key)) {
+
+                jsn_s[key]=objectValueReplace[key];
+
+            }
+
+        }
+
+        return jsn_s;
+
+    }
+
+    return objectValue;
+
+}
+
+
+
 /**
  * Where
  *
@@ -2225,7 +1888,7 @@ function templateValue (templateString, data, option) {
  */
 function where (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+    return whereLoopExecution(objectValue, objectValueWhere, func, true);
 
 }
 
@@ -2247,51 +1910,36 @@ function where (objectValue, objectValueWhere, func) {
  */
 function whereNot (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+    return whereLoopExecution(objectValue, objectValueWhere, func, false);
 
 }
 
 
-_stk.append=append;
-_stk.appendIsArrayExist=appendIsArrayExist;
-_stk.arrayConcat=arrayConcat;
-_stk.count=count;
-_stk.delimiter=delimiter;
-_stk.arraySum=arraySum;
-_stk.each=each;
-_stk.clone=clone;
-_stk.first=first;
-_stk.filter=filter;
-_stk.getData=getData;
-_stk.getJSONVariable=getJSONVariable;
-_stk.getKey=getKey;
-_stk.getTypeof=getTypeof;
-_stk.getUniq=getUniq;
-_stk.getValue=getValue;
-_stk.has=has;
-_stk.ifUndefined=ifUndefined;
-_stk.indexOf=indexOf;
-_stk.insert=insert;
-_stk.isEmpty=isEmpty;
-_stk.isExact=isExact;
-_stk.isExactbyRegExp=isExactbyRegExp;
-_stk.jsonToArray=jsonToArray;
-_stk.last=last;
-_stk.like=like;
-_stk.limit=limit;
-_stk.map=map;
-_stk.numberFormat=numberFormat;
-_stk.parseJson=parseJson;
-_stk.parseString=parseString;
-_stk.random=random;
-_stk.range=range;
-_stk.remove=remove;
-_stk.repeat=repeat;
-_stk.roundDecimal=roundDecimal;
-_stk.shuffle=shuffle;
-_stk.sort=sort;
-_stk.toArray=toArray;
-_stk.varExtend=varExtend;
-_stk.templateValue=templateValue;
-_stk.where=where;
-_stk.whereNot=whereNot;
+
+
+/**
+ * To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number|string|object} value The second number in an addition.
+ * @returns {array} Returns the total.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toArray (value) {
+
+    let return_val = value;
+
+    if (getTypeof(return_val)!=="array") {
+
+        return_val = [value];
+
+    }
+
+    return return_val;
+
+}
+

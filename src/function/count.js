@@ -8,19 +8,19 @@ import each from './each';
  * @since 1.0.1
  * @category Seq
  * @param {array} objectValue The second number in an addition.
- * @param {boolean} bol The second number in an addition.
+ * @param {boolean} json_is_empty_check The second number in an addition.
  * @returns {int} Returns the total.
  * @example
  *
  * count([1,2])
  * // => 2
  */
-function count (objectValue, bol) {
+function count (objectValue, json_is_empty_check) {
 
     let cnt=0;
     const incByOne=1;
     const defaultValueForFalse=0;
-    const bol_d=bol||false;
+    const json_is_empty_check_default=json_is_empty_check||false;
     const get_json=getTypeof(objectValue);
 
     if (has(objectValue)===false) {
@@ -51,7 +51,7 @@ function count (objectValue, bol) {
 
     }
 
-    if (get_json==="json"&&bol_d===true) {
+    if (get_json==="json"&&json_is_empty_check_default===true) {
 
         const jsn_parse=objectValue;
         let cnts=0;

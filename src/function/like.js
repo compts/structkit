@@ -1,7 +1,7 @@
 import whereLoopExecution from '../core/whereLoopExecution';
 
 /**
- * Where Not
+ * Like
  *
  * @since 1.0.1
  * @category Seq
@@ -11,13 +11,12 @@ import whereLoopExecution from '../core/whereLoopExecution';
  * @returns {array|object} Returns the total.
  * @example
  *
- * whereNot({"s1":1,"s2":1},{"s1":2})
+ * where({"s1":1,"s2":1},{"s1":1})
  *=>{"s1":1,"s2":1}
  */
-function whereNot (objectValue, objectValueWhere, func) {
+function like (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
 
 }
-export default whereNot;
-
+export default like;
