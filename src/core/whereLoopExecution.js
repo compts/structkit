@@ -36,26 +36,26 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         : jsn;
     const whr_s=whr||{};
     const variable=getJSONVariable(jsn);
-    let filter = {};
+    let filterData = {};
 
     each(jsn_s, function (jk, jv) {
 
 
         if (getTypeof(jsn)==="array") {
 
-            filter = jv;
+            filterData = jv;
 
         }
         if (getTypeof(jsn)==="json") {
 
 
-            filter[jk]=jv;
+            filterData[jk]=jv;
 
         }
 
         if (types === "where") {
 
-            if (isExact(filter, whr_s, isExist)) {
+            if (isExact(filterData, whr_s, isExist)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {
@@ -69,7 +69,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         }
         if (types === "like") {
 
-            if (isExactbyRegExp(filter, whr_s)) {
+            if (isExactbyRegExp(filterData, whr_s)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {

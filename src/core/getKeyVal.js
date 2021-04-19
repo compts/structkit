@@ -2,9 +2,6 @@ import indexOf from '../function/indexOf';
 import each from '../function/each';
 import count from '../function/count';
 
-const one =1,
-    zero =0;
-
 /**
  * Get key value
  *
@@ -20,6 +17,8 @@ const one =1,
  */
 function getKeyVal (jsn, typ) {
 
+    const one =1,
+        zero =0;
 
     const ky=[],
         vl=[];
