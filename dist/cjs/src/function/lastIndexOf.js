@@ -17,15 +17,15 @@ const getIndexOf = require('../core/getIndexOf');
  * indexOf([1,2], 1)
  * // => 0
  */
-function indexOf (objectValue, value) {
+function lastIndexOf (objectValue, value) {
 
     const start = 0;
 
 
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
 
     return indexValue;
 
 }
-module.exports=indexOf;;
+module.exports=lastIndexOf;;
 

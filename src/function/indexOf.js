@@ -1,5 +1,6 @@
-import getTypeof from './getTypeof';
+
 import count from './count';
+import getIndexOf from '../core/getIndexOf';
 
 /**
  * Index Of array
@@ -16,28 +17,12 @@ import count from './count';
  */
 function indexOf (objectValue, value) {
 
-    const indexOfDefaultValue=-1;
-    const incrementDefaultValue=1;
+    const start = 0;
 
-    if (getTypeof(objectValue)==="array") {
 
-        for (let inc=0; inc<count(objectValue);) {
+    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
 
-            if (objectValue[inc]===value) {
-
-                return inc;
-
-            }
-
-            inc+=incrementDefaultValue;
-
-        }
-
-        return indexOfDefaultValue;
-
-    }
-
-    return indexOfDefaultValue;
+    return indexValue;
 
 }
 export default indexOf;

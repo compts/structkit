@@ -1,5 +1,4 @@
-!(function(window){ 
-window._stk={};
+const _stk=exports;
 
 
 /**
@@ -17,7 +16,8 @@ window._stk={};
  * // => {'as':2}
  */
 function append (objectValue, val, key) {
-var typeofs=getTypeof(objectValue);
+
+    const typeofs=getTypeof(objectValue);
 
     if (typeofs === "json") {
 
@@ -35,9 +35,6 @@ var typeofs=getTypeof(objectValue);
 }
 
 
-
-
-
 /**
  * Append Is Array Exist
  *
@@ -52,9 +49,10 @@ var typeofs=getTypeof(objectValue);
  * // => [1,2]
  */
 function appendIsArrayExist (arrayObject, value) {
-var ary_type=getTypeof(arrayObject);
-var ary_type1=getTypeof(value);
-var notExist=-1;
+
+    const ary_type=getTypeof(arrayObject);
+    const ary_type1=getTypeof(value);
+    const notExist=-1;
 
     if (ary_type ==="array" && ary_type1 ==="array") {
 
@@ -77,7 +75,6 @@ var notExist=-1;
 }
 
 
-
 /**
  * Array Concat
  *
@@ -92,7 +89,8 @@ var notExist=-1;
  * // => [1,2]
  */
 function arrayConcat (arrayObject, arrayValue) {
-var return_val=arrayObject;
+
+    const return_val=arrayObject;
 
     if (getTypeof(return_val)==="array") {
 
@@ -103,8 +101,6 @@ var return_val=arrayObject;
     return [];
 
 }
-
-
 
 
 /**
@@ -121,10 +117,11 @@ var return_val=arrayObject;
  * // => 3.00
  */
 function arraySum (arrayObject, delimeter) {
-var sum=0;
-var defaultLimitDecimal = 3;
-var arrayObjects=arrayObject||[];
-var delimeters=delimeter||defaultLimitDecimal;
+
+    let sum=0;
+    const defaultLimitDecimal = 3;
+    const arrayObjects=arrayObject||[];
+    const delimeters=delimeter||defaultLimitDecimal;
 
     each(arrayObjects, function (ak, av) {
 
@@ -141,9 +138,6 @@ var delimeters=delimeter||defaultLimitDecimal;
 }
 
 
-
-
-
 /**
  * Array Clone
  *
@@ -157,7 +151,8 @@ var delimeters=delimeter||defaultLimitDecimal;
  * // => [1,2]
  */
 function clone (objectValue) {
-var variable=getJSONVariable(objectValue);
+
+    const variable=getJSONVariable(objectValue);
 
     each(objectValue, function (key, value) {
 
@@ -168,122 +163,6 @@ var variable=getJSONVariable(objectValue);
     return variable;
 
 }
-
-
-
-
-
-/**
- * Array Count
- *
- * @since 1.0.1
- * @category Seq
- * @param {array} objectValue The second number in an addition.
- * @param {boolean} json_is_empty_check The second number in an addition.
- * @returns {int} Returns the total.
- * @example
- *
- * count([1,2])
- * // => 2
- */
-function count (objectValue, json_is_empty_check) {
-var cnt=0;
-var incByOne=1;
-var defaultValueForFalse=0;
-var json_is_empty_check_default=json_is_empty_check||false;
-var get_json=getTypeof(objectValue);
-
-    if (has(objectValue)===false) {
-
-        return defaultValueForFalse;
-
-    }
-
-    if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
-
-        for (
-var inc in objectValue) {
-
-            if (!isNaN(inc)) {
-
-                cnt+=incByOne;
-
-            }
-
-        }
-
-    } else {
-
-        each(objectValue, function () {
-
-            cnt+=incByOne;
-
-        });
-
-    }
-
-    if (get_json==="json"&&json_is_empty_check_default===true) {
-var jsn_parse=objectValue;
-var cnts=0;
-
-        each(jsn_parse, function () {
-
-            cnts+=incByOne;
-
-        });
-
-        return cnts;
-
-    }
-
-    return cnt;
-
-}
-
-
-
-
-
-/**
- * Delimiter
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {integer} min The second number in an addition.
- * @param {integer} max The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * delimiter([1,2])
- * // => 2
- */
-function delimiter (objectValue, min, max) {
-var ran_var=[];
-var defaultValueZero=0;
-var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-var ran_max=has(max)
-        ?max+ran_min
-        :count(objectValue);
-var math_random=Math.round(Math.random()*ran_max);
-
-    each(objectValue, function (key, value) {
-
-        if (math_random===key) {
-
-            ran_var=value;
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-
 
 
 /**
@@ -302,16 +181,17 @@ var math_random=Math.round(Math.random()*ran_max);
  *
  */
 function each (objectValue, func) {
-var re_loop=[];
-var typeofs=getTypeof(objectValue);
+
+    let re_loop=[];
+    const typeofs=getTypeof(objectValue);
 
     if (typeofs==="json"||typeofs==="array"||typeofs==="object") {
 
-        for (
-var ins in objectValue) {
+        for (const ins in objectValue) {
 
             if (has(objectValue, ins)) {
-var bool_func = true;
+
+                let bool_func = true;
 
                 if (getTypeof(objectValue[ins])==="function") {
 
@@ -362,11 +242,6 @@ var bool_func = true;
 }
 
 
-
-
-
-
-
 /**
  * Filter
  *
@@ -383,8 +258,9 @@ var bool_func = true;
  *
  */
 function filter (objectValue, func) {
-var jsn_var=getJSONVariable(objectValue);
-var jsn_type=getTypeof(objectValue);
+
+    let jsn_var=getJSONVariable(objectValue);
+    const jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {
 
@@ -413,9 +289,6 @@ var jsn_type=getTypeof(objectValue);
 }
 
 
-
-
-
 /**
  * Get key value
  *
@@ -430,11 +303,13 @@ var jsn_type=getTypeof(objectValue);
  *=>{"s1":1,"s2":1}
  */
 function getKeyVal (jsn, typ) {
-var one =1,
+
+    const one =1,
         zero =0;
-var ky=[],
+
+    const ky=[],
         vl=[];
-var list_raw = [];
+    const list_raw = [];
 
     each(jsn, function (kk, vv) {
 
@@ -450,7 +325,8 @@ var list_raw = [];
         "key",
         "value"
     ], typ)>-one) {
-var ars=typ==="key"
+
+        const ars=typ==="key"
             ?ky
             :vl;
 
@@ -480,8 +356,6 @@ var ars=typ==="key"
 }
 
 
-
-
 /**
  * First
  *
@@ -501,6 +375,114 @@ function first (objectValue) {
 }
 
 
+/**
+ * Array Count
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array} objectValue The second number in an addition.
+ * @param {boolean} json_is_empty_check The second number in an addition.
+ * @returns {int} Returns the total.
+ * @example
+ *
+ * count([1,2])
+ * // => 2
+ */
+function count (objectValue, json_is_empty_check) {
+
+    let cnt=0;
+    const incByOne=1;
+    const defaultValueForFalse=0;
+    const json_is_empty_check_default=json_is_empty_check||false;
+    const get_json=getTypeof(objectValue);
+
+    if (has(objectValue)===false) {
+
+        return defaultValueForFalse;
+
+    }
+
+    if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+
+        for (const inc in objectValue) {
+
+            if (!isNaN(inc)) {
+
+                cnt+=incByOne;
+
+            }
+
+        }
+
+    } else {
+
+        each(objectValue, function () {
+
+            cnt+=incByOne;
+
+        });
+
+    }
+
+    if (get_json==="json"&&json_is_empty_check_default===true) {
+
+        const jsn_parse=objectValue;
+        let cnts=0;
+
+        each(jsn_parse, function () {
+
+            cnts+=incByOne;
+
+        });
+
+        return cnts;
+
+    }
+
+    return cnt;
+
+}
+
+
+/**
+ * Delimiter
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @param {integer} min The second number in an addition.
+ * @param {integer} max The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * delimiter([1,2])
+ * // => 2
+ */
+function delimiter (objectValue, min, max) {
+
+    let ran_var=[];
+    const defaultValueZero=0;
+    const ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    const ran_max=has(max)
+        ?max+ran_min
+        :count(objectValue);
+    const math_random=Math.round(Math.random()*ran_max);
+
+    each(objectValue, function (key, value) {
+
+        if (math_random===key) {
+
+            ran_var=value;
+
+        }
+
+    });
+
+    return ran_var;
+
+}
 
 
 /**
@@ -517,9 +499,10 @@ function first (objectValue) {
  *=>1
  */
 function getData (objectValue, split_str) {
-var spl_len=split_str.split(":");
-var spl=[];
-var jsn_total={};
+
+    const spl_len=split_str.split(":");
+    const spl=[];
+    let jsn_total={};
 
     if (!has(objectValue)) {
 
@@ -568,7 +551,6 @@ var jsn_total={};
 }
 
 
-
 /**
  * Get JSON Variable
  *
@@ -600,7 +582,6 @@ function getJSONVariable (value) {
 }
 
 
-
 /**
  * Get key
  *
@@ -616,6 +597,31 @@ function getJSONVariable (value) {
 function getKey (objectValue) {
 
     return getKeyVal(objectValue, "key");
+
+}
+
+/**
+ * Get unique value
+ *
+ * @since 1.0.1
+ * @returns {alphanumeric} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => x2sf2
+ */
+function getUniq () {
+
+    const defaultRandomValue=2;
+    const defaultSubstrValue=36;
+    const str_rand1=Math
+        .random()
+        .toString(defaultSubstrValue)
+        .substr(defaultRandomValue)+Math.random()
+        .toString(defaultSubstrValue)
+        .substr(defaultRandomValue);
+
+    return str_rand1;
 
 }
 
@@ -653,31 +659,6 @@ function getTypeof (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Get unique value
- *
- * @since 1.0.1
- * @returns {alphanumeric} Get Unique Key.
- * @example
- *
- * getUniq()
- * => x2sf2
- */
-function getUniq () {
-var defaultRandomValue=2;
-var defaultSubstrValue=36;
-var str_rand1=Math
-        .random()
-        .toString(defaultSubstrValue)
-        .substr(defaultRandomValue)+Math.random()
-        .toString(defaultSubstrValue)
-        .substr(defaultRandomValue);
-
-    return str_rand1;
-
-}
-
 
 
 /**
@@ -724,6 +705,46 @@ function has (value, key) {
 }
 
 
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The first number in an addition.
+ * @param {number|object|string} value The first number in an addition.
+ * @returns {number|object|string} Returns the total.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function indexOf (objectValue, value) {
+
+    const indexOfDefaultValue=-1;
+    const incrementDefaultValue=1;
+
+    if (getTypeof(objectValue)==="array") {
+
+        for (let inc=0; inc<count(objectValue);) {
+
+            if (objectValue[inc]===value) {
+
+                return inc;
+
+            }
+
+            inc+=incrementDefaultValue;
+
+        }
+
+        return indexOfDefaultValue;
+
+    }
+
+    return indexOfDefaultValue;
+
+}
+
 
 /**
  * Check if is undefined
@@ -764,85 +785,6 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 
-
-
-
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number} value The first number in an addition.
- * @param {number} start The first number in an addition.
- * @param {number} end The first number in an addition.
- * @param {boolean} isGetLast The first number in an addition.
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function getIndexOf (objectValue, value, start, end, isGetLast) {
-var indexOfDefaultValue=-1;
-var incrementDefaultValue=1;
-var referenceValue = -1;
-
-    if (getTypeof(objectValue)==="array") {
-
-        for (
-var inc=start; inc<end;) {
-
-            if (objectValue[inc]===value) {
-
-                if (isGetLast === false) {
-
-                    return inc;
-
-                }
-                referenceValue = inc;
-
-
-            }
-
-            inc+=incrementDefaultValue;
-
-        }
-
-    }
-
-    return isGetLast === false
-        ?indexOfDefaultValue
-        :referenceValue;
-
-}
-
-
-
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value The first number in an addition.
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function indexOf (objectValue, value) {
-var start = 0;
-var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
-
-    return indexValue;
-
-}
-
-
-
-
 /**
  * Is empty
  *
@@ -856,7 +798,8 @@ var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false
  * // => true
  */
 function isEmpty (value) {
-var zero =0;
+
+    const zero =0;
 
     if (getTypeof(value) === "json" || getTypeof(value) === "array") {
 
@@ -867,51 +810,6 @@ var zero =0;
     return (/^\s*$/gmi).test(value);
 
 }
-
-
-
-
-
-/**
- * Insert Value
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value The first number in an addition.
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * ifUndefined({'as':1}, 'as','as2')
- * // => 1
- */
-function insert (objectValue, value) {
-
-    if (has(objectValue)) {
-var jsn_type=getTypeof(value);
-
-        if (jsn_type==="json") {
-
-            each(value, function (key, _value) {
-
-                objectValue[key]=_value;
-
-            });
-
-        } else {
-
-            objectValue.push(value);
-
-        }
-
-    }
-
-}
-
-
-
-
-
 
 
 /**
@@ -935,26 +833,28 @@ function isExact (objectValue1, objectValue2, isExist) {
         return false;
 
     }
-var local_is_exist=has(isExist)&&getTypeof(isExist)==="boolean"
+
+    const local_is_exist=has(isExist)&&getTypeof(isExist)==="boolean"
         ?isExist
         :true;
-var val_s=(/(json|array)/g).test(getTypeof(objectValue2))
+    const val_s=(/(json|array)/g).test(getTypeof(objectValue2))
         ?objectValue2
         :[objectValue2];
-var key_s=(/(json|array)/g).test(getTypeof(objectValue1))
+    const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
         ?objectValue1
         :[objectValue1];
-var cnt=0;
-var incrementDefaultValue=1;
-var emptyDefaultValue=0;
-var notExistArrayDefaultValue=-1;
+    let cnt=0;
+    const incrementDefaultValue=1;
+    const emptyDefaultValue=0;
+    const notExistArrayDefaultValue=-1;
 
     each(key_s, function (kk, kv) {
 
         if (getTypeof(objectValue2)==="json") {
 
             if (has(val_s[kk])) {
-var local_is_valid = local_is_exist
+
+                const local_is_valid = local_is_exist
                     ?val_s[kk]===kv
                     :val_s[kk]!==kv;
 
@@ -969,7 +869,8 @@ var local_is_valid = local_is_exist
         }
 
         if (getTypeof(objectValue2)==="array") {
-var local_is_valid = local_is_exist
+
+            const local_is_valid = local_is_exist
                 ?indexOf(val_s, kv)>notExistArrayDefaultValue
                 :indexOf(val_s, kv)===notExistArrayDefaultValue;
 
@@ -995,8 +896,42 @@ var local_is_valid = local_is_exist
 }
 
 
+/**
+ * Insert Value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The first number in an addition.
+ * @param {number|object|string} value The first number in an addition.
+ * @returns {number|object|string} Returns the total.
+ * @example
+ *
+ * ifUndefined({'as':1}, 'as','as2')
+ * // => 1
+ */
+function insert (objectValue, value) {
 
+    if (has(objectValue)) {
 
+        const jsn_type=getTypeof(value);
+
+        if (jsn_type==="json") {
+
+            each(value, function (key, _value) {
+
+                objectValue[key]=_value;
+
+            });
+
+        } else {
+
+            objectValue.push(value);
+
+        }
+
+    }
+
+}
 
 
 /**
@@ -1013,13 +948,16 @@ var local_is_valid = local_is_exist
  * => []
  */
 function jsonToArray (objectValue, value) {
-var arry=[];
+
+    const arry=[];
 
 
     each(objectValue, function (_key, _value) {
 
         if (has(value)) {
-var valueData = getData(_value, value);
+
+
+            const valueData = getData(_value, value);
 
 
             if (isEmpty(valueData) ===false) {
@@ -1041,95 +979,6 @@ var valueData = getData(_value, value);
 }
 
 
-
-
-
-/**
- * Is Exact by Regexp
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} objectValue1 The first number in an addition.
- * @param {string} objectValue2 The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * isExactbyRegExp('')
- * // => true
- */
-function isExactbyRegExp (objectValue1, objectValue2) {
-var zero =0;
-
-    if (objectValue2===null) {
-
-        return false;
-
-    }
-
-
-    if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
-
-        return false;
-
-    }
-var key_s=(/(json|array)/g).test(getTypeof(objectValue1))
-        ?objectValue1
-        :[objectValue1];
-var cnt=0;
-var incrementDefaultValue=1;
-var local_is_valid = null;
-
-    each(key_s, function (kk, kv) {
-
-        if (getTypeof(objectValue2)==="json") {
-
-            if (has(objectValue2[kk])) {
-
-                if (getTypeof(objectValue2[kk])==="regexp") {
-
-                    local_is_valid = objectValue2[kk];
-
-                } else {
-
-                    local_is_valid = new RegExp(objectValue2[kk]);
-
-                }
-                if (local_is_valid.test(kv)) {
-
-                    cnt+=incrementDefaultValue;
-
-                }
-
-            }
-
-        } else {
-
-            if (getTypeof(objectValue2)==="regexp") {
-
-                local_is_valid = objectValue2;
-
-            } else {
-
-                local_is_valid = new RegExp(objectValue2);
-
-            }
-            if (local_is_valid.test(kv)) {
-
-                cnt+=incrementDefaultValue;
-
-            }
-
-        }
-
-    });
-
-
-    return cnt >zero;
-
-}
-
-
-
 /**
  * Last
  *
@@ -1149,40 +998,6 @@ function last (objectValue) {
 }
 
 
-
-
-
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value The first number in an addition.
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function lastIndexOf (objectValue, value) {
-var start = 0;
-var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
-
-}
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Where Loop Execution
  *
@@ -1200,16 +1015,18 @@ var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true)
  *=>{"s1":1,"s2":1}
  */
 function whereLoopExecution (jsn, whr, func, isExist, types) {
-var zero =0;
-var json_convertion = getTypeof(jsn) === "array"
+
+    const zero =0;
+
+    const json_convertion = getTypeof(jsn) === "array"
         ? jsn
         : [jsn];
-var jsn_s= count(jsn, true) ===zero
+    const jsn_s= count(jsn, true) ===zero
         ? json_convertion
         : jsn;
-var whr_s=whr||{};
-var variable=getJSONVariable(jsn);
-var filterData = {};
+    const whr_s=whr||{};
+    const variable=getJSONVariable(jsn);
+    let filterData = {};
 
     each(jsn_s, function (jk, jv) {
 
@@ -1262,7 +1079,6 @@ var filterData = {};
 }
 
 
-
 /**
  * Like
  *
@@ -1284,7 +1100,92 @@ function like (objectValue, objectValueWhere, func) {
 }
 
 
+/**
+ * Is Exact by Regexp
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} objectValue1 The first number in an addition.
+ * @param {string} objectValue2 The first number in an addition.
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * isExactbyRegExp('')
+ * // => true
+ */
+function isExactbyRegExp (objectValue1, objectValue2) {
 
+    const zero =0;
+
+    if (objectValue2===null) {
+
+        return false;
+
+    }
+
+
+    if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
+
+        return false;
+
+    }
+
+
+    const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
+        ?objectValue1
+        :[objectValue1];
+    let cnt=0;
+    const incrementDefaultValue=1;
+    let local_is_valid = null;
+
+    each(key_s, function (kk, kv) {
+
+        if (getTypeof(objectValue2)==="json") {
+
+            if (has(objectValue2[kk])) {
+
+                if (getTypeof(objectValue2[kk])==="regexp") {
+
+                    local_is_valid = objectValue2[kk];
+
+                } else {
+
+                    local_is_valid = new RegExp(objectValue2[kk]);
+
+                }
+                if (local_is_valid.test(kv)) {
+
+                    cnt+=incrementDefaultValue;
+
+                }
+
+            }
+
+        } else {
+
+            if (getTypeof(objectValue2)==="regexp") {
+
+                local_is_valid = objectValue2;
+
+            } else {
+
+                local_is_valid = new RegExp(objectValue2);
+
+            }
+            if (local_is_valid.test(kv)) {
+
+                cnt+=incrementDefaultValue;
+
+            }
+
+        }
+
+    });
+
+
+    return cnt >zero;
+
+}
 
 
 /**
@@ -1303,17 +1204,18 @@ function like (objectValue, objectValueWhere, func) {
  *=>{'1':2}
  */
 function limit (objectValue, minValue, maxValue, func) {
-var cnt=0;
-var glo_jsn={};
-var glo_indtfd = null;
-var emptyDefaultValue=0;
-var minValueReserve=has(minValue)
+
+    let cnt=0;
+    const glo_jsn={};
+    let glo_indtfd = null;
+    const emptyDefaultValue=0;
+    const minValueReserve=has(minValue)
         ?minValue
         :emptyDefaultValue;
-var maxValueReserve=has(maxValue)
+    const maxValueReserve=has(maxValue)
         ?maxValue
         :count(objectValue);
-var incrementDefaultValue=1;
+    const incrementDefaultValue=1;
 
     each(objectValue, function (key, meth) {
 
@@ -1347,6 +1249,40 @@ var incrementDefaultValue=1;
 }
 
 
+/**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+
+    const emptyDefaultValue=0;
+    const incrementDefaultValue=1;
+    const value_arry=[];
+    let cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            value_arry.push(func(value, key, cnt));
+            cnt+=incrementDefaultValue;
+
+        }
+
+    });
+
+    return value_arry;
+
+}
 
 
 /**
@@ -1364,27 +1300,30 @@ var incrementDefaultValue=1;
  *=>1.00
  */
 function numberFormat (objectValue, value1, value2) {
-var incrementDefaultValue=1;
-var emptyDefaultValue=0;
-var threeDefaultValue=3;
-var valueZero=value2||emptyDefaultValue;
-var objectValueEvaluate=objectValue.toString();
-var splt_dec=objectValueEvaluate.split(".");
-var reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
-var num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
-var ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
+
+    const incrementDefaultValue=1;
+    const emptyDefaultValue=0;
+    const threeDefaultValue=3;
+    const valueZero=value2||emptyDefaultValue;
+    const objectValueEvaluate=objectValue.toString();
+    const splt_dec=objectValueEvaluate.split(".");
+    const reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
+    const num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
+    let ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
         ?"."+splt_dec[incrementDefaultValue]
         :"";
 
     if (valueZero>emptyDefaultValue) {
-var str_dec=ssd_va.split(".");
+
+        const str_dec=ssd_va.split(".");
 
         if (count(str_dec)===incrementDefaultValue) {
 
             ssd_va=ssd_va+"."+repeat("0", valueZero);
 
         } else {
-var dec_num=str_dec[incrementDefaultValue];
+
+            const dec_num=str_dec[incrementDefaultValue];
 
             if (dec_num.length>=valueZero) {
 
@@ -1417,9 +1356,10 @@ var dec_num=str_dec[incrementDefaultValue];
  *=>{}
  */
 function parseJson (value) {
-var emptyDefaultValue=0;
-var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
-var returnValue=null;
+
+    const emptyDefaultValue=0;
+    const stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+    let returnValue=null;
 
     if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
         .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
@@ -1438,47 +1378,6 @@ var returnValue=null;
 }
 
 
-
-
-/**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-var emptyDefaultValue=0;
-var incrementDefaultValue=1;
-var value_arry=[];
-var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            value_arry.push(func(value, key, cnt));
-            cnt+=incrementDefaultValue;
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-
-
-
-
-
-
 /**
  * Data String
  *
@@ -1492,7 +1391,8 @@ var cnt=emptyDefaultValue;
  *=>'{}'
  */
 function datastring (str) {
-var data_s="";
+
+    let data_s="";
 
     if (typeof str ==="string") {
 
@@ -1553,12 +1453,13 @@ function returnLoop (dstr, func, dl) {
  *=>'{}'
  */
 function parseString (value) {
-var str="";
-var str_strt="";
-var str_end="";
-var inc=0;
-var incrementDefaultValue=1;
-var inc_main=null;
+
+    let str="";
+    let str_strt="";
+    let str_end="";
+    let inc=0;
+    const incrementDefaultValue=1;
+    let inc_main=null;
 
     if (has(value)) {
 
@@ -1622,10 +1523,6 @@ var inc_main=null;
 }
 
 
-
-
-
-
 /**
  * Random
  *
@@ -1641,15 +1538,16 @@ var inc_main=null;
  *=>'{}'
  */
 function random (valueArray, minValue, maxValue) {
-var ran_var=[];
-var emptyDefaultValue=0;
-var ran_min=has(minValue)
+
+    let ran_var=[];
+    const emptyDefaultValue=0;
+    const ran_min=has(minValue)
         ?minValue
         :emptyDefaultValue;
-var ran_max=has(maxValue)
+    const ran_max=has(maxValue)
         ?maxValue+ran_min
         :count(valueArray);
-var math_random = Math.round(Math.random()*ran_max);
+    const math_random = Math.round(Math.random()*ran_max);
 
     each(valueArray, function (key, value) {
 
@@ -1666,7 +1564,6 @@ var math_random = Math.round(Math.random()*ran_max);
 }
 
 
-
 /**
  * Range
  *
@@ -1681,19 +1578,19 @@ var math_random = Math.round(Math.random()*ran_max);
  *=>[1,2,3,4,5,6,7,8,9,10]
  */
 function range (maxValue, minValue) {
-var emptyDefaultValue=0;
-var tenDefaultValue=10;
-var incrementDefaultValue=1;
-var minValueRef=has(minValue)
+
+    const emptyDefaultValue=0;
+    const tenDefaultValue=10;
+    const incrementDefaultValue=1;
+    const minValueRef=has(minValue)
         ?minValue
         :emptyDefaultValue;
-var maxValueRef=has(maxValue)
+    const maxValueRef=has(maxValue)
         ?maxValue
         :tenDefaultValue;
-var output=[];
+    const output=[];
 
-    for (
-var inc=minValueRef; inc<=maxValueRef;) {
+    for (let inc=minValueRef; inc<=maxValueRef;) {
 
         output.push(inc);
         inc+=incrementDefaultValue;
@@ -1703,10 +1600,6 @@ var inc=minValueRef; inc<=maxValueRef;) {
     return output;
 
 }
-
-
-
-
 
 
 /**
@@ -1723,9 +1616,10 @@ var inc=minValueRef; inc<=maxValueRef;) {
  *=>'{}'
  */
 function remove (objectValue, value) {
-var emptyDefaultValue=0;
-var type_js=getTypeof(objectValue);
-var reslt =null;
+
+    const emptyDefaultValue=0;
+    const type_js=getTypeof(objectValue);
+    let reslt =null;
 
     if (type_js==="array") {
 
@@ -1745,7 +1639,7 @@ var reslt =null;
     if (type_js==="json") {
 
         reslt={};
-var jsn_vw=[];
+        const jsn_vw=[];
 
         each(objectValue, function () {
 
@@ -1787,10 +1681,11 @@ var jsn_vw=[];
  *=>'ss'
  */
 function repeat (value, valueRepetion) {
-var emptyDefaultValue=0;
-var onceDefaultValue=1;
-var nm_rpt=valueRepetion||emptyDefaultValue;
-var nm_str=value||"";
+
+    const emptyDefaultValue=0;
+    const onceDefaultValue=1;
+    const nm_rpt=valueRepetion||emptyDefaultValue;
+    const nm_str=value||"";
 
     if (nm_rpt>emptyDefaultValue) {
 
@@ -1801,7 +1696,6 @@ var nm_str=value||"";
     return "";
 
 }
-
 
 
 /**
@@ -1819,21 +1713,23 @@ var nm_str=value||"";
  *=>'{}'
  */
 function roundDecimal (value, minValue, maxValue) {
-var emptyDefaultValue=0;
-var onceDefaultValue=1;
-var twoDefaultValue=2;
-var tenDefaultValue=10;
-var jsn=value||emptyDefaultValue;
-var str_dec=jsn.toString().split(".");
-var s_dmin=minValue||onceDefaultValue;
-var s_dmax=maxValue||twoDefaultValue;
+
+    const emptyDefaultValue=0;
+    const onceDefaultValue=1;
+    const twoDefaultValue=2;
+    const tenDefaultValue=10;
+    const jsn=value||emptyDefaultValue;
+    const str_dec=jsn.toString().split(".");
+    const s_dmin=minValue||onceDefaultValue;
+    const s_dmax=maxValue||twoDefaultValue;
 
     if (count(str_dec)===twoDefaultValue) {
-var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-var delmts=p_cnts<=s_dmin
+
+        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        const delmts=p_cnts<=s_dmin
             ?s_dmin
             :s_dmax;
-var dec_s=tenDefaultValue**delmts;
+        const dec_s=tenDefaultValue**delmts;
 
         return Math.round(parseFloat(jsn*dec_s))/dec_s;
 
@@ -1842,9 +1738,6 @@ var dec_s=tenDefaultValue**delmts;
     return jsn;
 
 }
-
-
-
 
 
 /**
@@ -1861,21 +1754,22 @@ var dec_s=tenDefaultValue**delmts;
  *=>[2,3,1]
  */
 function shuffle (objectValue) {
-var emptyDefaultValue=0;
-var onceDefaultValue=1;
-var output=objectValue;
-var valueType=[
+
+    const emptyDefaultValue=0;
+    const onceDefaultValue=1;
+    const output=objectValue;
+    const valueType=[
         "array",
         "json"
     ];
 
     if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
-var counts=count(objectValue)-onceDefaultValue;
-var randomIndex=emptyDefaultValue;
-var temporaryValue=null;
 
-        for (
-var currentIndex=counts; currentIndex>emptyDefaultValue;) {
+        const counts=count(objectValue)-onceDefaultValue;
+        let randomIndex=emptyDefaultValue;
+        let temporaryValue=null;
+
+        for (let currentIndex=counts; currentIndex>emptyDefaultValue;) {
 
             randomIndex = Math.floor(Math.random() * currentIndex);
 
@@ -1898,9 +1792,6 @@ var currentIndex=counts; currentIndex>emptyDefaultValue;) {
 }
 
 
-
-
-
 /**
  * Sort
  *
@@ -1917,11 +1808,12 @@ var currentIndex=counts; currentIndex>emptyDefaultValue;) {
  *=>[1,2,3]
  */
 function sort (objectValue, index, order, func) {
-var jsonn=objectValue;
-var asc=has(order)
+
+    let jsonn=objectValue;
+    const asc=has(order)
         ?order
         :true;
-var js_m=getTypeof(jsonn)==="json"
+    const js_m=getTypeof(jsonn)==="json"
         ?each(jsonn)
         :jsonn;
 
@@ -1948,12 +1840,6 @@ var js_m=getTypeof(jsonn)==="json"
 }
 
 
-
-
-
-
-
-
 /**
  * Template Value Internal
  *
@@ -1968,17 +1854,20 @@ var js_m=getTypeof(jsonn)==="json"
  *=>'{}'
  */
 function templateValueInternal (str_raw, reg) {
-var str=str_raw;
-var strs=str;
+
+    const str=str_raw;
+    let strs=str;
 
     try {
 
         try {
-var regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
+
+            const regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
 
             strs=strs.replace(regs, function (word, mes1) {
-var strs_perd=mes1.replace(".", ":");
-var gtdata=getData(reg, strs_perd);
+
+                const strs_perd=mes1.replace(".", ":");
+                const gtdata=getData(reg, strs_perd);
 
                 return getTypeof(gtdata)==="json"
                     ?""
@@ -1997,7 +1886,8 @@ var gtdata=getData(reg, strs_perd);
         console.log(error);
 
     }
-var strs_finl=strs;
+
+    const strs_finl=strs;
 
     return strs_finl;
 
@@ -2018,26 +1908,32 @@ var strs_finl=strs;
  *=>'{}'
  */
 function templateValue (templateString, data, option) {
-var oneDefaultValue=1;
+
+    const oneDefaultValue=1;
 
     templateString = templateValueInternal(templateString, data);
-var default_option=varExtend({
+
+    const default_option=varExtend({
         "escape": "<!-([\\s\\S]+?)!>",
         "evaluate": "<![^=-]([\\s\\S]+?)!>",
         "interpolate": "<!=([\\s\\S]+?)!>"
     }, option);
-var valueType=[
+
+    const valueType=[
         "array",
         "json"
     ];
-var regexp = new RegExp([
+
+    const regexp = new RegExp([
         default_option.evaluate,
         default_option.interpolate,
         default_option.escape
     ].join("|")+"|$", "g");
-var source = "__p+='";
-var index = 0;
-var escapes = {
+
+    let source = "__p+='";
+    let index = 0;
+
+    const escapes = {
         '\n': 'n',
         '\r': 'r',
         "'": "'",
@@ -2045,8 +1941,10 @@ var escapes = {
         '\u2028': 'u2028',
         '\u2029': 'u2029'
     };
-var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-var escapeChar = function (match) {
+
+    const escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+    const escapeChar = function (match) {
 
         return '\\' + escapes[match];
 
@@ -2086,12 +1984,12 @@ var escapeChar = function (match) {
     source + " return __p;\n";
 
     try {
-var val_source = "";
+
+        let val_source = "";
 
         if (getTypeof(data)==="json") {
 
-            for (
-var key in data) {
+            for (const key in data) {
 
                 if (has(data, key)) {
 
@@ -2104,7 +2002,8 @@ var key in data) {
             }
 
         }
-var render = new Function('obj', '_', val_source+source);
+
+        const render = new Function('obj', '_', val_source+source);
 
         return render.call(this, data, templateValue);
 
@@ -2119,7 +2018,31 @@ var render = new Function('obj', '_', val_source+source);
 }
 
 
+/**
+ * To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number|string|object} value The second number in an addition.
+ * @returns {array} Returns the total.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toArray (value) {
 
+    let return_val = value;
+
+    if (getTypeof(return_val)!=="array") {
+
+        return_val = [value];
+
+    }
+
+    return return_val;
+
+}
 
 
 /**
@@ -2136,19 +2059,21 @@ var render = new Function('obj', '_', val_source+source);
  *=>{"s1":2}
  */
 function varExtend (objectValue, objectValueReplace) {
-var onceDefaultValue=1;
+
+    const onceDefaultValue=1;
 
     if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
-var jsn_s={};
 
-        for (
-var key in objectValue) {
+        const jsn_s={};
+
+        for (const key in objectValue) {
 
             if (indexOf([
                 'true',
                 'false'
             ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
-var jsn_bool={
+
+                const jsn_bool={
                     "false": false,
                     "true": true
                 };
@@ -2163,8 +2088,7 @@ var jsn_bool={
 
         }
 
-        for (
-var key in objectValueReplace) {
+        for (const key in objectValueReplace) {
 
             if (has(jsn_s, key)) {
 
@@ -2181,34 +2105,6 @@ var key in objectValueReplace) {
     return objectValue;
 
 }
-
-
-
-/**
- * To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {number|string|object} value The second number in an addition.
- * @returns {array} Returns the total.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-var return_val = value;
-
-    if (getTypeof(return_val)!=="array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
-
-}
-
 
 
 /**
@@ -2230,7 +2126,6 @@ function where (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
 
 }
-
 
 
 /**
@@ -2259,32 +2154,31 @@ _stk.appendIsArrayExist=appendIsArrayExist;
 _stk.arrayConcat=arrayConcat;
 _stk.arraySum=arraySum;
 _stk.clone=clone;
-_stk.count=count;
-_stk.delimiter=delimiter;
 _stk.each=each;
 _stk.filter=filter;
 _stk.first=first;
+_stk.count=count;
+_stk.delimiter=delimiter;
 _stk.getData=getData;
 _stk.getJSONVariable=getJSONVariable;
 _stk.getKey=getKey;
-_stk.getTypeof=getTypeof;
 _stk.getUniq=getUniq;
+_stk.getTypeof=getTypeof;
 _stk.getValue=getValue;
 _stk.has=has;
-_stk.ifUndefined=ifUndefined;
 _stk.indexOf=indexOf;
+_stk.ifUndefined=ifUndefined;
 _stk.isEmpty=isEmpty;
-_stk.insert=insert;
 _stk.isExact=isExact;
+_stk.insert=insert;
 _stk.jsonToArray=jsonToArray;
-_stk.isExactbyRegExp=isExactbyRegExp;
 _stk.last=last;
-_stk.lastIndexOf=lastIndexOf;
 _stk.like=like;
+_stk.isExactbyRegExp=isExactbyRegExp;
 _stk.limit=limit;
+_stk.map=map;
 _stk.numberFormat=numberFormat;
 _stk.parseJson=parseJson;
-_stk.map=map;
 _stk.parseString=parseString;
 _stk.random=random;
 _stk.range=range;
@@ -2294,9 +2188,7 @@ _stk.roundDecimal=roundDecimal;
 _stk.shuffle=shuffle;
 _stk.sort=sort;
 _stk.templateValue=templateValue;
-_stk.varExtend=varExtend;
 _stk.toArray=toArray;
+_stk.varExtend=varExtend;
 _stk.where=where;
 _stk.whereNot=whereNot;
-
-})(window)

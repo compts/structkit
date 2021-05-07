@@ -11,7 +11,6 @@ exports.module=function (grassconf) {
 
     grassconf.load("cjs", function () {
 
-
         return grassconf.src(list_package_utility_js)
 
             .pipe(compts_script_interpreter.esm_to_cjs_require({
@@ -23,11 +22,9 @@ exports.module=function (grassconf) {
                 "main_file": "/src/a_test_import.js"
             }));
 
-
     });
 
     grassconf.load("cjs2", function () {
-
 
         return grassconf.src(list_package_utility_js1)
 
@@ -39,7 +36,6 @@ exports.module=function (grassconf) {
             .pipe(grassconf.dest("dist/cjs/", {
                 "lsFileType": "path"
             }));
-
 
     });
 
