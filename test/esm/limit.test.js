@@ -1,5 +1,5 @@
 
-import {limit} from "../../dist/node.es";
+import {limit} from "../../node.es";
 import assert from 'assert';
 
 const eight=8,

@@ -8,3 +8,5 @@ src_old_copy
 dist/.DS_Store
 src/.DS_Store
 test/.DS_Store
+dist/node.cjs.js_old
+dist/node.es.js_old

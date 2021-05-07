@@ -1,5 +1,5 @@
 
-import {isExact} from "../../dist/node.es";
+import {isExact} from "../../node.es";
 import assert from 'assert';
 
 describe('isExact method', function () {

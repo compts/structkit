@@ -1,4 +1,4 @@
-const {where} = require("../../dist/node.cjs");
+const {where} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 describe('where method', function () {

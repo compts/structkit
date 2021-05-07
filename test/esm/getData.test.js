@@ -1,4 +1,4 @@
-import {getData} from "../../dist/node.es";
+import {getData} from "../../node.es";
 import assert from 'assert';
 
 describe('getData method', function () {

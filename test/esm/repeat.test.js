@@ -1,5 +1,5 @@
 
-import {repeat} from "../../dist/node.es";
+import {repeat} from "../../node.es";
 import assert from 'assert';
 
 const two=2;

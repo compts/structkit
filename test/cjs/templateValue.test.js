@@ -1,4 +1,4 @@
-const {templateValue} = require("../../dist/node.cjs");
+const {templateValue} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 describe('templateValue method', function () {

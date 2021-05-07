@@ -1,4 +1,5 @@
 const list_package_utility_js = ["src/function/*.js"];
+const list_package_utility_js1 = ["src/*/*.js"];
 
 const ref ='';
 
@@ -13,14 +14,30 @@ exports.module=function (grassconf) {
 
         return grassconf.src(list_package_utility_js)
 
-            .pipe(compts_script_interpreter.esm_to_cjs({
-                "globalName": "_stk",
-                "isWeb": false
+            .pipe(compts_script_interpreter.esm_to_cjs_require({
 
+                "outputType": "main"
             }))
-            .pipe(grass_concat("dist/node.cjs"+ref+".js", {
+            .pipe(grass_concat("dist/cjs/node.cjs"+ref+".js", {
                 "istruncate": true,
                 "main_file": "/src/a_test_import.js"
+            }));
+
+
+    });
+
+    grassconf.load("cjs2", function () {
+
+
+        return grassconf.src(list_package_utility_js1)
+
+            .pipe(compts_script_interpreter.esm_to_cjs_require({
+
+                "outputType": "convert_to_require"
+
+            }))
+            .pipe(grassconf.dest("dist/cjs/", {
+                "lsFileType": "path"
             }));
 
 
@@ -35,7 +52,7 @@ exports.module=function (grassconf) {
             .pipe(compts_script_interpreter.esm({
 
             }))
-            .pipe(grass_concat("dist/node.es"+ref+".js", {
+            .pipe(grass_concat("node.es"+ref+".js", {
                 "istruncate": true,
                 "main_file": "/src/a_test_import.js"
             }));
@@ -84,7 +101,9 @@ exports.execute=function (lib) {
     lib.default=function (strm) {
 
         //  Strm.series("new_esm");
-        strm.series("cjs")
+        strm
+            .series("cjs")
+            .series("cjs2")
             .series("esm")
             .series("web_cjs");
 

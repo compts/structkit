@@ -1,4 +1,4 @@
-const {toArray} = require("../../dist/node.cjs");
+const {toArray} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 const ten=10;

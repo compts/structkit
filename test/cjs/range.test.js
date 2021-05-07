@@ -1,4 +1,4 @@
-const {range} = require("../../dist/node.cjs");
+const {range} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 const eight=8,

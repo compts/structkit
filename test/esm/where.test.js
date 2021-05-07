@@ -1,5 +1,5 @@
 
-import {where} from "../../dist/node.es";
+import {where} from "../../node.es";
 import assert from 'assert';
 
 describe('where method', function () {

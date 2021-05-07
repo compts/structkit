@@ -1,5 +1,5 @@
 
-import {varExtend} from "../../dist/node.es";
+import {varExtend} from "../../node.es";
 import assert from 'assert';
 
 describe('varExtend method', function () {

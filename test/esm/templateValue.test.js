@@ -1,5 +1,5 @@
 
-import {templateValue} from "../../dist/node.es";
+import {templateValue} from "../../node.es";
 import assert from 'assert';
 
 describe('templateValue method', function () {

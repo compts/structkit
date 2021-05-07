@@ -1,4 +1,4 @@
-const {repeat} = require("../../dist/node.cjs");
+const {repeat} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 const two=2;

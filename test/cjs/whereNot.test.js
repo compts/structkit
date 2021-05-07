@@ -1,4 +1,4 @@
-const {whereNot} = require("../../dist/node.cjs");
+const {whereNot} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 describe('whereNot method', function () {

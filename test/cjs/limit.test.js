@@ -1,4 +1,4 @@
-const {limit} = require("../../dist/node.cjs");
+const {limit} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 const eight=8,

@@ -1,4 +1,4 @@
-import {count} from "../../dist/node.es";
+import {count} from "../../node.es";
 import assert from 'assert';
 
 const zero =0;

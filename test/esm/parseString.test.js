@@ -1,5 +1,5 @@
 
-import {parseString} from "../../dist/node.es";
+import {parseString} from "../../node.es";
 import assert from 'assert';
 
 describe('parseString method', function () {
