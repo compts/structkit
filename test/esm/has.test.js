@@ -1,5 +1,5 @@
 
-import {has} from "../../node.es";
+import {has} from "../../dist/node.es";
 import assert from 'assert';
 
 describe('has method', function () {

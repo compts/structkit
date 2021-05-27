@@ -1,5 +1,5 @@
 
-import {toArray} from "../../node.es";
+import {toArray} from "../../dist/node.es";
 import assert from 'assert';
 
 const ten=10;

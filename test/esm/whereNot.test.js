@@ -1,5 +1,5 @@
 
-import {whereNot} from "../../node.es";
+import {whereNot} from "../../dist/node.es";
 import assert from 'assert';
 
 describe('whereNot method', function () {
