@@ -6,16 +6,14 @@ const ref ='';
 exports.module=function (grassconf) {
 
     const grass_concat = grassconf.require("grass_concat");
-    const compts_script_interpreter = grassconf.require("compts-script-interpreter");
-
+    const grass_packpier = grassconf.require("grass_packpier");
 
     grassconf.load("cjs", function () {
 
         return grassconf.src(list_package_utility_js)
-
-            .pipe(compts_script_interpreter.esm_to_cjs_require({
-
-                "outputType": "main"
+            .pipe(grass_packpier({
+                "config": {"mainType": "exportFileNameOnly"},
+                "convertType": "cjs"
             }))
             .pipe(grass_concat("dist/cjs/node.cjs"+ref+".js", {
                 "istruncate": true,
@@ -27,11 +25,9 @@ exports.module=function (grassconf) {
     grassconf.load("cjs2", function () {
 
         return grassconf.src(list_package_utility_js1)
-
-            .pipe(compts_script_interpreter.esm_to_cjs_require({
-
-                "outputType": "convert_to_require"
-
+            .pipe(grass_packpier({
+                "config": {"mainType": "convertExportToRequire"},
+                "convertType": "cjs"
             }))
             .pipe(grassconf.dest("dist/cjs/", {
                 "lsFileType": "path"
@@ -45,10 +41,12 @@ exports.module=function (grassconf) {
 
         return grassconf.src(list_package_utility_js)
 
-            .pipe(compts_script_interpreter.esm({
-
+            .pipe(grass_packpier({
+                "config": {"mainType": "exportFileNameOnly",
+                    "prefixPath": "../"},
+                "convertType": "es6"
             }))
-            .pipe(grass_concat("node.es"+ref+".js", {
+            .pipe(grass_concat("dist/node.es"+ref+".js", {
                 "istruncate": true,
                 "main_file": "/src/a_test_import.js"
             }));
@@ -62,27 +60,13 @@ exports.module=function (grassconf) {
 
         return grassconf.src(list_package_utility_js)
 
-            .pipe(compts_script_interpreter.esm_to_cjs({
-                "globalName": "_stk",
-                "isWeb": true
+            .pipe(grass_packpier({
+                "config": {"mainType": "exportFileNameOnly",
+                    "moduleName": "_stk"},
+                "convertType": "iife"
+
             }))
             .pipe(grass_concat("dist/web/structkit-full"+ref+".cjs.js", {
-                "istruncate": true,
-                "main_file": "/src/a_test_import.js"
-            }));
-
-
-    });
-
-    grassconf.load("new_esm", function () {
-
-
-        return grassconf.src(list_package_utility_js)
-
-            .pipe(compts_script_interpreter.new_esm({
-
-            }))
-            .pipe(grass_concat("dist/node.new_esm"+ref+".js", {
                 "istruncate": true,
                 "main_file": "/src/a_test_import.js"
             }));

@@ -1,5 +1,5 @@
-!(function(window){ 
-window._stk={};
+(function(window){
+window._stk={}
 
 
 /**
@@ -33,6 +33,9 @@ var typeofs=getTypeof(objectValue);
     return objectValue;
 
 }
+
+_stk.append=append;
+
 
 
 
@@ -76,6 +79,9 @@ var notExist=-1;
 
 }
 
+_stk.appendIsArrayExist=appendIsArrayExist;
+
+
 
 
 /**
@@ -103,6 +109,9 @@ var return_val=arrayObject;
     return [];
 
 }
+
+_stk.arrayConcat=arrayConcat;
+
 
 
 
@@ -140,6 +149,39 @@ var delimeters=delimeter||defaultLimitDecimal;
 
 }
 
+_stk.arraySum=arraySum;
+
+
+
+
+
+/**
+ * Array To Object By DataFormat
+ *
+ * @since 1.3.5
+ * @category Seq
+ * @param {number|string|object} objectValue The second number in an addition.
+ * @param {number|string|object} valueFormat The second number in an addition.
+ * @returns {array} Returns the total.
+ * @example
+ *
+ * arrayToObjectByDataFormat(1)
+ *=>[1]
+ */
+function arrayToObjectByDataFormat (objectValue, valueFormat) {
+
+
+    return map(objectValue, function (value) {
+
+        return getData(value, valueFormat);
+
+    });
+
+}
+
+_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat;
+
+
 
 
 
@@ -168,6 +210,9 @@ var variable=getJSONVariable(objectValue);
     return variable;
 
 }
+
+_stk.clone=clone;
+
 
 
 
@@ -240,6 +285,9 @@ var cnts=0;
 
 }
 
+_stk.count=count;
+
+
 
 
 
@@ -282,6 +330,63 @@ var math_random=Math.round(Math.random()*ran_max);
     return ran_var;
 
 }
+
+_stk.delimiter=delimiter;
+
+
+
+
+
+
+
+
+/**
+ * Filter
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * filter([1,2],(key,value)=>{
+ *
+ * })
+ *
+ */
+function filter (objectValue, func) {
+var jsn_var=getJSONVariable(objectValue);
+var jsn_type=getTypeof(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (func(key, value)===true) {
+
+                if ((/(json|array)/g).test(jsn_type)) {
+
+                    append(jsn_var, value, key);
+
+                } else {
+
+                    jsn_var=value;
+
+                }
+
+            }
+
+        }
+
+    });
+
+    return jsn_var;
+
+}
+
+_stk.filter=filter;
+
 
 
 
@@ -361,144 +466,8 @@ var bool_func = true;
 
 }
 
+_stk.each=each;
 
-
-
-
-
-
-/**
- * Filter
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * filter([1,2],(key,value)=>{
- *
- * })
- *
- */
-function filter (objectValue, func) {
-var jsn_var=getJSONVariable(objectValue);
-var jsn_type=getTypeof(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (func(key, value)===true) {
-
-                if ((/(json|array)/g).test(jsn_type)) {
-
-                    append(jsn_var, value, key);
-
-                } else {
-
-                    jsn_var=value;
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return jsn_var;
-
-}
-
-
-
-
-
-/**
- * Get key value
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {boolean} typ The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * getKeyVal({"s1":1,"s2":1},"key")
- *=>{"s1":1,"s2":1}
- */
-function getKeyVal (jsn, typ) {
-var one =1,
-        zero =0;
-var ky=[],
-        vl=[];
-var list_raw = [];
-
-    each(jsn, function (kk, vv) {
-
-        ky.push(kk);
-        vl.push(vv);
-        list_raw.push({
-            "key": kk,
-            "value": vv
-        });
-
-    });
-    if (indexOf([
-        "key",
-        "value"
-    ], typ)>-one) {
-var ars=typ==="key"
-            ?ky
-            :vl;
-
-
-        return count(ars)===one
-            ?ars[zero]
-            :ars;
-
-    }
-    if (typ ==="first_index") {
-
-        return count(list_raw)>zero
-            ?list_raw[zero]
-            :null;
-
-    }
-    if (typ ==="last_index") {
-
-        return count(list_raw)>zero
-            ?list_raw[count(list_raw)-one]
-            :null;
-
-    }
-
-    return null;
-
-}
-
-
-
-
-/**
- * First
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * first([1,2],(key,value) )
- *=>1
- */
-function first (objectValue) {
-
-    return getKeyVal(objectValue, "first_index");
-
-}
 
 
 
@@ -567,6 +536,32 @@ var jsn_total={};
 
 }
 
+_stk.getData=getData;
+
+
+
+
+/**
+ * First
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * first([1,2],(key,value) )
+ *=>1
+ */
+function first (objectValue) {
+
+    return getKeyVal(objectValue, "first_index");
+
+}
+
+_stk.first=first;
+
+
 
 
 /**
@@ -599,6 +594,9 @@ function getJSONVariable (value) {
 
 }
 
+_stk.getJSONVariable=getJSONVariable;
+
+
 
 
 /**
@@ -618,6 +616,9 @@ function getKey (objectValue) {
     return getKeyVal(objectValue, "key");
 
 }
+
+_stk.getKey=getKey;
+
 
 /**
  * Get JSON Variable
@@ -654,6 +655,9 @@ function getTypeof (objectValue) {
 
 }
 
+_stk.getTypeof=getTypeof;
+
+
 /**
  * Get unique value
  *
@@ -678,6 +682,9 @@ var str_rand1=Math
 
 }
 
+_stk.getUniq=getUniq;
+
+
 
 
 /**
@@ -697,6 +704,9 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");
 
 }
+
+_stk.getValue=getValue;
+
 
 /**
  * Check if object or value
@@ -722,6 +732,9 @@ function has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
+
+_stk.has=has;
+
 
 
 
@@ -763,59 +776,10 @@ function ifUndefined (objectValue, value1, value2) {
 
 }
 
+_stk.ifUndefined=ifUndefined;
 
 
 
-
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number} value The first number in an addition.
- * @param {number} start The first number in an addition.
- * @param {number} end The first number in an addition.
- * @param {boolean} isGetLast The first number in an addition.
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function getIndexOf (objectValue, value, start, end, isGetLast) {
-var indexOfDefaultValue=-1;
-var incrementDefaultValue=1;
-var referenceValue = -1;
-
-    if (getTypeof(objectValue)==="array") {
-
-        for (
-var inc=start; inc<end;) {
-
-            if (objectValue[inc]===value) {
-
-                if (isGetLast === false) {
-
-                    return inc;
-
-                }
-                referenceValue = inc;
-
-
-            }
-
-            inc+=incrementDefaultValue;
-
-        }
-
-    }
-
-    return isGetLast === false
-        ?indexOfDefaultValue
-        :referenceValue;
-
-}
 
 
 
@@ -840,33 +804,8 @@ var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false
 
 }
 
+_stk.indexOf=indexOf;
 
-
-
-/**
- * Is empty
- *
- * @since 1.0.1
- * @category Seq
- * @param {string|object} value The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * isEmpty('')
- * // => true
- */
-function isEmpty (value) {
-var zero =0;
-
-    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
-
-        return count(value, true)===zero;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
 
 
 
@@ -907,6 +846,40 @@ var jsn_type=getTypeof(value);
     }
 
 }
+
+_stk.insert=insert;
+
+
+
+
+
+/**
+ * Is empty
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string|object} value The first number in an addition.
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+function isEmpty (value) {
+var zero =0;
+
+    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
+
+        return count(value, true)===zero;
+
+    }
+
+    return (/^\s*$/gmi).test(value);
+
+}
+
+_stk.isEmpty=isEmpty;
+
 
 
 
@@ -994,51 +967,8 @@ var local_is_valid = local_is_exist
 
 }
 
+_stk.isExact=isExact;
 
-
-
-
-
-/**
- * Json To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} objectValue The first number in an addition.
- * @param {string} value The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * jsonToArray({"a":1,"b":2},"a")
- * => []
- */
-function jsonToArray (objectValue, value) {
-var arry=[];
-
-
-    each(objectValue, function (_key, _value) {
-
-        if (has(value)) {
-var valueData = getData(_value, value);
-
-
-            if (isEmpty(valueData) ===false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
 
 
 
@@ -1128,6 +1058,58 @@ var local_is_valid = null;
 
 }
 
+_stk.isExactbyRegExp=isExactbyRegExp;
+
+
+
+
+
+
+
+/**
+ * Json To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} objectValue The first number in an addition.
+ * @param {string} value The first number in an addition.
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * jsonToArray({"a":1,"b":2},"a")
+ * => []
+ */
+function jsonToArray (objectValue, value) {
+var arry=[];
+
+
+    each(objectValue, function (_key, _value) {
+
+        if (has(value)) {
+var valueData = getData(_value, value);
+
+
+            if (isEmpty(valueData) ===false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
+
+}
+
+_stk.jsonToArray=jsonToArray;
+
+
 
 
 /**
@@ -1147,6 +1129,9 @@ function last (objectValue) {
     return getKeyVal(objectValue, "last_index");
 
 }
+
+_stk.last=last;
+
 
 
 
@@ -1173,93 +1158,8 @@ var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true)
 
 }
 
+_stk.lastIndexOf=lastIndexOf;
 
-
-
-
-
-
-
-
-
-
-/**
- * Where Loop Execution
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {object} whr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {boolean} isExist The second number in an addition.
- * @param {string} types The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function whereLoopExecution (jsn, whr, func, isExist, types) {
-var zero =0;
-var json_convertion = getTypeof(jsn) === "array"
-        ? jsn
-        : [jsn];
-var jsn_s= count(jsn, true) ===zero
-        ? json_convertion
-        : jsn;
-var whr_s=whr||{};
-var variable=getJSONVariable(jsn);
-var filterData = {};
-
-    each(jsn_s, function (jk, jv) {
-
-
-        if (getTypeof(jsn)==="array") {
-
-            filterData = jv;
-
-        }
-        if (getTypeof(jsn)==="json") {
-
-
-            filterData[jk]=jv;
-
-        }
-
-        if (types === "where") {
-
-            if (isExact(filterData, whr_s, isExist)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-        if (types === "like") {
-
-            if (isExactbyRegExp(filterData, whr_s)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return variable;
-
-}
 
 
 
@@ -1282,6 +1182,9 @@ function like (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
 
 }
+
+_stk.like=like;
+
 
 
 
@@ -1346,6 +1249,62 @@ var incrementDefaultValue=1;
 
 }
 
+_stk.limit=limit;
+
+
+
+
+
+
+/**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+var strTypeOf =getTypeof(objectValue);
+var emptyDefaultValue=0;
+var incrementDefaultValue=1;
+var value_arry=strTypeOf==="array"
+        ?[]
+        :{};
+var cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+var dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
+
+        }
+
+    });
+
+    return value_arry;
+
+}
+
+_stk.map=map;
+
+
 
 
 
@@ -1404,6 +1363,9 @@ var dec_num=str_dec[incrementDefaultValue];
 
 }
 
+_stk.numberFormat=numberFormat;
+
+
 /**
  * Parse Json
  *
@@ -1437,42 +1399,8 @@ var returnValue=null;
 
 }
 
+_stk.parseJson=parseJson;
 
-
-
-/**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-var emptyDefaultValue=0;
-var incrementDefaultValue=1;
-var value_arry=[];
-var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            value_arry.push(func(value, key, cnt));
-            cnt+=incrementDefaultValue;
-
-        }
-
-    });
-
-    return value_arry;
-
-}
 
 
 
@@ -1622,6 +1550,9 @@ var inc_main=null;
 }
 
 
+_stk.parseString=parseString;
+
+
 
 
 
@@ -1665,6 +1596,9 @@ var math_random = Math.round(Math.random()*ran_max);
 
 }
 
+_stk.random=random;
+
+
 
 
 /**
@@ -1703,6 +1637,9 @@ var inc=minValueRef; inc<=maxValueRef;) {
     return output;
 
 }
+
+_stk.range=range;
+
 
 
 
@@ -1773,6 +1710,9 @@ var jsn_vw=[];
 
 }
 
+_stk.remove=remove;
+
+
 /**
  * Repeat
  *
@@ -1801,6 +1741,9 @@ var nm_str=value||"";
     return "";
 
 }
+
+_stk.repeat=repeat;
+
 
 
 
@@ -1842,6 +1785,9 @@ var dec_s=tenDefaultValue**delmts;
     return jsn;
 
 }
+
+_stk.roundDecimal=roundDecimal;
+
 
 
 
@@ -1897,6 +1843,9 @@ var currentIndex=counts; currentIndex>emptyDefaultValue;) {
 
 }
 
+_stk.shuffle=shuffle;
+
+
 
 
 
@@ -1946,6 +1895,9 @@ var js_m=getTypeof(jsonn)==="json"
     return jsonn;
 
 }
+
+_stk.sort=sort;
+
 
 
 
@@ -2118,6 +2070,39 @@ var render = new Function('obj', '_', val_source+source);
 
 }
 
+_stk.templateValue=templateValue;
+
+
+
+
+/**
+ * To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number|string|object} value The second number in an addition.
+ * @returns {array} Returns the total.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toArray (value) {
+var return_val = value;
+
+    if (getTypeof(return_val)!=="array") {
+
+        return_val = [value];
+
+    }
+
+    return return_val;
+
+}
+
+_stk.toArray=toArray;
+
+
 
 
 
@@ -2182,32 +2167,8 @@ var key in objectValueReplace) {
 
 }
 
+_stk.varExtend=varExtend;
 
-
-/**
- * To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {number|string|object} value The second number in an addition.
- * @returns {array} Returns the total.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-var return_val = value;
-
-    if (getTypeof(return_val)!=="array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
-
-}
 
 
 
@@ -2231,6 +2192,9 @@ function where (objectValue, objectValueWhere, func) {
 
 }
 
+_stk.where=where;
+
+
 
 
 /**
@@ -2253,50 +2217,217 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 }
 
-
-_stk.append=append;
-_stk.appendIsArrayExist=appendIsArrayExist;
-_stk.arrayConcat=arrayConcat;
-_stk.arraySum=arraySum;
-_stk.clone=clone;
-_stk.count=count;
-_stk.delimiter=delimiter;
-_stk.each=each;
-_stk.filter=filter;
-_stk.first=first;
-_stk.getData=getData;
-_stk.getJSONVariable=getJSONVariable;
-_stk.getKey=getKey;
-_stk.getTypeof=getTypeof;
-_stk.getUniq=getUniq;
-_stk.getValue=getValue;
-_stk.has=has;
-_stk.ifUndefined=ifUndefined;
-_stk.indexOf=indexOf;
-_stk.isEmpty=isEmpty;
-_stk.insert=insert;
-_stk.isExact=isExact;
-_stk.jsonToArray=jsonToArray;
-_stk.isExactbyRegExp=isExactbyRegExp;
-_stk.last=last;
-_stk.lastIndexOf=lastIndexOf;
-_stk.like=like;
-_stk.limit=limit;
-_stk.numberFormat=numberFormat;
-_stk.parseJson=parseJson;
-_stk.map=map;
-_stk.parseString=parseString;
-_stk.random=random;
-_stk.range=range;
-_stk.remove=remove;
-_stk.repeat=repeat;
-_stk.roundDecimal=roundDecimal;
-_stk.shuffle=shuffle;
-_stk.sort=sort;
-_stk.templateValue=templateValue;
-_stk.varExtend=varExtend;
-_stk.toArray=toArray;
-_stk.where=where;
 _stk.whereNot=whereNot;
+
+
+
+
+
+
+/**
+ * Get key value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} jsn The second number in an addition.
+ * @param {boolean} typ The second number in an addition.
+ * @returns {array|object} Returns the total.
+ * @example
+ *
+ * getKeyVal({"s1":1,"s2":1},"key")
+ *=>{"s1":1,"s2":1}
+ */
+function getKeyVal (jsn, typ) {
+var one =1,
+        zero =0;
+var ky=[],
+        vl=[];
+var list_raw = [];
+
+    each(jsn, function (kk, vv) {
+
+        ky.push(kk);
+        vl.push(vv);
+        list_raw.push({
+            "key": kk,
+            "value": vv
+        });
+
+    });
+    if (indexOf([
+        "key",
+        "value"
+    ], typ)>-one) {
+var ars=typ==="key"
+            ?ky
+            :vl;
+
+
+        return count(ars)===one
+            ?ars[zero]
+            :ars;
+
+    }
+    if (typ ==="first_index") {
+
+        return count(list_raw)>zero
+            ?list_raw[zero]
+            :null;
+
+    }
+    if (typ ==="last_index") {
+
+        return count(list_raw)>zero
+            ?list_raw[count(list_raw)-one]
+            :null;
+
+    }
+
+    return null;
+
+}
+
+
+
+
+
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The first number in an addition.
+ * @param {number} value The first number in an addition.
+ * @param {number} start The first number in an addition.
+ * @param {number} end The first number in an addition.
+ * @param {boolean} isGetLast The first number in an addition.
+ * @returns {number|object|string} Returns the total.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function getIndexOf (objectValue, value, start, end, isGetLast) {
+var indexOfDefaultValue=-1;
+var incrementDefaultValue=1;
+var referenceValue = -1;
+
+    if (getTypeof(objectValue)==="array") {
+
+        for (
+var inc=start; inc<end;) {
+
+            if (objectValue[inc]===value) {
+
+                if (isGetLast === false) {
+
+                    return inc;
+
+                }
+                referenceValue = inc;
+
+            }
+
+            inc+=incrementDefaultValue;
+
+        }
+
+    }
+
+    return isGetLast === false
+        ?indexOfDefaultValue
+        :referenceValue;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Where Loop Execution
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} jsn The second number in an addition.
+ * @param {object} whr The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @param {boolean} isExist The second number in an addition.
+ * @param {string} types The second number in an addition.
+ * @returns {array|object} Returns the total.
+ * @example
+ *
+ * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function whereLoopExecution (jsn, whr, func, isExist, types) {
+var zero =0;
+var json_convertion = getTypeof(jsn) === "array"
+        ? jsn
+        : [jsn];
+var jsn_s= count(jsn, true) ===zero
+        ? json_convertion
+        : jsn;
+var whr_s=whr||{};
+var variable=getJSONVariable(jsn);
+var filterData = {};
+
+    each(jsn_s, function (jk, jv) {
+
+
+        if (getTypeof(jsn)==="array") {
+
+            filterData = jv;
+
+        }
+        if (getTypeof(jsn)==="json") {
+
+
+            filterData[jk]=jv;
+
+        }
+
+        if (types === "where") {
+
+            if (isExact(filterData, whr_s, isExist)) {
+
+                append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+        if (types === "like") {
+
+            if (isExactbyRegExp(filterData, whr_s)) {
+
+                append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+
+    });
+
+    return variable;
+
+}
+
 
 })(window)

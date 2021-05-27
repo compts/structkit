@@ -1,7 +1,7 @@
 import getKeyVal from '../core/getKeyVal';
 
 /**
- * Get key
+ * Get key Object or JSON
  *
  * @since 1.0.1
  * @category Seq

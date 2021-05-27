@@ -2,6 +2,8 @@ const has = require('./has');
 
 const each = require('./each');
 
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Map
@@ -18,17 +20,30 @@ const each = require('./each');
  */
 function map (objectValue, func) {
 
+    const strTypeOf =getTypeof(objectValue);
     const emptyDefaultValue=0;
     const incrementDefaultValue=1;
-    const value_arry=[];
+    const value_arry=strTypeOf==="array"
+        ?[]
+        :{};
     let cnt=emptyDefaultValue;
 
     each(objectValue, function (key, value) {
 
         if (has(func)) {
 
-            value_arry.push(func(value, key, cnt));
-            cnt+=incrementDefaultValue;
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+
+                const dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
 
         }
 

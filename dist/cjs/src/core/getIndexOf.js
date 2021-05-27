@@ -37,7 +37,6 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
                 }
                 referenceValue = inc;
 
-
             }
 
             inc+=incrementDefaultValue;

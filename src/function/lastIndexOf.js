@@ -12,7 +12,7 @@ import getIndexOf from '../core/getIndexOf';
  * @returns {number|object|string} Returns the total.
  * @example
  *
- * indexOf([1,2], 1)
+ * lastIndexOf([1,2], 1)
  * // => 0
  */
 function lastIndexOf (objectValue, value) {

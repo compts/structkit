@@ -25,13 +25,11 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
     }
 
-
     if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
 
         return false;
 
     }
-
 
     const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
         ?objectValue1
@@ -83,7 +81,6 @@ function isExactbyRegExp (objectValue1, objectValue2) {
         }
 
     });
-
 
     return cnt >zero;
 

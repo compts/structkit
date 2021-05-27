@@ -10,3 +10,5 @@ src/.DS_Store
 test/.DS_Store
 dist/node.cjs.js_old
 dist/node.es.js_old
+dist_copy
+dist_exp
