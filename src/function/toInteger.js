@@ -14,8 +14,10 @@ import dataTypeFormat from '../core/dataTypeFormat';
  */
 function toInteger (value) {
 
-    return parseFloat(dataTypeFormat(/(\d)/g, 0, value===null
-        ?0
+    const zero = 0;
+
+    return parseFloat(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
         :value));
 
 }

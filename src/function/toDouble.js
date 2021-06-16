@@ -14,8 +14,10 @@ import dataTypeFormat from '../core/dataTypeFormat';
  */
 function toDouble (value) {
 
-    return parseFloat(dataTypeFormat(/(\d\.)/g, 0.00, value===null
-        ?0
+    const zero = 0.00;
+
+    return parseFloat(dataTypeFormat(/(\d\.)/g, zero, value===null
+        ?zero
         :value));
 
 }
