@@ -10,7 +10,7 @@ const getKeyVal = require('../core/getKeyVal');
  * @returns {null} Returns the total.
  * @example
  *
- * first([1,2],(key,value) )
+ * first([1,2])
  *=>1
  */
 function first (objectValue) {

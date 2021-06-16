@@ -18,7 +18,6 @@ const getData = require('./getData');
  */
 function arrayToObjectByDataFormat (objectValue, valueFormat) {
 
-
     return map(objectValue, function (value) {
 
         return getData(value, valueFormat);

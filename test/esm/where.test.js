@@ -2,7 +2,7 @@
 import {where} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('where method', function () {
+describe('ESM: where method', function () {
 
     it('check if value exist', function () {
 

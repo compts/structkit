@@ -13,7 +13,7 @@ const eight=8,
     three=3,
     two =2;
 
-describe('LastIndexOf', function () {
+describe('ESM: LastIndexOf', function () {
 
     it('check if value exist', function () {
 

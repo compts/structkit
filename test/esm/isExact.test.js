@@ -2,7 +2,7 @@
 import {isExact} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('isExact method', function () {
+describe('ESM: isExact method', function () {
 
     it('check if json key exist', function () {
 

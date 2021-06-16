@@ -2,7 +2,7 @@
 import {parseString} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('parseString method', function () {
+describe('ESM: parseString method', function () {
 
     it('check if repetion is correct', function () {
 

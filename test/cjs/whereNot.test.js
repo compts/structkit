@@ -1,7 +1,7 @@
 const {whereNot} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
-describe('whereNot method', function () {
+describe('CJS: whereNot method', function () {
 
     it('check if value exist', function () {
 
@@ -23,9 +23,7 @@ describe('whereNot method', function () {
                 "s2": 1}
         ]);
 
-
     });
-
 
 });
 

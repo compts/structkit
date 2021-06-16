@@ -2,7 +2,7 @@
 import {templateValue} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('templateValue method', function () {
+describe('ESM: templateValue method', function () {
 
     it('check if Template functionality', function () {
 

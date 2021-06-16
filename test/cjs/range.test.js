@@ -12,7 +12,7 @@ const eight=8,
     three=3,
     two =2;
 
-describe('where method', function () {
+describe('CJS: range method', function () {
 
     it('check if value exist', function () {
 

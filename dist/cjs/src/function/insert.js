@@ -15,7 +15,7 @@ const each = require('./each');
  * @returns {number|object|string} Returns the total.
  * @example
  *
- * ifUndefined({'as':1}, 'as','as2')
+ * insert({'as':1}, 'as','as2')
  * // => 1
  */
 function insert (objectValue, value) {

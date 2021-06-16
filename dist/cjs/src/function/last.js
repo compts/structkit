@@ -10,7 +10,7 @@ const getKeyVal = require('../core/getKeyVal');
  * @returns {null} Returns the total.
  * @example
  *
- * last([1,2],(key,value) )
+ * last([1,2] )
  *=>2
  */
 function last (objectValue) {

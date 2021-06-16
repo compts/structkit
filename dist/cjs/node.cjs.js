@@ -1,12 +1,12 @@
-const append_module = require('./src/function/append');
-
-exports.append=append_module;
 const appendIsArrayExist_module = require('./src/function/appendIsArrayExist');
 
 exports.appendIsArrayExist=appendIsArrayExist_module;
 const arrayConcat_module = require('./src/function/arrayConcat');
 
 exports.arrayConcat=arrayConcat_module;
+const append_module = require('./src/function/append');
+
+exports.append=append_module;
 const arraySum_module = require('./src/function/arraySum');
 
 exports.arraySum=arraySum_module;
@@ -28,15 +28,15 @@ exports.each=each_module;
 const filter_module = require('./src/function/filter');
 
 exports.filter=filter_module;
+const getJSONVariable_module = require('./src/function/getJSONVariable');
+
+exports.getJSONVariable=getJSONVariable_module;
 const first_module = require('./src/function/first');
 
 exports.first=first_module;
 const getData_module = require('./src/function/getData');
 
 exports.getData=getData_module;
-const getJSONVariable_module = require('./src/function/getJSONVariable');
-
-exports.getJSONVariable=getJSONVariable_module;
 const getKey_module = require('./src/function/getKey');
 
 exports.getKey=getKey_module;
@@ -64,12 +64,6 @@ exports.insert=insert_module;
 const isEmpty_module = require('./src/function/isEmpty');
 
 exports.isEmpty=isEmpty_module;
-const isExact_module = require('./src/function/isExact');
-
-exports.isExact=isExact_module;
-const isExactbyRegExp_module = require('./src/function/isExactbyRegExp');
-
-exports.isExactbyRegExp=isExactbyRegExp_module;
 const jsonToArray_module = require('./src/function/jsonToArray');
 
 exports.jsonToArray=jsonToArray_module;
@@ -82,18 +76,24 @@ exports.lastIndexOf=lastIndexOf_module;
 const like_module = require('./src/function/like');
 
 exports.like=like_module;
+const isExact_module = require('./src/function/isExact');
+
+exports.isExact=isExact_module;
 const limit_module = require('./src/function/limit');
 
 exports.limit=limit_module;
+const isExactbyRegExp_module = require('./src/function/isExactbyRegExp');
+
+exports.isExactbyRegExp=isExactbyRegExp_module;
 const map_module = require('./src/function/map');
 
 exports.map=map_module;
-const numberFormat_module = require('./src/function/numberFormat');
-
-exports.numberFormat=numberFormat_module;
 const parseJson_module = require('./src/function/parseJson');
 
 exports.parseJson=parseJson_module;
+const numberFormat_module = require('./src/function/numberFormat');
+
+exports.numberFormat=numberFormat_module;
 const parseString_module = require('./src/function/parseString');
 
 exports.parseString=parseString_module;
@@ -115,15 +115,15 @@ exports.roundDecimal=roundDecimal_module;
 const shuffle_module = require('./src/function/shuffle');
 
 exports.shuffle=shuffle_module;
-const sort_module = require('./src/function/sort');
+const toDouble_module = require('./src/function/toDouble');
 
-exports.sort=sort_module;
-const templateValue_module = require('./src/function/templateValue');
-
-exports.templateValue=templateValue_module;
+exports.toDouble=toDouble_module;
 const toArray_module = require('./src/function/toArray');
 
 exports.toArray=toArray_module;
+const templateValue_module = require('./src/function/templateValue');
+
+exports.templateValue=templateValue_module;
 const varExtend_module = require('./src/function/varExtend');
 
 exports.varExtend=varExtend_module;
@@ -133,3 +133,9 @@ exports.where=where_module;
 const whereNot_module = require('./src/function/whereNot');
 
 exports.whereNot=whereNot_module;
+const sort_module = require('./src/function/sort');
+
+exports.sort=sort_module;
+const toInteger_module = require('./src/function/toInteger');
+
+exports.toInteger=toInteger_module;

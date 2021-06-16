@@ -1,7 +1,7 @@
 const {where} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
-describe('where method', function () {
+describe('CJS: where method', function () {
 
     it('check if value exist', function () {
 

@@ -3,7 +3,7 @@ const assert = require("assert");
 
 const two=2;
 
-describe('repeat method', function () {
+describe('CJS: repeat method', function () {
 
     it('check if repetion is correct', function () {
 

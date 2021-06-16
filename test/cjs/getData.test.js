@@ -1,7 +1,7 @@
 const {getData} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
-describe('getData method', function () {
+describe('CJS: getData method', function () {
 
     it('check if repetion is correct', function () {
 

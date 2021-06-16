@@ -2,7 +2,7 @@
 import {varExtend} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('varExtend method', function () {
+describe('ESM: varExtend method', function () {
 
     it('check if value exist', function () {
 

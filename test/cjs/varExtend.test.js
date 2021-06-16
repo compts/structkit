@@ -2,7 +2,7 @@ const {varExtend} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
 
-describe('varExtend method', function () {
+describe('CJS: varExtend method', function () {
 
     it('check if value exist', function () {
 

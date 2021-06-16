@@ -2,7 +2,7 @@
 import {whereNot} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('whereNot method', function () {
+describe('ESM: whereNot method', function () {
 
     it('check if value exist', function () {
 
@@ -24,8 +24,6 @@ describe('whereNot method', function () {
                 "s2": 1}
         ]);
 
-
     });
-
 
 });

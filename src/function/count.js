@@ -29,7 +29,11 @@ function count (objectValue, json_is_empty_check) {
 
     }
 
-    if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+    if (get_json==="array") {
+
+        return objectValue.length;
+
+    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
 
         for (const inc in objectValue) {
 

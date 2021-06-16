@@ -3,7 +3,7 @@ const assert = require("assert");
 
 const one=1;
 
-describe('like method', function () {
+describe('CJS: like method', function () {
 
     it('check if value exist', function () {
 

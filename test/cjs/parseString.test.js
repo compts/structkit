@@ -1,7 +1,7 @@
 const {parseString} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
-describe('parseString method', function () {
+describe('CJS: parseString method', function () {
 
     it('check if repetion is correct', function () {
 

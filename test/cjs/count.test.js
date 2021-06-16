@@ -4,7 +4,7 @@ const assert = require("assert");
 const one =1;
 const zero =0;
 
-describe('count method', function () {
+describe('CJS: count method', function () {
 
     it('check if value exist', function () {
 

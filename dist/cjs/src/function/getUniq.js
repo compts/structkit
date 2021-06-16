@@ -1,5 +1,5 @@
 /**
- * Get unique value
+ * Get unique value id
  *
  * @since 1.0.1
  * @returns {alphanumeric} Get Unique Key.

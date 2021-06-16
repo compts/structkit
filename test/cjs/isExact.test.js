@@ -2,7 +2,7 @@
 const {isExact}= require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
-describe('isExact method', function () {
+describe('CJS: isExact method', function () {
 
     it('check if json key exist', function () {
 

@@ -2,7 +2,7 @@
 import {jsonToArray} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('jsonToArray method', function () {
+describe('ESM: jsonToArray method', function () {
 
     it('check if value exist', function () {
 

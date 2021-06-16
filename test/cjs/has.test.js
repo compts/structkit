@@ -2,7 +2,7 @@
 const {has} = require("../../dist/cjs/node.cjs");
 const assert = require("assert");
 
-describe('has method', function () {
+describe('CJS: has method', function () {
 
     it('check if json key does exist', function () {
 

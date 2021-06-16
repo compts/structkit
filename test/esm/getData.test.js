@@ -1,7 +1,7 @@
 import {getData} from "../../dist/node.es";
 import assert from 'assert';
 
-describe('getData method', function () {
+describe('ESM: getData method', function () {
 
     it('check if repetion is correct', function () {
 
