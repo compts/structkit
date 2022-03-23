@@ -7,6 +7,8 @@ src_old_copy
 .DS_Store
 dist/.DS_Store
 src/.DS_Store
+src/*/.DS_Store
+src/*/*/.DS_Store
 test/.DS_Store
 dist/node.cjs.js_old
 dist/node.es.js_old
