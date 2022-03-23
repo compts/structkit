@@ -600,9 +600,9 @@ function asyncReplace (value, search, toReplace) {
 
             var values = [];
 
-            String.prototype.replace.call(value, search, function () {
+            String.prototype.replace.call(value, search, function (...arg) {
 
-                values.push(toReplace.apply(undefined, arguments));
+                values.push(toReplace(...arg));
 
                 return "";
 
@@ -1170,28 +1170,6 @@ function getJSONVariable (value) {
 _stk.getJSONVariable=getJSONVariable
 
 
-;
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-_stk.getKey=getKey
-
-
 /**
  * Get JSON Variable
  *
@@ -1276,6 +1254,28 @@ function getValue (objectValue) {
 
 }
 _stk.getValue=getValue
+
+
+;
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+_stk.getKey=getKey
 
 
 /**
@@ -1619,28 +1619,6 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 _stk.isExactbyRegExp=isExactbyRegExp
 
 
-;
-
-/**
- * Last
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index");
-
-}
-_stk.last=last
-
-
 ;;;;;
 
 /**
@@ -1712,6 +1690,28 @@ function jsonToArray (objectValue, value) {
 
 }
 _stk.jsonToArray=jsonToArray
+
+
+;
+
+/**
+ * Last
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index");
+
+}
+_stk.last=last
 
 
 ;;
@@ -2014,6 +2014,58 @@ _stk.like=like
 ;;;
 
 /**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+
+    var strTypeOf =getTypeof(objectValue);
+    var emptyDefaultValue=0;
+    var incrementDefaultValue=1;
+    var value_arry=strTypeOf==="array"
+        ?[]
+        :{};
+    var cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+
+                var dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
+
+        }
+
+    });
+
+    return value_arry;
+
+}
+_stk.map=map
+
+
+;;;
+
+/**
  * Limit
  *
  * @since 1.0.1
@@ -2164,58 +2216,6 @@ function numberFormat (objectValue, value1, value2) {
 
 }
 _stk.numberFormat=numberFormat
-
-
-;;;
-
-/**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-
-    var strTypeOf =getTypeof(objectValue);
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
-    var value_arry=strTypeOf==="array"
-        ?[]
-        :{};
-    var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (strTypeOf==="array") {
-
-                value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
-
-            } else {
-
-                var dataFunc = func(value, key, cnt);
-
-                value_arry[key] = dataFunc;
-
-            }
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-_stk.map=map
 
 
 /**
@@ -2737,6 +2737,56 @@ _stk.shuffle=shuffle
 ;;;
 
 /**
+ * Sort
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {number} index The second number in an addition.
+ * @param {boolean} order The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {string|number} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, index, order, func) {
+
+    var jsonn=objectValue;
+    var asc=has(order)
+        ?order
+        :true;
+    var js_m=getTypeof(jsonn)==="json"
+        ?each(jsonn)
+        :jsonn;
+
+    jsonn=js_m.sort(function (orderA, orderB) {
+
+        if (has(func)) {
+
+            return func(orderA, orderB);
+
+        }
+        if (asc) {
+
+            return orderA[index] > orderB[index];
+
+        }
+
+        return orderB[index] > orderA[index];
+
+    });
+
+    return jsonn;
+
+}
+_stk.sort=sort
+
+
+;;;
+
+/**
  * Var extend
  *
  * @since 1.0.1
@@ -3193,56 +3243,6 @@ function toArray (value) {
 
 }
 _stk.toArray=toArray
-
-
-;;;
-
-/**
- * Sort
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} index The second number in an addition.
- * @param {boolean} order The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {string|number} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, index, order, func) {
-
-    var jsonn=objectValue;
-    var asc=has(order)
-        ?order
-        :true;
-    var js_m=getTypeof(jsonn)==="json"
-        ?each(jsonn)
-        :jsonn;
-
-    jsonn=js_m.sort(function (orderA, orderB) {
-
-        if (has(func)) {
-
-            return func(orderA, orderB);
-
-        }
-        if (asc) {
-
-            return orderA[index] > orderB[index];
-
-        }
-
-        return orderB[index] > orderA[index];
-
-    });
-
-    return jsonn;
-
-}
-_stk.sort=sort
 
 
 ;

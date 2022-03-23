@@ -10,6 +10,7 @@ module.exports = {
         "exports": true,
         "it": true,
         "module": true,
+        "process": true,
         "require": true
 
     },

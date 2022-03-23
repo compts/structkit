@@ -1,6 +1,7 @@
-const structkit = require("../../main.cjs");
-const localCWD =process.cwd();
-const localARGV =process.argv.splice(2).join(" "); 
+const structkit = require("../../node.cjs");
 
-var func = new Function("_ct","return "+localARGV);
-console.log(func.call(this,structkit));
+const localARGV =process.argv.splice(2).join(" ");
+
+const func = new Function("_stk", "return "+localARGV);
+
+console.log(func.call(this, structkit));

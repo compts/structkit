@@ -19,7 +19,8 @@ exports.module=function (grassconf) {
                     "path": list_package_utility_js1
                 },
                 "output": {
-                    "type": "esm"// Esm,cjs,iife,
+                    // Esm,cjs,iife,
+                    "type": "esm"
                 }
             }
         )
@@ -38,7 +39,8 @@ exports.module=function (grassconf) {
                     "path": list_package_utility_js
                 },
                 "output": {
-                    "type": "cjs" // Esm,cjs,iife,
+                    // Esm,cjs,iife,
+                    "type": "cjs"
                 },
                 "plugin": [cjsToEsmFileNameOnly()]
 
@@ -59,7 +61,8 @@ exports.module=function (grassconf) {
                     "path": list_package_utility_js1
                 },
                 "output": {
-                    "type": "cjs" // Esm,cjs,iife,
+                    // Esm,cjs,iife,
+                    "type": "cjs"
                 },
                 "plugin": [cjsFileNameOnlyImportOnly()]
             }

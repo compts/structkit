@@ -23,9 +23,9 @@ function asyncReplace (value, search, toReplace) {
 
             const values = [];
 
-            String.prototype.replace.call(value, search, function () {
+            String.prototype.replace.call(value, search, function (...arg) {
 
-                values.push(toReplace.apply(undefined, arguments));
+                values.push(toReplace(...arg));
 
                 return "";
 
