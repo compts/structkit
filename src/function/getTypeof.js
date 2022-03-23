@@ -3,7 +3,7 @@
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
@@ -32,4 +32,5 @@ function getTypeof (objectValue) {
     return typeof objectValue;
 
 }
-export default getTypeof;
+module.exports=getTypeof;
+

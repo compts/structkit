@@ -15,8 +15,10 @@ const dataTypeFormat = require('../core/dataTypeFormat');
  */
 function toInteger (value) {
 
-    return parseFloat(dataTypeFormat(/(\d)/g, 0, value===null
-        ?0
+    const zero = 0;
+
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
         :value));
 
 }

@@ -1,8 +1,13 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
-import indexOf from './indexOf';
-import count from './count';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
+const indexOf = require('./indexOf');
+
+const count = require('./count');
+
 
 /**
  * Is Exact
@@ -86,4 +91,5 @@ function isExact (objectValue1, objectValue2, isExist) {
     return cnt===count(objectValue2);
 
 }
-export default isExact;
+module.exports=isExact;
+

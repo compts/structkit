@@ -1,14 +1,17 @@
-import has from './has';
-import each from './each';
-import getTypeof from './getTypeof';
+const has = require('./has');
+
+const each = require('./each');
+
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Map
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} func The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
  * @returns {null} Returns the total.
  * @example
  *
@@ -49,4 +52,5 @@ function map (objectValue, func) {
     return value_arry;
 
 }
-export default map;
+module.exports=map;
+

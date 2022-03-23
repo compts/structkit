@@ -4,7 +4,7 @@
  * @since 1.0.1
  * @category Seq
  * @param {string} value The second number in an addition.
- * @returns {array|object} Returns the total.
+ * @returns {any} Returns the total.
  * @example
  *
  * parseJson('{}' )
@@ -31,4 +31,5 @@ function parseJson (value) {
     return returnValue;
 
 }
-export default parseJson;
+module.exports=parseJson;
+

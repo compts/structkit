@@ -3,8 +3,8 @@
  *
  * @since 1.0.1
  * @category Seq
- * @param {number|object|string} value The first number in an addition.
- * @param {number|object|string} key The second number in an addition.
+ * @param {any} value The first number in an addition.
+ * @param {any} key The second number in an addition.
  * @returns {boolean} Returns the total.
  * @example
  *
@@ -22,4 +22,5 @@ function has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-export default has;
+module.exports=has;
+

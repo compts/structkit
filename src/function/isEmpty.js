@@ -1,12 +1,14 @@
-import getTypeof from './getTypeof';
-import count from './count';
+const getTypeof = require('./getTypeof');
+
+const count = require('./count');
+
 
 /**
  * Is empty
  *
  * @since 1.0.1
  * @category Seq
- * @param {string|object} value The first number in an addition.
+ * @param {any} value The first number in an addition.
  * @returns {boolean} Returns the total.
  * @example
  *
@@ -26,4 +28,5 @@ function isEmpty (value) {
     return (/^\s*$/gmi).test(value);
 
 }
-export default isEmpty;
+module.exports=isEmpty;
+

@@ -12,3 +12,6 @@ dist/node.cjs.js_old
 dist/node.es.js_old
 dist_copy
 dist_exp
+grassfile copy.js
+grassfile_copy_old.js
+package-lock.json

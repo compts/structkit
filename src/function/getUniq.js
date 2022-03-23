@@ -2,7 +2,7 @@
  * Get unique value id
  *
  * @since 1.0.1
- * @returns {alphanumeric} Get Unique Key.
+ * @returns {string} Get Unique Key.
  * @example
  *
  * getUniq()
@@ -22,4 +22,5 @@ function getUniq () {
     return str_rand1;
 
 }
-export default getUniq;
+module.exports=getUniq;
+

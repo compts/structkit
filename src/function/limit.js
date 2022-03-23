@@ -1,16 +1,19 @@
-import has from './has';
-import each from './each';
-import count from './count';
+const has = require('./has');
+
+const each = require('./each');
+
+const count = require('./count');
+
 
 /**
  * Limit
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {limit} minValue The second number in an addition.
- * @param {integer} maxValue The second number in an addition.
- * @param {function} func The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
+ * @param {number} minValue The second number in an addition.
+ * @param {number} maxValue The second number in an addition.
+ * @param {any} func The second number in an addition.
  * @returns {null} Returns the total.
  * @example
  *
@@ -61,4 +64,5 @@ function limit (objectValue, minValue, maxValue, func) {
     return glo_jsn;
 
 }
-export default limit;
+module.exports=limit;
+

@@ -1,12 +1,14 @@
-import count from './count';
-import repeat from './repeat';
+const count = require('./count');
+
+const repeat = require('./repeat');
+
 
 /**
  * Number format
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
  * @param {string} value1 The first number in an addition.
  * @param {string} value2 The first number in an addition.
  * @returns {null} Returns the total.
@@ -58,4 +60,5 @@ function numberFormat (objectValue, value1, value2) {
     return ssd_va;
 
 }
-export default numberFormat;
+module.exports=numberFormat;
+

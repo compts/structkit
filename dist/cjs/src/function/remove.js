@@ -1,5 +1,9 @@
 const getTypeof = require('./getTypeof');
 
+const has = require('./has');
+
+const count = require('./count');
+
 const each = require('./each');
 
 const indexOf = require('./indexOf');
@@ -14,30 +18,52 @@ const where = require('./where');
  * @category Seq
  * @param {array|object} objectValue The second number in an addition.
  * @param {number} value The second number in an addition.
+ * @param {number} value2 The second number in an addition.
  * @returns {string|number} Returns the total.
  * @example
  *
  * remove([1,2,3],1 )
- *=>'{}'
+ *=>[2, 3]
  */
-function remove (objectValue, value) {
+function remove (objectValue, value, value2) {
 
     const emptyDefaultValue=0;
     const type_js=getTypeof(objectValue);
     let reslt =null;
 
+    const isValueAFunction = getTypeof(value)==="function";
+
     if (type_js==="array") {
+
+        const lastRow = has(value2)
+            ?value2
+            :count(objectValue);
 
         reslt=[];
         each(objectValue, function (ak, av) {
 
-            if (indexOf(objectValue, value)<emptyDefaultValue) {
+            if (isValueAFunction) {
 
-                reslt.push(av);
+                if (value(ak, av)) {
+
+                    reslt.push(av);
+
+                }
+
+            } else {
+
+                if (ak > value && ak < lastRow) {
+
+                    reslt.push(av);
+
+                }
 
             }
 
+
         });
+
+        return reslt;
 
     }
 
@@ -66,10 +92,12 @@ function remove (objectValue, value) {
 
         });
 
+        return reslt;
+
     }
 
-    return reslt;
+    return [];
 
 }
-module.exports=remove;;
+module.exports=remove;
 

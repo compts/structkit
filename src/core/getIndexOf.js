@@ -1,4 +1,5 @@
-import getTypeof from '../function/getTypeof';
+const getTypeof = require('../function/getTypeof');
+
 
 /**
  * Index Of array
@@ -49,4 +50,5 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
         :referenceValue;
 
 }
-export default getIndexOf;
+module.exports=getIndexOf;;
+

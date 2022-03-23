@@ -1,15 +1,18 @@
-import each from './each';
-import indexOf from './indexOf';
-import getTypeof from './getTypeof';
+const each = require('./each');
+
+const indexOf = require('./indexOf');
+
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Append Is Array Exist
  *
  * @since 1.0.1
  * @category Seq
- * @param {number|Object|string} arrayObject The second number in an addition.
- * @param {number|Object|string} value The second number in an addition.
- * @returns {Array} Returns the total.
+ * @param {any} arrayObject The second number in an addition.
+ * @param {any} value The second number in an addition.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * appendIsArrayExist([1], 2)
@@ -40,4 +43,5 @@ function appendIsArrayExist (arrayObject, value) {
     return [];
 
 }
-export default appendIsArrayExist;
+module.exports=appendIsArrayExist;
+

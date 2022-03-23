@@ -1,16 +1,19 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
 
 /**
  * Sort
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
  * @param {number} index The second number in an addition.
  * @param {boolean} order The second number in an addition.
- * @param {function} func The second number in an addition.
+ * @param {any} func The second number in an addition.
  * @returns {string|number} Returns the total.
  * @example
  *
@@ -48,4 +51,5 @@ function sort (objectValue, index, order, func) {
     return jsonn;
 
 }
-export default sort;
+module.exports=sort;
+

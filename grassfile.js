@@ -1,76 +1,101 @@
 const list_package_utility_js = ["src/function/*.js"];
 const list_package_utility_js1 = ["src/*/*.js"];
 
-const ref ='';
 
 exports.module=function (grassconf) {
 
     const grass_concat = grassconf.require("grass_concat");
-    const grass_packpier = grassconf.require("grass_packpier");
 
-    grassconf.load("cjs", function () {
+    const packpier = grassconf.require("packpier");
+    const {cjsFileNameOnlyImportOnly, cjsToEsmFileNameOnly} = grassconf.require("pirate-pack-js");
 
-        return grassconf.src(list_package_utility_js)
-            .pipe(grass_packpier({
-                "config": {"mainType": "exportFileNameOnly"},
-                "convertType": "cjs"
-            }))
-            .pipe(grass_concat("dist/cjs/node.cjs"+ref+".js", {
-                "istruncate": true,
-                "main_file": "/src/a_test_import.js"
-            }));
 
-    });
+    grassconf.load("esm", function () {
 
-    grassconf.load("cjs2", function () {
-
-        return grassconf.src(list_package_utility_js1)
-            .pipe(grass_packpier({
-                "config": {"mainType": "convertExportToRequire"},
-                "convertType": "cjs"
-            }))
-            .pipe(grassconf.dest("dist/cjs/", {
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js1
+                },
+                "output": {
+                    "type": "esm",//esm,cjs,iife,
+                }
+            }
+        )
+            .pipe(grassconf.dest("dist/esm", {
                 "lsFileType": "path"
             }));
 
     });
 
+    grassconf.load("esm_only", function () {
 
-    grassconf.load("esm", function () {
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js
+                },
+                "output": {
+                    "type": "cjs", //esm,cjs,iife,
+                },
+                "plugin": [cjsToEsmFileNameOnly()]
 
-
-        return grassconf.src(list_package_utility_js)
-
-            .pipe(grass_packpier({
-                "config": {"mainType": "exportFileNameOnly",
-                    "prefixPath": "../"},
-                "convertType": "es6"
-            }))
-            .pipe(grass_concat("dist/node.es"+ref+".js", {
-                "istruncate": true,
-                "main_file": "/src/a_test_import.js"
+            }
+        )
+            .pipe(grass_concat("dist/esm/node.esm.js", {
+                "istruncate": true
             }));
-
 
     });
 
+    grassconf.load("cjs_only", function () {
 
-    grassconf.load("web_cjs", function () {
-
-
-        return grassconf.src(list_package_utility_js)
-
-            .pipe(grass_packpier({
-                "config": {"mainType": "exportFileNameOnly",
-                    "moduleName": "_stk"},
-                "convertType": "iife"
-
-            }))
-            .pipe(grass_concat("dist/web/structkit-full"+ref+".cjs.js", {
-                "istruncate": true,
-                "main_file": "/src/a_test_import.js"
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js1
+                },
+                "output": {
+                    "type": "cjs" //esm,cjs,iife,
+                },
+                "plugin": [cjsFileNameOnlyImportOnly()]
+            }
+        )
+            .pipe(grass_concat("src/node.cjs.js", {
+                "istruncate": true
             }));
 
+    });
+
+    grassconf.load("web_iife", function () {
+
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js
+                },
+                "output": {
+                    "globalName": "_stk",
+                    "type": "iife"
+                },
+                "plugin": []
+            }
+        )
+            .pipe(grass_concat("dist/web/structkit-full.iife.js", {
+                "istruncate": true
+            }));
+
+    });
+    grassconf.load("cjs_move", function () {
+
+        return grassconf.src("src/node.cjs.js")
+            .pipe(grass_concat("node.cjs.js", {
+                "istruncate": true
+            }));
 
     });
 
@@ -80,12 +105,11 @@ exports.execute=function (lib) {
 
     lib.default=function (strm) {
 
-        //  Strm.series("new_esm");
-        strm
-            .series("cjs")
-            .series("cjs2")
-            .series("esm")
-            .series("web_cjs");
+        strm.series("web_iife");
+        strm.series("esm");
+        strm.series("esm_only");
+        strm.series("cjs_only");
+        strm.series("cjs_move");
 
     };
 

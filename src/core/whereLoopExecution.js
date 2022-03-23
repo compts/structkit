@@ -1,11 +1,19 @@
-import count from '../function/count';
-import getTypeof from '../function/getTypeof';
-import each from '../function/each';
-import getJSONVariable from '../function/getJSONVariable';
-import isExact from '../function/isExact';
-import isExactbyRegExp from '../function/isExactbyRegExp';
-import has from '../function/has';
-import append from '../function/append';
+const count = require('../function/count');
+
+const getTypeof = require('../function/getTypeof');
+
+const each = require('../function/each');
+
+const getJSONVariable = require('../function/getJSONVariable');
+
+const isExact = require('../function/isExact');
+
+const isExactbyRegExp = require('../function/isExactbyRegExp');
+
+const has = require('../function/has');
+
+const append = require('../function/append');
+
 
 
 /**
@@ -87,4 +95,5 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     return variable;
 
 }
-export default whereLoopExecution;
+module.exports=whereLoopExecution;;
+

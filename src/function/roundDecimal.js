@@ -1,4 +1,5 @@
-import count from './count';
+const count = require('./count');
+
 
 /**
  * Random Decimal
@@ -40,4 +41,5 @@ function roundDecimal (value, minValue, maxValue) {
     return jsn;
 
 }
-export default roundDecimal;
+module.exports=roundDecimal;
+

@@ -1,14 +1,17 @@
-import getJSONVariable from './getJSONVariable';
-import each from './each';
-import append from './append';
+const getJSONVariable = require('./getJSONVariable');
+
+const each = require('./each');
+
+const append = require('./append');
+
 
 /**
  * Array Clone
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {float} Returns the total.
+ * @param {any} objectValue The second number in an addition.
+ * @returns {number} Returns the total.
  * @example
  *
  * clone([1,2])
@@ -27,4 +30,5 @@ function clone (objectValue) {
     return variable;
 
 }
-export default clone;
+module.exports=clone;
+

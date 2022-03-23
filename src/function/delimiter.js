@@ -1,15 +1,18 @@
-import has from './has';
-import count from './count';
-import each from './each';
+const has = require('./has');
+
+const count = require('./count');
+
+const each = require('./each');
+
 
 /**
  * Delimiter
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {integer} min The second number in an addition.
- * @param {integer} max The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
+ * @param {number} min The second number in an addition.
+ * @param {number} max The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
@@ -41,4 +44,5 @@ function delimiter (objectValue, min, max) {
     return ran_var;
 
 }
-export default delimiter;
+module.exports=delimiter;
+

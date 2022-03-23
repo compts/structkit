@@ -1,6 +1,9 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
 
 /**
  * Is Exact by Regexp
@@ -85,4 +88,5 @@ function isExactbyRegExp (objectValue1, objectValue2) {
     return cnt >zero;
 
 }
-export default isExactbyRegExp;
+module.exports=isExactbyRegExp;
+

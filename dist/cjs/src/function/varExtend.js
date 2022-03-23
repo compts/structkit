@@ -21,7 +21,7 @@ const indexOf = require('./indexOf');
 function varExtend (objectValue, objectValueReplace) {
 
     const onceDefaultValue=1;
-
+    console.log(objectValue,":objectValue")
     if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
 
         const jsn_s={};

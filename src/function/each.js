@@ -1,13 +1,15 @@
-import getTypeof from './getTypeof';
-import has from './has';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
 
 /**
  * Each
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} func The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
  * @returns {null} Returns the total.
  * @example
  *
@@ -76,4 +78,5 @@ function each (objectValue, func) {
     return null;
 
 }
-export default each;
+module.exports=each;
+

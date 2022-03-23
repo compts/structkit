@@ -1,11 +1,12 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
  * Last
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
  * @returns {null} Returns the total.
  * @example
  *
@@ -17,4 +18,5 @@ function last (objectValue) {
     return getKeyVal(objectValue, "last_index");
 
 }
-export default last;
+module.exports=last;
+

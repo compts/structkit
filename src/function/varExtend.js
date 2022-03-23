@@ -1,6 +1,9 @@
-import has from './has';
-import getTypeof from './getTypeof';
-import indexOf from './indexOf';
+const has = require('./has');
+
+const getTypeof = require('./getTypeof');
+
+const indexOf = require('./indexOf');
+
 
 /**
  * Var extend
@@ -49,7 +52,15 @@ function varExtend (objectValue, objectValueReplace) {
 
             if (has(jsn_s, key)) {
 
-                jsn_s[key]=objectValueReplace[key];
+                if (getTypeof(jsn_s[key]) ==="json") {
+
+                    jsn_s[key]=replaceValue(jsn_s[key], objectValueReplace[key]);
+
+                } else {
+
+                    jsn_s[key]=objectValueReplace[key];
+
+                }
 
             }
 
@@ -62,4 +73,39 @@ function varExtend (objectValue, objectValueReplace) {
     return objectValue;
 
 }
-export default varExtend;
+
+/**
+ * Replace Value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} objectValueReplace The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * varExtend({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+function replaceValue (objectValue, objectValueReplace) {
+
+    for (const key in objectValueReplace) {
+
+        if (getTypeof(objectValue[key]) ==="json") {
+
+            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
+
+        } else {
+
+            objectValue[key] = objectValueReplace[key];
+
+        }
+
+
+    }
+
+    return objectValue;
+
+}
+module.exports=varExtend;
+

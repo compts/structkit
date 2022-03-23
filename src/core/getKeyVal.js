@@ -1,6 +1,9 @@
-import indexOf from '../function/indexOf';
-import each from '../function/each';
-import count from '../function/count';
+const indexOf = require('../function/indexOf');
+
+const each = require('../function/each');
+
+const count = require('../function/count');
+
 
 /**
  * Get key value
@@ -68,4 +71,5 @@ function getKeyVal (jsn, typ) {
 
 }
 
-export default getKeyVal;
+module.exports=getKeyVal;;
+

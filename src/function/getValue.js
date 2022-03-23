@@ -1,11 +1,12 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
  * Get value
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
+ * @param {any} objectValue The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
@@ -17,4 +18,5 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");
 
 }
-export default getValue;
+module.exports=getValue;
+

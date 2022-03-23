@@ -1,12 +1,13 @@
-import dataTypeFormat from '../core/dataTypeFormat';
+const dataTypeFormat = require('../core/dataTypeFormat');
+
 
 /**
  * To Array
  *
  * @since 1.0.1
  * @category Seq
- * @param {number|string|object} value The second number in an addition.
- * @returns {array} Returns the total.
+ * @param {any} value The second number in an addition.
+ * @returns {any} Returns the total.
  * @example
  *
  * toArray(1)
@@ -16,9 +17,10 @@ function toInteger (value) {
 
     const zero = 0;
 
-    return parseFloat(dataTypeFormat(/(\d)/g, zero, value===null
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
         ?zero
         :value));
 
 }
-export default toInteger;
+module.exports=toInteger;
+

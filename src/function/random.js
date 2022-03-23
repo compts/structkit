@@ -1,13 +1,16 @@
-import has from './has';
-import count from './count';
-import each from './each';
+const has = require('./has');
+
+const count = require('./count');
+
+const each = require('./each');
+
 
 /**
  * Random
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} valueArray The second number in an addition.
+ * @param {any} valueArray The second number in an addition.
  * @param {number} minValue The second number in an addition.
  * @param {number} maxValue The second number in an addition.
  * @returns {string|number} Returns the total.
@@ -41,4 +44,5 @@ function random (valueArray, minValue, maxValue) {
     return ran_var;
 
 }
-export default random;
+module.exports=random;
+

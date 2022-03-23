@@ -1,7 +1,11 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
-import count from './count';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
+const count = require('./count');
+
 
 /**
  * Data String
@@ -70,7 +74,7 @@ function returnLoop (dstr, func, dl) {
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} value The second number in an addition.
+ * @param {any} value The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
@@ -147,4 +151,5 @@ function parseString (value) {
 
 }
 
-export default parseString;
+module.exports=parseString;
+
