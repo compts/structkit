@@ -71,5 +71,5 @@ function getKeyVal (jsn, typ) {
 
 }
 
-module.exports=getKeyVal;;
+module.exports=getKeyVal;
 

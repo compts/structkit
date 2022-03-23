@@ -44,5 +44,5 @@ function jsonToArray (objectValue, value) {
     return arry;
 
 }
-export {jsonToArray};
+export default jsonToArray;
 

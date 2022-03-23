@@ -9,6 +9,7 @@ module.exports = {
         "describe": true,
         "exports": true,
         "it": true,
+        "module": true,
         "require": true
 
     },

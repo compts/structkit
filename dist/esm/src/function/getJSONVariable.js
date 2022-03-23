@@ -30,5 +30,5 @@ function getJSONVariable (value) {
     return value;
 
 }
-export {getJSONVariable};
+export default getJSONVariable;
 

@@ -48,5 +48,5 @@ function sort (objectValue, index, order, func) {
     return jsonn;
 
 }
-export {sort};
+export default sort;
 

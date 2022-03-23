@@ -18,5 +18,5 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");
 
 }
-export {getValue};
+export default getValue;
 

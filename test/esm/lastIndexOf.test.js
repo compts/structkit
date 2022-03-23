@@ -1,5 +1,5 @@
 
-import {lastIndexOf} from "../../dist/node.es";
+import {lastIndexOf} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 const eight=8,

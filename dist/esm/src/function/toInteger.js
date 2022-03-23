@@ -22,5 +22,5 @@ function toInteger (value) {
         :value));
 
 }
-export {toInteger};
+export default toInteger;
 

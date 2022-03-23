@@ -85,5 +85,5 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     return variable;
 
 }
-export {whereLoopExecution};
+export default whereLoopExecution;
 

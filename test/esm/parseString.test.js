@@ -1,5 +1,5 @@
 
-import {parseString} from "../../dist/node.es";
+import {parseString} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: parseString method', function () {

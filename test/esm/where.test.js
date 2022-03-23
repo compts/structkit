@@ -1,5 +1,5 @@
 
-import {where} from "../../dist/node.es";
+import {where} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: where method', function () {

@@ -1,4 +1,4 @@
-const {varExtend} = require("../../dist/cjs/node.cjs");
+const {varExtend} = require("../../node.cjs");
 const assert = require("assert");
 
 

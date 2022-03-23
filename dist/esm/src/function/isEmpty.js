@@ -27,5 +27,5 @@ function isEmpty (value) {
     return (/^\s*$/gmi).test(value);
 
 }
-export {isEmpty};
+export default isEmpty;
 

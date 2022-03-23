@@ -59,5 +59,5 @@ function numberFormat (objectValue, value1, value2) {
     return ssd_va;
 
 }
-export {numberFormat};
+export default numberFormat;
 

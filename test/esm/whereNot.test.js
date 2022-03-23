@@ -1,5 +1,5 @@
 
-import {whereNot} from "../../dist/node.es";
+import {whereNot} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: whereNot method', function () {

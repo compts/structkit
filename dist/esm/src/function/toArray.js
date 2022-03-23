@@ -26,5 +26,5 @@ function toArray (value) {
     return return_val;
 
 }
-export {toArray};
+export default toArray;
 

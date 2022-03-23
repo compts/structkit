@@ -86,5 +86,5 @@ function isExactbyRegExp (objectValue1, objectValue2) {
     return cnt >zero;
 
 }
-export {isExactbyRegExp};
+export default isExactbyRegExp;
 

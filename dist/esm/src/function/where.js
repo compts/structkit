@@ -20,5 +20,5 @@ function where (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
 
 }
-export {where};
+export default where;
 

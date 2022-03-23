@@ -22,5 +22,5 @@ function toDouble (value) {
         :value));
 
 }
-export {toDouble};
+export default toDouble;
 

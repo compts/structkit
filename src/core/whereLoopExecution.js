@@ -15,7 +15,6 @@ const has = require('../function/has');
 const append = require('../function/append');
 
 
-
 /**
  * Where Loop Execution
  *
@@ -95,5 +94,5 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     return variable;
 
 }
-module.exports=whereLoopExecution;;
+module.exports=whereLoopExecution;
 

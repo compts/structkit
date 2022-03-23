@@ -50,5 +50,5 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
         :referenceValue;
 
 }
-module.exports=getIndexOf;;
+module.exports=getIndexOf;
 

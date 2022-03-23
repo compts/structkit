@@ -1,5 +1,5 @@
 
-import {templateValue} from "../../dist/node.es";
+import {templateValue} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: templateValue method', function () {

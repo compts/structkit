@@ -1,4 +1,4 @@
-const {remove} = require("../../dist/cjs/node.cjs");
+const {remove} = require("../../node.cjs");
 const assert = require("assert");
 
 const three =3;

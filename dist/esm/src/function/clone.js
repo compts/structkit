@@ -28,5 +28,5 @@ function clone (objectValue) {
     return variable;
 
 }
-export {clone};
+export default clone;
 

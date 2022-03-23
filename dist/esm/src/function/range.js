@@ -37,5 +37,5 @@ function range (maxValue, minValue) {
     return output;
 
 }
-export {range};
+export default range;
 

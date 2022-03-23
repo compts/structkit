@@ -27,5 +27,5 @@ function arrayConcat (arrayObject, arrayValue) {
     return [];
 
 }
-export {arrayConcat};
+export default arrayConcat;
 

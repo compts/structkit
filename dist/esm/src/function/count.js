@@ -74,5 +74,5 @@ function count (objectValue, json_is_empty_check) {
     return cnt;
 
 }
-export {count};
+export default count;
 

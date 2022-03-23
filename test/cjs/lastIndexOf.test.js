@@ -1,5 +1,5 @@
 
-const {lastIndexOf}= require("../../dist/cjs/node.cjs");
+const {lastIndexOf}= require("../../node.cjs");
 const assert = require("assert");
 
 const eight=8,

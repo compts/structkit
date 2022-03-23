@@ -41,5 +41,5 @@ function appendIsArrayExist (arrayObject, value) {
     return [];
 
 }
-export {appendIsArrayExist};
+export default appendIsArrayExist;
 

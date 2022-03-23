@@ -39,5 +39,5 @@ function insert (objectValue, value) {
     }
 
 }
-export {insert};
+export default insert;
 

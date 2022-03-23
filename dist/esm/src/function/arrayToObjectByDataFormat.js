@@ -24,5 +24,5 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
     });
 
 }
-export {arrayToObjectByDataFormat};
+export default arrayToObjectByDataFormat;
 

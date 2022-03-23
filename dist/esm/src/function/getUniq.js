@@ -22,5 +22,5 @@ function getUniq () {
     return str_rand1;
 
 }
-export {getUniq};
+export default getUniq;
 

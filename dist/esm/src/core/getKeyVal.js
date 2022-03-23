@@ -68,5 +68,5 @@ function getKeyVal (jsn, typ) {
 
 }
 
-export {getKeyVal};
+export default getKeyVal;
 

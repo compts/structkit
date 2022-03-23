@@ -86,5 +86,5 @@ function isExact (objectValue1, objectValue2, isExist) {
     return cnt===count(objectValue2);
 
 }
-export {isExact};
+export default isExact;
 

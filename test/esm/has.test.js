@@ -1,5 +1,5 @@
 
-import {has} from "../../dist/node.es";
+import {has} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: has method', function () {

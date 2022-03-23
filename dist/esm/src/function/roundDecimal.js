@@ -41,5 +41,5 @@ function roundDecimal (value, minValue, maxValue) {
     return jsn;
 
 }
-export {roundDecimal};
+export default roundDecimal;
 

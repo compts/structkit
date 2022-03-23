@@ -32,5 +32,5 @@ function getTypeof (objectValue) {
     return typeof objectValue;
 
 }
-export {getTypeof};
+export default getTypeof;
 

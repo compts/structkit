@@ -66,5 +66,5 @@ function getData (objectValue, split_str) {
     return jsn_total;
 
 }
-export {getData};
+export default getData;
 

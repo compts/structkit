@@ -50,5 +50,5 @@ function map (objectValue, func) {
     return value_arry;
 
 }
-export {map};
+export default map;
 

@@ -35,5 +35,5 @@ function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
     return intr;
 
 }
-export {dataTypeFormat};
+export default dataTypeFormat;
 

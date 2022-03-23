@@ -42,5 +42,5 @@ function delimiter (objectValue, min, max) {
     return ran_var;
 
 }
-export {delimiter};
+export default delimiter;
 

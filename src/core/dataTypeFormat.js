@@ -1,7 +1,6 @@
 const has = require('../function/has');
 
 
-
 /**
  * Where Loop Execution
  *
@@ -36,5 +35,5 @@ function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
     return intr;
 
 }
-module.exports=dataTypeFormat;;
+module.exports=dataTypeFormat;
 

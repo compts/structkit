@@ -53,5 +53,5 @@ function shuffle (objectValue) {
     return output;
 
 }
-export {shuffle};
+export default shuffle;
 

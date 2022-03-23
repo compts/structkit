@@ -148,5 +148,5 @@ function parseString (value) {
 
 }
 
-export {parseString};
+export default parseString;
 

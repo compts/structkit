@@ -24,5 +24,5 @@ function lastIndexOf (objectValue, value) {
     return indexValue;
 
 }
-export {lastIndexOf};
+export default lastIndexOf;
 

@@ -22,5 +22,5 @@ function has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-export {has};
+export default has;
 

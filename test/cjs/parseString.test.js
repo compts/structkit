@@ -1,4 +1,4 @@
-const {parseString} = require("../../dist/cjs/node.cjs");
+const {parseString} = require("../../node.cjs");
 const assert = require("assert");
 
 describe('CJS: parseString method', function () {

@@ -20,5 +20,5 @@ function whereNot (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
 
 }
-export {whereNot};
+export default whereNot;
 

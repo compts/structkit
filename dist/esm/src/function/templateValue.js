@@ -182,5 +182,5 @@ function templateValue (templateString, data, option) {
     }
 
 }
-export {templateValue};
+export default templateValue;
 

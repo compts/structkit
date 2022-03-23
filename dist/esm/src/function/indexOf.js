@@ -24,5 +24,5 @@ function indexOf (objectValue, value) {
     return indexValue;
 
 }
-export {indexOf};
+export default indexOf;
 

@@ -61,5 +61,5 @@ function limit (objectValue, minValue, maxValue, func) {
     return glo_jsn;
 
 }
-export {limit};
+export default limit;
 

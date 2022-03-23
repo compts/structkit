@@ -42,5 +42,5 @@ function random (valueArray, minValue, maxValue) {
     return ran_var;
 
 }
-export {random};
+export default random;
 

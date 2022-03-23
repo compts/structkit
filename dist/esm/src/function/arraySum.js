@@ -35,5 +35,5 @@ function arraySum (arrayObject, delimeter) {
     return sum.toFixed(delimeters);
 
 }
-export {arraySum};
+export default arraySum;
 

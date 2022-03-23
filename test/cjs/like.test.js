@@ -1,4 +1,4 @@
-const {like} = require("../../dist/cjs/node.cjs");
+const {like} = require("../../node.cjs");
 const assert = require("assert");
 
 const one=1;

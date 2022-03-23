@@ -27,5 +27,5 @@ function repeat (value, valueRepetion) {
     return "";
 
 }
-export {repeat};
+export default repeat;
 

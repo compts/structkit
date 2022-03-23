@@ -93,5 +93,5 @@ function remove (objectValue, value, value2) {
     return [];
 
 }
-export {remove};
+export default remove;
 

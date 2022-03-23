@@ -77,5 +77,5 @@ function each (objectValue, func) {
     return null;
 
 }
-export {each};
+export default each;
 

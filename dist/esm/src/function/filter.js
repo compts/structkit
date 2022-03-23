@@ -50,5 +50,5 @@ function filter (objectValue, func) {
     return jsn_var;
 
 }
-export {filter};
+export default filter;
 

@@ -20,5 +20,5 @@ function like (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
 
 }
-export {like};
+export default like;
 

@@ -38,5 +38,5 @@ function ifUndefined (objectValue, value1, value2) {
     return value2;
 
 }
-export {ifUndefined};
+export default ifUndefined;
 

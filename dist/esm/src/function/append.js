@@ -33,5 +33,5 @@ function append (objectValue, val, key) {
     return objectValue;
 
 }
-export {append};
+export default append;
 

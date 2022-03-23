@@ -104,5 +104,5 @@ function replaceValue (objectValue, objectValueReplace) {
     return objectValue;
 
 }
-export {varExtend};
+export default varExtend;
 

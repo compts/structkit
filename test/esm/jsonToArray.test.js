@@ -1,5 +1,5 @@
 
-import {jsonToArray} from "../../dist/node.es";
+import {jsonToArray} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: jsonToArray method', function () {

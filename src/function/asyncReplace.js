@@ -25,7 +25,7 @@ function asyncReplace (value, search, toReplace) {
 
             String.prototype.replace.call(value, search, function () {
 
-                values.push(toReplace.apply(undefined, arguments) );
+                values.push(toReplace.apply(undefined, arguments));
 
                 return "";
 

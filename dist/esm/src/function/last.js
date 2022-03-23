@@ -18,5 +18,5 @@ function last (objectValue) {
     return getKeyVal(objectValue, "last_index");
 
 }
-export {last};
+export default last;
 

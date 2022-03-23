@@ -18,5 +18,5 @@ function first (objectValue) {
     return getKeyVal(objectValue, "first_index");
 
 }
-export {first};
+export default first;
 

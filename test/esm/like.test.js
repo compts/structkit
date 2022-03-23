@@ -1,5 +1,5 @@
 
-import {like} from "../../dist/node.es";
+import {like} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 
