@@ -1,10 +1,14 @@
 import getTypeof from './getTypeof';
-import has from './has';
-import count from './count';
-import each from './each';
-import indexOf from './indexOf';
-import where from './where';
 
+import has from './has';
+
+import count from './count';
+
+import each from './each';
+
+import indexOf from './indexOf';
+
+import where from './where';
 
 /**
  * Remove

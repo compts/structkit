@@ -1,6 +1,6 @@
 import map from './map';
-import getData from './getData';
 
+import getData from './getData';
 
 /**
  * Array To Object By DataFormat

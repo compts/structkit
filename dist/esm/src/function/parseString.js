@@ -1,8 +1,10 @@
 import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
-import count from './count';
 
+import has from './has';
+
+import each from './each';
+
+import count from './count';
 
 /**
  * Data String

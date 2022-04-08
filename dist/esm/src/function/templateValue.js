@@ -1,10 +1,14 @@
 import varExtend from './varExtend';
-import getTypeof from './getTypeof';
-import indexOf from './indexOf';
-import parseString from './parseString';
-import getData from './getData';
-import has from './has';
 
+import getTypeof from './getTypeof';
+
+import indexOf from './indexOf';
+
+import parseString from './parseString';
+
+import getData from './getData';
+
+import has from './has';
 
 /**
  * Template Value Internal

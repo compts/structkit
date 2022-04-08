@@ -1,12 +1,18 @@
 import count from '../function/count';
-import getTypeof from '../function/getTypeof';
-import each from '../function/each';
-import getJSONVariable from '../function/getJSONVariable';
-import isExact from '../function/isExact';
-import isExactbyRegExp from '../function/isExactbyRegExp';
-import has from '../function/has';
-import append from '../function/append';
 
+import getTypeof from '../function/getTypeof';
+
+import each from '../function/each';
+
+import getJSONVariable from '../function/getJSONVariable';
+
+import isExact from '../function/isExact';
+
+import isExactbyRegExp from '../function/isExactbyRegExp';
+
+import has from '../function/has';
+
+import append from '../function/append';
 
 /**
  * Where Loop Execution

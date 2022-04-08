@@ -1,7 +1,8 @@
 import has from './has';
-import each from './each';
-import count from './count';
 
+import each from './each';
+
+import count from './count';
 
 /**
  * Limit

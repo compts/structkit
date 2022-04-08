@@ -1,7 +1,8 @@
 import has from './has';
-import each from './each';
-import getTypeof from './getTypeof';
 
+import each from './each';
+
+import getTypeof from './getTypeof';
 
 /**
  * Map

@@ -1,7 +1,8 @@
 import getJSONVariable from './getJSONVariable';
-import each from './each';
-import append from './append';
 
+import each from './each';
+
+import append from './append';
 
 /**
  * Array Clone

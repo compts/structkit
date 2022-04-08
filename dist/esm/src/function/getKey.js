@@ -1,6 +1,5 @@
 import getKeyVal from '../core/getKeyVal';
 
-
 /**
  * Get key Object or JSON
  *

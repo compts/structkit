@@ -1,6 +1,5 @@
 import getTypeof from './getTypeof';
 
-
 /**
  * Get JSON Variable
  *

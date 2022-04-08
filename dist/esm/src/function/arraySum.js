@@ -1,6 +1,6 @@
 import each from './each';
-import has from './has';
 
+import has from './has';
 
 /**
  * Array Sum

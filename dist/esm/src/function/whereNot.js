@@ -1,6 +1,5 @@
 import whereLoopExecution from '../core/whereLoopExecution';
 
-
 /**
  * Where Not
  *

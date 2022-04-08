@@ -1,6 +1,5 @@
 import dataTypeFormat from '../core/dataTypeFormat';
 
-
 /**
  * To Array
  *

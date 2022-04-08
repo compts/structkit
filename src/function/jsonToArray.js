@@ -17,8 +17,8 @@ const isEmpty = require('./isEmpty');
  * @returns {boolean} Returns the total.
  * @example
  *
- * jsonToArray({"a":1,"b":2},"a")
- * => []
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
  */
 function jsonToArray (objectValue, value) {
 

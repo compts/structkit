@@ -1,21 +1,19 @@
 import count from './count';
 
-
 /**
  * Random Decimal
  *
  * @since 1.0.1
  * @category Seq
  * @param {number} value The second number in an addition.
- * @param {number} minValue The second number in an addition.
  * @param {number} maxValue The second number in an addition.
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal([1,2,3],1,2 )
- *=>'{}'
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
  */
-function roundDecimal (value, minValue, maxValue) {
+function roundDecimal (value, maxValue) {
 
     const emptyDefaultValue=0;
     const onceDefaultValue=1;
@@ -23,7 +21,7 @@ function roundDecimal (value, minValue, maxValue) {
     const tenDefaultValue=10;
     const jsn=value||emptyDefaultValue;
     const str_dec=jsn.toString().split(".");
-    const s_dmin=minValue||onceDefaultValue;
+    const s_dmin=0;
     const s_dmax=maxValue||twoDefaultValue;
 
     if (count(str_dec)===twoDefaultValue) {

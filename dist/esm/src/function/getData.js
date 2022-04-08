@@ -1,6 +1,6 @@
 import has from './has';
-import each from './each';
 
+import each from './each';
 
 /**
  * Get Data

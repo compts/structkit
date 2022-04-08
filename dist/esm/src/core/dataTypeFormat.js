@@ -1,6 +1,5 @@
 import has from '../function/has';
 
-
 /**
  * Where Loop Execution
  *

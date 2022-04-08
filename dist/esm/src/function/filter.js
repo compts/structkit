@@ -1,9 +1,12 @@
 import has from './has';
-import each from './each';
-import getJSONVariable from './getJSONVariable';
-import getTypeof from './getTypeof';
-import append from './append';
 
+import each from './each';
+
+import getJSONVariable from './getJSONVariable';
+
+import getTypeof from './getTypeof';
+
+import append from './append';
 
 /**
  * Filter

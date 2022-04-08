@@ -1,6 +1,6 @@
 import getTypeof from './getTypeof';
-import count from './count';
 
+import count from './count';
 
 /**
  * Is empty

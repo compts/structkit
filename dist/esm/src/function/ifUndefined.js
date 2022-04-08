@@ -1,6 +1,5 @@
 import has from './has';
 
-
 /**
  * Check if is undefined
  *

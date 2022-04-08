@@ -1,6 +1,5 @@
 import getTypeof from './getTypeof';
 
-
 /**
  * Check if object or value
  *

@@ -1,7 +1,8 @@
 import has from './has';
-import getTypeof from './getTypeof';
-import indexOf from './indexOf';
 
+import getTypeof from './getTypeof';
+
+import indexOf from './indexOf';
 
 /**
  * Var extend

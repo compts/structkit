@@ -2,9 +2,9 @@ const getTypeof = require('./getTypeof');
 
 
 /**
- * Is empty
+ * Async replace
  *
- * @since 1.0.1
+ * @since 1.3.1
  * @category Seq
  * @param {any} value The first number in an addition.
  * @param {any} search The first number in an addition.

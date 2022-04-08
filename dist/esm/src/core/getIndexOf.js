@@ -1,6 +1,5 @@
 import getTypeof from '../function/getTypeof';
 
-
 /**
  * Index Of array
  *

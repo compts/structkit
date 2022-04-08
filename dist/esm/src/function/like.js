@@ -1,6 +1,5 @@
 import whereLoopExecution from '../core/whereLoopExecution';
 
-
 /**
  * Like
  *
@@ -13,7 +12,7 @@ import whereLoopExecution from '../core/whereLoopExecution';
  * @example
  *
  * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
+ *=>{s1: 1, s2: 1}
  */
 function like (objectValue, objectValueWhere, func) {
 

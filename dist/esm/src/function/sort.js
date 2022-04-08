@@ -1,7 +1,8 @@
 import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
 
+import has from './has';
+
+import each from './each';
 
 /**
  * Sort

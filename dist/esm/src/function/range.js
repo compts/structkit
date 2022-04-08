@@ -1,6 +1,5 @@
 import has from './has';
 
-
 /**
  * Range
  *

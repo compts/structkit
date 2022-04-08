@@ -1,7 +1,8 @@
 import each from './each';
-import indexOf from './indexOf';
-import getTypeof from './getTypeof';
 
+import indexOf from './indexOf';
+
+import getTypeof from './getTypeof';
 
 /**
  * Append Is Array Exist

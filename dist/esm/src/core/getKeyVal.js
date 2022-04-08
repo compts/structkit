@@ -1,7 +1,8 @@
 import indexOf from '../function/indexOf';
-import each from '../function/each';
-import count from '../function/count';
 
+import each from '../function/each';
+
+import count from '../function/count';
 
 /**
  * Get key value

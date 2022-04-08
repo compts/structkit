@@ -1,6 +1,6 @@
 import count from './count';
-import repeat from './repeat';
 
+import repeat from './repeat';
 
 /**
  * Number format

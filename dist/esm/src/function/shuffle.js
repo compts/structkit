@@ -1,7 +1,8 @@
 import getTypeof from './getTypeof';
-import count from './count';
-import indexOf from './indexOf';
 
+import count from './count';
+
+import indexOf from './indexOf';
 
 /**
  * Shuffle

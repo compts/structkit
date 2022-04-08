@@ -1,9 +1,12 @@
 import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
-import indexOf from './indexOf';
-import count from './count';
 
+import has from './has';
+
+import each from './each';
+
+import indexOf from './indexOf';
+
+import count from './count';
 
 /**
  * Is Exact

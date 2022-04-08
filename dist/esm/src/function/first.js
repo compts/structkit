@@ -1,6 +1,5 @@
 import getKeyVal from '../core/getKeyVal';
 
-
 /**
  * First
  *

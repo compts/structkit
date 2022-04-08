@@ -16,7 +16,7 @@ const each = require('./each');
  * @example
  *
  * isExactbyRegExp('')
- * // => true
+ * // => false
  */
 function isExactbyRegExp (objectValue1, objectValue2) {
 

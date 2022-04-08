@@ -1,7 +1,8 @@
 import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
 
+import has from './has';
+
+import each from './each';
 
 /**
  * Is Exact by Regexp
@@ -14,7 +15,7 @@ import each from './each';
  * @example
  *
  * isExactbyRegExp('')
- * // => true
+ * // => false
  */
 function isExactbyRegExp (objectValue1, objectValue2) {
 

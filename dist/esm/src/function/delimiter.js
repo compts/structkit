@@ -1,7 +1,8 @@
 import has from './has';
-import count from './count';
-import each from './each';
 
+import count from './count';
+
+import each from './each';
 
 /**
  * Delimiter
@@ -19,21 +20,20 @@ import each from './each';
  */
 function delimiter (objectValue, min, max) {
 
-    let ran_var=[];
+    const ran_var=[];
     const defaultValueZero=0;
     const ran_min=has(min)
         ?min
         :defaultValueZero;
     const ran_max=has(max)
-        ?max+ran_min
+        ?max
         :count(objectValue);
-    const math_random=Math.round(Math.random()*ran_max);
 
     each(objectValue, function (key, value) {
 
-        if (math_random===key) {
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
 
-            ran_var=value;
+            ran_var.push(value);
 
         }
 
