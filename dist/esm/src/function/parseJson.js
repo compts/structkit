@@ -31,5 +31,5 @@ function parseJson (value) {
     return returnValue;
 
 }
-export default parseJson;
+module.exports=parseJson;
 

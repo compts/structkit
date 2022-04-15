@@ -1,10 +1,11 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import has from './has';
+const has = require('./has');
 
-import each from './each';
+const each = require('./each');
 
-import count from './count';
+const count = require('./count');
+
 
 /**
  * Data String
@@ -150,5 +151,5 @@ function parseString (value) {
 
 }
 
-export default parseString;
+module.exports=parseString;
 

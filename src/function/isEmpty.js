@@ -4,7 +4,7 @@ const count = require('./count');
 
 
 /**
- * Is empty
+ * Check if data is empty
  *
  * @since 1.0.1
  * @category Seq

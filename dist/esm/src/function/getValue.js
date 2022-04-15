@@ -1,7 +1,8 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
- * Get value
+ * Get value of json or array
  *
  * @since 1.0.1
  * @category Seq
@@ -17,5 +18,5 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");
 
 }
-export default getValue;
+module.exports=getValue;
 

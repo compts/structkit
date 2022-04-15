@@ -1,5 +1,5 @@
 /**
- * Check if object or value
+ * Check if object has value
  *
  * @since 1.0.1
  * @category Seq
@@ -22,5 +22,5 @@ function has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-export default has;
+module.exports=has;
 

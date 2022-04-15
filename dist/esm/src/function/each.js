@@ -1,6 +1,7 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import has from './has';
+const has = require('./has');
+
 
 /**
  * Each
@@ -77,5 +78,5 @@ function each (objectValue, func) {
     return null;
 
 }
-export default each;
+module.exports=each;
 

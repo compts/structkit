@@ -1,4 +1,5 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
  * First
@@ -17,5 +18,5 @@ function first (objectValue) {
     return getKeyVal(objectValue, "first_index");
 
 }
-export default first;
+module.exports=first;
 

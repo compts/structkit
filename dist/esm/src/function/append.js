@@ -1,7 +1,8 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
- * Check if object or value
+ * Append data fir json and array
  *
  * @since 1.0.1
  * @category Seq
@@ -32,5 +33,5 @@ function append (objectValue, val, key) {
     return objectValue;
 
 }
-export default append;
+module.exports=append;
 

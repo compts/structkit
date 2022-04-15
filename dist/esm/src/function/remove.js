@@ -1,14 +1,15 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import has from './has';
+const has = require('./has');
 
-import count from './count';
+const count = require('./count');
 
-import each from './each';
+const each = require('./each');
 
-import indexOf from './indexOf';
+const indexOf = require('./indexOf');
 
-import where from './where';
+const where = require('./where');
+
 
 /**
  * Remove
@@ -22,7 +23,7 @@ import where from './where';
  * @example
  *
  * remove([1,2,3],1 )
- *=>[2, 3]
+ *=>[3]
  */
 function remove (objectValue, value, value2) {
 
@@ -51,13 +52,14 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (ak > value && ak < lastRow) {
+                if (ak >= value && ak <= lastRow) {
 
                     reslt.push(av);
 
                 }
 
             }
+
 
         });
 
@@ -97,5 +99,5 @@ function remove (objectValue, value, value2) {
     return [];
 
 }
-export default remove;
+module.exports=remove;
 

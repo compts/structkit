@@ -1,4 +1,5 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
  * Get key Object or JSON
@@ -17,5 +18,5 @@ function getKey (objectValue) {
     return getKeyVal(objectValue, "key");
 
 }
-export default getKey;
+module.exports=getKey;
 

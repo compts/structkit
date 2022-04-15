@@ -1,4 +1,5 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
  * Last
@@ -17,5 +18,5 @@ function last (objectValue) {
     return getKeyVal(objectValue, "last_index");
 
 }
-export default last;
+module.exports=last;
 

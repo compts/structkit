@@ -1,10 +1,11 @@
-import has from './has';
+const has = require('./has');
 
-import each from './each';
+const each = require('./each');
 
-import getData from './getData';
+const getData = require('./getData');
 
-import isEmpty from './isEmpty';
+const isEmpty = require('./isEmpty');
+
 
 /**
  * Json To Array
@@ -23,11 +24,14 @@ function jsonToArray (objectValue, value) {
 
     const arry=[];
 
+
     each(objectValue, function (_key, _value) {
 
         if (has(value)) {
 
+
             const valueData = getData(_value, value);
+
 
             if (isEmpty(valueData) ===false) {
 
@@ -46,5 +50,5 @@ function jsonToArray (objectValue, value) {
     return arry;
 
 }
-export default jsonToArray;
+module.exports=jsonToArray;
 

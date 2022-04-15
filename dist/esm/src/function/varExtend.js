@@ -1,8 +1,9 @@
-import has from './has';
+const has = require('./has');
 
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import indexOf from './indexOf';
+const indexOf = require('./indexOf');
+
 
 /**
  * Var extend
@@ -100,10 +101,11 @@ function replaceValue (objectValue, objectValueReplace) {
 
         }
 
+
     }
 
     return objectValue;
 
 }
-export default varExtend;
+module.exports=varExtend;
 

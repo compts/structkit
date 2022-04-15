@@ -1,4 +1,5 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+const whereLoopExecution = require('../core/whereLoopExecution');
+
 
 /**
  * Like
@@ -19,5 +20,5 @@ function like (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
 
 }
-export default like;
+module.exports=like;
 

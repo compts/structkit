@@ -1,4 +1,5 @@
-import has from '../function/has';
+const has = require('../function/has');
+
 
 /**
  * Where Loop Execution
@@ -34,5 +35,5 @@ function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
     return intr;
 
 }
-export default dataTypeFormat;
+module.exports=dataTypeFormat;
 

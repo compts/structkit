@@ -1,4 +1,5 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Get JSON Variable
@@ -29,5 +30,5 @@ function getJSONVariable (value) {
     return value;
 
 }
-export default getJSONVariable;
+module.exports=getJSONVariable;
 

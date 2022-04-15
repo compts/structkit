@@ -2,7 +2,7 @@ const getTypeof = require('./getTypeof');
 
 
 /**
- * Check if object or value
+ * Append data fir json and array
  *
  * @since 1.0.1
  * @category Seq

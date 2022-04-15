@@ -1,4 +1,5 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Array Concat
@@ -26,5 +27,5 @@ function arrayConcat (arrayObject, arrayValue) {
     return [];
 
 }
-export default arrayConcat;
+module.exports=arrayConcat;
 

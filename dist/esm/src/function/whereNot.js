@@ -1,4 +1,4 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+const whereLoopExecution = require('../core/whereLoopExecution');
 
 /**
  * Where Not
@@ -19,5 +19,6 @@ function whereNot (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
 
 }
-export default whereNot;
+module.exports=whereNot;
+
 

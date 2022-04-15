@@ -1,4 +1,5 @@
-import has from './has';
+const has = require('./has');
+
 
 /**
  * Range
@@ -36,5 +37,5 @@ function range (maxValue, minValue) {
     return output;
 
 }
-export default range;
+module.exports=range;
 

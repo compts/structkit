@@ -1,8 +1,9 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import has from './has';
+const has = require('./has');
 
-import each from './each';
+const each = require('./each');
+
 
 /**
  * Insert Value
@@ -13,9 +14,9 @@ import each from './each';
  * @param {any} value The first number in an addition.
  * @returns {any} Returns the total.
  * @example
- *
- * insert({'as':1}, 'as','as2')
- * // => 1
+ * var ss = {"A":1}
+ * insert(ss,{'as':1})
+ * // => {A: 1, as: 1}
  */
 function insert (objectValue, value) {
 
@@ -31,7 +32,9 @@ function insert (objectValue, value) {
 
             });
 
-        } else {
+        }
+
+        if (jsn_type==="array") {
 
             objectValue.push(value);
 
@@ -40,5 +43,5 @@ function insert (objectValue, value) {
     }
 
 }
-export default insert;
+module.exports=insert;
 

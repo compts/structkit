@@ -1,8 +1,9 @@
-import getJSONVariable from './getJSONVariable';
+const getJSONVariable = require('./getJSONVariable');
 
-import each from './each';
+const each = require('./each');
 
-import append from './append';
+const append = require('./append');
+
 
 /**
  * Array Clone
@@ -29,5 +30,5 @@ function clone (objectValue) {
     return variable;
 
 }
-export default clone;
+module.exports=clone;
 

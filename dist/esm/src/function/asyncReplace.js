@@ -1,4 +1,5 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Async replace
@@ -44,6 +45,7 @@ function asyncReplace (value, search, toReplace) {
 
         return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
 
+
     } catch (error) {
 
         return Promise.reject(error);
@@ -51,5 +53,5 @@ function asyncReplace (value, search, toReplace) {
     }
 
 }
-export default asyncReplace;
+module.exports=asyncReplace;
 

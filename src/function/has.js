@@ -1,5 +1,5 @@
 /**
- * Check if object or value
+ * Check if object has value
  *
  * @since 1.0.1
  * @category Seq

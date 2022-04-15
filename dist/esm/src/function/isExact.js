@@ -1,12 +1,13 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import has from './has';
+const has = require('./has');
 
-import each from './each';
+const each = require('./each');
 
-import indexOf from './indexOf';
+const indexOf = require('./indexOf');
 
-import count from './count';
+const count = require('./count');
+
 
 /**
  * Is Exact
@@ -80,6 +81,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
     });
 
+
     if (cnt===emptyDefaultValue) {
 
         return false;
@@ -89,5 +91,5 @@ function isExact (objectValue1, objectValue2, isExist) {
     return cnt===count(objectValue2);
 
 }
-export default isExact;
+module.exports=isExact;
 

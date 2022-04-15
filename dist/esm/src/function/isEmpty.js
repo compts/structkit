@@ -1,9 +1,10 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import count from './count';
+const count = require('./count');
+
 
 /**
- * Is empty
+ * Check if data is empty
  *
  * @since 1.0.1
  * @category Seq
@@ -27,5 +28,5 @@ function isEmpty (value) {
     return (/^\s*$/gmi).test(value);
 
 }
-export default isEmpty;
+module.exports=isEmpty;
 

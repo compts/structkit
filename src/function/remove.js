@@ -52,7 +52,7 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (ak > value && ak < lastRow) {
+                if (ak >= value && ak <= lastRow) {
 
                     reslt.push(av);
 

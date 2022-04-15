@@ -6,7 +6,7 @@ const getTypeof = require('./getTypeof');
 
 
 /**
- * Append Is Array Exist
+ * Append If Array not Exist
  *
  * @since 1.0.1
  * @category Seq

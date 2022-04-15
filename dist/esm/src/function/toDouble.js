@@ -1,4 +1,5 @@
-import dataTypeFormat from '../core/dataTypeFormat';
+const dataTypeFormat = require('../core/dataTypeFormat');
+
 
 /**
  * To Array
@@ -21,5 +22,5 @@ function toDouble (value) {
         :value));
 
 }
-export default toDouble;
+module.exports=toDouble;
 

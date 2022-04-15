@@ -1,8 +1,9 @@
-import has from './has';
+const has = require('./has');
 
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import each from './each';
+const each = require('./each');
+
 
 /**
  * Array Count
@@ -75,5 +76,5 @@ function count (objectValue, json_is_empty_check) {
     return cnt;
 
 }
-export default count;
+module.exports=count;
 

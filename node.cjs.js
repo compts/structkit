@@ -1,10 +1,10 @@
-const getIndexOf=require('./src/core/getIndexOf.js');
-
-exports.getIndexOf =getIndexOf;
-
 const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
+
+const getIndexOf=require('./src/core/getIndexOf.js');
+
+exports.getIndexOf =getIndexOf;
 
 const getKeyVal=require('./src/core/getKeyVal.js');
 
@@ -38,17 +38,21 @@ const asyncReplace=require('./src/function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
 
-const clone=require('./src/function/clone.js');
+const count=require('./src/function/count.js');
 
-exports.clone =clone;
+exports.count =count;
 
 const delimiter=require('./src/function/delimiter.js');
 
 exports.delimiter =delimiter;
 
-const count=require('./src/function/count.js');
+const each=require('./src/function/each.js');
 
-exports.count =count;
+exports.each =each;
+
+const clone=require('./src/function/clone.js');
+
+exports.clone =clone;
 
 const filter=require('./src/function/filter.js');
 
@@ -58,37 +62,37 @@ const first=require('./src/function/first.js');
 
 exports.first =first;
 
-const each=require('./src/function/each.js');
+const getData=require('./src/function/getData.js');
 
-exports.each =each;
-
-const getJSONVariable=require('./src/function/getJSONVariable.js');
-
-exports.getJSONVariable =getJSONVariable;
+exports.getData =getData;
 
 const getKey=require('./src/function/getKey.js');
 
 exports.getKey =getKey;
 
-const getData=require('./src/function/getData.js');
-
-exports.getData =getData;
-
 const getTypeof=require('./src/function/getTypeof.js');
 
 exports.getTypeof =getTypeof;
-
-const getValue=require('./src/function/getValue.js');
-
-exports.getValue =getValue;
 
 const getUniq=require('./src/function/getUniq.js');
 
 exports.getUniq =getUniq;
 
+const getValue=require('./src/function/getValue.js');
+
+exports.getValue =getValue;
+
+const has=require('./src/function/has.js');
+
+exports.has =has;
+
 const ifUndefined=require('./src/function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
+
+const getJSONVariable=require('./src/function/getJSONVariable.js');
+
+exports.getJSONVariable =getJSONVariable;
 
 const indexOf=require('./src/function/indexOf.js');
 
@@ -106,13 +110,13 @@ const isExact=require('./src/function/isExact.js');
 
 exports.isExact =isExact;
 
+const jsonToArray=require('./src/function/jsonToArray.js');
+
+exports.jsonToArray =jsonToArray;
+
 const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
 
 exports.isExactbyRegExp =isExactbyRegExp;
-
-const has=require('./src/function/has.js');
-
-exports.has =has;
 
 const last=require('./src/function/last.js');
 
@@ -126,13 +130,13 @@ const like=require('./src/function/like.js');
 
 exports.like =like;
 
-const jsonToArray=require('./src/function/jsonToArray.js');
-
-exports.jsonToArray =jsonToArray;
-
 const limit=require('./src/function/limit.js');
 
 exports.limit =limit;
+
+const map=require('./src/function/map.js');
+
+exports.map =map;
 
 const parseJson=require('./src/function/parseJson.js');
 
@@ -142,17 +146,13 @@ const parseString=require('./src/function/parseString.js');
 
 exports.parseString =parseString;
 
-const random=require('./src/function/random.js');
-
-exports.random =random;
-
 const range=require('./src/function/range.js');
 
 exports.range =range;
 
-const map=require('./src/function/map.js');
+const random=require('./src/function/random.js');
 
-exports.map =map;
+exports.random =random;
 
 const remove=require('./src/function/remove.js');
 
@@ -170,10 +170,6 @@ const sort=require('./src/function/sort.js');
 
 exports.sort =sort;
 
-const shuffle=require('./src/function/shuffle.js');
-
-exports.shuffle =shuffle;
-
 const templateValue=require('./src/function/templateValue.js');
 
 exports.templateValue =templateValue;
@@ -186,9 +182,9 @@ const toDouble=require('./src/function/toDouble.js');
 
 exports.toDouble =toDouble;
 
-const toInteger=require('./src/function/toInteger.js');
+const shuffle=require('./src/function/shuffle.js');
 
-exports.toInteger =toInteger;
+exports.shuffle =shuffle;
 
 const varExtend=require('./src/function/varExtend.js');
 
@@ -201,4 +197,8 @@ exports.where =where;
 const whereNot=require('./src/function/whereNot.js');
 
 exports.whereNot =whereNot;
+
+const toInteger=require('./src/function/toInteger.js');
+
+exports.toInteger =toInteger;
 

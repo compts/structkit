@@ -1,5 +1,5 @@
 /**
- * Get unique value id
+ * Generate unique value id
  *
  * @since 1.0.1
  * @returns {string} Get Unique Key.
@@ -22,5 +22,5 @@ function getUniq () {
     return str_rand1;
 
 }
-export default getUniq;
+module.exports=getUniq;
 

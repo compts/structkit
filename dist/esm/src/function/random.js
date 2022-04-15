@@ -1,8 +1,9 @@
-import has from './has';
+const has = require('./has');
 
-import count from './count';
+const count = require('./count');
 
-import each from './each';
+const each = require('./each');
+
 
 /**
  * Random
@@ -15,12 +16,12 @@ import each from './each';
  * @returns {string|number} Returns the total.
  * @example
  *
- * random([1,2,3],1,2 )
- *=>'{}'
+ * _stk.random([10,20,30],0,3 )
+ *=>'[20]'
  */
 function random (valueArray, minValue, maxValue) {
 
-    let ran_var=[];
+    const ran_var=[];
     const emptyDefaultValue=0;
     const ran_min=has(minValue)
         ?minValue
@@ -32,9 +33,9 @@ function random (valueArray, minValue, maxValue) {
 
     each(valueArray, function (key, value) {
 
-        if (math_random===key) {
+        if (math_random===parseInt(key)) {
 
-            ran_var = value;
+            ran_var.push(value);
 
         }
 
@@ -43,5 +44,5 @@ function random (valueArray, minValue, maxValue) {
     return ran_var;
 
 }
-export default random;
+module.exports=random;
 

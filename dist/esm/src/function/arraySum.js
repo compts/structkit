@@ -1,6 +1,7 @@
-import each from './each';
+const each = require('./each');
 
-import has from './has';
+const has = require('./has');
+
 
 /**
  * Array Sum
@@ -35,5 +36,5 @@ function arraySum (arrayObject, delimeter) {
     return sum.toFixed(delimeters);
 
 }
-export default arraySum;
+module.exports=arraySum;
 

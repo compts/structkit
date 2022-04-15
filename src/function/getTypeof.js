@@ -1,5 +1,5 @@
 /**
- * Get JSON Variable
+ * Get Variable typeof
  *
  * @since 1.0.1
  * @category Seq

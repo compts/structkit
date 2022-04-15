@@ -1,11 +1,12 @@
-import each from './each';
+const each = require('./each');
 
-import indexOf from './indexOf';
+const indexOf = require('./indexOf');
 
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
- * Append Is Array Exist
+ * Append If Array not Exist
  *
  * @since 1.0.1
  * @category Seq
@@ -42,5 +43,5 @@ function appendIsArrayExist (arrayObject, value) {
     return [];
 
 }
-export default appendIsArrayExist;
+module.exports=appendIsArrayExist;
 

@@ -1,8 +1,9 @@
-import has from './has';
+const has = require('./has');
 
-import each from './each';
+const each = require('./each');
 
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
  * Map
@@ -51,5 +52,5 @@ function map (objectValue, func) {
     return value_arry;
 
 }
-export default map;
+module.exports=map;
 

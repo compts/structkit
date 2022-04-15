@@ -1,6 +1,7 @@
-import has from './has';
+const has = require('./has');
 
-import each from './each';
+const each = require('./each');
+
 
 /**
  * Get Data
@@ -66,5 +67,4 @@ function getData (objectValue, split_str) {
     return jsn_total;
 
 }
-export default getData;
-
+module.exports=getData;

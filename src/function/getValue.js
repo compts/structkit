@@ -2,7 +2,7 @@ const getKeyVal = require('../core/getKeyVal');
 
 
 /**
- * Get value
+ * Get value of json or array
  *
  * @since 1.0.1
  * @category Seq

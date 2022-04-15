@@ -1,5 +1,5 @@
 /**
- * Get JSON Variable
+ * Get Variable typeof
  *
  * @since 1.0.1
  * @category Seq
@@ -32,5 +32,5 @@ function getTypeof (objectValue) {
     return typeof objectValue;
 
 }
-export default getTypeof;
+module.exports=getTypeof;
 

@@ -1,4 +1,5 @@
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
+
 
 /**
  * To Array
@@ -25,5 +26,5 @@ function toArray (value) {
     return return_val;
 
 }
-export default toArray;
+module.exports=toArray;
 

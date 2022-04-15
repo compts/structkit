@@ -1,14 +1,15 @@
-import varExtend from './varExtend';
+const varExtend = require('./varExtend');
 
-import getTypeof from './getTypeof';
+const getTypeof = require('./getTypeof');
 
-import indexOf from './indexOf';
+const indexOf = require('./indexOf');
 
-import parseString from './parseString';
+const parseString = require('./parseString');
 
-import getData from './getData';
+const getData = require('./getData');
 
-import has from './has';
+const has = require('./has');
+
 
 /**
  * Template Value Internal
@@ -186,5 +187,5 @@ function templateValue (templateString, data, option) {
     }
 
 }
-export default templateValue;
+module.exports=templateValue;
 

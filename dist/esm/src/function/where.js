@@ -1,4 +1,5 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+const whereLoopExecution = require('../core/whereLoopExecution');
+
 
 /**
  * Where
@@ -19,5 +20,5 @@ function where (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
 
 }
-export default where;
+module.exports=where;
 
