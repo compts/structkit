@@ -1,4 +1,4 @@
-const {remove} = require("../../node.cjs");
+import {remove} from "../../dist/esm/node.esm";
 const assert = require("assert");
 
 const three =3;
