@@ -8,7 +8,7 @@ const each = require('./each');
 /**
  * Delimiter
  *
- * @since 1.0.1
+ * @since 1.3.1
  * @category Seq
  * @param {any} objectValue The second number in an addition.
  * @param {number} min The second number in an addition.
