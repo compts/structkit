@@ -23,3 +23,6 @@ dist/.DS_Store
 dist/cjs/.DS_Store
 dist/.DS_Store
 .DS_Store
+src/node.cjs.js
+coverage
+package-lock.json

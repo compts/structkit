@@ -1,7 +1,7 @@
 {
   "name": "structkit",
   "version": "1.3.1",
-  "description": "JS dom support",
+  "description": "JS utility tool",
   "main": "node.cjs.js",
   "module": "dist/node.es.js",
   "types": "dist/ts/node.esm.d.ts",
@@ -13,7 +13,9 @@
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
     "test_esm": "mocha -r esm test/esm/*.test.js",
     "test_cjs": "mocha test/cjs/*.test.js",
-    "validate": "npm run style && npm run test"
+    "validate": "npm run style && npm run test",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "tsd": {
     "directory": "test/ts"
@@ -40,6 +42,28 @@
     "eslint-config-strongloop": "^2.1.0",
     "eslint-plugin-import": "^2.22.1",
     "esm": "^3.2.25",
+    "jest": "^27.5.1",
     "mocha": "^5.2.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/compts-labs/",
+      "/src_old_copy/",
+      "/dist/",
+      "/test/esm/"
+
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
   }
 }
