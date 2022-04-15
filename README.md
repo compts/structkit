@@ -1,5 +1,8 @@
 # Structkit
 [![NPM version][npm-image]][npm-url] 
+
+[Site](https://structkit.codehyouka.xyz/) |
+[Docs](https://structkit.codehyouka.xyz/docs) |
 ## Use Cases
 
 In a browser:
