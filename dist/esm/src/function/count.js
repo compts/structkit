@@ -1,17 +1,16 @@
-const has = require('./has');
+import has from './has';
 
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const each = require('./each');
-
+import each from './each';
 
 /**
  * Array Count
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {boolean} json_is_empty_check The second number in an addition.
+ * @param {any} objectValue Json or array
+ * @param {boolean} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.
  * @example
  *
@@ -76,5 +75,5 @@ function count (objectValue, json_is_empty_check) {
     return cnt;
 
 }
-module.exports=count;
+export default count;
 

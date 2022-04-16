@@ -1,9 +1,8 @@
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const count = require('./count');
+import count from './count';
 
-const indexOf = require('./indexOf');
-
+import indexOf from './indexOf';
 
 /**
  * Shuffle
@@ -55,5 +54,5 @@ function shuffle (objectValue) {
     return output;
 
 }
-module.exports=shuffle;
+export default shuffle;
 

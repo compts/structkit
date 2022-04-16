@@ -1,20 +1,19 @@
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
+import each from './each';
 
-const getData = require('./getData');
+import getData from './getData';
 
-const isEmpty = require('./isEmpty');
-
+import isEmpty from './isEmpty';
 
 /**
  * Json To Array
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue The first number in an addition.
- * @param {string} value The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {string} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {boolean} Returns Array
  * @example
  *
  * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
@@ -24,14 +23,11 @@ function jsonToArray (objectValue, value) {
 
     const arry=[];
 
-
     each(objectValue, function (_key, _value) {
 
         if (has(value)) {
 
-
             const valueData = getData(_value, value);
-
 
             if (isEmpty(valueData) ===false) {
 
@@ -50,5 +46,5 @@ function jsonToArray (objectValue, value) {
     return arry;
 
 }
-module.exports=jsonToArray;
+export default jsonToArray;
 

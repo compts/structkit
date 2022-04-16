@@ -10,13 +10,13 @@ const getTypeof = require('./getTypeof');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} arrayObject The second number in an addition.
- * @param {any} value The second number in an addition.
- * @returns {any[]} Returns the total.
+ * @param {any} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {any[]} Return array.
  * @example
  *
- * appendIsArrayExist([1], 2)
- * // => [1,2]
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
  */
 function appendIsArrayExist (arrayObject, value) {
 

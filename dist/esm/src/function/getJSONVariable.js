@@ -1,13 +1,12 @@
-const getTypeof = require('./getTypeof');
-
+import getTypeof from './getTypeof';
 
 /**
  * Get JSON Variable
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} value Json or Array
+ * @returns {any} Returns empty either Json or Array
  * @example
  *
  * getJSONVariable([])
@@ -30,5 +29,5 @@ function getJSONVariable (value) {
     return value;
 
 }
-module.exports=getJSONVariable;
+export default getJSONVariable;
 

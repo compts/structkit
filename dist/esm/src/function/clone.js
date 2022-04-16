@@ -1,17 +1,16 @@
-const getJSONVariable = require('./getJSONVariable');
+import getJSONVariable from './getJSONVariable';
 
-const each = require('./each');
+import each from './each';
 
-const append = require('./append');
-
+import append from './append';
 
 /**
  * Array Clone
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @returns {number} Returns the total.
+ * @param {any} objectValue data you want to clone
+ * @returns {number} Returns clone data
  * @example
  *
  * clone([1,2])
@@ -30,5 +29,5 @@ function clone (objectValue) {
     return variable;
 
 }
-module.exports=clone;
+export default clone;
 

@@ -8,12 +8,12 @@ const count = require('./count');
 
 
 /**
- * Data String
+ * Data String from JSON object
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} str The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {string} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
  * @example
  *
  * parseString({} )

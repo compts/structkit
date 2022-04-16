@@ -1,9 +1,8 @@
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
+import each from './each';
 
-const count = require('./count');
-
+import count from './count';
 
 /**
  * Limit
@@ -38,7 +37,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
         if (cnt>=minValueReserve && cnt<=maxValueReserve) {
 
-
             if (has(func)) {
 
                 glo_indtfd=func(key, meth);
@@ -64,5 +62,5 @@ function limit (objectValue, minValue, maxValue, func) {
     return glo_jsn;
 
 }
-module.exports=limit;
+export default limit;
 

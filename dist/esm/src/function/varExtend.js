@@ -1,18 +1,17 @@
-const has = require('./has');
+import has from './has';
 
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const indexOf = require('./indexOf');
-
+import indexOf from './indexOf';
 
 /**
  * Var extend
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} objectValue The second number in an addition.
- * @param {object} objectValueReplace The second number in an addition.
- * @returns {array} Returns the total.
+ * @param {object} objectValue Json or Array
+ * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
+ * @returns {array} Return Json or Array.
  * @example
  *
  * varExtend({"s1":1},{"s1":2})
@@ -79,9 +78,9 @@ function varExtend (objectValue, objectValueReplace) {
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} objectValueReplace The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {object} objectValue Json or Array
+ * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
+ * @returns {array} Return Json or Array.
  * @example
  *
  * varExtend({"s1":1},{"s1":2})
@@ -101,11 +100,10 @@ function replaceValue (objectValue, objectValueReplace) {
 
         }
 
-
     }
 
     return objectValue;
 
 }
-module.exports=varExtend;
+export default varExtend;
 

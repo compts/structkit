@@ -5,10 +5,10 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} objectValueWhere The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you not want to search in key
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
  * @example
  *
  * whereNot({"s1":1,"s2":1},{"s1":2})

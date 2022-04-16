@@ -1,14 +1,14 @@
-const whereLoopExecution = require('../core/whereLoopExecution');
-
+import whereLoopExecution from '../core/whereLoopExecution';
 
 /**
  * Like
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} objectValueWhere The second number in an addition.
- * @param {function} func The second number in an addition.
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
  * @returns {any} Returns the total.
  * @example
  *
@@ -20,5 +20,5 @@ function like (objectValue, objectValueWhere, func) {
     return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
 
 }
-module.exports=like;
+export default like;
 

@@ -10,9 +10,9 @@ const each = require('./each');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The first number in an addition.
- * @param {any} value The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} objectValue Json or array
+ * @param {any} value Data you want to insert
+ * @returns {any} Returns Json or array
  * @example
  * var ss = {"A":1}
  * insert(ss,{'as':1})

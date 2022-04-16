@@ -1,15 +1,14 @@
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const has = require('./has');
+import has from './has';
 
-const count = require('./count');
+import count from './count';
 
-const each = require('./each');
+import each from './each';
 
-const indexOf = require('./indexOf');
+import indexOf from './indexOf';
 
-const where = require('./where');
-
+import where from './where';
 
 /**
  * Remove
@@ -22,8 +21,8 @@ const where = require('./where');
  * @returns {string|number} Returns the total.
  * @example
  *
- * remove([1,2,3],1 )
- *=>[3]
+ * remove([1,2,3],0 )
+ *=>[2, 3]
  */
 function remove (objectValue, value, value2) {
 
@@ -52,14 +51,13 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (ak >= value && ak <= lastRow) {
+                if (ak > value && ak <= lastRow) {
 
                     reslt.push(av);
 
                 }
 
             }
-
 
         });
 
@@ -99,5 +97,5 @@ function remove (objectValue, value, value2) {
     return [];
 
 }
-module.exports=remove;
+export default remove;
 

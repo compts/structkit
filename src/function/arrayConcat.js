@@ -6,9 +6,9 @@ const getTypeof = require('./getTypeof');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} arrayObject The second number in an addition.
- * @param {any} arrayValue The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
  * @example
  *
  * arrayConcat([1], 2)

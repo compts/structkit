@@ -2,12 +2,12 @@ const dataTypeFormat = require('../core/dataTypeFormat');
 
 
 /**
- * To Array
+ * To Double
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} value Value you to convert in double
+ * @returns {any[]} Return in double.
  * @example
  *
  * toArray(1)

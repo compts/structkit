@@ -2,12 +2,12 @@ const getKeyVal = require('../core/getKeyVal');
 
 
 /**
- * Last
+ * Last of array
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @returns {null} Returns the total.
+ * @param {any} objectValue Array
+ * @returns {any} Returns json result first key or index.
  * @example
  *
  * last([1,2] )

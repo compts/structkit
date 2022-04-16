@@ -1,5 +1,4 @@
-const has = require('./has');
-
+import has from './has';
 
 /**
  * Check if data is undefined
@@ -38,5 +37,5 @@ function ifUndefined (objectValue, value1, value2) {
     return value2;
 
 }
-module.exports=ifUndefined;
+export default ifUndefined;
 

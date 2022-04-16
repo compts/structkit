@@ -1,18 +1,17 @@
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
-
+import each from './each';
 
 /**
  * Insert Value
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The first number in an addition.
- * @param {any} value The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} objectValue Json or array
+ * @param {any} value Data you want to insert
+ * @returns {any} Returns Json or array
  * @example
  * var ss = {"A":1}
  * insert(ss,{'as':1})
@@ -43,5 +42,5 @@ function insert (objectValue, value) {
     }
 
 }
-module.exports=insert;
+export default insert;
 

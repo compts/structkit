@@ -1,18 +1,17 @@
-const indexOf = require('../function/indexOf');
+import indexOf from '../function/indexOf';
 
-const each = require('../function/each');
+import each from '../function/each';
 
-const count = require('../function/count');
-
+import count from '../function/count';
 
 /**
  * Get key value
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {boolean} typ The second number in an addition.
- * @returns {array|object} Returns the total.
+ * @param {object} jsn Json or Array
+ * @param {boolean} typ Types of instruction
+ * @returns {array|object} Expected return from instruction
  * @example
  *
  * getKeyVal({"s1":1,"s2":1},"key")
@@ -46,7 +45,6 @@ function getKeyVal (jsn, typ) {
             ?ky
             :vl;
 
-
         return count(ars)===one
             ?ars[zero]
             :ars;
@@ -71,5 +69,5 @@ function getKeyVal (jsn, typ) {
 
 }
 
-module.exports=getKeyVal;
+export default getKeyVal;
 

@@ -10,10 +10,10 @@ const each = require('./each');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} valueArray The second number in an addition.
- * @param {number} minValue The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue  Max value
+ * @returns {string|number} Return string or number in array
  * @example
  *
  * _stk.random([10,20,30],0,3 )

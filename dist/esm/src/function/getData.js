@@ -1,15 +1,14 @@
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
-
+import each from './each';
 
 /**
  * Get Data
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} split_str The second number in an addition.
+ * @param {any} objectValue Json or Array data.
+ * @param {any} split_str Search key or index.
  * @returns {any} Returns the total.
  * @example
  *
@@ -67,4 +66,5 @@ function getData (objectValue, split_str) {
     return jsn_total;
 
 }
-module.exports=getData;
+export default getData;
+

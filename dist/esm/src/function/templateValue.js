@@ -1,24 +1,23 @@
-const varExtend = require('./varExtend');
+import varExtend from './varExtend';
 
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const indexOf = require('./indexOf');
+import indexOf from './indexOf';
 
-const parseString = require('./parseString');
+import parseString from './parseString';
 
-const getData = require('./getData');
+import getData from './getData';
 
-const has = require('./has');
-
+import has from './has';
 
 /**
  * Template Value Internal
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} str_raw The second number in an addition.
- * @param {string} reg The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {string} str_raw String from template you need interpolation
+ * @param {string} reg Value you want to replace from template
+ * @returns {string} Returns template from interpolation
  * @example
  *
  * templateValueInternal("","" )
@@ -187,5 +186,5 @@ function templateValue (templateString, data, option) {
     }
 
 }
-module.exports=templateValue;
+export default templateValue;
 

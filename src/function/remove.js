@@ -22,7 +22,7 @@ const where = require('./where');
  * @returns {string|number} Returns the total.
  * @example
  *
- * remove([1,2,3],1 )
+ * remove([1,2,3],0 )
  *=>[2, 3]
  */
 function remove (objectValue, value, value2) {
@@ -52,7 +52,7 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (ak >= value && ak <= lastRow) {
+                if (ak > value && ak <= lastRow) {
 
                     reslt.push(av);
 

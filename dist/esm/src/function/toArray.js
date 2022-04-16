@@ -1,13 +1,12 @@
-const getTypeof = require('./getTypeof');
-
+import getTypeof from './getTypeof';
 
 /**
  * To Array
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The second number in an addition.
- * @returns {any[]} Returns the total.
+ * @param {any} value Value you to convert in array
+ * @returns {any[]} Return in array.
  * @example
  *
  * toArray(1)
@@ -26,5 +25,5 @@ function toArray (value) {
     return return_val;
 
 }
-module.exports=toArray;
+export default toArray;
 

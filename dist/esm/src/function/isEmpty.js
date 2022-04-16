@@ -1,15 +1,14 @@
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const count = require('./count');
-
+import count from './count';
 
 /**
  * Check if data is empty
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
  * @example
  *
  * isEmpty('')
@@ -28,5 +27,5 @@ function isEmpty (value) {
     return (/^\s*$/gmi).test(value);
 
 }
-module.exports=isEmpty;
+export default isEmpty;
 

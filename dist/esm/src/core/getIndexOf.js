@@ -1,16 +1,15 @@
-const getTypeof = require('../function/getTypeof');
-
+import getTypeof from '../function/getTypeof';
 
 /**
  * Index Of array
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number} value The first number in an addition.
- * @param {number} start The first number in an addition.
- * @param {number} end The first number in an addition.
- * @param {boolean} isGetLast The first number in an addition.
+ * @param {array|object} objectValue Array
+ * @param {number} value key of array
+ * @param {number} start The first index in array
+ * @param {number} end The last index in array
+ * @param {boolean} isGetLast If True first index if False last index
  * @returns {number|object|string} Returns the total.
  * @example
  *
@@ -50,5 +49,5 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
         :referenceValue;
 
 }
-module.exports=getIndexOf;
+export default getIndexOf;
 

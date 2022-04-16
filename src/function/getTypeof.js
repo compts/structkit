@@ -3,8 +3,8 @@
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} objectValue Any data you want to check its property
+ * @returns {string} Get the property of variable
  * @example
  *
  * getTypeof([])

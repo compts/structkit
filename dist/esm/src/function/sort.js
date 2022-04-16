@@ -1,9 +1,8 @@
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
-
+import each from './each';
 
 /**
  * Sort
@@ -45,11 +44,10 @@ function sort (objectValue, index, order, func) {
 
         return orderB[index] > orderA[index];
 
-
     });
 
     return jsonn;
 
 }
-module.exports=sort;
+export default sort;
 

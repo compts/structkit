@@ -3,9 +3,9 @@
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The first number in an addition.
- * @param {any} key The second number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} value JSON or Array
+ * @param {any} key For key or index of data
+ * @returns {boolean} Returns true or false.
  * @example
  *
  * has({'as':1}, 'as')

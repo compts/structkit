@@ -4,6 +4,7 @@ const assert = require("assert");
 const three =3;
 const two =2;
 const one =1;
+const zero =0;
 
 describe('CJS: remove method', function () {
 
@@ -17,7 +18,7 @@ describe('CJS: remove method', function () {
                 two,
                 three
             ],
-            one
+            zero
         ), [
             two,
             three

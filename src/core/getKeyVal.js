@@ -10,9 +10,9 @@ const count = require('../function/count');
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {boolean} typ The second number in an addition.
- * @returns {array|object} Returns the total.
+ * @param {object} jsn Json or Array
+ * @param {boolean} typ Types of instruction
+ * @returns {array|object} Expected return from instruction
  * @example
  *
  * getKeyVal({"s1":1,"s2":1},"key")

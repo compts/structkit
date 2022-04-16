@@ -6,14 +6,14 @@ const getTypeof = require('./getTypeof');
  *
  * @since 1.3.1
  * @category Seq
- * @param {any} value The first number in an addition.
- * @param {any} search The first number in an addition.
- * @param {any} toReplace The first number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {any} toReplace Replace value.
+ * @returns {Promise<string>} String
  * @example
  *
- * isEmpty('')
- * // => true
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
 function asyncReplace (value, search, toReplace) {
 

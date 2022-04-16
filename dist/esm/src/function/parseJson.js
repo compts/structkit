@@ -3,7 +3,7 @@
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} value The second number in an addition.
+ * @param {string} value String you want to convert to JSON
  * @returns {any} Returns the total.
  * @example
  *
@@ -31,5 +31,5 @@ function parseJson (value) {
     return returnValue;
 
 }
-module.exports=parseJson;
+export default parseJson;
 

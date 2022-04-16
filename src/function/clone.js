@@ -10,8 +10,8 @@ const append = require('./append');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @returns {number} Returns the total.
+ * @param {any} objectValue data you want to clone
+ * @returns {number} Returns clone data
  * @example
  *
  * clone([1,2])

@@ -16,9 +16,9 @@ const has = require('./has');
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} str_raw The second number in an addition.
- * @param {string} reg The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {string} str_raw String from template you need interpolation
+ * @param {string} reg Value you want to replace from template
+ * @returns {string} Returns template from interpolation
  * @example
  *
  * templateValueInternal("","" )

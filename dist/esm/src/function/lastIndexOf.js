@@ -1,17 +1,16 @@
 
-const count = require('./count');
+import count from './count';
 
-const getIndexOf = require('../core/getIndexOf');
-
+import getIndexOf from '../core/getIndexOf';
 
 /**
  * Index Of array
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The first number in an addition.
- * @param {any} value The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
  * @example
  *
  * lastIndexOf([1,2], 1)
@@ -21,11 +20,10 @@ function lastIndexOf (objectValue, value) {
 
     const start = 0;
 
-
     const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
 
     return indexValue;
 
 }
-module.exports=lastIndexOf;
+export default lastIndexOf;
 

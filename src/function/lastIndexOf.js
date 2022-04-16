@@ -9,9 +9,9 @@ const getIndexOf = require('../core/getIndexOf');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The first number in an addition.
- * @param {any} value The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
  * @example
  *
  * lastIndexOf([1,2], 1)

@@ -1,19 +1,18 @@
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
+import each from './each';
 
-const count = require('./count');
-
+import count from './count';
 
 /**
- * Data String
+ * Data String from JSON object
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} str The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {string} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
  * @example
  *
  * parseString({} )
@@ -151,5 +150,5 @@ function parseString (value) {
 
 }
 
-module.exports=parseString;
+export default parseString;
 

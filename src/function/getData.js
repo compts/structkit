@@ -8,8 +8,8 @@ const each = require('./each');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} split_str The second number in an addition.
+ * @param {any} objectValue Json or Array data.
+ * @param {any} split_str Search key or index.
  * @returns {any} Returns the total.
  * @example
  *

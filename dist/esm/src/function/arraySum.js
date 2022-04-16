@@ -1,15 +1,14 @@
-const each = require('./each');
+import each from './each';
 
-const has = require('./has');
-
+import has from './has';
 
 /**
  * Array Sum
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} arrayObject The second number in an addition.
- * @param {number} delimeter The second number in an addition.
+ * @param {number[]} arrayObject Array in number
+ * @param {number} delimeter decimal point and default value is 4
  * @returns {number} Returns the total.
  * @example
  *
@@ -36,5 +35,5 @@ function arraySum (arrayObject, delimeter) {
     return sum.toFixed(delimeters);
 
 }
-module.exports=arraySum;
+export default arraySum;
 

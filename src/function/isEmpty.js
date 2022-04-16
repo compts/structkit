@@ -8,8 +8,8 @@ const count = require('./count');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
  * @example
  *
  * isEmpty('')

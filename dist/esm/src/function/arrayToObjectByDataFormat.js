@@ -1,19 +1,18 @@
-const map = require('./map');
+import map from './map';
 
-const getData = require('./getData');
-
+import getData from './getData';
 
 /**
  * Array To Object By DataFormat
  *
  * @since 1.3.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} valueFormat The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any[]} objectValue Json in array format
+ * @param {string} valueFormat Key look up format
+ * @returns {any} Return array.
  * @example
  *
- * arrayToObjectByDataFormat(1)
+ * arrayToObjectByDataFormat([{"Asd":1}],"Asd")
  *=>[1]
  */
 function arrayToObjectByDataFormat (objectValue, valueFormat) {
@@ -25,5 +24,5 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
     });
 
 }
-module.exports=arrayToObjectByDataFormat;
+export default arrayToObjectByDataFormat;
 

@@ -1,13 +1,12 @@
-const has = require('./has');
+import has from './has';
 
-const each = require('./each');
+import each from './each';
 
-const getJSONVariable = require('./getJSONVariable');
+import getJSONVariable from './getJSONVariable';
 
-const getTypeof = require('./getTypeof');
+import getTypeof from './getTypeof';
 
-const append = require('./append');
-
+import append from './append';
 
 /**
  * Filter
@@ -54,5 +53,5 @@ function filter (objectValue, func) {
     return jsn_var;
 
 }
-module.exports=filter;
+export default filter;
 

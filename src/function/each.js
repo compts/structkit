@@ -8,9 +8,9 @@ const has = require('./has');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} objectValue Array or json.
+ * @param {any} func Function data
+ * @returns {any} Array or json
  * @example
  *
  * each([1,2],(key,value)=>{
