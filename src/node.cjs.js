@@ -1,10 +1,10 @@
-const dataTypeFormat=require('./src/core/dataTypeFormat.js');
-
-exports.dataTypeFormat =dataTypeFormat;
-
 const getIndexOf=require('./src/core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
+
+const dataTypeFormat=require('./src/core/dataTypeFormat.js');
+
+exports.dataTypeFormat =dataTypeFormat;
 
 const getKeyVal=require('./src/core/getKeyVal.js');
 
@@ -58,10 +58,6 @@ const filter=require('./src/function/filter.js');
 
 exports.filter =filter;
 
-const first=require('./src/function/first.js');
-
-exports.first =first;
-
 const getData=require('./src/function/getData.js');
 
 exports.getData =getData;
@@ -82,6 +78,10 @@ const getUniq=require('./src/function/getUniq.js');
 
 exports.getUniq =getUniq;
 
+const first=require('./src/function/first.js');
+
+exports.first =first;
+
 const getValue=require('./src/function/getValue.js');
 
 exports.getValue =getValue;
@@ -98,13 +98,13 @@ const indexOf=require('./src/function/indexOf.js');
 
 exports.indexOf =indexOf;
 
-const insert=require('./src/function/insert.js');
-
-exports.insert =insert;
-
 const isEmpty=require('./src/function/isEmpty.js');
 
 exports.isEmpty =isEmpty;
+
+const insert=require('./src/function/insert.js');
+
+exports.insert =insert;
 
 const isExact=require('./src/function/isExact.js');
 
@@ -174,13 +174,13 @@ const sort=require('./src/function/sort.js');
 
 exports.sort =sort;
 
-const templateValue=require('./src/function/templateValue.js');
-
-exports.templateValue =templateValue;
-
 const toArray=require('./src/function/toArray.js');
 
 exports.toArray =toArray;
+
+const templateValue=require('./src/function/templateValue.js');
+
+exports.templateValue =templateValue;
 
 const toDouble=require('./src/function/toDouble.js');
 
