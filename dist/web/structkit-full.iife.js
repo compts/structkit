@@ -1155,6 +1155,28 @@ function getJSONVariable (value) {
 _stk.getJSONVariable=getJSONVariable
 
 
+
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+_stk.getKey=getKey
+
+
 /**
  * Get Variable typeof
  *
@@ -1190,28 +1212,6 @@ function getTypeof (objectValue) {
 
 }
 _stk.getTypeof=getTypeof
-
-
-
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-_stk.getKey=getKey
 
 
 /**
@@ -1375,33 +1375,6 @@ function insert (objectValue, value) {
 _stk.insert=insert
 
 
-/**
- * Check if object has value
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value JSON or Array
- * @param {any} key For key or index of data
- * @returns {boolean} Returns true or false.
- * @example
- *
- * has({'as':1}, 'as')
- * // => true
- */
-function has (value, key) {
-
-    if (typeof key==="undefined") {
-
-        return value!==null && typeof value !=="undefined";
-
-    }
-
-    return Object.prototype.hasOwnProperty.call(value, key);
-
-}
-_stk.has=has
-
-
 
 
 /**
@@ -1432,90 +1405,31 @@ function isEmpty (value) {
 _stk.isEmpty=isEmpty
 
 
-
-
 /**
- * Is Exact
+ * Check if object has value
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue1 Json or Array
- * @param {string} objectValue2 Json or Array for lookup to objectValue1
- * @param {boolean} isExist Default value is True
- * @returns {boolean} Returns the total.
+ * @param {any} value JSON or Array
+ * @param {any} key For key or index of data
+ * @returns {boolean} Returns true or false.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
+ * has({'as':1}, 'as')
  * // => true
  */
-function isExact (objectValue1, objectValue2, isExist) {
+function has (value, key) {
 
-    if (objectValue2===null) {
+    if (typeof key==="undefined") {
 
-        return false;
-
-    }
-
-    var local_is_exist=has(isExist)&&getTypeof(isExist)==="boolean"
-        ?isExist
-        :true;
-    var val_s=(/(json|array)/g).test(getTypeof(objectValue2))
-        ?objectValue2
-        :[objectValue2];
-    var key_s=(/(json|array)/g).test(getTypeof(objectValue1))
-        ?objectValue1
-        :[objectValue1];
-    var cnt=0;
-    var incrementDefaultValue=1;
-    var emptyDefaultValue=0;
-    var notExistArrayDefaultValue=-1;
-
-    each(key_s, function (kk, kv) {
-
-        if (getTypeof(objectValue2)==="json") {
-
-            if (has(val_s[kk])) {
-
-                var local_is_valid = local_is_exist
-                    ?val_s[kk]===kv
-                    :val_s[kk]!==kv;
-
-                if (local_is_valid) {
-
-                    cnt+=incrementDefaultValue;
-
-                }
-
-            }
-
-        }
-
-        if (getTypeof(objectValue2)==="array") {
-
-            var local_is_valid = local_is_exist
-                ?indexOf(val_s, kv)>notExistArrayDefaultValue
-                :indexOf(val_s, kv)===notExistArrayDefaultValue;
-
-            if (local_is_valid) {
-
-                cnt+=incrementDefaultValue;
-
-            }
-
-        }
-
-    });
-
-    if (cnt===emptyDefaultValue) {
-
-        return false;
+        return value!==null && typeof value !=="undefined";
 
     }
 
-    return cnt===count(objectValue2);
+    return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-_stk.isExact=isExact
+_stk.has=has
 
 
 
@@ -1675,6 +1589,92 @@ function jsonToArray (objectValue, value) {
 
 }
 _stk.jsonToArray=jsonToArray
+
+
+
+
+/**
+ * Is Exact
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} objectValue1 Json or Array
+ * @param {string} objectValue2 Json or Array for lookup to objectValue1
+ * @param {boolean} isExist Default value is True
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * isExact({"test": 11,"test2": 11}, {"test2": 11})
+ * // => true
+ */
+function isExact (objectValue1, objectValue2, isExist) {
+
+    if (objectValue2===null) {
+
+        return false;
+
+    }
+
+    var local_is_exist=has(isExist)&&getTypeof(isExist)==="boolean"
+        ?isExist
+        :true;
+    var val_s=(/(json|array)/g).test(getTypeof(objectValue2))
+        ?objectValue2
+        :[objectValue2];
+    var key_s=(/(json|array)/g).test(getTypeof(objectValue1))
+        ?objectValue1
+        :[objectValue1];
+    var cnt=0;
+    var incrementDefaultValue=1;
+    var emptyDefaultValue=0;
+    var notExistArrayDefaultValue=-1;
+
+    each(key_s, function (kk, kv) {
+
+        if (getTypeof(objectValue2)==="json") {
+
+            if (has(val_s[kk])) {
+
+                var local_is_valid = local_is_exist
+                    ?val_s[kk]===kv
+                    :val_s[kk]!==kv;
+
+                if (local_is_valid) {
+
+                    cnt+=incrementDefaultValue;
+
+                }
+
+            }
+
+        }
+
+        if (getTypeof(objectValue2)==="array") {
+
+            var local_is_valid = local_is_exist
+                ?indexOf(val_s, kv)>notExistArrayDefaultValue
+                :indexOf(val_s, kv)===notExistArrayDefaultValue;
+
+            if (local_is_valid) {
+
+                cnt+=incrementDefaultValue;
+
+            }
+
+        }
+
+    });
+
+    if (cnt===emptyDefaultValue) {
+
+        return false;
+
+    }
+
+    return cnt===count(objectValue2);
+
+}
+_stk.isExact=isExact
 
 
 
@@ -2492,6 +2492,50 @@ function remove (objectValue, value, value2) {
 _stk.remove=remove
 
 
+
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} value The second number in an addition.
+ * @param {number} maxValue The second number in an addition.
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec)===twoDefaultValue) {
+
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts<=s_dmin
+            ?s_dmin
+            :s_dmax;
+        var dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+_stk.roundDecimal=roundDecimal
+
+
 /**
  * Repeat
  *
@@ -2531,8 +2575,7 @@ _stk.repeat=repeat
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} value The second number in an addition.
+ * @param {any} objectValue Array argmuments
  * @returns {string|number} Returns the total.
  * @example
  *
@@ -2586,44 +2629,87 @@ _stk.shuffle=shuffle
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} index The second number in an addition.
- * @param {boolean} order The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {any} objectValue Array
+ * @param {any} order True for ascend then false for descend
+ * @param {any} func Callback function or sort type
+ * @returns {string[]|number[]} Returns the total.
  * @example
  *
  * sort([2,3,1])
  *=>[1,2,3]
  */
-function sort (objectValue, index, order, func) {
+function sort (objectValue, order, func) {
 
     var jsonn=objectValue;
-    var asc=has(order)
-        ?order
-        :true;
+    var asc=true;
+    var types='any';
+
+    if (has(order) && getTypeof(order) ==='boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(func) && getTypeof(func) ==='string') {
+
+        types= func;
+
+    }
+
     var js_m=getTypeof(jsonn)==="json"
         ?each(jsonn)
         :jsonn;
 
-    jsonn=js_m.sort(function (orderA, orderB) {
+    var finalResponse=js_m.sort(function (orderA, orderB) {
 
-        if (has(func)) {
+        if (has(func) && getTypeof(func) ==='function') {
 
             return func(orderA, orderB);
 
         }
-        if (asc) {
 
-            return orderA[index] > orderB[index];
+        var sortOrderA = orderA;
+        var sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types ==='any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types ==='lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types ==='uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
 
         }
 
-        return orderB[index] > orderA[index];
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
 
     });
 
-    return jsonn;
+    return finalResponse;
 
 }
 _stk.sort=sort
@@ -3124,32 +3210,6 @@ function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
- * To Double
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in double
- * @returns {any[]} Return in double.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toDouble (value) {
-
-    var zero = 0.00;
-
-    return parseFloat(dataTypeFormat(/(\d[.]{0,})/g, zero, value===null
-        ?zero
-        :value));
-
-}
-_stk.toDouble=toDouble
-
-
-
-
-/**
  * To Integer
  *
  * @since 1.0.1
@@ -3282,30 +3342,6 @@ _stk.varExtend=varExtend
 
 
 /**
- * Where
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search in key
- * @param {any} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function where (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
-
-}
-_stk.where=where
-
-
-
-
-/**
  * Where Not
  *
  * @since 1.0.1
@@ -3330,44 +3366,50 @@ _stk.whereNot=whereNot
 
 
 /**
- * Random Decimal
+ * Where
  *
  * @since 1.0.1
  * @category Seq
- * @param {number} value The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @returns {number} Returns the total.
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * where({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
  */
-function roundDecimal (value, maxValue) {
+function where (objectValue, objectValueWhere, func) {
 
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
-    var str_dec=jsn.toString().split(".");
-    var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec)===twoDefaultValue) {
-
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts<=s_dmin
-            ?s_dmin
-            :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
 
 }
-_stk.roundDecimal=roundDecimal
+_stk.where=where
+
+
+
+
+/**
+ * To Double
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in double
+ * @returns {any[]} Return in double.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toDouble (value) {
+
+    var zero = 0.00;
+
+    return parseFloat(dataTypeFormat(/(\d[.]{0,})/g, zero, value===null
+        ?zero
+        :value));
+
+}
+_stk.toDouble=toDouble
 
 })(typeof window !== "undefined" ? window : this);

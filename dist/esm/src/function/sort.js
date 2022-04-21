@@ -4,49 +4,94 @@ import has from './has';
 
 import each from './each';
 
+import isEmpty from './isEmpty';
+
 /**
  * Sort
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} index The second number in an addition.
- * @param {boolean} order The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {any} objectValue Array
+ * @param {any} order True for ascend then false for descend
+ * @param {any} func Callback function or sort type
+ * @returns {string[]|number[]} Returns the total.
  * @example
  *
  * sort([2,3,1])
  *=>[1,2,3]
  */
-function sort (objectValue, index, order, func) {
+function sort (objectValue, order, func) {
 
-    let jsonn=objectValue;
-    const asc=has(order)
-        ?order
-        :true;
+    const jsonn=objectValue;
+    let asc=true;
+    let types='any';
+
+    if (has(order) && getTypeof(order) ==='boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(func) && getTypeof(func) ==='string') {
+
+        types= func;
+
+    }
+
     const js_m=getTypeof(jsonn)==="json"
         ?each(jsonn)
         :jsonn;
 
-    jsonn=js_m.sort(function (orderA, orderB) {
+    const finalResponse=js_m.sort(function (orderA, orderB) {
 
-        if (has(func)) {
+        if (has(func) && getTypeof(func) ==='function') {
 
             return func(orderA, orderB);
 
         }
-        if (asc) {
 
-            return orderA[index] > orderB[index];
+        let sortOrderA = orderA;
+        let sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types ==='any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types ==='lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types ==='uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
 
         }
 
-        return orderB[index] > orderA[index];
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
 
     });
 
-    return jsonn;
+    return finalResponse;
 
 }
 export default sort;

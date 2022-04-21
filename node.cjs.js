@@ -6,13 +6,13 @@ const getIndexOf=require('./src/core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const getKeyVal=require('./src/core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
 const whereLoopExecution=require('./src/core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
+
+const getKeyVal=require('./src/core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
 
 const append=require('./src/function/append.js');
 
@@ -142,6 +142,10 @@ const parseJson=require('./src/function/parseJson.js');
 
 exports.parseJson =parseJson;
 
+const parseString=require('./src/function/parseString.js');
+
+exports.parseString =parseString;
+
 const random=require('./src/function/random.js');
 
 exports.random =random;
@@ -149,10 +153,6 @@ exports.random =random;
 const range=require('./src/function/range.js');
 
 exports.range =range;
-
-const parseString=require('./src/function/parseString.js');
-
-exports.parseString =parseString;
 
 const remove=require('./src/function/remove.js');
 

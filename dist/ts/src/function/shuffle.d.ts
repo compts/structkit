@@ -4,8 +4,7 @@ export default shuffle;
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} value The second number in an addition.
+ * @param {any} objectValue Array argmuments
  * @returns {string|number} Returns the total.
  * @example
  *
