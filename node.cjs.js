@@ -6,10 +6,6 @@ const getIndexOf=require('./src/core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const whereLoopExecution=require('./src/core/whereLoopExecution.js');
-
-exports.whereLoopExecution =whereLoopExecution;
-
 const getKeyVal=require('./src/core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
@@ -17,6 +13,10 @@ exports.getKeyVal =getKeyVal;
 const append=require('./src/function/append.js');
 
 exports.append =append;
+
+const whereLoopExecution=require('./src/core/whereLoopExecution.js');
+
+exports.whereLoopExecution =whereLoopExecution;
 
 const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
 
@@ -82,13 +82,13 @@ const getUniq=require('./src/function/getUniq.js');
 
 exports.getUniq =getUniq;
 
-const getValue=require('./src/function/getValue.js');
-
-exports.getValue =getValue;
-
 const has=require('./src/function/has.js');
 
 exports.has =has;
+
+const getValue=require('./src/function/getValue.js');
+
+exports.getValue =getValue;
 
 const ifUndefined=require('./src/function/ifUndefined.js');
 
@@ -118,10 +118,6 @@ const jsonToArray=require('./src/function/jsonToArray.js');
 
 exports.jsonToArray =jsonToArray;
 
-const last=require('./src/function/last.js');
-
-exports.last =last;
-
 const lastIndexOf=require('./src/function/lastIndexOf.js');
 
 exports.lastIndexOf =lastIndexOf;
@@ -129,6 +125,10 @@ exports.lastIndexOf =lastIndexOf;
 const like=require('./src/function/like.js');
 
 exports.like =like;
+
+const last=require('./src/function/last.js');
+
+exports.last =last;
 
 const limit=require('./src/function/limit.js');
 

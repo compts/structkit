@@ -14,7 +14,7 @@ import isEmpty from './isEmpty';
  * @param {any} objectValue Array
  * @param {any} order True for ascend then false for descend
  * @param {any} func Callback function or sort type
- * @returns {string[]|number[]} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * sort([2,3,1])
