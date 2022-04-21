@@ -73,6 +73,37 @@ _stk.append=append
 
 
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    var return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
+
+}
+_stk.arrayConcat=arrayConcat
+
+
+
+
+/**
  * Check if object has value
  *
  * @since 1.0.1
@@ -172,6 +203,44 @@ function each (objectValue, func) {
     return null;
 
 }
+
+/**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number[]} arrayObject Array in number
+ * @param {number} delimeter decimal point and default value is 4
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ */
+function arraySum (arrayObject, delimeter) {
+
+    var sum=0;
+    var defaultLimitDecimal = 3;
+    var arrayObjects=arrayObject||[];
+    var delimeters=delimeter||defaultLimitDecimal;
+
+    each(arrayObjects, function (ak, av) {
+
+        if (has(av)) {
+
+            sum+=parseFloat(av);
+
+        }
+
+    });
+
+    return sum.toFixed(delimeters);
+
+}
+_stk.arraySum=arraySum
+
+
+
 
 /**
  * Array Count
@@ -362,75 +431,6 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-_stk.arrayConcat=arrayConcat
-
-
-
-
-/**
- * Array Sum
- *
- * @since 1.0.1
- * @category Seq
- * @param {number[]} arrayObject Array in number
- * @param {number} delimeter decimal point and default value is 4
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- */
-function arraySum (arrayObject, delimeter) {
-
-    var sum=0;
-    var defaultLimitDecimal = 3;
-    var arrayObjects=arrayObject||[];
-    var delimeters=delimeter||defaultLimitDecimal;
-
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum+=parseFloat(av);
-
-        }
-
-    });
-
-    return sum.toFixed(delimeters);
-
-}
-_stk.arraySum=arraySum
-
-
-
-
-/**
  * Map
  *
  * @since 1.0.1
@@ -571,6 +571,62 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 
 /**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {any} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+_stk.asyncReplace=asyncReplace
+
+
+
+
+/**
  * Get JSON Variable
  *
  * @since 1.0.1
@@ -659,62 +715,6 @@ function clone (objectValue) {
 
 }
 _stk.clone=clone
-
-
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function (...arg) {
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-_stk.asyncReplace=asyncReplace
 
 
 
@@ -1155,28 +1155,6 @@ function getJSONVariable (value) {
 _stk.getJSONVariable=getJSONVariable
 
 
-
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-_stk.getKey=getKey
-
-
 /**
  * Get Variable typeof
  *
@@ -1212,6 +1190,28 @@ function getTypeof (objectValue) {
 
 }
 _stk.getTypeof=getTypeof
+
+
+
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+_stk.getKey=getKey
 
 
 /**
@@ -1261,33 +1261,6 @@ function getValue (objectValue) {
 
 }
 _stk.getValue=getValue
-
-
-/**
- * Check if object has value
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value JSON or Array
- * @param {any} key For key or index of data
- * @returns {boolean} Returns true or false.
- * @example
- *
- * has({'as':1}, 'as')
- * // => true
- */
-function has (value, key) {
-
-    if (typeof key==="undefined") {
-
-        return value!==null && typeof value !=="undefined";
-
-    }
-
-    return Object.prototype.hasOwnProperty.call(value, key);
-
-}
-_stk.has=has
 
 
 
@@ -1400,6 +1373,33 @@ function insert (objectValue, value) {
 
 }
 _stk.insert=insert
+
+
+/**
+ * Check if object has value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value JSON or Array
+ * @param {any} key For key or index of data
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * has({'as':1}, 'as')
+ * // => true
+ */
+function has (value, key) {
+
+    if (typeof key==="undefined") {
+
+        return value!==null && typeof value !=="undefined";
+
+    }
+
+    return Object.prototype.hasOwnProperty.call(value, key);
+
+}
+_stk.has=has
 
 
 
@@ -2527,50 +2527,6 @@ _stk.repeat=repeat
 
 
 /**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} value The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
-    var str_dec=jsn.toString().split(".");
-    var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec)===twoDefaultValue) {
-
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts<=s_dmin
-            ?s_dmin
-            :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-_stk.roundDecimal=roundDecimal
-
-
-
-
-/**
  * Shuffle
  *
  * @since 1.0.1
@@ -3369,5 +3325,49 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 }
 _stk.whereNot=whereNot
+
+
+
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} value The second number in an addition.
+ * @param {number} maxValue The second number in an addition.
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec)===twoDefaultValue) {
+
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts<=s_dmin
+            ?s_dmin
+            :s_dmax;
+        var dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+_stk.roundDecimal=roundDecimal
 
 })(typeof window !== "undefined" ? window : this);

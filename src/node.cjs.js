@@ -1,10 +1,10 @@
-const getIndexOf=require('./src/core/getIndexOf.js');
-
-exports.getIndexOf =getIndexOf;
-
 const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
+
+const getIndexOf=require('./src/core/getIndexOf.js');
+
+exports.getIndexOf =getIndexOf;
 
 const getKeyVal=require('./src/core/getKeyVal.js');
 
@@ -22,13 +22,13 @@ const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
 
-const arraySum=require('./src/function/arraySum.js');
-
-exports.arraySum =arraySum;
-
 const arrayConcat=require('./src/function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
+
+const arraySum=require('./src/function/arraySum.js');
+
+exports.arraySum =arraySum;
 
 const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
 
@@ -58,6 +58,10 @@ const filter=require('./src/function/filter.js');
 
 exports.filter =filter;
 
+const first=require('./src/function/first.js');
+
+exports.first =first;
+
 const getData=require('./src/function/getData.js');
 
 exports.getData =getData;
@@ -78,10 +82,6 @@ const getUniq=require('./src/function/getUniq.js');
 
 exports.getUniq =getUniq;
 
-const first=require('./src/function/first.js');
-
-exports.first =first;
-
 const getValue=require('./src/function/getValue.js');
 
 exports.getValue =getValue;
@@ -98,13 +98,13 @@ const indexOf=require('./src/function/indexOf.js');
 
 exports.indexOf =indexOf;
 
-const isEmpty=require('./src/function/isEmpty.js');
-
-exports.isEmpty =isEmpty;
-
 const insert=require('./src/function/insert.js');
 
 exports.insert =insert;
+
+const isEmpty=require('./src/function/isEmpty.js');
+
+exports.isEmpty =isEmpty;
 
 const isExact=require('./src/function/isExact.js');
 
@@ -142,10 +142,6 @@ const parseJson=require('./src/function/parseJson.js');
 
 exports.parseJson =parseJson;
 
-const parseString=require('./src/function/parseString.js');
-
-exports.parseString =parseString;
-
 const random=require('./src/function/random.js');
 
 exports.random =random;
@@ -153,6 +149,10 @@ exports.random =random;
 const range=require('./src/function/range.js');
 
 exports.range =range;
+
+const parseString=require('./src/function/parseString.js');
+
+exports.parseString =parseString;
 
 const remove=require('./src/function/remove.js');
 
@@ -174,13 +174,13 @@ const sort=require('./src/function/sort.js');
 
 exports.sort =sort;
 
-const toArray=require('./src/function/toArray.js');
-
-exports.toArray =toArray;
-
 const templateValue=require('./src/function/templateValue.js');
 
 exports.templateValue =templateValue;
+
+const toArray=require('./src/function/toArray.js');
+
+exports.toArray =toArray;
 
 const toDouble=require('./src/function/toDouble.js');
 
