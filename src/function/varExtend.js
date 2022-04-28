@@ -3,6 +3,7 @@ const has = require('./has');
 const getTypeof = require('./getTypeof');
 
 const indexOf = require('./indexOf');
+const getKey = require('./getKey');
 
 
 /**
@@ -21,6 +22,10 @@ const indexOf = require('./indexOf');
 function varExtend (objectValue, objectValueReplace) {
 
     const onceDefaultValue=1;
+    const jsn_bool={
+        "false": false,
+        "true": true
+    };
 
     if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
 
@@ -28,23 +33,24 @@ function varExtend (objectValue, objectValueReplace) {
 
         for (const key in objectValue) {
 
-            if (indexOf([
-                'true',
-                'false'
-            ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
+            if (has(objectValue[key])) {
 
-                const jsn_bool={
-                    "false": false,
-                    "true": true
-                };
+                if (indexOf(getKey(jsn_bool), objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
 
-                jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+                    jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+
+                } else {
+
+                    jsn_s[key]=objectValue[key];
+
+                }
 
             } else {
 
                 jsn_s[key]=objectValue[key];
 
             }
+
 
         }
 

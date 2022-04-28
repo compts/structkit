@@ -174,6 +174,240 @@ function each (objectValue, func) {
 }
 
 /**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number[]} arrayObject Array in number
+ * @param {number} delimeter decimal point and default value is 4
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ */
+function arraySum (arrayObject, delimeter) {
+
+    var sum=0;
+    var defaultLimitDecimal = 3;
+    var arrayObjects=arrayObject||[];
+    var delimeters=delimeter||defaultLimitDecimal;
+
+    each(arrayObjects, function (ak, av) {
+
+        if (has(av)) {
+
+            sum+=parseFloat(av);
+
+        }
+
+    });
+
+    return sum.toFixed(delimeters);
+
+}
+_stk.arraySum=arraySum
+
+
+
+
+/**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+
+    var strTypeOf =getTypeof(objectValue);
+    var emptyDefaultValue=0;
+    var incrementDefaultValue=1;
+    var value_arry=strTypeOf==="array"
+        ?[]
+        :{};
+    var cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+
+                var dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
+
+        }
+
+    });
+
+    return value_arry;
+
+}
+
+/**
+ * Get Data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array data.
+ * @param {any} split_str Search key or index.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * getData({"s":1},"s")
+ *=>1
+ */
+function getData (objectValue, split_str) {
+
+    var spl_len=split_str.split(":");
+    var spl=[];
+    var jsn_total={};
+
+    if (!has(objectValue)) {
+
+        return "";
+
+    }
+
+    each(spl_len, function (key, value) {
+
+        spl.push(value);
+
+    });
+
+    each(spl, function (key, value) {
+
+        try {
+
+            if (has(objectValue, value)) {
+
+                if ((/^\s+$/).test(objectValue[value])===false) {
+
+                    jsn_total=objectValue[value];
+
+                }
+
+            } else {
+
+                if (has(jsn_total, value)) {
+
+                    jsn_total=jsn_total[value];
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    });
+
+    return jsn_total;
+
+}
+
+/**
+ * Array To Object By DataFormat
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any[]} objectValue Json in array format
+ * @param {string} valueFormat Key look up format
+ * @returns {any} Return array.
+ * @example
+ *
+ * arrayToObjectByDataFormat([{"Asd":1}],"Asd")
+ *=>[1]
+ */
+function arrayToObjectByDataFormat (objectValue, valueFormat) {
+
+    return map(objectValue, function (value) {
+
+        return getData(value, valueFormat);
+
+    });
+
+}
+_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
+
+
+
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {any} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+_stk.asyncReplace=asyncReplace
+
+
+
+
+/**
  * Array Count
  *
  * @since 1.0.1
@@ -362,184 +596,6 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
- * Array Sum
- *
- * @since 1.0.1
- * @category Seq
- * @param {number[]} arrayObject Array in number
- * @param {number} delimeter decimal point and default value is 4
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- */
-function arraySum (arrayObject, delimeter) {
-
-    var sum=0;
-    var defaultLimitDecimal = 3;
-    var arrayObjects=arrayObject||[];
-    var delimeters=delimeter||defaultLimitDecimal;
-
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum+=parseFloat(av);
-
-        }
-
-    });
-
-    return sum.toFixed(delimeters);
-
-}
-_stk.arraySum=arraySum
-
-
-
-
-/**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-
-    var strTypeOf =getTypeof(objectValue);
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
-    var value_arry=strTypeOf==="array"
-        ?[]
-        :{};
-    var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (strTypeOf==="array") {
-
-                value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
-
-            } else {
-
-                var dataFunc = func(value, key, cnt);
-
-                value_arry[key] = dataFunc;
-
-            }
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-
-/**
- * Get Data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array data.
- * @param {any} split_str Search key or index.
- * @returns {any} Returns the total.
- * @example
- *
- * getData({"s":1},"s")
- *=>1
- */
-function getData (objectValue, split_str) {
-
-    var spl_len=split_str.split(":");
-    var spl=[];
-    var jsn_total={};
-
-    if (!has(objectValue)) {
-
-        return "";
-
-    }
-
-    each(spl_len, function (key, value) {
-
-        spl.push(value);
-
-    });
-
-    each(spl, function (key, value) {
-
-        try {
-
-            if (has(objectValue, value)) {
-
-                if ((/^\s+$/).test(objectValue[value])===false) {
-
-                    jsn_total=objectValue[value];
-
-                }
-
-            } else {
-
-                if (has(jsn_total, value)) {
-
-                    jsn_total=jsn_total[value];
-
-                }
-
-            }
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-
-    });
-
-    return jsn_total;
-
-}
-
-/**
- * Array To Object By DataFormat
- *
- * @since 1.3.1
- * @category Seq
- * @param {any[]} objectValue Json in array format
- * @param {string} valueFormat Key look up format
- * @returns {any} Return array.
- * @example
- *
- * arrayToObjectByDataFormat([{"Asd":1}],"Asd")
- *=>[1]
- */
-function arrayToObjectByDataFormat (objectValue, valueFormat) {
-
-    return map(objectValue, function (value) {
-
-        return getData(value, valueFormat);
-
-    });
-
-}
-_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
-
-
-
-
-/**
  * Array Concat
  *
  * @since 1.0.1
@@ -566,62 +622,6 @@ function arrayConcat (arrayObject, arrayValue) {
 
 }
 _stk.arrayConcat=arrayConcat
-
-
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function (...arg) {
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-_stk.asyncReplace=asyncReplace
 
 
 
@@ -1214,6 +1214,28 @@ function getTypeof (objectValue) {
 _stk.getTypeof=getTypeof
 
 
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+_stk.getValue=getValue
+
+
 /**
  * Generate unique value id
  *
@@ -1241,28 +1263,6 @@ function getUniq () {
 _stk.getUniq=getUniq
 
 
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-_stk.getValue=getValue
-
-
 /**
  * Check if object has value
  *
@@ -1288,6 +1288,33 @@ function has (value, key) {
 
 }
 _stk.has=has
+
+
+
+
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value in array
+ * @returns {any} Returns the index.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function indexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+
+    return indexValue;
+
+}
+_stk.indexOf=indexOf
 
 
 
@@ -1335,28 +1362,44 @@ _stk.ifUndefined=ifUndefined
 
 
 /**
- * Index Of array
+ * Insert Value
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value in array
- * @returns {any} Returns the index.
+ * @param {any} objectValue Json or array
+ * @param {any} value Data you want to insert
+ * @returns {any} Returns Json or array
  * @example
- *
- * indexOf([1,2], 1)
- * // => 0
+ * var ss = {"A":1}
+ * insert(ss,{'as':1})
+ * // => {A: 1, as: 1}
  */
-function indexOf (objectValue, value) {
+function insert (objectValue, value) {
 
-    var start = 0;
+    if (has(objectValue)) {
 
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+        var jsn_type=getTypeof(value);
 
-    return indexValue;
+        if (jsn_type==="json") {
+
+            each(value, function (key, _value) {
+
+                objectValue[key]=_value;
+
+            });
+
+        }
+
+        if (jsn_type==="array") {
+
+            objectValue.push(value);
+
+        }
+
+    }
 
 }
-_stk.indexOf=indexOf
+_stk.insert=insert
 
 
 
@@ -1566,49 +1609,6 @@ _stk.isExactbyRegExp=isExactbyRegExp
 
 
 /**
- * Insert Value
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or array
- * @param {any} value Data you want to insert
- * @returns {any} Returns Json or array
- * @example
- * var ss = {"A":1}
- * insert(ss,{'as':1})
- * // => {A: 1, as: 1}
- */
-function insert (objectValue, value) {
-
-    if (has(objectValue)) {
-
-        var jsn_type=getTypeof(value);
-
-        if (jsn_type==="json") {
-
-            each(value, function (key, _value) {
-
-                objectValue[key]=_value;
-
-            });
-
-        }
-
-        if (jsn_type==="array") {
-
-            objectValue.push(value);
-
-        }
-
-    }
-
-}
-_stk.insert=insert
-
-
-
-
-/**
  * Check if data is empty
  *
  * @since 1.0.1
@@ -1697,6 +1697,157 @@ function last (objectValue) {
 
 }
 _stk.last=last
+
+
+
+
+/**
+ * Limit
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {number} minValue The second number in an addition.
+ * @param {number} maxValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * limit([1,2],1,2 )
+ *=>{'1':2}
+ */
+function limit (objectValue, minValue, maxValue, func) {
+
+    var cnt=0;
+    var glo_jsn={};
+    var glo_indtfd = null;
+    var emptyDefaultValue=0;
+    var minValueReserve=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+    var incrementDefaultValue=1;
+
+    each(objectValue, function (key, meth) {
+
+        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
+
+            if (has(func)) {
+
+                glo_indtfd=func(key, meth);
+
+                if (has(glo_indtfd)) {
+
+                    glo_jsn[key]=glo_indtfd;
+
+                }
+
+            } else {
+
+                glo_jsn[key]=meth;
+
+            }
+
+        }
+
+        cnt+=incrementDefaultValue;
+
+    });
+
+    return glo_jsn;
+
+}
+_stk.limit=limit
+
+
+
+
+/**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+
+    var strTypeOf =getTypeof(objectValue);
+    var emptyDefaultValue=0;
+    var incrementDefaultValue=1;
+    var value_arry=strTypeOf==="array"
+        ?[]
+        :{};
+    var cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+
+                var dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
+
+        }
+
+    });
+
+    return value_arry;
+
+}
+_stk.map=map
+
+
+/**
+ * Parse Json
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value String you want to convert to JSON
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function parseJson (value) {
+
+    var emptyDefaultValue=0;
+    var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+    var returnValue=null;
+
+    if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
+        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
+
+            returnValue = eval('(' + stripValue + ')');
+
+        }
+
+    }
+
+    return returnValue;
+
+}
+_stk.parseJson=parseJson
 
 
 
@@ -1998,105 +2149,6 @@ _stk.like=like
 
 
 /**
- * Limit
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} minValue The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * limit([1,2],1,2 )
- *=>{'1':2}
- */
-function limit (objectValue, minValue, maxValue, func) {
-
-    var cnt=0;
-    var glo_jsn={};
-    var glo_indtfd = null;
-    var emptyDefaultValue=0;
-    var minValueReserve=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-    var incrementDefaultValue=1;
-
-    each(objectValue, function (key, meth) {
-
-        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(key, meth);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt+=incrementDefaultValue;
-
-    });
-
-    return glo_jsn;
-
-}
-_stk.limit=limit
-
-
-/**
- * Parse Json
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value String you want to convert to JSON
- * @returns {any} Returns the total.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function parseJson (value) {
-
-    var emptyDefaultValue=0;
-    var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
-    var returnValue=null;
-
-    if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
-        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-
-        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
-
-            returnValue = eval('(' + stripValue + ')');
-
-        }
-
-    }
-
-    return returnValue;
-
-}
-_stk.parseJson=parseJson
-
-
-
-
-/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -2246,58 +2298,6 @@ _stk.parseString=parseString
 
 
 /**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-
-    var strTypeOf =getTypeof(objectValue);
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
-    var value_arry=strTypeOf==="array"
-        ?[]
-        :{};
-    var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (strTypeOf==="array") {
-
-                value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
-
-            } else {
-
-                var dataFunc = func(value, key, cnt);
-
-                value_arry[key] = dataFunc;
-
-            }
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-_stk.map=map
-
-
-
-
-/**
  * Random
  *
  * @since 1.0.1
@@ -2337,6 +2337,118 @@ function random (valueArray, minValue, maxValue) {
 
 }
 _stk.random=random
+
+
+
+
+/**
+ * Where
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * where({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function where (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+
+}
+
+/**
+ * Remove
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {number} value The second number in an addition.
+ * @param {number} value2 The second number in an addition.
+ * @returns {string|number} Returns the total.
+ * @example
+ *
+ * remove([1,2,3],0 )
+ *=>[2, 3]
+ */
+function remove (objectValue, value, value2) {
+
+    var emptyDefaultValue=0;
+    var type_js=getTypeof(objectValue);
+    var reslt =null;
+
+    var isValueAFunction = getTypeof(value)==="function";
+
+    if (type_js==="array") {
+
+        var lastRow = has(value2)
+            ?value2
+            :count(objectValue);
+
+        reslt=[];
+        each(objectValue, function (ak, av) {
+
+            if (isValueAFunction) {
+
+                if (value(ak, av)) {
+
+                    reslt.push(av);
+
+                }
+
+            } else {
+
+                if (ak > value && ak <= lastRow) {
+
+                    reslt.push(av);
+
+                }
+
+            }
+
+        });
+
+        return reslt;
+
+    }
+
+    if (type_js==="json") {
+
+        reslt={};
+        var jsn_vw=[];
+
+        each(objectValue, function () {
+
+            where(objectValue, value, function (jk) {
+
+                jsn_vw.push(jk);
+
+            });
+
+        });
+
+        each(objectValue, function (ak, av) {
+
+            if (indexOf(jsn_vw, ak)<emptyDefaultValue) {
+
+                reslt[ak]=av;
+
+            }
+
+        });
+
+        return reslt;
+
+    }
+
+    return [];
+
+}
+_stk.remove=remove
 
 
 
@@ -2454,118 +2566,6 @@ function roundDecimal (value, maxValue) {
 
 }
 _stk.roundDecimal=roundDecimal
-
-
-
-
-/**
- * Where
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search in key
- * @param {any} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function where (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
-
-}
-
-/**
- * Remove
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} value The second number in an addition.
- * @param {number} value2 The second number in an addition.
- * @returns {string|number} Returns the total.
- * @example
- *
- * remove([1,2,3],0 )
- *=>[2, 3]
- */
-function remove (objectValue, value, value2) {
-
-    var emptyDefaultValue=0;
-    var type_js=getTypeof(objectValue);
-    var reslt =null;
-
-    var isValueAFunction = getTypeof(value)==="function";
-
-    if (type_js==="array") {
-
-        var lastRow = has(value2)
-            ?value2
-            :count(objectValue);
-
-        reslt=[];
-        each(objectValue, function (ak, av) {
-
-            if (isValueAFunction) {
-
-                if (value(ak, av)) {
-
-                    reslt.push(av);
-
-                }
-
-            } else {
-
-                if (ak > value && ak <= lastRow) {
-
-                    reslt.push(av);
-
-                }
-
-            }
-
-        });
-
-        return reslt;
-
-    }
-
-    if (type_js==="json") {
-
-        reslt={};
-        var jsn_vw=[];
-
-        each(objectValue, function () {
-
-            where(objectValue, value, function (jk) {
-
-                jsn_vw.push(jk);
-
-            });
-
-        });
-
-        each(objectValue, function (ak, av) {
-
-            if (indexOf(jsn_vw, ak)<emptyDefaultValue) {
-
-                reslt[ak]=av;
-
-            }
-
-        });
-
-        return reslt;
-
-    }
-
-    return [];
-
-}
-_stk.remove=remove
 
 
 
@@ -2718,6 +2718,24 @@ _stk.sort=sort
 
 
 /**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+
+/**
  * Var extend
  *
  * @since 1.0.1
@@ -2733,6 +2751,10 @@ _stk.sort=sort
 function varExtend (objectValue, objectValueReplace) {
 
     var onceDefaultValue=1;
+    var jsn_bool={
+        "false": false,
+        "true": true
+    };
 
     if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
 
@@ -2740,17 +2762,17 @@ function varExtend (objectValue, objectValueReplace) {
 
         for (var key in objectValue) {
 
-            if (indexOf([
-                'true',
-                'false'
-            ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
+            if (has(objectValue[key])) {
 
-                var jsn_bool={
-                    "false": false,
-                    "true": true
-                };
+                if (indexOf(getKey(jsn_bool), objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
 
-                jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+                    jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+
+                } else {
+
+                    jsn_s[key]=objectValue[key];
+
+                }
 
             } else {
 
@@ -3236,32 +3258,6 @@ _stk.toDouble=toDouble
 
 
 /**
- * To Integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-_stk.toInteger=toInteger
-
-
-
-
-/**
  * Var extend
  *
  * @since 1.0.1
@@ -3277,6 +3273,10 @@ _stk.toInteger=toInteger
 function varExtend (objectValue, objectValueReplace) {
 
     var onceDefaultValue=1;
+    var jsn_bool={
+        "false": false,
+        "true": true
+    };
 
     if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
 
@@ -3284,17 +3284,17 @@ function varExtend (objectValue, objectValueReplace) {
 
         for (var key in objectValue) {
 
-            if (indexOf([
-                'true',
-                'false'
-            ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
+            if (has(objectValue[key])) {
 
-                var jsn_bool={
-                    "false": false,
-                    "true": true
-                };
+                if (indexOf(getKey(jsn_bool), objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
 
-                jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+                    jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+
+                } else {
+
+                    jsn_s[key]=objectValue[key];
+
+                }
 
             } else {
 
@@ -3363,6 +3363,32 @@ function replaceValue (objectValue, objectValueReplace) {
 
 }
 _stk.varExtend=varExtend
+
+
+
+
+/**
+ * To Integer
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in integer
+ * @returns {any[]} Return in integer.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+_stk.toInteger=toInteger
 
 
 
