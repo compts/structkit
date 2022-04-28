@@ -2,13 +2,17 @@ const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
 
+const getIndexOf=require('./src/core/getIndexOf.js');
+
+exports.getIndexOf =getIndexOf;
+
 const getKeyVal=require('./src/core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
 
-const getIndexOf=require('./src/core/getIndexOf.js');
+const append=require('./src/function/append.js');
 
-exports.getIndexOf =getIndexOf;
+exports.append =append;
 
 const whereLoopExecution=require('./src/core/whereLoopExecution.js');
 
@@ -18,10 +22,6 @@ const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
 
-const append=require('./src/function/append.js');
-
-exports.append =append;
-
 const arrayConcat=require('./src/function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
@@ -30,13 +30,13 @@ const arraySum=require('./src/function/arraySum.js');
 
 exports.arraySum =arraySum;
 
-const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
-
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
-
 const asyncReplace=require('./src/function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
+
+const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
+
+exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
 const clone=require('./src/function/clone.js');
 
@@ -46,13 +46,13 @@ const count=require('./src/function/count.js');
 
 exports.count =count;
 
-const delimiter=require('./src/function/delimiter.js');
-
-exports.delimiter =delimiter;
-
 const each=require('./src/function/each.js');
 
 exports.each =each;
+
+const delimiter=require('./src/function/delimiter.js');
+
+exports.delimiter =delimiter;
 
 const filter=require('./src/function/filter.js');
 
@@ -94,10 +94,6 @@ const ifUndefined=require('./src/function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
 
-const indexOf=require('./src/function/indexOf.js');
-
-exports.indexOf =indexOf;
-
 const insert=require('./src/function/insert.js');
 
 exports.insert =insert;
@@ -110,13 +106,17 @@ const isExact=require('./src/function/isExact.js');
 
 exports.isExact =isExact;
 
-const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
+const indexOf=require('./src/function/indexOf.js');
 
-exports.isExactbyRegExp =isExactbyRegExp;
+exports.indexOf =indexOf;
 
 const jsonToArray=require('./src/function/jsonToArray.js');
 
 exports.jsonToArray =jsonToArray;
+
+const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
+
+exports.isExactbyRegExp =isExactbyRegExp;
 
 const last=require('./src/function/last.js');
 
@@ -126,21 +126,21 @@ const lastIndexOf=require('./src/function/lastIndexOf.js');
 
 exports.lastIndexOf =lastIndexOf;
 
-const like=require('./src/function/like.js');
-
-exports.like =like;
-
 const limit=require('./src/function/limit.js');
 
 exports.limit =limit;
 
-const map=require('./src/function/map.js');
+const like=require('./src/function/like.js');
 
-exports.map =map;
+exports.like =like;
 
 const parseJson=require('./src/function/parseJson.js');
 
 exports.parseJson =parseJson;
+
+const map=require('./src/function/map.js');
+
+exports.map =map;
 
 const parseString=require('./src/function/parseString.js');
 
@@ -158,13 +158,13 @@ const remove=require('./src/function/remove.js');
 
 exports.remove =remove;
 
-const repeat=require('./src/function/repeat.js');
-
-exports.repeat =repeat;
-
 const roundDecimal=require('./src/function/roundDecimal.js');
 
 exports.roundDecimal =roundDecimal;
+
+const repeat=require('./src/function/repeat.js');
+
+exports.repeat =repeat;
 
 const shuffle=require('./src/function/shuffle.js');
 
@@ -194,11 +194,11 @@ const varExtend=require('./src/function/varExtend.js');
 
 exports.varExtend =varExtend;
 
-const where=require('./src/function/where.js');
-
-exports.where =where;
-
 const whereNot=require('./src/function/whereNot.js');
 
 exports.whereNot =whereNot;
+
+const where=require('./src/function/where.js');
+
+exports.where =where;
 
