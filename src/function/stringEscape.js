@@ -14,8 +14,8 @@ const {entity, listType} = require("../variable/htmlentity");
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * stringEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
  */
 function stringEscape (value, type) {
 
