@@ -21,9 +21,11 @@ import {entity, listType} from '../variable/htmlentity';
  */
 function stringEscape (value, type) {
 
+    const minusOne = -1;
+    const zero = 0;
     const typeVal = type || "entity";
 
-    if (indexOf(listType, typeVal) === -1) {
+    if (indexOf(listType, typeVal) === minusOne) {
 
         return "";
 
@@ -35,9 +37,9 @@ function stringEscape (value, type) {
 
         const whr = where(entity, search);
 
-        return count(whr) === 0
+        return count(whr) === zero
             ? str1
-            : whr[0][typeVal];
+            : whr[zero][typeVal];
 
     });
 

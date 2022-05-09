@@ -462,7 +462,8 @@ function map (objectValue, func) {
  */
 function getData (objectValue, split_str) {
 
-    var spl_len=split_str.split(":");
+    var split_strReplace= split_str.replace(/([.]{1,})/g, ":");
+    var spl_len=split_strReplace.split(":");
     var spl=[];
     var jsn_total={};
 
@@ -540,32 +541,57 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 
 /**
- * Array Concat
+ * Async replace
  *
- * @since 1.0.1
+ * @since 1.3.1
  * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {any} toReplace Replace value.
+ * @returns {Promise<string>} String
  * @example
  *
- * arrayConcat([1], 2)
- * // => [1,2]
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-function arrayConcat (arrayObject, arrayValue) {
+function asyncReplace (value, search, toReplace) {
 
-    var return_val=arrayObject;
+    try {
 
-    if (getTypeof(return_val)==="array") {
+        if (getTypeof(toReplace) === "function") {
 
-        return return_val.concat(arrayValue);
+            var values = [];
+
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
 
     }
 
-    return [];
-
 }
-_stk.arrayConcat=arrayConcat
+_stk.asyncReplace=asyncReplace
 
 
 
@@ -664,57 +690,44 @@ _stk.clone=clone
 
 
 /**
- * Async replace
+ * Delimiter
  *
  * @since 1.3.1
  * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
- * @returns {Promise<string>} String
+ * @param {any} objectValue Array
+ * @param {number} min Delimiter in minumum of 2
+ * @param {number} max Delimiter in minumum base on array count
+ * @returns {string} Returns the total.
  * @example
  *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
+ * delimiter([1,2])
+ * // => 2
  */
-function asyncReplace (value, search, toReplace) {
+function delimiter (objectValue, min, max) {
 
-    try {
+    var ran_var=[];
+    var defaultValueZero=0;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
 
-        if (getTypeof(toReplace) === "function") {
+    each(objectValue, function (key, value) {
 
-            var values = [];
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
 
-            String.prototype.replace.call(value, search, function (...arg) {
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
+            ran_var.push(value);
 
         }
 
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+    });
 
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
+    return ran_var;
 
 }
-_stk.asyncReplace=asyncReplace
+_stk.delimiter=delimiter
 
 
 
@@ -796,44 +809,51 @@ _stk.count=count
 
 
 /**
- * Delimiter
+ * Filter
  *
- * @since 1.3.1
+ * @since 1.0.1
  * @category Seq
- * @param {any} objectValue Array
- * @param {number} min Delimiter in minumum of 2
- * @param {number} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
  * @example
  *
- * delimiter([1,2])
- * // => 2
+ * filter([1,2],(key,value)=>{
+ *
+ * })
+ *
  */
-function delimiter (objectValue, min, max) {
+function filter (objectValue, func) {
 
-    var ran_var=[];
-    var defaultValueZero=0;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
+    var jsn_var=getJSONVariable(objectValue);
+    var jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {
 
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+        if (has(func)) {
 
-            ran_var.push(value);
+            if (func(key, value)===true) {
+
+                if ((/(json|array)/g).test(jsn_type)) {
+
+                    append(jsn_var, value, key);
+
+                } else {
+
+                    jsn_var=value;
+
+                }
+
+            }
 
         }
 
     });
 
-    return ran_var;
+    return jsn_var;
 
 }
-_stk.delimiter=delimiter
+_stk.filter=filter
 
 
 
@@ -914,56 +934,6 @@ function each (objectValue, func) {
 
 }
 _stk.each=each
-
-
-
-
-/**
- * Filter
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * filter([1,2],(key,value)=>{
- *
- * })
- *
- */
-function filter (objectValue, func) {
-
-    var jsn_var=getJSONVariable(objectValue);
-    var jsn_type=getTypeof(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (func(key, value)===true) {
-
-                if ((/(json|array)/g).test(jsn_type)) {
-
-                    append(jsn_var, value, key);
-
-                } else {
-
-                    jsn_var=value;
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return jsn_var;
-
-}
-_stk.filter=filter
 
 
 
@@ -1070,7 +1040,8 @@ _stk.first=first
  */
 function getData (objectValue, split_str) {
 
-    var spl_len=split_str.split(":");
+    var split_strReplace= split_str.replace(/([.]{1,})/g, ":");
+    var spl_len=split_strReplace.split(":");
     var spl=[];
     var jsn_total={};
 
@@ -1335,6 +1306,64 @@ _stk.ifUndefined=ifUndefined
 
 
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    var return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
+
+}
+_stk.arrayConcat=arrayConcat
+
+
+
+
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value in array
+ * @returns {any} Returns the index.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function indexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+
+    return indexValue;
+
+}
+_stk.indexOf=indexOf
+
+
+
+
+/**
  * Insert Value
  *
  * @since 1.0.1
@@ -1373,33 +1402,6 @@ function insert (objectValue, value) {
 
 }
 _stk.insert=insert
-
-
-
-
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value in array
- * @returns {any} Returns the index.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function indexOf (objectValue, value) {
-
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
-
-    return indexValue;
-
-}
-_stk.indexOf=indexOf
 
 
 
@@ -2259,6 +2261,112 @@ function parseString (value) {
 _stk.parseString=parseString
 
 
+
+
+/**
+ * Where
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * where({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function where (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+
+}
+
+var entity = [
+
+    {"decimal": "&#160;",
+        "entity": "&nbsp;",
+        "hex": "&#xA0;",
+        "html": " ",
+        "title": "non-breaking space"},
+    {"decimal": "&#34;",
+        "entity": "&quot;",
+        "hex": "&#x22;",
+        "html": '"',
+        "title": "quotation mark = APL quote"},
+    {"decimal": "&#38;",
+        "entity": "&amp;",
+        "hex": "&#x26;",
+        "html": "&",
+        "title": "ampersand"},
+    {"decimal": "&#60;",
+        "entity": "&lt;",
+        "hex": "&#x3C;",
+        "html": "<",
+        "title": "less-than sign"},
+    {"decimal": "&#62;",
+        "entity": "&gt;",
+        "hex": "&#x3E;",
+        "html": ">",
+        "title": "greater-than sign"},
+    {"decimal": "&#710;",
+        "entity": "&circ;",
+        "hex": "&#x2C6;",
+        "html": "^",
+        "title": "modifier letter circumflex accent"}
+
+];
+
+var listType = [
+    'decimal',
+    'entity',
+    'hex'
+];
+
+/**
+ * String Unescape
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {number} value The second number in an addition.
+ * @param {string} type The second number in an addition.
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function stringUnEscape (value, type) {
+
+    var typeVal = type || "entity";
+    var minusOne = -1;
+    var zero = 0;
+
+    if (indexOf(listType, typeVal) === minusOne) {
+
+        return "";
+
+    }
+
+    var regexReplace = value.replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
+
+        var search = {};
+
+        search[typeVal] =str1;
+
+        var whr = where(entity, search);
+
+        return count(whr) === zero
+            ? str1
+            : whr[zero].html;
+
+    });
+
+    return regexReplace;
+
+}
+
 /**
  * Parse Json
  *
@@ -2274,7 +2382,7 @@ _stk.parseString=parseString
 function parseJson (value) {
 
     var emptyDefaultValue=0;
-    var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+    var stripValue=stringUnEscape(value);
     var returnValue=null;
 
     if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
@@ -2381,26 +2489,6 @@ _stk.range=range
 
 
 
-
-/**
- * Where
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search in key
- * @param {any} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function where (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
-
-}
 
 /**
  * Remove
@@ -2717,47 +2805,6 @@ _stk.sort=sort
 
 
 
-var entity = [
-
-    {"decimal": "&#160;",
-        "entity": "&nbsp;",
-        "hex": "&#xA0;",
-        "html": " ",
-        "title": "non-breaking space"},
-    {"decimal": "&#34;",
-        "entity": "&quot;",
-        "hex": "&#x22;",
-        "html": '"',
-        "title": "quotation mark = APL quote"},
-    {"decimal": "&#38;",
-        "entity": "&amp;",
-        "hex": "&#x26;",
-        "html": "&",
-        "title": "ampersand"},
-    {"decimal": "&#60;",
-        "entity": "&lt;",
-        "hex": "&#x3C;",
-        "html": "<",
-        "title": "less-than sign"},
-    {"decimal": "&#62;",
-        "entity": "&gt;",
-        "hex": "&#x3E;",
-        "html": ">",
-        "title": "greater-than sign"},
-    {"decimal": "&#710;",
-        "entity": "&circ;",
-        "hex": "&#x2C6;",
-        "html": "^",
-        "title": "modifier letter circumflex accent"}
-
-];
-
-var listType = [
-    'decimal',
-    'entity',
-    'hex'
-];
-
 /**
  * String Escape
  *
@@ -2773,9 +2820,11 @@ var listType = [
  */
 function stringEscape (value, type) {
 
+    var minusOne = -1;
+    var zero = 0;
     var typeVal = type || "entity";
 
-    if (indexOf(listType, typeVal) === -1) {
+    if (indexOf(listType, typeVal) === minusOne) {
 
         return "";
 
@@ -2787,9 +2836,9 @@ function stringEscape (value, type) {
 
         var whr = where(entity, search);
 
-        return count(whr) === 0
+        return count(whr) === zero
             ? str1
-            : whr[0][typeVal];
+            : whr[zero][typeVal];
 
     });
 
@@ -2817,8 +2866,10 @@ _stk.stringEscape=stringEscape
 function stringUnEscape (value, type) {
 
     var typeVal = type || "entity";
+    var minusOne = -1;
+    var zero = 0;
 
-    if (indexOf(listType, typeVal) === -1) {
+    if (indexOf(listType, typeVal) === minusOne) {
 
         return "";
 
@@ -2832,9 +2883,9 @@ function stringUnEscape (value, type) {
 
         var whr = where(entity, search);
 
-        return count(whr) === 0 
+        return count(whr) === zero
             ? str1
-            : whr[0].html;
+            : whr[zero].html;
 
     });
 

@@ -18,7 +18,8 @@ const each = require('./each');
  */
 function getData (objectValue, split_str) {
 
-    const spl_len=split_str.split(":");
+    const split_strReplace= split_str.replace(/([.]{1,})/g, ":");
+    const spl_len=split_strReplace.split(":");
     const spl=[];
     let jsn_total={};
 

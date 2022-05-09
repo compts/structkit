@@ -18,25 +18,25 @@ const whereLoopExecution=require('./src/core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
-const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
-
-exports.appendIsArrayExist =appendIsArrayExist;
-
 const arrayConcat=require('./src/function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
+
+const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
+
+exports.appendIsArrayExist =appendIsArrayExist;
 
 const arraySum=require('./src/function/arraySum.js');
 
 exports.arraySum =arraySum;
 
-const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
-
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
-
 const asyncReplace=require('./src/function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
+
+const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
+
+exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
 const clone=require('./src/function/clone.js');
 
@@ -58,6 +58,10 @@ const filter=require('./src/function/filter.js');
 
 exports.filter =filter;
 
+const first=require('./src/function/first.js');
+
+exports.first =first;
+
 const getData=require('./src/function/getData.js');
 
 exports.getData =getData;
@@ -78,21 +82,17 @@ const getUniq=require('./src/function/getUniq.js');
 
 exports.getUniq =getUniq;
 
-const first=require('./src/function/first.js');
-
-exports.first =first;
-
 const getValue=require('./src/function/getValue.js');
 
 exports.getValue =getValue;
 
-const has=require('./src/function/has.js');
-
-exports.has =has;
-
 const ifUndefined=require('./src/function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
+
+const has=require('./src/function/has.js');
+
+exports.has =has;
 
 const indexOf=require('./src/function/indexOf.js');
 
@@ -101,6 +101,10 @@ exports.indexOf =indexOf;
 const isEmpty=require('./src/function/isEmpty.js');
 
 exports.isEmpty =isEmpty;
+
+const insert=require('./src/function/insert.js');
+
+exports.insert =insert;
 
 const isExact=require('./src/function/isExact.js');
 
@@ -114,17 +118,21 @@ const jsonToArray=require('./src/function/jsonToArray.js');
 
 exports.jsonToArray =jsonToArray;
 
-const lastIndexOf=require('./src/function/lastIndexOf.js');
-
-exports.lastIndexOf =lastIndexOf;
-
 const last=require('./src/function/last.js');
 
 exports.last =last;
 
+const lastIndexOf=require('./src/function/lastIndexOf.js');
+
+exports.lastIndexOf =lastIndexOf;
+
 const like=require('./src/function/like.js');
 
 exports.like =like;
+
+const limit=require('./src/function/limit.js');
+
+exports.limit =limit;
 
 const map=require('./src/function/map.js');
 
@@ -134,17 +142,9 @@ const parseJson=require('./src/function/parseJson.js');
 
 exports.parseJson =parseJson;
 
-const limit=require('./src/function/limit.js');
-
-exports.limit =limit;
-
 const parseString=require('./src/function/parseString.js');
 
 exports.parseString =parseString;
-
-const insert=require('./src/function/insert.js');
-
-exports.insert =insert;
 
 const random=require('./src/function/random.js');
 
@@ -198,13 +198,13 @@ const toInteger=require('./src/function/toInteger.js');
 
 exports.toInteger =toInteger;
 
-const where=require('./src/function/where.js');
-
-exports.where =where;
-
 const varExtend=require('./src/function/varExtend.js');
 
 exports.varExtend =varExtend;
+
+const where=require('./src/function/where.js');
+
+exports.where =where;
 
 const whereNot=require('./src/function/whereNot.js');
 

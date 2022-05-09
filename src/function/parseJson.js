@@ -1,3 +1,5 @@
+const stringUnEscape = require('./stringUnEscape');
+
 /**
  * Parse Json
  *
@@ -13,7 +15,7 @@
 function parseJson (value) {
 
     const emptyDefaultValue=0;
-    const stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+    const stripValue=stringUnEscape(value);
     let returnValue=null;
 
     if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
