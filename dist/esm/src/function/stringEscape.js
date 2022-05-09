@@ -2,7 +2,9 @@ import where from './where';
 
 import indexOf from './indexOf';
 
-import count from './indexOf';
+import isEmpty from './isEmpty';
+
+import first from './first';
 
 import {entity, listType} from '../variable/htmlentity';
 
@@ -22,7 +24,6 @@ import {entity, listType} from '../variable/htmlentity';
 function stringEscape (value, type) {
 
     const minusOne = -1;
-    const zero = 0;
     const typeVal = type || "entity";
 
     if (indexOf(listType, typeVal) === minusOne) {
@@ -37,9 +38,9 @@ function stringEscape (value, type) {
 
         const whr = where(entity, search);
 
-        return count(whr) === zero
+        return isEmpty(whr)
             ? str1
-            : whr[zero][typeVal];
+            : first(whr).value[typeVal];
 
     });
 

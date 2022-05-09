@@ -1,6 +1,7 @@
 const where = require('./where');
 const indexOf = require('./indexOf');
-const count = require('./indexOf');
+const isEmpty = require("./isEmpty");
+const first = require("./first");
 const {entity, listType} = require("../variable/htmlentity");
 
 /**
@@ -20,7 +21,6 @@ function stringUnEscape (value, type) {
 
     const typeVal = type || "entity";
     const minusOne = -1;
-    const zero = 0;
 
     if (indexOf(listType, typeVal) === minusOne) {
 
@@ -36,9 +36,9 @@ function stringUnEscape (value, type) {
 
         const whr = where(entity, search);
 
-        return count(whr) === zero
+        return isEmpty(whr)
             ? str1
-            : whr[zero].html;
+            : first(whr).value.html;
 
     });
 
