@@ -18,8 +18,8 @@ import {entity, listType} from '../variable/htmlentity';
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ *=>"yahii & adad ^ss"
  */
 function stringUnEscape (value, type) {
 

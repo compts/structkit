@@ -1,6 +1,159 @@
 (function(global){
 global._stk={}
 /**
+ * Check if object has value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value JSON or Array
+ * @param {any} key For key or index of data
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * has({'as':1}, 'as')
+ * // => true
+ */
+function has (value, key) {
+
+    if (typeof key==="undefined") {
+
+        return value!==null && typeof value !=="undefined";
+
+    }
+
+    return Object.prototype.hasOwnProperty.call(value, key);
+
+}
+
+var objectCallType = {"[object Array]": "object",
+    "[object Object]": "object",
+    "[object String]": "string"};
+
+var listObjArrayType = [
+    "[object Object]",
+    "[object Array]"
+];
+
+/**
+ * Is Json valid
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string|object|array} value Value you want to check JSON is Valid
+ * @param {string} valueType Get value type
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * isJson('{}' )
+ *=> true
+ */
+function isJson (value, valueType) {
+
+    var getValueType = Object.prototype.toString.call(value);
+
+    if (has(objectCallType, getValueType) ===false) {
+
+        return false;
+
+    }
+
+    var getValueTypeRef = objectCallType[getValueType];
+
+    if (has(valueType)) {
+
+        getValueTypeRef = valueType;
+
+    }
+
+    if (getValueTypeRef === "string") {
+
+        var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+
+        return (/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+            .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
+            .replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
+
+    }
+
+    if (getValueTypeRef === "object") {
+
+        try {
+
+            return checkIfFunctionNotExistObject(value);
+
+        } catch (err) {
+
+            return false;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+/**
+ * Check if object has no function
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {array|object} obj String you want to convert to JSON
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function checkIfFunctionNotExistObject (obj) {
+
+    var getValueType = Object.prototype.toString.call(obj);
+
+    if (getValueType==="[object Function]") {
+
+        throw new Error("Function must not exist");
+
+    }
+
+    var isValid = false;
+    var zero = 0;
+
+    if (getValueType==="[object Object]") {
+
+        isValid = true;
+
+    }
+
+    if (getValueType==="[object Array]") {
+
+        if (obj.length ===zero) {
+
+            return true;
+
+        }
+
+        isValid = true;
+
+    }
+    if (isValid) {
+
+        for (var key in obj) {
+
+            if (has(obj, key)) {
+
+                checkIfFunctionNotExistObject(obj[key]);
+
+            }
+
+        }
+
+    }
+
+    return true;
+
+}
+
+/**
  * Get Variable typeof
  *
  * @since 1.0.1
@@ -16,7 +169,9 @@ function getTypeof (objectValue) {
 
     if (Object.prototype.toString.call(objectValue)==="[object Object]") {
 
-        return "json";
+        return isJson(objectValue, "object")
+            ?"json"
+            :"object";
 
     }
 
@@ -71,31 +226,6 @@ _stk.append=append
 
 
 
-
-/**
- * Check if object has value
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value JSON or Array
- * @param {any} key For key or index of data
- * @returns {boolean} Returns true or false.
- * @example
- *
- * has({'as':1}, 'as')
- * // => true
- */
-function has (value, key) {
-
-    if (typeof key==="undefined") {
-
-        return value!==null && typeof value !=="undefined";
-
-    }
-
-    return Object.prototype.hasOwnProperty.call(value, key);
-
-}
 
 /**
  * Each
@@ -357,75 +487,6 @@ function appendIsArrayExist (arrayObject, value) {
 
 }
 _stk.appendIsArrayExist=appendIsArrayExist
-
-
-
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-_stk.arrayConcat=arrayConcat
-
-
-
-
-/**
- * Array Sum
- *
- * @since 1.0.1
- * @category Seq
- * @param {number[]} arrayObject Array in number
- * @param {number} delimeter decimal point and default value is 4
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- */
-function arraySum (arrayObject, delimeter) {
-
-    var sum=0;
-    var defaultLimitDecimal = 3;
-    var arrayObjects=arrayObject||[];
-    var delimeters=delimeter||defaultLimitDecimal;
-
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum+=parseFloat(av);
-
-        }
-
-    });
-
-    return sum.toFixed(delimeters);
-
-}
-_stk.arraySum=arraySum
 
 
 
@@ -716,6 +777,75 @@ function clone (objectValue) {
 
 }
 _stk.clone=clone
+
+
+
+
+/**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number[]} arrayObject Array in number
+ * @param {number} delimeter decimal point and default value is 4
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ */
+function arraySum (arrayObject, delimeter) {
+
+    var sum=0;
+    var defaultLimitDecimal = 3;
+    var arrayObjects=arrayObject||[];
+    var delimeters=delimeter||defaultLimitDecimal;
+
+    each(arrayObjects, function (ak, av) {
+
+        if (has(av)) {
+
+            sum+=parseFloat(av);
+
+        }
+
+    });
+
+    return sum.toFixed(delimeters);
+
+}
+_stk.arraySum=arraySum
+
+
+
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    var return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
+
+}
+_stk.arrayConcat=arrayConcat
 
 
 
@@ -1179,6 +1309,8 @@ function getKey (objectValue) {
 _stk.getKey=getKey
 
 
+
+
 /**
  * Get Variable typeof
  *
@@ -1195,7 +1327,9 @@ function getTypeof (objectValue) {
 
     if (Object.prototype.toString.call(objectValue)==="[object Object]") {
 
-        return "json";
+        return isJson(objectValue, "object")
+            ?"json"
+            :"object";
 
     }
 
@@ -1290,6 +1424,48 @@ function has (value, key) {
 
 }
 _stk.has=has
+
+
+
+
+/**
+ * Check if data is undefined
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The first number in an addition.
+ * @param {any} value1 The first number in an addition.
+ * @param {any} value2 The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * ifUndefined({'as':1}, 'as','as2')
+ * // => 1
+ */
+function ifUndefined (objectValue, value1, value2) {
+
+    if (!has(value2)) {
+
+        if (has(objectValue)) {
+
+            return objectValue;
+
+        }
+
+        return value1;
+
+    }
+
+    if (has(objectValue, value1)) {
+
+        return objectValue[value1];
+
+    }
+
+    return value2;
+
+}
+_stk.ifUndefined=ifUndefined
 
 
 
@@ -1481,99 +1657,6 @@ _stk.isExact=isExact
 
 
 /**
- * Check if data is empty
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value JSON , Array and String
- * @returns {boolean} Returns true or false
- * @example
- *
- * isEmpty('')
- * // => true
- */
-function isEmpty (value) {
-
-    var zero =0;
-
-    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
-
-        return count(value, true)===zero;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
-
-/**
- * Json To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} objectValue Json
- * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
- * @example
- *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
- * => [2, 3]
- */
-function jsonToArray (objectValue, value) {
-
-    var arry=[];
-
-    each(objectValue, function (_key, _value) {
-
-        if (has(value)) {
-
-            var valueData = getData(_value, value);
-
-            if (isEmpty(valueData) ===false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
-_stk.jsonToArray=jsonToArray
-
-
-
-
-/**
- * Last of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @returns {any} Returns json result first key or index.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index");
-
-}
-_stk.last=last
-
-
-
-
-/**
  * Is Exact by Regexp
  *
  * @since 1.0.1
@@ -1662,28 +1745,146 @@ _stk.isExactbyRegExp=isExactbyRegExp
 
 
 /**
- * Index Of array
+ * Is Json valid
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string|object|array} value Value you want to check JSON is Valid
+ * @param {string} valueType Get value type
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * isJson('{}' )
+ *=> true
+ */
+function isJson (value, valueType) {
+
+    var getValueType = Object.prototype.toString.call(value);
+
+    if (has(objectCallType, getValueType) ===false) {
+
+        return false;
+
+    }
+
+    var getValueTypeRef = objectCallType[getValueType];
+
+    if (has(valueType)) {
+
+        getValueTypeRef = valueType;
+
+    }
+
+    if (getValueTypeRef === "string") {
+
+        var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+
+        return (/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+            .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
+            .replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
+
+    }
+
+    if (getValueTypeRef === "object") {
+
+        try {
+
+            return checkIfFunctionNotExistObject(value);
+
+        } catch (err) {
+
+            return false;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+/**
+ * Check if object has no function
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {array|object} obj String you want to convert to JSON
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function checkIfFunctionNotExistObject (obj) {
+
+    var getValueType = Object.prototype.toString.call(obj);
+
+    if (getValueType==="[object Function]") {
+
+        throw new Error("Function must not exist");
+
+    }
+
+    var isValid = false;
+    var zero = 0;
+
+    if (getValueType==="[object Object]") {
+
+        isValid = true;
+
+    }
+
+    if (getValueType==="[object Array]") {
+
+        if (obj.length ===zero) {
+
+            return true;
+
+        }
+
+        isValid = true;
+
+    }
+    if (isValid) {
+
+        for (var key in obj) {
+
+            if (has(obj, key)) {
+
+                checkIfFunctionNotExistObject(obj[key]);
+
+            }
+
+        }
+
+    }
+
+    return true;
+
+}
+_stk.isJson=isJson
+
+
+
+
+/**
+ * Last of array
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
+ * @returns {any} Returns json result first key or index.
  * @example
  *
- * lastIndexOf([1,2], 1)
- * // => 0
+ * last([1,2] )
+ *=>2
  */
-function lastIndexOf (objectValue, value) {
+function last (objectValue) {
 
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
+    return getKeyVal(objectValue, "last_index");
 
 }
-_stk.lastIndexOf=lastIndexOf
+_stk.last=last
 
 
 
@@ -1958,6 +2159,77 @@ _stk.like=like
 
 
 /**
+ * Check if data is empty
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+function isEmpty (value) {
+
+    var zero =0;
+
+    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
+
+        return count(value, true)===zero;
+
+    }
+
+    return (/^\s*$/gmi).test(value);
+
+}
+
+/**
+ * Json To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {boolean} Returns Array
+ * @example
+ *
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
+ */
+function jsonToArray (objectValue, value) {
+
+    var arry=[];
+
+    each(objectValue, function (_key, _value) {
+
+        if (has(value)) {
+
+            var valueData = getData(_value, value);
+
+            if (isEmpty(valueData) ===false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
+
+}
+_stk.jsonToArray=jsonToArray
+
+
+
+
+/**
  * Limit
  *
  * @since 1.0.1
@@ -2073,6 +2345,33 @@ _stk.map=map
 
 
 /**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+_stk.lastIndexOf=lastIndexOf
+
+
+
+
+/**
  * Where
  *
  * @since 1.0.1
@@ -2161,8 +2460,8 @@ var listType = [
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ *=>"yahii & adad ^ss"
  */
 function stringUnEscape (value, type) {
 
@@ -2211,9 +2510,7 @@ function parseJson (value) {
     var stripValue=stringUnEscape(value);
     var returnValue=null;
 
-    if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
-        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    if (isJson(value)) {
 
         if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
 
@@ -2790,8 +3087,8 @@ _stk.sort=sort
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * stringEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
  */
 function stringEscape (value, type) {
 
@@ -2834,8 +3131,8 @@ _stk.stringEscape=stringEscape
  * @returns {number} Returns the total.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ *=>"yahii & adad ^ss"
  */
 function stringUnEscape (value, type) {
 
@@ -3411,32 +3708,6 @@ _stk.toDouble=toDouble
 
 
 /**
- * To Integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-_stk.toInteger=toInteger
-
-
-
-
-/**
  * Var extend
  *
  * @since 1.0.1
@@ -3595,42 +3866,26 @@ _stk.whereNot=whereNot
 
 
 /**
- * Check if data is undefined
+ * To Integer
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The first number in an addition.
- * @param {any} value1 The first number in an addition.
- * @param {any} value2 The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} value Value you to convert in integer
+ * @returns {any[]} Return in integer.
  * @example
  *
- * ifUndefined({'as':1}, 'as','as2')
- * // => 1
+ * toArray(1)
+ *=>[1]
  */
-function ifUndefined (objectValue, value1, value2) {
+function toInteger (value) {
 
-    if (!has(value2)) {
+    var zero = 0;
 
-        if (has(objectValue)) {
-
-            return objectValue;
-
-        }
-
-        return value1;
-
-    }
-
-    if (has(objectValue, value1)) {
-
-        return objectValue[value1];
-
-    }
-
-    return value2;
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
 
 }
-_stk.ifUndefined=ifUndefined
+_stk.toInteger=toInteger
 
 })(typeof window !== "undefined" ? window : this);

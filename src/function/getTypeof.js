@@ -1,3 +1,5 @@
+const isJson = require("./isJson");
+
 /**
  * Get Variable typeof
  *
@@ -14,7 +16,9 @@ function getTypeof (objectValue) {
 
     if (Object.prototype.toString.call(objectValue)==="[object Object]") {
 
-        return "json";
+        return isJson(objectValue, "object")
+            ?"json"
+            :"object";
 
     }
 

@@ -2,13 +2,13 @@ const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
 
-const getIndexOf=require('./src/core/getIndexOf.js');
-
-exports.getIndexOf =getIndexOf;
-
 const getKeyVal=require('./src/core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
+
+const getIndexOf=require('./src/core/getIndexOf.js');
+
+exports.getIndexOf =getIndexOf;
 
 const whereLoopExecution=require('./src/core/whereLoopExecution.js');
 
@@ -30,10 +30,6 @@ const arraySum=require('./src/function/arraySum.js');
 
 exports.arraySum =arraySum;
 
-const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
-
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
-
 const asyncReplace=require('./src/function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
@@ -41,6 +37,10 @@ exports.asyncReplace =asyncReplace;
 const clone=require('./src/function/clone.js');
 
 exports.clone =clone;
+
+const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
+
+exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
 const count=require('./src/function/count.js');
 
@@ -50,13 +50,13 @@ const delimiter=require('./src/function/delimiter.js');
 
 exports.delimiter =delimiter;
 
-const filter=require('./src/function/filter.js');
-
-exports.filter =filter;
-
 const each=require('./src/function/each.js');
 
 exports.each =each;
+
+const filter=require('./src/function/filter.js');
+
+exports.filter =filter;
 
 const first=require('./src/function/first.js');
 
@@ -90,13 +90,13 @@ const has=require('./src/function/has.js');
 
 exports.has =has;
 
-const ifUndefined=require('./src/function/ifUndefined.js');
-
-exports.ifUndefined =ifUndefined;
-
 const indexOf=require('./src/function/indexOf.js');
 
 exports.indexOf =indexOf;
+
+const ifUndefined=require('./src/function/ifUndefined.js');
+
+exports.ifUndefined =ifUndefined;
 
 const insert=require('./src/function/insert.js');
 
@@ -114,6 +114,10 @@ const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
 
 exports.isExactbyRegExp =isExactbyRegExp;
 
+const isJson=require('./src/function/isJson.js');
+
+exports.isJson =isJson;
+
 const jsonToArray=require('./src/function/jsonToArray.js');
 
 exports.jsonToArray =jsonToArray;
@@ -122,13 +126,13 @@ const last=require('./src/function/last.js');
 
 exports.last =last;
 
-const lastIndexOf=require('./src/function/lastIndexOf.js');
-
-exports.lastIndexOf =lastIndexOf;
-
 const like=require('./src/function/like.js');
 
 exports.like =like;
+
+const lastIndexOf=require('./src/function/lastIndexOf.js');
+
+exports.lastIndexOf =lastIndexOf;
 
 const limit=require('./src/function/limit.js');
 
@@ -138,13 +142,13 @@ const map=require('./src/function/map.js');
 
 exports.map =map;
 
-const parseString=require('./src/function/parseString.js');
-
-exports.parseString =parseString;
-
 const parseJson=require('./src/function/parseJson.js');
 
 exports.parseJson =parseJson;
+
+const parseString=require('./src/function/parseString.js');
+
+exports.parseString =parseString;
 
 const random=require('./src/function/random.js');
 
@@ -174,10 +178,6 @@ const sort=require('./src/function/sort.js');
 
 exports.sort =sort;
 
-const stringEscape=require('./src/function/stringEscape.js');
-
-exports.stringEscape =stringEscape;
-
 const stringUnEscape=require('./src/function/stringUnEscape.js');
 
 exports.stringUnEscape =stringUnEscape;
@@ -186,13 +186,17 @@ const templateValue=require('./src/function/templateValue.js');
 
 exports.templateValue =templateValue;
 
-const toArray=require('./src/function/toArray.js');
+const stringEscape=require('./src/function/stringEscape.js');
 
-exports.toArray =toArray;
+exports.stringEscape =stringEscape;
 
 const toDouble=require('./src/function/toDouble.js');
 
 exports.toDouble =toDouble;
+
+const toArray=require('./src/function/toArray.js');
+
+exports.toArray =toArray;
 
 const toInteger=require('./src/function/toInteger.js');
 
@@ -213,4 +217,8 @@ exports.whereNot =whereNot;
 const entity=require('./src/variable/htmlentity.js');
 
 exports.entity =entity;
+
+const objectCallType=require('./src/variable/types.js');
+
+exports.objectCallType =objectCallType;
 

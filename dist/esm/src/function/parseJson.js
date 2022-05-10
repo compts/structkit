@@ -1,5 +1,7 @@
 import stringUnEscape from './stringUnEscape';
 
+import isJson from './isJson';
+
 /**
  * Parse Json
  *
@@ -18,9 +20,7 @@ function parseJson (value) {
     const stripValue=stringUnEscape(value);
     let returnValue=null;
 
-    if ((/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
-        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    if (isJson(value)) {
 
         if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
 
