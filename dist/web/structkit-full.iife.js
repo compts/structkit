@@ -671,6 +671,62 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {any} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+_stk.asyncReplace=asyncReplace
+
+
+
+
+/**
  * Array Concat
  *
  * @since 1.0.1
@@ -914,57 +970,51 @@ _stk.delimiter=delimiter
 
 
 /**
- * Async replace
+ * Filter
  *
- * @since 1.3.1
+ * @since 1.0.1
  * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
- * @returns {Promise<string>} String
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
  * @example
  *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
+ * filter([1,2],(key,value)=>{
+ *
+ * })
+ *
  */
-function asyncReplace (value, search, toReplace) {
+function filter (objectValue, func) {
 
-    try {
+    var jsn_var=getJSONVariable(objectValue);
+    var jsn_type=getTypeof(objectValue);
 
-        if (getTypeof(toReplace) === "function") {
+    each(objectValue, function (key, value) {
 
-            var values = [];
+        if (has(func)) {
 
-            String.prototype.replace.call(value, search, function (...arg) {
+            if (func(key, value)===true) {
 
-                values.push(toReplace(...arg));
+                if ((/(json|array)/g).test(jsn_type)) {
 
-                return "";
+                    append(jsn_var, value, key);
 
-            });
+                } else {
 
-            return Promise.all(values).then(function (resolvedValues) {
+                    jsn_var=value;
 
-                return String.prototype.replace.call(value, search, function () {
+                }
 
-                    return resolvedValues.shift();
-
-                });
-
-            });
+            }
 
         }
 
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+    });
 
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
+    return jsn_var;
 
 }
-_stk.asyncReplace=asyncReplace
+_stk.filter=filter
 
 
 
@@ -1206,56 +1256,6 @@ _stk.getData=getData
 
 
 /**
- * Filter
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * filter([1,2],(key,value)=>{
- *
- * })
- *
- */
-function filter (objectValue, func) {
-
-    var jsn_var=getJSONVariable(objectValue);
-    var jsn_type=getTypeof(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (func(key, value)===true) {
-
-                if ((/(json|array)/g).test(jsn_type)) {
-
-                    append(jsn_var, value, key);
-
-                } else {
-
-                    jsn_var=value;
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return jsn_var;
-
-}
-_stk.filter=filter
-
-
-
-
-/**
  * Get JSON Variable
  *
  * @since 1.0.1
@@ -1377,6 +1377,28 @@ function getUniq () {
 _stk.getUniq=getUniq
 
 
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+_stk.getValue=getValue
+
+
 /**
  * Check if object has value
  *
@@ -1429,6 +1451,48 @@ function indexOf (objectValue, value) {
 
 }
 _stk.indexOf=indexOf
+
+
+
+
+/**
+ * Check if data is undefined
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The first number in an addition.
+ * @param {any} value1 The first number in an addition.
+ * @param {any} value2 The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * ifUndefined({'as':1}, 'as','as2')
+ * // => 1
+ */
+function ifUndefined (objectValue, value1, value2) {
+
+    if (!has(value2)) {
+
+        if (has(objectValue)) {
+
+            return objectValue;
+
+        }
+
+        return value1;
+
+    }
+
+    if (has(objectValue, value1)) {
+
+        return objectValue[value1];
+
+    }
+
+    return value2;
+
+}
+_stk.ifUndefined=ifUndefined
 
 
 
@@ -1502,70 +1566,6 @@ function isEmpty (value) {
 
 }
 _stk.isEmpty=isEmpty
-
-
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-_stk.getValue=getValue
-
-
-
-
-/**
- * Check if data is undefined
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The first number in an addition.
- * @param {any} value1 The first number in an addition.
- * @param {any} value2 The second number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * ifUndefined({'as':1}, 'as','as2')
- * // => 1
- */
-function ifUndefined (objectValue, value1, value2) {
-
-    if (!has(value2)) {
-
-        if (has(objectValue)) {
-
-            return objectValue;
-
-        }
-
-        return value1;
-
-    }
-
-    if (has(objectValue, value1)) {
-
-        return objectValue[value1];
-
-    }
-
-    return value2;
-
-}
-_stk.ifUndefined=ifUndefined
 
 
 
@@ -2985,6 +2985,50 @@ _stk.shuffle=shuffle
 
 
 /**
+ * String Escape
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {number} value The second number in an addition.
+ * @param {string} type The second number in an addition.
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * stringEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
+ */
+function stringEscape (value, type) {
+
+    var minusOne = -1;
+    var typeVal = type || "entity";
+
+    if (indexOf(listType, typeVal) === minusOne) {
+
+        return "";
+
+    }
+
+    var regexReplace = value.replace(/([\s<>"'^&])/g, function (str1) {
+
+        var search = {"html": str1};
+
+        var whr = where(entity, search);
+
+        return isEmpty(whr)
+            ? str1
+            : first(whr).value[typeVal];
+
+    });
+
+    return regexReplace;
+
+}
+_stk.stringEscape=stringEscape
+
+
+
+
+/**
  * Sort
  *
  * @since 1.0.1
@@ -3073,50 +3117,6 @@ function sort (objectValue, order, func) {
 
 }
 _stk.sort=sort
-
-
-
-
-/**
- * String Escape
- *
- * @since 1.3.1
- * @category Seq
- * @param {number} value The second number in an addition.
- * @param {string} type The second number in an addition.
- * @returns {number} Returns the total.
- * @example
- *
- * stringEscape("yahii & adad ^ss")
- *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
- */
-function stringEscape (value, type) {
-
-    var minusOne = -1;
-    var typeVal = type || "entity";
-
-    if (indexOf(listType, typeVal) === minusOne) {
-
-        return "";
-
-    }
-
-    var regexReplace = value.replace(/([\s<>"'^&])/g, function (str1) {
-
-        var search = {"html": str1};
-
-        var whr = where(entity, search);
-
-        return isEmpty(whr)
-            ? str1
-            : first(whr).value[typeVal];
-
-    });
-
-    return regexReplace;
-
-}
-_stk.stringEscape=stringEscape
 
 
 
@@ -3844,30 +3844,6 @@ _stk.varExtend=varExtend
 
 
 /**
- * Where
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search in key
- * @param {any} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function where (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
-
-}
-_stk.where=where
-
-
-
-
-/**
  * Where Not
  *
  * @since 1.0.1
@@ -3887,5 +3863,29 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 }
 _stk.whereNot=whereNot
+
+
+
+
+/**
+ * Where
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * where({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function where (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+
+}
+_stk.where=where
 
 })(typeof window !== "undefined" ? window : this);

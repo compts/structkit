@@ -2,6 +2,10 @@ const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
 
+const getKeyVal=require('./src/core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
+
 const getIndexOf=require('./src/core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
@@ -9,10 +13,6 @@ exports.getIndexOf =getIndexOf;
 const whereLoopExecution=require('./src/core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
-
-const getKeyVal=require('./src/core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
 
 const append=require('./src/function/append.js');
 
@@ -42,10 +42,6 @@ const clone=require('./src/function/clone.js');
 
 exports.clone =clone;
 
-const count=require('./src/function/count.js');
-
-exports.count =count;
-
 const delimiter=require('./src/function/delimiter.js');
 
 exports.delimiter =delimiter;
@@ -58,21 +54,21 @@ const filter=require('./src/function/filter.js');
 
 exports.filter =filter;
 
+const count=require('./src/function/count.js');
+
+exports.count =count;
+
 const first=require('./src/function/first.js');
 
 exports.first =first;
-
-const getData=require('./src/function/getData.js');
-
-exports.getData =getData;
 
 const getJSONVariable=require('./src/function/getJSONVariable.js');
 
 exports.getJSONVariable =getJSONVariable;
 
-const getKey=require('./src/function/getKey.js');
+const getData=require('./src/function/getData.js');
 
-exports.getKey =getKey;
+exports.getData =getData;
 
 const getTypeof=require('./src/function/getTypeof.js');
 
@@ -101,6 +97,10 @@ exports.indexOf =indexOf;
 const insert=require('./src/function/insert.js');
 
 exports.insert =insert;
+
+const getKey=require('./src/function/getKey.js');
+
+exports.getKey =getKey;
 
 const isEmpty=require('./src/function/isEmpty.js');
 
@@ -134,10 +134,6 @@ const like=require('./src/function/like.js');
 
 exports.like =like;
 
-const limit=require('./src/function/limit.js');
-
-exports.limit =limit;
-
 const map=require('./src/function/map.js');
 
 exports.map =map;
@@ -150,25 +146,25 @@ const parseString=require('./src/function/parseString.js');
 
 exports.parseString =parseString;
 
+const limit=require('./src/function/limit.js');
+
+exports.limit =limit;
+
 const random=require('./src/function/random.js');
 
 exports.random =random;
-
-const range=require('./src/function/range.js');
-
-exports.range =range;
 
 const remove=require('./src/function/remove.js');
 
 exports.remove =remove;
 
-const repeat=require('./src/function/repeat.js');
-
-exports.repeat =repeat;
-
 const roundDecimal=require('./src/function/roundDecimal.js');
 
 exports.roundDecimal =roundDecimal;
+
+const repeat=require('./src/function/repeat.js');
+
+exports.repeat =repeat;
 
 const shuffle=require('./src/function/shuffle.js');
 
@@ -182,17 +178,25 @@ const stringEscape=require('./src/function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
+const range=require('./src/function/range.js');
+
+exports.range =range;
+
 const stringUnEscape=require('./src/function/stringUnEscape.js');
 
 exports.stringUnEscape =stringUnEscape;
+
+const templateValue=require('./src/function/templateValue.js');
+
+exports.templateValue =templateValue;
 
 const toArray=require('./src/function/toArray.js');
 
 exports.toArray =toArray;
 
-const templateValue=require('./src/function/templateValue.js');
+const toDouble=require('./src/function/toDouble.js');
 
-exports.templateValue =templateValue;
+exports.toDouble =toDouble;
 
 const toInteger=require('./src/function/toInteger.js');
 
@@ -202,17 +206,13 @@ const varExtend=require('./src/function/varExtend.js');
 
 exports.varExtend =varExtend;
 
-const whereNot=require('./src/function/whereNot.js');
-
-exports.whereNot =whereNot;
-
 const where=require('./src/function/where.js');
 
 exports.where =where;
 
-const toDouble=require('./src/function/toDouble.js');
+const whereNot=require('./src/function/whereNot.js');
 
-exports.toDouble =toDouble;
+exports.whereNot =whereNot;
 
 const entity=require('./src/variable/htmlentity.js');
 
