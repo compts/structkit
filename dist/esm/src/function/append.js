@@ -1,7 +1,7 @@
 import getTypeof from './getTypeof';
 
 /**
- * Append data fir json and array
+ * Append data for json and array
  *
  * @since 1.0.1
  * @category Seq

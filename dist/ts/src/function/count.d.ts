@@ -5,11 +5,11 @@ export default count;
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Json or array
- * @param {boolean} [json_is_empty_check] If data is json, it will check its map data
+ * @param {boolean} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.
  * @example
  *
  * count([1,2])
  * // => 2
  */
-declare function count(objectValue: any, json_is_empty_check?: boolean): number;
+declare function count(objectValue: any, json_is_empty_check: boolean): number;
