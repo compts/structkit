@@ -2,13 +2,13 @@ const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
 
-const getKeyVal=require('./src/core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
 const getIndexOf=require('./src/core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
+
+const getKeyVal=require('./src/core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
 
 const whereLoopExecution=require('./src/core/whereLoopExecution.js');
 
@@ -34,17 +34,17 @@ const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataForma
 
 exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
-const asyncReplace=require('./src/function/asyncReplace.js');
+const count=require('./src/function/count.js');
 
-exports.asyncReplace =asyncReplace;
+exports.count =count;
 
 const clone=require('./src/function/clone.js');
 
 exports.clone =clone;
 
-const delimiter=require('./src/function/delimiter.js');
+const asyncReplace=require('./src/function/asyncReplace.js');
 
-exports.delimiter =delimiter;
+exports.asyncReplace =asyncReplace;
 
 const each=require('./src/function/each.js');
 
@@ -54,21 +54,25 @@ const filter=require('./src/function/filter.js');
 
 exports.filter =filter;
 
-const count=require('./src/function/count.js');
-
-exports.count =count;
-
 const first=require('./src/function/first.js');
 
 exports.first =first;
+
+const delimiter=require('./src/function/delimiter.js');
+
+exports.delimiter =delimiter;
+
+const getData=require('./src/function/getData.js');
+
+exports.getData =getData;
 
 const getJSONVariable=require('./src/function/getJSONVariable.js');
 
 exports.getJSONVariable =getJSONVariable;
 
-const getData=require('./src/function/getData.js');
+const getKey=require('./src/function/getKey.js');
 
-exports.getData =getData;
+exports.getKey =getKey;
 
 const getTypeof=require('./src/function/getTypeof.js');
 
@@ -90,21 +94,17 @@ const ifUndefined=require('./src/function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
 
-const indexOf=require('./src/function/indexOf.js');
-
-exports.indexOf =indexOf;
-
 const insert=require('./src/function/insert.js');
 
 exports.insert =insert;
 
-const getKey=require('./src/function/getKey.js');
-
-exports.getKey =getKey;
-
 const isEmpty=require('./src/function/isEmpty.js');
 
 exports.isEmpty =isEmpty;
+
+const indexOf=require('./src/function/indexOf.js');
+
+exports.indexOf =indexOf;
 
 const isExact=require('./src/function/isExact.js');
 
@@ -134,6 +134,10 @@ const like=require('./src/function/like.js');
 
 exports.like =like;
 
+const limit=require('./src/function/limit.js');
+
+exports.limit =limit;
+
 const map=require('./src/function/map.js');
 
 exports.map =map;
@@ -146,13 +150,17 @@ const parseString=require('./src/function/parseString.js');
 
 exports.parseString =parseString;
 
-const limit=require('./src/function/limit.js');
-
-exports.limit =limit;
-
 const random=require('./src/function/random.js');
 
 exports.random =random;
+
+const range=require('./src/function/range.js');
+
+exports.range =range;
+
+const repeat=require('./src/function/repeat.js');
+
+exports.repeat =repeat;
 
 const remove=require('./src/function/remove.js');
 
@@ -162,25 +170,17 @@ const roundDecimal=require('./src/function/roundDecimal.js');
 
 exports.roundDecimal =roundDecimal;
 
-const repeat=require('./src/function/repeat.js');
+const sort=require('./src/function/sort.js');
 
-exports.repeat =repeat;
+exports.sort =sort;
 
 const shuffle=require('./src/function/shuffle.js');
 
 exports.shuffle =shuffle;
 
-const sort=require('./src/function/sort.js');
-
-exports.sort =sort;
-
 const stringEscape=require('./src/function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
-
-const range=require('./src/function/range.js');
-
-exports.range =range;
 
 const stringUnEscape=require('./src/function/stringUnEscape.js');
 
@@ -206,10 +206,6 @@ const varExtend=require('./src/function/varExtend.js');
 
 exports.varExtend =varExtend;
 
-const where=require('./src/function/where.js');
-
-exports.where =where;
-
 const whereNot=require('./src/function/whereNot.js');
 
 exports.whereNot =whereNot;
@@ -221,4 +217,8 @@ exports.entity =entity;
 const objectCallType=require('./src/variable/types.js');
 
 exports.objectCallType =objectCallType;
+
+const where=require('./src/function/where.js');
+
+exports.where =where;
 

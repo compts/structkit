@@ -483,6 +483,37 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    var return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
+
+}
+_stk.arrayConcat=arrayConcat
+
+
+
+
+/**
  * Array Count
  *
  * @since 1.0.1
@@ -727,37 +758,6 @@ _stk.asyncReplace=asyncReplace
 
 
 /**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-_stk.arrayConcat=arrayConcat
-
-
-
-
-/**
  * Get JSON Variable
  *
  * @since 1.0.1
@@ -970,56 +970,6 @@ _stk.delimiter=delimiter
 
 
 /**
- * Filter
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * filter([1,2],(key,value)=>{
- *
- * })
- *
- */
-function filter (objectValue, func) {
-
-    var jsn_var=getJSONVariable(objectValue);
-    var jsn_type=getTypeof(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (func(key, value)===true) {
-
-                if ((/(json|array)/g).test(jsn_type)) {
-
-                    append(jsn_var, value, key);
-
-                } else {
-
-                    jsn_var=value;
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return jsn_var;
-
-}
-_stk.filter=filter
-
-
-
-
-/**
  * Each
  *
  * @since 1.0.1
@@ -1187,71 +1137,52 @@ _stk.first=first
 
 
 /**
- * Get Data
+ * Filter
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue Json or Array data.
- * @param {any} split_str Search key or index.
- * @returns {any} Returns the total.
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
  * @example
  *
- * getData({"s":1},"s")
- *=>1
+ * filter([1,2],(key,value)=>{
+ *
+ * })
+ *
  */
-function getData (objectValue, split_str) {
+function filter (objectValue, func) {
 
-    var split_strReplace= split_str.replace(/([.]{1,})/g, ":");
-    var spl_len=split_strReplace.split(":");
-    var spl=[];
-    var jsn_total={};
+    var jsn_var=getJSONVariable(objectValue);
+    var jsn_type=getTypeof(objectValue);
 
-    if (!has(objectValue)) {
+    each(objectValue, function (key, value) {
 
-        return "";
+        if (has(func)) {
 
-    }
+            if (func(key, value)===true) {
 
-    each(spl_len, function (key, value) {
+                if ((/(json|array)/g).test(jsn_type)) {
 
-        spl.push(value);
+                    append(jsn_var, value, key);
 
-    });
+                } else {
 
-    each(spl, function (key, value) {
-
-        try {
-
-            if (has(objectValue, value)) {
-
-                if ((/^\s+$/).test(objectValue[value])===false) {
-
-                    jsn_total=objectValue[value];
-
-                }
-
-            } else {
-
-                if (has(jsn_total, value)) {
-
-                    jsn_total=jsn_total[value];
+                    jsn_var=value;
 
                 }
 
             }
 
-        } catch (error) {
-
-            console.log(error);
-
         }
 
     });
 
-    return jsn_total;
+    return jsn_var;
 
 }
-_stk.getData=getData
+_stk.filter=filter
+
 
 
 
@@ -1380,6 +1311,75 @@ _stk.getUniq=getUniq
 
 
 /**
+ * Get Data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array data.
+ * @param {any} split_str Search key or index.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * getData({"s":1},"s")
+ *=>1
+ */
+function getData (objectValue, split_str) {
+
+    var split_strReplace= split_str.replace(/([.]{1,})/g, ":");
+    var spl_len=split_strReplace.split(":");
+    var spl=[];
+    var jsn_total={};
+
+    if (!has(objectValue)) {
+
+        return "";
+
+    }
+
+    each(spl_len, function (key, value) {
+
+        spl.push(value);
+
+    });
+
+    each(spl, function (key, value) {
+
+        try {
+
+            if (has(objectValue, value)) {
+
+                if ((/^\s+$/).test(objectValue[value])===false) {
+
+                    jsn_total=objectValue[value];
+
+                }
+
+            } else {
+
+                if (has(jsn_total, value)) {
+
+                    jsn_total=jsn_total[value];
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    });
+
+    return jsn_total;
+
+}
+_stk.getData=getData
+
+
+
+/**
  * Get value of json or array
  *
  * @since 1.0.1
@@ -1429,33 +1429,6 @@ _stk.has=has
 
 
 /**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value in array
- * @returns {any} Returns the index.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function indexOf (objectValue, value) {
-
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
-
-    return indexValue;
-
-}
-_stk.indexOf=indexOf
-
-
-
-
-/**
  * Check if data is undefined
  *
  * @since 1.0.1
@@ -1493,6 +1466,33 @@ function ifUndefined (objectValue, value1, value2) {
 
 }
 _stk.ifUndefined=ifUndefined
+
+
+
+
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value in array
+ * @returns {any} Returns the index.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function indexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+
+    return indexValue;
+
+}
+_stk.indexOf=indexOf
 
 
 
@@ -2243,7 +2243,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
  * @returns {any} Returns the total.
  * @example
  *
- * where({"s1":1,"s2":1},{"s1":1})
+ * like({"s1":1,"s2":1},{"s1":1})
  *=>{s1: 1, s2: 1}
  */
 function like (objectValue, objectValueWhere, func) {
@@ -2440,7 +2440,17 @@ var entity = [
         "entity": "&circ;",
         "hex": "&#x2C6;",
         "html": "^",
-        "title": "modifier letter circumflex accent"}
+        "title": "modifier letter circumflex accent"},
+    {"decimal": "&#123;",
+        "entity": "&lcub;",
+        "hex": "&#x7B;",
+        "html": "{",
+        "title": "Left curly bracket"},
+    {"decimal": "&#125;",
+        "entity": "&rcub;",
+        "hex": "&#x7D;",
+        "html": "}",
+        "title": "Right curly bracket"}
 
 ];
 
@@ -3008,7 +3018,7 @@ function stringEscape (value, type) {
 
     }
 
-    var regexReplace = value.replace(/([\s<>"'^&])/g, function (str1) {
+    var regexReplace = value.replace(/([\s<>"'^&{}])/g, function (str1) {
 
         var search = {"html": str1};
 
@@ -3844,30 +3854,6 @@ _stk.varExtend=varExtend
 
 
 /**
- * Where Not
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you not want to search in key
- * @param {any} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * whereNot({"s1":1,"s2":1},{"s1":2})
- *=>{"s1":1,"s2":1}
- */
-function whereNot (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
-
-}
-_stk.whereNot=whereNot
-
-
-
-
-/**
  * Where
  *
  * @since 1.0.1
@@ -3887,5 +3873,29 @@ function where (objectValue, objectValueWhere, func) {
 
 }
 _stk.where=where
+
+
+
+
+/**
+ * Where Not
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you not want to search in key
+ * @param {any} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * whereNot({"s1":1,"s2":1},{"s1":2})
+ *=>{"s1":1,"s2":1}
+ */
+function whereNot (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+
+}
+_stk.whereNot=whereNot
 
 })(typeof window !== "undefined" ? window : this);

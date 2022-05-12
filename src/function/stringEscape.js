@@ -28,7 +28,7 @@ function stringEscape (value, type) {
 
     }
 
-    const regexReplace = value.replace(/([\s<>"'^&])/g, function (str1) {
+    const regexReplace = value.replace(/([\s<>"'^&{}])/g, function (str1) {
 
         const search = {"html": str1};
 

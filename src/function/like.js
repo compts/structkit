@@ -13,7 +13,7 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  * @returns {any} Returns the total.
  * @example
  *
- * where({"s1":1,"s2":1},{"s1":1})
+ * like({"s1":1,"s2":1},{"s1":1})
  *=>{s1: 1, s2: 1}
  */
 function like (objectValue, objectValueWhere, func) {

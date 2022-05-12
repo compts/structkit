@@ -29,7 +29,17 @@ const entity = [
         "entity": "&circ;",
         "hex": "&#x2C6;",
         "html": "^",
-        "title": "modifier letter circumflex accent"}
+        "title": "modifier letter circumflex accent"},
+    {"decimal": "&#123;",
+        "entity": "&lcub;",
+        "hex": "&#x7B;",
+        "html": "{",
+        "title": "Left curly bracket"},
+    {"decimal": "&#125;",
+        "entity": "&rcub;",
+        "hex": "&#x7D;",
+        "html": "}",
+        "title": "Right curly bracket"}
 
 ];
 
