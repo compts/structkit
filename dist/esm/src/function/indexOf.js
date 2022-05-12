@@ -4,7 +4,7 @@ import count from './count';
 import getIndexOf from '../core/getIndexOf';
 
 /**
- * Index Of array
+ * Index of array
  *
  * @since 1.0.1
  * @category Seq

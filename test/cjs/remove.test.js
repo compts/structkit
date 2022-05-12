@@ -26,6 +26,25 @@ describe('CJS: remove method', function () {
 
     });
 
+    it('check Json', function () {
+
+        assert.deepStrictEqual(remove(
+
+            {
+                "ones": one,
+                "threes": three,
+                "twos": two
+            },
+            {
+                "twos": two
+            }
+        ), {
+            "ones": one,
+            "threes": three
+        });
+
+    });
+
 });
 
 

@@ -6,7 +6,7 @@ const two =2;
 const one =1;
 const zero =0;
 
-describe('CJS: remove method', function () {
+describe('ESM: remove method', function () {
 
 
     it('check Array list', function () {
@@ -23,6 +23,25 @@ describe('CJS: remove method', function () {
             two,
             three
         ]);
+
+    });
+
+    it('check Json', function () {
+
+        assert.deepStrictEqual(remove(
+
+            {
+                "ones": one,
+                "threes": three,
+                "twos": two
+            },
+            {
+                "twos": two
+            }
+        ), {
+            "ones": one,
+            "threes": three
+        });
 
     });
 
