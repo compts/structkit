@@ -50,17 +50,13 @@ const delimiter=require('./src/function/delimiter.js');
 
 exports.delimiter =delimiter;
 
-const filter=require('./src/function/filter.js');
-
-exports.filter =filter;
-
 const each=require('./src/function/each.js');
 
 exports.each =each;
 
-const first=require('./src/function/first.js');
+const filter=require('./src/function/filter.js');
 
-exports.first =first;
+exports.filter =filter;
 
 const getData=require('./src/function/getData.js');
 
@@ -70,9 +66,17 @@ const getJSONVariable=require('./src/function/getJSONVariable.js');
 
 exports.getJSONVariable =getJSONVariable;
 
+const getKey=require('./src/function/getKey.js');
+
+exports.getKey =getKey;
+
 const getTypeof=require('./src/function/getTypeof.js');
 
 exports.getTypeof =getTypeof;
+
+const first=require('./src/function/first.js');
+
+exports.first =first;
 
 const getUniq=require('./src/function/getUniq.js');
 
@@ -82,13 +86,9 @@ const getValue=require('./src/function/getValue.js');
 
 exports.getValue =getValue;
 
-const getKey=require('./src/function/getKey.js');
+const has=require('./src/function/has.js');
 
-exports.getKey =getKey;
-
-const ifUndefined=require('./src/function/ifUndefined.js');
-
-exports.ifUndefined =ifUndefined;
+exports.has =has;
 
 const indexOf=require('./src/function/indexOf.js');
 
@@ -110,6 +110,10 @@ const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
 
 exports.isExactbyRegExp =isExactbyRegExp;
 
+const ifUndefined=require('./src/function/ifUndefined.js');
+
+exports.ifUndefined =ifUndefined;
+
 const isJson=require('./src/function/isJson.js');
 
 exports.isJson =isJson;
@@ -122,37 +126,25 @@ const last=require('./src/function/last.js');
 
 exports.last =last;
 
-const has=require('./src/function/has.js');
-
-exports.has =has;
-
-const lastIndexOf=require('./src/function/lastIndexOf.js');
-
-exports.lastIndexOf =lastIndexOf;
-
 const like=require('./src/function/like.js');
 
 exports.like =like;
-
-const map=require('./src/function/map.js');
-
-exports.map =map;
-
-const parseJson=require('./src/function/parseJson.js');
-
-exports.parseJson =parseJson;
-
-const parseString=require('./src/function/parseString.js');
-
-exports.parseString =parseString;
 
 const limit=require('./src/function/limit.js');
 
 exports.limit =limit;
 
-const random=require('./src/function/random.js');
+const map=require('./src/function/map.js');
 
-exports.random =random;
+exports.map =map;
+
+const parseString=require('./src/function/parseString.js');
+
+exports.parseString =parseString;
+
+const parseJson=require('./src/function/parseJson.js');
+
+exports.parseJson =parseJson;
 
 const range=require('./src/function/range.js');
 
@@ -161,6 +153,10 @@ exports.range =range;
 const remove=require('./src/function/remove.js');
 
 exports.remove =remove;
+
+const random=require('./src/function/random.js');
+
+exports.random =random;
 
 const repeat=require('./src/function/repeat.js');
 
@@ -194,31 +190,35 @@ const toArray=require('./src/function/toArray.js');
 
 exports.toArray =toArray;
 
-const toInteger=require('./src/function/toInteger.js');
-
-exports.toInteger =toInteger;
-
 const toDouble=require('./src/function/toDouble.js');
 
 exports.toDouble =toDouble;
+
+const toInteger=require('./src/function/toInteger.js');
+
+exports.toInteger =toInteger;
 
 const varExtend=require('./src/function/varExtend.js');
 
 exports.varExtend =varExtend;
 
-const where=require('./src/function/where.js');
+const lastIndexOf=require('./src/function/lastIndexOf.js');
 
-exports.where =where;
+exports.lastIndexOf =lastIndexOf;
 
 const whereNot=require('./src/function/whereNot.js');
 
 exports.whereNot =whereNot;
 
-const entity=require('./src/variable/htmlentity.js');
+const where=require('./src/function/where.js');
 
-exports.entity =entity;
+exports.where =where;
 
 const objectCallType=require('./src/variable/types.js');
 
 exports.objectCallType =objectCallType;
+
+const entity=require('./src/variable/htmlentity.js');
+
+exports.entity =entity;
 
