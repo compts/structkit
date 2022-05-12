@@ -81,9 +81,21 @@ function remove (objectValue, value, value2) {
 
         each(objectValue, function (ak, av) {
 
-            if (indexOfExist(jsn_vw, av)===false) {
+            if (isValueAFunction) {
 
-                reslt[ak]=av;
+                if (value(ak, av)) {
+
+                    reslt[ak]=av;
+
+                }
+
+            } else {
+
+                if (indexOfExist(jsn_vw, av)===false) {
+
+                    reslt[ak]=av;
+
+                }
 
             }
 
