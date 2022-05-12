@@ -15,7 +15,7 @@ import {entity, listType} from '../variable/htmlentity';
  * @category Seq
  * @param {number} value The second number in an addition.
  * @param {string} type The second number in an addition.
- * @returns {number} Returns the total.
+ * @returns {string} Returns the total.
  * @example
  *
  * stringEscape("yahii & adad ^ss")

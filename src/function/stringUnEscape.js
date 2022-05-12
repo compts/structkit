@@ -11,7 +11,7 @@ const {entity, listType} = require("../variable/htmlentity");
  * @category Seq
  * @param {number} value The second number in an addition.
  * @param {string} type The second number in an addition.
- * @returns {number} Returns the total.
+ * @returns {string} Returns the total.
  * @example
  *
  * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')

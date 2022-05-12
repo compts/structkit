@@ -6,10 +6,10 @@ export default stringEscape;
  * @category Seq
  * @param {number} value The second number in an addition.
  * @param {string} type The second number in an addition.
- * @returns {number} Returns the total.
+ * @returns {string} Returns the total.
  * @example
  *
  * stringEscape("yahii & adad ^ss")
  *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
  */
-declare function stringEscape(value: number, type: string): number;
+declare function stringEscape(value: number, type: string): string;
