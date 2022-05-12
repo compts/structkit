@@ -2,7 +2,7 @@ import has from './has';
 
 import getTypeof from './getTypeof';
 
-import indexOf from './indexOf';
+import indexOfExist from './indexOfExist';
 
 import getKey from './getKey';
 
@@ -21,7 +21,6 @@ import getKey from './getKey';
  */
 function varExtend (objectValue, objectValueReplace) {
 
-    const onceDefaultValue=1;
     const jsn_bool={
         "false": false,
         "true": true
@@ -35,7 +34,7 @@ function varExtend (objectValue, objectValueReplace) {
 
             if (has(objectValue[key])) {
 
-                if (indexOf(getKey(jsn_bool), objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
+                if (indexOfExist(getKey(jsn_bool), objectValue[key].toString().toLowerCase())) {
 
                     jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
 
