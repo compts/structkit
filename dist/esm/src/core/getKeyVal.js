@@ -1,4 +1,4 @@
-import indexOf from '../function/indexOf';
+import indexOfExist from '../function/indexOfExist';
 
 import each from '../function/each';
 
@@ -36,10 +36,10 @@ function getKeyVal (jsn, typ) {
         });
 
     });
-    if (indexOf([
+    if (indexOfExist([
         "key",
         "value"
-    ], typ)>-one) {
+    ], typ)) {
 
         const ars=typ==="key"
             ?ky

@@ -1,4 +1,4 @@
-const indexOf = require('../function/indexOf');
+const indexOfExist = require('../function/indexOfExist');
 
 const each = require('../function/each');
 
@@ -37,10 +37,10 @@ function getKeyVal (jsn, typ) {
         });
 
     });
-    if (indexOf([
+    if (indexOfExist([
         "key",
         "value"
-    ], typ)>-one) {
+    ], typ)) {
 
         const ars=typ==="key"
             ?ky
