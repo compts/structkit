@@ -1,3 +1,7 @@
+const getKeyVal=require('./src/core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
+
 const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
@@ -6,13 +10,13 @@ const getIndexOf=require('./src/core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const getKeyVal=require('./src/core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
 const append=require('./src/function/append.js');
 
 exports.append =append;
+
+const whereLoopExecution=require('./src/core/whereLoopExecution.js');
+
+exports.whereLoopExecution =whereLoopExecution;
 
 const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
 
@@ -22,13 +26,13 @@ const arrayConcat=require('./src/function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
 
-const whereLoopExecution=require('./src/core/whereLoopExecution.js');
-
-exports.whereLoopExecution =whereLoopExecution;
-
 const arrayToObjectByDataFormat=require('./src/function/arrayToObjectByDataFormat.js');
 
 exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
+
+const asyncReplace=require('./src/function/asyncReplace.js');
+
+exports.asyncReplace =asyncReplace;
 
 const arraySum=require('./src/function/arraySum.js');
 
@@ -38,21 +42,17 @@ const clone=require('./src/function/clone.js');
 
 exports.clone =clone;
 
-const asyncReplace=require('./src/function/asyncReplace.js');
-
-exports.asyncReplace =asyncReplace;
-
 const count=require('./src/function/count.js');
 
 exports.count =count;
 
-const each=require('./src/function/each.js');
-
-exports.each =each;
-
 const delimiter=require('./src/function/delimiter.js');
 
 exports.delimiter =delimiter;
+
+const each=require('./src/function/each.js');
+
+exports.each =each;
 
 const filter=require('./src/function/filter.js');
 
@@ -90,13 +90,13 @@ const has=require('./src/function/has.js');
 
 exports.has =has;
 
-const indexOf=require('./src/function/indexOf.js');
-
-exports.indexOf =indexOf;
-
 const ifUndefined=require('./src/function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
+
+const indexOf=require('./src/function/indexOf.js');
+
+exports.indexOf =indexOf;
 
 const insert=require('./src/function/insert.js');
 
@@ -182,6 +182,10 @@ const stringEscape=require('./src/function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
+const stringUnEscape=require('./src/function/stringUnEscape.js');
+
+exports.stringUnEscape =stringUnEscape;
+
 const templateValue=require('./src/function/templateValue.js');
 
 exports.templateValue =templateValue;
@@ -189,10 +193,6 @@ exports.templateValue =templateValue;
 const toArray=require('./src/function/toArray.js');
 
 exports.toArray =toArray;
-
-const stringUnEscape=require('./src/function/stringUnEscape.js');
-
-exports.stringUnEscape =stringUnEscape;
 
 const toDouble=require('./src/function/toDouble.js');
 
@@ -210,13 +210,13 @@ const where=require('./src/function/where.js');
 
 exports.where =where;
 
-const entity=require('./src/variable/htmlentity.js');
-
-exports.entity =entity;
-
 const whereNot=require('./src/function/whereNot.js');
 
 exports.whereNot =whereNot;
+
+const entity=require('./src/variable/htmlentity.js');
+
+exports.entity =entity;
 
 const objectCallType=require('./src/variable/types.js');
 
