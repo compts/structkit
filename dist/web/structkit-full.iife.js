@@ -342,245 +342,6 @@ _stk.arraySum=arraySum
 
 
 /**
- * Array Count
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or array
- * @param {boolean} json_is_empty_check If data is json, it will check its map data
- * @returns {number} Returns the total.
- * @example
- *
- * count([1,2])
- * // => 2
- */
-function count (objectValue, json_is_empty_check) {
-
-    var cnt=0;
-    var incByOne=1;
-    var defaultValueForFalse=0;
-    var json_is_empty_check_default=json_is_empty_check||false;
-    var get_json=getTypeof(objectValue);
-
-    if (has(objectValue)===false) {
-
-        return defaultValueForFalse;
-
-    }
-
-    if (get_json==="array") {
-
-        return objectValue.length;
-
-    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
-
-        for (var inc in objectValue) {
-
-            if (!isNaN(inc)) {
-
-                cnt+=incByOne;
-
-            }
-
-        }
-
-    } else {
-
-        each(objectValue, function () {
-
-            cnt+=incByOne;
-
-        });
-
-    }
-
-    if (get_json==="json"&&json_is_empty_check_default===true) {
-
-        var jsn_parse=objectValue;
-        var cnts=0;
-
-        each(jsn_parse, function () {
-
-            cnts+=incByOne;
-
-        });
-
-        return cnts;
-
-    }
-
-    return cnt;
-
-}
-
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue Array
- * @param {number} value key of array
- * @param {number} start The first index in array
- * @param {number} end The last index in array
- * @param {boolean} isGetLast If True first index if False last index
- * @returns {number|object|string} Returns the total.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function getIndexOf (objectValue, value, start, end, isGetLast) {
-
-    var indexOfDefaultValue=-1;
-    var incrementDefaultValue=1;
-
-    var referenceValue = -1;
-
-    if (getTypeof(objectValue)==="array") {
-
-        for (var inc=start; inc<end;) {
-
-            if (objectValue[inc]===value) {
-
-                if (isGetLast === false) {
-
-                    return inc;
-
-                }
-                referenceValue = inc;
-
-            }
-
-            inc+=incrementDefaultValue;
-
-        }
-
-    }
-
-    return isGetLast === false
-        ?indexOfDefaultValue
-        :referenceValue;
-
-}
-
-/**
- * Index of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value in array
- * @returns {any} Returns the index.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-function indexOf (objectValue, value) {
-
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
-
-    return indexValue;
-
-}
-
-/**
- * Index of array is Exist or not
- *
- * @since 1.3.1
- * @category Seq
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return array.
- * @example
- *
- * indexOfExist([312], 32)
- * // => false
- */
-function indexOfExist (arrayObject, value) {
-
-    var zero = 0;
-
-    return indexOf(arrayObject, value)>=zero;
-
-}
-
-/**
- * Append If Array not Exist
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    var ary_type=getTypeof(arrayObject);
-    var ary_type1=getTypeof(value);
-
-    if (ary_type ==="array" && ary_type1 ==="array") {
-
-        each(value, function (key, val) {
-
-            if (indexOfExist(arrayObject, val)===false) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-_stk.appendIsArrayExist=appendIsArrayExist
-
-
-
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-_stk.arrayConcat=arrayConcat
-
-
-
-
-/**
  * Map
  *
  * @since 1.0.1
@@ -848,50 +609,170 @@ function count (objectValue, json_is_empty_check) {
     return cnt;
 
 }
-_stk.count=count
+
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue Array
+ * @param {number} value key of array
+ * @param {number} start The first index in array
+ * @param {number} end The last index in array
+ * @param {boolean} isGetLast If True first index if False last index
+ * @returns {number|object|string} Returns the total.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function getIndexOf (objectValue, value, start, end, isGetLast) {
+
+    var indexOfDefaultValue=-1;
+    var incrementDefaultValue=1;
+
+    var referenceValue = -1;
+
+    if (getTypeof(objectValue)==="array") {
+
+        for (var inc=start; inc<end;) {
+
+            if (objectValue[inc]===value) {
+
+                if (isGetLast === false) {
+
+                    return inc;
+
+                }
+                referenceValue = inc;
+
+            }
+
+            inc+=incrementDefaultValue;
+
+        }
+
+    }
+
+    return isGetLast === false
+        ?indexOfDefaultValue
+        :referenceValue;
+
+}
+
+/**
+ * Index of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value in array
+ * @returns {any} Returns the index.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+function indexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+
+    return indexValue;
+
+}
+
+/**
+ * Index of array is Exist or not
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return array.
+ * @example
+ *
+ * indexOfExist([312], 32)
+ * // => false
+ */
+function indexOfExist (arrayObject, value) {
+
+    var zero = 0;
+
+    return indexOf(arrayObject, value)>=zero;
+
+}
+
+/**
+ * Append If Array not Exist
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+function appendIsArrayExist (arrayObject, value) {
+
+    var ary_type=getTypeof(arrayObject);
+    var ary_type1=getTypeof(value);
+
+    if (ary_type ==="array" && ary_type1 ==="array") {
+
+        each(value, function (key, val) {
+
+            if (indexOfExist(arrayObject, val)===false) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
+
+}
+_stk.appendIsArrayExist=appendIsArrayExist
 
 
 
 
 /**
- * Delimiter
+ * Array Concat
  *
- * @since 1.3.1
+ * @since 1.0.1
  * @category Seq
- * @param {any} objectValue Array
- * @param {number} min Delimiter in minumum of 2
- * @param {number} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
  * @example
  *
- * delimiter([1,2])
- * // => 2
+ * arrayConcat([1], 2)
+ * // => [1,2]
  */
-function delimiter (objectValue, min, max) {
+function arrayConcat (arrayObject, arrayValue) {
 
-    var ran_var=[];
-    var defaultValueZero=0;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
+    var return_val=arrayObject;
 
-    each(objectValue, function (key, value) {
+    if (getTypeof(return_val)==="array") {
 
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+        return return_val.concat(arrayValue);
 
-            ran_var.push(value);
+    }
 
-        }
-
-    });
-
-    return ran_var;
+    return [];
 
 }
-_stk.delimiter=delimiter
+_stk.arrayConcat=arrayConcat
 
 
 
@@ -985,6 +866,125 @@ function clone (objectValue) {
 
 }
 _stk.clone=clone
+
+
+
+
+/**
+ * Array Count
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or array
+ * @param {boolean} json_is_empty_check If data is json, it will check its map data
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * count([1,2])
+ * // => 2
+ */
+function count (objectValue, json_is_empty_check) {
+
+    var cnt=0;
+    var incByOne=1;
+    var defaultValueForFalse=0;
+    var json_is_empty_check_default=json_is_empty_check||false;
+    var get_json=getTypeof(objectValue);
+
+    if (has(objectValue)===false) {
+
+        return defaultValueForFalse;
+
+    }
+
+    if (get_json==="array") {
+
+        return objectValue.length;
+
+    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+
+        for (var inc in objectValue) {
+
+            if (!isNaN(inc)) {
+
+                cnt+=incByOne;
+
+            }
+
+        }
+
+    } else {
+
+        each(objectValue, function () {
+
+            cnt+=incByOne;
+
+        });
+
+    }
+
+    if (get_json==="json"&&json_is_empty_check_default===true) {
+
+        var jsn_parse=objectValue;
+        var cnts=0;
+
+        each(jsn_parse, function () {
+
+            cnts+=incByOne;
+
+        });
+
+        return cnts;
+
+    }
+
+    return cnt;
+
+}
+_stk.count=count
+
+
+
+
+/**
+ * Delimiter
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {number} min Delimiter in minumum of 2
+ * @param {number} max Delimiter in minumum base on array count
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * delimiter([1,2])
+ * // => 2
+ */
+function delimiter (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+_stk.delimiter=delimiter
 
 
 
@@ -2365,58 +2365,6 @@ _stk.limit=limit
 
 
 /**
- * Map
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
- * @example
- *
- * map([1,2],1,2 )
- *=>[2]
- */
-function map (objectValue, func) {
-
-    var strTypeOf =getTypeof(objectValue);
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
-    var value_arry=strTypeOf==="array"
-        ?[]
-        :{};
-    var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (strTypeOf==="array") {
-
-                value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
-
-            } else {
-
-                var dataFunc = func(value, key, cnt);
-
-                value_arry[key] = dataFunc;
-
-            }
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-_stk.map=map
-
-
-
-
-/**
  * Where
  *
  * @since 1.0.1
@@ -2733,6 +2681,143 @@ _stk.parseString=parseString
 
 
 /**
+ * Map
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The second number in an addition.
+ * @param {any} func The second number in an addition.
+ * @returns {null} Returns the total.
+ * @example
+ *
+ * map([1,2],1,2 )
+ *=>[2]
+ */
+function map (objectValue, func) {
+
+    var strTypeOf =getTypeof(objectValue);
+    var emptyDefaultValue=0;
+    var incrementDefaultValue=1;
+    var value_arry=strTypeOf==="array"
+        ?[]
+        :{};
+    var cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+
+                var dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
+
+        }
+
+    });
+
+    return value_arry;
+
+}
+_stk.map=map
+
+
+
+
+/**
+ * Random
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue  Max value
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * _stk.random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random===parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+_stk.random=random
+
+
+
+
+/**
+ * Range
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} maxValue Max value you to generate in array
+ * @param {number} minValue Min value you to generate in array
+ * @returns {string|number} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue) {
+
+    var emptyDefaultValue=0;
+    var tenDefaultValue=10;
+    var incrementDefaultValue=1;
+    var minValueRef=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var maxValueRef=has(maxValue)
+        ?maxValue
+        :tenDefaultValue;
+    var output=[];
+
+    for (var inc=minValueRef; inc<=maxValueRef;) {
+
+        output.push(inc);
+        inc+=incrementDefaultValue;
+
+    }
+
+    return output;
+
+}
+_stk.range=range
+
+
+
+
+/**
  * Remove
  *
  * @since 1.0.1
@@ -2833,47 +2918,6 @@ function remove (objectValue, value, value2) {
 _stk.remove=remove
 
 
-
-
-/**
- * Range
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} maxValue Max value you to generate in array
- * @param {number} minValue Min value you to generate in array
- * @returns {string|number} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue) {
-
-    var emptyDefaultValue=0;
-    var tenDefaultValue=10;
-    var incrementDefaultValue=1;
-    var minValueRef=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var maxValueRef=has(maxValue)
-        ?maxValue
-        :tenDefaultValue;
-    var output=[];
-
-    for (var inc=minValueRef; inc<=maxValueRef;) {
-
-        output.push(inc);
-        inc+=incrementDefaultValue;
-
-    }
-
-    return output;
-
-}
-_stk.range=range
-
-
 /**
  * Repeat
  *
@@ -2904,50 +2948,6 @@ function repeat (value, valueRepetion) {
 
 }
 _stk.repeat=repeat
-
-
-
-
-/**
- * Random
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value
- * @param {number} maxValue  Max value
- * @returns {string|number} Return string or number in array
- * @example
- *
- * _stk.random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random===parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-_stk.random=random
 
 
 
@@ -3144,6 +3144,91 @@ _stk.sort=sort
 
 
 /**
+ * Where Loop Execution
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function stringSplit (value) {
+
+    return value.toLowerCase().replace(/([-_.\s]{1,})/g, ' ');
+
+}
+
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+function stringCamelCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .replace(/(\s[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        })
+        .split(" ")
+        .join("");
+
+}
+_stk.stringCamelCase=stringCamelCase
+
+
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ */
+function stringCapitalize (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return value.toLowerCase().replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+_stk.stringCapitalize=stringCapitalize
+
+
+
+
+/**
  * String Escape
  *
  * @since 1.3.1
@@ -3183,6 +3268,66 @@ function stringEscape (value, type) {
 
 }
 _stk.stringEscape=stringEscape
+
+
+
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function stringKebabCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .split(" ")
+        .join("-");
+
+}
+_stk.stringKebabCase=stringKebabCase
+
+
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function stringSnakeCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .split(" ")
+        .join("_");
+
+}
+_stk.stringSnakeCase=stringSnakeCase
 
 
 
@@ -3882,6 +4027,32 @@ _stk.varExtend=varExtend
 
 
 /**
+ * To Integer
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in integer
+ * @returns {any[]} Return in integer.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+_stk.toInteger=toInteger
+
+
+
+
+/**
  * Where
  *
  * @since 1.0.1
@@ -3925,31 +4096,5 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 }
 _stk.whereNot=whereNot
-
-
-
-
-/**
- * To Integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-_stk.toInteger=toInteger
 
 })(typeof window !== "undefined" ? window : this);
