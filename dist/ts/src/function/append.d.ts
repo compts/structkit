@@ -6,11 +6,11 @@ export default append;
  * @category Seq
  * @param {any} objectValue The first number in an addition.
  * @param {any} val Value for array index and json
- * @param {any} key Json key
+ * @param {any=} key Json key
  * @returns {any} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-declare function append(objectValue: any, val: any, key: any): any;
+declare function append(objectValue: any, val: any, key?: any | undefined): any;
