@@ -10,8 +10,8 @@ import each from './each';
  * @since 1.3.1
  * @category Seq
  * @param {any} objectValue Array
- * @param {number} min Delimiter in minumum of 2
- * @param {number} max Delimiter in minumum base on array count
+ * @param {number=} min Delimiter in minumum of 2
+ * @param {number=} max Delimiter in minumum base on array count
  * @returns {string} Returns the total.
  * @example
  *

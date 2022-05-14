@@ -8,7 +8,7 @@ const getTypeof = require('./getTypeof');
  * @category Seq
  * @param {any} objectValue The first number in an addition.
  * @param {any} val Value for array index and json
- * @param {any} key Json key
+ * @param {any=} key Json key
  * @returns {any} Returns the total.
  * @example
  *

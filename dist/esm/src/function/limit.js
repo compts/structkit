@@ -9,11 +9,11 @@ import count from './count';
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {number} minValue The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue Maximum value
+ * @param {any} func Callback function
+ * @returns {any} Returns the object.
  * @example
  *
  * limit([1,2],1,2 )

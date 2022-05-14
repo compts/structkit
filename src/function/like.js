@@ -8,7 +8,7 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  * @category Seq
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} func Function
+ * @param {any=} func Function
  * @returns {any} Return either Json to Array.
  * @returns {any} Returns the total.
  * @example
