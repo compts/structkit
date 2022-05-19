@@ -4,7 +4,7 @@ export default appendIsArrayExist;
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} arrayObject Array
+ * @param {any} arrayObject Data is Array
  * @param {any} value Value for array lookup
  * @returns {any[]} Return array.
  * @example

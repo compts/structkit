@@ -4,7 +4,7 @@ export default toArray;
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value Value you to convert in array
+ * @param {any} value Value you want to convert in array
  * @returns {any[]} Return in array.
  * @example
  *

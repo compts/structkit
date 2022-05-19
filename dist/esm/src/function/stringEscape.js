@@ -13,9 +13,9 @@ import {entity, listType} from '../variable/htmlentity';
  *
  * @since 1.3.1
  * @category Seq
- * @param {string} value The second number in an addition.
- * @param {string=} type The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns escape string
  * @example
  *
  * stringEscape("yahii & adad ^ss")
@@ -40,7 +40,7 @@ function stringEscape (value, type) {
 
         return isEmpty(whr)
             ? str1
-            : first(whr).value[typeVal];
+            : first(whr)[typeVal];
 
     });
 

@@ -6,7 +6,7 @@ const getTypeof = require('./getTypeof');
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The first number in an addition.
+ * @param {any} objectValue The data either json or array
  * @param {any} val Value for array index and json
  * @param {any=} key Json key
  * @returns {any} Returns the total.

@@ -16,10 +16,7 @@ describe('CJS: first method', function () {
                 two,
                 three
             ]),
-            {
-                'key': '0',
-                'value': one
-            }
+            one
         );
 
     });

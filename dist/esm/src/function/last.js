@@ -14,7 +14,7 @@ import getKeyVal from '../core/getKeyVal';
  */
 function last (objectValue) {
 
-    return getKeyVal(objectValue, "last_index");
+    return getKeyVal(objectValue, "last_index").value;
 
 }
 export default last;

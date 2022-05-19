@@ -5,7 +5,7 @@ import getTypeof from './getTypeof';
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value Json or Array
+ * @param {any} value Either Json or Array
  * @returns {any} Returns empty either Json or Array
  * @example
  *

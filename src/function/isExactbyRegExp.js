@@ -10,8 +10,8 @@ const each = require('./each');
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue1 The first number in an addition.
- * @param {string} objectValue2 The first number in an addition.
+ * @param {string} objectValue1 Either Json or array
+ * @param {string} objectValue2 use as lookup data in data
  * @returns {boolean} Returns the total.
  * @example
  *

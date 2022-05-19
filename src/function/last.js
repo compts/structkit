@@ -15,7 +15,7 @@ const getKeyVal = require('../core/getKeyVal');
  */
 function last (objectValue) {
 
-    return getKeyVal(objectValue, "last_index");
+    return getKeyVal(objectValue, "last_index").value;
 
 }
 module.exports=last;

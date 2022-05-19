@@ -5,7 +5,7 @@ import getKeyVal from '../core/getKeyVal';
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue JSON or Array
+ * @param {any} objectValue Either JSON or Array
  * @returns {string} Returns it respective key or index
  * @example
  *
