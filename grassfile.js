@@ -1,108 +1,122 @@
-const list_package_utility_js =  [ 
-  "src/function/*.js",
-  
-];
+const list_package_utility_js = ["src/function/*.js"];
+const list_package_utility_js1 = ["src/*/*.js"];
 
 
+exports.module=function (grassconf) {
+
+    const grass_concat = grassconf.require("grass_concat");
+
+    const packpier = grassconf.require("packpier");
+    const {cjsFileNameOnlyImportOnly, cjsToEsmFileNameOnly} = grassconf.require("pirate-pack-js");
 
 
-exports.module=function(grassconf){   
-  var grass_concat = grassconf.require("grass_concat")  
-  var compts_script_interpreter = grassconf.require("compts-script-interpreter");
-  
-  
-  grassconf.load("cjs",function(test){
-    
-    
-    return grassconf.src(list_package_utility_js)
-    //    .pipe(grass_composer( {
-    //      "banner":{
-    //        "header":"(function(window){ \n" +
-    //        " /** \n" +
-    //        " /* This program was writtern by pein freccs. \n" +
-    //        " /* Please check my repository for more details and update \n" +
-    //        " /* https://github.com/compts/compts \n"+
-    //        " **/ \n",
-    //        "footer":"\n })(window);"
-    //        
-    //      }//,main_file:__dirname+"/src/a_test_import.js"
-    //    } ) )
-    .pipe(compts_script_interpreter.esm_to_cjs( {
-        "isWeb":false,
-    }))
-    .pipe(grass_concat(__dirname+"/dist/node.cjs.js",{
-      istruncate:true,
-      main_file:__dirname+"/src/a_test_import.js"
-    }) );
-    
-    
-  });
+    grassconf.load("esm", function () {
 
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js1
+                },
+                "output": {
+                    // Esm,cjs,iife,
+                    "type": "esm"
+                }
+            }
+        )
+            .pipe(grassconf.dest("dist/esm", {
+                "lsFileType": "path"
+            }));
 
-  
-  grassconf.load("esm",function(test){
-    
-    
-    return grassconf.src(list_package_utility_js)
-    //    .pipe(grass_composer( {
-    //      "banner":{
-    //        "header":"(function(window){ \n" +
-    //        " /** \n" +
-    //        " /* This program was writtern by pein freccs. \n" +
-    //        " /* Please check my repository for more details and update \n" +
-    //        " /* https://github.com/compts/compts \n"+
-    //        " **/ \n",
-    //        "footer":"\n })(window);"
-    //        
-    //      }//,main_file:__dirname+"/src/a_test_import.js"
-    //    } ) )
-    .pipe(compts_script_interpreter.esm( {
-      
-    }))
-    .pipe(grass_concat(__dirname+"/dist/node.es.js",{
-      istruncate:true,
-      main_file:__dirname+"/src/a_test_import.js"
-    }) );
-    
-    
-  });
+    });
 
+    grassconf.load("esm_only", function () {
 
-  grassconf.load("web_cjs",function(test){
-    
-    
-    return grassconf.src(list_package_utility_js)
-    //    .pipe(grass_composer( {
-    //      "banner":{
-    //        "header":"(function(window){ \n" +
-    //        " /** \n" +
-    //        " /* This program was writtern by pein freccs. \n" +
-    //        " /* Please check my repository for more details and update \n" +
-    //        " /* https://github.com/compts/compts \n"+
-    //        " **/ \n",
-    //        "footer":"\n })(window);"
-    //        
-    //      }//,main_file:__dirname+"/src/a_test_import.js"
-    //    } ) )
-    .pipe(compts_script_interpreter.esm_to_cjs( {
-        "isWeb":true,
-    }))
-    .pipe(grass_concat(__dirname+"/dist/web/web-full.cjs.js",{
-      istruncate:true,
-      main_file:__dirname+"/src/a_test_import.js"
-    }) );
-    
-    
-  });
-  
-} 
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js
+                },
+                "output": {
+                    // Esm,cjs,iife,
+                    "type": "cjs"
+                },
+                "plugin": [cjsToEsmFileNameOnly()]
 
-exports.execute=function( lib ){   
-  lib.default=function(strm){
-    strm.series("cjs")
-    .series("esm")
-    .series("web_cjs");
-  }  
-  return lib;    
-}       
+            }
+        )
+            .pipe(grass_concat("dist/esm/node.esm.js", {
+                "istruncate": true
+            }));
+
+    });
+
+    grassconf.load("cjs_only", function () {
+
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js1
+                },
+                "output": {
+                    // Esm,cjs,iife,
+                    "type": "cjs"
+                },
+                "plugin": [cjsFileNameOnlyImportOnly()]
+            }
+        )
+            .pipe(grass_concat("src/node.cjs.js", {
+                "istruncate": true
+            }));
+
+    });
+
+    grassconf.load("web_iife", function () {
+
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js
+                },
+                "output": {
+                    "globalName": "_stk",
+                    "type": "iife"
+                },
+                "plugin": []
+            }
+        )
+            .pipe(grass_concat("dist/web/structkit-full.iife.js", {
+                "istruncate": true
+            }));
+
+    });
+    grassconf.load("cjs_move", function () {
+
+        return grassconf.src("src/node.cjs.js")
+            .pipe(grass_concat("node.cjs.js", {
+                "istruncate": true
+            }));
+
+    });
+
+};
+
+exports.execute=function (lib) {
+
+    lib.default=function (strm) {
+
+        strm.series("web_iife");
+        strm.series("esm");
+        strm.series("esm_only");
+        strm.series("cjs_only");
+        strm.series("cjs_move");
+
+    };
+
+    return lib;
+
+};
 

@@ -1,21 +1,24 @@
-import has from './has';
-import each from './each';
-import count from './count';
+const has = require('./has');
+
+const each = require('./each');
+
+const count = require('./count');
+
 
 /**
  * Limit
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {limit} minValue The second number in an addition.
- * @param {integer} maxValue The second number in an addition.
- * @param {function} func The second number in an addition.
- * @returns {null} Returns the total.
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue Maximum value
+ * @param {any} func Callback function
+ * @returns {any} Returns the object.
  * @example
  *
  * limit([1,2],1,2 )
- *=>[2]
+ *=>{'1':2}
  */
 function limit (objectValue, minValue, maxValue, func) {
 
@@ -35,7 +38,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
         if (cnt>=minValueReserve && cnt<=maxValueReserve) {
 
-            glo_jsn[key]=meth;
 
             if (has(func)) {
 
@@ -46,6 +48,10 @@ function limit (objectValue, minValue, maxValue, func) {
                     glo_jsn[key]=glo_indtfd;
 
                 }
+
+            } else {
+
+                glo_jsn[key]=meth;
 
             }
 
@@ -58,4 +64,5 @@ function limit (objectValue, minValue, maxValue, func) {
     return glo_jsn;
 
 }
-export default limit;
+module.exports=limit;
+

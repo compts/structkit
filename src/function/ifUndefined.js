@@ -1,14 +1,15 @@
-import has from "./has";
+const has = require('./has');
+
 
 /**
- * Check if is undefined
+ * Check if data is undefined
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value1 The first number in an addition.
- * @param {number|object|string} value2 The second number in an addition.
- * @returns {number|object|string} Returns the total.
+ * @param {any} objectValue Either JSON or array
+ * @param {any} value1 Check the key of value
+ * @param {any=} value2 if value not exist, this value will be return
+ * @returns {any} Returns the total.
  * @example
  *
  * ifUndefined({'as':1}, 'as','as2')
@@ -37,4 +38,5 @@ function ifUndefined (objectValue, value1, value2) {
     return value2;
 
 }
-export default ifUndefined;
+module.exports=ifUndefined;
+

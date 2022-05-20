@@ -1,19 +1,22 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
 
 /**
  * Insert Value
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The first number in an addition.
- * @param {number|object|string} value The first number in an addition.
- * @returns {number|object|string} Returns the total.
+ * @param {any} objectValue Either Json or array
+ * @param {any} value Data you want to insert
+ * @returns {any} Returns Json or array
  * @example
- *
- * ifUndefined({'as':1}, 'as','as2')
- * // => 1
+ * var ss = {"A":1}
+ * insert(ss,{'as':1})
+ * // => {A: 1, as: 1}
  */
 function insert (objectValue, value) {
 
@@ -29,7 +32,9 @@ function insert (objectValue, value) {
 
             });
 
-        } else {
+        }
+
+        if (jsn_type==="array") {
 
             objectValue.push(value);
 
@@ -38,4 +43,5 @@ function insert (objectValue, value) {
     }
 
 }
-export default insert;
+module.exports=insert;
+

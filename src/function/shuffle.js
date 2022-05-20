@@ -1,14 +1,16 @@
-import getTypeof from './getTypeof';
-import count from './count';
-import indexOf from './indexOf';
+const getTypeof = require('./getTypeof');
+
+const count = require('./count');
+
+const indexOf = require('./indexOf');
+
 
 /**
  * Shuffle
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {number} value The second number in an addition.
+ * @param {any} objectValue Array argmuments
  * @returns {string|number} Returns the total.
  * @example
  *
@@ -52,4 +54,5 @@ function shuffle (objectValue) {
     return output;
 
 }
-export default shuffle;
+module.exports=shuffle;
+

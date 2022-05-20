@@ -1,26 +1,29 @@
-import has from './has';
-import getTypeof from './getTypeof';
-import each from './each';
+const has = require('./has');
+
+const getTypeof = require('./getTypeof');
+
+const each = require('./each');
+
 
 /**
  * Array Count
  *
  * @since 1.0.1
  * @category Seq
- * @param {array} objectValue The second number in an addition.
- * @param {boolean} bol The second number in an addition.
- * @returns {int} Returns the total.
+ * @param {any} objectValue Json or array
+ * @param {boolean} json_is_empty_check If data is json, it will check its map data
+ * @returns {number} Returns the total.
  * @example
  *
  * count([1,2])
  * // => 2
  */
-function count (objectValue, bol) {
+function count (objectValue, json_is_empty_check) {
 
     let cnt=0;
     const incByOne=1;
     const defaultValueForFalse=0;
-    const bol_d=bol||false;
+    const json_is_empty_check_default=json_is_empty_check||false;
     const get_json=getTypeof(objectValue);
 
     if (has(objectValue)===false) {
@@ -29,7 +32,11 @@ function count (objectValue, bol) {
 
     }
 
-    if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+    if (get_json==="array") {
+
+        return objectValue.length;
+
+    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
 
         for (const inc in objectValue) {
 
@@ -51,7 +58,7 @@ function count (objectValue, bol) {
 
     }
 
-    if (get_json==="json"&&bol_d===true) {
+    if (get_json==="json"&&json_is_empty_check_default===true) {
 
         const jsn_parse=objectValue;
         let cnts=0;
@@ -69,4 +76,5 @@ function count (objectValue, bol) {
     return cnt;
 
 }
-export default count;
+module.exports=count;
+

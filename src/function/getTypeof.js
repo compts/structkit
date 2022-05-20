@@ -1,10 +1,12 @@
+const isJson = require("./isJson");
+
 /**
- * Get JSON Variable
+ * Get Variable typeof
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} objectValue Any data you want to check its property
+ * @returns {string} Get the property of variable
  * @example
  *
  * getTypeof([])
@@ -14,7 +16,9 @@ function getTypeof (objectValue) {
 
     if (Object.prototype.toString.call(objectValue)==="[object Object]") {
 
-        return "json";
+        return isJson(objectValue, "object")
+            ?"json"
+            :"object";
 
     }
 
@@ -23,8 +27,14 @@ function getTypeof (objectValue) {
         return "array";
 
     }
+    if (Object.prototype.toString.call(objectValue)==="[object RegExp]") {
 
-    return typeof s;
+        return "regexp";
+
+    }
+
+    return typeof objectValue;
 
 }
-export default getTypeof;
+module.exports=getTypeof;
+

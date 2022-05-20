@@ -1,12 +1,13 @@
-import getKeyVal from '../core/getKeyVal';
+const getKeyVal = require('../core/getKeyVal');
+
 
 /**
- * Get key
+ * Get key Object or JSON
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective key or index
  * @example
  *
  * getKey({"s":1})
@@ -17,4 +18,5 @@ function getKey (objectValue) {
     return getKeyVal(objectValue, "key");
 
 }
-export default getKey;
+module.exports=getKey;
+

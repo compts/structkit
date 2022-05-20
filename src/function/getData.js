@@ -1,14 +1,16 @@
-import has from './has';
-import each from './each';
+const has = require('./has');
+
+const each = require('./each');
+
 
 /**
  * Get Data
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {function} split_str The second number in an addition.
- * @returns {object} Returns the total.
+ * @param {any} objectValue Either Json or Array data.
+ * @param {any} split_str Search key or index.
+ * @returns {any} Returns the total.
  * @example
  *
  * getData({"s":1},"s")
@@ -16,7 +18,8 @@ import each from './each';
  */
 function getData (objectValue, split_str) {
 
-    const spl_len=split_str.split(":");
+    const split_strReplace= split_str.replace(/([.]{1,})/g, ":");
+    const spl_len=split_strReplace.split(":");
     const spl=[];
     let jsn_total={};
 
@@ -65,4 +68,4 @@ function getData (objectValue, split_str) {
     return jsn_total;
 
 }
-export default getData;
+module.exports=getData;

@@ -1,24 +1,27 @@
-import has from './has';
-import count from './count';
-import each from './each';
+const has = require('./has');
+
+const count = require('./count');
+
+const each = require('./each');
+
 
 /**
  * Random
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} valueArray The second number in an addition.
- * @param {number} minValue The second number in an addition.
- * @param {number} maxValue The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue  Max value
+ * @returns {string|number} Return string or number in array
  * @example
  *
- * random([1,2,3],1,2 )
- *=>'{}'
+ * _stk.random([10,20,30],0,3 )
+ *=>'[20]'
  */
 function random (valueArray, minValue, maxValue) {
 
-    let ran_var=[];
+    const ran_var=[];
     const emptyDefaultValue=0;
     const ran_min=has(minValue)
         ?minValue
@@ -30,9 +33,9 @@ function random (valueArray, minValue, maxValue) {
 
     each(valueArray, function (key, value) {
 
-        if (math_random===key) {
+        if (math_random===parseInt(key)) {
 
-            ran_var = value;
+            ran_var.push(value);
 
         }
 
@@ -41,4 +44,5 @@ function random (valueArray, minValue, maxValue) {
     return ran_var;
 
 }
-export default random;
+module.exports=random;
+

@@ -1,39 +1,68 @@
-import getTypeof from './getTypeof';
-import each from './each';
-import indexOf from './indexOf';
-import where from './where';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const count = require('./count');
+
+const each = require('./each');
+
+const indexOfExist = require('./indexOfExist');
+
+const where = require('./where');
+
 
 /**
  * Remove
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {number} value The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {any} objectValue Json or array
+ * @param {number} value if objectValue, json is must be object or array index you want to remove
+ * @param {number} value2 Last row in index
+ * @returns {any[]} Returns the total.
  * @example
  *
- * remove([1,2,3],1 )
- *=>'{}'
+ * remove([1,2,3],0 )
+ *=>[2, 3]
  */
-function remove (objectValue, value) {
+function remove (objectValue, value, value2) {
 
-    const emptyDefaultValue=0;
     const type_js=getTypeof(objectValue);
     let reslt =null;
 
+    const isValueAFunction = getTypeof(value)==="function";
+
     if (type_js==="array") {
+
+        const lastRow = has(value2)
+            ?value2
+            :count(objectValue);
 
         reslt=[];
         each(objectValue, function (ak, av) {
 
-            if (indexOf(objectValue, value)<emptyDefaultValue) {
+            if (isValueAFunction) {
 
-                reslt.push(av);
+                if (value(ak, av)) {
+
+                    reslt.push(av);
+
+                }
+
+            } else {
+
+                if (ak > value && ak <= lastRow) {
+
+                    reslt.push(av);
+
+                }
 
             }
 
+
         });
+
+        return reslt;
 
     }
 
@@ -54,17 +83,33 @@ function remove (objectValue, value) {
 
         each(objectValue, function (ak, av) {
 
-            if (indexOf(jsn_vw, ak)<emptyDefaultValue) {
+            if (isValueAFunction) {
 
-                reslt[ak]=av;
+                if (value(ak, av)) {
+
+                    reslt[ak]=av;
+
+                }
+
+            } else {
+
+                if (indexOfExist(jsn_vw, av)===false) {
+
+                    reslt[ak]=av;
+
+                }
 
             }
 
+
         });
+
+        return reslt;
 
     }
 
-    return reslt;
+    return [];
 
 }
-export default remove;
+module.exports=remove;
+

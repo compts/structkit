@@ -1,44 +1,101 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
+const isEmpty = require('./isEmpty');
+
 
 /**
  * Sort
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {number} index The second number in an addition.
- * @param {boolean} order The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {any} objectValue Array
+ * @param {any} order True for ascend then false for descend
+ * @param {any} func Callback function or sort type
+ * @returns {any[]} Returns the total.
  * @example
  *
  * sort([2,3,1])
  *=>[1,2,3]
  */
-function sort (objectValue, index, order) {
+function sort (objectValue, order, func) {
 
-    let jsonn=objectValue;
-    const asc=has(order)
-        ?order
-        :true;
+    const jsonn=objectValue;
+    let asc=true;
+    let types='any';
+
+    if (has(order) && getTypeof(order) ==='boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(func) && getTypeof(func) ==='string') {
+
+        types= func;
+
+    }
+
     const js_m=getTypeof(jsonn)==="json"
         ?each(jsonn)
         :jsonn;
 
-    jsonn=js_m.sort(function (orderA, orderB) {
+    const finalResponse=js_m.sort(function (orderA, orderB) {
 
-        if (asc) {
+        if (has(func) && getTypeof(func) ==='function') {
 
-            return orderA[index] > orderB[index];
+            return func(orderA, orderB);
 
         }
 
-        return orderB[index] > orderA[index];
+        let sortOrderA = orderA;
+        let sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types ==='any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types ==='lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types ==='uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
+
+
+        }
+
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
+
 
     });
 
-    return jsonn;
+    return finalResponse;
 
 }
-export default sort;
+module.exports=sort;
+

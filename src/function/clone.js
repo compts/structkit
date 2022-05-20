@@ -1,18 +1,21 @@
-import getJSONVariable from './getJSONVariable';
-import each from './each';
-import append from './append';
+const getJSONVariable = require('./getJSONVariable');
+
+const each = require('./each');
+
+const append = require('./append');
+
 
 /**
  * Array Clone
  *
  * @since 1.0.1
  * @category Seq
- * @param {array} objectValue The second number in an addition.
- * @returns {float} Returns the total.
+ * @param {any} objectValue data you want to clone
+ * @returns {number} Returns clone data
  * @example
  *
- * arraySum([1,2], 2)
- * // => 3.00
+ * clone([1,2])
+ * // => [1,2]
  */
 function clone (objectValue) {
 
@@ -27,4 +30,5 @@ function clone (objectValue) {
     return variable;
 
 }
-export default clone;
+module.exports=clone;
+

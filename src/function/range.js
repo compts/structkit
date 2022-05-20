@@ -1,17 +1,18 @@
-import has from './has';
+const has = require('./has');
+
 
 /**
  * Range
  *
  * @since 1.0.1
  * @category Seq
- * @param {number} maxValue The second number in an addition.
- * @param {number} minValue The second number in an addition.
- * @returns {string|number} Returns the total.
+ * @param {number} maxValue Max value you to generate in array
+ * @param {number} minValue Min value you to generate in array
+ * @returns {string|number} Return in array.
  * @example
  *
- * random([1,2,3],1,2 )
- *=>'{}'
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
  */
 function range (maxValue, minValue) {
 
@@ -36,4 +37,5 @@ function range (maxValue, minValue) {
     return output;
 
 }
-export default range;
+module.exports=range;
+

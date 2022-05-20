@@ -1,21 +1,26 @@
-import getTypeof from './getTypeof';
-import has from './has';
-import each from './each';
-import indexOf from './indexOf';
-import count from './count';
+const getTypeof = require('./getTypeof');
+
+const has = require('./has');
+
+const each = require('./each');
+
+const indexOf = require('./indexOf');
+
+const count = require('./count');
+
 
 /**
  * Is Exact
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue1 The first number in an addition.
- * @param {string} objectValue2 The first number in an addition.
- * @param {boolean} isExist The first number in an addition.
+ * @param {string} objectValue1 Json or Array
+ * @param {string} objectValue2 Json or Array for lookup to objectValue1
+ * @param {boolean} isExist Default value is True
  * @returns {boolean} Returns the total.
  * @example
  *
- * isExact('')
+ * isExact({"test": 11,"test2": 11}, {"test2": 11})
  * // => true
  */
 function isExact (objectValue1, objectValue2, isExist) {
@@ -86,4 +91,5 @@ function isExact (objectValue1, objectValue2, isExist) {
     return cnt===count(objectValue2);
 
 }
-export default isExact;
+module.exports=isExact;
+

@@ -1,15 +1,19 @@
-import has from './has';
-import getTypeof from './getTypeof';
-import indexOf from './indexOf';
+const has = require('./has');
+
+const getTypeof = require('./getTypeof');
+
+const indexOfExist = require('./indexOfExist');
+const getKey = require('./getKey');
+
 
 /**
  * Var extend
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} objectValue The second number in an addition.
- * @param {object} objectValueReplace The second number in an addition.
- * @returns {array} Returns the total.
+ * @param {object} objectValue Json or Array
+ * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
+ * @returns {array} Return Json or Array.
  * @example
  *
  * varExtend({"s1":1},{"s1":2})
@@ -17,7 +21,10 @@ import indexOf from './indexOf';
  */
 function varExtend (objectValue, objectValueReplace) {
 
-    const onceDefaultValue=1;
+    const jsn_bool={
+        "false": false,
+        "true": true
+    };
 
     if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
 
@@ -25,17 +32,17 @@ function varExtend (objectValue, objectValueReplace) {
 
         for (const key in objectValue) {
 
-            if (indexOf([
-                'true',
-                'false'
-            ], objectValue[key].toString().toLowerCase())>-onceDefaultValue) {
+            if (has(objectValue[key])) {
 
-                const jsn_bool={
-                    "false": false,
-                    "true": true
-                };
+                if (indexOfExist(getKey(jsn_bool), objectValue[key].toString().toLowerCase())) {
 
-                jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+                    jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+
+                } else {
+
+                    jsn_s[key]=objectValue[key];
+
+                }
 
             } else {
 
@@ -43,13 +50,22 @@ function varExtend (objectValue, objectValueReplace) {
 
             }
 
+
         }
 
         for (const key in objectValueReplace) {
 
             if (has(jsn_s, key)) {
 
-                jsn_s[key]=objectValueReplace[key];
+                if (getTypeof(jsn_s[key]) ==="json") {
+
+                    jsn_s[key]=replaceValue(jsn_s[key], objectValueReplace[key]);
+
+                } else {
+
+                    jsn_s[key]=objectValueReplace[key];
+
+                }
 
             }
 
@@ -62,4 +78,39 @@ function varExtend (objectValue, objectValueReplace) {
     return objectValue;
 
 }
-export default varExtend;
+
+/**
+ * Replace Value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} objectValue Json or Array
+ * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
+ * @returns {array} Return Json or Array.
+ * @example
+ *
+ * varExtend({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+function replaceValue (objectValue, objectValueReplace) {
+
+    for (const key in objectValueReplace) {
+
+        if (getTypeof(objectValue[key]) ==="json") {
+
+            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
+
+        } else {
+
+            objectValue[key] = objectValueReplace[key];
+
+        }
+
+
+    }
+
+    return objectValue;
+
+}
+module.exports=varExtend;
+

@@ -1,11 +1,11 @@
 /**
- * Check if object or value
+ * Check if object has value or null
  *
  * @since 1.0.1
  * @category Seq
- * @param {number|object|string} value The first number in an addition.
- * @param {number|object|string} key The second number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} value Either JSON or Array
+ * @param {any=} key For key or index of data
+ * @returns {boolean} Returns true or false.
  * @example
  *
  * has({'as':1}, 'as')
@@ -22,4 +22,5 @@ function has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-export default has;
+module.exports=has;
+

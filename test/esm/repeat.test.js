@@ -1,12 +1,16 @@
 
-import {repeat} from "../../dist/node.es";
+import {repeat} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('repeat method', function() {
-  it('check if repetion is correct', function() {
-    assert.strictEqual(repeat("as",2), "asas");
-    
-  });
-  
-  
+const two=2;
+
+describe('ESM: repeat method', function () {
+
+    it('check if repetion is correct', function () {
+
+        assert.strictEqual(repeat("as", two), "asas");
+
+    });
+
+
 });

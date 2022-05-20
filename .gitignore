@@ -4,3 +4,26 @@ compts-labs/*
 compts-labs
 src_old_copy/*
 src_old_copy
+.DS_Store
+dist/.DS_Store
+src/.DS_Store
+src/*/.DS_Store
+src/*/*/.DS_Store
+test/.DS_Store
+dist/node.cjs.js_old
+dist/node.es.js_old
+dist_copy
+dist_exp
+grassfile copy.js
+grassfile_copy_old.js
+package-lock.json
+.DS_Store
+.DS_Store
+dist/.DS_Store
+dist/cjs/.DS_Store
+dist/.DS_Store
+dist/web/.DS_Store
+.DS_Store
+src/node.cjs.js
+coverage
+
