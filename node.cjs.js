@@ -2,25 +2,25 @@ const dataTypeFormat=require('./src/core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
 
-const getKeyVal=require('./src/core/getKeyVal.js');
+const getIndexOf=require('./src/core/getIndexOf.js');
 
-exports.getKeyVal =getKeyVal;
+exports.getIndexOf =getIndexOf;
 
 const stringSplit=require('./src/core/stringSplit.js');
 
 exports.stringSplit =stringSplit;
 
-const getIndexOf=require('./src/core/getIndexOf.js');
+const getKeyVal=require('./src/core/getKeyVal.js');
 
-exports.getIndexOf =getIndexOf;
-
-const whereLoopExecution=require('./src/core/whereLoopExecution.js');
-
-exports.whereLoopExecution =whereLoopExecution;
+exports.getKeyVal =getKeyVal;
 
 const append=require('./src/function/append.js');
 
 exports.append =append;
+
+const whereLoopExecution=require('./src/core/whereLoopExecution.js');
+
+exports.whereLoopExecution =whereLoopExecution;
 
 const appendIsArrayExist=require('./src/function/appendIsArrayExist.js');
 
@@ -118,25 +118,25 @@ const isEmpty=require('./src/function/isEmpty.js');
 
 exports.isEmpty =isEmpty;
 
-const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
-
-exports.isExactbyRegExp =isExactbyRegExp;
-
 const isExact=require('./src/function/isExact.js');
 
 exports.isExact =isExact;
+
+const isExactbyRegExp=require('./src/function/isExactbyRegExp.js');
+
+exports.isExactbyRegExp =isExactbyRegExp;
 
 const isJson=require('./src/function/isJson.js');
 
 exports.isJson =isJson;
 
-const last=require('./src/function/last.js');
-
-exports.last =last;
-
 const jsonToArray=require('./src/function/jsonToArray.js');
 
 exports.jsonToArray =jsonToArray;
+
+const last=require('./src/function/last.js');
+
+exports.last =last;
 
 const lastIndexOf=require('./src/function/lastIndexOf.js');
 
@@ -178,13 +178,13 @@ const repeat=require('./src/function/repeat.js');
 
 exports.repeat =repeat;
 
-const shuffle=require('./src/function/shuffle.js');
-
-exports.shuffle =shuffle;
-
 const roundDecimal=require('./src/function/roundDecimal.js');
 
 exports.roundDecimal =roundDecimal;
+
+const shuffle=require('./src/function/shuffle.js');
+
+exports.shuffle =shuffle;
 
 const sort=require('./src/function/sort.js');
 
@@ -246,11 +246,11 @@ const whereNot=require('./src/function/whereNot.js');
 
 exports.whereNot =whereNot;
 
-const objectCallType=require('./src/variable/types.js');
-
-exports.objectCallType =objectCallType;
-
 const entity=require('./src/variable/htmlentity.js');
 
 exports.entity =entity;
+
+const objectCallType=require('./src/variable/types.js');
+
+exports.objectCallType =objectCallType;
 
