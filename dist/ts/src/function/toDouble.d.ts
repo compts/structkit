@@ -8,7 +8,7 @@ export default toDouble;
  * @returns {any[]} Return in double.
  * @example
  *
- * toArray(1)
- *=>[1]
+ * toDouble(1)
+ *=>1.00
  */
 declare function toDouble(value: any): any[];

@@ -8,7 +8,7 @@ const isEmpty = require('./isEmpty');
 
 
 /**
- * Sort
+ * Sort array
  *
  * @since 1.0.1
  * @category Seq

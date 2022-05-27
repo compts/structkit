@@ -13,7 +13,9 @@
  */
 function stringSplit (value) {
 
-    return value.toLowerCase().replace(/([-_.\s]{1,})/g, ' ');
+    return value.trim()
+        .toLowerCase()
+        .replace(/([-_.\s]{1,})/g, ' ');
 
 }
 module.exports=stringSplit;

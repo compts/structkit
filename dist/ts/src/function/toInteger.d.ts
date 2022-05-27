@@ -8,7 +8,7 @@ export default toInteger;
  * @returns {any[]} Return in integer.
  * @example
  *
- * toArray(1)
- *=>[1]
+ * toInteger(1)
+ *=>1
  */
 declare function toInteger(value: any): any[];

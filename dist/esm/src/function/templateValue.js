@@ -11,59 +11,6 @@ import getData from './getData';
 import has from './has';
 
 /**
- * Template Value Internal
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} str_raw String from template you need interpolation
- * @param {string} reg Value you want to replace from template
- * @returns {string} Returns template from interpolation
- * @example
- *
- * templateValueInternal("","" )
- *=>'{}'
- */
-function templateValueInternal (str_raw, reg) {
-
-    const str=str_raw;
-    let strs=str;
-
-    try {
-
-        try {
-
-            const regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
-
-            strs=strs.replace(regs, function (word, mes1) {
-
-                const strs_perd=mes1.replace(".", ":");
-                const gtdata=getData(reg, strs_perd);
-
-                return getTypeof(gtdata)==="json"
-                    ?""
-                    :gtdata;
-
-            });
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-
-    } catch (error) {
-
-        console.log(error);
-
-    }
-
-    const strs_finl=strs;
-
-    return strs_finl;
-
-}
-
-/**
  * Template Value
  *
  * @since 1.0.1
@@ -74,8 +21,8 @@ function templateValueInternal (str_raw, reg) {
  * @returns {string} Returns the total.
  * @example
  *
- * templateValue("","" )
- *=>'{}'
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
  */
 function templateValue (templateString, data, option) {
 
@@ -186,5 +133,59 @@ function templateValue (templateString, data, option) {
     }
 
 }
+
+/**
+ * Template Value Internal
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} str_raw String from template you need interpolation
+ * @param {string} reg Value you want to replace from template
+ * @returns {string} Returns template from interpolation
+ * @example
+ *
+ * templateValueInternal("","" )
+ *=>'{}'
+ */
+function templateValueInternal (str_raw, reg) {
+
+    const str=str_raw;
+    let strs=str;
+
+    try {
+
+        try {
+
+            const regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
+
+            strs=strs.replace(regs, function (word, mes1) {
+
+                const strs_perd=mes1.replace(".", ":");
+                const gtdata=getData(reg, strs_perd);
+
+                return getTypeof(gtdata)==="json"
+                    ?""
+                    :gtdata;
+
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+    const strs_finl=strs;
+
+    return strs_finl;
+
+}
+
 export default templateValue;
 

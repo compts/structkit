@@ -1,6 +1,6 @@
 import where from './where';
 
-import indexOf from './indexOf';
+import indexOfNotExist from './indexOfNotExist';
 
 import isEmpty from './isEmpty';
 
@@ -24,9 +24,8 @@ import {entity, listType} from '../variable/htmlentity';
 function stringUnEscape (value, type) {
 
     const typeVal = type || "entity";
-    const minusOne = -1;
 
-    if (indexOf(listType, typeVal) === minusOne) {
+    if (indexOfNotExist(listType, typeVal)) {
 
         return "";
 

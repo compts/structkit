@@ -1,6 +1,6 @@
 export default random;
 /**
- * Random
+ * Random value from array list
  *
  * @since 1.0.1
  * @category Seq
@@ -10,7 +10,7 @@ export default random;
  * @returns {string|number} Return string or number in array
  * @example
  *
- * _stk.random([10,20,30],0,3 )
+ * random([10,20,30],0,3 )
  *=>'[20]'
  */
 declare function random(valueArray: any, minValue: number, maxValue: number): string | number;

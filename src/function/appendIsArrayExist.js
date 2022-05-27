@@ -1,6 +1,6 @@
 const each = require('./each');
 
-const indexOfExist = require('./indexOfExist');
+const indexOfNotExist = require('./indexOfNotExist');
 
 const getTypeof = require('./getTypeof');
 
@@ -27,7 +27,7 @@ function appendIsArrayExist (arrayObject, value) {
 
         each(value, function (key, val) {
 
-            if (indexOfExist(arrayObject, val)===false) {
+            if (indexOfNotExist(arrayObject, val)) {
 
                 arrayObject.push(val);
 
