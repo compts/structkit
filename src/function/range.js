@@ -2,7 +2,7 @@ const has = require('./has');
 
 
 /**
- * Range
+ * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
  * @category Seq

@@ -6,7 +6,7 @@ const getTypeof = require('./getTypeof');
 
 
 /**
- * Map
+ * To map the value of json ot array
  *
  * @since 1.0.1
  * @category Seq
