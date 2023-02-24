@@ -72,4 +72,3 @@ function getKeyVal (jsn, typ) {
 }
 
 module.exports=getKeyVal;
-

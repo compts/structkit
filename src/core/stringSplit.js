@@ -19,4 +19,3 @@ function stringSplit (value) {
 
 }
 module.exports=stringSplit;
-
