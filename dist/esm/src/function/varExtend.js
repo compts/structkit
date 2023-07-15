@@ -26,7 +26,14 @@ function varExtend (objectValue, objectValueReplace) {
         "true": true
     };
 
-    if (getTypeof(objectValue)==="json"&& getTypeof(objectValueReplace)==="json") {
+    const listValid = [
+        "json",
+        "object"
+    ];
+
+    console.log(getTypeof(objectValue)+"&&"+ getTypeof(objectValueReplace),objectValueReplace);
+
+    if (indexOfExist(listValid, getTypeof(objectValue))&& indexOfExist(listValid, getTypeof(objectValueReplace))) {
 
         const jsn_s={};
 

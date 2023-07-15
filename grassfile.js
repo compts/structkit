@@ -64,7 +64,11 @@ exports.module=function (grassconf) {
                     // Esm,cjs,iife,
                     "type": "cjs"
                 },
-                "plugin": [cjsFileNameOnlyImportOnly()]
+                "plugin": [
+                    cjsFileNameOnlyImportOnly({
+                        "replacePath": (file) => file.replace(/(src\/)/g, "")
+                    })
+                ]
             }
         )
             .pipe(grass_concat("src/node.cjs.js", {
@@ -93,14 +97,7 @@ exports.module=function (grassconf) {
             }));
 
     });
-    grassconf.load("cjs_move", function () {
 
-        return grassconf.src("src/node.cjs.js")
-            .pipe(grass_concat("node.cjs.js", {
-                "istruncate": true
-            }));
-
-    });
 
 };
 
@@ -112,7 +109,6 @@ exports.execute=function (lib) {
         strm.series("esm");
         strm.series("esm_only");
         strm.series("cjs_only");
-        strm.series("cjs_move");
 
     };
 

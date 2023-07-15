@@ -75,5 +75,5 @@ ClassSequence.prototype.cancel = function () {
 
 };
 
-export default  onSequence;
+export default onSequence;
 

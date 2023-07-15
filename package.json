@@ -2,7 +2,7 @@
   "name": "structkit",
   "version": "1.4.1",
   "description": "JS utility tool",
-  "main": "node.cjs.js",
+  "main": "src/node.cjs.js",
   "module": "dist/esm/node.es.js",
   "types": "dist/ts/node.esm.d.ts",
   "sideEffects": false,

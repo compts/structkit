@@ -87,5 +87,5 @@ function onWait (func, wait, option) {
 
 }
 
-export default  onWait;
+export default onWait;
 

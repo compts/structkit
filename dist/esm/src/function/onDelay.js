@@ -62,5 +62,5 @@ ClassDelay.prototype.cancel = function () {
 
 };
 
-export default  onDelay;
+export default onDelay;
 
