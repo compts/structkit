@@ -21,4 +21,3 @@ function whereNot (objectValue, objectValueWhere, func) {
 }
 module.exports=whereNot;
 
-

@@ -1,4 +1,4 @@
-const varExtend = require('./varExtend');
+import varExtend from './varExtend';
 
 /**
  * On wait
@@ -14,22 +14,35 @@ const varExtend = require('./varExtend');
  *  onWait(()=>{})
  *=>'11'
  */
-function onDelay (func, wait, option) {
+function onSequence (func, wait, option) {
 
     const zero = 0;
+    const one = 1;
     const extend = varExtend(option, {
         "limitCounterClear": 0
     });
 
     const valueWaited = wait || zero;
+    let counter = 0;
 
-    const timeout = setTimeout(function () {
+    const interval = setInterval(function () {
 
         func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
 
     }, valueWaited);
 
-    const sequence = new ClassDelay(timeout, extend);
+    const sequence = new ClassSequence(interval, extend);
 
     return sequence;
 
@@ -40,7 +53,7 @@ function onDelay (func, wait, option) {
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} timeout The second number in an addition.
+ * @param {any} interval The second number in an addition.
  * @param {object} extend The second number in an addition.
  * @returns {any} Returns the total.
  * @example
@@ -48,18 +61,19 @@ function onDelay (func, wait, option) {
  *  onWait(()=>{})
  *=>'11'
  */
-function ClassDelay (timeout, extend) {
+function ClassSequence (interval, extend) {
 
-    this.timeout = timeout;
+    this.interval = interval;
 
     this.extend = extend;
 
 }
 
-ClassDelay.prototype.cancel = function () {
+ClassSequence.prototype.cancel = function () {
 
-    clearTimeout(this.timeout);
+    clearInterval(this.interval);
 
 };
 
-module.exports = onDelay;
+export default  onSequence;
+

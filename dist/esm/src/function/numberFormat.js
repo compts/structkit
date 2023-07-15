@@ -1,6 +1,7 @@
 
-const repeat = require('./repeat');
-const count = require('./count');
+import repeat from './repeat';
+
+import count from './count';
 
 /**
  * Number format
@@ -59,5 +60,5 @@ function numberFormat (objectValue, value1, value2) {
     return ssd_va;
 
 }
-module.exports=numberFormat;
+export default numberFormat;
 

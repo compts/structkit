@@ -1,7 +1,8 @@
-const varExtend = require('./varExtend');
-const onDelay = require("./onDelay");
-const {getWindow} = require('../core/global');
+import varExtend from './varExtend';
 
+import onDelay from './onDelay';
+
+import {getWindow} from '../core/global';
 
 /**
  * On wait
@@ -22,7 +23,6 @@ function onWait (func, wait, option) {
     const browserWindow = getWindow();
     const extend = varExtend(option, {});
     let timerId = null;
-
 
     const useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
 
@@ -87,4 +87,5 @@ function onWait (func, wait, option) {
 
 }
 
-module.exports = onWait;
+export default  onWait;
+

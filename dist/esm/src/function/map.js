@@ -5,7 +5,7 @@ import each from './each';
 import getTypeof from './getTypeof';
 
 /**
- * Map
+ * To map the value of json ot array
  *
  * @since 1.0.1
  * @category Seq

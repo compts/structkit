@@ -1,4 +1,4 @@
-const varExtend = require('./varExtend');
+import varExtend from './varExtend';
 
 /**
  * On wait
@@ -62,4 +62,5 @@ ClassDelay.prototype.cancel = function () {
 
 };
 
-module.exports = onDelay;
+export default  onDelay;
+

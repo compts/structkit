@@ -5,7 +5,7 @@ import has from './has';
 import each from './each';
 
 /**
- * Insert Value
+ * Insert value in Json object or array
  *
  * @since 1.0.1
  * @category Seq

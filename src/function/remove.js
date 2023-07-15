@@ -59,7 +59,6 @@ function remove (objectValue, value, value2) {
 
             }
 
-
         });
 
         return reslt;
@@ -100,7 +99,6 @@ function remove (objectValue, value, value2) {
                 }
 
             }
-
 
         });
 
