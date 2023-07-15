@@ -44,7 +44,7 @@ In a browser
 ```html
 _stk.repeat("1",20)
 ```
-keep in my `_stk` is the global function for structkit in html
+keep in my `_stk` is used as global library at html
 
 
 CJS, ESM and TS use this code below
