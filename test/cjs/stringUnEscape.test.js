@@ -1,5 +1,5 @@
 
-const {stringUnEscape} = require("../../node.cjs");
+const {stringUnEscape} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: stringUnEscape method', function () {

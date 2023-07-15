@@ -1,4 +1,4 @@
-const {jsonToArray} = require("../../node.cjs");
+const {jsonToArray} = require("../../src/node.cjs");
 
 const assert = require("assert");
 

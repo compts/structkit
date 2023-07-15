@@ -1,4 +1,4 @@
-const {indexOfExist}= require("../../node.cjs");
+const {indexOfExist}= require("../../src/node.cjs");
 const assert = require("assert");
 
 const eight=8,

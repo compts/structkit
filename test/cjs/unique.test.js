@@ -1,4 +1,4 @@
-const {unique} = require("../../node.cjs");
+const {unique} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const one =1;

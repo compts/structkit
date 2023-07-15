@@ -1,4 +1,4 @@
-const {getData} = require("../../node.cjs");
+const {getData} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: getData method', function () {

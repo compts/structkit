@@ -1,5 +1,5 @@
 
-const {stringSnakeCase} = require("../../node.cjs");
+const {stringSnakeCase} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: stringSnakeCase method', function () {

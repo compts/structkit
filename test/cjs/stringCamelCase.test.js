@@ -1,5 +1,5 @@
 
-const {stringCamelCase} = require("../../node.cjs");
+const {stringCamelCase} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: stringCamelCase method', function () {

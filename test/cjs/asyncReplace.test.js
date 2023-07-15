@@ -1,4 +1,4 @@
-const {asyncReplace} = require("../../node.cjs");
+const {asyncReplace} = require("../../src/node.cjs");
 const assert = require("assert");
 
 

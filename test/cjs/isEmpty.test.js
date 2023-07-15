@@ -1,4 +1,4 @@
-const {isEmpty} = require("../../node.cjs");
+const {isEmpty} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: isEmpty method', function () {

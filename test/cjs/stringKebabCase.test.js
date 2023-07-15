@@ -1,5 +1,5 @@
 
-const {stringKebabCase} = require("../../node.cjs");
+const {stringKebabCase} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: stringKebabCase method', function () {

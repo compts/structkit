@@ -1,4 +1,4 @@
-const {getJSONVariable} = require("../../node.cjs");
+const {getJSONVariable} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const three =3;

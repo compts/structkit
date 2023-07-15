@@ -1,4 +1,4 @@
-const {count} = require("../../node.cjs");
+const {count} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const one =1;

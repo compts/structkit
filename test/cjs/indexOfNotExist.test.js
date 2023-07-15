@@ -1,4 +1,4 @@
-const {indexOfNotExist}= require("../../node.cjs");
+const {indexOfNotExist}= require("../../src/node.cjs");
 
 const assert = require("assert");
 

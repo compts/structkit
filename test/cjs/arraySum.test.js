@@ -1,4 +1,4 @@
-const {arraySum} = require("../../node.cjs");
+const {arraySum} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const one =1,
