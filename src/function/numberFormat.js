@@ -7,10 +7,10 @@ const count = require('./count');
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {string} value1 The first number in an addition.
- * @param {string} value2 The first number in an addition.
- * @returns {null} Returns the total.
+ * @param {array|object} objectValue The data you want to format
+ * @param {string} value1 The start number.
+ * @param {string} value2 The end number.
+ * @returns {null} Return format number
  * @example
  *
  * numberFormat(1,1,2)

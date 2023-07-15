@@ -6,7 +6,7 @@ const indexOf = require('./indexOf');
 
 
 /**
- * Shuffle
+ * Shuffle data in array
  *
  * @since 1.0.1
  * @category Seq
