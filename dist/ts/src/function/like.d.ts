@@ -1,6 +1,6 @@
 export default like;
 /**
- * Like
+ * Searching the data either in array or json object to get similar value of data
  *
  * @since 1.0.1
  * @category Seq

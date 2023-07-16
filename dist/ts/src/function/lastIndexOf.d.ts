@@ -1,6 +1,6 @@
 export default lastIndexOf;
 /**
- * Index Of array
+ * Last index Of array
  *
  * @since 1.0.1
  * @category Seq

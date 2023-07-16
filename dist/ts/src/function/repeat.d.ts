@@ -1,6 +1,6 @@
 export default repeat;
 /**
- * Repeat
+ * Repeat string value
  *
  * @since 1.0.1
  * @category Seq
