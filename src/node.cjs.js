@@ -6,13 +6,13 @@ const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const getWindow=require('./core/global.js');
-
-exports.getWindow =getWindow;
-
 const getKeyVal=require('./core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
+
+const getWindow=require('./core/global.js');
+
+exports.getWindow =getWindow;
 
 const stringSplit=require('./core/stringSplit.js');
 
@@ -22,13 +22,17 @@ const whereLoopExecution=require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
+const append=require('./function/append.js');
+
+exports.append =append;
+
 const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
 
-const append=require('./function/append.js');
+const arrayConcat=require('./function/arrayConcat.js');
 
-exports.append =append;
+exports.arrayConcat =arrayConcat;
 
 const arraySum=require('./function/arraySum.js');
 
@@ -42,29 +46,25 @@ const asyncReplace=require('./function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
 
-const arrayConcat=require('./function/arrayConcat.js');
-
-exports.arrayConcat =arrayConcat;
-
 const count=require('./function/count.js');
 
 exports.count =count;
-
-const clone=require('./function/clone.js');
-
-exports.clone =clone;
 
 const delimiter=require('./function/delimiter.js');
 
 exports.delimiter =delimiter;
 
-const filter=require('./function/filter.js');
+const clone=require('./function/clone.js');
 
-exports.filter =filter;
+exports.clone =clone;
 
 const each=require('./function/each.js');
 
 exports.each =each;
+
+const filter=require('./function/filter.js');
+
+exports.filter =filter;
 
 const first=require('./function/first.js');
 
@@ -94,13 +94,13 @@ const getValue=require('./function/getValue.js');
 
 exports.getValue =getValue;
 
-const has=require('./function/has.js');
-
-exports.has =has;
-
 const ifUndefined=require('./function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
+
+const has=require('./function/has.js');
+
+exports.has =has;
 
 const indexOf=require('./function/indexOf.js');
 
@@ -206,9 +206,9 @@ const sort=require('./function/sort.js');
 
 exports.sort =sort;
 
-const stringCapitalize=require('./function/stringCapitalize.js');
+const shuffle=require('./function/shuffle.js');
 
-exports.stringCapitalize =stringCapitalize;
+exports.shuffle =shuffle;
 
 const stringCamelCase=require('./function/stringCamelCase.js');
 
@@ -218,9 +218,13 @@ const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
-const shuffle=require('./function/shuffle.js');
+const stringCapitalize=require('./function/stringCapitalize.js');
 
-exports.shuffle =shuffle;
+exports.stringCapitalize =stringCapitalize;
+
+const stringKebabCase=require('./function/stringKebabCase.js');
+
+exports.stringKebabCase =stringKebabCase;
 
 const stringSnakeCase=require('./function/stringSnakeCase.js');
 
@@ -238,21 +242,17 @@ const toArray=require('./function/toArray.js');
 
 exports.toArray =toArray;
 
-const stringKebabCase=require('./function/stringKebabCase.js');
-
-exports.stringKebabCase =stringKebabCase;
-
 const toDouble=require('./function/toDouble.js');
 
 exports.toDouble =toDouble;
 
-const unique=require('./function/unique.js');
-
-exports.unique =unique;
-
 const toInteger=require('./function/toInteger.js');
 
 exports.toInteger =toInteger;
+
+const unique=require('./function/unique.js');
+
+exports.unique =unique;
 
 const varExtend=require('./function/varExtend.js');
 

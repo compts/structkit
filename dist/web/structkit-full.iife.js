@@ -191,6 +191,42 @@ function getTypeof (objectValue) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    var typeofs=getTypeof(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    return objectValue;
+
+}
+
+_stk.append=append
+
+
+/**
  * Each
  *
  * @since 1.0.1
@@ -600,9 +636,9 @@ _stk.asyncReplace=asyncReplace
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue The second number in an addition.
- * @param {any} func The second number in an addition.
- * @returns {null} Returns the total.
+ * @param {any} objectValue The data you want to map
+ * @param {any} func Callback function
+ * @returns {null} Return map either JSON or Array
  * @example
  *
  * map([1,2],1,2 )
@@ -766,39 +802,6 @@ function getJSONVariable (value) {
 }
 
 /**
- * Append data for json and array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    var typeofs=getTypeof(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
@@ -827,6 +830,48 @@ function clone (objectValue) {
 _stk.clone=clone
 
 _stk.count=count
+
+
+/**
+ * Delimiter
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {number=} min Delimiter in minumum of 2
+ * @param {number=} max Delimiter in minumum base on array count
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * delimiter([1,2])
+ * // => 2
+ */
+function delimiter (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.delimiter=delimiter
 
 _stk.each=each
 
@@ -878,52 +923,6 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter
-
-
-/**
- * Delimiter
- *
- * @since 1.3.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {number=} min Delimiter in minumum of 2
- * @param {number=} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
- * @example
- *
- * delimiter([1,2])
- * // => 2
- */
-function delimiter (objectValue, min, max) {
-
-    var ran_var=[];
-    var defaultValueZero=0;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-_stk.delimiter=delimiter
-
-_stk.getData=getData
-
-_stk.getJSONVariable=getJSONVariable
 
 
 /**
@@ -1013,6 +1012,31 @@ function getKeyVal (jsn, typ) {
 }
 
 /**
+ * First
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns first value of `objectValue`.
+ * @example
+ *
+ * first([1,2,3])
+ *=> 1
+ */
+function first (objectValue) {
+
+    return getKeyVal(objectValue, "first_index").value;
+
+}
+
+_stk.first=first
+
+_stk.getData=getData
+
+_stk.getJSONVariable=getJSONVariable
+
+
+/**
  * Get key Object or JSON
  *
  * @since 1.0.1
@@ -1033,27 +1057,6 @@ function getKey (objectValue) {
 _stk.getKey=getKey
 
 _stk.getTypeof=getTypeof
-
-
-/**
- * First
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data is array
- * @returns {any} Returns first value of `objectValue`.
- * @example
- *
- * first([1,2,3])
- *=> 1
- */
-function first (objectValue) {
-
-    return getKeyVal(objectValue, "first_index").value;
-
-}
-
-_stk.first=first
 /**
  * Generate unique value id
  *
@@ -1102,6 +1105,8 @@ function getValue (objectValue) {
 
 _stk.getValue=getValue
 
+_stk.indexOf=indexOf
+
 _stk.has=has
 
 
@@ -1144,8 +1149,6 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined
-
-_stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
 
@@ -1588,8 +1591,6 @@ function like (objectValue, objectValueWhere, func) {
 
 _stk.like=like
 
-_stk.map=map
-
 
 /**
  * Limit
@@ -1652,6 +1653,8 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit
 
+_stk.map=map
+
 /**
  * Repeat string value
  *
@@ -1687,10 +1690,10 @@ function repeat (value, valueRepetion) {
  *
  * @since 1.0.1
  * @category Seq
- * @param {array|object} objectValue The second number in an addition.
- * @param {string} value1 The first number in an addition.
- * @param {string} value2 The first number in an addition.
- * @returns {null} Returns the total.
+ * @param {array|object} objectValue The data you want to format
+ * @param {string} value1 The start number.
+ * @param {string} value2 The end number.
+ * @returns {null} Return format number
  * @example
  *
  * numberFormat(1,1,2)
@@ -1744,13 +1747,13 @@ _stk.numberFormat=numberFormat
 
 
 /**
- * Var extend
+ * Var extend is use for cloning Json, Array or Object
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} objectValue Json or Array
- * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
- * @returns {array} Return Json or Array.
+ * @param {object} objectValue Json, Array or Object
+ * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
+ * @returns {array} Return Json or Array or Object.
  * @example
  *
  * varExtend({"s1":1},{"s1":2})
@@ -1768,9 +1771,7 @@ function varExtend (objectValue, objectValueReplace) {
         "object"
     ];
 
-    console.log(getTypeof(objectValue)+"&&"+ getTypeof(objectValueReplace),objectValueReplace);
-
-    if (indexOfExist(listValid, getTypeof(objectValue))&& indexOfExist(listValid, getTypeof(objectValueReplace))) {
+    if (indexOfExist(listValid, getTypeof(objectValue)) && indexOfExist(listValid, getTypeof(objectValueReplace))) {
 
         var jsn_s={};
 
@@ -1856,14 +1857,14 @@ function replaceValue (objectValue, objectValueReplace) {
 }
 
 /**
- * On wait
+ * On delay
  *
  * @since 1.4.1
  * @category Seq
- * @param {any} func The second number in an addition.
- * @param {object} wait The second number in an addition.
- * @param {object} option The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} func a Callback function
+ * @param {object} wait timer for delay
+ * @param {object} option option for delay
+ * @returns {object} Returns object.
  * @example
  *
  *  onWait(()=>{})
@@ -1895,9 +1896,9 @@ function onDelay (func, wait, option) {
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} timeout The second number in an addition.
- * @param {object} extend The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} timeout timer for delay
+ * @param {object} extend option for delay
+ * @returns {object} Returns object.
  * @example
  *
  *  onWait(()=>{})
@@ -1921,14 +1922,14 @@ _stk.onDelay=onDelay
 
 
 /**
- * On wait
+ * On sequence
  *
  * @since 1.4.1
  * @category Seq
- * @param {any} func The second number in an addition.
- * @param {object} wait The second number in an addition.
- * @param {object} option The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} func a Callback function
+ * @param {object} wait timer for delay
+ * @param {object} option option for delay
+ * @returns {string} Returns object.
  * @example
  *
  *  onWait(()=>{})
@@ -1973,9 +1974,9 @@ function onSequence (func, wait, option) {
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} interval The second number in an addition.
- * @param {object} extend The second number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
  * @example
  *
  *  onWait(()=>{})
@@ -1997,7 +1998,6 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence
 
-
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -2015,19 +2015,17 @@ var getWindow = function () {
  *
  * @since 1.4.1
  * @category Seq
- * @param {any} func The second number in an addition.
- * @param {object} wait The second number in an addition.
- * @param {object} option The second number in an addition.
+ * @param {any} func a Callback function
+ * @param {object} wait timer for delay
  * @returns {string} Returns the total.
  * @example
  *
  *  onWait(()=>{})
  *=>'11'
  */
-function onWait (func, wait, option) {
+function onWait (func, wait) {
 
     var browserWindow = getWindow();
-    var extend = varExtend(option, {});
     var timerId = null;
 
     var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
@@ -2214,7 +2212,7 @@ function stringUnEscape (value, type) {
  * @since 1.0.1
  * @category Seq
  * @param {string} value String you want to convert to JSON
- * @returns {any} Returns the total.
+ * @returns {any} Returns the json.
  * @example
  *
  * parseJson('{}' )
@@ -2241,6 +2239,49 @@ function parseJson (value) {
 }
 
 _stk.parseJson=parseJson
+
+
+/**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue  Max value
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random===parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.random=random
 
 
 /**
@@ -2391,49 +2432,6 @@ _stk.parseString=parseString
 
 
 /**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value
- * @param {number} maxValue  Max value
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random===parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-_stk.random=random
-
-
-/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -2471,8 +2469,6 @@ function range (maxValue, minValue) {
 }
 
 _stk.range=range
-
-_stk.repeat=repeat
 
 
 /**
@@ -2576,14 +2572,16 @@ function remove (objectValue, value, value2) {
 
 _stk.remove=remove
 
+_stk.repeat=repeat
+
 
 /**
  * Random Decimal
  *
  * @since 1.0.1
  * @category Seq
- * @param {number} value The second number in an addition.
- * @param {number} maxValue The second number in an addition.
+ * @param {number} value Int or Double value type
+ * @param {number} maxValue limit decimal
  * @returns {number} Returns the total.
  * @example
  *
@@ -2621,7 +2619,7 @@ _stk.roundDecimal=roundDecimal
 
 
 /**
- * Shuffle
+ * Shuffle data in array
  *
  * @since 1.0.1
  * @category Seq
@@ -2893,37 +2891,6 @@ _stk.stringCapitalize=stringCapitalize
 
 
 /**
- * String Kebab case
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * stringKebabCase('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function stringKebabCase (value) {
-
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return stringSplit(value)
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.stringKebabCase=stringKebabCase
-
-_stk.stringUnEscape=stringUnEscape
-
-
-/**
  * String Snake case
  *
  * @since 1.3.1
@@ -2950,6 +2917,8 @@ function stringSnakeCase (value) {
 }
 
 _stk.stringSnakeCase=stringSnakeCase
+
+_stk.stringUnEscape=stringUnEscape
 
 
 /**
@@ -3222,31 +3191,6 @@ _stk.toDouble=toDouble
 
 
 /**
- * To Integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger
-
-
-/**
  * Get only the unique data from array
  *
  * @since 1.4.1
@@ -3284,11 +3228,34 @@ function unique (value) {
 
 _stk.unique=unique
 
-_stk.varExtend=varExtend
 
-_stk.append=append
+/**
+ * To Integer
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in integer
+ * @returns {any[]} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger
 
 _stk.where=where
+
+_stk.varExtend=varExtend
 
 
 /**
@@ -3312,5 +3279,34 @@ function whereNot (objectValue, objectValueWhere, func) {
 }
 
 _stk.whereNot=whereNot
+
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function stringKebabCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.stringKebabCase=stringKebabCase
 
 })(typeof window !== "undefined" ? window : this);

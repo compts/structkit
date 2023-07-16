@@ -5,7 +5,7 @@ import count from './count';
 import indexOf from './indexOf';
 
 /**
- * Shuffle
+ * Shuffle data in array
  *
  * @since 1.0.1
  * @category Seq

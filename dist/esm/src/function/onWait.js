@@ -1,5 +1,3 @@
-import varExtend from './varExtend';
-
 import onDelay from './onDelay';
 
 import {getWindow} from '../core/global';
@@ -9,19 +7,17 @@ import {getWindow} from '../core/global';
  *
  * @since 1.4.1
  * @category Seq
- * @param {any} func The second number in an addition.
- * @param {object} wait The second number in an addition.
- * @param {object} option The second number in an addition.
+ * @param {any} func a Callback function
+ * @param {object} wait timer for delay
  * @returns {string} Returns the total.
  * @example
  *
  *  onWait(()=>{})
  *=>'11'
  */
-function onWait (func, wait, option) {
+function onWait (func, wait) {
 
     const browserWindow = getWindow();
-    const extend = varExtend(option, {});
     let timerId = null;
 
     const useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
