@@ -227,6 +227,36 @@ _stk.append=append
 
 
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    var return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
+
+}
+
+_stk.arrayConcat=arrayConcat
+
+
+/**
  * Each
  *
  * @since 1.0.1
@@ -510,36 +540,6 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-
-_stk.arrayConcat=arrayConcat
-
-
-/**
  * Array Sum
  *
  * @since 1.0.1
@@ -574,61 +574,6 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function (...arg) {
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-
-_stk.asyncReplace=asyncReplace
 
 
 /**
@@ -769,6 +714,61 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 }
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
+
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {any} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+
+_stk.asyncReplace=asyncReplace
 
 
 /**
@@ -1105,10 +1105,6 @@ function getValue (objectValue) {
 
 _stk.getValue=getValue
 
-_stk.indexOf=indexOf
-
-_stk.has=has
-
 
 /**
  * Check if data is undefined
@@ -1149,6 +1145,10 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined
+
+_stk.indexOf=indexOf
+
+_stk.has=has
 
 _stk.indexOfExist=indexOfExist
 
@@ -1398,50 +1398,6 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 _stk.isExactbyRegExp=isExactbyRegExp
 
 _stk.isJson=isJson
-
-
-/**
- * Json To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} objectValue Json
- * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
- * @example
- *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
- * => [2, 3]
- */
-function jsonToArray (objectValue, value) {
-
-    var arry=[];
-
-    each(objectValue, function (_key, _value) {
-
-        if (has(value)) {
-
-            var valueData = getData(_value, value);
-
-            if (isEmpty(valueData) ===false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
-
-_stk.jsonToArray=jsonToArray
 
 
 /**
@@ -2242,49 +2198,6 @@ _stk.parseJson=parseJson
 
 
 /**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value
- * @param {number} maxValue  Max value
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random===parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-_stk.random=random
-
-
-/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -2429,6 +2342,49 @@ function parseString (value) {
 }
 
 _stk.parseString=parseString
+
+
+/**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue  Max value
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random===parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.random=random
 
 
 /**
@@ -2672,98 +2628,6 @@ _stk.shuffle=shuffle
 
 
 /**
- * Sort array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} order True for ascend then false for descend
- * @param {any} func Callback function or sort type
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, order, func) {
-
-    var jsonn=objectValue;
-    var asc=true;
-    var types='any';
-
-    if (has(order) && getTypeof(order) ==='boolean') {
-
-        asc= order;
-
-    }
-
-    if (has(func) && getTypeof(func) ==='string') {
-
-        types= func;
-
-    }
-
-    var js_m=getTypeof(jsonn)==="json"
-        ?each(jsonn)
-        :jsonn;
-
-    var finalResponse=js_m.sort(function (orderA, orderB) {
-
-        if (has(func) && getTypeof(func) ==='function') {
-
-            return func(orderA, orderB);
-
-        }
-
-        var sortOrderA = orderA;
-        var sortOrderB = orderB;
-
-        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-            if (isEmpty(types) === false) {
-
-                if (types ==='any') {
-
-                    sortOrderA =orderA.charCodeAt();
-                    sortOrderB= orderB.charCodeAt();
-
-                }
-                if (types ==='lowercase') {
-
-                    sortOrderA =orderA.toLowerCase().charCodeAt();
-                    sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                }
-
-                if (types ==='uppercase') {
-
-                    sortOrderA =orderA.toUpperCase().charCodeAt();
-                    sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                }
-
-            }
-
-        }
-
-        if (asc) {
-
-            return sortOrderA - sortOrderB;
-
-        }
-
-        return sortOrderB - sortOrderA;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sort=sort
-
-
-/**
  * Where Loop Execution
  *
  * @since 1.0.1
@@ -2888,6 +2752,35 @@ function stringCapitalize (value) {
 }
 
 _stk.stringCapitalize=stringCapitalize
+
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function stringKebabCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.stringKebabCase=stringKebabCase
 
 
 /**
@@ -3191,6 +3084,31 @@ _stk.toDouble=toDouble
 
 
 /**
+ * To Integer
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in integer
+ * @returns {any[]} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger
+
+
+/**
  * Get only the unique data from array
  *
  * @since 1.4.1
@@ -3228,34 +3146,9 @@ function unique (value) {
 
 _stk.unique=unique
 
-
-/**
- * To Integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataTypeFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger
+_stk.varExtend=varExtend
 
 _stk.where=where
-
-_stk.varExtend=varExtend
 
 
 /**
@@ -3282,31 +3175,138 @@ _stk.whereNot=whereNot
 
 
 /**
- * String Kebab case
+ * Json To Array
  *
- * @since 1.3.1
+ * @since 1.0.1
  * @category Seq
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
+ * @param {string} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {boolean} Returns Array
  * @example
  *
- * stringKebabCase('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
  */
-function stringKebabCase (value) {
+function jsonToArray (objectValue, value) {
 
-    if (has(value) === false && getTypeof(value) !=="string") {
+    var arry=[];
 
-        return "";
+    each(objectValue, function (_key, _value) {
 
-    }
+        if (has(value)) {
 
-    return stringSplit(value)
-        .split(" ")
-        .join("-");
+            var valueData = getData(_value, value);
+
+            if (isEmpty(valueData) ===false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
 
 }
 
-_stk.stringKebabCase=stringKebabCase
+_stk.jsonToArray=jsonToArray
+
+
+/**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} order True for ascend then false for descend
+ * @param {any} func Callback function or sort type
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, order, func) {
+
+    var jsonn=objectValue;
+    var asc=true;
+    var types='any';
+
+    if (has(order) && getTypeof(order) ==='boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(func) && getTypeof(func) ==='string') {
+
+        types= func;
+
+    }
+
+    var js_m=getTypeof(jsonn)==="json"
+        ?each(jsonn)
+        :jsonn;
+
+    var finalResponse=js_m.sort(function (orderA, orderB) {
+
+        if (has(func) && getTypeof(func) ==='function') {
+
+            return func(orderA, orderB);
+
+        }
+
+        var sortOrderA = orderA;
+        var sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types ==='any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types ==='lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types ==='uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
+
+        }
+
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sort=sort
 
 })(typeof window !== "undefined" ? window : this);
