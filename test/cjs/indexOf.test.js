@@ -1,5 +1,5 @@
 
-const {indexOf}= require("../../node.cjs");
+const {indexOf}= require("../../src/node.cjs");
 const assert = require("assert");
 
 const eight=8,

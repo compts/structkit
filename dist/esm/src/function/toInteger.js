@@ -9,8 +9,8 @@ import dataTypeFormat from '../core/dataTypeFormat';
  * @returns {any[]} Return in integer.
  * @example
  *
- * toArray(1)
- *=>[1]
+ * toInteger(1)
+ *=>1
  */
 function toInteger (value) {
 

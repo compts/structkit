@@ -58,7 +58,6 @@ function isJson (value, valueType) {
 
     }
 
-
     return false;
 
 }

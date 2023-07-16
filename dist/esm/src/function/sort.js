@@ -7,7 +7,7 @@ import each from './each';
 import isEmpty from './isEmpty';
 
 /**
- * Sort
+ * Sort array
  *
  * @since 1.0.1
  * @category Seq

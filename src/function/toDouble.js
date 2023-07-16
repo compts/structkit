@@ -10,8 +10,8 @@ const dataTypeFormat = require('../core/dataTypeFormat');
  * @returns {any[]} Return in double.
  * @example
  *
- * toArray(1)
- *=>[1]
+ * toDouble(1)
+ *=>1.00
  */
 function toDouble (value) {
 

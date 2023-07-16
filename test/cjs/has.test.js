@@ -1,5 +1,5 @@
 
-const {has} = require("../../node.cjs");
+const {has} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: has method', function () {

@@ -1,4 +1,4 @@
-const {delimiter} = require("../../node.cjs");
+const {delimiter} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const three =3;

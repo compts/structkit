@@ -1,0 +1,24 @@
+const indexOf = require('./indexOf');
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return array.
+ * @example
+ *
+ * indexOfNotExist([312], 32)
+ * // => true
+ */
+function indexOfNotExist (arrayObject, value) {
+
+    const zero = -1;
+
+    return indexOf(arrayObject, value)===zero;
+
+}
+module.exports=indexOfNotExist;
+

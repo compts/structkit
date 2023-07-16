@@ -1,6 +1,6 @@
 export default sort;
 /**
- * Sort
+ * Sort array
  *
  * @since 1.0.1
  * @category Seq

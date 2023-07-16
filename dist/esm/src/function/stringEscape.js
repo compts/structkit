@@ -1,6 +1,6 @@
 import where from './where';
 
-import indexOf from './indexOf';
+import indexOfNotExist from './indexOfNotExist';
 
 import isEmpty from './isEmpty';
 
@@ -23,10 +23,9 @@ import {entity, listType} from '../variable/htmlentity';
  */
 function stringEscape (value, type) {
 
-    const minusOne = -1;
     const typeVal = type || "entity";
 
-    if (indexOf(listType, typeVal) === minusOne) {
+    if (indexOfNotExist(listType, typeVal)) {
 
         return "";
 

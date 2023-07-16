@@ -1,6 +1,6 @@
 import each from './each';
 
-import indexOfExist from './indexOfExist';
+import indexOfNotExist from './indexOfNotExist';
 
 import getTypeof from './getTypeof';
 
@@ -26,7 +26,7 @@ function appendIsArrayExist (arrayObject, value) {
 
         each(value, function (key, val) {
 
-            if (indexOfExist(arrayObject, val)===false) {
+            if (indexOfNotExist(arrayObject, val)) {
 
                 arrayObject.push(val);
 

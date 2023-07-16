@@ -1,5 +1,5 @@
 
-const {isJson} = require("../../node.cjs");
+const {isJson} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: isJson method', function () {

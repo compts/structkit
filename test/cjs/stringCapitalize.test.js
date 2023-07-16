@@ -1,5 +1,5 @@
 
-const {stringCapitalize} = require("../../node.cjs");
+const {stringCapitalize} = require("../../src/node.cjs");
 const assert = require("assert");
 
 describe('CJS: stringCapitalize method', function () {

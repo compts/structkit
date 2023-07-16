@@ -10,7 +10,7 @@ export default templateValue;
  * @returns {string} Returns the total.
  * @example
  *
- * templateValue("","" )
- *=>'{}'
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
  */
 declare function templateValue(templateString: string, data: object, option: object): string;

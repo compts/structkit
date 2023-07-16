@@ -1,4 +1,4 @@
-const {sort} = require("../../node.cjs");
+const {sort} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const one =1;

@@ -1,8 +1,8 @@
 {
   "name": "structkit",
-  "version": "1.3.1",
+  "version": "1.4.1",
   "description": "JS utility tool",
-  "main": "node.cjs.js",
+  "main": "src/node.cjs.js",
   "module": "dist/esm/node.es.js",
   "types": "dist/ts/node.esm.d.ts",
   "sideEffects": false,
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/compts/structkit/issues"
   },
-  "homepage": "https://github.com/compts/structkit#readme",
+  "homepage": "https://structkit.codehyouka.xyz",
   "dependencies": {
     "tsd": "^0.19.1"
   },

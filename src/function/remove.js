@@ -12,7 +12,7 @@ const where = require('./where');
 
 
 /**
- * Remove
+ * Remove data in either JSON or Array using key or woth value
  *
  * @since 1.0.1
  * @category Seq
@@ -59,7 +59,6 @@ function remove (objectValue, value, value2) {
 
             }
 
-
         });
 
         return reslt;
@@ -100,7 +99,6 @@ function remove (objectValue, value, value2) {
                 }
 
             }
-
 
         });
 

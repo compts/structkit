@@ -5,8 +5,8 @@ import count from './count';
  *
  * @since 1.0.1
  * @category Seq
- * @param {number} value The second number in an addition.
- * @param {number} maxValue The second number in an addition.
+ * @param {number} value Int or Double value type
+ * @param {number} maxValue limit decimal
  * @returns {number} Returns the total.
  * @example
  *

@@ -5,7 +5,7 @@ import each from './each';
 import append from './append';
 
 /**
- * Array Clone
+ * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
  * @category Seq

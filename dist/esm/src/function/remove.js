@@ -11,7 +11,7 @@ import indexOfExist from './indexOfExist';
 import where from './where';
 
 /**
- * Remove
+ * Remove data in either JSON or Array using key or woth value
  *
  * @since 1.0.1
  * @category Seq

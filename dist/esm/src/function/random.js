@@ -5,7 +5,7 @@ import count from './count';
 import each from './each';
 
 /**
- * Random
+ * Random value from array list
  *
  * @since 1.0.1
  * @category Seq
@@ -15,7 +15,7 @@ import each from './each';
  * @returns {string|number} Return string or number in array
  * @example
  *
- * _stk.random([10,20,30],0,3 )
+ * random([10,20,30],0,3 )
  *=>'[20]'
  */
 function random (valueArray, minValue, maxValue) {

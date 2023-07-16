@@ -1,5 +1,5 @@
 
-const {appendIsArrayExist} = require("../../node.cjs");
+const {appendIsArrayExist} = require("../../src/node.cjs");
 const assert = require("assert");
 
 

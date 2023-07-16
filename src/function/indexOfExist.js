@@ -1,7 +1,7 @@
 const indexOf = require('./indexOf');
 
 /**
- * Index of array is Exist or not
+ * Check index of array is Exist or not
  *
  * @since 1.3.1
  * @category Seq

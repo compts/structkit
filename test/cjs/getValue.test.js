@@ -1,4 +1,4 @@
-const {getValue} = require("../../node.cjs");
+const {getValue} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const three =3;

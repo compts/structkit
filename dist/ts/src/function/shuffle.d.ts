@@ -1,6 +1,6 @@
 export default shuffle;
 /**
- * Shuffle
+ * Shuffle data in array
  *
  * @since 1.0.1
  * @category Seq

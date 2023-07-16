@@ -1,4 +1,4 @@
-const {clone} = require("../../node.cjs");
+const {clone} = require("../../src/node.cjs");
 const assert = require("assert");
 
 

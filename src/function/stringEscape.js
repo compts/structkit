@@ -1,5 +1,5 @@
 const where = require('./where');
-const indexOf = require('./indexOf');
+const indexOfNotExist = require('./indexOfNotExist');
 const isEmpty = require("./isEmpty");
 const first = require("./first");
 const {entity, listType} = require("../variable/htmlentity");
@@ -19,10 +19,9 @@ const {entity, listType} = require("../variable/htmlentity");
  */
 function stringEscape (value, type) {
 
-    const minusOne = -1;
     const typeVal = type || "entity";
 
-    if (indexOf(listType, typeVal) === minusOne) {
+    if (indexOfNotExist(listType, typeVal)) {
 
         return "";
 

@@ -1,4 +1,4 @@
-const {first} = require("../../node.cjs");
+const {first} = require("../../src/node.cjs");
 const assert = require("assert");
 
 const three =3;
