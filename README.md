@@ -44,7 +44,7 @@ In a browser
 ```html
 _stk.repeat("1",20)
 ```
-keep in my `_stk` is used as global library at html
+keep in mind `_stk` is used as global library at html
 
 
 CJS, ESM and TS use this code below
