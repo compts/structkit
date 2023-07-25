@@ -14,8 +14,8 @@ const count = require('./count');
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue1 Json or Array
- * @param {string} objectValue2 Json or Array for lookup to objectValue1
+ * @param {any} objectValue1 Json or Array
+ * @param {any} objectValue2 Json or Array for lookup to objectValue1
  * @param {boolean=} isExist Default value is True
  * @returns {boolean} Returns the total.
  * @example

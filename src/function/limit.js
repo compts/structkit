@@ -12,8 +12,8 @@ const count = require('./count');
  * @category Seq
  * @param {any} objectValue Data must be array
  * @param {number} minValue Minimum value
- * @param {number} maxValue Maximum value
- * @param {any} func Callback function
+ * @param {number=} maxValue Maximum value
+ * @param {Function=} func Callback function
  * @returns {any} Returns the object.
  * @example
  *

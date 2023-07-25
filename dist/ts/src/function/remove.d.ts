@@ -5,7 +5,7 @@ export default remove;
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Json or array
- * @param {number} value if objectValue, json is must be object or array index you want to remove
+ * @param {any} value if objectValue, json is must be object or array index you want to remove
  * @param {number=} value2 Last row in index
  * @returns {any[]} Returns the total.
  * @example
@@ -13,4 +13,4 @@ export default remove;
  * remove([1,2,3],0 )
  *=>[2, 3]
  */
-declare function remove(objectValue: any, value: number, value2?: number | undefined): any[];
+declare function remove(objectValue: any, value: any, value2?: number | undefined): any[];

@@ -1,42 +1,42 @@
-const getIndexOf=require('./core/getIndexOf.js');
+const dataTypeFormat=require('./core/dataTypeFormat.js');
 
-exports.getIndexOf =getIndexOf;
+exports.dataTypeFormat =dataTypeFormat;
 
 const getKeyVal=require('./core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
 
-const getWindow=require('./core/global.js');
-
-exports.getWindow =getWindow;
-
 const whereLoopExecution=require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
-const stringSplit=require('./core/stringSplit.js');
+const getWindow=require('./core/global.js');
 
-exports.stringSplit =stringSplit;
+exports.getWindow =getWindow;
 
 const append=require('./function/append.js');
 
 exports.append =append;
 
-const dataTypeFormat=require('./core/dataTypeFormat.js');
+const arrayConcat=require('./function/arrayConcat.js');
 
-exports.dataTypeFormat =dataTypeFormat;
+exports.arrayConcat =arrayConcat;
+
+const stringSplit=require('./core/stringSplit.js');
+
+exports.stringSplit =stringSplit;
 
 const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
 
-const arrayConcat=require('./function/arrayConcat.js');
-
-exports.arrayConcat =arrayConcat;
-
 const arraySum=require('./function/arraySum.js');
 
 exports.arraySum =arraySum;
+
+const asyncReplace=require('./function/asyncReplace.js');
+
+exports.asyncReplace =asyncReplace;
 
 const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
 
@@ -46,17 +46,13 @@ const clone=require('./function/clone.js');
 
 exports.clone =clone;
 
-const asyncReplace=require('./function/asyncReplace.js');
+const delimiter=require('./function/delimiter.js');
 
-exports.asyncReplace =asyncReplace;
+exports.delimiter =delimiter;
 
 const count=require('./function/count.js');
 
 exports.count =count;
-
-const delimiter=require('./function/delimiter.js');
-
-exports.delimiter =delimiter;
 
 const each=require('./function/each.js');
 
@@ -74,13 +70,13 @@ const getData=require('./function/getData.js');
 
 exports.getData =getData;
 
-const getJSONVariable=require('./function/getJSONVariable.js');
-
-exports.getJSONVariable =getJSONVariable;
-
 const getKey=require('./function/getKey.js');
 
 exports.getKey =getKey;
+
+const getJSONVariable=require('./function/getJSONVariable.js');
+
+exports.getJSONVariable =getJSONVariable;
 
 const getTypeof=require('./function/getTypeof.js');
 
@@ -114,33 +110,33 @@ const indexOfNotExist=require('./function/indexOfNotExist.js');
 
 exports.indexOfNotExist =indexOfNotExist;
 
-const isExact=require('./function/isExact.js');
-
-exports.isExact =isExact;
-
 const insert=require('./function/insert.js');
 
 exports.insert =insert;
-
-const isExactbyRegExp=require('./function/isExactbyRegExp.js');
-
-exports.isExactbyRegExp =isExactbyRegExp;
 
 const isEmpty=require('./function/isEmpty.js');
 
 exports.isEmpty =isEmpty;
 
+const isExact=require('./function/isExact.js');
+
+exports.isExact =isExact;
+
+const isExactbyRegExp=require('./function/isExactbyRegExp.js');
+
+exports.isExactbyRegExp =isExactbyRegExp;
+
 const isJson=require('./function/isJson.js');
 
 exports.isJson =isJson;
 
-const jsonToArray=require('./function/jsonToArray.js');
-
-exports.jsonToArray =jsonToArray;
-
 const last=require('./function/last.js');
 
 exports.last =last;
+
+const jsonToArray=require('./function/jsonToArray.js');
+
+exports.jsonToArray =jsonToArray;
 
 const lastIndexOf=require('./function/lastIndexOf.js');
 
@@ -178,6 +174,10 @@ const parseJson=require('./function/parseJson.js');
 
 exports.parseJson =parseJson;
 
+const random=require('./function/random.js');
+
+exports.random =random;
+
 const parseString=require('./function/parseString.js');
 
 exports.parseString =parseString;
@@ -186,29 +186,25 @@ const range=require('./function/range.js');
 
 exports.range =range;
 
-const remove=require('./function/remove.js');
-
-exports.remove =remove;
-
-const random=require('./function/random.js');
-
-exports.random =random;
-
 const repeat=require('./function/repeat.js');
 
 exports.repeat =repeat;
+
+const remove=require('./function/remove.js');
+
+exports.remove =remove;
 
 const roundDecimal=require('./function/roundDecimal.js');
 
 exports.roundDecimal =roundDecimal;
 
-const shuffle=require('./function/shuffle.js');
-
-exports.shuffle =shuffle;
-
 const sort=require('./function/sort.js');
 
 exports.sort =sort;
+
+const shuffle=require('./function/shuffle.js');
+
+exports.shuffle =shuffle;
 
 const stringCamelCase=require('./function/stringCamelCase.js');
 
@@ -250,6 +246,10 @@ const toInteger=require('./function/toInteger.js');
 
 exports.toInteger =toInteger;
 
+const unique=require('./function/unique.js');
+
+exports.unique =unique;
+
 const varExtend=require('./function/varExtend.js');
 
 exports.varExtend =varExtend;
@@ -262,15 +262,15 @@ const whereNot=require('./function/whereNot.js');
 
 exports.whereNot =whereNot;
 
-const unique=require('./function/unique.js');
+const objectCallType=require('./variable/types.js');
 
-exports.unique =unique;
+exports.objectCallType =objectCallType;
 
 const entity=require('./variable/htmlentity.js');
 
 exports.entity =entity;
 
-const objectCallType=require('./variable/types.js');
+const getIndexOf=require('./core/getIndexOf.js');
 
-exports.objectCallType =objectCallType;
+exports.getIndexOf =getIndexOf;
 

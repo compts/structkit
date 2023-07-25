@@ -1,31 +1,23 @@
-//const {count} = require("../../dist/ts/node.esm.d");
-//const assert = require("assert");
-//import {appendIsArrayExist} from "../../dist/esm/node.esm";
 import {count} from "../../dist/esm/node.esm";
-//import assert from 'assert';
-import {expectType, expectAssignable} from 'tsd';
+import assert from 'assert';
 
-const one:number =1;
-const zero:number =0;
+const zero =0;
+const one =1;
 
 describe('TS: count method', function () {
 
-    it('check if value exist', function () {
+    it('check count', function () {
 
+        assert.deepStrictEqual(count({"s1": 1}), one);
+        assert.deepStrictEqual(count([one]), one);
 
-      //  assert.deepStrictEqual(count({"s1": 1}), one);
-      //  assert.deepStrictEqual(count([one]), one);
-      //expectType<number>(count({"s1": 1}));
-      expectType<number>(count([one, zero]));
+    });
+    it('check JSON value if empty', function () {
+
+        assert.deepStrictEqual(count([]), zero);
+        assert.deepStrictEqual(count({}, true), zero);
 
     });
 
-    it('check JSON value if empty', function () {
-
-       // assert.deepStrictEqual(count([]), zero);
-       // assert.deepStrictEqual(count({}, true), zero);
-
-   });
 
 });
-
