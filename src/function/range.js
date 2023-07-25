@@ -7,7 +7,7 @@ const has = require('./has');
  * @since 1.0.1
  * @category Seq
  * @param {number} maxValue Max value you to generate in array
- * @param {number} minValue Min value you to generate in array
+ * @param {number=} minValue Min value you to generate in array
  * @returns {string|number} Return in array.
  * @example
  *

@@ -227,42 +227,12 @@ _stk.append=append
 
 
 /**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-
-_stk.arrayConcat=arrayConcat
-
-
-/**
  * Each
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Array or json.
- * @param {any} func Function data
+ * @param {Function=} func Function data
  * @returns {any} Array or json
  * @example
  *
@@ -333,12 +303,49 @@ function each (objectValue, func) {
 }
 
 /**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number[]} arrayObject Array in number
+ * @param {number=} delimeter decimal point and default value is 4
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ */
+function arraySum (arrayObject, delimeter) {
+
+    var sum=0;
+    var defaultLimitDecimal = 3;
+    var arrayObjects=arrayObject||[];
+    var delimeters=delimeter||defaultLimitDecimal;
+
+    each(arrayObjects, function (ak, av) {
+
+        if (has(av)) {
+
+            sum+=parseFloat(av);
+
+        }
+
+    });
+
+    return sum.toFixed(delimeters);
+
+}
+
+_stk.arraySum=arraySum
+
+
+/**
  * Array Count
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Json or array
- * @param {boolean} json_is_empty_check If data is json, it will check its map data
+ * @param {boolean=} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.
  * @example
  *
@@ -540,40 +547,33 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
- * Array Sum
+ * Array Concat
  *
  * @since 1.0.1
  * @category Seq
- * @param {number[]} arrayObject Array in number
- * @param {number=} delimeter decimal point and default value is 4
- * @returns {number} Returns the total.
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
  * @example
  *
- * arraySum([1,2], 2)
- * // => 3.00
+ * arrayConcat([1], 2)
+ * // => [1,2]
  */
-function arraySum (arrayObject, delimeter) {
+function arrayConcat (arrayObject, arrayValue) {
 
-    var sum=0;
-    var defaultLimitDecimal = 3;
-    var arrayObjects=arrayObject||[];
-    var delimeters=delimeter||defaultLimitDecimal;
+    var return_val=arrayObject;
 
-    each(arrayObjects, function (ak, av) {
+    if (getTypeof(return_val)==="array") {
 
-        if (has(av)) {
+        return return_val.concat(arrayValue);
 
-            sum+=parseFloat(av);
+    }
 
-        }
-
-    });
-
-    return sum.toFixed(delimeters);
+    return [];
 
 }
 
-_stk.arraySum=arraySum
+_stk.arrayConcat=arrayConcat
 
 
 /**
@@ -582,7 +582,7 @@ _stk.arraySum=arraySum
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue The data you want to map
- * @param {any} func Callback function
+ * @param {any=} func Callback function
  * @returns {null} Return map either JSON or Array
  * @example
  *
@@ -697,7 +697,7 @@ function getData (objectValue, split_str) {
  * @category Seq
  * @param {any[]} objectValue Json in array format
  * @param {string} valueFormat Key look up format
- * @returns {any} Return array.
+ * @returns {any[]} Return array or object.
  * @example
  *
  * arrayToObjectByDataFormat([{"Asd":1}],"Asd")
@@ -723,7 +723,7 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
  * @category Seq
  * @param {any} value String data
  * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
+ * @param {Function=} toReplace Replace value.
  * @returns {Promise<string>} String
  * @example
  *
@@ -882,7 +882,7 @@ _stk.each=each
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue The data either json or array
- * @param {any} func The second number in an addition.
+ * @param {Function=} func The second number in an addition.
  * @returns {null} Returns the total.
  * @example
  *
@@ -1084,6 +1084,8 @@ function getUniq () {
 
 _stk.getUniq=getUniq
 
+_stk.has=has
+
 
 /**
  * Get value of json or array
@@ -1148,11 +1150,7 @@ _stk.ifUndefined=ifUndefined
 
 _stk.indexOf=indexOf
 
-_stk.has=has
-
 _stk.indexOfExist=indexOfExist
-
-_stk.indexOfNotExist=indexOfNotExist
 
 
 /**
@@ -1196,6 +1194,8 @@ function insert (objectValue, value) {
 
 _stk.insert=insert
 
+_stk.indexOfNotExist=indexOfNotExist
+
 
 /**
  * Check if data is empty
@@ -1233,7 +1233,7 @@ _stk.isEmpty=isEmpty
  * @category Seq
  * @param {string} objectValue1 Json or Array
  * @param {string} objectValue2 Json or Array for lookup to objectValue1
- * @param {boolean} isExist Default value is True
+ * @param {boolean=} isExist Default value is True
  * @returns {boolean} Returns the total.
  * @example
  *
@@ -1398,6 +1398,50 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 _stk.isExactbyRegExp=isExactbyRegExp
 
 _stk.isJson=isJson
+
+
+/**
+ * Json To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {boolean} Returns Array
+ * @example
+ *
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
+ */
+function jsonToArray (objectValue, value) {
+
+    var arry=[];
+
+    each(objectValue, function (_key, _value) {
+
+        if (has(value)) {
+
+            var valueData = getData(_value, value);
+
+            if (isEmpty(valueData) ===false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
+
+}
+
+_stk.jsonToArray=jsonToArray
 
 
 /**
@@ -1648,7 +1692,7 @@ function repeat (value, valueRepetion) {
  * @category Seq
  * @param {array|object} objectValue The data you want to format
  * @param {string} value1 The start number.
- * @param {string} value2 The end number.
+ * @param {string=} value2 The end number.
  * @returns {null} Return format number
  * @example
  *
@@ -1818,8 +1862,8 @@ function replaceValue (objectValue, objectValueReplace) {
  * @since 1.4.1
  * @category Seq
  * @param {any} func a Callback function
- * @param {object} wait timer for delay
- * @param {object} option option for delay
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
  * @returns {object} Returns object.
  * @example
  *
@@ -1883,8 +1927,8 @@ _stk.onDelay=onDelay
  * @since 1.4.1
  * @category Seq
  * @param {any} func a Callback function
- * @param {object} wait timer for delay
- * @param {object} option option for delay
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
  * @returns {string} Returns object.
  * @example
  *
@@ -1972,7 +2016,7 @@ var getWindow = function () {
  * @since 1.4.1
  * @category Seq
  * @param {any} func a Callback function
- * @param {object} wait timer for delay
+ * @param {object=} wait timer for delay
  * @returns {string} Returns the total.
  * @example
  *
@@ -2393,7 +2437,7 @@ _stk.random=random
  * @since 1.0.1
  * @category Seq
  * @param {number} maxValue Max value you to generate in array
- * @param {number} minValue Min value you to generate in array
+ * @param {number=} minValue Min value you to generate in array
  * @returns {string|number} Return in array.
  * @example
  *
@@ -2434,7 +2478,7 @@ _stk.range=range
  * @category Seq
  * @param {any} objectValue Json or array
  * @param {number} value if objectValue, json is must be object or array index you want to remove
- * @param {number} value2 Last row in index
+ * @param {number=} value2 Last row in index
  * @returns {any[]} Returns the total.
  * @example
  *
@@ -2537,7 +2581,7 @@ _stk.repeat=repeat
  * @since 1.0.1
  * @category Seq
  * @param {number} value Int or Double value type
- * @param {number} maxValue limit decimal
+ * @param {number=} maxValue limit decimal
  * @returns {number} Returns the total.
  * @example
  *
@@ -2682,6 +2726,37 @@ _stk.stringCamelCase=stringCamelCase
 
 
 /**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ */
+function stringCapitalize (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return value.toLowerCase().replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize
+
+
+/**
  * String Escape
  *
  * @since 1.3.1
@@ -2721,37 +2796,6 @@ function stringEscape (value, type) {
 }
 
 _stk.stringEscape=stringEscape
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The Fish Is Goad   With Goat-1ss'
- */
-function stringCapitalize (value) {
-
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return value.toLowerCase().replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize
 
 
 /**
@@ -3064,7 +3108,7 @@ function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
  * @since 1.0.1
  * @category Seq
  * @param {any} value Value you to convert in double
- * @returns {any[]} Return in double.
+ * @returns {any} Return in double.
  * @example
  *
  * toDouble(1)
@@ -3089,7 +3133,7 @@ _stk.toDouble=toDouble
  * @since 1.0.1
  * @category Seq
  * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
+ * @returns {any} Return in integer.
  * @example
  *
  * toInteger(1)
@@ -3175,57 +3219,13 @@ _stk.whereNot=whereNot
 
 
 /**
- * Json To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} objectValue Json
- * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
- * @example
- *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
- * => [2, 3]
- */
-function jsonToArray (objectValue, value) {
-
-    var arry=[];
-
-    each(objectValue, function (_key, _value) {
-
-        if (has(value)) {
-
-            var valueData = getData(_value, value);
-
-            if (isEmpty(valueData) ===false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
-
-_stk.jsonToArray=jsonToArray
-
-
-/**
  * Sort array
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Array
- * @param {any} order True for ascend then false for descend
- * @param {any} func Callback function or sort type
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {any=} func Callback function or sort type
  * @returns {any[]} Returns the total.
  * @example
  *

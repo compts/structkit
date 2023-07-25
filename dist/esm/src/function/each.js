@@ -8,7 +8,7 @@ import has from './has';
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Array or json.
- * @param {any} func Function data
+ * @param {Function=} func Function data
  * @returns {any} Array or json
  * @example
  *

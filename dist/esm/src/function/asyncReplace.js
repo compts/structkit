@@ -7,7 +7,7 @@ import getTypeof from './getTypeof';
  * @category Seq
  * @param {any} value String data
  * @param {any} search Regexp or string to look for match
- * @param {any} toReplace Replace value.
+ * @param {Function=} toReplace Replace value.
  * @returns {Promise<string>} String
  * @example
  *
