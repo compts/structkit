@@ -13,6 +13,7 @@
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
     "test_esm": "mocha -r esm test/esm/*.test.js",
     "test_cjs": "mocha test/cjs/*.test.js",
+    "test_ts": "mocha --require ts-node/register test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
@@ -37,13 +38,15 @@
     "tsd": "^0.19.1"
   },
   "devDependencies": {
-    "@types/node": "^17.0.22",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.4",
     "eslint": "^7.16.0",
     "eslint-config-strongloop": "^2.1.0",
     "eslint-plugin-import": "^2.22.1",
     "esm": "^3.2.25",
     "jest": "^27.5.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "ts-node": "^10.9.1"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -55,7 +58,6 @@
       "/src_old_copy/",
       "/dist/",
       "/test/esm/"
-
     ],
     "coverageThreshold": {
       "global": {

@@ -1,7 +1,7 @@
 //const {count} = require("../../dist/ts/node.esm.d");
 //const assert = require("assert");
 //import {appendIsArrayExist} from "../../dist/esm/node.esm";
-import {count} from "../../dist/ts/node.esm.d";
+import {count} from "../../dist/esm/node.esm";
 //import assert from 'assert';
 import {expectType, expectAssignable} from 'tsd';
 
