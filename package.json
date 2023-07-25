@@ -1,6 +1,6 @@
 {
   "name": "structkit",
-  "version": "1.4.1",
+  "version": "1.4.5",
   "description": "JS utility tool",
   "main": "src/node.cjs.js",
   "module": "dist/esm/node.es.js",
@@ -50,7 +50,8 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "*.js"
+      "*.js",
+      "*.ts"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
