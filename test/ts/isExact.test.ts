@@ -1,6 +1,7 @@
 
 import {isExact} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: isExact method', function () {
 
@@ -11,5 +12,9 @@ describe('TS: isExact method', function () {
 
     });
 
-
+    it('check expected type', function () {
+       
+        expectType<boolean>(isExact({"test": 11,
+        "test2": 11}, {"test2": 11}, true));
+    });
 });

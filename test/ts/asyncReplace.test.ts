@@ -1,5 +1,6 @@
 import {asyncReplace} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: asyncReplace method', function () {
 
@@ -10,5 +11,10 @@ describe('TS: asyncReplace method', function () {
         assert.deepStrictEqual(data, "a@d");
 
     });
-
+    it('check expected type', async function () {
+       
+        const data = await asyncReplace("asd", /s/g, "@");
+        expectType<any[number]>(data);
+  
+      });
 });

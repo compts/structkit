@@ -7,10 +7,10 @@ export default delimiter;
  * @param {any} objectValue Array
  * @param {number=} min Delimiter in minumum of 2
  * @param {number=} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * delimiter([1,2])
  * // => 2
  */
-declare function delimiter(objectValue: any, min?: number | undefined, max?: number | undefined): string;
+declare function delimiter(objectValue: any, min?: number | undefined, max?: number | undefined): any[];

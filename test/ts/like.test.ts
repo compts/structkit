@@ -1,7 +1,7 @@
 
 import {like} from "../../dist/esm/node.esm";
 import assert from 'assert';
-
+import {expectType} from 'tsd';
 
 const one=1;
 
@@ -48,5 +48,12 @@ describe('TS: like method', function () {
 
     });
 
+    it('check expected type', function () {
+       
+        expectType<any>(like([
+            {"s1": one,
+                "s2": "as"}
+        ], {"s2": /(ass)/g}));
+    });
 
 });

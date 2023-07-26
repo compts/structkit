@@ -1,6 +1,7 @@
 
 import {last} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const eight=8,
     five=5,
@@ -29,6 +30,20 @@ describe('TS: Last', function () {
         ]), ten);
 
     });
-
+    it('check expected type', function () {
+       
+        expectType<any>(last([
+            one,
+            one,
+            one,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+            ten
+        ]));
+    });
 
 });

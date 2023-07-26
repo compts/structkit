@@ -1,6 +1,7 @@
 
 import {jsonToArray} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: jsonToArray method', function () {
 
@@ -13,6 +14,10 @@ describe('TS: jsonToArray method', function () {
         );
 
     });
-
+    it('check expected type', function () {
+       
+        expectType<any>(jsonToArray({"a": 1,
+        "b": {"asd": {"aa": "bb"}}}, "b:asd"));
+    });
 
 });

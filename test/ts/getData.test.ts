@@ -1,5 +1,6 @@
 import {getData} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: getData method', function () {
 
@@ -9,5 +10,9 @@ describe('TS: getData method', function () {
         assert.strictEqual(getData({"a": {"b": "b1"}}, "a:b"), "b1");
 
     });
-
+    it('check expected type', function () {
+       
+        expectType<any>(getData({"a": "1"}, "a"));
+  
+      });
 });

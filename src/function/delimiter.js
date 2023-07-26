@@ -13,7 +13,7 @@ const each = require('./each');
  * @param {any} objectValue Array
  * @param {number=} min Delimiter in minumum of 2
  * @param {number=} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * delimiter([1,2])

@@ -1,5 +1,6 @@
 import {getKey} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const three =3;
 const two =2;
@@ -34,7 +35,11 @@ describe('TS: getKey method', function () {
         );
 
     });
-
+    it('check expected type', function () {
+       
+        expectType<any>(getKey({"ones": one}));
+  
+      });
 });
 
 

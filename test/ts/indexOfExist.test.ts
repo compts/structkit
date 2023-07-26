@@ -1,6 +1,7 @@
 
 import {indexOfExist} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const eight=8,
     five=5,
@@ -65,5 +66,20 @@ describe('TS: indexOfExist', function () {
 
     });
 
-
+    it('check expected type', function () {
+       
+        expectType<boolean>(indexOfExist([
+            one,
+            two,
+            three,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+            ten
+        ], zero));
+  
+    });
 });

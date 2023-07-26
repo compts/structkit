@@ -577,6 +577,61 @@ _stk.arraySum=arraySum
 
 
 /**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+
+_stk.asyncReplace=asyncReplace
+
+
+/**
  * To map the value of json ot array
  *
  * @since 1.0.1
@@ -715,120 +770,6 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function (...arg) {
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-
-_stk.asyncReplace=asyncReplace
-
-
-/**
- * Get JSON Variable
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Either Json or Array
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * getJSONVariable([])
- * => []
- */
-function getJSONVariable (value) {
-
-    if (getTypeof(value)==="json") {
-
-        return {};
-
-    }
-
-    if (getTypeof(value)==="array") {
-
-        return [];
-
-    }
-
-    return value;
-
-}
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue data you want to clone
- * @returns {number} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    var variable=getJSONVariable(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
-
-}
-
-_stk.clone=clone
-
 _stk.count=count
 
 
@@ -840,7 +781,7 @@ _stk.count=count
  * @param {any} objectValue Array
  * @param {number=} min Delimiter in minumum of 2
  * @param {number=} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * delimiter([1,2])
@@ -875,6 +816,36 @@ _stk.delimiter=delimiter
 
 _stk.each=each
 
+
+/**
+ * Get JSON Variable
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Either Json or Array
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * getJSONVariable([])
+ * => []
+ */
+function getJSONVariable (value) {
+
+    if (getTypeof(value)==="json") {
+
+        return {};
+
+    }
+
+    if (getTypeof(value)==="array") {
+
+        return [];
+
+    }
+
+    return value;
+
+}
 
 /**
  * Filter
@@ -923,6 +894,35 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue data you want to clone
+ * @returns {number} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    var variable=getJSONVariable(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone
 
 
 /**
@@ -1031,30 +1031,9 @@ function first (objectValue) {
 
 _stk.first=first
 
-_stk.getData=getData
-
 _stk.getJSONVariable=getJSONVariable
 
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-
-_stk.getKey=getKey
+_stk.getData=getData
 
 _stk.getTypeof=getTypeof
 /**
@@ -1083,6 +1062,27 @@ function getUniq () {
 }
 
 _stk.getUniq=getUniq
+
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+
+_stk.getKey=getKey
 
 
 /**
@@ -1401,27 +1401,6 @@ _stk.isJson=isJson
 
 
 /**
- * Last of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @returns {any} Returns json result first key or index.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last
-
-
-/**
  * Json To Array
  *
  * @since 1.0.1
@@ -1463,6 +1442,27 @@ function jsonToArray (objectValue, value) {
 }
 
 _stk.jsonToArray=jsonToArray
+
+
+/**
+ * Last of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @returns {any} Returns json result first key or index.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last
 
 
 /**
@@ -1653,8 +1653,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit
 
-_stk.map=map
-
 /**
  * Repeat string value
  *
@@ -1744,6 +1742,8 @@ function numberFormat (objectValue, value1, value2) {
 }
 
 _stk.numberFormat=numberFormat
+
+_stk.map=map
 
 
 /**
@@ -1995,101 +1995,6 @@ ClassDelay.prototype.cancel = function () {
     clearTimeout(this.timeout);
 
 };
-
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame();
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-
-        timerId.cancel();
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait
 
 _stk.onDelay=onDelay
 
@@ -2540,7 +2445,7 @@ _stk.remove=remove
  * @category Seq
  * @param {number} maxValue Max value you to generate in array
  * @param {number=} minValue Min value you to generate in array
- * @returns {string|number} Return in array.
+ * @returns {any[]} Return in array.
  * @example
  *
  * range(10)
@@ -2764,38 +2669,18 @@ _stk.sort=sort
 
 
 /**
- * Where Loop Execution
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function stringSplit (value) {
-
-    return value.trim()
-        .toLowerCase()
-        .replace(/([-_.\s]{1,})/g, ' ');
-
-}
-
-/**
- * String Camel case
+ * String Capitalize
  *
  * @since 1.3.1
  * @category Seq
  * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @returns {string} Returns Capitalize sting data
  * @example
  *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The Fish Is Goad   With Goat-1ss'
  */
-function stringCamelCase (value) {
+function stringCapitalize (value) {
 
     if (has(value) === false && getTypeof(value) !=="string") {
 
@@ -2803,18 +2688,110 @@ function stringCamelCase (value) {
 
     }
 
-    return stringSplit(value)
-        .replace(/(\s[a-z])/g, function (ss1) {
+    return value.toLowerCase().replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
 
-            return ss1.toUpperCase();
+        return ss1.toUpperCase();
 
-        })
-        .split(" ")
-        .join("");
+    });
 
 }
 
-_stk.stringCamelCase=stringCamelCase
+_stk.stringCapitalize=stringCapitalize
+
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    var browserWindow = getWindow();
+    var timerId = null;
+
+    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame();
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+
+        timerId.cancel();
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+_stk.onWait=onWait
 
 
 /**
@@ -2860,6 +2837,26 @@ _stk.stringEscape=stringEscape
 
 
 /**
+ * Where Loop Execution
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function stringSplit (value) {
+
+    return value.trim()
+        .toLowerCase()
+        .replace(/([-_.\s]{1,})/g, ' ');
+
+}
+
+/**
  * String Kebab case
  *
  * @since 1.3.1
@@ -2886,37 +2883,6 @@ function stringKebabCase (value) {
 }
 
 _stk.stringKebabCase=stringKebabCase
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The Fish Is Goad   With Goat-1ss'
- */
-function stringCapitalize (value) {
-
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return value.toLowerCase().replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize
 
 
 /**
@@ -2948,35 +2914,6 @@ function stringSnakeCase (value) {
 _stk.stringSnakeCase=stringSnakeCase
 
 _stk.stringUnEscape=stringUnEscape
-
-
-/**
- * To Array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-
-    var return_val = value;
-
-    if (getTypeof(return_val)!=="array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
-
-}
-
-_stk.toArray=toArray
 
 
 /**
@@ -3160,6 +3097,35 @@ _stk.templateValue=templateValue
 
 
 /**
+ * To Array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toArray (value) {
+
+    var return_val = value;
+
+    if (getTypeof(return_val)!=="array") {
+
+        return_val = [value];
+
+    }
+
+    return return_val;
+
+}
+
+_stk.toArray=toArray
+
+
+/**
  * Where Loop Execution
  *
  * @since 1.0.1
@@ -3284,6 +3250,42 @@ _stk.unique=unique
 
 _stk.varExtend=varExtend
 
+_stk.where=where
+
+
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+function stringCamelCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .replace(/(\s[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        })
+        .split(" ")
+        .join("");
+
+}
+
+_stk.stringCamelCase=stringCamelCase
+
 
 /**
  * Where Not
@@ -3308,4 +3310,3 @@ function whereNot (objectValue, objectValueWhere, func) {
 _stk.whereNot=whereNot
 
 })(typeof window !== "undefined" ? window : this);
-_stk.where=where

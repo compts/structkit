@@ -1,6 +1,7 @@
 
 import {indexOf} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const eight=8,
     five=5,
@@ -47,5 +48,20 @@ describe('TS: IndexOf', function () {
 
     });
 
-
+    it('check expected type', function () {
+       
+        expectType<number>(indexOf([
+            one,
+            two,
+            three,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+            ten
+        ], seven));
+  
+    });
 });

@@ -1,6 +1,7 @@
 
 import {lastIndexOf} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const eight=8,
     five=5,
@@ -45,6 +46,20 @@ describe('TS: LastIndexOf', function () {
         ], two), three);
 
     });
-
+    it('check expected type', function () {
+       
+        expectType<any>(lastIndexOf([
+            one,
+            one,
+            two,
+            two,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+            ten
+        ], two));
+    });
 
 });

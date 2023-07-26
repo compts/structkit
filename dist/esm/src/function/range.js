@@ -7,7 +7,7 @@ import has from './has';
  * @category Seq
  * @param {number} maxValue Max value you to generate in array
  * @param {number=} minValue Min value you to generate in array
- * @returns {string|number} Return in array.
+ * @returns {any[]} Return in array.
  * @example
  *
  * range(10)

@@ -1,6 +1,7 @@
 
 import {stringEscape} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: stringEscape method', function () {
 
@@ -14,6 +15,12 @@ describe('TS: stringEscape method', function () {
 
         assert.strictEqual(stringEscape("yahii & adad ^ss"), 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss');
 
+    });
+
+    it('check expected type', async function () {
+       
+        expectType<string>(stringEscape("yahii & adad ^ss"));
+  
     });
 
 });

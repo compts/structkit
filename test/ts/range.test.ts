@@ -1,6 +1,7 @@
 
 import {range} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const eight=8,
     five=5,
@@ -32,5 +33,9 @@ describe('TS: range method', function () {
 
     });
 
+    it('check expected type', function () {
+       
+        expectType<any[]>(range(ten, one));
+    });
 
 });

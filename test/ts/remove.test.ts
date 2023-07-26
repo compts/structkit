@@ -1,5 +1,6 @@
 import {remove} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const three =3;
 const two =2;
@@ -44,7 +45,18 @@ describe('TS: remove method', function () {
         });
 
     });
+    it('check expected type', function () {
+       
+        expectType<any[]>(remove(
 
+            [
+                one,
+                two,
+                three
+            ],
+            zero
+        ));
+    });
 });
 
 

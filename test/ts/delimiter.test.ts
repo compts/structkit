@@ -1,6 +1,6 @@
 import {delimiter} from "../../dist/esm/node.esm";
 import assert from 'assert';
-
+import {expectType} from 'tsd';
 const three =3;
 const two =2;
 const one =1;
@@ -34,6 +34,15 @@ describe('TS: delimiter method', function () {
         ]);
 
     });
+    it('check expected type', function () {
+       
+        expectType<any[]>(delimiter([
+            one,
+            two,
+            three
+        ], one));
+  
+      });
 
 });
 

@@ -1,6 +1,7 @@
 
 import {varExtend} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: varExtend method', function () {
 
@@ -10,5 +11,9 @@ describe('TS: varExtend method', function () {
 
     });
 
-
+    it('check expected type', async function () {
+       
+        expectType<any>(varExtend({"s1": 1}, {"s1": 2}));
+  
+    });
 });

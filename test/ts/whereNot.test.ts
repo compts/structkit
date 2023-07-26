@@ -1,6 +1,7 @@
 
 import {whereNot} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 describe('TS: whereNot method', function () {
 
@@ -25,5 +26,14 @@ describe('TS: whereNot method', function () {
         ]);
 
     });
-
+    it('check expected type', async function () {
+       
+        expectType<any>(whereNot([
+            {"s1": 1,
+                "s2": 1},
+            {"s1": 2,
+                "s2": 2}
+        ], {"s1": 1}));
+  
+    });
 });

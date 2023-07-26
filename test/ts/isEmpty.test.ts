@@ -1,7 +1,7 @@
 
 import {isEmpty} from "../../dist/esm/node.esm";
 import assert from 'assert';
-
+import {expectType} from 'tsd';
 
 describe('TS: isEmpty method', function () {
 
@@ -31,6 +31,12 @@ describe('TS: isEmpty method', function () {
         ]), false);
 
     });
-
+    it('check expected type', function () {
+       
+        expectType<boolean>(isEmpty([
+            '1',
+            '2'
+        ]));
+    });
 
 });

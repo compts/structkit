@@ -1,6 +1,7 @@
 
 import {sort} from "../../dist/esm/node.esm";
 import assert from 'assert';
+import {expectType} from 'tsd';
 
 const one =1;
 const ten=10;
@@ -54,5 +55,13 @@ describe('TS: sort method', function () {
         ]);
 
     });
+    it('check expected type', function () {
+       
+        expectType<any[]>(sort([
+            'ten',
+            'one'
+        ], false));
+    });
+
 
 });

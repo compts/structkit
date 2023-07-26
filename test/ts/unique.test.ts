@@ -1,6 +1,6 @@
 import {unique} from "../../dist/esm/node.esm";
 import assert from 'assert';
-
+import {expectType} from 'tsd';
 const one =1;
 const ten=10;
 
@@ -18,5 +18,13 @@ describe('TS: unique method', function () {
         ]);
 
     });
-
+    it('check expected type', async function () {
+       
+        expectType<number[]>(unique([
+            ten,
+            ten,
+            one
+        ]));
+  
+    });
 });
