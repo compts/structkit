@@ -28,4 +28,3 @@ function stringSnakeCase (value) {
 
 }
 module.exports=stringSnakeCase;
-

@@ -1,6 +1,5 @@
 const getKeyVal = require('../core/getKeyVal');
 
-
 /**
  * Last of array
  *
