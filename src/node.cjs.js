@@ -6,13 +6,13 @@ const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const getWindow=require('./core/global.js');
-
-exports.getWindow =getWindow;
-
 const getKeyVal=require('./core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
+
+const getWindow=require('./core/global.js');
+
+exports.getWindow =getWindow;
 
 const stringSplit=require('./core/stringSplit.js');
 
@@ -26,37 +26,37 @@ const append=require('./function/append.js');
 
 exports.append =append;
 
-const appendIsArrayExist=require('./function/appendIsArrayExist.js');
-
-exports.appendIsArrayExist =appendIsArrayExist;
-
 const arrayConcat=require('./function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
+
+const appendIsArrayExist=require('./function/appendIsArrayExist.js');
+
+exports.appendIsArrayExist =appendIsArrayExist;
 
 const arraySum=require('./function/arraySum.js');
 
 exports.arraySum =arraySum;
 
-const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
-
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
-
 const asyncReplace=require('./function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
+
+const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
+
+exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
 const clone=require('./function/clone.js');
 
 exports.clone =clone;
 
-const delimiter=require('./function/delimiter.js');
-
-exports.delimiter =delimiter;
-
 const count=require('./function/count.js');
 
 exports.count =count;
+
+const delimiter=require('./function/delimiter.js');
+
+exports.delimiter =delimiter;
 
 const each=require('./function/each.js');
 
@@ -65,6 +65,10 @@ exports.each =each;
 const filter=require('./function/filter.js');
 
 exports.filter =filter;
+
+const first=require('./function/first.js');
+
+exports.first =first;
 
 const getData=require('./function/getData.js');
 
@@ -78,10 +82,6 @@ const getKey=require('./function/getKey.js');
 
 exports.getKey =getKey;
 
-const first=require('./function/first.js');
-
-exports.first =first;
-
 const getTypeof=require('./function/getTypeof.js');
 
 exports.getTypeof =getTypeof;
@@ -90,21 +90,21 @@ const getUniq=require('./function/getUniq.js');
 
 exports.getUniq =getUniq;
 
-const has=require('./function/has.js');
-
-exports.has =has;
-
 const getValue=require('./function/getValue.js');
 
 exports.getValue =getValue;
 
-const indexOf=require('./function/indexOf.js');
+const has=require('./function/has.js');
 
-exports.indexOf =indexOf;
+exports.has =has;
 
 const ifUndefined=require('./function/ifUndefined.js');
 
 exports.ifUndefined =ifUndefined;
+
+const indexOf=require('./function/indexOf.js');
+
+exports.indexOf =indexOf;
 
 const indexOfExist=require('./function/indexOfExist.js');
 
@@ -114,13 +114,13 @@ const indexOfNotExist=require('./function/indexOfNotExist.js');
 
 exports.indexOfNotExist =indexOfNotExist;
 
-const insert=require('./function/insert.js');
-
-exports.insert =insert;
-
 const isEmpty=require('./function/isEmpty.js');
 
 exports.isEmpty =isEmpty;
+
+const insert=require('./function/insert.js');
+
+exports.insert =insert;
 
 const isExact=require('./function/isExact.js');
 
@@ -134,17 +134,9 @@ const isJson=require('./function/isJson.js');
 
 exports.isJson =isJson;
 
-const jsonToArray=require('./function/jsonToArray.js');
-
-exports.jsonToArray =jsonToArray;
-
 const last=require('./function/last.js');
 
 exports.last =last;
-
-const lastIndexOf=require('./function/lastIndexOf.js');
-
-exports.lastIndexOf =lastIndexOf;
 
 const like=require('./function/like.js');
 
@@ -154,6 +146,10 @@ const limit=require('./function/limit.js');
 
 exports.limit =limit;
 
+const lastIndexOf=require('./function/lastIndexOf.js');
+
+exports.lastIndexOf =lastIndexOf;
+
 const map=require('./function/map.js');
 
 exports.map =map;
@@ -161,6 +157,10 @@ exports.map =map;
 const numberFormat=require('./function/numberFormat.js');
 
 exports.numberFormat =numberFormat;
+
+const jsonToArray=require('./function/jsonToArray.js');
+
+exports.jsonToArray =jsonToArray;
 
 const onDelay=require('./function/onDelay.js');
 
@@ -210,25 +210,21 @@ const sort=require('./function/sort.js');
 
 exports.sort =sort;
 
-const stringCamelCase=require('./function/stringCamelCase.js');
-
-exports.stringCamelCase =stringCamelCase;
-
 const stringCapitalize=require('./function/stringCapitalize.js');
 
 exports.stringCapitalize =stringCapitalize;
 
-const stringEscape=require('./function/stringEscape.js');
+const stringCamelCase=require('./function/stringCamelCase.js');
 
-exports.stringEscape =stringEscape;
+exports.stringCamelCase =stringCamelCase;
 
 const stringKebabCase=require('./function/stringKebabCase.js');
 
 exports.stringKebabCase =stringKebabCase;
 
-const stringSnakeCase=require('./function/stringSnakeCase.js');
+const stringEscape=require('./function/stringEscape.js');
 
-exports.stringSnakeCase =stringSnakeCase;
+exports.stringEscape =stringEscape;
 
 const stringUnEscape=require('./function/stringUnEscape.js');
 
@@ -237,6 +233,10 @@ exports.stringUnEscape =stringUnEscape;
 const templateValue=require('./function/templateValue.js');
 
 exports.templateValue =templateValue;
+
+const stringSnakeCase=require('./function/stringSnakeCase.js');
+
+exports.stringSnakeCase =stringSnakeCase;
 
 const toArray=require('./function/toArray.js');
 
