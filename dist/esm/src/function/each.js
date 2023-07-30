@@ -12,9 +12,7 @@ import has from './has';
  * @returns {any} Array or json
  * @example
  *
- * each([1,2],(key,value)=>{
- *
- * })
+ * each([1,2],(key,value)=>{ })
  *
  */
 function each (objectValue, func) {

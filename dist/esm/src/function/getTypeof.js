@@ -14,7 +14,9 @@ import isJson from './isJson';
  */
 function getTypeof (objectValue) {
 
-    if (Object.prototype.toString.call(objectValue)==="[object Object]") {
+    const objectType = Object.prototype.toString.call(objectValue);
+
+    if (objectType==="[object Object]") {
 
         return isJson(objectValue, "object")
             ?"json"
@@ -22,14 +24,19 @@ function getTypeof (objectValue) {
 
     }
 
-    if (Object.prototype.toString.call(objectValue)==="[object Array]") {
+    if (objectType==="[object Array]") {
 
         return "array";
 
     }
-    if (Object.prototype.toString.call(objectValue)==="[object RegExp]") {
+    if (objectType==="[object RegExp]") {
 
         return "regexp";
+
+    }
+    if (objectType==="[object Promise]") {
+
+        return "promise";
 
     }
 

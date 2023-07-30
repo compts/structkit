@@ -167,7 +167,9 @@ function checkIfFunctionNotExistObject (obj) {
  */
 function getTypeof (objectValue) {
 
-    if (Object.prototype.toString.call(objectValue)==="[object Object]") {
+    var objectType = Object.prototype.toString.call(objectValue);
+
+    if (objectType==="[object Object]") {
 
         return isJson(objectValue, "object")
             ?"json"
@@ -175,14 +177,19 @@ function getTypeof (objectValue) {
 
     }
 
-    if (Object.prototype.toString.call(objectValue)==="[object Array]") {
+    if (objectType==="[object Array]") {
 
         return "array";
 
     }
-    if (Object.prototype.toString.call(objectValue)==="[object RegExp]") {
+    if (objectType==="[object RegExp]") {
 
         return "regexp";
+
+    }
+    if (objectType==="[object Promise]") {
+
+        return "promise";
 
     }
 
@@ -227,6 +234,36 @@ _stk.append=append
 
 
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} arrayObject First array
+ * @param {any} arrayValue The second array for concat
+ * @returns {any} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (arrayObject, arrayValue) {
+
+    var return_val=arrayObject;
+
+    if (getTypeof(return_val)==="array") {
+
+        return return_val.concat(arrayValue);
+
+    }
+
+    return [];
+
+}
+
+_stk.arrayConcat=arrayConcat
+
+
+/**
  * Each
  *
  * @since 1.0.1
@@ -236,9 +273,7 @@ _stk.append=append
  * @returns {any} Array or json
  * @example
  *
- * each([1,2],(key,value)=>{
- *
- * })
+ * each([1,2],(key,value)=>{ })
  *
  */
 function each (objectValue, func) {
@@ -510,36 +545,6 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
- * Array Concat
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (arrayObject, arrayValue) {
-
-    var return_val=arrayObject;
-
-    if (getTypeof(return_val)==="array") {
-
-        return return_val.concat(arrayValue);
-
-    }
-
-    return [];
-
-}
-
-_stk.arrayConcat=arrayConcat
-
-
-/**
  * Array Sum
  *
  * @since 1.0.1
@@ -574,61 +579,6 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Seq
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function (...arg) {
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-
-_stk.asyncReplace=asyncReplace
 
 
 /**
@@ -770,51 +720,60 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
-_stk.count=count
-
 
 /**
- * Delimiter
+ * Async replace
  *
  * @since 1.3.1
  * @category Seq
- * @param {any} objectValue Array
- * @param {number=} min Delimiter in minumum of 2
- * @param {number=} max Delimiter in minumum base on array count
- * @returns {any[]} Returns the total.
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
  * @example
  *
- * delimiter([1,2])
- * // => 2
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-function delimiter (objectValue, min, max) {
+function asyncReplace (value, search, toReplace) {
 
-    var ran_var=[];
-    var defaultValueZero=0;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
+    try {
 
-    each(objectValue, function (key, value) {
+        if (getTypeof(toReplace) === "function") {
 
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+            var values = [];
 
-            ran_var.push(value);
+            String.prototype.replace.call(value, search, function (...arg) {
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
 
         }
 
-    });
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
 
-    return ran_var;
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
 
 }
 
-_stk.delimiter=delimiter
-
-_stk.each=each
+_stk.asyncReplace=asyncReplace
 
 
 /**
@@ -846,6 +805,84 @@ function getJSONVariable (value) {
     return value;
 
 }
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue data you want to clone
+ * @returns {number} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    var variable=getJSONVariable(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone
+
+_stk.count=count
+
+
+/**
+ * Delimiter
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {number=} min Delimiter in minumum of 2
+ * @param {number=} max Delimiter in minumum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * delimiter([1,2],1)
+ * // => [2]
+ *
+ * delimiter([1,2,3,4],2,4)
+ * // => [2, 3, 4]
+ */
+function delimiter (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.delimiter=delimiter
+
+_stk.each=each
+
 
 /**
  * Filter
@@ -894,35 +931,6 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue data you want to clone
- * @returns {number} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    var variable=getJSONVariable(objectValue);
-
-    each(objectValue, function (key, value) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
-
-}
-
-_stk.clone=clone
 
 
 /**
@@ -1031,11 +1039,30 @@ function first (objectValue) {
 
 _stk.first=first
 
-_stk.getJSONVariable=getJSONVariable
-
 _stk.getData=getData
 
-_stk.getTypeof=getTypeof
+_stk.getJSONVariable=getJSONVariable
+
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+
+_stk.getKey=getKey
 /**
  * Generate unique value id
  *
@@ -1062,27 +1089,6 @@ function getUniq () {
 }
 
 _stk.getUniq=getUniq
-
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-
-_stk.getKey=getKey
 
 
 /**
@@ -1147,6 +1153,8 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined
+
+_stk.getTypeof=getTypeof
 
 _stk.indexOf=indexOf
 
@@ -1310,6 +1318,8 @@ function isExact (objectValue1, objectValue2, isExist) {
 
 _stk.isExact=isExact
 
+_stk.isJson=isJson
+
 
 /**
  * Is Exact by Regexp
@@ -1396,8 +1406,6 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 }
 
 _stk.isExactbyRegExp=isExactbyRegExp
-
-_stk.isJson=isJson
 
 
 /**
@@ -1593,7 +1601,7 @@ _stk.like=like
 
 
 /**
- * Limit
+ * Specify the limit, similar in delimiter bt the return was object to ensure the order are not shuffle
  *
  * @since 1.0.1
  * @category Seq
@@ -1652,6 +1660,8 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit
+
+_stk.map=map
 
 /**
  * Repeat string value
@@ -1742,8 +1752,6 @@ function numberFormat (objectValue, value1, value2) {
 }
 
 _stk.numberFormat=numberFormat
-
-_stk.map=map
 
 
 /**
@@ -1857,6 +1865,71 @@ function replaceValue (objectValue, objectValueReplace) {
 }
 
 /**
+ * On delay
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var zero = 0;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+
+    var timeout = setTimeout(function () {
+
+        func();
+
+    }, valueWaited);
+
+    var sequence = new ClassDelay(timeout, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} timeout timer for delay
+ * @param {object} extend option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassDelay (timeout, extend) {
+
+    this.timeout = timeout;
+
+    this.extend = extend;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+_stk.onDelay=onDelay
+
+
+/**
  * On sequence
  *
  * @since 1.4.1
@@ -1933,70 +2006,100 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence
 
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
 
 /**
- * On delay
+ * On wait
  *
  * @since 1.4.1
  * @category Seq
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
+ * @returns {string} Returns the total.
  * @example
  *
  *  onWait(()=>{})
  *=>'11'
  */
-function onDelay (func, wait, option) {
+function onWait (func, wait) {
 
-    var zero = 0;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
+    var browserWindow = getWindow();
+    var timerId = null;
 
-    var valueWaited = wait || zero;
+    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
 
-    var timeout = setTimeout(function () {
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
 
-        func();
+        if (useReqeustAdnimation) {
 
-    }, valueWaited);
+            clearTimer();
 
-    var sequence = new ClassDelay(timeout, extend);
+            return browserWindow.requestAnimationFrame();
 
-    return sequence;
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+
+        timerId.cancel();
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
 
 }
 
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} timeout timer for delay
- * @param {object} extend option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
-
-    this.extend = extend;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-_stk.onDelay=onDelay
+_stk.onWait=onWait
 
 
 /**
@@ -2577,98 +2680,6 @@ _stk.shuffle=shuffle
 
 
 /**
- * Sort array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {boolean=} order True for ascend then false for descend
- * @param {any=} func Callback function or sort type
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, order, func) {
-
-    var jsonn=objectValue;
-    var asc=true;
-    var types='any';
-
-    if (has(order) && getTypeof(order) ==='boolean') {
-
-        asc= order;
-
-    }
-
-    if (has(func) && getTypeof(func) ==='string') {
-
-        types= func;
-
-    }
-
-    var js_m=getTypeof(jsonn)==="json"
-        ?each(jsonn)
-        :jsonn;
-
-    var finalResponse=js_m.sort(function (orderA, orderB) {
-
-        if (has(func) && getTypeof(func) ==='function') {
-
-            return func(orderA, orderB);
-
-        }
-
-        var sortOrderA = orderA;
-        var sortOrderB = orderB;
-
-        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-            if (isEmpty(types) === false) {
-
-                if (types ==='any') {
-
-                    sortOrderA =orderA.charCodeAt();
-                    sortOrderB= orderB.charCodeAt();
-
-                }
-                if (types ==='lowercase') {
-
-                    sortOrderA =orderA.toLowerCase().charCodeAt();
-                    sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                }
-
-                if (types ==='uppercase') {
-
-                    sortOrderA =orderA.toUpperCase().charCodeAt();
-                    sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                }
-
-            }
-
-        }
-
-        if (asc) {
-
-            return sortOrderA - sortOrderB;
-
-        }
-
-        return sortOrderB - sortOrderA;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sort=sort
-
-
-/**
  * String Capitalize
  *
  * @since 1.3.1
@@ -2698,100 +2709,59 @@ function stringCapitalize (value) {
 
 _stk.stringCapitalize=stringCapitalize
 
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
 
 /**
- * On wait
+ * Split string for special cases
  *
- * @since 1.4.1
+ * @since 1.3.1
  * @category Seq
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {string} value String to split
  * @returns {string} Returns the total.
  * @example
  *
- *  onWait(()=>{})
- *=>'11'
+ * stringSplit("split-this-string")
+ *=>"split this string"
  */
-function onWait (func, wait) {
+function stringSplit (value) {
 
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame();
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-
-        timerId.cancel();
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
+    return value.trim()
+        .toLowerCase()
+        .replace(/([-_.\s]{1,})/g, ' ');
 
 }
 
-_stk.onWait=onWait
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+function stringCamelCase (value) {
+
+    if (has(value) === false && getTypeof(value) !=="string") {
+
+        return "";
+
+    }
+
+    return stringSplit(value)
+        .replace(/(\s[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        })
+        .split(" ")
+        .join("");
+
+}
+
+_stk.stringCamelCase=stringCamelCase
 
 
 /**
@@ -2835,26 +2805,6 @@ function stringEscape (value, type) {
 
 _stk.stringEscape=stringEscape
 
-
-/**
- * Where Loop Execution
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function stringSplit (value) {
-
-    return value.trim()
-        .toLowerCase()
-        .replace(/([-_.\s]{1,})/g, ' ');
-
-}
 
 /**
  * String Kebab case
@@ -2912,8 +2862,6 @@ function stringSnakeCase (value) {
 }
 
 _stk.stringSnakeCase=stringSnakeCase
-
-_stk.stringUnEscape=stringUnEscape
 
 
 /**
@@ -3095,6 +3043,8 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue
 
+_stk.stringUnEscape=stringUnEscape
+
 
 /**
  * To Array
@@ -3254,40 +3204,6 @@ _stk.where=where
 
 
 /**
- * String Camel case
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
- */
-function stringCamelCase (value) {
-
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return stringSplit(value)
-        .replace(/(\s[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        })
-        .split(" ")
-        .join("");
-
-}
-
-_stk.stringCamelCase=stringCamelCase
-
-
-/**
  * Where Not
  *
  * @since 1.0.1
@@ -3308,5 +3224,97 @@ function whereNot (objectValue, objectValueWhere, func) {
 }
 
 _stk.whereNot=whereNot
+
+
+/**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {any=} func Callback function or sort type
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, order, func) {
+
+    var jsonn=objectValue;
+    var asc=true;
+    var types='any';
+
+    if (has(order) && getTypeof(order) ==='boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(func) && getTypeof(func) ==='string') {
+
+        types= func;
+
+    }
+
+    var js_m=getTypeof(jsonn)==="json"
+        ?each(jsonn)
+        :jsonn;
+
+    var finalResponse=js_m.sort(function (orderA, orderB) {
+
+        if (has(func) && getTypeof(func) ==='function') {
+
+            return func(orderA, orderB);
+
+        }
+
+        var sortOrderA = orderA;
+        var sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types ==='any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types ==='lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types ==='uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
+
+        }
+
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sort=sort
 
 })(typeof window !== "undefined" ? window : this);

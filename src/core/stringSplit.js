@@ -1,14 +1,14 @@
 /**
- * Where Loop Execution
+ * Split string for special cases
  *
- * @since 1.0.1
+ * @since 1.3.1
  * @category Seq
- * @param {string} value The second number in an addition.
+ * @param {string} value String to split
  * @returns {string} Returns the total.
  * @example
  *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
+ * stringSplit("split-this-string")
+ *=>"split this string"
  */
 function stringSplit (value) {
 

@@ -2,21 +2,21 @@ const dataTypeFormat=require('./core/dataTypeFormat.js');
 
 exports.dataTypeFormat =dataTypeFormat;
 
-const getKeyVal=require('./core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
 const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const stringSplit=require('./core/stringSplit.js');
-
-exports.stringSplit =stringSplit;
-
 const getWindow=require('./core/global.js');
 
 exports.getWindow =getWindow;
+
+const getKeyVal=require('./core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
+
+const stringSplit=require('./core/stringSplit.js');
+
+exports.stringSplit =stringSplit;
 
 const whereLoopExecution=require('./core/whereLoopExecution.js');
 
@@ -30,33 +30,33 @@ const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
 
-const arraySum=require('./function/arraySum.js');
-
-exports.arraySum =arraySum;
-
 const arrayConcat=require('./function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
+
+const arraySum=require('./function/arraySum.js');
+
+exports.arraySum =arraySum;
 
 const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
 
 exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
-const clone=require('./function/clone.js');
-
-exports.clone =clone;
-
 const asyncReplace=require('./function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
 
-const count=require('./function/count.js');
+const clone=require('./function/clone.js');
 
-exports.count =count;
+exports.clone =clone;
 
 const delimiter=require('./function/delimiter.js');
 
 exports.delimiter =delimiter;
+
+const count=require('./function/count.js');
+
+exports.count =count;
 
 const each=require('./function/each.js');
 
@@ -74,13 +74,13 @@ const getJSONVariable=require('./function/getJSONVariable.js');
 
 exports.getJSONVariable =getJSONVariable;
 
-const first=require('./function/first.js');
-
-exports.first =first;
-
 const getKey=require('./function/getKey.js');
 
 exports.getKey =getKey;
+
+const first=require('./function/first.js');
+
+exports.first =first;
 
 const getTypeof=require('./function/getTypeof.js');
 
@@ -90,21 +90,21 @@ const getUniq=require('./function/getUniq.js');
 
 exports.getUniq =getUniq;
 
-const getValue=require('./function/getValue.js');
-
-exports.getValue =getValue;
-
 const has=require('./function/has.js');
 
 exports.has =has;
 
-const ifUndefined=require('./function/ifUndefined.js');
+const getValue=require('./function/getValue.js');
 
-exports.ifUndefined =ifUndefined;
+exports.getValue =getValue;
 
 const indexOf=require('./function/indexOf.js');
 
 exports.indexOf =indexOf;
+
+const ifUndefined=require('./function/ifUndefined.js');
+
+exports.ifUndefined =ifUndefined;
 
 const indexOfExist=require('./function/indexOfExist.js');
 
@@ -214,13 +214,13 @@ const stringCamelCase=require('./function/stringCamelCase.js');
 
 exports.stringCamelCase =stringCamelCase;
 
-const stringEscape=require('./function/stringEscape.js');
-
-exports.stringEscape =stringEscape;
-
 const stringCapitalize=require('./function/stringCapitalize.js');
 
 exports.stringCapitalize =stringCapitalize;
+
+const stringEscape=require('./function/stringEscape.js');
+
+exports.stringEscape =stringEscape;
 
 const stringKebabCase=require('./function/stringKebabCase.js');
 
@@ -262,13 +262,13 @@ const where=require('./function/where.js');
 
 exports.where =where;
 
-const entity=require('./variable/htmlentity.js');
-
-exports.entity =entity;
-
 const whereNot=require('./function/whereNot.js');
 
 exports.whereNot =whereNot;
+
+const entity=require('./variable/htmlentity.js');
+
+exports.entity =entity;
 
 const objectCallType=require('./variable/types.js');
 
