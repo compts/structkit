@@ -56,4 +56,4 @@ repeat("1",20)
 
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.1.1-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.2-brightgreen
