@@ -54,14 +54,14 @@ function getKeyVal (jsn, typ) {
 
         return count(list_raw)>zero
             ?list_raw[zero]
-            :null;
+            :null;//{"value": ''};
 
     }
     if (typ ==="last_index") {
 
         return count(list_raw)>zero
             ?list_raw[count(list_raw)-one]
-            :null;
+            :null;//{"value": ''};
 
     }
 
