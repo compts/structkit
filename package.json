@@ -1,6 +1,6 @@
 {
   "name": "structkit",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "JS utility tool",
   "main": "src/node.cjs.js",
   "module": "dist/esm/node.es.js",
@@ -55,7 +55,6 @@
       "/src_old_copy/",
       "/dist/",
       "/test/esm/"
-
     ],
     "coverageThreshold": {
       "global": {
