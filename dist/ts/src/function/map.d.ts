@@ -9,7 +9,7 @@ export default map;
  * @returns {null} Return map either JSON or Array
  * @example
  *
- * map([1,2],1,2 )
- *=>[2]
+ * map([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
  */
 declare function map(objectValue: any, func?: any | undefined): null;

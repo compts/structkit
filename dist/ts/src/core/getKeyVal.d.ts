@@ -9,7 +9,7 @@ export default getKeyVal;
  * @returns {array|object} Expected return from instruction
  * @example
  *
- * getKeyVal({"s1":1,"s2":1},"key")
- *=>{"s1":1,"s2":1}
+ * getKeyVal([1,2],"first_index")
+ *=>{"key":1,"value":1}
  */
 declare function getKeyVal(jsn: object, typ: boolean): any[] | object;

@@ -8,6 +8,8 @@ import first from './first';
 
 import {entity, listType} from '../variable/htmlentity';
 
+import toString from './toString';
+
 /**
  * String Unescape
  *
@@ -31,7 +33,7 @@ function stringUnEscape (value, type) {
 
     }
 
-    const regexReplace = value.replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
+    const regexReplace = toString(value).replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
 
         const search = {};
 

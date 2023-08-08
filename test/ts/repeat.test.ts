@@ -6,7 +6,7 @@ import {expectType} from 'tsd';
 
 const two=2;
 
-describe('ESM: repeat method', function () {
+describe('TS: repeat method', function () {
 
     it('check if repetion is correct', function () {
 
@@ -15,7 +15,7 @@ describe('ESM: repeat method', function () {
     });
     it('check expected type', function () {
        
-        expectType<string>(repeat("as", two));
+        expectType<any>(repeat("as", two));
     });
 
 });

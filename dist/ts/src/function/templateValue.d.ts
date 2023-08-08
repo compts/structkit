@@ -4,8 +4,8 @@ export default templateValue;
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} templateString The second number in an addition.
- * @param {any} data The second number in an addition.
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
  * @param {any=} option The second number in an addition.
  * @returns {string} Returns the total.
  * @example

@@ -1,6 +1,5 @@
-const has = require('./has');
-const getTypeof = require('./getTypeof');
 const stringSplit = require("../core/stringSplit");
+const toString = require("./toString");
 
 /**
  * String Camel case
@@ -16,13 +15,7 @@ const stringSplit = require("../core/stringSplit");
  */
 function stringCamelCase (value) {
 
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return stringSplit(value)
+    return stringSplit(toString(value))
         .replace(/(\s[a-z])/g, function (ss1) {
 
             return ss1.toUpperCase();

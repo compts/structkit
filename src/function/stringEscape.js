@@ -3,6 +3,8 @@ const indexOfNotExist = require('./indexOfNotExist');
 const isEmpty = require("./isEmpty");
 const first = require("./first");
 const {entity, listType} = require("../variable/htmlentity");
+const toString = require("./toString");
+
 
 /**
  * String Escape
@@ -27,7 +29,7 @@ function stringEscape (value, type) {
 
     }
 
-    const regexReplace = value.replace(/([\s<>"'^&{}])/g, function (str1) {
+    const regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
 
         const search = {"html": str1};
 

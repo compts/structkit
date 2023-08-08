@@ -1,7 +1,7 @@
 import {stringKebabCase} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('CJS: stringKebabCase method', function () {
+describe('ESM: stringKebabCase method', function () {
 
     it('check Value', function () {
 
