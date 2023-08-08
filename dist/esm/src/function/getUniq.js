@@ -20,9 +20,9 @@ function getUniq (option) {
         const str_rand1=Math
             .random()
             .toString(defaultSubstrValue)
-            .substr(defaultRandomValue)+Math.random()
+            .substring(defaultRandomValue)+Math.random()
             .toString(defaultSubstrValue)
-            .substr(defaultRandomValue);
+            .substring(defaultRandomValue);
 
         return str_rand1;
 
