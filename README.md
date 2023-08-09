@@ -67,7 +67,7 @@ first([2,3,4,5])// 2
 last([2,3,4,5])// 5
 ```
 
-[get the last index of array](#last-index-of-array)
+[get start and end of array index](#slice-array-index)
 ``` javascript
 arraySlice([1,2],1)// [2]
 ```
