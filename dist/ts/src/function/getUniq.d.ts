@@ -8,6 +8,6 @@ export default getUniq;
  * @example
  *
  * getUniq()
- * => x2sf2
+ * => dur82ht126uqgszn62j04a
  */
 declare function getUniq(option?: any | undefined): string;

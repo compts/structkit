@@ -1,16 +1,16 @@
-import {delimiter} from "../../dist/esm/node.esm";
+import {arraySlice} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 const three =3;
 const two =2;
 const one =1;
 
-describe('TS: delimiter method', function () {
+describe('TS: arraySlice method', function () {
 
 
     it('check Array delimiter has no minimum', function () {
 
-        assert.deepStrictEqual(delimiter([
+        assert.deepStrictEqual(arraySlice([
             one,
             two,
             three
@@ -22,9 +22,9 @@ describe('TS: delimiter method', function () {
 
     });
 
-    it('check Array delimiter has minimum 1', function () {
+    it('check Array arraySlice has minimum 1', function () {
 
-        assert.deepStrictEqual(delimiter([
+        assert.deepStrictEqual(arraySlice([
             one,
             two,
             three
@@ -36,7 +36,7 @@ describe('TS: delimiter method', function () {
     });
     it('check expected type', function () {
        
-        expectType<any[]>(delimiter([
+        expectType<any[]>(arraySlice([
             one,
             two,
             three

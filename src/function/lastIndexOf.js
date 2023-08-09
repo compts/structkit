@@ -5,7 +5,7 @@ const getIndexOf = require('../core/getIndexOf');
 
 
 /**
- * Last index Of array
+ * Get the last index Of array
  *
  * @since 1.0.1
  * @category Seq

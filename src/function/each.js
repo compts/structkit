@@ -4,7 +4,7 @@ const has = require('./has');
 
 
 /**
- * Each
+ * Each or for loop function you are familiar with
  *
  * @since 1.0.1
  * @category Seq

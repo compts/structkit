@@ -8,7 +8,7 @@ const isEmpty = require('./isEmpty');
 
 
 /**
- * Json To Array
+ * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
  * @category Seq

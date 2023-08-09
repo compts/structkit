@@ -7,7 +7,7 @@
  * @example
  *
  * getUniq()
- * => x2sf2
+ * => dur82ht126uqgszn62j04a
  */
 function getUniq (option) {
 

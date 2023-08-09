@@ -2,7 +2,7 @@ const stringUnEscape = require('./stringUnEscape');
 const isJson = require('./isJson');
 
 /**
- * Parse Json
+ * Parse Json object
  *
  * @since 1.0.1
  * @category Seq
