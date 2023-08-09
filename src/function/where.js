@@ -2,13 +2,13 @@ const whereLoopExecution = require('../core/whereLoopExecution');
 
 
 /**
- * Where
+ * Get the value in array the value in json given the search value was in json
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
- * @param {any} func Function
+ * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *

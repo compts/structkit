@@ -9,6 +9,7 @@ const parseString = require('./parseString');
 const getData = require('./getData');
 
 const has = require('./has');
+const toString = require("./toString");
 
 
 /**
@@ -16,9 +17,9 @@ const has = require('./has');
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} templateString The second number in an addition.
- * @param {object} data The second number in an addition.
- * @param {object} option The second number in an addition.
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
+ * @param {any=} option The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
@@ -29,7 +30,7 @@ function templateValue (templateString, data, option) {
 
     const oneDefaultValue=1;
 
-    templateString = templateValueInternal(templateString, data);
+    templateString = templateValueInternal(toString(templateString), data);
 
     const default_option=varExtend({
         "escape": "<!-([\\s\\S]+?)!>",

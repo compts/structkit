@@ -11,5 +11,7 @@ export default getData;
  *
  * getData({"s":1},"s")
  *=>1
+ * getData({"a":{"a":2},"b":{"a":3}},"a:a")
+ *=> {a: 2}
  */
 declare function getData(objectValue: any, split_str: any): any;

@@ -12,8 +12,8 @@ import isEmpty from './isEmpty';
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Array
- * @param {any} order True for ascend then false for descend
- * @param {any} func Callback function or sort type
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {any=} func Callback function or sort type
  * @returns {any[]} Returns the total.
  * @example
  *

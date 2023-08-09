@@ -1,13 +1,13 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
 
 /**
- * Where Not
+ *  Get the value in array the value in json that should not in search value of json
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data that you exlude in search
- * @param {any} func Function
+ * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *

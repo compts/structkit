@@ -1,7 +1,7 @@
 import {stringSnakeCase} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('CJS: stringSnakeCase method', function () {
+describe('ESM: stringSnakeCase method', function () {
 
     it('check Value', function () {
 

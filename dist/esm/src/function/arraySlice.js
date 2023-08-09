@@ -1,25 +1,28 @@
-const has = require('./has');
+import has from './has';
 
-const count = require('./count');
+import count from './count';
 
-const each = require('./each');
-
+import each from './each';
 
 /**
- * Delimiter
+ * To get value of array given start and end(optional) of the array
+ * This is a rename of delimiter
  *
  * @since 1.3.1
  * @category Seq
  * @param {any} objectValue Array
- * @param {number=} min Delimiter in minumum of 2
- * @param {number=} max Delimiter in minumum base on array count
- * @returns {string} Returns the total.
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
  * @example
  *
- * delimiter([1,2])
- * // => 2
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [2, 3, 4]
  */
-function delimiter (objectValue, min, max) {
+function arraySlice (objectValue, min, max) {
 
     const ran_var=[];
     const defaultValueZero=0;
@@ -43,5 +46,5 @@ function delimiter (objectValue, min, max) {
     return ran_var;
 
 }
-module.exports=delimiter;
+export default arraySlice;
 

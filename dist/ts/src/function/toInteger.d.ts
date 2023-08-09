@@ -5,10 +5,10 @@ export default toInteger;
  * @since 1.0.1
  * @category Seq
  * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
+ * @returns {any} Return in integer.
  * @example
  *
  * toInteger(1)
  *=>1
  */
-declare function toInteger(value: any): any[];
+declare function toInteger(value: any): any;

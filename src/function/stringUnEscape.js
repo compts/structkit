@@ -3,6 +3,7 @@ const indexOfNotExist = require('./indexOfNotExist');
 const isEmpty = require("./isEmpty");
 const first = require("./first");
 const {entity, listType} = require("../variable/htmlentity");
+const toString = require("./toString");
 
 /**
  * String Unescape
@@ -27,7 +28,7 @@ function stringUnEscape (value, type) {
 
     }
 
-    const regexReplace = value.replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
+    const regexReplace = toString(value).replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
 
         const search = {};
 

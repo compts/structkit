@@ -7,7 +7,7 @@ import whereLoopExecution from '../core/whereLoopExecution';
  * @category Seq
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
- * @param {any} func Function
+ * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *

@@ -10,12 +10,12 @@ import getTypeof from './getTypeof';
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue The data you want to map
- * @param {any} func Callback function
+ * @param {any=} func Callback function
  * @returns {null} Return map either JSON or Array
  * @example
  *
- * map([1,2],1,2 )
- *=>[2]
+ * map([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
  */
 function map (objectValue, func) {
 

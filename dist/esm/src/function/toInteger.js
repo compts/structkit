@@ -6,7 +6,7 @@ import dataTypeFormat from '../core/dataTypeFormat';
  * @since 1.0.1
  * @category Seq
  * @param {any} value Value you to convert in integer
- * @returns {any[]} Return in integer.
+ * @returns {any} Return in integer.
  * @example
  *
  * toInteger(1)

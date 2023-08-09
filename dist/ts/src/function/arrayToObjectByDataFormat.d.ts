@@ -6,10 +6,10 @@ export default arrayToObjectByDataFormat;
  * @category Seq
  * @param {any[]} objectValue Json in array format
  * @param {string} valueFormat Key look up format
- * @returns {any} Return array.
+ * @returns {any[]} Return array or object.
  * @example
  *
  * arrayToObjectByDataFormat([{"Asd":1}],"Asd")
  *=>[1]
  */
-declare function arrayToObjectByDataFormat(objectValue: any[], valueFormat: string): any;
+declare function arrayToObjectByDataFormat(objectValue: any[], valueFormat: string): any[];

@@ -10,12 +10,12 @@ const append = require('./append');
 
 
 /**
- * Filter
+ * Filter the data in loop
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue The data either json or array
- * @param {any} func The second number in an addition.
+ * @param {Function=} func The second number in an addition.
  * @returns {null} Returns the total.
  * @example
  *

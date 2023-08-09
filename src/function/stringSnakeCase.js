@@ -1,6 +1,5 @@
-const has = require('./has');
-const getTypeof = require('./getTypeof');
 const stringSplit = require("../core/stringSplit");
+const toString = require("./toString");
 
 /**
  * String Snake case
@@ -16,16 +15,9 @@ const stringSplit = require("../core/stringSplit");
  */
 function stringSnakeCase (value) {
 
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return stringSplit(value)
+    return stringSplit(toString(value))
         .split(" ")
         .join("_");
 
 }
 module.exports=stringSnakeCase;
-

@@ -8,6 +8,8 @@ import first from './first';
 
 import {entity, listType} from '../variable/htmlentity';
 
+import toString from './toString';
+
 /**
  * String Escape
  *
@@ -31,7 +33,7 @@ function stringEscape (value, type) {
 
     }
 
-    const regexReplace = value.replace(/([\s<>"'^&{}])/g, function (str1) {
+    const regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
 
         const search = {"html": str1};
 

@@ -4,13 +4,13 @@ export default templateValue;
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} templateString The second number in an addition.
- * @param {object} data The second number in an addition.
- * @param {object} option The second number in an addition.
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
+ * @param {any=} option The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
  *  templateValue("<!- test !>", {"test": 11})
  *=>'11'
  */
-declare function templateValue(templateString: string, data: object, option: object): string;
+declare function templateValue(templateString: string, data: any, option?: any | undefined): string;

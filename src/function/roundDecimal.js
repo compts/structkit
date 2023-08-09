@@ -7,7 +7,7 @@ const count = require('./count');
  * @since 1.0.1
  * @category Seq
  * @param {number} value Int or Double value type
- * @param {number} maxValue limit decimal
+ * @param {number=} maxValue limit decimal
  * @returns {number} Returns the total.
  * @example
  *

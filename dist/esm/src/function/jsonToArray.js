@@ -11,7 +11,7 @@ import isEmpty from './isEmpty';
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue Json
+ * @param {any} objectValue Json
  * @param {string} value Search key or index.
  * @returns {boolean} Returns Array
  * @example

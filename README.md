@@ -13,11 +13,7 @@ Using npm to install in your project folder:
 ```shell
 $ npm i structkit
 ```
-## Requirement
-You need to install this in your machine to compile in your machine
-```bash
-npm install grasseum -g
-```
+
 
 ## How to import the Library
 
@@ -56,4 +52,27 @@ repeat("1",20)
 
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.2-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.5-brightgreen
+
+
+## Partial sampe you can use as your utitlity function
+
+[get the first index of array](#first-index-of-array)
+``` javascript
+first([2,3,4,5])// 2
+```
+
+[get the last index of array](#last-index-of-array)
+``` javascript
+last([2,3,4,5])// 5
+```
+
+[get the last index of array](#last-index-of-array)
+``` javascript
+arraySlice([1,2],1)// [2]
+```
+
+[get sum of array](#get-sum-of-array)
+``` javascript
+arraySum([1,2])// 3.00
+```

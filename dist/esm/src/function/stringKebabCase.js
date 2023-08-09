@@ -1,8 +1,6 @@
-import has from './has';
-
-import getTypeof from './getTypeof';
-
 import stringSplit from '../core/stringSplit';
+
+import toString from './toString';
 
 /**
  * String Kebab case
@@ -18,13 +16,7 @@ import stringSplit from '../core/stringSplit';
  */
 function stringKebabCase (value) {
 
-    if (has(value) === false && getTypeof(value) !=="string") {
-
-        return "";
-
-    }
-
-    return stringSplit(value)
+    return stringSplit(toString(value))
         .split(" ")
         .join("-");
 

@@ -6,7 +6,7 @@ import dataTypeFormat from '../core/dataTypeFormat';
  * @since 1.0.1
  * @category Seq
  * @param {any} value Value you to convert in double
- * @returns {any[]} Return in double.
+ * @returns {any} Return in double.
  * @example
  *
  * toDouble(1)
