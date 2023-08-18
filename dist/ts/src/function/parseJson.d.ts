@@ -1,6 +1,6 @@
 export default parseJson;
 /**
- * Parse Json
+ * Parse Json object
  *
  * @since 1.0.1
  * @category Seq

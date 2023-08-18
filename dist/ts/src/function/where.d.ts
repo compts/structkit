@@ -1,6 +1,6 @@
 export default where;
 /**
- * Where
+ * Get the value in array the value in json given the search value was in json
  *
  * @since 1.0.1
  * @category Seq

@@ -1,7 +1,11 @@
 import isJson from './isJson';
 
+import has from './has';
+
+import {objectCallTypeAll} from '../variable/types';
+
 /**
- * Get Variable typeof
+ * Get type of the variable
  *
  * @since 1.0.1
  * @category Seq
@@ -24,19 +28,9 @@ function getTypeof (objectValue) {
 
     }
 
-    if (objectType==="[object Array]") {
+    if (has(objectCallTypeAll, objectType)) {
 
-        return "array";
-
-    }
-    if (objectType==="[object RegExp]") {
-
-        return "regexp";
-
-    }
-    if (objectType==="[object Promise]") {
-
-        return "promise";
+        return objectCallTypeAll[objectType];
 
     }
 

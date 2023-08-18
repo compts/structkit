@@ -1,4 +1,6 @@
 const isJson = require("./isJson");
+const has = require("./has");
+const {objectCallTypeAll} = require("../variable/types");
 
 /**
  * Get type of the variable
@@ -24,19 +26,9 @@ function getTypeof (objectValue) {
 
     }
 
-    if (objectType==="[object Array]") {
+    if (has(objectCallTypeAll, objectType)) {
 
-        return "array";
-
-    }
-    if (objectType==="[object RegExp]") {
-
-        return "regexp";
-
-    }
-    if (objectType==="[object Promise]") {
-
-        return "promise";
+        return objectCallTypeAll[objectType];
 
     }
 

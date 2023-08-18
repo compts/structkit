@@ -5,7 +5,7 @@ import toString from './toString';
 import each from './each';
 
 /**
- * Get Data
+ * Get Data in array or json using string to search the data
  *
  * @since 1.0.1
  * @category Seq

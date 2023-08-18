@@ -1,6 +1,6 @@
 export default filter;
 /**
- * Filter
+ * Filter the data in loop
  *
  * @since 1.0.1
  * @category Seq

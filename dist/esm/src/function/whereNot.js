@@ -1,7 +1,7 @@
 import whereLoopExecution from '../core/whereLoopExecution';
 
 /**
- * Where Not
+ *  Get the value in array the value in json that should not in search value of json
  *
  * @since 1.0.1
  * @category Seq

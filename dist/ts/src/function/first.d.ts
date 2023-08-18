@@ -1,6 +1,6 @@
 export default first;
 /**
- * First
+ * Get the first value of array or JSON
  *
  * @since 1.0.1
  * @category Seq

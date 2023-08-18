@@ -7,4 +7,10 @@ const listObjArrayType = [
     "[object Array]"
 ];
 
-export {objectCallType,listObjArrayType};
+const objectCallTypeAll = {"[object Array]": "array",
+    "[object Object]": "object",
+    "[object Promise]": "promise",
+    "[object RegExp]": "regexp",
+    "[object String]": "string"};
+
+export {objectCallType,objectCallTypeAll,listObjArrayType};

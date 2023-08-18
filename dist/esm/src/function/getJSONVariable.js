@@ -1,7 +1,7 @@
 import getTypeof from './getTypeof';
 
 /**
- * Get JSON Variable
+ * Get JSON or  Array as empty variable
  *
  * @since 1.0.1
  * @category Seq

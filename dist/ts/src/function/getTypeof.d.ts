@@ -1,6 +1,6 @@
 export default getTypeof;
 /**
- * Get Variable typeof
+ * Get type of the variable
  *
  * @since 1.0.1
  * @category Seq

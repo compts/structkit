@@ -11,5 +11,8 @@ export default count;
  *
  * count([1,2])
  * // => 2
+ *
+ * count({"s" :1, "s2": 2}, true)
+ * // => 2
  */
 declare function count(objectValue: any, json_is_empty_check?: boolean | undefined): number;
