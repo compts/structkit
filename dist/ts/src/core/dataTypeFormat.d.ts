@@ -1,4 +1,4 @@
-export default dataTypeFormat;
+export default dataNumberFormat;
 /**
  * Where Loop Execution
  *
@@ -13,4 +13,4 @@ export default dataTypeFormat;
  * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
  *=>{"s1":1,"s2":1}
  */
-declare function dataTypeFormat(regexp: object, defaultVariable: object, nullReplacement: Function): any[] | object;
+declare function dataNumberFormat(regexp: object, defaultVariable: object, nullReplacement: Function): any[] | object;

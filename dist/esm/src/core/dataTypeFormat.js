@@ -1,5 +1,7 @@
 import has from '../function/has';
 
+import getTypeof from '../function/getTypeof';
+
 /**
  * Where Loop Execution
  *
@@ -14,7 +16,7 @@ import has from '../function/has';
  * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
  *=>{"s1":1,"s2":1}
  */
-function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
+function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
     const regp=regexp;
     let intr=defaultVariable;
@@ -30,9 +32,14 @@ function dataTypeFormat (regexp, defaultVariable, nullReplacement) {
         intr=defaultVariable;
 
     }
+    if (getTypeof(intr) === "string") {
+
+        intr = intr.replace(/[^\d.]/g, "");
+
+    }
 
     return intr;
 
 }
-export default dataTypeFormat;
+export default dataNumberFormat;
 

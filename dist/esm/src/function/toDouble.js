@@ -1,12 +1,12 @@
-import dataTypeFormat from '../core/dataTypeFormat';
+import dataNumberFormat from '../core/dataTypeFormat';
 
 /**
- * To Double
+ * To extract number in string and convert to double
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} value Value you to convert in double
- * @returns {any} Return in double.
+ * @returns {number} Return in double.
  * @example
  *
  * toDouble(1)
@@ -16,7 +16,7 @@ function toDouble (value) {
 
     const zero = 0.00;
 
-    return parseFloat(dataTypeFormat(/(\d[.]{0,})/g, zero, value===null
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
         ?zero
         :value));
 
