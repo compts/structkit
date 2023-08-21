@@ -2,7 +2,6 @@ const each = require('./each');
 const toArray = require('./toArray');
 const arraySlice = require('./arraySlice');
 const first = require('./first');
-const isEmpty = require('./isEmpty');
 
 /**
  * Array Concat
