@@ -26,7 +26,12 @@
     "url": "git+https://github.com/compts/structkit.git"
   },
   "keywords": [
-    "structkit"
+    "structkit",
+    "javascript",
+    "utilities",
+    "module",
+    "stdlib",
+    "util"
   ],
   "author": "Pein Freccs",
   "license": "MIT",
