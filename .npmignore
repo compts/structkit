@@ -5,3 +5,4 @@ node_modules
 src_old_copy
 compts-labs
 coverage
+dist/web/*
