@@ -3,18 +3,18 @@ import has from '../function/has';
 import getTypeof from '../function/getTypeof';
 
 /**
- * Where Loop Execution
+ * Logic in convert string or number to valid number
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} regexp The second number in an addition.
- * @param {object} defaultVariable The second number in an addition.
- * @param {function} nullReplacement The second number in an addition.
- * @returns {array|object} Returns the total.
+ * @param {any} regexp The second number in an addition.
+ * @param {string|mumber} defaultVariable The second number in an addition.
+ * @param {string|mumber} nullReplacement The second number in an addition.
+ * @returns {any} Returns the total.
  * @example
  *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
+ * dataNumberFormat(/(\d)/g, 0,1)
+ *=> 1
  */
 function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 

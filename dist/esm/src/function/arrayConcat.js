@@ -6,8 +6,6 @@ import arraySlice from './arraySlice';
 
 import first from './first';
 
-import isEmpty from './isEmpty';
-
 /**
  * Array Concat
  *
