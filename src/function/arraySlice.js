@@ -27,12 +27,49 @@ function arraySlice (objectValue, min, max) {
 
     const ran_var=[];
     const defaultValueZero=0;
-    const ran_min=has(min)
+    const defaultValueNegativeOne=-1;
+    let ran_min=has(min)
         ?min
         :defaultValueZero;
-    const ran_max=has(max)
+    let ran_max=has(max)
         ?max
         :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            const raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            const raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
 
     each(objectValue, function (key, value) {
 

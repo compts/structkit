@@ -2,10 +2,6 @@ const dataNumberFormat=require('./core/dataTypeFormat.js');
 
 exports.dataNumberFormat =dataNumberFormat;
 
-const getKeyVal=require('./core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
 const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
@@ -13,6 +9,10 @@ exports.getIndexOf =getIndexOf;
 const getWindow=require('./core/global.js');
 
 exports.getWindow =getWindow;
+
+const getKeyVal=require('./core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
 
 const stringSplit=require('./core/stringSplit.js');
 
@@ -22,17 +22,21 @@ const whereLoopExecution=require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
-const appendIsArrayExist=require('./function/appendIsArrayExist.js');
-
-exports.appendIsArrayExist =appendIsArrayExist;
-
 const append=require('./function/append.js');
 
 exports.append =append;
 
+const appendIsArrayExist=require('./function/appendIsArrayExist.js');
+
+exports.appendIsArrayExist =appendIsArrayExist;
+
 const arrayConcat=require('./function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
+
+const arrayRepeat=require('./function/arrayRepeat.js');
+
+exports.arrayRepeat =arrayRepeat;
 
 const arraySlice=require('./function/arraySlice.js');
 
@@ -210,13 +214,13 @@ const sort=require('./function/sort.js');
 
 exports.sort =sort;
 
-const stringCapitalize=require('./function/stringCapitalize.js');
-
-exports.stringCapitalize =stringCapitalize;
-
 const stringCamelCase=require('./function/stringCamelCase.js');
 
 exports.stringCamelCase =stringCamelCase;
+
+const stringCapitalize=require('./function/stringCapitalize.js');
+
+exports.stringCapitalize =stringCapitalize;
 
 const stringEscape=require('./function/stringEscape.js');
 
@@ -282,11 +286,11 @@ const whereNot=require('./function/whereNot.js');
 
 exports.whereNot =whereNot;
 
-const entity=require('./variable/htmlentity.js');
-
-exports.entity =entity;
-
 const objectCallType=require('./variable/types.js');
 
 exports.objectCallType =objectCallType;
+
+const entity=require('./variable/htmlentity.js');
+
+exports.entity =entity;
 

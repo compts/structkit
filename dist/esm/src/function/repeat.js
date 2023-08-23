@@ -1,3 +1,5 @@
+import arrayRepeat from './arrayRepeat';
+
 /**
  * Repeat string value
  *
@@ -14,17 +16,10 @@
 function repeat (value, valueRepetion) {
 
     const emptyDefaultValue=0;
-    const onceDefaultValue=1;
     const nm_rpt=valueRepetion||emptyDefaultValue;
     const nm_str=value||"";
 
-    if (nm_rpt>emptyDefaultValue) {
-
-        return new Array(nm_rpt+onceDefaultValue).join(nm_str);
-
-    }
-
-    return "";
+    return arrayRepeat(nm_str, nm_rpt).join("");
 
 }
 export default repeat;

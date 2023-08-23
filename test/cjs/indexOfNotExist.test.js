@@ -14,7 +14,7 @@ const eight=8,
     two =2,
     zero=0;
 
-describe('ESM: indexOfNotExist', function () {
+describe('CJS: indexOfNotExist', function () {
 
     it('check if value exist', function () {
 
