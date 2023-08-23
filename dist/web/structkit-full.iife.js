@@ -762,6 +762,8 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat
 
+_stk.arraySlice=arraySlice
+
 
 /**
  * To map the value of json ot array
@@ -876,8 +878,6 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat
-
-_stk.arraySlice=arraySlice
 
 
 /**
@@ -1159,9 +1159,9 @@ function clone (objectValue) {
 
 _stk.clone=clone
 
-_stk.each=each
-
 _stk.count=count
+
+_stk.each=each
 
 
 /**
@@ -1214,7 +1214,7 @@ _stk.filter=filter
 
 _stk.first=first
 
-_stk.getJSONVariable=getJSONVariable
+_stk.getData=getData
 
 
 /**
@@ -1237,9 +1237,9 @@ function getKey (objectValue) {
 
 _stk.getKey=getKey
 
-_stk.getData=getData
-
 _stk.getTypeof=getTypeof
+
+_stk.getJSONVariable=getJSONVariable
 /**
  * Generate unique value id
  *
@@ -1276,7 +1276,26 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq
 
-_stk.has=has
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue
 
 
 /**
@@ -1319,26 +1338,7 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined
 
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue
+_stk.has=has
 
 _stk.indexOf=indexOf
 
@@ -1593,27 +1593,6 @@ _stk.isJson=isJson
 
 
 /**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last
-
-
-/**
  * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
@@ -1655,6 +1634,27 @@ function jsonToArray (objectValue, value) {
 }
 
 _stk.jsonToArray=jsonToArray
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last
 
 
 /**
@@ -2106,6 +2106,84 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay
 
+
+/**
+ * On sequence
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {string} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var zero = 0;
+    var one = 1;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+    var counter = 0;
+
+    var interval = setInterval(function () {
+
+        func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+    var sequence = new ClassSequence(interval, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (interval, extend) {
+
+    this.interval = interval;
+
+    this.extend = extend;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+_stk.onSequence=onSequence
+
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -2200,84 +2278,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait
-
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {string} Returns object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var zero = 0;
-    var one = 1;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    var valueWaited = wait || zero;
-    var counter = 0;
-
-    var interval = setInterval(function () {
-
-        func();
-        if (extend.limitCounterClear >zero) {
-
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    var sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-_stk.onSequence=onSequence
 
 
 /**
@@ -2428,6 +2428,49 @@ _stk.parseJson=parseJson
 
 
 /**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value
+ * @param {number} maxValue  Max value
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random===parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.random=random
+
+
+/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -2573,48 +2616,7 @@ function parseString (value) {
 
 _stk.parseString=parseString
 
-
-/**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value
- * @param {number} maxValue  Max value
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random===parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-_stk.random=random
+_stk.range=range
 
 
 /**
@@ -2720,7 +2722,48 @@ _stk.remove=remove
 
 _stk.repeat=repeat
 
-_stk.range=range
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec)===twoDefaultValue) {
+
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts<=s_dmin
+            ?s_dmin
+            :s_dmax;
+        var dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+
+_stk.roundDecimal=roundDecimal
 
 
 /**
@@ -2912,49 +2955,6 @@ function stringCamelCase (value) {
 }
 
 _stk.stringCamelCase=stringCamelCase
-
-
-/**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
-    var str_dec=jsn.toString().split(".");
-    var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec)===twoDefaultValue) {
-
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts<=s_dmin
-            ?s_dmin
-            :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-
-_stk.roundDecimal=roundDecimal
 
 
 /**
@@ -3155,6 +3155,8 @@ function stringUpperCase (value) {
 
 _stk.stringUpperCase=stringUpperCase
 
+_stk.toArray=toArray
+
 
 /**
  * Logic in convert string or number to valid number
@@ -3219,6 +3221,99 @@ function toDouble (value) {
 }
 
 _stk.toDouble=toDouble
+
+_stk.toString=toString
+
+
+/**
+ * To extract number in string and convert to integer
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value)==="array") {
+
+        var uniqArrData = [];
+
+        each(value, function (key, val) {
+
+            if (indexOfNotExist(uniqArrData, val)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique
+
+_stk.varExtend=varExtend
+
+_stk.where=where
+
+
+/**
+ *  Get the value in array the value in json that should not in search value of json
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data that you exlude in search
+ * @param {Function=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
+ *=>[{"s1":2,"s2":2}]
+ */
+function whereNot (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+
+}
+
+_stk.whereNot=whereNot
 
 
 /**
@@ -3399,100 +3494,5 @@ function templateValueInternal (str_raw, reg) {
 }
 
 _stk.templateValue=templateValue
-
-_stk.toArray=toArray
-
-
-/**
- * To extract number in string and convert to integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger
-
-_stk.toString=toString
-
-
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value)==="array") {
-
-        var uniqArrData = [];
-
-        each(value, function (key, val) {
-
-            if (indexOfNotExist(uniqArrData, val)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique
-
-_stk.varExtend=varExtend
-
-_stk.where=where
-
-
-/**
- *  Get the value in array the value in json that should not in search value of json
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data that you exlude in search
- * @param {Function=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
- *=>[{"s1":2,"s2":2}]
- */
-function whereNot (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
-
-}
-
-_stk.whereNot=whereNot
 
 })(typeof window !== "undefined" ? window : this);

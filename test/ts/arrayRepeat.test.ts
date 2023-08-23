@@ -19,6 +19,10 @@ describe('TS: arrayRepeat method', function () {
 
     it('check expected type', function () {
        
-        expectType<any[]>(arrayRepeat("as", two));
-    });
+        expectType<any[]>(arrayRepeat(
+            "as",
+            two
+        ));
+  
+      });
 });

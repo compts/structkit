@@ -86,13 +86,13 @@ const getKey=require('./function/getKey.js');
 
 exports.getKey =getKey;
 
-const getTypeof=require('./function/getTypeof.js');
-
-exports.getTypeof =getTypeof;
-
 const getUniq=require('./function/getUniq.js');
 
 exports.getUniq =getUniq;
+
+const getTypeof=require('./function/getTypeof.js');
+
+exports.getTypeof =getTypeof;
 
 const getValue=require('./function/getValue.js');
 
@@ -146,17 +146,13 @@ const last=require('./function/last.js');
 
 exports.last =last;
 
-const lastIndexOf=require('./function/lastIndexOf.js');
-
-exports.lastIndexOf =lastIndexOf;
-
 const like=require('./function/like.js');
 
 exports.like =like;
 
-const limit=require('./function/limit.js');
+const lastIndexOf=require('./function/lastIndexOf.js');
 
-exports.limit =limit;
+exports.lastIndexOf =lastIndexOf;
 
 const map=require('./function/map.js');
 
@@ -169,6 +165,10 @@ exports.numberFormat =numberFormat;
 const onDelay=require('./function/onDelay.js');
 
 exports.onDelay =onDelay;
+
+const limit=require('./function/limit.js');
+
+exports.limit =limit;
 
 const onSequence=require('./function/onSequence.js');
 
@@ -286,11 +286,11 @@ const whereNot=require('./function/whereNot.js');
 
 exports.whereNot =whereNot;
 
-const objectCallType=require('./variable/types.js');
-
-exports.objectCallType =objectCallType;
-
 const entity=require('./variable/htmlentity.js');
 
 exports.entity =entity;
+
+const objectCallType=require('./variable/types.js');
+
+exports.objectCallType =objectCallType;
 
