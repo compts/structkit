@@ -5,8 +5,8 @@ export default random;
  * @since 1.0.1
  * @category Seq
  * @param {any} valueArray Array
- * @param {number} minValue Minimum value
- * @param {number} maxValue  Max value
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
  * @returns {string|number} Return string or number in array
  * @example
  *

@@ -11,7 +11,7 @@ import varExtend from './varExtend';
  * @returns {object} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onDelay(()=>{})
  *=>'11'
  */
 function onDelay (func, wait, option) {

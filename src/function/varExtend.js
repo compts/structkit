@@ -94,7 +94,7 @@ function varExtend (objectValue, objectValueReplace) {
  * @returns {array} Return Json or Array.
  * @example
  *
- * varExtend({"s1":1},{"s1":2})
+ * replaceValue({"s1":1},{"s1":2})
  *=>{"s1":2}
  */
 function replaceValue (objectValue, objectValueReplace) {

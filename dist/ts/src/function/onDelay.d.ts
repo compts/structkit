@@ -10,7 +10,7 @@ export default onDelay;
  * @returns {object} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onDelay(()=>{})
  *=>'11'
  */
 declare function onDelay(func: any, wait?: object | undefined, option?: object | undefined): object;

@@ -762,8 +762,6 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat
 
-_stk.arraySlice=arraySlice
-
 
 /**
  * To map the value of json ot array
@@ -879,6 +877,8 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat
 
+_stk.arraySlice=arraySlice
+
 
 /**
  * Array Sum
@@ -961,7 +961,8 @@ function toString (value) {
  * @example
  *
  * getData({"s":1},"s")
- *=>1
+ *=> 1
+ * @example
  * getData({"a":{"a":2},"b":{"a":3}},"a:a")
  *=> {a: 2}
  */
@@ -1216,35 +1217,14 @@ _stk.first=first
 
 _stk.getData=getData
 
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-
-_stk.getKey=getKey
+_stk.getJSONVariable=getJSONVariable
 
 _stk.getTypeof=getTypeof
-
-_stk.getJSONVariable=getJSONVariable
 /**
  * Generate unique value id
  *
  * @since 1.0.1
- * @param {any=} option if value not exist, this value will be return
+ * @param {any=} option type unique id
  * @returns {string} Get Unique Key.
  * @example
  *
@@ -1276,26 +1256,28 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq
 
+_stk.has=has
+
 
 /**
- * Get value of json or array
+ * Get key Object or JSON
  *
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
+ * @returns {string} Returns it respective key or index
  * @example
  *
- * getValue({"s":1})
- * => 1
+ * getKey({"s":1})
+ * => s
  */
-function getValue (objectValue) {
+function getKey (objectValue) {
 
-    return getKeyVal(objectValue, "value");
+    return getKeyVal(objectValue, "key");
 
 }
 
-_stk.getValue=getValue
+_stk.getKey=getKey
 
 
 /**
@@ -1338,11 +1320,30 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined
 
-_stk.has=has
-
 _stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue
 
 _stk.indexOfNotExist=indexOfNotExist
 
@@ -1845,92 +1846,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit
 
-_stk.map=map
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
-    var nm_str=value||"";
-
-    return arrayRepeat(nm_str, nm_rpt).join("");
-
-}
-
-/**
- * Number format
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The data you want to format
- * @param {string} value1 The start number.
- * @param {string=} value2 The end number.
- * @returns {null} Return format number
- * @example
- *
- * numberFormat(1,1,2)
- *=>1.00
- */
-function numberFormat (objectValue, value1, value2) {
-
-    var incrementDefaultValue=1;
-    var emptyDefaultValue=0;
-    var threeDefaultValue=3;
-    var valueZero=value2||emptyDefaultValue;
-    var objectValueEvaluate=objectValue.toString();
-    var splt_dec=objectValueEvaluate.split(".");
-    var reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
-    var num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
-    var ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
-        ?"."+splt_dec[incrementDefaultValue]
-        :"";
-
-    if (valueZero>emptyDefaultValue) {
-
-        var str_dec=ssd_va.split(".");
-
-        if (count(str_dec)===incrementDefaultValue) {
-
-            ssd_va=ssd_va+"."+repeat("0", valueZero);
-
-        } else {
-
-            var dec_num=str_dec[incrementDefaultValue];
-
-            if (dec_num.length>=valueZero) {
-
-                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
-
-            } else {
-
-                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num+repeat("0", dec_num.length-valueZero);
-
-            }
-
-        }
-
-    }
-
-    return ssd_va;
-
-}
-
-_stk.numberFormat=numberFormat
-
 
 /**
  * Var extend is use for cloning Json, Array or Object
@@ -2019,7 +1934,7 @@ function varExtend (objectValue, objectValueReplace) {
  * @returns {array} Return Json or Array.
  * @example
  *
- * varExtend({"s1":1},{"s1":2})
+ * replaceValue({"s1":1},{"s1":2})
  *=>{"s1":2}
  */
 function replaceValue (objectValue, objectValueReplace) {
@@ -2053,7 +1968,7 @@ function replaceValue (objectValue, objectValueReplace) {
  * @returns {object} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onDelay(()=>{})
  *=>'11'
  */
 function onDelay (func, wait, option) {
@@ -2106,6 +2021,8 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay
 
+_stk.map=map
+
 
 /**
  * On sequence
@@ -2118,7 +2035,7 @@ _stk.onDelay=onDelay
  * @returns {string} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onSequence(()=>{})
  *=>'11'
  */
 function onSequence (func, wait, option) {
@@ -2183,6 +2100,90 @@ ClassSequence.prototype.cancel = function () {
 };
 
 _stk.onSequence=onSequence
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+    var nm_str=value||"";
+
+    return arrayRepeat(nm_str, nm_rpt).join("");
+
+}
+
+/**
+ * Number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The data you want to format
+ * @param {string} value1 The start number.
+ * @param {string=} value2 The end number.
+ * @returns {null} Return format number
+ * @example
+ *
+ * numberFormat(1,1,2)
+ *=>1.00
+ */
+function numberFormat (objectValue, value1, value2) {
+
+    var incrementDefaultValue=1;
+    var emptyDefaultValue=0;
+    var threeDefaultValue=3;
+    var valueZero=value2||emptyDefaultValue;
+    var objectValueEvaluate=objectValue.toString();
+    var splt_dec=objectValueEvaluate.split(".");
+    var reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
+    var num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
+    var ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
+        ?"."+splt_dec[incrementDefaultValue]
+        :"";
+
+    if (valueZero>emptyDefaultValue) {
+
+        var str_dec=ssd_va.split(".");
+
+        if (count(str_dec)===incrementDefaultValue) {
+
+            ssd_va=ssd_va+"."+repeat("0", valueZero);
+
+        } else {
+
+            var dec_num=str_dec[incrementDefaultValue];
+
+            if (dec_num.length>=valueZero) {
+
+                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
+
+            } else {
+
+                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num+repeat("0", dec_num.length-valueZero);
+
+            }
+
+        }
+
+    }
+
+    return ssd_va;
+
+}
+
+_stk.numberFormat=numberFormat
 
 var getWindow = function () {
 
@@ -2278,196 +2279,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait
-
-
-/**
- * Get the value in array the value in json given the search value was in json
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search in key
- * @param {Function=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * where({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function where (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
-
-}
-
-var entity = [
-
-    {"decimal": "&#160;",
-        "entity": "&nbsp;",
-        "hex": "&#xA0;",
-        "html": " ",
-        "title": "non-breaking space"},
-    {"decimal": "&#34;",
-        "entity": "&quot;",
-        "hex": "&#x22;",
-        "html": '"',
-        "title": "quotation mark = APL quote"},
-    {"decimal": "&#38;",
-        "entity": "&amp;",
-        "hex": "&#x26;",
-        "html": "&",
-        "title": "ampersand"},
-    {"decimal": "&#60;",
-        "entity": "&lt;",
-        "hex": "&#x3C;",
-        "html": "<",
-        "title": "less-than sign"},
-    {"decimal": "&#62;",
-        "entity": "&gt;",
-        "hex": "&#x3E;",
-        "html": ">",
-        "title": "greater-than sign"},
-    {"decimal": "&#710;",
-        "entity": "&circ;",
-        "hex": "&#x2C6;",
-        "html": "^",
-        "title": "modifier letter circumflex accent"},
-    {"decimal": "&#123;",
-        "entity": "&lbrace;",
-        "hex": "&#x7B;",
-        "html": "{",
-        "title": "Left curly bracket"},
-    {"decimal": "&#125;",
-        "entity": "&rbrace;",
-        "hex": "&#x7D;",
-        "html": "}",
-        "title": "Right curly bracket"}
-
-];
-
-var listType = [
-    'decimal',
-    'entity',
-    'hex'
-];
-
-/**
- * String Unescape
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns unescape string
- * @example
- *
- * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
- *=>"yahii & adad ^ss"
- */
-function stringUnEscape (value, type) {
-
-    var typeVal = type || "entity";
-
-    if (indexOfNotExist(listType, typeVal)) {
-
-        return "";
-
-    }
-
-    var regexReplace = toString(value).replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
-
-        var search = {};
-
-        search[typeVal] =str1;
-
-        var whr = where(entity, search);
-
-        return isEmpty(whr)
-            ? str1
-            : first(whr).html;
-
-    });
-
-    return regexReplace;
-
-}
-
-/**
- * Parse Json object
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value String you want to convert to JSON
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function parseJson (value) {
-
-    var emptyDefaultValue=0;
-    var stripValue=stringUnEscape(value);
-    var returnValue=null;
-
-    if (isJson(value)) {
-
-        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
-
-            returnValue = eval('(' + stripValue + ')');
-
-        }
-
-    }
-
-    return returnValue;
-
-}
-
-_stk.parseJson=parseJson
-
-
-/**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value
- * @param {number} maxValue  Max value
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random===parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-_stk.random=random
 
 
 /**
@@ -2616,7 +2427,197 @@ function parseString (value) {
 
 _stk.parseString=parseString
 
+
+/**
+ * Get the value in array the value in json given the search value was in json
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search in key
+ * @param {Function=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * where({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function where (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+
+}
+
+var entity = [
+
+    {"decimal": "&#160;",
+        "entity": "&nbsp;",
+        "hex": "&#xA0;",
+        "html": " ",
+        "title": "non-breaking space"},
+    {"decimal": "&#34;",
+        "entity": "&quot;",
+        "hex": "&#x22;",
+        "html": '"',
+        "title": "quotation mark = APL quote"},
+    {"decimal": "&#38;",
+        "entity": "&amp;",
+        "hex": "&#x26;",
+        "html": "&",
+        "title": "ampersand"},
+    {"decimal": "&#60;",
+        "entity": "&lt;",
+        "hex": "&#x3C;",
+        "html": "<",
+        "title": "less-than sign"},
+    {"decimal": "&#62;",
+        "entity": "&gt;",
+        "hex": "&#x3E;",
+        "html": ">",
+        "title": "greater-than sign"},
+    {"decimal": "&#710;",
+        "entity": "&circ;",
+        "hex": "&#x2C6;",
+        "html": "^",
+        "title": "modifier letter circumflex accent"},
+    {"decimal": "&#123;",
+        "entity": "&lbrace;",
+        "hex": "&#x7B;",
+        "html": "{",
+        "title": "Left curly bracket"},
+    {"decimal": "&#125;",
+        "entity": "&rbrace;",
+        "hex": "&#x7D;",
+        "html": "}",
+        "title": "Right curly bracket"}
+
+];
+
+var listType = [
+    'decimal',
+    'entity',
+    'hex'
+];
+
+/**
+ * String Unescape
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns unescape string
+ * @example
+ *
+ * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ *=>"yahii & adad ^ss"
+ */
+function stringUnEscape (value, type) {
+
+    var typeVal = type || "entity";
+
+    if (indexOfNotExist(listType, typeVal)) {
+
+        return "";
+
+    }
+
+    var regexReplace = toString(value).replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
+
+        var search = {};
+
+        search[typeVal] =str1;
+
+        var whr = where(entity, search);
+
+        return isEmpty(whr)
+            ? str1
+            : first(whr).html;
+
+    });
+
+    return regexReplace;
+
+}
+
+/**
+ * Parse Json object
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value String you want to convert to JSON
+ * @returns {any} Returns the json.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function parseJson (value) {
+
+    var emptyDefaultValue=0;
+    var stripValue=stringUnEscape(value);
+    var returnValue=null;
+
+    if (isJson(value)) {
+
+        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
+
+            returnValue = eval('(' + stripValue + ')');
+
+        }
+
+    }
+
+    return returnValue;
+
+}
+
+_stk.parseJson=parseJson
+
 _stk.range=range
+
+
+/**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random===parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.random=random
 
 
 /**
@@ -2767,59 +2768,6 @@ _stk.roundDecimal=roundDecimal
 
 
 /**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array argmuments
- * @returns {string|number} Returns the total.
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-function shuffle (objectValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var output=objectValue;
-    var valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
-
-        var counts=count(objectValue)-onceDefaultValue;
-        var randomIndex=emptyDefaultValue;
-        var temporaryValue=null;
-
-        for (var currentIndex=counts; currentIndex>emptyDefaultValue;) {
-
-            randomIndex = Math.floor(Math.random() * currentIndex);
-
-            if (getTypeof(objectValue)==="array") {
-
-                temporaryValue = output[currentIndex];
-                output[currentIndex]=output[randomIndex];
-                output[randomIndex] = temporaryValue;
-
-            }
-
-            currentIndex -= onceDefaultValue;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle
-
-
-/**
  * Sort array
  *
  * @since 1.0.1
@@ -2909,6 +2857,59 @@ function sort (objectValue, order, func) {
 }
 
 _stk.sort=sort
+
+
+/**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array argmuments
+ * @returns {string|number} Returns the total.
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+function shuffle (objectValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var output=objectValue;
+    var valueType=[
+        "array",
+        "json"
+    ];
+
+    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+
+        var counts=count(objectValue)-onceDefaultValue;
+        var randomIndex=emptyDefaultValue;
+        var temporaryValue=null;
+
+        for (var currentIndex=counts; currentIndex>emptyDefaultValue;) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+
+            if (getTypeof(objectValue)==="array") {
+
+                temporaryValue = output[currentIndex];
+                output[currentIndex]=output[randomIndex];
+                output[randomIndex] = temporaryValue;
+
+            }
+
+            currentIndex -= onceDefaultValue;
+
+        }
+
+    }
+
+    return output;
+
+}
+
+_stk.shuffle=shuffle
 /**
  * Split string for special cases
  *
@@ -3038,29 +3039,6 @@ _stk.stringEscape=stringEscape
 
 
 /**
- * String Kebab case
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * stringKebabCase('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function stringKebabCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.stringKebabCase=stringKebabCase
-
-
-/**
  * String Lower case case
  *
  * @since 1.4.5
@@ -3103,6 +3081,8 @@ function stringSnakeCase (value) {
 
 _stk.stringSnakeCase=stringSnakeCase
 
+_stk.stringUnEscape=stringUnEscape
+
 
 /**
  * String Substr
@@ -3131,189 +3111,6 @@ function stringSubs (value, minValue, maxValue) {
 }
 
 _stk.stringSubs=stringSubs
-
-_stk.stringUnEscape=stringUnEscape
-
-
-/**
- * String Upper case case
- *
- * @since 1.4.5
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
- */
-function stringUpperCase (value) {
-
-    return toString(value).toUpperCase();
-
-}
-
-_stk.stringUpperCase=stringUpperCase
-
-_stk.toArray=toArray
-
-
-/**
- * Logic in convert string or number to valid number
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} regexp The second number in an addition.
- * @param {string|mumber} defaultVariable The second number in an addition.
- * @param {string|mumber} nullReplacement The second number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * dataNumberFormat(/(\d)/g, 0,1)
- *=> 1
- */
-function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
-
-    var regp=regexp;
-    var intr=defaultVariable;
-
-    if (regp.test(nullReplacement.toString())) {
-
-        intr=nullReplacement;
-
-    }
-
-    if (!has(nullReplacement) || nullReplacement.toString()==="NaN") {
-
-        intr=defaultVariable;
-
-    }
-    if (getTypeof(intr) === "string") {
-
-        intr = intr.replace(/[^\d.]/g, "");
-
-    }
-
-    return intr;
-
-}
-
-/**
- * To extract number in string and convert to double
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in double
- * @returns {number} Return in double.
- * @example
- *
- * toDouble(1)
- *=>1.00
- */
-function toDouble (value) {
-
-    var zero = 0.00;
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble
-
-_stk.toString=toString
-
-
-/**
- * To extract number in string and convert to integer
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger
-
-
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value)==="array") {
-
-        var uniqArrData = [];
-
-        each(value, function (key, val) {
-
-            if (indexOfNotExist(uniqArrData, val)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique
-
-_stk.varExtend=varExtend
-
-_stk.where=where
-
-
-/**
- *  Get the value in array the value in json that should not in search value of json
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data that you exlude in search
- * @param {Function=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
- *=>[{"s1":2,"s2":2}]
- */
-function whereNot (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
-
-}
-
-_stk.whereNot=whereNot
 
 
 /**
@@ -3494,5 +3291,209 @@ function templateValueInternal (str_raw, reg) {
 }
 
 _stk.templateValue=templateValue
+
+
+/**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringCamelCase('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+function stringUpperCase (value) {
+
+    return toString(value).toUpperCase();
+
+}
+
+_stk.stringUpperCase=stringUpperCase
+
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} regexp The second number in an addition.
+ * @param {string|mumber} defaultVariable The second number in an addition.
+ * @param {string|mumber} nullReplacement The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * dataNumberFormat(/(\d)/g, 0,1)
+ *=> 1
+ */
+function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
+
+    var regp=regexp;
+    var intr=defaultVariable;
+
+    if (regp.test(nullReplacement.toString())) {
+
+        intr=nullReplacement;
+
+    }
+
+    if (!has(nullReplacement) || nullReplacement.toString()==="NaN") {
+
+        intr=defaultVariable;
+
+    }
+    if (getTypeof(intr) === "string") {
+
+        intr = intr.replace(/[^\d.]/g, "");
+
+    }
+
+    return intr;
+
+}
+
+/**
+ * To extract number in string and convert to double
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in double
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble(1)
+ *=>1.00
+ */
+function toDouble (value) {
+
+    var zero = 0.00;
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble
+
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function stringKebabCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.stringKebabCase=stringKebabCase
+
+
+/**
+ * To extract number in string and convert to integer
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value)==="array") {
+
+        var uniqArrData = [];
+
+        each(value, function (key, val) {
+
+            if (indexOfNotExist(uniqArrData, val)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique
+
+_stk.toString=toString
+
+_stk.varExtend=varExtend
+
+_stk.where=where
+
+_stk.toArray=toArray
+
+
+/**
+ *  Get the value in array the value in json that should not in search value of json
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data that you exlude in search
+ * @param {Function=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
+ *=>[{"s1":2,"s2":2}]
+ */
+function whereNot (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+
+}
+
+_stk.whereNot=whereNot
 
 })(typeof window !== "undefined" ? window : this);

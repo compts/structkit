@@ -6,13 +6,13 @@ const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
-const getWindow=require('./core/global.js');
-
-exports.getWindow =getWindow;
-
 const getKeyVal=require('./core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
+
+const getWindow=require('./core/global.js');
+
+exports.getWindow =getWindow;
 
 const stringSplit=require('./core/stringSplit.js');
 
@@ -22,13 +22,13 @@ const whereLoopExecution=require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
-const append=require('./function/append.js');
-
-exports.append =append;
-
 const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
+
+const append=require('./function/append.js');
+
+exports.append =append;
 
 const arrayConcat=require('./function/arrayConcat.js');
 
@@ -86,13 +86,13 @@ const getKey=require('./function/getKey.js');
 
 exports.getKey =getKey;
 
-const getUniq=require('./function/getUniq.js');
-
-exports.getUniq =getUniq;
-
 const getTypeof=require('./function/getTypeof.js');
 
 exports.getTypeof =getTypeof;
+
+const getUniq=require('./function/getUniq.js');
+
+exports.getUniq =getUniq;
 
 const getValue=require('./function/getValue.js');
 
@@ -146,13 +146,13 @@ const last=require('./function/last.js');
 
 exports.last =last;
 
-const like=require('./function/like.js');
-
-exports.like =like;
-
 const lastIndexOf=require('./function/lastIndexOf.js');
 
 exports.lastIndexOf =lastIndexOf;
+
+const limit=require('./function/limit.js');
+
+exports.limit =limit;
 
 const map=require('./function/map.js');
 
@@ -165,10 +165,6 @@ exports.numberFormat =numberFormat;
 const onDelay=require('./function/onDelay.js');
 
 exports.onDelay =onDelay;
-
-const limit=require('./function/limit.js');
-
-exports.limit =limit;
 
 const onSequence=require('./function/onSequence.js');
 
@@ -226,6 +222,10 @@ const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
+const like=require('./function/like.js');
+
+exports.like =like;
+
 const stringKebabCase=require('./function/stringKebabCase.js');
 
 exports.stringKebabCase =stringKebabCase;
@@ -254,13 +254,13 @@ const templateValue=require('./function/templateValue.js');
 
 exports.templateValue =templateValue;
 
-const toArray=require('./function/toArray.js');
-
-exports.toArray =toArray;
-
 const toDouble=require('./function/toDouble.js');
 
 exports.toDouble =toDouble;
+
+const toArray=require('./function/toArray.js');
+
+exports.toArray =toArray;
 
 const toInteger=require('./function/toInteger.js');
 

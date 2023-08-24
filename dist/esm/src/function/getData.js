@@ -15,7 +15,8 @@ import each from './each';
  * @example
  *
  * getData({"s":1},"s")
- *=>1
+ *=> 1
+ * @example
  * getData({"a":{"a":2},"b":{"a":3}},"a:a")
  *=> {a: 2}
  */

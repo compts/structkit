@@ -11,7 +11,7 @@ import varExtend from './varExtend';
  * @returns {string} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onSequence(()=>{})
  *=>'11'
  */
 function onSequence (func, wait, option) {
