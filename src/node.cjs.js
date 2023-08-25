@@ -1,10 +1,10 @@
-const getKeyVal=require('./core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
 const dataNumberFormat=require('./core/dataTypeFormat.js');
 
 exports.dataNumberFormat =dataNumberFormat;
+
+const getKeyVal=require('./core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
 
 const getIndexOf=require('./core/getIndexOf.js');
 
@@ -18,21 +18,21 @@ const stringSplit=require('./core/stringSplit.js');
 
 exports.stringSplit =stringSplit;
 
-const whereLoopExecution=require('./core/whereLoopExecution.js');
-
-exports.whereLoopExecution =whereLoopExecution;
-
 const append=require('./function/append.js');
 
 exports.append =append;
 
-const appendIsArrayExist=require('./function/appendIsArrayExist.js');
+const whereLoopExecution=require('./core/whereLoopExecution.js');
 
-exports.appendIsArrayExist =appendIsArrayExist;
+exports.whereLoopExecution =whereLoopExecution;
 
 const arrayConcat=require('./function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
+
+const arrayRepeat=require('./function/arrayRepeat.js');
+
+exports.arrayRepeat =arrayRepeat;
 
 const arraySlice=require('./function/arraySlice.js');
 
@@ -42,33 +42,33 @@ const arraySum=require('./function/arraySum.js');
 
 exports.arraySum =arraySum;
 
-const clone=require('./function/clone.js');
-
-exports.clone =clone;
-
 const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
 
 exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
-
-const arrayRepeat=require('./function/arrayRepeat.js');
-
-exports.arrayRepeat =arrayRepeat;
 
 const asyncReplace=require('./function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
 
+const clone=require('./function/clone.js');
+
+exports.clone =clone;
+
 const count=require('./function/count.js');
 
 exports.count =count;
+
+const filter=require('./function/filter.js');
+
+exports.filter =filter;
 
 const each=require('./function/each.js');
 
 exports.each =each;
 
-const filter=require('./function/filter.js');
+const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
-exports.filter =filter;
+exports.appendIsArrayExist =appendIsArrayExist;
 
 const first=require('./function/first.js');
 
@@ -130,13 +130,13 @@ const isExact=require('./function/isExact.js');
 
 exports.isExact =isExact;
 
-const isJson=require('./function/isJson.js');
-
-exports.isJson =isJson;
-
 const isExactbyRegExp=require('./function/isExactbyRegExp.js');
 
 exports.isExactbyRegExp =isExactbyRegExp;
+
+const isJson=require('./function/isJson.js');
+
+exports.isJson =isJson;
 
 const jsonToArray=require('./function/jsonToArray.js');
 
@@ -154,37 +154,37 @@ const like=require('./function/like.js');
 
 exports.like =like;
 
-const limit=require('./function/limit.js');
-
-exports.limit =limit;
-
 const map=require('./function/map.js');
 
 exports.map =map;
+
+const limit=require('./function/limit.js');
+
+exports.limit =limit;
 
 const numberFormat=require('./function/numberFormat.js');
 
 exports.numberFormat =numberFormat;
 
-const onSequence=require('./function/onSequence.js');
-
-exports.onSequence =onSequence;
-
 const onDelay=require('./function/onDelay.js');
 
 exports.onDelay =onDelay;
+
+const onSequence=require('./function/onSequence.js');
+
+exports.onSequence =onSequence;
 
 const onWait=require('./function/onWait.js');
 
 exports.onWait =onWait;
 
-const parseString=require('./function/parseString.js');
-
-exports.parseString =parseString;
-
 const parseJson=require('./function/parseJson.js');
 
 exports.parseJson =parseJson;
+
+const parseString=require('./function/parseString.js');
+
+exports.parseString =parseString;
 
 const random=require('./function/random.js');
 
@@ -214,6 +214,10 @@ const sort=require('./function/sort.js');
 
 exports.sort =sort;
 
+const stringCamelCase=require('./function/stringCamelCase.js');
+
+exports.stringCamelCase =stringCamelCase;
+
 const stringCapitalize=require('./function/stringCapitalize.js');
 
 exports.stringCapitalize =stringCapitalize;
@@ -221,10 +225,6 @@ exports.stringCapitalize =stringCapitalize;
 const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
-
-const stringCamelCase=require('./function/stringCamelCase.js');
-
-exports.stringCamelCase =stringCamelCase;
 
 const stringKebabCase=require('./function/stringKebabCase.js');
 

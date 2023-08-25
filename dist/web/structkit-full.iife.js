@@ -1244,32 +1244,11 @@ function filter (objectValue, func) {
 
 _stk.filter=filter
 
+_stk.first=first
+
 _stk.getData=getData
 
 _stk.getJSONVariable=getJSONVariable
-
-_stk.first=first
-
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-
-_stk.getKey=getKey
 
 _stk.getTypeof=getTypeof
 /**
@@ -1329,6 +1308,27 @@ function getValue (objectValue) {
 
 _stk.getValue=getValue
 
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+
+_stk.getKey=getKey
+
 _stk.has=has
 
 
@@ -1372,9 +1372,9 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined
 
-_stk.indexOf=indexOf
-
 _stk.indexOfExist=indexOfExist
+
+_stk.indexOf=indexOf
 
 _stk.indexOfNotExist=indexOfNotExist
 
@@ -1632,27 +1632,6 @@ _stk.isJson=isJson
 
 
 /**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last
-
-
-/**
  * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
@@ -1694,6 +1673,27 @@ function jsonToArray (objectValue, value) {
 }
 
 _stk.jsonToArray=jsonToArray
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last
 
 
 /**
@@ -1884,6 +1884,92 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit
 
+_stk.map=map
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+    var nm_str=value||"";
+
+    return arrayRepeat(nm_str, nm_rpt).join("");
+
+}
+
+/**
+ * Number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {array|object} objectValue The data you want to format
+ * @param {string} value1 The start number.
+ * @param {string=} value2 The end number.
+ * @returns {null} Return format number
+ * @example
+ *
+ * numberFormat(1,1,2)
+ *=>1.00
+ */
+function numberFormat (objectValue, value1, value2) {
+
+    var incrementDefaultValue=1;
+    var emptyDefaultValue=0;
+    var threeDefaultValue=3;
+    var valueZero=value2||emptyDefaultValue;
+    var objectValueEvaluate=objectValue.toString();
+    var splt_dec=objectValueEvaluate.split(".");
+    var reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
+    var num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
+    var ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
+        ?"."+splt_dec[incrementDefaultValue]
+        :"";
+
+    if (valueZero>emptyDefaultValue) {
+
+        var str_dec=ssd_va.split(".");
+
+        if (count(str_dec)===incrementDefaultValue) {
+
+            ssd_va=ssd_va+"."+repeat("0", valueZero);
+
+        } else {
+
+            var dec_num=str_dec[incrementDefaultValue];
+
+            if (dec_num.length>=valueZero) {
+
+                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
+
+            } else {
+
+                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num+repeat("0", dec_num.length-valueZero);
+
+            }
+
+        }
+
+    }
+
+    return ssd_va;
+
+}
+
+_stk.numberFormat=numberFormat
+
 
 /**
  * Var extend is use for cloning Json, Array or Object
@@ -2059,8 +2145,6 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay
 
-_stk.map=map
-
 
 /**
  * On sequence
@@ -2139,89 +2223,100 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence
 
+var getWindow = function () {
 
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
+    if (typeof window !== 'undefined') {
 
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
-    var nm_str=value||"";
-
-    return arrayRepeat(nm_str, nm_rpt).join("");
-
-}
-
-/**
- * Number format
- *
- * @since 1.0.1
- * @category Seq
- * @param {array|object} objectValue The data you want to format
- * @param {string} value1 The start number.
- * @param {string=} value2 The end number.
- * @returns {null} Return format number
- * @example
- *
- * numberFormat(1,1,2)
- *=>1.00
- */
-function numberFormat (objectValue, value1, value2) {
-
-    var incrementDefaultValue=1;
-    var emptyDefaultValue=0;
-    var threeDefaultValue=3;
-    var valueZero=value2||emptyDefaultValue;
-    var objectValueEvaluate=objectValue.toString();
-    var splt_dec=objectValueEvaluate.split(".");
-    var reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
-    var num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
-    var ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
-        ?"."+splt_dec[incrementDefaultValue]
-        :"";
-
-    if (valueZero>emptyDefaultValue) {
-
-        var str_dec=ssd_va.split(".");
-
-        if (count(str_dec)===incrementDefaultValue) {
-
-            ssd_va=ssd_va+"."+repeat("0", valueZero);
-
-        } else {
-
-            var dec_num=str_dec[incrementDefaultValue];
-
-            if (dec_num.length>=valueZero) {
-
-                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
-
-            } else {
-
-                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num+repeat("0", dec_num.length-valueZero);
-
-            }
-
-        }
+        return window;
 
     }
 
-    return ssd_va;
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    var browserWindow = getWindow();
+    var timerId = null;
+
+    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame();
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+
+        timerId.cancel();
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
 
 }
 
-_stk.numberFormat=numberFormat
+_stk.onWait=onWait
 
 
 /**
@@ -2562,101 +2657,6 @@ _stk.random=random
 
 _stk.range=range
 
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame();
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-
-        timerId.cancel();
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait
-
 
 /**
  * Remove data in either JSON or Array using key or woth value
@@ -2763,49 +2763,6 @@ _stk.repeat=repeat
 
 
 /**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
-    var str_dec=jsn.toString().split(".");
-    var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec)===twoDefaultValue) {
-
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts<=s_dmin
-            ?s_dmin
-            :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-
-_stk.roundDecimal=roundDecimal
-
-
-/**
  * Shuffle data in array
  *
  * @since 1.0.1
@@ -2856,6 +2813,49 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle
+
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec)===twoDefaultValue) {
+
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts<=s_dmin
+            ?s_dmin
+            :s_dmax;
+        var dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+
+_stk.roundDecimal=roundDecimal
 
 
 /**
@@ -2948,44 +2948,6 @@ function sort (objectValue, order, func) {
 }
 
 _stk.sort=sort
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss', 'all)
- *=> 'The fish is goad   with goat-1ss'
- */
-function stringCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize
 /**
  * Split string for special cases
  *
@@ -3035,6 +2997,44 @@ _stk.stringCamelCase=stringCamelCase
 
 
 /**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss', 'all)
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize
+
+
+/**
  * String Escape
  *
  * @since 1.3.1
@@ -3077,26 +3077,26 @@ _stk.stringEscape=stringEscape
 
 
 /**
- * String Snake case
+ * String Kebab case
  *
  * @since 1.3.1
  * @category Seq
  * @param {string} value String data
- * @returns {string} Returns Snake sting data
+ * @returns {string} Returns Kebab sting data
  * @example
  *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
  */
-function stringSnakeCase (value) {
+function stringKebabCase (value) {
 
     return stringSplit(toString(value))
         .split(" ")
-        .join("_");
+        .join("-");
 
 }
 
-_stk.stringSnakeCase=stringSnakeCase
+_stk.stringKebabCase=stringKebabCase
 
 
 /**
@@ -3121,26 +3121,26 @@ _stk.stringLowerCase=stringLowerCase
 
 
 /**
- * String Kebab case
+ * String Snake case
  *
  * @since 1.3.1
  * @category Seq
  * @param {string} value String data
- * @returns {string} Returns Kebab sting data
+ * @returns {string} Returns Snake sting data
  * @example
  *
- * stringKebabCase('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
  */
-function stringKebabCase (value) {
+function stringSnakeCase (value) {
 
     return stringSplit(toString(value))
         .split(" ")
-        .join("-");
+        .join("_");
 
 }
 
-_stk.stringKebabCase=stringKebabCase
+_stk.stringSnakeCase=stringSnakeCase
 
 
 /**
@@ -3183,7 +3183,7 @@ _stk.stringUnEscape=stringUnEscape
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringCamelCase('The fish is goad   with Goat-1ss')
+ * stringUpperCase('The fish is goad   with Goat-1ss')
  *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
  */
 function stringUpperCase (value) {
@@ -3507,9 +3507,9 @@ function unique (value) {
 
 _stk.unique=unique
 
-_stk.where=where
-
 _stk.varExtend=varExtend
+
+_stk.where=where
 
 
 /**
