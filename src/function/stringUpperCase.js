@@ -9,7 +9,7 @@ const toString = require("./toString");
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringCamelCase('The fish is goad   with Goat-1ss')
+ * stringUpperCase('The fish is goad   with Goat-1ss')
  *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
  */
 function stringUpperCase (value) {
