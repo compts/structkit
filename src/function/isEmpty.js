@@ -19,9 +19,16 @@ function isEmpty (value) {
 
     const zero =0;
 
-    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
+    const typeofvalue = getTypeof(value);
+
+    if (typeofvalue=== "json" || typeofvalue === "array") {
 
         return count(value, true)===zero;
+
+    }
+    if (typeofvalue=== "number") {
+
+        return value===zero;
 
     }
 
