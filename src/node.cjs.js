@@ -14,17 +14,21 @@ const getWindow=require('./core/global.js');
 
 exports.getWindow =getWindow;
 
+const whereLoopExecution=require('./core/whereLoopExecution.js');
+
+exports.whereLoopExecution =whereLoopExecution;
+
 const stringSplit=require('./core/stringSplit.js');
 
 exports.stringSplit =stringSplit;
 
+const appendIsArrayExist=require('./function/appendIsArrayExist.js');
+
+exports.appendIsArrayExist =appendIsArrayExist;
+
 const append=require('./function/append.js');
 
 exports.append =append;
-
-const whereLoopExecution=require('./core/whereLoopExecution.js');
-
-exports.whereLoopExecution =whereLoopExecution;
 
 const arrayConcat=require('./function/arrayConcat.js');
 
@@ -58,17 +62,13 @@ const count=require('./function/count.js');
 
 exports.count =count;
 
-const filter=require('./function/filter.js');
-
-exports.filter =filter;
-
 const each=require('./function/each.js');
 
 exports.each =each;
 
-const appendIsArrayExist=require('./function/appendIsArrayExist.js');
+const filter=require('./function/filter.js');
 
-exports.appendIsArrayExist =appendIsArrayExist;
+exports.filter =filter;
 
 const first=require('./function/first.js');
 
@@ -98,13 +98,13 @@ const getValue=require('./function/getValue.js');
 
 exports.getValue =getValue;
 
-const ifUndefined=require('./function/ifUndefined.js');
-
-exports.ifUndefined =ifUndefined;
-
 const has=require('./function/has.js');
 
 exports.has =has;
+
+const ifUndefined=require('./function/ifUndefined.js');
+
+exports.ifUndefined =ifUndefined;
 
 const indexOf=require('./function/indexOf.js');
 
@@ -150,6 +150,10 @@ const lastIndexOf=require('./function/lastIndexOf.js');
 
 exports.lastIndexOf =lastIndexOf;
 
+const limit=require('./function/limit.js');
+
+exports.limit =limit;
+
 const like=require('./function/like.js');
 
 exports.like =like;
@@ -157,10 +161,6 @@ exports.like =like;
 const map=require('./function/map.js');
 
 exports.map =map;
-
-const limit=require('./function/limit.js');
-
-exports.limit =limit;
 
 const numberFormat=require('./function/numberFormat.js');
 
@@ -226,13 +226,13 @@ const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
-const stringKebabCase=require('./function/stringKebabCase.js');
-
-exports.stringKebabCase =stringKebabCase;
-
 const stringLowerCase=require('./function/stringLowerCase.js');
 
 exports.stringLowerCase =stringLowerCase;
+
+const stringKebabCase=require('./function/stringKebabCase.js');
+
+exports.stringKebabCase =stringKebabCase;
 
 const stringSnakeCase=require('./function/stringSnakeCase.js');
 
@@ -274,23 +274,23 @@ const unique=require('./function/unique.js');
 
 exports.unique =unique;
 
-const varExtend=require('./function/varExtend.js');
+const whereNot=require('./function/whereNot.js');
 
-exports.varExtend =varExtend;
+exports.whereNot =whereNot;
 
 const where=require('./function/where.js');
 
 exports.where =where;
 
-const whereNot=require('./function/whereNot.js');
+const varExtend=require('./function/varExtend.js');
 
-exports.whereNot =whereNot;
-
-const entity=require('./variable/htmlentity.js');
-
-exports.entity =entity;
+exports.varExtend =varExtend;
 
 const objectCallType=require('./variable/types.js');
 
 exports.objectCallType =objectCallType;
+
+const entity=require('./variable/htmlentity.js');
+
+exports.entity =entity;
 

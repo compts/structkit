@@ -2,6 +2,8 @@ import each from './each';
 
 import has from './has';
 
+import isEmpty from './isEmpty';
+
 /**
  * Array Sum
  *
@@ -32,7 +34,9 @@ function arraySum (arrayObject, delimeter) {
 
     });
 
-    return sum.toFixed(delimeters);
+    return isEmpty(delimeters)
+        ? parseInt(sum)
+        :sum.toFixed(delimeters);
 
 }
 export default arraySum;

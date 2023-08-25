@@ -912,6 +912,39 @@ _stk.arraySlice=arraySlice
 
 
 /**
+ * Check if data is empty
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+function isEmpty (value) {
+
+    var zero =0;
+
+    var typeofvalue = getTypeof(value);
+
+    if (typeofvalue=== "json" || typeofvalue === "array") {
+
+        return count(value, true)===zero;
+
+    }
+    if (typeofvalue=== "number") {
+
+        return value===zero;
+
+    }
+
+    return (/^\s*$/gmi).test(value);
+
+}
+
+/**
  * Array Sum
  *
  * @since 1.0.1
@@ -941,7 +974,9 @@ function arraySum (arrayObject, delimeter) {
 
     });
 
-    return sum.toFixed(delimeters);
+    return isEmpty(delimeters)
+        ? parseInt(sum)
+        :sum.toFixed(delimeters);
 
 }
 
@@ -1289,27 +1324,6 @@ _stk.getUniq=getUniq
 
 
 /**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue
-
-
-/**
  * Get key Object or JSON
  *
  * @since 1.0.1
@@ -1329,7 +1343,30 @@ function getKey (objectValue) {
 
 _stk.getKey=getKey
 
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue
+
 _stk.has=has
+
+_stk.indexOf=indexOf
 
 
 /**
@@ -1374,8 +1411,6 @@ _stk.ifUndefined=ifUndefined
 
 _stk.indexOfExist=indexOfExist
 
-_stk.indexOf=indexOf
-
 _stk.indexOfNotExist=indexOfNotExist
 
 
@@ -1419,40 +1454,6 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert
-
-
-/**
- * Check if data is empty
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value JSON , Array and String
- * @returns {boolean} Returns true or false
- * @example
- *
- * isEmpty('')
- * // => true
- */
-function isEmpty (value) {
-
-    var zero =0;
-
-    var typeofvalue = getTypeof(value);
-
-    if (typeofvalue=== "json" || typeofvalue === "array") {
-
-        return count(value, true)===zero;
-
-    }
-    if (typeofvalue=== "number") {
-
-        return value===zero;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
 
 _stk.isEmpty=isEmpty
 
@@ -3194,6 +3195,8 @@ function stringUpperCase (value) {
 
 _stk.stringUpperCase=stringUpperCase
 
+_stk.toArray=toArray
+
 
 /**
  * Template Value
@@ -3373,8 +3376,6 @@ function templateValueInternal (str_raw, reg) {
 }
 
 _stk.templateValue=templateValue
-
-_stk.toArray=toArray
 
 
 /**

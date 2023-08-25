@@ -2,6 +2,8 @@ const each = require('./each');
 
 const has = require('./has');
 
+const isEmpty = require('./isEmpty');
+
 
 /**
  * Array Sum
@@ -33,7 +35,9 @@ function arraySum (arrayObject, delimeter) {
 
     });
 
-    return sum.toFixed(delimeters);
+    return isEmpty(delimeters)
+        ? parseInt(sum)
+        :sum.toFixed(delimeters);
 
 }
 module.exports=arraySum;
