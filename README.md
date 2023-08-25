@@ -2,7 +2,7 @@
 [![NPM version][npm-image]][npm-url] 
 
 [Site](https://structkit.codehyouka.xyz/) |
-[Docs](https://structkit.codehyouka.xyz/docs) |
+[Docs](https://structkit.codehyouka.xyz/api) |
 
 ## Download
 
