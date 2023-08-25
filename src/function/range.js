@@ -58,9 +58,7 @@ function range (maxValue, minValue, step) {
 
             }
 
-
         }
-
 
     }
 
