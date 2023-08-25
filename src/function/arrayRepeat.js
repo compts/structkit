@@ -17,10 +17,9 @@ const range = require('./range');
 function arrayRepeat (value, valueRepetion) {
 
     const emptyDefaultValue=0;
-    const incrementDefaultValue=1;
     const nm_rpt=valueRepetion||emptyDefaultValue;
 
-    return map(range(nm_rpt - incrementDefaultValue), function () {
+    return map(range(nm_rpt), function () {
 
         return value;
 
