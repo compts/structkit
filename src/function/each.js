@@ -21,7 +21,7 @@ function each (objectValue, func) {
     let re_loop=[];
     const typeofs=getTypeof(objectValue);
 
-    if (typeofs==="json"||typeofs==="array"||typeofs==="object") {
+    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
 
         for (const ins in objectValue) {
 

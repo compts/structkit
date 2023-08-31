@@ -2,6 +2,8 @@ const getTypeof = require('./getTypeof');
 
 const count = require('./count');
 
+const indexOfExist = require('./indexOfExist');
+
 
 /**
  * Check if data is empty
@@ -21,6 +23,11 @@ function isEmpty (value) {
 
     const typeofvalue = getTypeof(value);
 
+    const invalidList = [
+        'null',
+        'undefined'
+    ];
+
     if (typeofvalue=== "json" || typeofvalue === "array") {
 
         return count(value, true)===zero;
@@ -29,6 +36,12 @@ function isEmpty (value) {
     if (typeofvalue=== "number") {
 
         return value===zero;
+
+    }
+
+    if (indexOfExist(invalidList, typeofvalue)) {
+
+        return true;
 
     }
 

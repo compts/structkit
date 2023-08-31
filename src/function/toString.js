@@ -19,8 +19,7 @@ function toString (value) {
     const notInList = [
         "object",
         "json",
-        "promise",
-        "regexp"
+        "promise"
     ];
 
     const gettypeof = getTypeof(value);

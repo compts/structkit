@@ -39,11 +39,13 @@ var objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Boolean]": "boolean",
     "[object Date]": "date",
     "[object Error]": "error",
+    "[object Null]": "null",
     "[object Number]": "number",
     "[object Object]": "object",
     "[object Promise]": "promise",
     "[object RegExp]": "regexp",
-    "[object String]": "string"};
+    "[object String]": "string",
+    "[object Undefined]": "undefined"};
 
 /**
  * Is Json valid
@@ -252,7 +254,7 @@ function each (objectValue, func) {
     var re_loop=[];
     var typeofs=getTypeof(objectValue);
 
-    if (typeofs==="json"||typeofs==="array"||typeofs==="object") {
+    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
 
         for (var ins in objectValue) {
 
@@ -929,6 +931,11 @@ function isEmpty (value) {
 
     var typeofvalue = getTypeof(value);
 
+    var invalidList = [
+        'null',
+        'undefined'
+    ];
+
     if (typeofvalue=== "json" || typeofvalue === "array") {
 
         return count(value, true)===zero;
@@ -937,6 +944,12 @@ function isEmpty (value) {
     if (typeofvalue=== "number") {
 
         return value===zero;
+
+    }
+
+    if (indexOfExist(invalidList, typeofvalue)) {
+
+        return true;
 
     }
 
@@ -1000,8 +1013,7 @@ function toString (value) {
     var notInList = [
         "object",
         "json",
-        "promise",
-        "regexp"
+        "promise"
     ];
 
     var gettypeof = getTypeof(value);
@@ -1285,7 +1297,51 @@ _stk.getData=getData
 
 _stk.getJSONVariable=getJSONVariable
 
+
+/**
+ * Get key Object or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+
+_stk.getKey=getKey
+
 _stk.getTypeof=getTypeof
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue
+
+_stk.has=has
 /**
  * Generate unique value id
  *
@@ -1321,52 +1377,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq
-
-
-/**
- * Get key Object or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-
-_stk.getKey=getKey
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue
-
-_stk.has=has
-
-_stk.indexOf=indexOf
 
 
 /**
@@ -1408,6 +1418,8 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined
+
+_stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
 
@@ -2764,6 +2776,49 @@ _stk.repeat=repeat
 
 
 /**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec)===twoDefaultValue) {
+
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts<=s_dmin
+            ?s_dmin
+            :s_dmax;
+        var dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+
+_stk.roundDecimal=roundDecimal
+
+
+/**
  * Shuffle data in array
  *
  * @since 1.0.1
@@ -2814,49 +2869,6 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle
-
-
-/**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
-    var str_dec=jsn.toString().split(".");
-    var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec)===twoDefaultValue) {
-
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts<=s_dmin
-            ?s_dmin
-            :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-
-_stk.roundDecimal=roundDecimal
 
 
 /**
@@ -3195,8 +3207,6 @@ function stringUpperCase (value) {
 
 _stk.stringUpperCase=stringUpperCase
 
-_stk.toArray=toArray
-
 
 /**
  * Template Value
@@ -3376,6 +3386,8 @@ function templateValueInternal (str_raw, reg) {
 }
 
 _stk.templateValue=templateValue
+
+_stk.toArray=toArray
 
 
 /**

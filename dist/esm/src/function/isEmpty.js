@@ -2,6 +2,8 @@ import getTypeof from './getTypeof';
 
 import count from './count';
 
+import indexOfExist from './indexOfExist';
+
 /**
  * Check if data is empty
  *
@@ -20,6 +22,11 @@ function isEmpty (value) {
 
     const typeofvalue = getTypeof(value);
 
+    const invalidList = [
+        'null',
+        'undefined'
+    ];
+
     if (typeofvalue=== "json" || typeofvalue === "array") {
 
         return count(value, true)===zero;
@@ -28,6 +35,12 @@ function isEmpty (value) {
     if (typeofvalue=== "number") {
 
         return value===zero;
+
+    }
+
+    if (indexOfExist(invalidList, typeofvalue)) {
+
+        return true;
 
     }
 

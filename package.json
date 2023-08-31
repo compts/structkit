@@ -31,7 +31,9 @@
     "utilities",
     "module",
     "stdlib",
-    "util"
+    "util",
+    "json",
+    "array"
   ],
   "author": "Pein Freccs",
   "license": "MIT",

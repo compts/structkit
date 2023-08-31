@@ -9,10 +9,12 @@ export const objectCallTypeAll: {
     "[object Boolean]": string;
     "[object Date]": string;
     "[object Error]": string;
+    "[object Null]": string;
     "[object Number]": string;
     "[object Object]": string;
     "[object Promise]": string;
     "[object RegExp]": string;
     "[object String]": string;
+    "[object Undefined]": string;
 };
 export const listObjArrayType: string[];
