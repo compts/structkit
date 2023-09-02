@@ -3,7 +3,7 @@ export default toDouble;
  * To extract number in string and convert to double
  *
  * @since 1.0.1
- * @category Seq
+ * @category Number
  * @param {any} value Value you to convert in double
  * @returns {number} Return in double.
  * @example

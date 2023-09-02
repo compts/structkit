@@ -3,7 +3,7 @@ export default stringCamelCase;
  * String Camel case
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns camel sting data
  * @example

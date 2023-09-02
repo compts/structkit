@@ -8,7 +8,7 @@ import indexOf from './indexOf';
  * Shuffle data in array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array argmuments
  * @returns {any[]} Returns the total.
  * @example

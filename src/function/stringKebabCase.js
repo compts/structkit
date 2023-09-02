@@ -6,7 +6,7 @@ const toString = require("./toString");
  * String Kebab case
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns Kebab sting data
  * @example

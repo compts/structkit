@@ -9,7 +9,7 @@ const each = require('./each');
  * Insert value in Json object or array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Object
  * @param {any} objectValue Either Json or array
  * @param {any} value Data you want to insert
  * @returns {any} Returns Json or array

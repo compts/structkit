@@ -3,7 +3,7 @@ export default count;
  * Array Count
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {any} objectValue Json or array
  * @param {boolean=} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.

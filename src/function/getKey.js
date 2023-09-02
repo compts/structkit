@@ -5,7 +5,7 @@ const getKeyVal = require('../core/getKeyVal');
  * Get key Object or JSON
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {any} objectValue Either JSON or Array
  * @returns {string} Returns it respective key or index
  * @example

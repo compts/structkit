@@ -6,7 +6,7 @@ import {getWindow} from '../core/global';
  * On wait
  *
  * @since 1.4.1
- * @category Seq
+ * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
  * @returns {string} Returns the total.

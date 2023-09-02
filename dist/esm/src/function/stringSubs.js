@@ -6,7 +6,7 @@ import has from './has';
  * String Substr
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {number} minValue minimum value
  * @param {number=} maxValue maximum value

@@ -12,7 +12,7 @@ import count from './count';
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue1 Json or Array
  * @param {any} objectValue2 Json or Array for lookup to objectValue1
  * @param {boolean=} isExist Default value is True

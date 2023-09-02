@@ -3,7 +3,7 @@ export default indexOfNotExist;
  * Check index of array Not or exist
  *
  * @since 1.4.1
- * @category Seq
+ * @category Boolean
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return array.

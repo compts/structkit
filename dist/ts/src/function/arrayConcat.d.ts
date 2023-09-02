@@ -3,7 +3,7 @@ export default arrayConcat;
  * Array Concat
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {...any} arg First array
  * @returns {any[]} Returns the array.
  * @example

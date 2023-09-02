@@ -3,7 +3,7 @@ export default getData;
  * Get Data in array or json using string to search the data
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Either Json or Array data.
  * @param {any} split_str Search key or index.
  * @returns {any} Returns the total.

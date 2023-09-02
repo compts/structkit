@@ -10,7 +10,7 @@ import isEmpty from './isEmpty';
  * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Json
  * @param {string} value Search key or index.
  * @returns {boolean} Returns Array

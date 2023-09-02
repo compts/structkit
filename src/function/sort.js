@@ -11,7 +11,7 @@ const isEmpty = require('./isEmpty');
  * Sort array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array
  * @param {boolean=} order True for ascend then false for descend
  * @param {any=} func Callback function or sort type

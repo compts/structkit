@@ -13,7 +13,7 @@ const append = require('./append');
  * Filter the data in loop
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue The data either json or array
  * @param {Function=} func The second number in an addition.
  * @returns {null} Returns the total.

@@ -4,7 +4,7 @@ global._stk={}
  * Check if object has value or null
  *
  * @since 1.0.1
- * @category Seq
+ * @category Boolean
  * @param {any} value Either JSON or Array
  * @param {any=} key For key or index of data
  * @returns {boolean} Returns true or false.
@@ -170,7 +170,7 @@ function checkIfFunctionNotExistObject (obj) {
  * Get type of the variable
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {any} objectValue Any data you want to check its property
  * @returns {string} Get the property of variable
  * @example
@@ -204,7 +204,7 @@ function getTypeof (objectValue) {
  * Append data for json and array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Any
  * @param {any} objectValue The data either json or array
  * @param {any} val Value for array index and json
  * @param {any=} key Json key
@@ -240,7 +240,7 @@ _stk.append=append
  * Each or for loop function you are familiar with
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Array or json.
  * @param {Function=} func Function data
  * @returns {any} Array or json
@@ -314,7 +314,7 @@ function each (objectValue, func) {
  * Array Count
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {any} objectValue Json or array
  * @param {boolean=} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.
@@ -439,10 +439,10 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  * Index of array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {any} objectValue Array
  * @param {any} value Value in array
- * @returns {any} Returns the index.
+ * @returns {number} Returns the index.
  * @example
  *
  * indexOf([1,2], 1)
@@ -462,7 +462,7 @@ function indexOf (objectValue, value) {
  * Check index of array Not or exist
  *
  * @since 1.4.1
- * @category Seq
+ * @category Boolean
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return array.
@@ -483,7 +483,7 @@ function indexOfNotExist (arrayObject, value) {
  * Append If Array not Exist
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} arrayObject Data is Array
  * @param {any} value Value for array lookup
  * @returns {any[]} Return array.
@@ -524,7 +524,7 @@ _stk.appendIsArrayExist=appendIsArrayExist
  * To Array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} value Value you want to convert in array
  * @returns {any[]} Return in array.
  * @example
@@ -551,7 +551,7 @@ function toArray (value) {
  * This is a rename of delimiter
  *
  * @since 1.3.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array
  * @param {number=} min Minumum of 2
  * @param {number=} max Maximum base on array count
@@ -630,7 +630,7 @@ function arraySlice (objectValue, min, max) {
  * Check index of array is Exist or not
  *
  * @since 1.3.1
- * @category Seq
+ * @category Boolean
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return array.
@@ -716,7 +716,7 @@ function getKeyVal (jsn, typ) {
  * Get the first value of array or JSON
  *
  * @since 1.0.1
- * @category Seq
+ * @category Any
  * @param {any} objectValue The data is array
  * @returns {any} Returns first value of `objectValue`.
  * @example
@@ -734,7 +734,7 @@ function first (objectValue) {
  * Array Concat
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {...any} arg First array
  * @returns {any[]} Returns the array.
  * @example
@@ -774,7 +774,7 @@ _stk.arrayConcat=arrayConcat
  * To map the value of json ot array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue The data you want to map
  * @param {any=} func Callback function
  * @returns {null} Return map either JSON or Array
@@ -886,7 +886,7 @@ function range (maxValue, minValue, step) {
  * Repeat  value in array
  *
  * @since 1.4.7
- * @category Seq
+ * @category Array
  * @param {any} value String you want to duplicate
  * @param {number} valueRepetion how many times you want to repeate
  * @returns {any[]} Return in string or number.
@@ -917,7 +917,7 @@ _stk.arraySlice=arraySlice
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
- * @category Seq
+ * @category Boolean
  * @param {any} value JSON , Array and String
  * @returns {boolean} Returns true or false
  * @example
@@ -961,7 +961,7 @@ function isEmpty (value) {
  * Array Sum
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {number[]} arrayObject Array in number
  * @param {number=} delimeter decimal point and default value is 4
  * @returns {number} Returns the total.
@@ -1000,7 +1000,7 @@ _stk.arraySum=arraySum
  * To String
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {any=} value Value you to convert in double
  * @returns {string} Return in double.
  * @example
@@ -1032,7 +1032,7 @@ function toString (value) {
  * Get Data in array or json using string to search the data
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Either Json or Array data.
  * @param {any} split_str Search key or index.
  * @returns {any} Returns the total.
@@ -1101,7 +1101,7 @@ function getData (objectValue, split_str) {
  * Array To Object By DataFormat
  *
  * @since 1.3.1
- * @category Seq
+ * @category Array
  * @param {any[]} objectValue Json in array format
  * @param {string} valueFormat Key look up format
  * @returns {any[]} Return array or object.
@@ -1127,7 +1127,7 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
  * Async replace
  *
  * @since 1.3.1
- * @category Seq
+ * @category Utility
  * @param {any} value String data
  * @param {any} search Regexp or string to look for match
  * @param {Function|String=} toReplace Replace value.
@@ -1184,7 +1184,7 @@ _stk.asyncReplace=asyncReplace
  * Get JSON or  Array as empty variable
  *
  * @since 1.0.1
- * @category Seq
+ * @category Any
  * @param {any} value Either Json or Array
  * @returns {any} Returns empty either Json or Array
  * @example
@@ -1214,9 +1214,9 @@ function getJSONVariable (value) {
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
- * @category Seq
+ * @category Any
  * @param {any} objectValue data you want to clone
- * @returns {number} Returns clone data
+ * @returns {any} Returns clone data
  * @example
  *
  * clone([1,2])
@@ -1242,12 +1242,16 @@ _stk.count=count
 
 _stk.each=each
 
+_stk.first=first
+
+_stk.getData=getData
+
 
 /**
  * Filter the data in loop
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue The data either json or array
  * @param {Function=} func The second number in an addition.
  * @returns {null} Returns the total.
@@ -1291,18 +1295,14 @@ function filter (objectValue, func) {
 
 _stk.filter=filter
 
-_stk.getData=getData
-
 _stk.getJSONVariable=getJSONVariable
-
-_stk.first=first
 
 
 /**
  * Get key Object or JSON
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {any} objectValue Either JSON or Array
  * @returns {string} Returns it respective key or index
  * @example
@@ -1317,12 +1317,11 @@ function getKey (objectValue) {
 }
 
 _stk.getKey=getKey
-
-_stk.getTypeof=getTypeof
 /**
  * Generate unique value id
  *
  * @since 1.0.1
+ * @category String
  * @param {any=} option type unique id
  * @returns {string} Get Unique Key.
  * @example
@@ -1355,14 +1354,14 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq
 
-_stk.has=has
+_stk.getTypeof=getTypeof
 
 
 /**
  * Get value of json or array
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {any} objectValue Either JSON or Array
  * @returns {string} Returns it respective value
  * @example
@@ -1378,12 +1377,14 @@ function getValue (objectValue) {
 
 _stk.getValue=getValue
 
+_stk.has=has
+
 
 /**
  * Check if data is undefined
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Either JSON or array
  * @param {any} value1 Check the key of value
  * @param {any=} value2 if value not exist, this value will be return
@@ -1423,14 +1424,12 @@ _stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
 
-_stk.indexOfNotExist=indexOfNotExist
-
 
 /**
  * Insert value in Json object or array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Object
  * @param {any} objectValue Either Json or array
  * @param {any} value Data you want to insert
  * @returns {any} Returns Json or array
@@ -1467,6 +1466,8 @@ function insert (objectValue, value) {
 
 _stk.insert=insert
 
+_stk.indexOfNotExist=indexOfNotExist
+
 _stk.isEmpty=isEmpty
 
 
@@ -1474,7 +1475,7 @@ _stk.isEmpty=isEmpty
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue1 Json or Array
  * @param {any} objectValue2 Json or Array for lookup to objectValue1
  * @param {boolean=} isExist Default value is True
@@ -1648,7 +1649,7 @@ _stk.isJson=isJson
  * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Json
  * @param {string} value Search key or index.
  * @returns {boolean} Returns Array
@@ -1904,7 +1905,7 @@ _stk.map=map
  * Repeat string value
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {string} value String you want to duplicate
  * @param {number} valueRepetion how many times you want to repeate
  * @returns {string} Return in string or number.
@@ -1927,7 +1928,7 @@ function repeat (value, valueRepetion) {
  * Number format
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {array|object} objectValue The data you want to format
  * @param {string} value1 The start number.
  * @param {string=} value2 The end number.
@@ -1988,7 +1989,7 @@ _stk.numberFormat=numberFormat
  * Var extend is use for cloning Json, Array or Object
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {object} objectValue Json, Array or Object
  * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
  * @returns {array} Return Json or Array or Object.
@@ -2098,7 +2099,7 @@ function replaceValue (objectValue, objectValueReplace) {
  * On delay
  *
  * @since 1.4.1
- * @category Seq
+ * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
  * @param {object=} option option for delay
@@ -2252,7 +2253,7 @@ var getWindow = function () {
  * On wait
  *
  * @since 1.4.1
- * @category Seq
+ * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
  * @returns {string} Returns the total.
@@ -2336,7 +2337,7 @@ _stk.onWait=onWait
  * Get the value in array the value in json given the search value was in json
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
  * @param {Function=} func Function
@@ -2407,7 +2408,7 @@ var listType = [
  * String Unescape
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {string=} type Configuration
  * @returns {string} Returns unescape string
@@ -2448,7 +2449,7 @@ function stringUnEscape (value, type) {
  * Parse Json object
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {string} value String you want to convert to JSON
  * @returns {any} Returns the json.
  * @example
@@ -2483,7 +2484,7 @@ _stk.parseJson=parseJson
  * Data String from JSON object
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {string} str Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example
@@ -2675,7 +2676,7 @@ _stk.range=range
  * Regex Count Group number
  *
  * @since 1.4.7
- * @category Seq
+ * @category String
  * @param {any} value Value you want to convert in array
  * @returns {number} Return in array.
  * @example
@@ -2698,7 +2699,7 @@ _stk.regexCountGroup=regexCountGroup
  * Remove data in either JSON or Array using key or woth value
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Json or array
  * @param {any} value if objectValue, json is must be object or array index you want to remove
  * @param {number=} value2 Last row in index
@@ -2802,7 +2803,7 @@ _stk.repeat=repeat
  * Random Decimal
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {number} value Int or Double value type
  * @param {number=} maxValue limit decimal
  * @returns {number} Returns the total.
@@ -2845,7 +2846,7 @@ _stk.roundDecimal=roundDecimal
  * Shuffle data in array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array argmuments
  * @returns {any[]} Returns the total.
  * @example
@@ -2898,7 +2899,7 @@ _stk.shuffle=shuffle
  * Sort array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array
  * @param {boolean=} order True for ascend then false for descend
  * @param {any=} func Callback function or sort type
@@ -3008,7 +3009,7 @@ function stringSplit (value) {
  * String Camel case
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns camel sting data
  * @example
@@ -3036,7 +3037,7 @@ _stk.stringCamelCase=stringCamelCase
  * String Capitalize
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {string=} option Type of captalize optional
  * @returns {string} Returns Capitalize sting data
@@ -3074,7 +3075,7 @@ _stk.stringCapitalize=stringCapitalize
  * String Escape
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {string=} type Configuration
  * @returns {string} Returns escape string
@@ -3116,7 +3117,7 @@ _stk.stringEscape=stringEscape
  * String Kebab case
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns Kebab sting data
  * @example
@@ -3139,7 +3140,7 @@ _stk.stringKebabCase=stringKebabCase
  * String Lower case case
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns camel sting data
  * @example
@@ -3160,7 +3161,7 @@ _stk.stringLowerCase=stringLowerCase
  * String Snake case
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns Snake sting data
  * @example
@@ -3183,7 +3184,7 @@ _stk.stringSnakeCase=stringSnakeCase
  * String Substr
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {number} minValue minimum value
  * @param {number=} maxValue maximum value
@@ -3214,7 +3215,7 @@ _stk.stringUnEscape=stringUnEscape
  * String Upper case case
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns camel sting data
  * @example
@@ -3235,7 +3236,7 @@ _stk.stringUpperCase=stringUpperCase
  * Template Value
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {string} templateString Template string
  * @param {any} data Parameter to replace
  * @param {any=} option The second number in an addition.
@@ -3410,8 +3411,6 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue
 
-_stk.toArray=toArray
-
 
 /**
  * Logic in convert string or number to valid number
@@ -3454,35 +3453,10 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
- * To extract number in string and convert to double
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value Value you to convert in double
- * @returns {number} Return in double.
- * @example
- *
- * toDouble(1)
- *=>1.00
- */
-function toDouble (value) {
-
-    var zero = 0.00;
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble
-
-
-/**
  * To extract number in string and convert to integer
  *
  * @since 1.0.1
- * @category Seq
+ * @category Number
  * @param {any} value Value you to convert in integer
  * @returns {number} Return in integer.
  * @example
@@ -3502,14 +3476,41 @@ function toInteger (value) {
 
 _stk.toInteger=toInteger
 
+
+/**
+ * To extract number in string and convert to double
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble(1)
+ *=>1.00
+ */
+function toDouble (value) {
+
+    var zero = 0.00;
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble
+
 _stk.toString=toString
+
+_stk.varExtend=varExtend
 
 
 /**
  * Get only the unique data from array
  *
  * @since 1.4.1
- * @category Seq
+ * @category Array
  * @param {any} value Value you want to convert in array
  * @returns {any[]} Return in array.
  * @example
@@ -3543,8 +3544,6 @@ function unique (value) {
 
 _stk.unique=unique
 
-_stk.varExtend=varExtend
-
 _stk.where=where
 
 
@@ -3552,7 +3551,7 @@ _stk.where=where
  *  Get the value in array the value in json that should not in search value of json
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data that you exlude in search
  * @param {Function=} func Function
@@ -3569,5 +3568,7 @@ function whereNot (objectValue, objectValueWhere, func) {
 }
 
 _stk.whereNot=whereNot
+
+_stk.toArray=toArray
 
 })(typeof window !== "undefined" ? window : this);

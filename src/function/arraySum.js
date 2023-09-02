@@ -9,7 +9,7 @@ const isEmpty = require('./isEmpty');
  * Array Sum
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {number[]} arrayObject Array in number
  * @param {number=} delimeter decimal point and default value is 4
  * @returns {number} Returns the total.

@@ -10,7 +10,7 @@ const each = require('./each');
  * This is a rename of delimiter
  *
  * @since 1.3.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array
  * @param {number=} min Minumum of 2
  * @param {number=} max Maximum base on array count

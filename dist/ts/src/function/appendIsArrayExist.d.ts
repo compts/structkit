@@ -3,7 +3,7 @@ export default appendIsArrayExist;
  * Append If Array not Exist
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} arrayObject Data is Array
  * @param {any} value Value for array lookup
  * @returns {any[]} Return array.

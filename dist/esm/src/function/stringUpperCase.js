@@ -4,7 +4,7 @@ import toString from './toString';
  * String Upper case case
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @returns {string} Returns camel sting data
  * @example

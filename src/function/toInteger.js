@@ -5,7 +5,7 @@ const dataNumberFormat = require('../core/dataTypeFormat');
  * To extract number in string and convert to integer
  *
  * @since 1.0.1
- * @category Seq
+ * @category Number
  * @param {any} value Value you to convert in integer
  * @returns {number} Return in integer.
  * @example

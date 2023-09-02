@@ -7,10 +7,10 @@ import getIndexOf from '../core/getIndexOf';
  * Index of array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {any} objectValue Array
  * @param {any} value Value in array
- * @returns {any} Returns the index.
+ * @returns {number} Returns the index.
  * @example
  *
  * indexOf([1,2], 1)
