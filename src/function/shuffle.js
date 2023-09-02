@@ -11,7 +11,7 @@ const indexOf = require('./indexOf');
  * @since 1.0.1
  * @category Seq
  * @param {any} objectValue Array argmuments
- * @returns {string|number} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * shuffle([1,2,3])
