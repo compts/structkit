@@ -52,7 +52,7 @@ repeat("1",20)
 
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.7-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.8-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function
