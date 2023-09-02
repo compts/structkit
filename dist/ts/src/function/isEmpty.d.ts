@@ -1,6 +1,6 @@
 export default isEmpty;
 /**
- * Check if data is empty
+ * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
  * @category Seq

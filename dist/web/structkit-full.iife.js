@@ -914,6 +914,89 @@ _stk.arraySlice=arraySlice
 
 
 /**
+ * Check if data is empty, null and undefined are now considered as empty
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+function isEmpty (value) {
+
+    var zero =0;
+
+    var typeofvalue = getTypeof(value);
+
+    var invalidList = [
+        'null',
+        'undefined'
+    ];
+
+    if (typeofvalue=== "json" || typeofvalue === "array") {
+
+        return count(value, true)===zero;
+
+    }
+    if (typeofvalue=== "number") {
+
+        return value===zero;
+
+    }
+
+    if (indexOfExist(invalidList, typeofvalue)) {
+
+        return true;
+
+    }
+
+    return (/^\s*$/gmi).test(value);
+
+}
+
+/**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number[]} arrayObject Array in number
+ * @param {number=} delimeter decimal point and default value is 4
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ */
+function arraySum (arrayObject, delimeter) {
+
+    var sum=0;
+    var defaultLimitDecimal = 3;
+    var arrayObjects=arrayObject||[];
+    var delimeters=delimeter||defaultLimitDecimal;
+
+    each(arrayObjects, function (ak, av) {
+
+        if (has(av)) {
+
+            sum+=parseFloat(av);
+
+        }
+
+    });
+
+    return isEmpty(delimeters)
+        ? parseInt(sum)
+        :sum.toFixed(delimeters);
+
+}
+
+_stk.arraySum=arraySum
+
+
+/**
  * To String
  *
  * @since 1.4.5
@@ -1038,89 +1121,6 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 }
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
-
-
-/**
- * Check if data is empty
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value JSON , Array and String
- * @returns {boolean} Returns true or false
- * @example
- *
- * isEmpty('')
- * // => true
- */
-function isEmpty (value) {
-
-    var zero =0;
-
-    var typeofvalue = getTypeof(value);
-
-    var invalidList = [
-        'null',
-        'undefined'
-    ];
-
-    if (typeofvalue=== "json" || typeofvalue === "array") {
-
-        return count(value, true)===zero;
-
-    }
-    if (typeofvalue=== "number") {
-
-        return value===zero;
-
-    }
-
-    if (indexOfExist(invalidList, typeofvalue)) {
-
-        return true;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
-
-/**
- * Array Sum
- *
- * @since 1.0.1
- * @category Seq
- * @param {number[]} arrayObject Array in number
- * @param {number=} delimeter decimal point and default value is 4
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- */
-function arraySum (arrayObject, delimeter) {
-
-    var sum=0;
-    var defaultLimitDecimal = 3;
-    var arrayObjects=arrayObject||[];
-    var delimeters=delimeter||defaultLimitDecimal;
-
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum+=parseFloat(av);
-
-        }
-
-    });
-
-    return isEmpty(delimeters)
-        ? parseInt(sum)
-        :sum.toFixed(delimeters);
-
-}
-
-_stk.arraySum=arraySum
 
 
 /**
@@ -1291,11 +1291,11 @@ function filter (objectValue, func) {
 
 _stk.filter=filter
 
-_stk.first=first
-
 _stk.getData=getData
 
 _stk.getJSONVariable=getJSONVariable
+
+_stk.first=first
 
 
 /**
@@ -1317,6 +1317,8 @@ function getKey (objectValue) {
 }
 
 _stk.getKey=getKey
+
+_stk.getTypeof=getTypeof
 /**
  * Generate unique value id
  *
@@ -1353,7 +1355,7 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq
 
-_stk.getTypeof=getTypeof
+_stk.has=has
 
 
 /**
@@ -1375,8 +1377,6 @@ function getValue (objectValue) {
 }
 
 _stk.getValue=getValue
-
-_stk.has=has
 
 
 /**
@@ -3155,7 +3155,28 @@ function stringLowerCase (value) {
 
 _stk.stringLowerCase=stringLowerCase
 
-_stk.stringUnEscape=stringUnEscape
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category Seq
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function stringSnakeCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+_stk.stringSnakeCase=stringSnakeCase
 
 
 /**
@@ -3186,28 +3207,7 @@ function stringSubs (value, minValue, maxValue) {
 
 _stk.stringSubs=stringSubs
 
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category Seq
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function stringSnakeCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-_stk.stringSnakeCase=stringSnakeCase
+_stk.stringUnEscape=stringUnEscape
 
 
 /**

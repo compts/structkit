@@ -30,37 +30,37 @@ const arrayConcat=require('./function/arrayConcat.js');
 
 exports.arrayConcat =arrayConcat;
 
+const arrayRepeat=require('./function/arrayRepeat.js');
+
+exports.arrayRepeat =arrayRepeat;
+
 const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
-
-const arraySum=require('./function/arraySum.js');
-
-exports.arraySum =arraySum;
 
 const arraySlice=require('./function/arraySlice.js');
 
 exports.arraySlice =arraySlice;
 
-const arrayRepeat=require('./function/arrayRepeat.js');
+const arraySum=require('./function/arraySum.js');
 
-exports.arrayRepeat =arrayRepeat;
+exports.arraySum =arraySum;
+
+const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
+
+exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
 const asyncReplace=require('./function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
 
-const clone=require('./function/clone.js');
-
-exports.clone =clone;
-
 const count=require('./function/count.js');
 
 exports.count =count;
 
-const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
+const clone=require('./function/clone.js');
 
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
+exports.clone =clone;
 
 const each=require('./function/each.js');
 
@@ -70,13 +70,13 @@ const filter=require('./function/filter.js');
 
 exports.filter =filter;
 
-const getData=require('./function/getData.js');
-
-exports.getData =getData;
-
 const first=require('./function/first.js');
 
 exports.first =first;
+
+const getData=require('./function/getData.js');
+
+exports.getData =getData;
 
 const getJSONVariable=require('./function/getJSONVariable.js');
 
@@ -122,13 +122,13 @@ const insert=require('./function/insert.js');
 
 exports.insert =insert;
 
-const isEmpty=require('./function/isEmpty.js');
-
-exports.isEmpty =isEmpty;
-
 const isExact=require('./function/isExact.js');
 
 exports.isExact =isExact;
+
+const isEmpty=require('./function/isEmpty.js');
+
+exports.isEmpty =isEmpty;
 
 const isExactbyRegExp=require('./function/isExactbyRegExp.js');
 
@@ -154,13 +154,13 @@ const like=require('./function/like.js');
 
 exports.like =like;
 
-const limit=require('./function/limit.js');
-
-exports.limit =limit;
-
 const map=require('./function/map.js');
 
 exports.map =map;
+
+const limit=require('./function/limit.js');
+
+exports.limit =limit;
 
 const numberFormat=require('./function/numberFormat.js');
 
@@ -190,21 +190,21 @@ const random=require('./function/random.js');
 
 exports.random =random;
 
-const regexCountGroup=require('./function/regexCountGroup.js');
+const remove=require('./function/remove.js');
 
-exports.regexCountGroup =regexCountGroup;
+exports.remove =remove;
 
 const range=require('./function/range.js');
 
 exports.range =range;
 
-const remove=require('./function/remove.js');
-
-exports.remove =remove;
-
 const repeat=require('./function/repeat.js');
 
 exports.repeat =repeat;
+
+const regexCountGroup=require('./function/regexCountGroup.js');
+
+exports.regexCountGroup =regexCountGroup;
 
 const roundDecimal=require('./function/roundDecimal.js');
 
@@ -218,10 +218,6 @@ const sort=require('./function/sort.js');
 
 exports.sort =sort;
 
-const stringCapitalize=require('./function/stringCapitalize.js');
-
-exports.stringCapitalize =stringCapitalize;
-
 const stringCamelCase=require('./function/stringCamelCase.js');
 
 exports.stringCamelCase =stringCamelCase;
@@ -230,29 +226,29 @@ const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
-const stringKebabCase=require('./function/stringKebabCase.js');
+const stringCapitalize=require('./function/stringCapitalize.js');
 
-exports.stringKebabCase =stringKebabCase;
+exports.stringCapitalize =stringCapitalize;
 
 const stringLowerCase=require('./function/stringLowerCase.js');
 
 exports.stringLowerCase =stringLowerCase;
 
-const stringSnakeCase=require('./function/stringSnakeCase.js');
-
-exports.stringSnakeCase =stringSnakeCase;
-
 const stringSubs=require('./function/stringSubs.js');
 
 exports.stringSubs =stringSubs;
 
+const stringKebabCase=require('./function/stringKebabCase.js');
+
+exports.stringKebabCase =stringKebabCase;
+
+const stringSnakeCase=require('./function/stringSnakeCase.js');
+
+exports.stringSnakeCase =stringSnakeCase;
+
 const stringUnEscape=require('./function/stringUnEscape.js');
 
 exports.stringUnEscape =stringUnEscape;
-
-const templateValue=require('./function/templateValue.js');
-
-exports.templateValue =templateValue;
 
 const stringUpperCase=require('./function/stringUpperCase.js');
 
@@ -261,6 +257,10 @@ exports.stringUpperCase =stringUpperCase;
 const toArray=require('./function/toArray.js');
 
 exports.toArray =toArray;
+
+const templateValue=require('./function/templateValue.js');
+
+exports.templateValue =templateValue;
 
 const toDouble=require('./function/toDouble.js');
 
