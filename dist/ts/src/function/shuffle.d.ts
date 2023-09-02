@@ -3,12 +3,12 @@ export default shuffle;
  * Shuffle data in array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array argmuments
- * @returns {string|number} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * shuffle([1,2,3])
  *=>[2,3,1]
  */
-declare function shuffle(objectValue: any): string | number;
+declare function shuffle(objectValue: any): any[];

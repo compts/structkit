@@ -4,7 +4,7 @@ import count from './count';
  * Random Decimal
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {number} value Int or Double value type
  * @param {number=} maxValue limit decimal
  * @returns {number} Returns the total.

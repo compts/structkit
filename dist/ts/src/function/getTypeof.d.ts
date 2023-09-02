@@ -1,9 +1,9 @@
 export default getTypeof;
 /**
- * Get Variable typeof
+ * Get type of the variable
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {any} objectValue Any data you want to check its property
  * @returns {string} Get the property of variable
  * @example

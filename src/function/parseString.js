@@ -11,7 +11,7 @@ const count = require('./count');
  * Data String from JSON object
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {string} str Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example

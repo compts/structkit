@@ -8,13 +8,16 @@ import each from './each';
  * Array Count
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {any} objectValue Json or array
  * @param {boolean=} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.
  * @example
  *
  * count([1,2])
+ * // => 2
+ *
+ * count({"s" :1, "s2": 2}, true)
  * // => 2
  */
 function count (objectValue, json_is_empty_check) {

@@ -3,7 +3,7 @@ export default stringCapitalize;
  * String Capitalize
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {string=} option Type of captalize optional
  * @returns {string} Returns Capitalize sting data

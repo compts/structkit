@@ -16,7 +16,7 @@ const toString = require("./toString");
  * Template Value
  *
  * @since 1.0.1
- * @category Seq
+ * @category String
  * @param {string} templateString Template string
  * @param {any} data Parameter to replace
  * @param {any=} option The second number in an addition.

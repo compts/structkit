@@ -10,7 +10,7 @@ import getKey from './getKey';
  * Var extend is use for cloning Json, Array or Object
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {object} objectValue Json, Array or Object
  * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
  * @returns {array} Return Json or Array or Object.
@@ -93,7 +93,7 @@ function varExtend (objectValue, objectValueReplace) {
  * @returns {array} Return Json or Array.
  * @example
  *
- * varExtend({"s1":1},{"s1":2})
+ * replaceValue({"s1":1},{"s1":2})
  *=>{"s1":2}
  */
 function replaceValue (objectValue, objectValueReplace) {

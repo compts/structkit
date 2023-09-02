@@ -2,7 +2,7 @@
 [![NPM version][npm-image]][npm-url] 
 
 [Site](https://structkit.codehyouka.xyz/) |
-[Docs](https://structkit.codehyouka.xyz/docs) |
+[Docs](https://structkit.codehyouka.xyz/api) |
 
 ## Download
 
@@ -52,7 +52,7 @@ repeat("1",20)
 
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.5-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.7-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function

@@ -7,7 +7,7 @@ const has = require('./has');
  * Each or for loop function you are familiar with
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Array or json.
  * @param {Function=} func Function data
  * @returns {any} Array or json
@@ -21,7 +21,7 @@ function each (objectValue, func) {
     let re_loop=[];
     const typeofs=getTypeof(objectValue);
 
-    if (typeofs==="json"||typeofs==="array"||typeofs==="object") {
+    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
 
         for (const ins in objectValue) {
 

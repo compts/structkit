@@ -2,12 +2,14 @@ const getTypeof = require('./getTypeof');
 
 const count = require('./count');
 
+const indexOfExist = require('./indexOfExist');
+
 
 /**
- * Check if data is empty
+ * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
- * @category Seq
+ * @category Boolean
  * @param {any} value JSON , Array and String
  * @returns {boolean} Returns true or false
  * @example
@@ -19,9 +21,27 @@ function isEmpty (value) {
 
     const zero =0;
 
-    if (getTypeof(value) === "json" || getTypeof(value) === "array") {
+    const typeofvalue = getTypeof(value);
+
+    const invalidList = [
+        'null',
+        'undefined'
+    ];
+
+    if (typeofvalue=== "json" || typeofvalue === "array") {
 
         return count(value, true)===zero;
+
+    }
+    if (typeofvalue=== "number") {
+
+        return value===zero;
+
+    }
+
+    if (indexOfExist(invalidList, typeofvalue)) {
+
+        return true;
 
     }
 

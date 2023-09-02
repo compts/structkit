@@ -1,13 +1,13 @@
-const dataTypeFormat = require('../core/dataTypeFormat');
+const dataNumberFormat = require('../core/dataTypeFormat');
 
 
 /**
- * To Double
+ * To extract number in string and convert to double
  *
  * @since 1.0.1
- * @category Seq
+ * @category Number
  * @param {any} value Value you to convert in double
- * @returns {any} Return in double.
+ * @returns {number} Return in double.
  * @example
  *
  * toDouble(1)
@@ -17,7 +17,7 @@ function toDouble (value) {
 
     const zero = 0.00;
 
-    return parseFloat(dataTypeFormat(/(\d[.]{0,})/g, zero, value===null
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
         ?zero
         :value));
 

@@ -7,5 +7,19 @@ const listObjArrayType = [
     "[object Array]"
 ];
 
+const objectCallTypeAll = {"[object Arguments]": "arguments",
+    "[object Array]": "array",
+    "[object Boolean]": "boolean",
+    "[object Date]": "date",
+    "[object Error]": "error",
+    "[object Null]": "null",
+    "[object Number]": "number",
+    "[object Object]": "object",
+    "[object Promise]": "promise",
+    "[object RegExp]": "regexp",
+    "[object String]": "string",
+    "[object Undefined]": "undefined"};
+
 exports.objectCallType =objectCallType;
+exports.objectCallTypeAll =objectCallTypeAll;
 exports.listObjArrayType =listObjArrayType;

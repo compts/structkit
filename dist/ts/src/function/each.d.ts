@@ -1,9 +1,9 @@
 export default each;
 /**
- * Each
+ * Each or for loop function you are familiar with
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Array or json.
  * @param {Function=} func Function data
  * @returns {any} Array or json

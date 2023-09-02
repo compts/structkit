@@ -6,7 +6,7 @@ const has = require('./has');
  * To String
  *
  * @since 1.4.5
- * @category Seq
+ * @category String
  * @param {any=} value Value you to convert in double
  * @returns {string} Return in double.
  * @example
@@ -19,8 +19,7 @@ function toString (value) {
     const notInList = [
         "object",
         "json",
-        "promise",
-        "regexp"
+        "promise"
     ];
 
     const gettypeof = getTypeof(value);

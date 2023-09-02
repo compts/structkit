@@ -1,6 +1,6 @@
 {
   "name": "structkit",
-  "version": "1.4.61",
+  "version": "1.4.7",
   "description": "JS utility tool",
   "main": "src/node.cjs.js",
   "module": "dist/esm/node.es.js",
@@ -26,7 +26,14 @@
     "url": "git+https://github.com/compts/structkit.git"
   },
   "keywords": [
-    "structkit"
+    "structkit",
+    "javascript",
+    "utilities",
+    "module",
+    "stdlib",
+    "util",
+    "json",
+    "array"
   ],
   "author": "Pein Freccs",
   "license": "MIT",

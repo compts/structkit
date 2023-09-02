@@ -10,7 +10,7 @@ const toString = require("./toString");
  * String Escape
  *
  * @since 1.3.1
- * @category Seq
+ * @category String
  * @param {string} value String data
  * @param {string=} type Configuration
  * @returns {string} Returns escape string

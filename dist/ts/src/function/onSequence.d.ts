@@ -10,7 +10,7 @@ export default onSequence;
  * @returns {string} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onSequence(()=>{})
  *=>'11'
  */
 declare function onSequence(func: any, wait?: object | undefined, option?: object | undefined): string;

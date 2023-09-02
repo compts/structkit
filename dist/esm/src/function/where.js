@@ -1,10 +1,10 @@
 import whereLoopExecution from '../core/whereLoopExecution';
 
 /**
- * Where
+ * Get the value in array the value in json given the search value was in json
  *
  * @since 1.0.1
- * @category Seq
+ * @category Collection
  * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
  * @param {Function=} func Function

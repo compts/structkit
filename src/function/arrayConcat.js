@@ -1,30 +1,40 @@
-const getTypeof = require('./getTypeof');
-
+const each = require('./each');
+const toArray = require('./toArray');
+const arraySlice = require('./arraySlice');
+const first = require('./first');
 
 /**
  * Array Concat
  *
  * @since 1.0.1
- * @category Seq
- * @param {any} arrayObject First array
- * @param {any} arrayValue The second array for concat
- * @returns {any} Returns the array.
+ * @category Array
+ * @param {...any} arg First array
+ * @returns {any[]} Returns the array.
  * @example
  *
  * arrayConcat([1], 2)
  * // => [1,2]
  */
-function arrayConcat (arrayObject, arrayValue) {
+function arrayConcat (...arg) {
 
-    const return_val=arrayObject;
+    const one =1;
 
-    if (getTypeof(return_val)==="array") {
+    if (arg.length < one) {
 
-        return return_val.concat(arrayValue);
+        return [];
 
     }
 
-    return [];
+    let return_val=toArray(first(arg));
+    const arrayValue = toArray(arraySlice(arg, one));
+
+    each(arrayValue, function (key, value) {
+
+        return_val = return_val.concat(toArray(value));
+
+    });
+
+    return return_val;
 
 }
 module.exports=arrayConcat;

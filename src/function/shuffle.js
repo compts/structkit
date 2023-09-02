@@ -9,9 +9,9 @@ const indexOf = require('./indexOf');
  * Shuffle data in array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} objectValue Array argmuments
- * @returns {string|number} Returns the total.
+ * @returns {any[]} Returns the total.
  * @example
  *
  * shuffle([1,2,3])

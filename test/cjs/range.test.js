@@ -33,6 +33,16 @@ describe('CJS: range method', function () {
 
     });
 
+    it('check if value exist less 4', function () {
+
+        assert.deepStrictEqual(range(ten, -two, -four), [
+            -two,
+            two,
+            six,
+            ten
+        ]);
+
+    });
 
 });
 

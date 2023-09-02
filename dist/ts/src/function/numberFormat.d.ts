@@ -3,7 +3,7 @@ export default numberFormat;
  * Number format
  *
  * @since 1.0.1
- * @category Seq
+ * @category Math
  * @param {array|object} objectValue The data you want to format
  * @param {string} value1 The start number.
  * @param {string=} value2 The end number.

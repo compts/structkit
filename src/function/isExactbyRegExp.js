@@ -15,7 +15,7 @@ const each = require('./each');
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
  * @example
  *
- * isExactbyRegExp('')
+ * isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})
  * // => false
  */
 function isExactbyRegExp (objectValue1, objectValue2) {

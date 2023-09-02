@@ -3,7 +3,8 @@ export default getUniq;
  * Generate unique value id
  *
  * @since 1.0.1
- * @param {any=} option if value not exist, this value will be return
+ * @category String
+ * @param {any=} option type unique id
  * @returns {string} Get Unique Key.
  * @example
  *
