@@ -2,14 +2,6 @@ const dataNumberFormat=require('./core/dataTypeFormat.js');
 
 exports.dataNumberFormat =dataNumberFormat;
 
-const getKeyVal=require('./core/getKeyVal.js');
-
-exports.getKeyVal =getKeyVal;
-
-const stringSplit=require('./core/stringSplit.js');
-
-exports.stringSplit =stringSplit;
-
 const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
@@ -18,17 +10,21 @@ const getWindow=require('./core/global.js');
 
 exports.getWindow =getWindow;
 
+const stringSplit=require('./core/stringSplit.js');
+
+exports.stringSplit =stringSplit;
+
 const whereLoopExecution=require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
-const append=require('./function/append.js');
-
-exports.append =append;
-
 const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
+
+const append=require('./function/append.js');
+
+exports.append =append;
 
 const arrayConcat=require('./function/arrayConcat.js');
 
@@ -46,13 +42,13 @@ const arraySum=require('./function/arraySum.js');
 
 exports.arraySum =arraySum;
 
-const asyncReplace=require('./function/asyncReplace.js');
-
-exports.asyncReplace =asyncReplace;
-
 const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
 
 exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
+
+const asyncReplace=require('./function/asyncReplace.js');
+
+exports.asyncReplace =asyncReplace;
 
 const clone=require('./function/clone.js');
 
@@ -74,13 +70,13 @@ const first=require('./function/first.js');
 
 exports.first =first;
 
-const getData=require('./function/getData.js');
-
-exports.getData =getData;
-
 const getJSONVariable=require('./function/getJSONVariable.js');
 
 exports.getJSONVariable =getJSONVariable;
+
+const getData=require('./function/getData.js');
+
+exports.getData =getData;
 
 const getKey=require('./function/getKey.js');
 
@@ -146,13 +142,13 @@ const last=require('./function/last.js');
 
 exports.last =last;
 
-const lastIndexOf=require('./function/lastIndexOf.js');
-
-exports.lastIndexOf =lastIndexOf;
-
 const like=require('./function/like.js');
 
 exports.like =like;
+
+const lastIndexOf=require('./function/lastIndexOf.js');
+
+exports.lastIndexOf =lastIndexOf;
 
 const limit=require('./function/limit.js');
 
@@ -182,6 +178,10 @@ const parseJson=require('./function/parseJson.js');
 
 exports.parseJson =parseJson;
 
+const parseString=require('./function/parseString.js');
+
+exports.parseString =parseString;
+
 const random=require('./function/random.js');
 
 exports.random =random;
@@ -194,13 +194,13 @@ const remove=require('./function/remove.js');
 
 exports.remove =remove;
 
+const regexCountGroup=require('./function/regexCountGroup.js');
+
+exports.regexCountGroup =regexCountGroup;
+
 const repeat=require('./function/repeat.js');
 
 exports.repeat =repeat;
-
-const parseString=require('./function/parseString.js');
-
-exports.parseString =parseString;
 
 const roundDecimal=require('./function/roundDecimal.js');
 
@@ -226,25 +226,25 @@ const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
-const stringKebabCase=require('./function/stringKebabCase.js');
-
-exports.stringKebabCase =stringKebabCase;
-
 const stringLowerCase=require('./function/stringLowerCase.js');
 
 exports.stringLowerCase =stringLowerCase;
+
+const stringKebabCase=require('./function/stringKebabCase.js');
+
+exports.stringKebabCase =stringKebabCase;
 
 const stringSnakeCase=require('./function/stringSnakeCase.js');
 
 exports.stringSnakeCase =stringSnakeCase;
 
-const stringSubs=require('./function/stringSubs.js');
-
-exports.stringSubs =stringSubs;
-
 const stringUnEscape=require('./function/stringUnEscape.js');
 
 exports.stringUnEscape =stringUnEscape;
+
+const stringSubs=require('./function/stringSubs.js');
+
+exports.stringSubs =stringSubs;
 
 const stringUpperCase=require('./function/stringUpperCase.js');
 
@@ -254,13 +254,13 @@ const templateValue=require('./function/templateValue.js');
 
 exports.templateValue =templateValue;
 
-const toArray=require('./function/toArray.js');
-
-exports.toArray =toArray;
-
 const toDouble=require('./function/toDouble.js');
 
 exports.toDouble =toDouble;
+
+const toArray=require('./function/toArray.js');
+
+exports.toArray =toArray;
 
 const toInteger=require('./function/toInteger.js');
 
@@ -293,4 +293,8 @@ exports.entity =entity;
 const objectCallType=require('./variable/types.js');
 
 exports.objectCallType =objectCallType;
+
+const getKeyVal=require('./core/getKeyVal.js');
+
+exports.getKeyVal =getKeyVal;
 
