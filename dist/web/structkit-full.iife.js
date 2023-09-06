@@ -522,186 +522,30 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
- * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
+ * To Array
  *
  * @since 1.0.1
- * @category Any
- * @param {any} value Either Json or Array
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * getEmptyVariable([])
- * => []
- */
-function getEmptyVariable (value) {
-
-    var zero = 0;
-
-    if (getTypeof(value)==="json") {
-
-        return {};
-
-    }
-
-    if (getTypeof(value)==="array") {
-
-        return [];
-
-    }
-
-    if (getTypeof(value)==="string") {
-
-        return '';
-
-    }
-    if (getTypeof(value)==="number") {
-
-        return zero;
-
-    }
-
-    return value;
-
-}
-
-/**
- * To map the value of json ot array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue The data you want to map
- * @param {any=} func Callback function
- * @returns {null} Return map either JSON or Array
- * @example
- *
- * map([1,2],function(value) { return value+2 } )
- *=> [3, 4]
- */
-function map (objectValue, func) {
-
-    var strTypeOf =getTypeof(objectValue);
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
-    var value_arry=getEmptyVariable(objectValue);
-    var cnt=emptyDefaultValue;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            if (strTypeOf==="array") {
-
-                value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
-
-            } else {
-
-                var dataFunc = func(value, key, cnt);
-
-                value_arry[key] = dataFunc;
-
-            }
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-
-/**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
+ * @category Array
+ * @param {any} value Value you want to convert in array
  * @returns {any[]} Return in array.
  * @example
  *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
+ * toArray(1)
+ *=>[1]
  */
-function range (maxValue, minValue, step) {
+function toArray (value) {
 
-    var emptyDefaultValue=0;
-    var tenDefaultValue=10;
+    var return_val = value;
 
-    var incrementDefaultValue=1;
+    if (getTypeof(return_val)!=="array") {
 
-    var incrementValue=has(step)
-        ?step
-        :incrementDefaultValue;
-    var minValueRef=has(minValue)
-        ?minValue
-        :incrementDefaultValue;
-    var maxValueRef=has(maxValue)
-        ?maxValue
-        :tenDefaultValue;
-    var output=[];
-
-    for (var inc=minValueRef; inc<=maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
+        return_val = [value];
 
     }
 
-    return output;
+    return return_val;
 
 }
-
-/**
- * Repeat  value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
-
-    return map(range(nm_rpt), function () {
-
-        return value;
-
-    });
-
-}
-
-_stk.arrayRepeat=arrayRepeat
-
 
 /**
  * To get value of array given start and end(optional) of the array
@@ -780,35 +624,6 @@ function arraySlice (objectValue, min, max) {
     });
 
     return ran_var;
-
-}
-
-_stk.arraySlice=arraySlice
-
-
-/**
- * To Array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-
-    var return_val = value;
-
-    if (getTypeof(return_val)!=="array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
 
 }
 
@@ -955,6 +770,8 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat
 
+_stk.arraySlice=arraySlice
+
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -1038,6 +855,95 @@ function arraySum (arrayObject, delimeter) {
 
 _stk.arraySum=arraySum
 
+
+/**
+ * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} value Either Json or Array
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * getEmptyVariable([])
+ * => []
+ */
+function getEmptyVariable (value) {
+
+    var zero = 0;
+
+    if (getTypeof(value)==="json") {
+
+        return {};
+
+    }
+
+    if (getTypeof(value)==="array") {
+
+        return [];
+
+    }
+
+    if (getTypeof(value)==="string") {
+
+        return '';
+
+    }
+    if (getTypeof(value)==="number") {
+
+        return zero;
+
+    }
+
+    return value;
+
+}
+
+/**
+ * To map the value of json ot array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue The data you want to map
+ * @param {any=} func Callback function
+ * @returns {null} Return map either JSON or Array
+ * @example
+ *
+ * map([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
+ */
+function map (objectValue, func) {
+
+    var strTypeOf =getTypeof(objectValue);
+    var emptyDefaultValue=0;
+    var incrementDefaultValue=1;
+    var value_arry=getEmptyVariable(objectValue);
+    var cnt=emptyDefaultValue;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            if (strTypeOf==="array") {
+
+                value_arry.push(func(value, key, cnt));
+                cnt+=incrementDefaultValue;
+
+            } else {
+
+                var dataFunc = func(value, key, cnt);
+
+                value_arry[key] = dataFunc;
+
+            }
+
+        }
+
+    });
+
+    return value_arry;
+
+}
 
 /**
  * To String
@@ -1167,6 +1073,99 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 
 /**
+ * Generate array of data from specific limit or where the index to start
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue, step) {
+
+    var emptyDefaultValue=0;
+    var tenDefaultValue=10;
+
+    var incrementDefaultValue=1;
+
+    var incrementValue=has(step)
+        ?step
+        :incrementDefaultValue;
+    var minValueRef=has(minValue)
+        ?minValue
+        :incrementDefaultValue;
+    var maxValueRef=has(maxValue)
+        ?maxValue
+        :tenDefaultValue;
+    var output=[];
+
+    for (var inc=minValueRef; inc<=maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "string") {
+
+            output.push(inc);
+
+            var render = new Function('inc', "return "+inc+incrementValue);
+
+            inc = render.call(inc);
+
+        }
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<emptyDefaultValue) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+/**
+ * Repeat  value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+
+    return map(range(nm_rpt), function () {
+
+        return value;
+
+    });
+
+}
+
+_stk.arrayRepeat=arrayRepeat
+
+
+/**
  * Async replace
  *
  * @since 1.3.1
@@ -1253,6 +1252,8 @@ _stk.clone=clone
 
 _stk.count=count
 
+_stk.each=each
+
 
 /**
  * Filter the data in loop
@@ -1300,8 +1301,6 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter
-
-_stk.each=each
 
 _stk.first=first
 
@@ -1368,6 +1367,8 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq
 
+_stk.has=has
+
 
 /**
  * Get value of json or array
@@ -1388,8 +1389,6 @@ function getValue (objectValue) {
 }
 
 _stk.getValue=getValue
-
-_stk.has=has
 
 
 /**
@@ -1658,53 +1657,6 @@ _stk.isJson=isJson
 
 
 /**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last
-
-
-/**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf([1,2], 1)
- * // => 0
- */
-function lastIndexOf (objectValue, value) {
-
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
-
-}
-
-_stk.lastIndexOf=lastIndexOf
-
-
-/**
  * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
@@ -1749,65 +1701,50 @@ _stk.jsonToArray=jsonToArray
 
 
 /**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
+ * Get the last value of array or JSON
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue Data must be array
- * @param {number} minValue Minimum value
- * @param {number=} maxValue Maximum value
- * @param {Function=} func Callback function
- * @returns {any} Returns the object.
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
  * @example
  *
- * limit([1,2],1,2 )
- *=>{'1':2}
+ * last([1,2] )
+ *=>2
  */
-function limit (objectValue, minValue, maxValue, func) {
+function last (objectValue) {
 
-    var cnt=0;
-    var glo_jsn={};
-    var glo_indtfd = null;
-    var emptyDefaultValue=0;
-    var minValueReserve=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-    var incrementDefaultValue=1;
-
-    each(objectValue, function (key, meth) {
-
-        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(key, meth);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt+=incrementDefaultValue;
-
-    });
-
-    return glo_jsn;
+    return getKeyVal(objectValue, "last_index").value;
 
 }
 
-_stk.limit=limit
+_stk.last=last
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+
+_stk.lastIndexOf=lastIndexOf
 
 
 /**
@@ -1909,6 +1846,68 @@ function like (objectValue, objectValueWhere, func) {
 }
 
 _stk.like=like
+
+
+/**
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number=} maxValue Maximum value
+ * @param {Function=} func Callback function
+ * @returns {any} Returns the object.
+ * @example
+ *
+ * limit([1,2],1,2 )
+ *=>{'1':2}
+ */
+function limit (objectValue, minValue, maxValue, func) {
+
+    var cnt=0;
+    var glo_jsn={};
+    var glo_indtfd = null;
+    var emptyDefaultValue=0;
+    var minValueReserve=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+    var incrementDefaultValue=1;
+
+    each(objectValue, function (key, meth) {
+
+        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
+
+            if (has(func)) {
+
+                glo_indtfd=func(key, meth);
+
+                if (has(glo_indtfd)) {
+
+                    glo_jsn[key]=glo_indtfd;
+
+                }
+
+            } else {
+
+                glo_jsn[key]=meth;
+
+            }
+
+        }
+
+        cnt+=incrementDefaultValue;
+
+    });
+
+    return glo_jsn;
+
+}
+
+_stk.limit=limit
 
 _stk.map=map
 
@@ -3467,31 +3466,6 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
- * To extract number in string and convert to integer
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger
-
-
-/**
  * To extract number in string and convert to double
  *
  * @since 1.0.1
@@ -3557,6 +3531,31 @@ function unique (value) {
 _stk.unique=unique
 
 _stk.varExtend=varExtend
+
+
+/**
+ * To extract number in string and convert to integer
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger
 
 _stk.where=where
 

@@ -1,6 +1,8 @@
+const structkit = require('./src/node.cjs');
+const types = require('./src/variable/types');
+
 const list_package_utility_js = ["src/function/*.js"];
 const list_package_utility_js1 = ["src/*/*.js"];
-
 
 const listOfType = {
     "array": "[]",
@@ -15,11 +17,24 @@ const listOfType = {
     "undefined": "undefined"
 };
 
-function isTypeFunction(types, structkit, suffix){
+/**
+ *  Get the type if
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} objectCallTypeAll Pass any value to check its type
+ * @param {any} suffix Pass any value to check its type
+ * @returns {string} Return either Json to Array.
+ * @example
+ *
+ *
+ *=> true
+ */
+function isTypeFunction (objectCallTypeAll, suffix) {
 
     let stringCnt = '';
 
-    structkit.each(types, (key, value) => {
+    structkit.each(objectCallTypeAll, (key, value) => {
 
         const name = 'is'+structkit.stringCapitalize(value);
 
@@ -33,7 +48,7 @@ function isTypeFunction(types, structkit, suffix){
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * ${name}(${structkit.ifUndefined(listOfType,value,'')})
+ * ${name}(${structkit.ifUndefined(listOfType, value, '')})
  *=> true
  */
 `;
@@ -52,9 +67,6 @@ exports.module=function (grassconf) {
     const grass_concat = grassconf.require("grass_concat");
 
     const packpier = grassconf.require("packpier");
-
-    const structkit = require('./src/node.cjs');
-    const types = require('./src/variable/types');
 
     const objectCallTypeAll = structkit.getValue(types.objectCallTypeAll);
 
@@ -96,25 +108,25 @@ exports.module=function (grassconf) {
                 "plugin": [
                     {
                         "name": "webIIfe",
-                            transform : async (config)=>{
+                        "transform": (config) => {
 
-                                return null;
-                            },
-                            transformFirstFile : async (config)=>{
-                                return null;
-                            },
-                            transformLastFile : async (config)=>{
+                            if (config.currentPath === 'src/function/where.js') {
 
-                                return  isTypeFunction(objectCallTypeAll, structkit,'_default')+"\n"+(structkit.map(objectCallTypeAll, function(value) {
+                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '_default')+"\n"+structkit.map(objectCallTypeAll, function (value) {
 
                                     const name = 'is'+structkit.stringCapitalize(value);
 
-                                    return "export const "+name+"="+name+"_default;"
+                                    return "export const "+name+"="+name+"_default;";
 
-                                }).join("\n"))+"\n";;
+                                }).join("\n")+"\n";
+
                             }
-                            
-                        
+
+                            return null;
+
+                        },
+                        "transformFirstFile": () => null,
+                        "transformLastFile": () => null
                     },
                     cjsToEsmFileNameOnly()
                 ]
@@ -142,25 +154,16 @@ exports.module=function (grassconf) {
                 "plugin": [
                     {
                         "name": "webIIfe",
-                            transform : async (config)=>{
+                        "transform": () => null,
+                        "transformFirstFile": () => null,
+                        "transformLastFile": () => isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
 
-                                return null;
-                            },
-                            transformFirstFile : async (config)=>{
-                                return null;
-                            },
-                            transformLastFile : async (config)=>{
+                            const name = 'is'+structkit.stringCapitalize(value);
 
-                                return  isTypeFunction(objectCallTypeAll, structkit,'_default')+"\n"+(structkit.map(objectCallTypeAll, function(value) {
+                            return "exports."+name+"="+name+"_default;";
 
-                                    const name = 'is'+structkit.stringCapitalize(value);
+                        }).join("\n")+"\n"
 
-                                    return "exports."+name+"="+name+"_default;"
-
-                                }).join("\n"))+"\n";;
-                            }
-                            
-                        
                     },
                     cjsFileNameOnlyImportOnly({
                         "replacePath": (file) => file.replace(/(src\/)/g, "")
@@ -189,29 +192,25 @@ exports.module=function (grassconf) {
                 "plugin": [
                     {
                         "name": "webIIfe",
-                            transform : async (config)=>{
-                                //console.log(config ,config.currentPath  === 'src/function/where.js',":")
-                                if (config.currentPath  === 'src/function/where.js'){
-                                    return  config.content+'\n'+isTypeFunction(objectCallTypeAll, structkit,'')+"\n"+(structkit.map(objectCallTypeAll, function(value) {
+                        "transform": (config) => {
 
-                                        const name = 'is'+structkit.stringCapitalize(value);
+                            if (config.currentPath === 'src/function/where.js') {
 
-                                        return "_stk."+name+"="+name+";"
+                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(objectCallTypeAll, function (value) {
 
-                                    }).join("\n"));
-                                }
-                              
-                                return null;
-                            },
-                            transformFirstFile : async (config)=>{
-                                return null;
-                            },
-                            transformLastFile : async (config)=>{
+                                    const name = 'is'+structkit.stringCapitalize(value);
 
-                                return null;
+                                    return "_stk."+name+"="+name+";";
+
+                                }).join("\n");
+
                             }
-                            
-                        
+
+                            return null;
+
+                        },
+                        "transformFirstFile": () => null,
+                        "transformLastFile": () => null
                     }
                 ]
             }
