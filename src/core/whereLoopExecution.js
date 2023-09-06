@@ -4,7 +4,7 @@ const getTypeof = require('../function/getTypeof');
 
 const each = require('../function/each');
 
-const getJSONVariable = require('../function/getJSONVariable');
+const getEmptyVariable = require('../function/getEmptyVariable');
 
 const isExact = require('../function/isExact');
 
@@ -42,7 +42,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         ? json_convertion
         : jsn;
     const whr_s=whr||{};
-    const variable=getJSONVariable(jsn);
+    const variable=getEmptyVariable(jsn);
     let filterData = {};
 
     each(jsn_s, function (jk, jv) {

@@ -9,9 +9,8 @@ export default filter;
  * @returns {null} Returns the total.
  * @example
  *
- * filter([1,2],(key,value)=>{
+ * filter([1,2,3,34],function(value, key){ return key%2===0 })
  *
- * })
- *
+ * => [2, 34]
  */
 declare function filter(objectValue: any, func?: Function | undefined): null;

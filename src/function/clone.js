@@ -1,4 +1,4 @@
-const getJSONVariable = require('./getJSONVariable');
+const getEmptyVariable = require('./getEmptyVariable');
 
 const each = require('./each');
 
@@ -19,7 +19,7 @@ const append = require('./append');
  */
 function clone (objectValue) {
 
-    const variable=getJSONVariable(objectValue);
+    const variable=getEmptyVariable(objectValue);
 
     each(objectValue, function (key, value) {
 

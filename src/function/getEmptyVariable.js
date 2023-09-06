@@ -2,7 +2,7 @@ const getTypeof = require('./getTypeof');
 
 
 /**
- * Get JSON or  Array as empty variable
+ * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
  *
  * @since 1.0.1
  * @category Any
@@ -10,10 +10,12 @@ const getTypeof = require('./getTypeof');
  * @returns {any} Returns empty either Json or Array
  * @example
  *
- * getJSONVariable([])
+ * getEmptyVariable([])
  * => []
  */
-function getJSONVariable (value) {
+function getEmptyVariable (value) {
+
+    const zero = 0;
 
     if (getTypeof(value)==="json") {
 
@@ -27,8 +29,19 @@ function getJSONVariable (value) {
 
     }
 
+    if (getTypeof(value)==="string") {
+
+        return '';
+
+    }
+    if (getTypeof(value)==="number") {
+
+        return zero;
+
+    }
+
     return value;
 
 }
-module.exports=getJSONVariable;
+module.exports=getEmptyVariable;
 

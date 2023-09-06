@@ -9,6 +9,7 @@ export const objectCallTypeAll: {
     "[object Boolean]": string;
     "[object Date]": string;
     "[object Error]": string;
+    "[object Function]": string;
     "[object Null]": string;
     "[object Number]": string;
     "[object Object]": string;

@@ -15,6 +15,6 @@ export default arraySlice;
  * // => [2]
  *
  * arraySlice([1,2,3,4],2,4)
- * // => [2, 3, 4]
+ * // => [3, 4]
  */
 declare function arraySlice(objectValue: any, min?: number | undefined, max?: number | undefined): any[];

@@ -20,7 +20,7 @@ import each from './each';
  * // => [2]
  *
  * arraySlice([1,2,3,4],2,4)
- * // => [2, 3, 4]
+ * // => [3, 4]
  */
 function arraySlice (objectValue, min, max) {
 

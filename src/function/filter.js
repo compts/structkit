@@ -2,7 +2,7 @@ const has = require('./has');
 
 const each = require('./each');
 
-const getJSONVariable = require('./getJSONVariable');
+const getEmptyVariable = require('./getEmptyVariable');
 
 const getTypeof = require('./getTypeof');
 
@@ -19,14 +19,13 @@ const append = require('./append');
  * @returns {null} Returns the total.
  * @example
  *
- * filter([1,2],(key,value)=>{
+ * filter([1,2,3,34],function(value, key){ return key%2===0 })
  *
- * })
- *
+ * => [2, 34]
  */
 function filter (objectValue, func) {
 
-    let jsn_var=getJSONVariable(objectValue);
+    let jsn_var=getEmptyVariable(objectValue);
     const jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {

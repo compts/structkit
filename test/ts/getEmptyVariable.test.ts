@@ -1,17 +1,17 @@
-import {getJSONVariable} from "../../dist/esm/node.esm";
+import {getEmptyVariable} from "../../dist/esm/node.esm";
 import assert from 'assert';
-
+import {expectType} from 'tsd';
 const three =3;
 const two =2;
 const one =1;
 
-describe('ESM: getJSONVariable method', function () {
+describe('TS: getEmptyVariable method', function () {
 
 
     it('return empty array', function () {
 
         assert.deepStrictEqual(
-            getJSONVariable([
+            getEmptyVariable([
                 one,
                 two,
                 three
@@ -24,11 +24,17 @@ describe('ESM: getJSONVariable method', function () {
     it('return empty json', function () {
 
         assert.deepStrictEqual(
-            getJSONVariable({"ones": one}),
+            getEmptyVariable({"ones": one}),
             {}
         );
 
     });
+
+    it('check expected type', function () {
+       
+        expectType<any>(getEmptyVariable({"ones": one}));
+  
+      });
 
 });
 

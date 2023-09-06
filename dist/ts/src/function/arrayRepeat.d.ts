@@ -9,7 +9,7 @@ export default arrayRepeat;
  * @returns {any[]} Return in string or number.
  * @example
  *
- * arrayRepeat("s",1 )
+ * arrayRepeat("s",2 )
  *=>['s','s']
  */
 declare function arrayRepeat(value: any, valueRepetion: number): any[];

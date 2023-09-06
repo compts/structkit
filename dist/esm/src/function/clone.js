@@ -1,4 +1,4 @@
-import getJSONVariable from './getJSONVariable';
+import getEmptyVariable from './getEmptyVariable';
 
 import each from './each';
 
@@ -18,7 +18,7 @@ import append from './append';
  */
 function clone (objectValue) {
 
-    const variable=getJSONVariable(objectValue);
+    const variable=getEmptyVariable(objectValue);
 
     each(objectValue, function (key, value) {
 

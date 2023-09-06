@@ -2,7 +2,7 @@ import has from './has';
 
 import each from './each';
 
-import getJSONVariable from './getJSONVariable';
+import getEmptyVariable from './getEmptyVariable';
 
 import getTypeof from './getTypeof';
 
@@ -18,14 +18,13 @@ import append from './append';
  * @returns {null} Returns the total.
  * @example
  *
- * filter([1,2],(key,value)=>{
+ * filter([1,2,3,34],function(value, key){ return key%2===0 })
  *
- * })
- *
+ * => [2, 34]
  */
 function filter (objectValue, func) {
 
-    let jsn_var=getJSONVariable(objectValue);
+    let jsn_var=getEmptyVariable(objectValue);
     const jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {

@@ -5,7 +5,7 @@ import each from './each';
 import count from './count';
 
 /**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
  * @category Seq
