@@ -1,7 +1,7 @@
 
 import count from './count';
 
-import getIndexOf from '../core/getIndexOf';
+import {getIndexOf} from '../core/getIndexOf';
 
 /**
  * Index of array

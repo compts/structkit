@@ -12,5 +12,7 @@ export default where;
  *
  * where({"s1":1,"s2":1},{"s1":1})
  *=>{"s1":1,"s2":1}
+ * where([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
+ *=>[{"s1":{"s2":2}}]
  */
 declare function where(objectValue: any, objectValueWhere: any, func?: Function | undefined): any;

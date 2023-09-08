@@ -1,6 +1,6 @@
 const has = require('./has');
 
-const getTypeof = require('./getTypeof');
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 const each = require('./each');
 
@@ -27,7 +27,7 @@ function count (objectValue, json_is_empty_check) {
     const incByOne=1;
     const defaultValueForFalse=0;
     const json_is_empty_check_default=json_is_empty_check||false;
-    const get_json=getTypeof(objectValue);
+    const get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue)===false) {
 

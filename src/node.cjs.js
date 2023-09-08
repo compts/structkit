@@ -14,6 +14,10 @@ const getIndexOf=require('./core/getIndexOf.js');
 
 exports.getIndexOf =getIndexOf;
 
+const getTypeofInternal=require('./core/getTypeOf.js');
+
+exports.getTypeofInternal =getTypeofInternal;
+
 const stringSplit=require('./core/stringSplit.js');
 
 exports.stringSplit =stringSplit;
@@ -22,13 +26,13 @@ const whereLoopExecution=require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution =whereLoopExecution;
 
-const append=require('./function/append.js');
-
-exports.append =append;
-
 const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
+
+const append=require('./function/append.js');
+
+exports.append =append;
 
 const arrayConcat=require('./function/arrayConcat.js');
 
@@ -38,21 +42,21 @@ const arrayRepeat=require('./function/arrayRepeat.js');
 
 exports.arrayRepeat =arrayRepeat;
 
-const arraySum=require('./function/arraySum.js');
-
-exports.arraySum =arraySum;
-
-const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
-
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
-
 const arraySlice=require('./function/arraySlice.js');
 
 exports.arraySlice =arraySlice;
 
+const arraySum=require('./function/arraySum.js');
+
+exports.arraySum =arraySum;
+
 const asyncReplace=require('./function/asyncReplace.js');
 
 exports.asyncReplace =asyncReplace;
+
+const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
+
+exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
 
 const clone=require('./function/clone.js');
 
@@ -97,6 +101,10 @@ exports.getUniq =getUniq;
 const getValue=require('./function/getValue.js');
 
 exports.getValue =getValue;
+
+const groupBy=require('./function/groupBy.js');
+
+exports.groupBy =groupBy;
 
 const has=require('./function/has.js');
 
@@ -158,21 +166,21 @@ const limit=require('./function/limit.js');
 
 exports.limit =limit;
 
-const numberFormat=require('./function/numberFormat.js');
-
-exports.numberFormat =numberFormat;
-
 const map=require('./function/map.js');
 
 exports.map =map;
 
-const onDelay=require('./function/onDelay.js');
+const numberFormat=require('./function/numberFormat.js');
 
-exports.onDelay =onDelay;
+exports.numberFormat =numberFormat;
 
 const onSequence=require('./function/onSequence.js');
 
 exports.onSequence =onSequence;
+
+const onDelay=require('./function/onDelay.js');
+
+exports.onDelay =onDelay;
 
 const onWait=require('./function/onWait.js');
 
@@ -186,13 +194,13 @@ const parseString=require('./function/parseString.js');
 
 exports.parseString =parseString;
 
-const random=require('./function/random.js');
-
-exports.random =random;
-
 const range=require('./function/range.js');
 
 exports.range =range;
+
+const random=require('./function/random.js');
+
+exports.random =random;
 
 const regexCountGroup=require('./function/regexCountGroup.js');
 
@@ -202,13 +210,13 @@ const remove=require('./function/remove.js');
 
 exports.remove =remove;
 
-const repeat=require('./function/repeat.js');
-
-exports.repeat =repeat;
-
 const roundDecimal=require('./function/roundDecimal.js');
 
 exports.roundDecimal =roundDecimal;
+
+const repeat=require('./function/repeat.js');
+
+exports.repeat =repeat;
 
 const shuffle=require('./function/shuffle.js');
 
@@ -254,25 +262,25 @@ const stringUpperCase=require('./function/stringUpperCase.js');
 
 exports.stringUpperCase =stringUpperCase;
 
-const templateValue=require('./function/templateValue.js');
-
-exports.templateValue =templateValue;
-
 const toArray=require('./function/toArray.js');
 
 exports.toArray =toArray;
+
+const templateValue=require('./function/templateValue.js');
+
+exports.templateValue =templateValue;
 
 const toDouble=require('./function/toDouble.js');
 
 exports.toDouble =toDouble;
 
-const toInteger=require('./function/toInteger.js');
-
-exports.toInteger =toInteger;
-
 const toString=require('./function/toString.js');
 
 exports.toString =toString;
+
+const toInteger=require('./function/toInteger.js');
+
+exports.toInteger =toInteger;
 
 const unique=require('./function/unique.js');
 

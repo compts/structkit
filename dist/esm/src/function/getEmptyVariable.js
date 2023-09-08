@@ -1,4 +1,4 @@
-import getTypeof from './getTypeof';
+import {getTypeofInternal} from '../core/getTypeOf';
 
 /**
  * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
@@ -16,24 +16,24 @@ function getEmptyVariable (value) {
 
     const zero = 0;
 
-    if (getTypeof(value)==="json") {
+    if (getTypeofInternal(value)==="json") {
 
         return {};
 
     }
 
-    if (getTypeof(value)==="array") {
+    if (getTypeofInternal(value)==="array" || getTypeofInternal(value)==="arguments") {
 
         return [];
 
     }
 
-    if (getTypeof(value)==="string") {
+    if (getTypeofInternal(value)==="string") {
 
         return '';
 
     }
-    if (getTypeof(value)==="number") {
+    if (getTypeofInternal(value)==="number") {
 
         return zero;
 

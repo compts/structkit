@@ -12,5 +12,7 @@ export default whereNot;
  *
  * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
  *=>[{"s1":2,"s2":2}]
+ * whereNot([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
+ *=>[{"s1":{"s2":3}}]
  */
 declare function whereNot(objectValue: any, objectValueWhere: any, func?: Function | undefined): any;

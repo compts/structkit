@@ -11,5 +11,10 @@ describe('CJS: isExact method', function () {
 
     });
 
+    it('check if repetion is correct', function () {
+
+        assert.strictEqual(isExact({"a": {"b": "b1"}}, {"a:b": "b1"}), true);
+
+    });
 
 });

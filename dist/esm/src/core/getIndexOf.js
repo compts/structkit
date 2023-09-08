@@ -1,4 +1,10 @@
-import getTypeof from '../function/getTypeof';
+import count from '../function/count';
+
+import each from '../function/each';
+
+import has from '../function/has';
+
+import {getTypeofInternal} from './getTypeOf';
 
 /**
  * Index Of array
@@ -23,11 +29,27 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
     let referenceValue = -1;
 
-    if (getTypeof(objectValue)==="array") {
+    if (getTypeofInternal(objectValue)==="array") {
 
         for (let inc=start; inc<end;) {
 
-            if (objectValue[inc]===value) {
+            let isValidMatch = false;
+
+            if (getTypeofInternal(value)==="json") {
+
+                isValidMatch = searchValueInJson(objectValue[inc], value);
+
+            } else {
+
+                if (objectValue[inc]===value) {
+
+                    isValidMatch = true;
+
+                }
+
+            }
+
+            if (isValidMatch) {
 
                 if (isGetLast === false) {
 
@@ -49,5 +71,46 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
         :referenceValue;
 
 }
-export default getIndexOf;
 
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} objectValue Array
+ * @param {number} searchValue key of array
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * searchValueInJson([1,2], 1)
+ * // => 0
+ */
+function searchValueInJson (objectValue, searchValue) {
+
+    if (count(objectValue) !== count(searchValue)) {
+
+        return false;
+
+    }
+    let counter = 0;
+    const increment = 1;
+
+    each(objectValue, function (key, value) {
+
+        if (has(searchValue, key)) {
+
+            if (searchValue[key] ===value) {
+
+                counter+=increment;
+
+            }
+
+        }
+
+    });
+
+    return count(objectValue) === counter;
+
+}
+
+export {getIndexOf};

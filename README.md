@@ -7,7 +7,7 @@
 ## Download
 
 To download this JS library and install in your local library
- * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~60KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/web/structkit-full.iife.js))
+ * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~74KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
 
 Using npm to install in your project folder:
 ```shell

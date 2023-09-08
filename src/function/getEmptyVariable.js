@@ -1,4 +1,4 @@
-const getTypeof = require('./getTypeof');
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 
 /**
@@ -17,24 +17,24 @@ function getEmptyVariable (value) {
 
     const zero = 0;
 
-    if (getTypeof(value)==="json") {
+    if (getTypeofInternal(value)==="json") {
 
         return {};
 
     }
 
-    if (getTypeof(value)==="array") {
+    if (getTypeofInternal(value)==="array" || getTypeofInternal(value)==="arguments") {
 
         return [];
 
     }
 
-    if (getTypeof(value)==="string") {
+    if (getTypeofInternal(value)==="string") {
 
         return '';
 
     }
-    if (getTypeof(value)==="number") {
+    if (getTypeofInternal(value)==="number") {
 
         return zero;
 

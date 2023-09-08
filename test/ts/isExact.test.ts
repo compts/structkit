@@ -17,4 +17,11 @@ describe('TS: isExact method', function () {
         expectType<boolean>(isExact({"test": 11,
         "test2": 11}, {"test2": 11}, true));
     });
+
+
+    it('check if repetion is correct', function () {
+
+        assert.strictEqual(isExact({"a": {"b": "b1"}}, {"a:b": "b1"}), true);
+
+    });
 });

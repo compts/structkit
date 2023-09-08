@@ -1,7 +1,7 @@
 import {stringCapitalize} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('CJS: stringCapitalize method', function () {
+describe('ESM: stringCapitalize method', function () {
 
     it('Capitalize first words', function () {
 

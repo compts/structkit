@@ -1,40 +1,39 @@
-import isJson from './isJson';
 
-import has from './has';
+import map from './map';
 
-import {objectCallTypeAll} from '../variable/types';
+import first from './first';
+
+import count from './count';
+
+import {getTypeofInternal} from '../core/getTypeOf';
 
 /**
  * Get type of the variable
  *
  * @since 1.0.1
  * @category String
- * @param {any} objectValue Any data you want to check its property
- * @returns {string} Get the property of variable
+ * @param {...any} args Any data you want to check its property in multiple arguments
+ * @returns {string|string[]} Get the property of variable
  * @example
  *
  * getTypeof([])
  * => array
+ * getTypeof([],{})
+ * => [array,json]
  */
-function getTypeof (objectValue) {
+function getTypeof (...args) {
 
-    const objectType = Object.prototype.toString.call(objectValue);
+    const one = 1;
 
-    if (objectType==="[object Object]") {
+    const getTypes = map(args, function (value) {
 
-        return isJson(objectValue, "object")
-            ?"json"
-            :"object";
+        return getTypeofInternal(value);
 
-    }
+    });
 
-    if (has(objectCallTypeAll, objectType)) {
-
-        return objectCallTypeAll[objectType];
-
-    }
-
-    return typeof objectValue;
+    return count(getTypes) === one
+        ?first(getTypes)
+        :getTypes;
 
 }
 export default getTypeof;

@@ -1,4 +1,4 @@
-const getTypeof = require('./getTypeof');
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 const count = require('./count');
 
@@ -21,7 +21,7 @@ function isEmpty (value) {
 
     const zero =0;
 
-    const typeofvalue = getTypeof(value);
+    const typeofvalue = getTypeofInternal(value);
 
     const invalidList = [
         'null',
@@ -33,7 +33,7 @@ function isEmpty (value) {
         return count(value, true)===zero;
 
     }
-    if (typeofvalue=== "number") {
+    if (typeofvalue === "number") {
 
         return value===zero;
 

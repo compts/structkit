@@ -1,6 +1,6 @@
 import has from './has';
 
-import getTypeof from './getTypeof';
+import {getTypeofInternal} from '../core/getTypeOf';
 
 import each from './each';
 
@@ -26,7 +26,7 @@ function count (objectValue, json_is_empty_check) {
     const incByOne=1;
     const defaultValueForFalse=0;
     const json_is_empty_check_default=json_is_empty_check||false;
-    const get_json=getTypeof(objectValue);
+    const get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue)===false) {
 

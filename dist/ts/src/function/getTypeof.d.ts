@@ -4,11 +4,13 @@ export default getTypeof;
  *
  * @since 1.0.1
  * @category String
- * @param {any} objectValue Any data you want to check its property
- * @returns {string} Get the property of variable
+ * @param {...any} args Any data you want to check its property in multiple arguments
+ * @returns {string|string[]} Get the property of variable
  * @example
  *
  * getTypeof([])
  * => array
+ * getTypeof([],{})
+ * => [array,json]
  */
-declare function getTypeof(objectValue: any): string;
+declare function getTypeof(...args: any[]): string | string[];

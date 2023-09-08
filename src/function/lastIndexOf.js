@@ -1,7 +1,7 @@
 
 const count = require('./count');
 
-const getIndexOf = require('../core/getIndexOf');
+const {getIndexOf} = require('../core/getIndexOf');
 
 
 /**
