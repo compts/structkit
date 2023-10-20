@@ -18,7 +18,6 @@ grassfile copy.js
 grassfile_copy_old.js
 package-lock.json
 .DS_Store
-.DS_Store
 dist/.DS_Store
 dist/cjs/.DS_Store
 dist/.DS_Store

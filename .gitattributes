@@ -1,3 +1,5 @@
 * text=auto
 test export-ignore
 src_old_copy export-ignore
+tsgenerate.sh  export-ignore
+grassfile.js  export-ignore
