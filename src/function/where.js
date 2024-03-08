@@ -23,4 +23,3 @@ function where (objectValue, objectValueWhere, func) {
 
 }
 module.exports=where;
-

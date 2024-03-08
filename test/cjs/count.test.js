@@ -1,6 +1,7 @@
 const {count} = require("../../src/node.cjs");
 const assert = require("assert");
 
+const seven =7;
 const one =1;
 const zero =0;
 
@@ -18,6 +19,12 @@ describe('CJS: count method', function () {
 
         assert.deepStrictEqual(count([]), zero);
         assert.deepStrictEqual(count({}, true), zero);
+
+    });
+
+    it('check string length', function () {
+
+        assert.deepStrictEqual(count("asasasd"), seven);
 
     });
 

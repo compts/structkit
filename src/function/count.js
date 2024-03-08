@@ -53,7 +53,15 @@ function count (objectValue, json_is_empty_check) {
 
     } else {
 
-        each(objectValue, function () {
+        let rawObjectValue = objectValue;
+
+        if (get_json === "string") {
+
+            rawObjectValue = rawObjectValue.split("");
+
+        }
+
+        each(rawObjectValue, function () {
 
             cnt+=incByOne;
 

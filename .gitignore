@@ -26,3 +26,4 @@ dist/web/.DS_Store
 src/node.cjs.js
 coverage
 notes
+note_write.txt
