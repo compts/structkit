@@ -221,12 +221,40 @@ exports.module=function (grassconf) {
 
     });
 
+    grassconf.load("cjs_compile", function () {
+
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js
+                },
+                "output": {
+                    "type": "cjs_compile"
+                },
+                "plugin": [
+                    {
+                        "name": "webIIfe",
+                        "transform": () => null,
+                        "transformFirstFile": () => null,
+                        "transformLastFile": () => null
+                    }
+                ]
+            }
+        )
+            .pipe(grass_concat("dist/cjs/structkit-full.cjs.js", {
+                "istruncate": true
+            }));
+
+    });
+
 };
 
 exports.execute=function (lib) {
 
     lib.default=function (strm) {
 
+        strm.series("cjs_compile");
         strm.series("web_iife");
         strm.series("esm");
         strm.series("esm_only");

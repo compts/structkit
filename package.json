@@ -6,6 +6,12 @@
   "module": "dist/esm/node.es.js",
   "types": "dist/ts/node.esm.d.ts",
   "sideEffects": false,
+  "exports": {
+    ".":{
+      "default":"./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "structkit": "./bin/structkit"
   },
