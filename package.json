@@ -2,13 +2,13 @@
   "name": "structkit",
   "version": "1.4.8",
   "description": "JS utility tool",
-  "main": "src/node.cjs.js",
+  "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "dist/esm/node.es.js",
   "types": "dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
     ".":{
-      "default":"./dist/cjs/index.js"
+      "default":"./dist/cjs/structkit-full.cjs.js"
     },
     "./package.json": "./package.json"
   },

@@ -1,13 +1,13 @@
 (function(global){
 global._stk={}
 
-_stk.appendIsArrayExist=appendIsArrayExist
-
 _stk.append=append
 
 _stk.arrayConcat=arrayConcat
 
 _stk.arrayRepeat=arrayRepeat
+
+_stk.appendIsArrayExist=appendIsArrayExist
 
 _stk.arraySlice=arraySlice
 
@@ -21,17 +21,17 @@ _stk.clone=clone
 
 _stk.count=count
 
-_stk.filter=filter
-
 _stk.each=each
 
-_stk.first=first
+_stk.filter=filter
 
-_stk.getData=getData
+_stk.first=first
 
 _stk.getEmptyVariable=getEmptyVariable
 
 _stk.getKey=getKey
+
+_stk.getData=getData
 
 _stk.getTypeof=getTypeof
 
@@ -41,19 +41,19 @@ _stk.getValue=getValue
 
 _stk.groupBy=groupBy
 
-_stk.ifUndefined=ifUndefined
+_stk.has=has
 
 _stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
 
-_stk.indexOfNotExist=indexOfNotExist
+_stk.ifUndefined=ifUndefined
 
 _stk.insert=insert
 
 _stk.isEmpty=isEmpty
 
-_stk.has=has
+_stk.indexOfNotExist=indexOfNotExist
 
 _stk.isExactbyRegExp=isExactbyRegExp
 
@@ -63,9 +63,13 @@ _stk.isJson=isJson
 
 _stk.jsonToArray=jsonToArray
 
-_stk.like=like
+_stk.last=last
 
 _stk.lastIndexOf=lastIndexOf
+
+_stk.like=like
+
+_stk.limit=limit
 
 _stk.map=map
 
@@ -75,10 +79,6 @@ _stk.onDelay=onDelay
 
 _stk.onSequence=onSequence
 
-_stk.last=last
-
-_stk.limit=limit
-
 _stk.onWait=onWait
 
 _stk.parseJson=parseJson
@@ -87,35 +87,35 @@ _stk.parseString=parseString
 
 _stk.random=random
 
-_stk.range=range
-
 _stk.regexCountGroup=regexCountGroup
 
-_stk.remove=remove
+_stk.range=range
 
 _stk.repeat=repeat
 
-_stk.roundDecimal=roundDecimal
-
 _stk.shuffle=shuffle
 
-_stk.sort=sort
+_stk.roundDecimal=roundDecimal
 
-_stk.stringCapitalize=stringCapitalize
+_stk.remove=remove
+
+_stk.sort=sort
 
 _stk.stringCamelCase=stringCamelCase
 
 _stk.stringEscape=stringEscape
 
+_stk.stringCapitalize=stringCapitalize
+
 _stk.stringKebabCase=stringKebabCase
 
 _stk.stringLowerCase=stringLowerCase
 
+_stk.stringSnakeCase=stringSnakeCase
+
 _stk.stringSubs=stringSubs
 
 _stk.stringUnEscape=stringUnEscape
-
-_stk.stringSnakeCase=stringSnakeCase
 
 _stk.stringUpperCase=stringUpperCase
 
