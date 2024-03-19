@@ -1,4 +1,4 @@
-const {arrayRepeat} = require("../../src/node.cjs");
+const {arrayRepeat} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const two=2;

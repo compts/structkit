@@ -1,4 +1,4 @@
-const {unique} = require("../../src/node.cjs");
+const {unique} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one =1;

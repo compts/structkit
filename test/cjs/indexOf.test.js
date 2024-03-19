@@ -1,5 +1,5 @@
 
-const {indexOf}= require("../../src/node.cjs");
+const {indexOf}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const eight=8,

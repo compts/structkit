@@ -1,4 +1,4 @@
-const {where} = require("../../src/node.cjs");
+const {where} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: where method', function () {

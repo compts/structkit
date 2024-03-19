@@ -1,4 +1,4 @@
-const {sort} = require("../../src/node.cjs");
+const {sort} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one =1;

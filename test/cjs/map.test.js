@@ -1,5 +1,5 @@
 
-const {map}= require("../../src/node.cjs");
+const {map}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: map method', function () {

@@ -1,4 +1,4 @@
-const {getData} = require("../../src/node.cjs");
+const {getData} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: getData method', function () {

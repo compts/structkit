@@ -1,4 +1,4 @@
-const {getEmptyVariable} = require("../../src/node.cjs");
+const {getEmptyVariable} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const three =3;

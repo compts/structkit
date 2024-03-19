@@ -1,4 +1,4 @@
-const {jsonToArray} = require("../../src/node.cjs");
+const {jsonToArray} = require("../../dist/cjs/structkit-full.cjs");
 
 const assert = require("assert");
 

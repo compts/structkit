@@ -1,5 +1,5 @@
 
-const {isExact}= require("../../src/node.cjs");
+const {isExact}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: isExact method', function () {

@@ -1,5 +1,5 @@
 
-const {stringSnakeCase} = require("../../src/node.cjs");
+const {stringSnakeCase} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: stringSnakeCase method', function () {

@@ -1,4 +1,4 @@
-const {indexOfNotExist}= require("../../src/node.cjs");
+const {indexOfNotExist}= require("../../dist/cjs/structkit-full.cjs");
 
 const assert = require("assert");
 

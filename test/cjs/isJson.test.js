@@ -1,5 +1,5 @@
 
-const {isJson} = require("../../src/node.cjs");
+const {isJson} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: isJson method', function () {

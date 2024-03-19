@@ -1,5 +1,5 @@
 
-const {groupBy}= require("../../src/node.cjs");
+const {groupBy}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: groupBy method', function () {

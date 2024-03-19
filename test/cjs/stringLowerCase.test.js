@@ -1,5 +1,5 @@
 
-const {stringLowerCase} = require("../../src/node.cjs");
+const {stringLowerCase} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: stringLowerCase method', function () {

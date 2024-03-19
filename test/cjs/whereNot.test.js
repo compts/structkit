@@ -1,4 +1,4 @@
-const {whereNot} = require("../../src/node.cjs");
+const {whereNot} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: whereNot method', function () {

@@ -1,4 +1,4 @@
-const {arrayConcat} = require("../../src/node.cjs");
+const {arrayConcat} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 

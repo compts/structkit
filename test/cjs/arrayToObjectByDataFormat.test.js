@@ -1,5 +1,5 @@
 
-const {arrayToObjectByDataFormat} = require("../../src/node.cjs");
+const {arrayToObjectByDataFormat} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 

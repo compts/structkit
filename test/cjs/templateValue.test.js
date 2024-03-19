@@ -1,4 +1,4 @@
-const {templateValue} = require("../../src/node.cjs");
+const {templateValue} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: templateValue method', function () {

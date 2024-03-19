@@ -1,4 +1,4 @@
-const {toString} = require("../../src/node.cjs");
+const {toString} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const ten=10;

@@ -1,4 +1,4 @@
-const {arraySum} = require("../../src/node.cjs");
+const {arraySum} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one =1,

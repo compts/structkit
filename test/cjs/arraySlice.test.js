@@ -1,4 +1,4 @@
-const {arraySlice} = require("../../src/node.cjs");
+const {arraySlice} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const three =3;

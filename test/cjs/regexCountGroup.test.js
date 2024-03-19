@@ -1,4 +1,4 @@
-const {regexCountGroup} = require("../../src/node.cjs");
+const {regexCountGroup} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one=1;
