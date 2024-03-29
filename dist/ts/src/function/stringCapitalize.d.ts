@@ -9,9 +9,9 @@ export default stringCapitalize;
  * @returns {string} Returns Capitalize sting data
  * @example
  *
- * stringCapitalize('the fish is goad   with goat-1ss')
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
  *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss', 'all)
+ * stringCapitalize('the fish is goad   with goat-1ss')
  *=> 'The fish is goad   with goat-1ss'
  */
 declare function stringCapitalize(value: string, option?: string | undefined): string;

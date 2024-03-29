@@ -11,17 +11,17 @@ _stk.arrayRepeat=arrayRepeat
 
 _stk.arraySlice=arraySlice
 
-_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
+_stk.arraySum=arraySum
 
-_stk.clone=clone
+_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 _stk.asyncReplace=asyncReplace
 
-_stk.count=count
-
-_stk.arraySum=arraySum
+_stk.clone=clone
 
 _stk.each=each
+
+_stk.count=count
 
 _stk.filter=filter
 
@@ -51,9 +51,9 @@ _stk.indexOfExist=indexOfExist
 
 _stk.indexOfNotExist=indexOfNotExist
 
-_stk.isEmpty=isEmpty
-
 _stk.insert=insert
+
+_stk.isEmpty=isEmpty
 
 _stk.isExact=isExact
 
@@ -75,23 +75,23 @@ _stk.map=map
 
 _stk.numberFormat=numberFormat
 
-_stk.onSequence=onSequence
-
 _stk.onDelay=onDelay
+
+_stk.onSequence=onSequence
 
 _stk.onWait=onWait
 
-_stk.parseString=parseString
-
 _stk.parseJson=parseJson
 
-_stk.range=range
+_stk.parseString=parseString
 
-_stk.random=random
+_stk.range=range
 
 _stk.regexCountGroup=regexCountGroup
 
 _stk.remove=remove
+
+_stk.random=random
 
 _stk.repeat=repeat
 
@@ -105,9 +105,9 @@ _stk.stringCamelCase=stringCamelCase
 
 _stk.stringCapitalize=stringCapitalize
 
-_stk.stringEscape=stringEscape
-
 _stk.stringKebabCase=stringKebabCase
+
+_stk.stringEscape=stringEscape
 
 _stk.stringLowerCase=stringLowerCase
 

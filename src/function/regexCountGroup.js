@@ -10,7 +10,7 @@ const toString = require('./toString');
  * @example
  *
  * regexCountGroup('/(abs|scs)@0@@1@/')
- * =>[1]
+ *=>[1]
  */
 function regexCountGroup (value) {
 

@@ -26,7 +26,7 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
     }
 
-    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
+    if (!has(nullReplacement) || nullReplacement.toString()==="NaN") {
 
         intr=defaultVariable;
 

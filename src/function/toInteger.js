@@ -16,7 +16,7 @@ function toInteger (value) {
 
     const zero = 0;
 
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
         ?zero
         :value));
 

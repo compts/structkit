@@ -18,7 +18,7 @@ import append from './append';
  * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
+ * filter([1,2,3,34],function(value, key){ return key%2===0 })
  *
  * => [2, 34]
  */
@@ -31,7 +31,7 @@ function filter (objectValue, func) {
 
         if (has(func)) {
 
-            if (func(key, value) === true) {
+            if (func(key, value)===true) {
 
                 if ((/(json|array)/g).test(jsn_type)) {
 

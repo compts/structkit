@@ -20,7 +20,7 @@ function each (objectValue, func) {
     let re_loop=[];
     const typeofs=getTypeofInternal(objectValue);
 
-    if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
+    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
 
         for (const ins in objectValue) {
 
@@ -28,7 +28,7 @@ function each (objectValue, func) {
 
                 let bool_func = true;
 
-                if (getTypeofInternal(objectValue[ins]) === "function") {
+                if (getTypeofInternal(objectValue[ins])==="function") {
 
                     if ((/\b_/g).test(ins)) {
 

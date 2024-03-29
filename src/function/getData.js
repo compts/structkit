@@ -43,7 +43,7 @@ function getData (objectValue, split_str) {
 
             if (has(objectValue, value)) {
 
-                if ((/^\s+$/).test(objectValue[value]) === false) {
+                if ((/^\s+$/).test(objectValue[value])===false) {
 
                     jsn_total=objectValue[value];
 

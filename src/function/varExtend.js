@@ -60,7 +60,7 @@ function varExtend (objectValue, objectValueReplace) {
 
             if (has(jsn_s, key)) {
 
-                if (getTypeof(jsn_s[key]) === "json") {
+                if (getTypeof(jsn_s[key]) ==="json") {
 
                     jsn_s[key]=replaceValue(jsn_s[key], objectValueReplace[key]);
 
@@ -99,7 +99,7 @@ function replaceValue (objectValue, objectValueReplace) {
 
     for (const key in objectValueReplace) {
 
-        if (getTypeof(objectValue[key]) === "json") {
+        if (getTypeof(objectValue[key]) ==="json") {
 
             objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
 

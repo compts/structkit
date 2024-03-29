@@ -16,24 +16,24 @@ function getEmptyVariable (value) {
 
     const zero = 0;
 
-    if (getTypeofInternal(value) === "json") {
+    if (getTypeofInternal(value)==="json") {
 
         return {};
 
     }
 
-    if (getTypeofInternal(value) === "array" || getTypeofInternal(value) === "arguments") {
+    if (getTypeofInternal(value)==="array" || getTypeofInternal(value)==="arguments") {
 
         return [];
 
     }
 
-    if (getTypeofInternal(value) === "string") {
+    if (getTypeofInternal(value)==="string") {
 
         return '';
 
     }
-    if (getTypeofInternal(value) === "number") {
+    if (getTypeofInternal(value)==="number") {
 
         return zero;
 

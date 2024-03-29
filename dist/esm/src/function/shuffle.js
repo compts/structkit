@@ -36,7 +36,7 @@ function shuffle (objectValue) {
 
             randomIndex = Math.floor(Math.random() * currentIndex);
 
-            if (getTypeof(objectValue) === "array") {
+            if (getTypeof(objectValue)==="array") {
 
                 temporaryValue = output[currentIndex];
                 output[currentIndex]=output[randomIndex];
