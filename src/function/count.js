@@ -29,23 +29,23 @@ function count (objectValue, json_is_empty_check) {
     const json_is_empty_check_default=json_is_empty_check||false;
     const get_json=getTypeofInternal(objectValue);
 
-    if (has(objectValue)===false) {
+    if (has(objectValue) === false) {
 
         return defaultValueForFalse;
 
     }
 
-    if (get_json==="array") {
+    if (get_json === "array") {
 
         return objectValue.length;
 
-    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+    } else if (get_json === "object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
 
         for (const inc in objectValue) {
 
             if (!isNaN(inc)) {
 
-                cnt+=incByOne;
+                cnt += incByOne;
 
             }
 
@@ -63,20 +63,20 @@ function count (objectValue, json_is_empty_check) {
 
         each(rawObjectValue, function () {
 
-            cnt+=incByOne;
+            cnt += incByOne;
 
         });
 
     }
 
-    if (get_json==="json"&&json_is_empty_check_default===true) {
+    if (get_json === "json"&&json_is_empty_check_default === true) {
 
         const jsn_parse=objectValue;
         let cnts=0;
 
         each(jsn_parse, function () {
 
-            cnts+=incByOne;
+            cnts += incByOne;
 
         });
 

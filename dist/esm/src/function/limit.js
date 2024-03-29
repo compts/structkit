@@ -55,7 +55,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         }
 
-        cnt+=incrementDefaultValue;
+        cnt += incrementDefaultValue;
 
     });
 

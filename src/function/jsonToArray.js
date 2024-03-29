@@ -33,7 +33,7 @@ function jsonToArray (objectValue, value) {
             const valueData = getData(_value, value);
 
 
-            if (isEmpty(valueData) ===false) {
+            if (isEmpty(valueData) === false) {
 
                 arry.push(valueData);
 

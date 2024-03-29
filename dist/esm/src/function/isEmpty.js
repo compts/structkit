@@ -27,14 +27,14 @@ function isEmpty (value) {
         'undefined'
     ];
 
-    if (typeofvalue=== "json" || typeofvalue === "array") {
+    if (typeofvalue === "json" || typeofvalue === "array") {
 
-        return count(value, true)===zero;
+        return count(value, true) === zero;
 
     }
     if (typeofvalue === "number") {
 
-        return value===zero;
+        return value === zero;
 
     }
 

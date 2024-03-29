@@ -32,13 +32,13 @@ const getData = require('./getData');
  */
 function isExact (objectValue1, objectValue2, isExist) {
 
-    if (objectValue2===null) {
+    if (objectValue2 === null) {
 
         return false;
 
     }
 
-    const local_is_exist=has(isExist)&&getTypeofInternal(isExist)==="boolean"
+    const local_is_exist=has(isExist)&&getTypeofInternal(isExist) === "boolean"
         ?isExist
         :true;
     const val_s=(/(json|array)/g).test(getTypeofInternal(objectValue2))
@@ -53,17 +53,17 @@ function isExact (objectValue1, objectValue2, isExist) {
 
     each(key_s, function (kk, kv) {
 
-        if (getTypeofInternal(objectValue2)==="json") {
+        if (getTypeofInternal(objectValue2) === "json") {
 
             if (has(val_s, kk)) {
 
                 const local_is_valid = local_is_exist
-                    ?val_s[kk]===kv
-                    :val_s[kk]!==kv;
+                    ?val_s[kk] === kv
+                    :val_s[kk] !== kv;
 
                 if (local_is_valid) {
 
-                    cnt+=incrementDefaultValue;
+                    cnt += incrementDefaultValue;
 
                 }
 
@@ -71,15 +71,15 @@ function isExact (objectValue1, objectValue2, isExist) {
 
         }
 
-        if (getTypeofInternal(objectValue2)==="array") {
+        if (getTypeofInternal(objectValue2) === "array") {
 
             const local_is_valid = local_is_exist
                 ?indexOf(val_s, kv)>notExistArrayDefaultValue
-                :indexOf(val_s, kv)===notExistArrayDefaultValue;
+                :indexOf(val_s, kv) === notExistArrayDefaultValue;
 
             if (local_is_valid) {
 
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             }
 
@@ -92,7 +92,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
         each(val_s, function (kk, kv) {
 
-            if (getTypeofInternal(objectValue2)==="json") {
+            if (getTypeofInternal(objectValue2) === "json") {
 
                 const gdata = getData(key_s, kk);
 
@@ -104,7 +104,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
                     if (local_is_valid) {
 
-                        cnt+=incrementDefaultValue;
+                        cnt += incrementDefaultValue;
 
                     }
 
@@ -116,7 +116,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
     }
 
-    return cnt===count(objectValue2);
+    return cnt === count(objectValue2);
 
 }
 module.exports=isExact;

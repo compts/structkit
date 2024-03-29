@@ -22,13 +22,13 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
     const zero =0;
 
-    if (objectValue2===null) {
+    if (objectValue2 === null) {
 
         return false;
 
     }
 
-    if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
+    if (getTypeof(objectValue2) !== "json" && getTypeof(objectValue2) !== "string" && getTypeof(objectValue2) !== "regexp" && getTypeof(objectValue2) !== "number") {
 
         return false;
 
@@ -43,11 +43,11 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
     each(key_s, function (kk, kv) {
 
-        if (getTypeof(objectValue2)==="json") {
+        if (getTypeof(objectValue2) === "json") {
 
             if (has(objectValue2[kk])) {
 
-                if (getTypeof(objectValue2[kk])==="regexp") {
+                if (getTypeof(objectValue2[kk]) === "regexp") {
 
                     local_is_valid = objectValue2[kk];
 
@@ -58,7 +58,7 @@ function isExactbyRegExp (objectValue1, objectValue2) {
                 }
                 if (local_is_valid.test(kv)) {
 
-                    cnt+=incrementDefaultValue;
+                    cnt += incrementDefaultValue;
 
                 }
 
@@ -66,7 +66,7 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
         } else {
 
-            if (getTypeof(objectValue2)==="regexp") {
+            if (getTypeof(objectValue2) === "regexp") {
 
                 local_is_valid = objectValue2;
 
@@ -77,7 +77,7 @@ function isExactbyRegExp (objectValue1, objectValue2) {
             }
             if (local_is_valid.test(kv)) {
 
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             }
 

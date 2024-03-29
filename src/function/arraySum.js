@@ -29,7 +29,7 @@ function arraySum (arrayObject, delimeter) {
 
         if (has(av)) {
 
-            sum+=parseFloat(av);
+            sum += parseFloat(av);
 
         }
 

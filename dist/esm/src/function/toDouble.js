@@ -16,7 +16,7 @@ function toDouble (value) {
 
     const zero = 0.00;
 
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
         ?zero
         :value));
 

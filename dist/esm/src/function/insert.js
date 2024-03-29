@@ -23,7 +23,7 @@ function insert (objectValue, value) {
 
         const jsn_type=getTypeof(value);
 
-        if (jsn_type==="json") {
+        if (jsn_type === "json") {
 
             each(value, function (key, _value) {
 
@@ -33,7 +33,7 @@ function insert (objectValue, value) {
 
         }
 
-        if (jsn_type==="array") {
+        if (jsn_type === "array") {
 
             objectValue.push(value);
 

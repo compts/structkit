@@ -15,9 +15,9 @@ var global = exports;
  */
 function has (value, key) {
 
-    if (typeof key==="undefined") {
+    if (typeof key === "undefined") {
 
-        return value!==null && typeof value !=="undefined";
+        return value !== null && typeof value !== "undefined";
 
     }
 
@@ -65,7 +65,7 @@ function isJson (value, valueType) {
 
     var getValueType = Object.prototype.toString.call(value);
 
-    if (has(objectCallType, getValueType) ===false) {
+    if (has(objectCallType, getValueType) === false) {
 
         return false;
 
@@ -123,7 +123,7 @@ function checkIfFunctionNotExistObject (obj) {
 
     var getValueType = Object.prototype.toString.call(obj);
 
-    if (getValueType==="[object Function]") {
+    if (getValueType === "[object Function]") {
 
         throw new Error("Function must not exist");
 
@@ -132,15 +132,15 @@ function checkIfFunctionNotExistObject (obj) {
     var isValid = false;
     var zero = 0;
 
-    if (getValueType==="[object Object]") {
+    if (getValueType === "[object Object]") {
 
         isValid = true;
 
     }
 
-    if (getValueType==="[object Array]") {
+    if (getValueType === "[object Array]") {
 
-        if (obj.length ===zero) {
+        if (obj.length === zero) {
 
             return true;
 
@@ -183,7 +183,7 @@ function getTypeofInternal (objectValue) {
 
     var objectType = Object.prototype.toString.call(objectValue);
 
-    if (objectType==="[object Object]") {
+    if (objectType === "[object Object]") {
 
         return isJson(objectValue, "object")
             ?"json"
@@ -219,7 +219,7 @@ function each (objectValue, func) {
     var re_loop=[];
     var typeofs=getTypeofInternal(objectValue);
 
-    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
+    if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
 
         for (var ins in objectValue) {
 
@@ -227,7 +227,7 @@ function each (objectValue, func) {
 
                 var bool_func = true;
 
-                if (getTypeofInternal(objectValue[ins])==="function") {
+                if (getTypeofInternal(objectValue[ins]) === "function") {
 
                     if ((/\b_/g).test(ins)) {
 
@@ -291,24 +291,24 @@ function getEmptyVariable (value) {
 
     var zero = 0;
 
-    if (getTypeofInternal(value)==="json") {
+    if (getTypeofInternal(value) === "json") {
 
         return {};
 
     }
 
-    if (getTypeofInternal(value)==="array" || getTypeofInternal(value)==="arguments") {
+    if (getTypeofInternal(value) === "array" || getTypeofInternal(value) === "arguments") {
 
         return [];
 
     }
 
-    if (getTypeofInternal(value)==="string") {
+    if (getTypeofInternal(value) === "string") {
 
         return '';
 
     }
-    if (getTypeofInternal(value)==="number") {
+    if (getTypeofInternal(value) === "number") {
 
         return zero;
 
@@ -343,10 +343,10 @@ function map (objectValue, func) {
 
         if (has(func)) {
 
-            if (strTypeOf==="array") {
+            if (strTypeOf === "array") {
 
                 value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             } else {
 
@@ -388,23 +388,23 @@ function count (objectValue, json_is_empty_check) {
     var json_is_empty_check_default=json_is_empty_check||false;
     var get_json=getTypeofInternal(objectValue);
 
-    if (has(objectValue)===false) {
+    if (has(objectValue) === false) {
 
         return defaultValueForFalse;
 
     }
 
-    if (get_json==="array") {
+    if (get_json === "array") {
 
         return objectValue.length;
 
-    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+    } else if (get_json === "object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
 
         for (var inc in objectValue) {
 
             if (!isNaN(inc)) {
 
-                cnt+=incByOne;
+                cnt += incByOne;
 
             }
 
@@ -422,20 +422,20 @@ function count (objectValue, json_is_empty_check) {
 
         each(rawObjectValue, function () {
 
-            cnt+=incByOne;
+            cnt += incByOne;
 
         });
 
     }
 
-    if (get_json==="json"&&json_is_empty_check_default===true) {
+    if (get_json === "json"&&json_is_empty_check_default === true) {
 
         var jsn_parse=objectValue;
         var cnts=0;
 
         each(jsn_parse, function () {
 
-            cnts+=incByOne;
+            cnts += incByOne;
 
         });
 
@@ -470,19 +470,19 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
     var referenceValue = -1;
 
-    if (getTypeofInternal(objectValue)==="array") {
+    if (getTypeofInternal(objectValue) === "array") {
 
         for (var inc=start; inc<end;) {
 
             var isValidMatch = false;
 
-            if (getTypeofInternal(value)==="json") {
+            if (getTypeofInternal(value) === "json") {
 
                 isValidMatch = searchValueInJson(objectValue[inc], value);
 
             } else {
 
-                if (objectValue[inc]===value) {
+                if (objectValue[inc] === value) {
 
                     isValidMatch = true;
 
@@ -501,7 +501,7 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc+=incrementDefaultValue;
+            inc += incrementDefaultValue;
 
         }
 
@@ -540,9 +540,9 @@ function searchValueInJson (objectValue, searchValue) {
 
         if (has(searchValue, key)) {
 
-            if (searchValue[key] ===value) {
+            if (searchValue[key] === value) {
 
-                counter+=increment;
+                counter += increment;
 
             }
 
@@ -635,23 +635,23 @@ function getKeyVal (jsn, typ) {
         "value"
     ], typ)) {
 
-        var ars=typ==="key"
+        var ars=typ === "key"
             ?ky
             :vl;
 
-        return count(ars)===one
+        return count(ars) === one
             ?ars[zero]
             :ars;
 
     }
-    if (typ ==="first_index") {
+    if (typ === "first_index") {
 
         return count(list_raw)>zero
             ?list_raw[zero]
             :{"value": ''};
 
     }
-    if (typ ==="last_index") {
+    if (typ === "last_index") {
 
         return count(list_raw)>zero
             ?list_raw[count(list_raw)-one]
@@ -750,152 +750,6 @@ global.append=append
 
 
 /**
- * To Array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-
-    var return_val = value;
-
-    if (getTypeof(return_val)!=="array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
-
-}
-
-/**
- * To get value of array given start and end(optional) of the array
- * This is a rename of delimiter
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-function arraySlice (objectValue, min, max) {
-
-    var ran_var=[];
-    var defaultValueZero=0;
-    var defaultValueNegativeOne=-1;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
-
-    if (has(min)) {
-
-        if (defaultValueZero > min) {
-
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
-
-        }
-
-    }
-
-    if (has(max)) {
-
-        if (defaultValueZero > max) {
-
-            var raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            var raw_ran_max =count(objectValue) + max;
-
-            if (raw_ran_min < raw_ran_max) {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
-
-            } else {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
-
-            }
-
-        }
-
-    }
-
-    each(objectValue, function (key, value) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any} arg First array
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat () {
-
-    var arg=arguments;
-
-    var one =1;
-
-    if (arg.length < one) {
-
-        return [];
-
-    }
-
-    var return_val=toArray(first(arg));
-    var arrayValue = toArray(arraySlice(arg, one));
-
-    each(arrayValue, function (key, value) {
-
-        return_val = return_val.concat(toArray(value));
-
-    });
-
-    return return_val;
-
-}
-
-global.arrayConcat=arrayConcat
-
-
-/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -987,6 +841,87 @@ function arrayRepeat (value, valueRepetion) {
 
 global.arrayRepeat=arrayRepeat
 
+
+/**
+ * To get value of array given start and end(optional) of the array
+ * This is a rename of delimiter
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+function arraySlice (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            var raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            var raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (key, value) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
 global.arraySlice=arraySlice
 
 
@@ -1007,7 +942,7 @@ function indexOfNotExist (arrayObject, value) {
 
     var zero = -1;
 
-    return indexOf(arrayObject, value)===zero;
+    return indexOf(arrayObject, value) === zero;
 
 }
 
@@ -1029,7 +964,7 @@ function appendIsArrayExist (arrayObject, value) {
     var ary_type=getTypeof(arrayObject);
     var ary_type1=getTypeof(value);
 
-    if (ary_type ==="array" && ary_type1 ==="array") {
+    if (ary_type === "array" && ary_type1 === "array") {
 
         each(value, function (key, val) {
 
@@ -1075,14 +1010,14 @@ function isEmpty (value) {
         'undefined'
     ];
 
-    if (typeofvalue=== "json" || typeofvalue === "array") {
+    if (typeofvalue === "json" || typeofvalue === "array") {
 
-        return count(value, true)===zero;
+        return count(value, true) === zero;
 
     }
     if (typeofvalue === "number") {
 
-        return value===zero;
+        return value === zero;
 
     }
 
@@ -1120,7 +1055,7 @@ function arraySum (arrayObject, delimeter) {
 
         if (has(av)) {
 
-            sum+=parseFloat(av);
+            sum += parseFloat(av);
 
         }
 
@@ -1133,6 +1068,129 @@ function arraySum (arrayObject, delimeter) {
 }
 
 global.arraySum=arraySum
+
+
+/**
+ * To Array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toArray (value) {
+
+    var return_val = value;
+
+    if (getTypeof(return_val) !== "array") {
+
+        return_val = [value];
+
+    }
+
+    return return_val;
+
+}
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any} arg First array
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat () {
+
+    var arg=arguments;
+
+    var one =1;
+
+    if (arg.length < one) {
+
+        return [];
+
+    }
+
+    var return_val=toArray(first(arg));
+    var arrayValue = toArray(arraySlice(arg, one));
+
+    each(arrayValue, function (key, value) {
+
+        return_val = return_val.concat(toArray(value));
+
+    });
+
+    return return_val;
+
+}
+
+global.arrayConcat=arrayConcat
+
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Utility
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function () {
+
+    var arg=arguments;
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+
+global.asyncReplace=asyncReplace
 
 
 /**
@@ -1208,7 +1266,7 @@ function getData (objectValue, split_str) {
 
             if (has(objectValue, value)) {
 
-                if ((/^\s+$/).test(objectValue[value])===false) {
+                if ((/^\s+$/).test(objectValue[value]) === false) {
 
                     jsn_total=objectValue[value];
 
@@ -1263,63 +1321,6 @@ global.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 
 /**
- * Async replace
- *
- * @since 1.3.1
- * @category Utility
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function () {
-
-    var arg=arguments;
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-
-global.asyncReplace=asyncReplace
-
-
-/**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
@@ -1349,6 +1350,8 @@ global.clone=clone
 
 global.count=count
 
+global.each=each
+
 
 /**
  * Filter the data in loop
@@ -1360,7 +1363,7 @@ global.count=count
  * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2,3,34],function(value, key){ return key%2===0 })
+ * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
  *
  * => [2, 34]
  */
@@ -1373,7 +1376,7 @@ function filter (objectValue, func) {
 
         if (has(func)) {
 
-            if (func(key, value)===true) {
+            if (func(key, value) === true) {
 
                 if ((/(json|array)/g).test(jsn_type)) {
 
@@ -1423,8 +1426,6 @@ function getKey (objectValue) {
 }
 
 global.getKey=getKey
-
-global.each=each
 
 global.getTypeof=getTypeof
 /**
@@ -1485,8 +1486,6 @@ function getValue (objectValue) {
 
 global.getValue=getValue
 
-global.has=has
-
 
 /**
  * To group the value of json or array
@@ -1529,6 +1528,8 @@ function groupBy (objectValue, func) {
 }
 
 global.groupBy=groupBy
+
+global.has=has
 
 
 /**
@@ -1575,6 +1576,8 @@ global.indexOf=indexOf
 
 global.indexOfExist=indexOfExist
 
+global.indexOfNotExist=indexOfNotExist
+
 
 /**
  * Insert value in Json object or array
@@ -1595,7 +1598,7 @@ function insert (objectValue, value) {
 
         var jsn_type=getTypeof(value);
 
-        if (jsn_type==="json") {
+        if (jsn_type === "json") {
 
             each(value, function (key, _value) {
 
@@ -1605,7 +1608,7 @@ function insert (objectValue, value) {
 
         }
 
-        if (jsn_type==="array") {
+        if (jsn_type === "array") {
 
             objectValue.push(value);
 
@@ -1616,10 +1619,6 @@ function insert (objectValue, value) {
 }
 
 global.insert=insert
-
-global.indexOfNotExist=indexOfNotExist
-
-global.isEmpty=isEmpty
 
 
 /**
@@ -1641,13 +1640,13 @@ global.isEmpty=isEmpty
  */
 function isExact (objectValue1, objectValue2, isExist) {
 
-    if (objectValue2===null) {
+    if (objectValue2 === null) {
 
         return false;
 
     }
 
-    var local_is_exist=has(isExist)&&getTypeofInternal(isExist)==="boolean"
+    var local_is_exist=has(isExist)&&getTypeofInternal(isExist) === "boolean"
         ?isExist
         :true;
     var val_s=(/(json|array)/g).test(getTypeofInternal(objectValue2))
@@ -1662,17 +1661,17 @@ function isExact (objectValue1, objectValue2, isExist) {
 
     each(key_s, function (kk, kv) {
 
-        if (getTypeofInternal(objectValue2)==="json") {
+        if (getTypeofInternal(objectValue2) === "json") {
 
             if (has(val_s, kk)) {
 
                 var local_is_valid = local_is_exist
-                    ?val_s[kk]===kv
-                    :val_s[kk]!==kv;
+                    ?val_s[kk] === kv
+                    :val_s[kk] !== kv;
 
                 if (local_is_valid) {
 
-                    cnt+=incrementDefaultValue;
+                    cnt += incrementDefaultValue;
 
                 }
 
@@ -1680,15 +1679,15 @@ function isExact (objectValue1, objectValue2, isExist) {
 
         }
 
-        if (getTypeofInternal(objectValue2)==="array") {
+        if (getTypeofInternal(objectValue2) === "array") {
 
             var local_is_valid = local_is_exist
                 ?indexOf(val_s, kv)>notExistArrayDefaultValue
-                :indexOf(val_s, kv)===notExistArrayDefaultValue;
+                :indexOf(val_s, kv) === notExistArrayDefaultValue;
 
             if (local_is_valid) {
 
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             }
 
@@ -1700,7 +1699,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
         each(val_s, function (kk, kv) {
 
-            if (getTypeofInternal(objectValue2)==="json") {
+            if (getTypeofInternal(objectValue2) === "json") {
 
                 var gdata = getData(key_s, kk);
 
@@ -1712,7 +1711,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
                     if (local_is_valid) {
 
-                        cnt+=incrementDefaultValue;
+                        cnt += incrementDefaultValue;
 
                     }
 
@@ -1724,11 +1723,13 @@ function isExact (objectValue1, objectValue2, isExist) {
 
     }
 
-    return cnt===count(objectValue2);
+    return cnt === count(objectValue2);
 
 }
 
 global.isExact=isExact
+
+global.isEmpty=isEmpty
 
 
 /**
@@ -1748,13 +1749,13 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
     var zero =0;
 
-    if (objectValue2===null) {
+    if (objectValue2 === null) {
 
         return false;
 
     }
 
-    if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
+    if (getTypeof(objectValue2) !== "json" && getTypeof(objectValue2) !== "string" && getTypeof(objectValue2) !== "regexp" && getTypeof(objectValue2) !== "number") {
 
         return false;
 
@@ -1769,11 +1770,11 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
     each(key_s, function (kk, kv) {
 
-        if (getTypeof(objectValue2)==="json") {
+        if (getTypeof(objectValue2) === "json") {
 
             if (has(objectValue2[kk])) {
 
-                if (getTypeof(objectValue2[kk])==="regexp") {
+                if (getTypeof(objectValue2[kk]) === "regexp") {
 
                     local_is_valid = objectValue2[kk];
 
@@ -1784,7 +1785,7 @@ function isExactbyRegExp (objectValue1, objectValue2) {
                 }
                 if (local_is_valid.test(kv)) {
 
-                    cnt+=incrementDefaultValue;
+                    cnt += incrementDefaultValue;
 
                 }
 
@@ -1792,7 +1793,7 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
         } else {
 
-            if (getTypeof(objectValue2)==="regexp") {
+            if (getTypeof(objectValue2) === "regexp") {
 
                 local_is_valid = objectValue2;
 
@@ -1803,7 +1804,7 @@ function isExactbyRegExp (objectValue1, objectValue2) {
             }
             if (local_is_valid.test(kv)) {
 
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             }
 
@@ -1843,7 +1844,7 @@ function jsonToArray (objectValue, value) {
 
             var valueData = getData(_value, value);
 
-            if (isEmpty(valueData) ===false) {
+            if (isEmpty(valueData) === false) {
 
                 arry.push(valueData);
 
@@ -1934,7 +1935,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     var json_convertion = getTypeof(jsn) === "array"
         ? jsn
         : [jsn];
-    var jsn_s= count(jsn, true) ===zero
+    var jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
     var whr_s=whr||{};
@@ -1943,12 +1944,12 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
     each(jsn_s, function (jk, jv) {
 
-        if (getTypeof(jsn)==="array") {
+        if (getTypeof(jsn) === "array") {
 
             filterData = jv;
 
         }
-        if (getTypeof(jsn)==="json") {
+        if (getTypeof(jsn) === "json") {
 
             filterData[jk]=jv;
 
@@ -2063,7 +2064,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         }
 
-        cnt+=incrementDefaultValue;
+        cnt += incrementDefaultValue;
 
     });
 
@@ -2131,7 +2132,7 @@ function numberFormat (objectValue, value1, value2) {
 
         var str_dec=ssd_va.split(".");
 
-        if (count(str_dec)===incrementDefaultValue) {
+        if (count(str_dec) === incrementDefaultValue) {
 
             ssd_va=ssd_va+"."+repeat("0", valueZero);
 
@@ -2215,7 +2216,7 @@ function varExtend (objectValue, objectValueReplace) {
 
             if (has(jsn_s, key)) {
 
-                if (getTypeof(jsn_s[key]) ==="json") {
+                if (getTypeof(jsn_s[key]) === "json") {
 
                     jsn_s[key]=replaceValue(jsn_s[key], objectValueReplace[key]);
 
@@ -2254,7 +2255,7 @@ function replaceValue (objectValue, objectValueReplace) {
 
     for (var key in objectValueReplace) {
 
-        if (getTypeof(objectValue[key]) ==="json") {
+        if (getTypeof(objectValue[key]) === "json") {
 
             objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
 
@@ -2269,71 +2270,6 @@ function replaceValue (objectValue, objectValueReplace) {
     return objectValue;
 
 }
-
-/**
- * On delay
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function onDelay (func, wait, option) {
-
-    var zero = 0;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    var valueWaited = wait || zero;
-
-    var timeout = setTimeout(function () {
-
-        func();
-
-    }, valueWaited);
-
-    var sequence = new ClassDelay(timeout, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} timeout timer for delay
- * @param {object} extend option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
-
-    this.extend = extend;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-global.onDelay=onDelay
-
 
 /**
  * On sequence
@@ -2411,101 +2347,6 @@ ClassSequence.prototype.cancel = function () {
 };
 
 global.onSequence=onSequence
-
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame();
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-
-        timerId.cancel();
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-global.onWait=onWait
 
 
 /**
@@ -2658,6 +2499,114 @@ global.parseJson=parseJson
 
 
 /**
+ * On delay
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var zero = 0;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+
+    var timeout = setTimeout(function () {
+
+        func();
+
+    }, valueWaited);
+
+    var sequence = new ClassDelay(timeout, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} timeout timer for delay
+ * @param {object} extend option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassDelay (timeout, extend) {
+
+    this.timeout = timeout;
+
+    this.extend = extend;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+global.onDelay=onDelay
+
+
+/**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random === parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+global.random=random
+
+
+/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -2673,7 +2622,7 @@ function datastring (str) {
 
     var data_s="";
 
-    if (typeof str ==="string") {
+    if (typeof str === "string") {
 
         if (str.indexOf("'")) {
 
@@ -2742,7 +2691,7 @@ function parseString (value) {
 
     if (has(value)) {
 
-        if (getTypeof(value)==="json") {
+        if (getTypeof(value) === "json") {
 
             str_strt="{";
             str_end="}";
@@ -2753,22 +2702,22 @@ function parseString (value) {
                     ?","
                     :"";
 
-                if (typeof _value==="object"&&_value!==null) {
+                if (typeof _value === "object"&&_value!== null) {
 
-                    str+=datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
+                    str += datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
 
                 } else {
 
-                    str+=datastring(_key)+":"+datastring(_value)+""+inc_main;
+                    str += datastring(_key)+":"+datastring(_value)+""+inc_main;
 
                 }
 
-                inc+=incrementDefaultValue;
+                inc += incrementDefaultValue;
 
             });
 
         }
-        if (getTypeof(value)==="array") {
+        if (getTypeof(value) === "array") {
 
             str_strt="[";
             str_end="]";
@@ -2779,17 +2728,17 @@ function parseString (value) {
                     ?","
                     :"";
 
-                if (typeof _value==="object") {
+                if (typeof _value === "object") {
 
-                    str+=returnLoop(_value, parseString, inc_main);
+                    str += returnLoop(_value, parseString, inc_main);
 
                 } else {
 
-                    str+=datastring(_value)+""+inc_main;
+                    str += datastring(_value)+""+inc_main;
 
                 }
 
-                inc+=incrementDefaultValue;
+                inc += incrementDefaultValue;
 
             });
 
@@ -2803,50 +2752,102 @@ function parseString (value) {
 
 global.parseString=parseString
 
+global.range=range
+
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
 
 /**
- * Random value from array list
+ * On wait
  *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @returns {string} Returns the total.
  * @example
  *
- * random([10,20,30],0,3 )
- *=>'[20]'
+ *  onWait(()=>{})
+ *=>'11'
  */
-function random (valueArray, minValue, maxValue) {
+function onWait (func, wait) {
 
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
+    var browserWindow = getWindow();
+    var timerId = null;
 
-    each(valueArray, function (key, value) {
+    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
 
-        if (math_random===parseInt(key)) {
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
 
-            ran_var.push(value);
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame();
 
         }
 
-    });
+        return onDelay(pendingFunc, waiting);
 
-    return ran_var;
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+
+        timerId.cancel();
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
 
 }
 
-global.random=random
-
-global.range=range
+global.onWait=onWait
 
 
 /**
@@ -2859,7 +2860,7 @@ global.range=range
  * @example
  *
  * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
+ * =>[1]
  */
 function regexCountGroup (value) {
 
@@ -2891,9 +2892,9 @@ function remove (objectValue, value, value2) {
     var type_js=getTypeof(objectValue);
     var reslt =null;
 
-    var isValueAFunction = getTypeof(value)==="function";
+    var isValueAFunction = getTypeof(value) === "function";
 
-    if (type_js==="array") {
+    if (type_js === "array") {
 
         var lastRow = has(value2)
             ?value2
@@ -2926,7 +2927,7 @@ function remove (objectValue, value, value2) {
 
     }
 
-    if (type_js==="json") {
+    if (type_js === "json") {
 
         reslt={};
         var jsn_vw=[];
@@ -2953,7 +2954,7 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (indexOfExist(jsn_vw, av)===false) {
+                if (indexOfExist(jsn_vw, av) === false) {
 
                     reslt[ak]=av;
 
@@ -3000,7 +3001,7 @@ function roundDecimal (value, maxValue) {
     var s_dmin=0;
     var s_dmax=maxValue||twoDefaultValue;
 
-    if (count(str_dec)===twoDefaultValue) {
+    if (count(str_dec) === twoDefaultValue) {
 
         var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
         var delmts=p_cnts<=s_dmin
@@ -3051,7 +3052,7 @@ function shuffle (objectValue) {
 
             randomIndex = Math.floor(Math.random() * currentIndex);
 
-            if (getTypeof(objectValue)==="array") {
+            if (getTypeof(objectValue) === "array") {
 
                 temporaryValue = output[currentIndex];
                 output[currentIndex]=output[randomIndex];
@@ -3092,25 +3093,25 @@ function sort (objectValue, order, func) {
     var asc=true;
     var types='any';
 
-    if (has(order) && getTypeof(order) ==='boolean') {
+    if (has(order) && getTypeof(order) === 'boolean') {
 
         asc= order;
 
     }
 
-    if (has(func) && getTypeof(func) ==='string') {
+    if (has(func) && getTypeof(func) === 'string') {
 
         types= func;
 
     }
 
-    var js_m=getTypeof(jsonn)==="json"
+    var js_m=getTypeof(jsonn) === "json"
         ?each(jsonn)
         :jsonn;
 
     var finalResponse=js_m.sort(function (orderA, orderB) {
 
-        if (has(func) && getTypeof(func) ==='function') {
+        if (has(func) && getTypeof(func) === 'function') {
 
             return func(orderA, orderB);
 
@@ -3123,20 +3124,20 @@ function sort (objectValue, order, func) {
 
             if (isEmpty(types) === false) {
 
-                if (types ==='any') {
+                if (types === 'any') {
 
                     sortOrderA =orderA.charCodeAt();
                     sortOrderB= orderB.charCodeAt();
 
                 }
-                if (types ==='lowercase') {
+                if (types === 'lowercase') {
 
                     sortOrderA =orderA.toLowerCase().charCodeAt();
                     sortOrderB= orderB.toLowerCase().charCodeAt();
 
                 }
 
-                if (types ==='uppercase') {
+                if (types === 'uppercase') {
 
                     sortOrderA =orderA.toUpperCase().charCodeAt();
                     sortOrderB= orderB.toUpperCase().charCodeAt();
@@ -3390,27 +3391,6 @@ global.stringUnEscape=stringUnEscape
 
 
 /**
- * String Upper case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringUpperCase('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
- */
-function stringUpperCase (value) {
-
-    return toString(value).toUpperCase();
-
-}
-
-global.stringUpperCase=stringUpperCase
-
-
-/**
  * Template Value
  *
  * @since 1.0.1
@@ -3447,7 +3427,7 @@ function templateValue (templateString, data, option) {
         default_option.escape
     ].join("|")+"|$", "g");
 
-    var source = "__p+='";
+    var source = "__p += '";
     var index = 0;
 
     var escapes = {
@@ -3469,24 +3449,24 @@ function templateValue (templateString, data, option) {
 
     templateString.replace(regexp, function (match, evaluate, interpolate, escape, offset) {
 
-        source+=templateString.slice(index, offset).replace(escaper, escapeChar);
+        source += templateString.slice(index, offset).replace(escaper, escapeChar);
         index = offset+match.length;
 
         if (evaluate) {
 
-            source+="';\n"+evaluate+"\n__p+='";
+            source += "';\n"+evaluate+"\n__p += '";
 
         }
 
         if (interpolate) {
 
-            source+="'+\n((__t=("+interpolate+"))==null?'':__t)+\n'";
+            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
 
         }
 
         if (escape) {
 
-            source+="'+\n((__t=("+interpolate+"))==null?'':__t)+\n'";
+            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
 
         }
 
@@ -3494,23 +3474,23 @@ function templateValue (templateString, data, option) {
 
     });
 
-    source+="';\n";
+    source += "';\n";
 
     source = "var __t,__p='',__j=[].join," +
-        "print=function(){__p+=__j.call(arguments,'');};\n" +
+        "print=function(){__p += __j.call(arguments,'');};\n" +
     source + " return __p;\n";
 
     try {
 
         var val_source = "";
 
-        if (getTypeof(data)==="json") {
+        if (getTypeof(data) === "json") {
 
             for (var key in data) {
 
                 if (has(data, key)) {
 
-                    val_source+='var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
+                    val_source += 'var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
                         ?parseString(data[key])
                         :'"'+data[key]+'"')+';';
 
@@ -3563,7 +3543,7 @@ function templateValueInternal (str_raw, reg) {
                 var strs_perd=mes1.replace(".", ":");
                 var gtdata=getData(reg, strs_perd);
 
-                return getTypeof(gtdata)==="json"
+                return getTypeof(gtdata) === "json"
                     ?""
                     :gtdata;
 
@@ -3593,6 +3573,27 @@ global.toArray=toArray
 
 
 /**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringUpperCase('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+function stringUpperCase (value) {
+
+    return toString(value).toUpperCase();
+
+}
+
+global.stringUpperCase=stringUpperCase
+
+
+/**
  * Logic in convert string or number to valid number
  *
  * @since 1.0.1
@@ -3617,7 +3618,7 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
     }
 
-    if (!has(nullReplacement) || nullReplacement.toString()==="NaN") {
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
 
         intr=defaultVariable;
 
@@ -3631,31 +3632,6 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
     return intr;
 
 }
-
-/**
- * To extract number in string and convert to double
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @returns {number} Return in double.
- * @example
- *
- * toDouble(1)
- *=>1.00
- */
-function toDouble (value) {
-
-    var zero = 0.00;
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value===null
-        ?zero
-        :value));
-
-}
-
-global.toDouble=toDouble
-
 
 /**
  * To extract number in string and convert to integer
@@ -3673,7 +3649,7 @@ function toInteger (value) {
 
     var zero = 0;
 
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value===null
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
         :value));
 
@@ -3682,6 +3658,31 @@ function toInteger (value) {
 global.toInteger=toInteger
 
 global.toString=toString
+
+
+/**
+ * To extract number in string and convert to double
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble(1)
+ *=>1.00
+ */
+function toDouble (value) {
+
+    var zero = 0.00;
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+global.toDouble=toDouble
 
 
 /**
@@ -3698,7 +3699,7 @@ global.toString=toString
  */
 function unique (value) {
 
-    if (getTypeof(value)==="array") {
+    if (getTypeof(value) === "array") {
 
         var uniqArrData = [];
 

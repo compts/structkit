@@ -37,7 +37,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     const json_convertion = getTypeof(jsn) === "array"
         ? jsn
         : [jsn];
-    const jsn_s= count(jsn, true) ===zero
+    const jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
     const whr_s=whr||{};
@@ -46,12 +46,12 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
     each(jsn_s, function (jk, jv) {
 
-        if (getTypeof(jsn)==="array") {
+        if (getTypeof(jsn) === "array") {
 
             filterData = jv;
 
         }
-        if (getTypeof(jsn)==="json") {
+        if (getTypeof(jsn) === "json") {
 
             filterData[jk]=jv;
 

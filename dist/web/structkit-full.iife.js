@@ -1,3 +1,5 @@
+
+_stk.appendIsArrayExist=appendIsArrayExist
 (function(global){
 global._stk={}
 
@@ -5,11 +7,9 @@ _stk.append=append
 
 _stk.arrayConcat=arrayConcat
 
-_stk.arrayRepeat=arrayRepeat
-
-_stk.appendIsArrayExist=appendIsArrayExist
-
 _stk.arraySlice=arraySlice
+
+_stk.arrayRepeat=arrayRepeat
 
 _stk.arraySum=arraySum
 
@@ -21,17 +21,17 @@ _stk.clone=clone
 
 _stk.count=count
 
-_stk.each=each
-
 _stk.filter=filter
 
+_stk.each=each
+
 _stk.first=first
+
+_stk.getData=getData
 
 _stk.getEmptyVariable=getEmptyVariable
 
 _stk.getKey=getKey
-
-_stk.getData=getData
 
 _stk.getTypeof=getTypeof
 
@@ -43,25 +43,25 @@ _stk.groupBy=groupBy
 
 _stk.has=has
 
+_stk.ifUndefined=ifUndefined
+
 _stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
 
-_stk.ifUndefined=ifUndefined
-
 _stk.insert=insert
-
-_stk.isEmpty=isEmpty
 
 _stk.indexOfNotExist=indexOfNotExist
 
-_stk.isExactbyRegExp=isExactbyRegExp
+_stk.isEmpty=isEmpty
 
 _stk.isExact=isExact
 
+_stk.jsonToArray=jsonToArray
+
 _stk.isJson=isJson
 
-_stk.jsonToArray=jsonToArray
+_stk.isExactbyRegExp=isExactbyRegExp
 
 _stk.last=last
 
@@ -77,9 +77,9 @@ _stk.numberFormat=numberFormat
 
 _stk.onDelay=onDelay
 
-_stk.onSequence=onSequence
-
 _stk.onWait=onWait
+
+_stk.onSequence=onSequence
 
 _stk.parseJson=parseJson
 
@@ -87,25 +87,23 @@ _stk.parseString=parseString
 
 _stk.random=random
 
-_stk.regexCountGroup=regexCountGroup
-
 _stk.range=range
+
+_stk.regexCountGroup=regexCountGroup
 
 _stk.repeat=repeat
 
-_stk.shuffle=shuffle
+_stk.remove=remove
 
 _stk.roundDecimal=roundDecimal
 
-_stk.remove=remove
+_stk.shuffle=shuffle
 
-_stk.sort=sort
+_stk.stringCapitalize=stringCapitalize
 
 _stk.stringCamelCase=stringCamelCase
 
-_stk.stringEscape=stringEscape
-
-_stk.stringCapitalize=stringCapitalize
+_stk.sort=sort
 
 _stk.stringKebabCase=stringKebabCase
 
@@ -115,11 +113,13 @@ _stk.stringSnakeCase=stringSnakeCase
 
 _stk.stringSubs=stringSubs
 
-_stk.stringUnEscape=stringUnEscape
-
 _stk.stringUpperCase=stringUpperCase
 
+_stk.stringUnEscape=stringUnEscape
+
 _stk.templateValue=templateValue
+
+_stk.stringEscape=stringEscape
 
 _stk.toArray=toArray
 
@@ -128,8 +128,6 @@ _stk.toDouble=toDouble
 _stk.toInteger=toInteger
 
 _stk.toString=toString
-
-_stk.unique=unique
 
 _stk.varExtend=varExtend
 
@@ -397,5 +395,7 @@ _stk.isRegexp=isRegexp;
 _stk.isString=isString;
 _stk.isUndefined=isUndefined;
 _stk.whereNot=whereNot
+
+_stk.unique=unique
 
 })(typeof window !== "undefined" ? window : this);

@@ -13,9 +13,9 @@
  */
 function has (value, key) {
 
-    if (typeof key==="undefined") {
+    if (typeof key === "undefined") {
 
-        return value!==null && typeof value !=="undefined";
+        return value !== null && typeof value !== "undefined";
 
     }
 
