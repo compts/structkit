@@ -17,7 +17,7 @@ function indexOfExist (arrayObject, value) {
 
     const zero = 0;
 
-    return indexOf(arrayObject, value)>=zero;
+    return indexOf(arrayObject, value) >= zero;
 
 }
 module.exports=indexOfExist;

@@ -43,7 +43,7 @@ function numberFormat (objectValue, value1, value2) {
 
             const dec_num=str_dec[incrementDefaultValue];
 
-            if (dec_num.length>=valueZero) {
+            if (dec_num.length >= valueZero) {
 
                 ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
 

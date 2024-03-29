@@ -34,7 +34,7 @@ function templateValue (templateString, data, option) {
     const default_option=varExtend({
         "escape": "<!-([\\s\\S]+?)!>",
         "evaluate": "<![^=-]([\\s\\S]+?)!>",
-        "interpolate": "<!=([\\s\\S]+?)!>"
+        "interpolate": "< != ([\\s\\S]+?)!>"
     }, option);
 
     const valueType=[

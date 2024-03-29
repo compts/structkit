@@ -1,29 +1,29 @@
-
-_stk.appendIsArrayExist=appendIsArrayExist
 (function(global){
 global._stk={}
 
 _stk.append=append
 
-_stk.arrayConcat=arrayConcat
+_stk.appendIsArrayExist=appendIsArrayExist
 
-_stk.arraySlice=arraySlice
+_stk.arrayConcat=arrayConcat
 
 _stk.arrayRepeat=arrayRepeat
 
-_stk.arraySum=arraySum
+_stk.arraySlice=arraySlice
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
-_stk.asyncReplace=asyncReplace
-
 _stk.clone=clone
+
+_stk.asyncReplace=asyncReplace
 
 _stk.count=count
 
-_stk.filter=filter
+_stk.arraySum=arraySum
 
 _stk.each=each
+
+_stk.filter=filter
 
 _stk.first=first
 
@@ -49,19 +49,19 @@ _stk.indexOf=indexOf
 
 _stk.indexOfExist=indexOfExist
 
-_stk.insert=insert
-
 _stk.indexOfNotExist=indexOfNotExist
 
 _stk.isEmpty=isEmpty
 
+_stk.insert=insert
+
 _stk.isExact=isExact
 
-_stk.jsonToArray=jsonToArray
+_stk.isExactbyRegExp=isExactbyRegExp
 
 _stk.isJson=isJson
 
-_stk.isExactbyRegExp=isExactbyRegExp
+_stk.jsonToArray=jsonToArray
 
 _stk.last=last
 
@@ -75,35 +75,37 @@ _stk.map=map
 
 _stk.numberFormat=numberFormat
 
+_stk.onSequence=onSequence
+
 _stk.onDelay=onDelay
 
 _stk.onWait=onWait
 
-_stk.onSequence=onSequence
+_stk.parseString=parseString
 
 _stk.parseJson=parseJson
 
-_stk.parseString=parseString
+_stk.range=range
 
 _stk.random=random
 
-_stk.range=range
-
 _stk.regexCountGroup=regexCountGroup
 
-_stk.repeat=repeat
-
 _stk.remove=remove
+
+_stk.repeat=repeat
 
 _stk.roundDecimal=roundDecimal
 
 _stk.shuffle=shuffle
 
-_stk.stringCapitalize=stringCapitalize
+_stk.sort=sort
 
 _stk.stringCamelCase=stringCamelCase
 
-_stk.sort=sort
+_stk.stringCapitalize=stringCapitalize
+
+_stk.stringEscape=stringEscape
 
 _stk.stringKebabCase=stringKebabCase
 
@@ -113,13 +115,11 @@ _stk.stringSnakeCase=stringSnakeCase
 
 _stk.stringSubs=stringSubs
 
-_stk.stringUpperCase=stringUpperCase
-
 _stk.stringUnEscape=stringUnEscape
 
-_stk.templateValue=templateValue
+_stk.stringUpperCase=stringUpperCase
 
-_stk.stringEscape=stringEscape
+_stk.templateValue=templateValue
 
 _stk.toArray=toArray
 
@@ -128,6 +128,8 @@ _stk.toDouble=toDouble
 _stk.toInteger=toInteger
 
 _stk.toString=toString
+
+_stk.unique=unique
 
 _stk.varExtend=varExtend
 
@@ -395,7 +397,5 @@ _stk.isRegexp=isRegexp;
 _stk.isString=isString;
 _stk.isUndefined=isUndefined;
 _stk.whereNot=whereNot
-
-_stk.unique=unique
 
 })(typeof window !== "undefined" ? window : this);

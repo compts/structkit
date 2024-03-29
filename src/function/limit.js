@@ -35,7 +35,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
     each(objectValue, function (key, meth) {
 
-        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
+        if (cnt >= minValueReserve && cnt >= maxValueReserve) {
 
             if (has(func)) {
 

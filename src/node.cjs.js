@@ -2,6 +2,10 @@ const dataNumberFormat=require('./core/dataTypeFormat.js');
 
 exports.dataNumberFormat =dataNumberFormat;
 
+const getIndexOf=require('./core/getIndexOf.js');
+
+exports.getIndexOf =getIndexOf;
+
 const getKeyVal=require('./core/getKeyVal.js');
 
 exports.getKeyVal =getKeyVal;
@@ -10,10 +14,6 @@ const getTypeofInternal=require('./core/getTypeOf.js');
 
 exports.getTypeofInternal =getTypeofInternal;
 
-const getIndexOf=require('./core/getIndexOf.js');
-
-exports.getIndexOf =getIndexOf;
-
 const getWindow=require('./core/global.js');
 
 exports.getWindow =getWindow;
@@ -21,6 +21,10 @@ exports.getWindow =getWindow;
 const stringSplit=require('./core/stringSplit.js');
 
 exports.stringSplit =stringSplit;
+
+const arrayConcat=require('./function/arrayConcat.js');
+
+exports.arrayConcat =arrayConcat;
 
 const whereLoopExecution=require('./core/whereLoopExecution.js');
 
@@ -34,13 +38,13 @@ const appendIsArrayExist=require('./function/appendIsArrayExist.js');
 
 exports.appendIsArrayExist =appendIsArrayExist;
 
-const arrayConcat=require('./function/arrayConcat.js');
-
-exports.arrayConcat =arrayConcat;
-
 const arrayRepeat=require('./function/arrayRepeat.js');
 
 exports.arrayRepeat =arrayRepeat;
+
+const arraySlice=require('./function/arraySlice.js');
+
+exports.arraySlice =arraySlice;
 
 const arraySum=require('./function/arraySum.js');
 
@@ -62,29 +66,25 @@ const count=require('./function/count.js');
 
 exports.count =count;
 
-const arraySlice=require('./function/arraySlice.js');
-
-exports.arraySlice =arraySlice;
-
-const each=require('./function/each.js');
-
-exports.each =each;
-
 const filter=require('./function/filter.js');
 
 exports.filter =filter;
-
-const getData=require('./function/getData.js');
-
-exports.getData =getData;
 
 const first=require('./function/first.js');
 
 exports.first =first;
 
+const each=require('./function/each.js');
+
+exports.each =each;
+
 const getEmptyVariable=require('./function/getEmptyVariable.js');
 
 exports.getEmptyVariable =getEmptyVariable;
+
+const getData=require('./function/getData.js');
+
+exports.getData =getData;
 
 const getKey=require('./function/getKey.js');
 
@@ -170,10 +170,6 @@ const map=require('./function/map.js');
 
 exports.map =map;
 
-const onDelay=require('./function/onDelay.js');
-
-exports.onDelay =onDelay;
-
 const numberFormat=require('./function/numberFormat.js');
 
 exports.numberFormat =numberFormat;
@@ -181,6 +177,10 @@ exports.numberFormat =numberFormat;
 const onSequence=require('./function/onSequence.js');
 
 exports.onSequence =onSequence;
+
+const onDelay=require('./function/onDelay.js');
+
+exports.onDelay =onDelay;
 
 const onWait=require('./function/onWait.js');
 
@@ -198,13 +198,13 @@ const random=require('./function/random.js');
 
 exports.random =random;
 
-const regexCountGroup=require('./function/regexCountGroup.js');
-
-exports.regexCountGroup =regexCountGroup;
-
 const range=require('./function/range.js');
 
 exports.range =range;
+
+const regexCountGroup=require('./function/regexCountGroup.js');
+
+exports.regexCountGroup =regexCountGroup;
 
 const remove=require('./function/remove.js');
 
@@ -222,6 +222,10 @@ const shuffle=require('./function/shuffle.js');
 
 exports.shuffle =shuffle;
 
+const sort=require('./function/sort.js');
+
+exports.sort =sort;
+
 const stringCamelCase=require('./function/stringCamelCase.js');
 
 exports.stringCamelCase =stringCamelCase;
@@ -230,21 +234,21 @@ const stringCapitalize=require('./function/stringCapitalize.js');
 
 exports.stringCapitalize =stringCapitalize;
 
-const sort=require('./function/sort.js');
-
-exports.sort =sort;
-
 const stringEscape=require('./function/stringEscape.js');
 
 exports.stringEscape =stringEscape;
 
-const stringLowerCase=require('./function/stringLowerCase.js');
+const stringKebabCase=require('./function/stringKebabCase.js');
 
-exports.stringLowerCase =stringLowerCase;
+exports.stringKebabCase =stringKebabCase;
 
 const stringSnakeCase=require('./function/stringSnakeCase.js');
 
 exports.stringSnakeCase =stringSnakeCase;
+
+const stringLowerCase=require('./function/stringLowerCase.js');
+
+exports.stringLowerCase =stringLowerCase;
 
 const stringSubs=require('./function/stringSubs.js');
 
@@ -254,21 +258,17 @@ const stringUnEscape=require('./function/stringUnEscape.js');
 
 exports.stringUnEscape =stringUnEscape;
 
-const stringKebabCase=require('./function/stringKebabCase.js');
-
-exports.stringKebabCase =stringKebabCase;
-
 const stringUpperCase=require('./function/stringUpperCase.js');
 
 exports.stringUpperCase =stringUpperCase;
 
-const templateValue=require('./function/templateValue.js');
-
-exports.templateValue =templateValue;
-
 const toArray=require('./function/toArray.js');
 
 exports.toArray =toArray;
+
+const templateValue=require('./function/templateValue.js');
+
+exports.templateValue =templateValue;
 
 const toDouble=require('./function/toDouble.js');
 
@@ -286,13 +286,13 @@ const unique=require('./function/unique.js');
 
 exports.unique =unique;
 
-const where=require('./function/where.js');
-
-exports.where =where;
-
 const varExtend=require('./function/varExtend.js');
 
 exports.varExtend =varExtend;
+
+const where=require('./function/where.js');
+
+exports.where =where;
 
 const whereNot=require('./function/whereNot.js');
 
@@ -301,6 +301,7 @@ exports.whereNot =whereNot;
 const entity=require('./variable/htmlentity.js');
 
 exports.entity =entity;
+
 
 /**
  *  Get the type if arguments
@@ -320,6 +321,7 @@ function isArguments_default (value) {
 
 }
 
+
 /**
  *  Get the type if array
  *
@@ -337,6 +339,7 @@ function isArray_default (value) {
     return getTypeof(value) === "array";
 
 }
+
 
 /**
  *  Get the type if boolean
@@ -356,6 +359,7 @@ function isBoolean_default (value) {
 
 }
 
+
 /**
  *  Get the type if date
  *
@@ -373,6 +377,7 @@ function isDate_default (value) {
     return getTypeof(value) === "date";
 
 }
+
 
 /**
  *  Get the type if error
@@ -392,6 +397,7 @@ function isError_default (value) {
 
 }
 
+
 /**
  *  Get the type if function
  *
@@ -409,6 +415,7 @@ function isFunction_default (value) {
     return getTypeof(value) === "function";
 
 }
+
 
 /**
  *  Get the type if null
@@ -428,6 +435,7 @@ function isNull_default (value) {
 
 }
 
+
 /**
  *  Get the type if number
  *
@@ -445,6 +453,7 @@ function isNumber_default (value) {
     return getTypeof(value) === "number";
 
 }
+
 
 /**
  *  Get the type if object
@@ -464,6 +473,7 @@ function isObject_default (value) {
 
 }
 
+
 /**
  *  Get the type if promise
  *
@@ -481,6 +491,7 @@ function isPromise_default (value) {
     return getTypeof(value) === "promise";
 
 }
+
 
 /**
  *  Get the type if regexp
@@ -500,6 +511,7 @@ function isRegexp_default (value) {
 
 }
 
+
 /**
  *  Get the type if string
  *
@@ -518,6 +530,7 @@ function isString_default (value) {
 
 }
 
+
 /**
  *  Get the type if undefined
  *
@@ -535,6 +548,7 @@ function isUndefined_default (value) {
     return getTypeof(value) === "undefined";
 
 }
+
 
 exports.isArguments=isArguments_default;
 exports.isArray=isArray_default;

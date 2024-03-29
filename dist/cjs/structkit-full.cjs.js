@@ -594,7 +594,7 @@ function indexOfExist (arrayObject, value) {
 
     var zero = 0;
 
-    return indexOf(arrayObject, value)>=zero;
+    return indexOf(arrayObject, value) >= zero;
 
 }
 
@@ -750,96 +750,65 @@ global.append=append
 
 
 /**
- * Generate array of data from specific limit or where the index to start
+ * Check index of array Not or exist
  *
- * @since 1.0.1
- * @category Seq
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
+ * @since 1.4.1
+ * @category Boolean
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return array.
  * @example
  *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
+ * indexOfNotExist([312], 32)
+ * // => true
  */
-function range (maxValue, minValue, step) {
+function indexOfNotExist (arrayObject, value) {
 
-    var emptyDefaultValue=0;
-    var tenDefaultValue=10;
+    var zero = -1;
 
-    var incrementDefaultValue=1;
-
-    var incrementValue=has(step)
-        ?step
-        :incrementDefaultValue;
-    var minValueRef=has(minValue)
-        ?minValue
-        :incrementDefaultValue;
-    var maxValueRef=has(maxValue)
-        ?maxValue
-        :tenDefaultValue;
-    var output=[];
-
-    for (var inc=minValueRef; inc<=maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
+    return indexOf(arrayObject, value) === zero;
 
 }
 
 /**
- * Repeat  value in array
+ * Append If Array not Exist
  *
- * @since 1.4.7
+ * @since 1.0.1
  * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
+ * @param {any} arrayObject Data is Array
+ * @param {any} value Value for array lookup
+ * @returns {any[]} Return array.
  * @example
  *
- * arrayRepeat("s",2 )
- *=>['s','s']
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
  */
-function arrayRepeat (value, valueRepetion) {
+function appendIsArrayExist (arrayObject, value) {
 
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
+    var ary_type=getTypeof(arrayObject);
+    var ary_type1=getTypeof(value);
 
-    return map(range(nm_rpt), function () {
+    if (ary_type === "array" && ary_type1 === "array") {
 
-        return value;
+        each(value, function (key, val) {
 
-    });
+            if (indexOfNotExist(arrayObject, val)) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
 
 }
 
-global.arrayRepeat=arrayRepeat
+global.appendIsArrayExist=appendIsArrayExist
 
 
 /**
@@ -923,68 +892,6 @@ function arraySlice (objectValue, min, max) {
 }
 
 global.arraySlice=arraySlice
-
-
-/**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Boolean
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return array.
- * @example
- *
- * indexOfNotExist([312], 32)
- * // => true
- */
-function indexOfNotExist (arrayObject, value) {
-
-    var zero = -1;
-
-    return indexOf(arrayObject, value) === zero;
-
-}
-
-/**
- * Append If Array not Exist
- *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    var ary_type=getTypeof(arrayObject);
-    var ary_type1=getTypeof(value);
-
-    if (ary_type === "array" && ary_type1 === "array") {
-
-        each(value, function (key, val) {
-
-            if (indexOfNotExist(arrayObject, val)) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-
-global.appendIsArrayExist=appendIsArrayExist
 
 
 /**
@@ -1137,60 +1044,96 @@ global.arrayConcat=arrayConcat
 
 
 /**
- * Async replace
+ * Generate array of data from specific limit or where the index to start
  *
- * @since 1.3.1
- * @category Utility
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
  * @example
  *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
  */
-function asyncReplace (value, search, toReplace) {
+function range (maxValue, minValue, step) {
 
-    try {
+    var emptyDefaultValue=0;
+    var tenDefaultValue=10;
 
-        if (getTypeof(toReplace) === "function") {
+    var incrementDefaultValue=1;
 
-            var values = [];
+    var incrementValue=has(step)
+        ?step
+        :incrementDefaultValue;
+    var minValueRef=has(minValue)
+        ?minValue
+        :incrementDefaultValue;
+    var maxValueRef=has(maxValue)
+        ?maxValue
+        :tenDefaultValue;
+    var output=[];
 
-            String.prototype.replace.call(value, search, function () {
+    for (var inc=minValueRef; inc <= maxValueRef;) {
 
-    var arg=arguments;
+        if (getTypeof(incrementValue) === "string") {
 
-                values.push(toReplace(...arg));
+            output.push(inc);
 
-                return "";
+            var render = new Function('inc', "return "+inc+incrementValue);
 
-            });
+            inc = render.call(inc);
 
-            return Promise.all(values).then(function (resolvedValues) {
+        }
+        if (getTypeof(incrementValue) === "number") {
 
-                return String.prototype.replace.call(value, search, function () {
+            output.push(inc);
+            if (incrementValue<emptyDefaultValue) {
 
-                    return resolvedValues.shift();
+                inc -= incrementValue;
 
-                });
+            } else {
 
-            });
+                inc += incrementValue;
+
+            }
 
         }
 
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
     }
+
+    return output;
 
 }
 
-global.asyncReplace=asyncReplace
+/**
+ * Repeat  value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+
+    return map(range(nm_rpt), function () {
+
+        return value;
+
+    });
+
+}
+
+global.arrayRepeat=arrayRepeat
 
 
 /**
@@ -1319,6 +1262,8 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 
 global.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
+global.count=count
+
 
 /**
  * Cloning the data either in JSON or array that be used as different property
@@ -1348,7 +1293,62 @@ function clone (objectValue) {
 
 global.clone=clone
 
-global.count=count
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Utility
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function () {
+
+    var arg=arguments;
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+
+global.asyncReplace=asyncReplace
 
 global.each=each
 
@@ -1406,6 +1406,8 @@ global.getData=getData
 
 global.getEmptyVariable=getEmptyVariable
 
+global.getTypeof=getTypeof
+
 
 /**
  * Get key Object or JSON
@@ -1426,8 +1428,6 @@ function getKey (objectValue) {
 }
 
 global.getKey=getKey
-
-global.getTypeof=getTypeof
 /**
  * Generate unique value id
  *
@@ -1464,27 +1464,6 @@ function getUniq (option) {
 }
 
 global.getUniq=getUniq
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-global.getValue=getValue
 
 
 /**
@@ -1528,6 +1507,27 @@ function groupBy (objectValue, func) {
 }
 
 global.groupBy=groupBy
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+global.getValue=getValue
 
 global.has=has
 
@@ -1619,6 +1619,8 @@ function insert (objectValue, value) {
 }
 
 global.insert=insert
+
+global.isEmpty=isEmpty
 
 
 /**
@@ -1728,8 +1730,6 @@ function isExact (objectValue1, objectValue2, isExist) {
 }
 
 global.isExact=isExact
-
-global.isEmpty=isEmpty
 
 
 /**
@@ -1887,32 +1887,6 @@ global.last=last
 
 
 /**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf([1,2], 1)
- * // => 0
- */
-function lastIndexOf (objectValue, value) {
-
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
-
-}
-
-global.lastIndexOf=lastIndexOf
-
-
-/**
  * Where Loop Execution
  *
  * @since 1.0.1
@@ -2014,6 +1988,32 @@ global.like=like
 
 
 /**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    var start = 0;
+
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+
+global.lastIndexOf=lastIndexOf
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -2044,7 +2044,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
     each(objectValue, function (key, meth) {
 
-        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
+        if (cnt >= minValueReserve && cnt >= maxValueReserve) {
 
             if (has(func)) {
 
@@ -2140,7 +2140,7 @@ function numberFormat (objectValue, value1, value2) {
 
             var dec_num=str_dec[incrementDefaultValue];
 
-            if (dec_num.length>=valueZero) {
+            if (dec_num.length >= valueZero) {
 
                 ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
 
@@ -2272,6 +2272,71 @@ function replaceValue (objectValue, objectValueReplace) {
 }
 
 /**
+ * On delay
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var zero = 0;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+
+    var timeout = setTimeout(function () {
+
+        func();
+
+    }, valueWaited);
+
+    var sequence = new ClassDelay(timeout, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} timeout timer for delay
+ * @param {object} extend option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassDelay (timeout, extend) {
+
+    this.timeout = timeout;
+
+    this.extend = extend;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+global.onDelay=onDelay
+
+
+/**
  * On sequence
  *
  * @since 1.4.1
@@ -2347,6 +2412,101 @@ ClassSequence.prototype.cancel = function () {
 };
 
 global.onSequence=onSequence
+
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    var browserWindow = getWindow();
+    var timerId = null;
+
+    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame();
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+
+        timerId.cancel();
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+global.onWait=onWait
 
 
 /**
@@ -2499,114 +2659,6 @@ global.parseJson=parseJson
 
 
 /**
- * On delay
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function onDelay (func, wait, option) {
-
-    var zero = 0;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    var valueWaited = wait || zero;
-
-    var timeout = setTimeout(function () {
-
-        func();
-
-    }, valueWaited);
-
-    var sequence = new ClassDelay(timeout, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} timeout timer for delay
- * @param {object} extend option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
-
-    this.extend = extend;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-global.onDelay=onDelay
-
-
-/**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random === parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-global.random=random
-
-
-/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -2752,102 +2804,48 @@ function parseString (value) {
 
 global.parseString=parseString
 
-global.range=range
-
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
 
 /**
- * On wait
+ * Random value from array list
  *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
  * @example
  *
- *  onWait(()=>{})
- *=>'11'
+ * random([10,20,30],0,3 )
+ *=>'[20]'
  */
-function onWait (func, wait) {
+function random (valueArray, minValue, maxValue) {
 
-    var browserWindow = getWindow();
-    var timerId = null;
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
 
-    var useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+    each(valueArray, function (key, value) {
 
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
+        if (math_random === parseInt(key)) {
 
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame();
+            ran_var.push(value);
 
         }
 
-        return onDelay(pendingFunc, waiting);
+    });
 
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-
-        timerId.cancel();
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
+    return ran_var;
 
 }
 
-global.onWait=onWait
+global.random=random
 
 
 /**
@@ -2871,6 +2869,8 @@ function regexCountGroup (value) {
 }
 
 global.regexCountGroup=regexCountGroup
+
+global.range=range
 
 
 /**
@@ -3004,7 +3004,7 @@ function roundDecimal (value, maxValue) {
     if (count(str_dec) === twoDefaultValue) {
 
         var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts<=s_dmin
+        var delmts=p_cnts <= s_dmin
             ?s_dmin
             :s_dmax;
         var dec_s=tenDefaultValue**delmts;
@@ -3071,6 +3071,44 @@ function shuffle (objectValue) {
 }
 
 global.shuffle=shuffle
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+global.stringCapitalize=stringCapitalize
 
 
 /**
@@ -3163,6 +3201,48 @@ function sort (objectValue, order, func) {
 }
 
 global.sort=sort
+
+
+/**
+ * String Escape
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns escape string
+ * @example
+ *
+ * stringEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
+ */
+function stringEscape (value, type) {
+
+    var typeVal = type || "entity";
+
+    if (indexOfNotExist(listType, typeVal)) {
+
+        return "";
+
+    }
+
+    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
+
+        var search = {"html": str1};
+
+        var whr = where(entity, search);
+
+        return isEmpty(whr)
+            ? str1
+            : first(whr)[typeVal];
+
+    });
+
+    return regexReplace;
+
+}
+
+global.stringEscape=stringEscape
 /**
  * Split string for special cases
  *
@@ -3213,83 +3293,24 @@ global.stringCamelCase=stringCamelCase
 
 
 /**
- * String Capitalize
+ * String Lower case case
  *
- * @since 1.3.1
+ * @since 1.4.5
  * @category String
  * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
+ * @returns {string} Returns camel sting data
  * @example
  *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
  */
-function stringCapitalize (value, option) {
+function stringLowerCase (value) {
 
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
+    return toString(value).toLowerCase();
 
 }
 
-global.stringCapitalize=stringCapitalize
-
-
-/**
- * String Escape
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns escape string
- * @example
- *
- * stringEscape("yahii & adad ^ss")
- *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
- */
-function stringEscape (value, type) {
-
-    var typeVal = type || "entity";
-
-    if (indexOfNotExist(listType, typeVal)) {
-
-        return "";
-
-    }
-
-    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
-
-        var search = {"html": str1};
-
-        var whr = where(entity, search);
-
-        return isEmpty(whr)
-            ? str1
-            : first(whr)[typeVal];
-
-    });
-
-    return regexReplace;
-
-}
-
-global.stringEscape=stringEscape
+global.stringLowerCase=stringLowerCase
 
 
 /**
@@ -3313,50 +3334,6 @@ function stringKebabCase (value) {
 }
 
 global.stringKebabCase=stringKebabCase
-
-
-/**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-function stringLowerCase (value) {
-
-    return toString(value).toLowerCase();
-
-}
-
-global.stringLowerCase=stringLowerCase
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function stringSnakeCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-global.stringSnakeCase=stringSnakeCase
 
 
 /**
@@ -3391,6 +3368,27 @@ global.stringUnEscape=stringUnEscape
 
 
 /**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringUpperCase('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+function stringUpperCase (value) {
+
+    return toString(value).toUpperCase();
+
+}
+
+global.stringUpperCase=stringUpperCase
+
+
+/**
  * Template Value
  *
  * @since 1.0.1
@@ -3413,7 +3411,7 @@ function templateValue (templateString, data, option) {
     var default_option=varExtend({
         "escape": "<!-([\\s\\S]+?)!>",
         "evaluate": "<![^=-]([\\s\\S]+?)!>",
-        "interpolate": "<!=([\\s\\S]+?)!>"
+        "interpolate": "< != ([\\s\\S]+?)!>"
     }, option);
 
     var valueType=[
@@ -3573,27 +3571,6 @@ global.toArray=toArray
 
 
 /**
- * String Upper case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringUpperCase('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
- */
-function stringUpperCase (value) {
-
-    return toString(value).toUpperCase();
-
-}
-
-global.stringUpperCase=stringUpperCase
-
-
-/**
  * Logic in convert string or number to valid number
  *
  * @since 1.0.1
@@ -3657,8 +3634,6 @@ function toInteger (value) {
 
 global.toInteger=toInteger
 
-global.toString=toString
-
 
 /**
  * To extract number in string and convert to double
@@ -3683,6 +3658,31 @@ function toDouble (value) {
 }
 
 global.toDouble=toDouble
+
+global.toString=toString
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function stringSnakeCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+global.stringSnakeCase=stringSnakeCase
 
 
 /**

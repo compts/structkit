@@ -27,7 +27,7 @@ function roundDecimal (value, maxValue) {
     if (count(str_dec) === twoDefaultValue) {
 
         const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        const delmts=p_cnts<=s_dmin
+        const delmts=p_cnts <= s_dmin
             ?s_dmin
             :s_dmax;
         const dec_s=tenDefaultValue**delmts;
