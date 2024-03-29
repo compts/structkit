@@ -1,7 +1,6 @@
 const has = require('../function/has');
 const getTypeof = require('../function/getTypeof');
 
-
 /**
  * Logic in convert string or number to valid number
  *

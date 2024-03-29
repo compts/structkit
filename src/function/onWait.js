@@ -1,7 +1,6 @@
 const onDelay = require("./onDelay");
 const {getWindow} = require('../core/global');
 
-
 /**
  * On wait
  *
@@ -19,7 +18,6 @@ function onWait (func, wait) {
 
     const browserWindow = getWindow();
     let timerId = null;
-
 
     const useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
 

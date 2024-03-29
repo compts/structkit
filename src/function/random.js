@@ -4,7 +4,6 @@ const count = require('./count');
 
 const each = require('./each');
 
-
 /**
  * Random value from array list
  *

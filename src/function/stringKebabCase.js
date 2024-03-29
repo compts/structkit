@@ -1,7 +1,6 @@
 const stringSplit = require("../core/stringSplit");
 const toString = require("./toString");
 
-
 /**
  * String Kebab case
  *

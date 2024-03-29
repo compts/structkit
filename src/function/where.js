@@ -1,6 +1,5 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
 
-
 /**
  * Get the value in array the value in json given the search value was in json
  *

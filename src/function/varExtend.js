@@ -5,7 +5,6 @@ const getTypeof = require('./getTypeof');
 const indexOfExist = require('./indexOfExist');
 const getKey = require('./getKey');
 
-
 /**
  * Var extend is use for cloning Json, Array or Object
  *
@@ -54,7 +53,6 @@ function varExtend (objectValue, objectValueReplace) {
                 jsn_s[key]=objectValue[key];
 
             }
-
 
         }
 

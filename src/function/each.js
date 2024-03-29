@@ -2,7 +2,6 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 
 const has = require('./has');
 
-
 /**
  * Each or for loop function you are familiar with
  *

@@ -14,7 +14,6 @@ const has = require('../function/has');
 
 const append = require('../function/append');
 
-
 /**
  * Where Loop Execution
  *
@@ -47,14 +46,12 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
     each(jsn_s, function (jk, jv) {
 
-
         if (getTypeof(jsn) === "array") {
 
             filterData = jv;
 
         }
         if (getTypeof(jsn) === "json") {
-
 
             filterData[jk]=jv;
 

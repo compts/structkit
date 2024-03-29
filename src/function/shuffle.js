@@ -4,7 +4,6 @@ const count = require('./count');
 
 const indexOf = require('./indexOf');
 
-
 /**
  * Shuffle data in array
  *

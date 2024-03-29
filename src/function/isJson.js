@@ -1,7 +1,6 @@
 const has = require('./has');
 const {objectCallType} = require("../variable/types");
 
-
 /**
  * Is Json valid
  *
@@ -32,7 +31,6 @@ function isJson (value, valueType) {
         getValueTypeRef = valueType;
 
     }
-
 
     if (getValueTypeRef === "string") {
 
@@ -76,7 +74,6 @@ function isJson (value, valueType) {
  */
 function checkIfFunctionNotExistObject (obj) {
 
-
     const getValueType = Object.prototype.toString.call(obj);
 
     if (getValueType === "[object Function]") {
@@ -118,7 +115,6 @@ function checkIfFunctionNotExistObject (obj) {
         }
 
     }
-
 
     return true;
 

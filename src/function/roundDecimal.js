@@ -1,6 +1,5 @@
 const count = require('./count');
 
-
 /**
  * Random Decimal
  *

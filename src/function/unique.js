@@ -2,7 +2,6 @@ const getTypeof = require('./getTypeof');
 const each = require('./each');
 const indexOfNotExist = require('./indexOfNotExist');
 
-
 /**
  * Get only the unique data from array
  *

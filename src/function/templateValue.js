@@ -11,7 +11,6 @@ const getData = require('./getData');
 const has = require('./has');
 const toString = require("./toString");
 
-
 /**
  * Template Value
  *

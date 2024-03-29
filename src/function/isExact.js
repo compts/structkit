@@ -12,7 +12,6 @@ const isEmpty = require('./isEmpty');
 
 const getData = require('./getData');
 
-
 /**
  * Looking the data in JSON and Array base on object value
  *
@@ -86,7 +85,6 @@ function isExact (objectValue1, objectValue2, isExist) {
         }
 
     });
-
 
     if (isEmpty(cnt)) {
 

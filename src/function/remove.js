@@ -10,7 +10,6 @@ const indexOfExist = require('./indexOfExist');
 
 const where = require('./where');
 
-
 /**
  * Remove data in either JSON or Array using key or woth value
  *

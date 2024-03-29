@@ -4,7 +4,6 @@ const count = require('./count');
 
 const indexOfExist = require('./indexOfExist');
 
-
 /**
  * Check if data is empty, null and undefined are now considered as empty
  *

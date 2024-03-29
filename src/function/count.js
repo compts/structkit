@@ -4,7 +4,6 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 
 const each = require('./each');
 
-
 /**
  * Array Count
  *

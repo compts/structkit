@@ -1,6 +1,5 @@
 const has = require('./has');
 
-
 /**
  * Check if data is undefined
  *

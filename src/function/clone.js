@@ -4,7 +4,6 @@ const each = require('./each');
 
 const append = require('./append');
 
-
 /**
  * Cloning the data either in JSON or array that be used as different property
  *

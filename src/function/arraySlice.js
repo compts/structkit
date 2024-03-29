@@ -4,7 +4,6 @@ const count = require('./count');
 
 const each = require('./each');
 
-
 /**
  * To get value of array given start and end(optional) of the array
  * This is a rename of delimiter

@@ -1,6 +1,5 @@
 const getTypeof = require('./getTypeof');
 
-
 /**
  * Append data for json and array
  *

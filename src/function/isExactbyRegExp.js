@@ -4,7 +4,6 @@ const has = require('./has');
 
 const each = require('./each');
 
-
 /**
  * Looking the data in JSON and Array base on object value with the help regexp
  *

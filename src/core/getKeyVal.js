@@ -4,7 +4,6 @@ const each = require('../function/each');
 
 const count = require('../function/count');
 
-
 /**
  * Get key value
  *
@@ -45,7 +44,6 @@ function getKeyVal (jsn, typ) {
         const ars=typ === "key"
             ?ky
             :vl;
-
 
         return count(ars) === one
             ?ars[zero]

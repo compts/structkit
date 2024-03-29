@@ -302,7 +302,6 @@ const entity=require('./variable/htmlentity.js');
 
 exports.entity =entity;
 
-
 /**
  *  Get the type if arguments
  *
@@ -320,7 +319,6 @@ function isArguments_default (value) {
     return getTypeof(value) === "arguments";
 
 }
-
 
 /**
  *  Get the type if array
@@ -340,7 +338,6 @@ function isArray_default (value) {
 
 }
 
-
 /**
  *  Get the type if boolean
  *
@@ -358,7 +355,6 @@ function isBoolean_default (value) {
     return getTypeof(value) === "boolean";
 
 }
-
 
 /**
  *  Get the type if date
@@ -378,7 +374,6 @@ function isDate_default (value) {
 
 }
 
-
 /**
  *  Get the type if error
  *
@@ -396,7 +391,6 @@ function isError_default (value) {
     return getTypeof(value) === "error";
 
 }
-
 
 /**
  *  Get the type if function
@@ -416,7 +410,6 @@ function isFunction_default (value) {
 
 }
 
-
 /**
  *  Get the type if null
  *
@@ -434,7 +427,6 @@ function isNull_default (value) {
     return getTypeof(value) === "null";
 
 }
-
 
 /**
  *  Get the type if number
@@ -454,7 +446,6 @@ function isNumber_default (value) {
 
 }
 
-
 /**
  *  Get the type if object
  *
@@ -472,7 +463,6 @@ function isObject_default (value) {
     return getTypeof(value) === "object";
 
 }
-
 
 /**
  *  Get the type if promise
@@ -492,7 +482,6 @@ function isPromise_default (value) {
 
 }
 
-
 /**
  *  Get the type if regexp
  *
@@ -510,7 +499,6 @@ function isRegexp_default (value) {
     return getTypeof(value) === "regexp";
 
 }
-
 
 /**
  *  Get the type if string
@@ -530,7 +518,6 @@ function isString_default (value) {
 
 }
 
-
 /**
  *  Get the type if undefined
  *
@@ -548,7 +535,6 @@ function isUndefined_default (value) {
     return getTypeof(value) === "undefined";
 
 }
-
 
 exports.isArguments=isArguments_default;
 exports.isArray=isArray_default;

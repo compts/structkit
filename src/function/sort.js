@@ -6,7 +6,6 @@ const each = require('./each');
 
 const isEmpty = require('./isEmpty');
 
-
 /**
  * Sort array
  *
@@ -80,7 +79,6 @@ function sort (objectValue, order, func) {
 
             }
 
-
         }
 
         if (asc) {
@@ -90,7 +88,6 @@ function sort (objectValue, order, func) {
         }
 
         return sortOrderB - sortOrderA;
-
 
     });
 

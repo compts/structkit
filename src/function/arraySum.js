@@ -4,7 +4,6 @@ const has = require('./has');
 
 const isEmpty = require('./isEmpty');
 
-
 /**
  * Array Sum
  *

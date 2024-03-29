@@ -1,6 +1,5 @@
 const dataNumberFormat = require('../core/dataTypeFormat');
 
-
 /**
  * To extract number in string and convert to double
  *

@@ -2,7 +2,6 @@ const has = require('./has');
 const toString = require("./toString");
 const each = require('./each');
 
-
 /**
  * Get Data in array or json using string to search the data
  *

@@ -6,7 +6,6 @@ const each = require('./each');
 
 const count = require('./count');
 
-
 /**
  * Data String from JSON object
  *

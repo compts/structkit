@@ -2,7 +2,6 @@ const map = require('./map');
 
 const getData = require('./getData');
 
-
 /**
  * Array To Object By DataFormat
  *

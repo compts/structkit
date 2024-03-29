@@ -1,6 +1,5 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
 
-
 /**
  * Searching the data either in array or json object to get similar value of data
  *

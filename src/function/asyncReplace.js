@@ -1,6 +1,5 @@
 const getTypeof = require('./getTypeof');
 
-
 /**
  * Async replace
  *
@@ -44,7 +43,6 @@ function asyncReplace (value, search, toReplace) {
         }
 
         return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
 
     } catch (error) {
 

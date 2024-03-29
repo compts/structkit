@@ -1,6 +1,5 @@
 const getTypeof = require('./getTypeof');
 
-
 /**
  * To Array
  *

@@ -1,6 +1,5 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
 
-
 /**
  * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
  *
