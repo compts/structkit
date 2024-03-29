@@ -31,10 +31,10 @@ function map (objectValue, func) {
 
         if (has(func)) {
 
-            if (strTypeOf==="array") {
+            if (strTypeOf === "array") {
 
                 value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             } else {
 

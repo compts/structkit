@@ -1,9 +1,9 @@
 (function(global){
 global._stk={}
 
-_stk.append=append
-
 _stk.appendIsArrayExist=appendIsArrayExist
+
+_stk.append=append
 
 _stk.arrayConcat=arrayConcat
 
@@ -11,19 +11,19 @@ _stk.arrayRepeat=arrayRepeat
 
 _stk.arraySlice=arraySlice
 
-_stk.arraySum=arraySum
-
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 _stk.asyncReplace=asyncReplace
 
 _stk.clone=clone
 
-_stk.each=each
-
 _stk.count=count
 
+_stk.arraySum=arraySum
+
 _stk.filter=filter
+
+_stk.each=each
 
 _stk.first=first
 
@@ -61,15 +61,11 @@ _stk.isExactbyRegExp=isExactbyRegExp
 
 _stk.isJson=isJson
 
-_stk.jsonToArray=jsonToArray
-
 _stk.last=last
 
 _stk.lastIndexOf=lastIndexOf
 
 _stk.like=like
-
-_stk.limit=limit
 
 _stk.map=map
 
@@ -77,13 +73,19 @@ _stk.numberFormat=numberFormat
 
 _stk.onDelay=onDelay
 
+_stk.limit=limit
+
 _stk.onSequence=onSequence
 
 _stk.onWait=onWait
 
+_stk.jsonToArray=jsonToArray
+
 _stk.parseJson=parseJson
 
 _stk.parseString=parseString
+
+_stk.random=random
 
 _stk.range=range
 
@@ -91,27 +93,25 @@ _stk.regexCountGroup=regexCountGroup
 
 _stk.remove=remove
 
-_stk.random=random
-
 _stk.repeat=repeat
 
 _stk.roundDecimal=roundDecimal
 
-_stk.shuffle=shuffle
+_stk.stringCamelCase=stringCamelCase
 
 _stk.sort=sort
 
-_stk.stringCamelCase=stringCamelCase
-
-_stk.stringCapitalize=stringCapitalize
+_stk.stringEscape=stringEscape
 
 _stk.stringKebabCase=stringKebabCase
 
-_stk.stringEscape=stringEscape
+_stk.shuffle=shuffle
+
+_stk.stringSnakeCase=stringSnakeCase
 
 _stk.stringLowerCase=stringLowerCase
 
-_stk.stringSnakeCase=stringSnakeCase
+_stk.stringCapitalize=stringCapitalize
 
 _stk.stringSubs=stringSubs
 
@@ -123,15 +123,13 @@ _stk.templateValue=templateValue
 
 _stk.toArray=toArray
 
-_stk.toDouble=toDouble
-
 _stk.toInteger=toInteger
+
+_stk.toDouble=toDouble
 
 _stk.toString=toString
 
 _stk.unique=unique
-
-_stk.varExtend=varExtend
 
 _stk.where=where
 
@@ -396,6 +394,8 @@ _stk.isPromise=isPromise;
 _stk.isRegexp=isRegexp;
 _stk.isString=isString;
 _stk.isUndefined=isUndefined;
+_stk.varExtend=varExtend
+
 _stk.whereNot=whereNot
 
 })(typeof window !== "undefined" ? window : this);

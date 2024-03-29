@@ -18,7 +18,7 @@ function isJson (value, valueType) {
 
     const getValueType = Object.prototype.toString.call(value);
 
-    if (has(objectCallType, getValueType) ===false) {
+    if (has(objectCallType, getValueType) === false) {
 
         return false;
 
@@ -76,7 +76,7 @@ function checkIfFunctionNotExistObject (obj) {
 
     const getValueType = Object.prototype.toString.call(obj);
 
-    if (getValueType==="[object Function]") {
+    if (getValueType === "[object Function]") {
 
         throw new Error("Function must not exist");
 
@@ -85,15 +85,15 @@ function checkIfFunctionNotExistObject (obj) {
     let isValid = false;
     const zero = 0;
 
-    if (getValueType==="[object Object]") {
+    if (getValueType === "[object Object]") {
 
         isValid = true;
 
     }
 
-    if (getValueType==="[object Array]") {
+    if (getValueType === "[object Array]") {
 
-        if (obj.length ===zero) {
+        if (obj.length === zero) {
 
             return true;
 

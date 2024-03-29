@@ -29,19 +29,19 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
     let referenceValue = -1;
 
-    if (getTypeofInternal(objectValue)==="array") {
+    if (getTypeofInternal(objectValue) === "array") {
 
         for (let inc=start; inc<end;) {
 
             let isValidMatch = false;
 
-            if (getTypeofInternal(value)==="json") {
+            if (getTypeofInternal(value) === "json") {
 
                 isValidMatch = searchValueInJson(objectValue[inc], value);
 
             } else {
 
-                if (objectValue[inc]===value) {
+                if (objectValue[inc] === value) {
 
                     isValidMatch = true;
 
@@ -60,7 +60,7 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc+=incrementDefaultValue;
+            inc += incrementDefaultValue;
 
         }
 
@@ -99,9 +99,9 @@ function searchValueInJson (objectValue, searchValue) {
 
         if (has(searchValue, key)) {
 
-            if (searchValue[key] ===value) {
+            if (searchValue[key] === value) {
 
-                counter+=increment;
+                counter += increment;
 
             }
 

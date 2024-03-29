@@ -32,7 +32,7 @@ function random (valueArray, minValue, maxValue) {
 
     each(valueArray, function (key, value) {
 
-        if (math_random===parseInt(key)) {
+        if (math_random === parseInt(key)) {
 
             ran_var.push(value);
 

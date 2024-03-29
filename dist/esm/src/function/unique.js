@@ -18,7 +18,7 @@ import indexOfNotExist from './indexOfNotExist';
  */
 function unique (value) {
 
-    if (getTypeof(value)==="array") {
+    if (getTypeof(value) === "array") {
 
         const uniqArrData = [];
 

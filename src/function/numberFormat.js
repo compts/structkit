@@ -34,7 +34,7 @@ function numberFormat (objectValue, value1, value2) {
 
         const str_dec=ssd_va.split(".");
 
-        if (count(str_dec)===incrementDefaultValue) {
+        if (count(str_dec) === incrementDefaultValue) {
 
             ssd_va=ssd_va+"."+repeat("0", valueZero);
 

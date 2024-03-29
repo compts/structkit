@@ -20,7 +20,7 @@ function getTypeofInternal (objectValue) {
 
     const objectType = Object.prototype.toString.call(objectValue);
 
-    if (objectType==="[object Object]") {
+    if (objectType === "[object Object]") {
 
         return isJson(objectValue, "object")
             ?"json"
