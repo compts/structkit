@@ -751,6 +751,161 @@ global.append=append
 
 
 /**
+ * Generate array of data from specific limit or where the index to start
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue, step) {
+
+    var emptyDefaultValue=0;
+    var tenDefaultValue=10;
+
+    var incrementDefaultValue=1;
+
+    var incrementValue=has(step)
+        ?step
+        :incrementDefaultValue;
+    var minValueRef=has(minValue)
+        ?minValue
+        :incrementDefaultValue;
+    var maxValueRef=has(maxValue)
+        ?maxValue
+        :tenDefaultValue;
+    var output=[];
+
+    for (var inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "string") {
+
+            output.push(inc);
+
+            var render = new Function('inc', "return "+inc+incrementValue);
+
+            inc = render.call(inc);
+
+        }
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<emptyDefaultValue) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+/**
+ * Repeat  value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+
+    return map(range(nm_rpt), function () {
+
+        return value;
+
+    });
+
+}
+
+global.arrayRepeat=arrayRepeat
+
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Boolean
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return array.
+ * @example
+ *
+ * indexOfNotExist([312], 32)
+ * // => true
+ */
+function indexOfNotExist (arrayObject, value) {
+
+    var zero = -1;
+
+    return indexOf(arrayObject, value) === zero;
+
+}
+
+/**
+ * Append If Array not Exist
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} arrayObject Data is Array
+ * @param {any} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+function appendIsArrayExist (arrayObject, value) {
+
+    var ary_type=getTypeof(arrayObject);
+    var ary_type1=getTypeof(value);
+
+    if (ary_type === "array" && ary_type1 === "array") {
+
+        each(value, function (key, val) {
+
+            if (indexOfNotExist(arrayObject, val)) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
+
+}
+
+global.appendIsArrayExist=appendIsArrayExist
+
+
+/**
  * To Array
  *
  * @since 1.0.1
@@ -895,99 +1050,6 @@ function arrayConcat () {
 
 global.arrayConcat=arrayConcat
 
-
-/**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue, step) {
-
-    var emptyDefaultValue=0;
-    var tenDefaultValue=10;
-
-    var incrementDefaultValue=1;
-
-    var incrementValue=has(step)
-        ?step
-        :incrementDefaultValue;
-    var minValueRef=has(minValue)
-        ?minValue
-        :incrementDefaultValue;
-    var maxValueRef=has(maxValue)
-        ?maxValue
-        :tenDefaultValue;
-    var output=[];
-
-    for (var inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-/**
- * Repeat  value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
-
-    return map(range(nm_rpt), function () {
-
-        return value;
-
-    });
-
-}
-
-global.arrayRepeat=arrayRepeat
-
 global.arraySlice=arraySlice
 
 
@@ -1073,27 +1135,6 @@ function arraySum (arrayObject, delimeter) {
 
 global.arraySum=arraySum
 
-
-/**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Boolean
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return array.
- * @example
- *
- * indexOfNotExist([312], 32)
- * // => true
- */
-function indexOfNotExist (arrayObject, value) {
-
-    var zero = -1;
-
-    return indexOf(arrayObject, value) === zero;
-
-}
 
 /**
  * To String
@@ -1307,9 +1348,9 @@ function clone (objectValue) {
 
 global.clone=clone
 
-global.count=count
-
 global.each=each
+
+global.count=count
 
 
 /**
@@ -1359,6 +1400,8 @@ function filter (objectValue, func) {
 
 global.filter=filter
 
+global.first=first
+
 global.getData=getData
 
 global.getEmptyVariable=getEmptyVariable
@@ -1383,67 +1426,6 @@ function getKey (objectValue) {
 }
 
 global.getKey=getKey
-
-global.first=first
-
-global.getTypeof=getTypeof
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-function getUniq (option) {
-
-    var optionValue = option||"default";
-
-    if (optionValue === "default") {
-
-        var defaultRandomValue=2;
-        var defaultSubstrValue=36;
-        var str_rand1=Math
-            .random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue)+Math.random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue);
-
-        return str_rand1;
-
-    }
-
-    return "";
-
-}
-
-global.getUniq=getUniq
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-global.getValue=getValue
 
 
 /**
@@ -1532,6 +1514,65 @@ function ifUndefined (objectValue, value1, value2) {
 global.ifUndefined=ifUndefined
 
 global.indexOf=indexOf
+
+global.getTypeof=getTypeof
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+global.getValue=getValue
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+function getUniq (option) {
+
+    var optionValue = option||"default";
+
+    if (optionValue === "default") {
+
+        var defaultRandomValue=2;
+        var defaultSubstrValue=36;
+        var str_rand1=Math
+            .random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue)+Math.random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue);
+
+        return str_rand1;
+
+    }
+
+    return "";
+
+}
+
+global.getUniq=getUniq
 
 global.indexOfExist=indexOfExist
 
@@ -2618,49 +2659,6 @@ global.parseJson=parseJson
 
 
 /**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_var=[];
-    var emptyDefaultValue=0;
-    var ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    each(valueArray, function (key, value) {
-
-        if (math_random === parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-global.random=random
-
-
-/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -2805,6 +2803,49 @@ function parseString (value) {
 }
 
 global.parseString=parseString
+
+
+/**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_var=[];
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    each(valueArray, function (key, value) {
+
+        if (math_random === parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+global.random=random
 
 global.range=range
 
@@ -2980,6 +3021,59 @@ global.roundDecimal=roundDecimal
 
 
 /**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} objectValue Array argmuments
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+function shuffle (objectValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var output=objectValue;
+    var valueType=[
+        "array",
+        "json"
+    ];
+
+    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+
+        var counts=count(objectValue)-onceDefaultValue;
+        var randomIndex=emptyDefaultValue;
+        var temporaryValue=null;
+
+        for (var currentIndex=counts; currentIndex>emptyDefaultValue;) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+
+            if (getTypeof(objectValue) === "array") {
+
+                temporaryValue = output[currentIndex];
+                output[currentIndex]=output[randomIndex];
+                output[randomIndex] = temporaryValue;
+
+            }
+
+            currentIndex -= onceDefaultValue;
+
+        }
+
+    }
+
+    return output;
+
+}
+
+global.shuffle=shuffle
+
+
+/**
  * Sort array
  *
  * @since 1.0.1
@@ -3069,59 +3163,6 @@ function sort (objectValue, order, func) {
 }
 
 global.sort=sort
-
-
-/**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} objectValue Array argmuments
- * @returns {any[]} Returns the total.
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-function shuffle (objectValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var output=objectValue;
-    var valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
-
-        var counts=count(objectValue)-onceDefaultValue;
-        var randomIndex=emptyDefaultValue;
-        var temporaryValue=null;
-
-        for (var currentIndex=counts; currentIndex>emptyDefaultValue;) {
-
-            randomIndex = Math.floor(Math.random() * currentIndex);
-
-            if (getTypeof(objectValue) === "array") {
-
-                temporaryValue = output[currentIndex];
-                output[currentIndex]=output[randomIndex];
-                output[randomIndex] = temporaryValue;
-
-            }
-
-            currentIndex -= onceDefaultValue;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-global.shuffle=shuffle
 /**
  * Split string for special cases
  *
@@ -3252,29 +3293,6 @@ global.stringEscape=stringEscape
 
 
 /**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * stringKebabCase('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function stringKebabCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-global.stringKebabCase=stringKebabCase
-
-
-/**
  * String Lower case case
  *
  * @since 1.4.5
@@ -3293,29 +3311,6 @@ function stringLowerCase (value) {
 }
 
 global.stringLowerCase=stringLowerCase
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function stringSnakeCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-global.stringSnakeCase=stringSnakeCase
 
 
 /**
@@ -3347,6 +3342,73 @@ function stringSubs (value, minValue, maxValue) {
 global.stringSubs=stringSubs
 
 global.stringUnEscape=stringUnEscape
+
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function stringKebabCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+global.stringKebabCase=stringKebabCase
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function stringSnakeCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+global.stringSnakeCase=stringSnakeCase
+
+
+/**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringUpperCase('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+function stringUpperCase (value) {
+
+    return toString(value).toUpperCase();
+
+}
+
+global.stringUpperCase=stringUpperCase
 
 
 /**
@@ -3528,27 +3590,6 @@ function templateValueInternal (str_raw, reg) {
 
 global.templateValue=templateValue
 
-
-/**
- * String Upper case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringUpperCase('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
- */
-function stringUpperCase (value) {
-
-    return toString(value).toUpperCase();
-
-}
-
-global.stringUpperCase=stringUpperCase
-
 global.toArray=toArray
 
 
@@ -3615,47 +3656,6 @@ function toDouble (value) {
 }
 
 global.toDouble=toDouble
-
-
-/**
- * Append If Array not Exist
- *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    var ary_type=getTypeof(arrayObject);
-    var ary_type1=getTypeof(value);
-
-    if (ary_type === "array" && ary_type1 === "array") {
-
-        each(value, function (key, val) {
-
-            if (indexOfNotExist(arrayObject, val)) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-
-global.appendIsArrayExist=appendIsArrayExist
 
 
 /**

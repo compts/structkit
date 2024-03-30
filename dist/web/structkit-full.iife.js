@@ -1,15 +1,17 @@
 (function(global){
-global._stk={}
-
-_stk.appendIsArrayExist=appendIsArrayExist
+global._stk={};
 
 _stk.append=append
 
-_stk.arrayConcat=arrayConcat
+_stk.appendIsArrayExist=appendIsArrayExist
 
 _stk.arrayRepeat=arrayRepeat
 
+_stk.arrayConcat=arrayConcat
+
 _stk.arraySlice=arraySlice
+
+_stk.arraySum=arraySum
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
@@ -19,11 +21,9 @@ _stk.clone=clone
 
 _stk.count=count
 
-_stk.arraySum=arraySum
+_stk.each=each
 
 _stk.filter=filter
-
-_stk.each=each
 
 _stk.first=first
 
@@ -53,13 +53,15 @@ _stk.indexOfNotExist=indexOfNotExist
 
 _stk.insert=insert
 
-_stk.isEmpty=isEmpty
-
 _stk.isExact=isExact
 
 _stk.isExactbyRegExp=isExactbyRegExp
 
 _stk.isJson=isJson
+
+_stk.isEmpty=isEmpty
+
+_stk.jsonToArray=jsonToArray
 
 _stk.last=last
 
@@ -67,51 +69,49 @@ _stk.lastIndexOf=lastIndexOf
 
 _stk.like=like
 
+_stk.limit=limit
+
 _stk.map=map
 
 _stk.numberFormat=numberFormat
 
 _stk.onDelay=onDelay
 
-_stk.limit=limit
-
 _stk.onSequence=onSequence
 
 _stk.onWait=onWait
-
-_stk.jsonToArray=jsonToArray
 
 _stk.parseJson=parseJson
 
 _stk.parseString=parseString
 
-_stk.random=random
-
 _stk.range=range
+
+_stk.random=random
 
 _stk.regexCountGroup=regexCountGroup
 
-_stk.remove=remove
-
 _stk.repeat=repeat
+
+_stk.remove=remove
 
 _stk.roundDecimal=roundDecimal
 
-_stk.stringCamelCase=stringCamelCase
+_stk.shuffle=shuffle
 
 _stk.sort=sort
 
+_stk.stringCamelCase=stringCamelCase
+
+_stk.stringCapitalize=stringCapitalize
+
 _stk.stringEscape=stringEscape
-
-_stk.stringKebabCase=stringKebabCase
-
-_stk.shuffle=shuffle
-
-_stk.stringSnakeCase=stringSnakeCase
 
 _stk.stringLowerCase=stringLowerCase
 
-_stk.stringCapitalize=stringCapitalize
+_stk.stringSnakeCase=stringSnakeCase
+
+_stk.stringKebabCase=stringKebabCase
 
 _stk.stringSubs=stringSubs
 
@@ -123,13 +123,15 @@ _stk.templateValue=templateValue
 
 _stk.toArray=toArray
 
-_stk.toInteger=toInteger
-
 _stk.toDouble=toDouble
+
+_stk.toInteger=toInteger
 
 _stk.toString=toString
 
 _stk.unique=unique
+
+_stk.varExtend=varExtend
 
 _stk.where=where
 
@@ -394,8 +396,6 @@ _stk.isPromise=isPromise;
 _stk.isRegexp=isRegexp;
 _stk.isString=isString;
 _stk.isUndefined=isUndefined;
-_stk.varExtend=varExtend
-
 _stk.whereNot=whereNot
 
 })(typeof window !== "undefined" ? window : this);
