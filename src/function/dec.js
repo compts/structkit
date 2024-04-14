@@ -1,4 +1,4 @@
-
+const {zero, one} = require("../core/defaultValue");
 const getTypeof = require('./getTypeof');
 
 /**
@@ -17,7 +17,7 @@ const getTypeof = require('./getTypeof');
 function dec (value, default_value) {
 
     let return_val = value;
-    let inc_n = 1;
+    let inc_n = one;
 
     if (getTypeof(default_value) === "number") {
 
@@ -33,7 +33,7 @@ function dec (value, default_value) {
 
     }
 
-    return 0;
+    return zero;
 
 }
 module.exports=dec;

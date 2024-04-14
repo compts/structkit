@@ -1,12 +1,20 @@
-import count from '../function/count';
+import count from './count';
+
+import getKey from './getKey';
+
+import getTypeof from './getTypeof';
+
+import toArray from './toArray';
+
+import {zero, one, two, three, four, oneHundred} from '../core/defaultValue';
 
 /**
- * Logic in convert string or number to valid number
+ * Logic in convert string or number to compute
  *
  * @since 1.4.8
  * @category Seq
  * @param {string} formula The second number in an addition.
- * @param {any[]} args The second number in an addition.
+ * @param {any=} args The second number in an addition.
  * @returns {boolean|any} Returns the total.
  * @example
  *
@@ -15,13 +23,27 @@ import count from '../function/count';
  */
 function calculate (formula, args) {
 
+    const typeofs=getTypeof(args);
+
+    if (typeofs === "json") {
+
+        const argsKey = new RegExp("\\b("+toArray(getKey(args)).join("|")+")\\b", "g");
+
+        formula = formula.replace(argsKey, function (mm, m1) {
+
+            return args[m1];
+
+        });
+
+    }
+
     const strFormula = formula.replace(/\((.*?)\)/, function (mm, m1) {
 
-        return compute(m1, args);
+        return compute(m1);
 
     });
 
-    return parseFloat(compute(strFormula, args));
+    return parseFloat(compute(strFormula));
 
 }
 
@@ -31,21 +53,17 @@ function calculate (formula, args) {
  * @since 1.4.8
  * @category Seq
  * @param {string} formula The second number in an addition.
- * @param {any[]} args The second number in an addition.
  * @returns {boolean|any} Returns the total.
  * @example
  *
  * calculate(/(\d)/g, 0,1)
  *=> 1
  */
-function compute (formula, args) {
+function compute (formula) {
 
     const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
     let matches = formula.match(regexpNumber);
     const limit = 3;
-    const zero = 0;
-    const one = 1;
-    const two = 2;
 
     if (count(matches) === one) {
 
@@ -53,7 +71,7 @@ function compute (formula, args) {
 
         if (count(matches) === one) {
 
-            return convert(matches[0], zero, "right");
+            return convert(matches[zero], zero, "right");
 
         }
 
@@ -81,14 +99,14 @@ function compute (formula, args) {
 
         if (ii === zero) {
 
-            result = process(convert(matches[0], matches[2], "right"), matches[1], convert(matches[0], matches[2], "left"));
+            result = process(convert(matches[zero], matches[two], "right"), matches[one], convert(matches[zero], matches[two], "left"));
 
         } else {
 
-            if (count(matches) > counter + 4) {
+            if (count(matches) > counter + four) {
 
-                result = process(convert(result, matches[counter + 4], "right"), matches[counter + 3], convert(result, matches[counter + 4], "left"));
-                counter += 2;
+                result = process(convert(result, matches[counter + four], "right"), matches[counter + three], convert(result, matches[counter + four], "left"));
+                counter += two;
 
             }
 
@@ -157,7 +175,7 @@ function convert (a1, b1, pos) {
 
     if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})$/).test(a1) && pos ==="left") {
 
-        return parseFloat(a1) * parseFloat(b1.replace(/%/g, "")/ 100);
+        return parseFloat(a1) * parseFloat(b1.replace(/%/g, "")/ oneHundred);
 
     }
 
@@ -165,13 +183,13 @@ function convert (a1, b1, pos) {
 
         if (pos === "right") {
 
-            return parseFloat(a1.replace(/%/g, "")/ 100);
+            return parseFloat(a1.replace(/%/g, "")/ oneHundred);
 
         }
 
         if (pos === "left") {
 
-            return parseFloat(b1.replace(/%/g, "")/ 100);
+            return parseFloat(b1.replace(/%/g, "")/ oneHundred);
 
         }
 
@@ -194,8 +212,6 @@ function convert (a1, b1, pos) {
         }
 
         let inc = 1;
-
-        const one = 1;
 
         for (let vv = one; vv <= value;) {
 
