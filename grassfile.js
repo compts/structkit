@@ -191,7 +191,7 @@ exports.module=function (grassconf) {
                 },
                 "plugin": [
                     {
-                        "name": "webIIfe",
+                        "name": "webIIfes",
                         "transform": (config) => {
 
                             if (config.currentPath === 'src/function/where.js') {
@@ -206,7 +206,7 @@ exports.module=function (grassconf) {
 
                             }
 
-                            return null;
+                            return config.content;
 
                         },
                         "transformFirstFile": () => null,
@@ -220,33 +220,24 @@ exports.module=function (grassconf) {
             }));
 
     });
-
     grassconf.load("cjs_compile", function () {
 
-        return packpier(
-            grassconf.event(),
-            {
-                "input": {
-                    "path": list_package_utility_js
-                },
-                "output": {
-                    "type": "cjs_compile"
-                },
-                "plugin": [
-                    {
-                        "name": "webIIfe",
-                        "transform": () => null,
-                        "transformFirstFile": () => null,
-                        "transformLastFile": () => null
-                    }
-                ]
-            }
-        )
+        return grassconf.src(["dist/web/structkit-full.iife.js"]).pipe(grassconf.streamPipe(function (data) {
+
+            let getData = data.readData();
+
+            getData = getData.replace("(function(global){\nglobal._stk={};", "var _stk = exports;");
+            getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "");
+            data.writeData(getData);
+            data.done();
+
+        }))
             .pipe(grass_concat("dist/cjs/structkit-full.cjs.js", {
                 "istruncate": true
             }));
 
     });
+
 
 };
 
@@ -254,11 +245,12 @@ exports.execute=function (lib) {
 
     lib.default=function (strm) {
 
-        strm.series("cjs_compile");
         strm.series("web_iife");
         strm.series("esm");
         strm.series("esm_only");
         strm.series("cjs_only");
+
+        strm.series("cjs_compile");
 
     };
 
