@@ -17,19 +17,19 @@ const getTypeof = require('../function/getTypeof');
 function statementAction (types, args) {
 
     if (types === "eq") {
-        
+
     }
 
     if (types === "neq") {
-        
+
     }
 
     if (types === "lte") {
-        
+
     }
 
     if (types === "gte") {
-        
+
     }
 
 }

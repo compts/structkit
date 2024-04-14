@@ -2,7 +2,7 @@ import has from './has';
 
 import each from './each';
 
-import getEmptyVariable from './getEmptyVariable';
+import empty from './empty';
 
 import getTypeof from './getTypeof';
 
@@ -24,7 +24,7 @@ import append from './append';
  */
 function filter (objectValue, func) {
 
-    let jsn_var=getEmptyVariable(objectValue);
+    let jsn_var=empty(objectValue);
     const jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {

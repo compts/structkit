@@ -4,7 +4,7 @@ const each = require('./each');
 
 const {getTypeofInternal} = require('../core/getTypeOf');
 
-const getEmptyVariable = require('./getEmptyVariable');
+const empty = require('./empty');
 
 /**
  * To map the value of json or array
@@ -24,7 +24,7 @@ function map (objectValue, func) {
     const strTypeOf =getTypeofInternal(objectValue);
     const emptyDefaultValue=0;
     const incrementDefaultValue=1;
-    const value_arry=getEmptyVariable(objectValue);
+    const value_arry=empty(objectValue);
     let cnt=emptyDefaultValue;
 
     each(objectValue, function (key, value) {

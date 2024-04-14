@@ -2,7 +2,7 @@ const has = require('./has');
 
 const each = require('./each');
 
-const getEmptyVariable = require('./getEmptyVariable');
+const empty = require('./empty');
 
 const getTypeof = require('./getTypeof');
 
@@ -24,7 +24,7 @@ const append = require('./append');
  */
 function filter (objectValue, func) {
 
-    let jsn_var=getEmptyVariable(objectValue);
+    let jsn_var=empty(objectValue);
     const jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {

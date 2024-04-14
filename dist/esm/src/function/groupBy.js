@@ -4,7 +4,7 @@ import each from './each';
 
 import clone from './clone';
 
-import getEmptyVariable from './getEmptyVariable';
+import empty from './empty';
 
 import append from './append';
 
@@ -23,7 +23,7 @@ import append from './append';
  */
 function groupBy (objectValue, func) {
 
-    const value_arry=clone(getEmptyVariable(objectValue));
+    const value_arry=clone(empty(objectValue));
 
     const groupData = {};
 

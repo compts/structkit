@@ -1,4 +1,4 @@
-import getEmptyVariable from './getEmptyVariable';
+import empty from './empty';
 
 import each from './each';
 
@@ -18,7 +18,7 @@ import append from './append';
  */
 function clone (objectValue) {
 
-    const variable=getEmptyVariable(objectValue);
+    const variable=empty(objectValue);
 
     each(objectValue, function (key, value) {
 

@@ -1,7 +1,7 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
 
 /**
- * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
+ * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
  *
  * @since 1.0.1
  * @category Any
@@ -9,10 +9,10 @@ const {getTypeofInternal} = require('../core/getTypeOf');
  * @returns {any} Returns empty either Json or Array
  * @example
  *
- * getEmptyVariable([])
+ * empty([])
  * => []
  */
-function getEmptyVariable (value) {
+function empty (value) {
 
     const zero = 0;
 
@@ -42,5 +42,5 @@ function getEmptyVariable (value) {
     return value;
 
 }
-module.exports=getEmptyVariable;
+module.exports=empty;
 

@@ -4,7 +4,7 @@ const each = require('./each');
 
 const clone = require('./clone');
 
-const getEmptyVariable = require('./getEmptyVariable');
+const empty = require('./empty');
 
 const append = require('./append');
 
@@ -23,7 +23,7 @@ const append = require('./append');
  */
 function groupBy (objectValue, func) {
 
-    const value_arry=clone(getEmptyVariable(objectValue));
+    const value_arry=clone(empty(objectValue));
 
     const groupData = {};
 

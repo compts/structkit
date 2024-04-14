@@ -4,7 +4,7 @@ import getTypeof from '../function/getTypeof';
 
 import each from '../function/each';
 
-import getEmptyVariable from '../function/getEmptyVariable';
+import empty from '../function/empty';
 
 import isExact from '../function/isExact';
 
@@ -41,7 +41,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         ? json_convertion
         : jsn;
     const whr_s=whr||{};
-    const variable=getEmptyVariable(jsn);
+    const variable=empty(jsn);
     let filterData = {};
 
     each(jsn_s, function (jk, jv) {

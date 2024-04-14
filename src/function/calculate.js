@@ -10,12 +10,12 @@ const count = require('../function/count');
  * @returns {boolean|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
- *=> 1
+ * calculate('1+1')
+ *=> 2
  */
 function calculate (formula, args) {
 
-    const strFormula = formula.replace(/\((.*?)\)/, function (m, m1) {
+    const strFormula = formula.replace(/\((.*?)\)/, function (mm, m1) {
 
         return compute(m1, args);
 
@@ -40,13 +40,13 @@ function calculate (formula, args) {
  */
 function compute (formula, args) {
 
-    const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x])/g;
+    const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
     let matches = formula.match(regexpNumber);
     const limit = 3;
     const zero = 0;
     const one = 1;
+    const two = 2;
 
-    console.log(matches);
     if (count(matches) === one) {
 
         matches = formula.match(/([\d]+|[%])/g);
@@ -54,6 +54,15 @@ function compute (formula, args) {
         if (count(matches) === one) {
 
             return convert(matches[0], zero, "right");
+
+        }
+
+    }
+    if (count(matches) === two) {
+
+        if (matches[zero] === "-") {
+
+            return convert(matches.join(""), zero, "right");
 
         }
 
@@ -76,7 +85,7 @@ function compute (formula, args) {
 
         } else {
 
-            if (count(matches) > counter + 4 ) {
+            if (count(matches) > counter + 4) {
 
                 result = process(convert(result, matches[counter + 4], "right"), matches[counter + 3], convert(result, matches[counter + 4], "left"));
                 counter += 2;
@@ -120,6 +129,8 @@ function process (a1, operator, b1) {
         return parseFloat(a1) / parseFloat(b1);
     case '%':
         return parseInt(a1) % parseInt(b1);
+    case '^':
+        return parseFloat(a1) ** parseFloat(b1);
     default:
         break;
 
@@ -194,6 +205,22 @@ function convert (a1, b1, pos) {
         }
 
         return inc;
+
+    }
+
+    if ((/^|(\d{1,})|$/).test(b1) || (/^|(\d{1,})|$/).test(a1)) {
+
+        if (pos === "right") {
+
+            return Math.abs(a1);
+
+        }
+
+        if (pos === "left") {
+
+            return Math.abs(b1);
+
+        }
 
     }
 

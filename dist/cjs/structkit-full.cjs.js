@@ -1,4 +1,4 @@
-var global = exports;
+var _stk = exports;
 
 /**
  * Check if object has value or null
@@ -276,7 +276,7 @@ function each (objectValue, func) {
 }
 
 /**
- * Get JSON or  Array as empty variable(rename from `getJSONVariable`)
+ * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
  *
  * @since 1.0.1
  * @category Any
@@ -284,10 +284,10 @@ function each (objectValue, func) {
  * @returns {any} Returns empty either Json or Array
  * @example
  *
- * getEmptyVariable([])
+ * empty([])
  * => []
  */
-function getEmptyVariable (value) {
+function empty (value) {
 
     var zero = 0;
 
@@ -336,7 +336,7 @@ function map (objectValue, func) {
     var strTypeOf =getTypeofInternal(objectValue);
     var emptyDefaultValue=0;
     var incrementDefaultValue=1;
-    var value_arry=getEmptyVariable(objectValue);
+    var value_arry=empty(objectValue);
     var cnt=emptyDefaultValue;
 
     each(objectValue, function (key, value) {
@@ -747,7 +747,7 @@ function append (objectValue, val, key) {
 
 }
 
-global.append=append
+_stk.append=append
 
 
 /**
@@ -840,8 +840,34 @@ function arrayRepeat (value, valueRepetion) {
 
 }
 
-global.arrayRepeat=arrayRepeat
+_stk.arrayRepeat=arrayRepeat
 
+
+/**
+ * To Array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+function toArray (value) {
+
+    var return_val = value;
+
+    if (getTypeof(return_val) !== "array") {
+
+        return_val = [value];
+
+    }
+
+    return return_val;
+
+}
 
 /**
  * To get value of array given start and end(optional) of the array
@@ -923,97 +949,6 @@ function arraySlice (objectValue, min, max) {
 
 }
 
-global.arraySlice=arraySlice
-
-
-/**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Boolean
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return array.
- * @example
- *
- * indexOfNotExist([312], 32)
- * // => true
- */
-function indexOfNotExist (arrayObject, value) {
-
-    var zero = -1;
-
-    return indexOf(arrayObject, value) === zero;
-
-}
-
-/**
- * Append If Array not Exist
- *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    var ary_type=getTypeof(arrayObject);
-    var ary_type1=getTypeof(value);
-
-    if (ary_type === "array" && ary_type1 === "array") {
-
-        each(value, function (key, val) {
-
-            if (indexOfNotExist(arrayObject, val)) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-
-global.appendIsArrayExist=appendIsArrayExist
-
-
-/**
- * To Array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-function toArray (value) {
-
-    var return_val = value;
-
-    if (getTypeof(return_val) !== "array") {
-
-        return_val = [value];
-
-    }
-
-    return return_val;
-
-}
-
 /**
  * Array Concat
  *
@@ -1051,7 +986,9 @@ function arrayConcat () {
 
 }
 
-global.arrayConcat=arrayConcat
+_stk.arrayConcat=arrayConcat
+
+_stk.arraySlice=arraySlice
 
 
 /**
@@ -1134,7 +1071,363 @@ function arraySum (arrayObject, delimeter) {
 
 }
 
-global.arraySum=arraySum
+_stk.arraySum=arraySum
+
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Boolean
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return array.
+ * @example
+ *
+ * indexOfNotExist([312], 32)
+ * // => true
+ */
+function indexOfNotExist (arrayObject, value) {
+
+    var zero = -1;
+
+    return indexOf(arrayObject, value) === zero;
+
+}
+
+/**
+ * Append If Array not Exist
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} arrayObject Data is Array
+ * @param {any} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+function appendIsArrayExist (arrayObject, value) {
+
+    var ary_type=getTypeof(arrayObject);
+    var ary_type1=getTypeof(value);
+
+    if (ary_type === "array" && ary_type1 === "array") {
+
+        each(value, function (key, val) {
+
+            if (indexOfNotExist(arrayObject, val)) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
+
+}
+
+_stk.appendIsArrayExist=appendIsArrayExist
+
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Utility
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    try {
+
+        if (getTypeof(toReplace) === "function") {
+
+            var values = [];
+
+            String.prototype.replace.call(value, search, function () {
+
+    var arg=arguments;
+
+                values.push(toReplace(...arg));
+
+                return "";
+
+            });
+
+            return Promise.all(values).then(function (resolvedValues) {
+
+                return String.prototype.replace.call(value, search, function () {
+
+                    return resolvedValues.shift();
+
+                });
+
+            });
+
+        }
+
+        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
+
+    } catch (error) {
+
+        return Promise.reject(error);
+
+    }
+
+}
+
+_stk.asyncReplace=asyncReplace
+
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {string} formula The second number in an addition.
+ * @param {any[]} args The second number in an addition.
+ * @returns {boolean|any} Returns the total.
+ * @example
+ *
+ * calculate('1+1')
+ *=> 2
+ */
+function calculate (formula, args) {
+
+    var strFormula = formula.replace(/\((.*?)\)/, function (mm, m1) {
+
+        return compute(m1, args);
+
+    });
+
+    return parseFloat(compute(strFormula, args));
+
+}
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {string} formula The second number in an addition.
+ * @param {any[]} args The second number in an addition.
+ * @returns {boolean|any} Returns the total.
+ * @example
+ *
+ * calculate(/(\d)/g, 0,1)
+ *=> 1
+ */
+function compute (formula, args) {
+
+    var regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
+    var matches = formula.match(regexpNumber);
+    var limit = 3;
+    var zero = 0;
+    var one = 1;
+    var two = 2;
+
+    if (count(matches) === one) {
+
+        matches = formula.match(/([\d]+|[%])/g);
+
+        if (count(matches) === one) {
+
+            return convert(matches[0], zero, "right");
+
+        }
+
+    }
+    if (count(matches) === two) {
+
+        if (matches[zero] === "-") {
+
+            return convert(matches.join(""), zero, "right");
+
+        }
+
+    }
+
+    if (count(matches) < limit) {
+
+        throw new Error("Invalid formula");
+
+    }
+
+    var counter = zero;
+    var result = 0;
+
+    for (var ii = zero; ii<Math.ceil(count(matches)/limit); ii +=one) {
+
+        if (ii === zero) {
+
+            result = process(convert(matches[0], matches[2], "right"), matches[1], convert(matches[0], matches[2], "left"));
+
+        } else {
+
+            if (count(matches) > counter + 4) {
+
+                result = process(convert(result, matches[counter + 4], "right"), matches[counter + 3], convert(result, matches[counter + 4], "left"));
+                counter += 2;
+
+            }
+
+        }
+
+    }
+
+    return parseFloat(result);
+
+}
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {number} a1 The second number in an addition.
+ * @param {string} operator The second number in an addition.
+ * @param {number} b1 The second number in an addition.
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * calculate(/(\d)/g, 0,1)
+ *=> 1
+ */
+function process (a1, operator, b1) {
+
+    switch (operator) {
+
+    case '+':
+        return parseFloat(a1) + parseFloat(b1);
+    case '-':
+        return parseFloat(a1) - parseFloat(b1);
+    case 'x':
+    case '*':
+        return parseFloat(a1) * parseFloat(b1);
+    case '/':
+        return parseFloat(a1) / parseFloat(b1);
+    case '%':
+        return parseInt(a1) % parseInt(b1);
+    case '^':
+        return parseFloat(a1) ** parseFloat(b1);
+    default:
+        break;
+
+    }
+    throw new Error("Invalid operator");
+
+}
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {number} a1 The second number in an addition.
+ * @param {string} b1 The second number in an addition.
+ * @param {string} pos The second number in an addition.
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * calculate(/(\d)/g, 0,1)
+ *=> 1
+ */
+function convert (a1, b1, pos) {
+
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})$/).test(a1) && pos ==="left") {
+
+        return parseFloat(a1) * parseFloat(b1.replace(/%/g, "")/ 100);
+
+    }
+
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(a1)) {
+
+        if (pos === "right") {
+
+            return parseFloat(a1.replace(/%/g, "")/ 100);
+
+        }
+
+        if (pos === "left") {
+
+            return parseFloat(b1.replace(/%/g, "")/ 100);
+
+        }
+
+    }
+
+    if ((/^(\d{1,})!$/).test(b1) || (/^(\d{1,})!$/).test(a1)) {
+
+        var value = 1;
+
+        if (pos === "right") {
+
+            value = parseInt(a1.replace(/!/g, ""));
+
+        }
+
+        if (pos === "left") {
+
+            value = parseInt(b1.replace(/!/g, ""));
+
+        }
+
+        var inc = 1;
+
+        var one = 1;
+
+        for (var vv = one; vv <= value;) {
+
+            inc *= vv;
+            vv+=one;
+
+        }
+
+        return inc;
+
+    }
+
+    if ((/^|(\d{1,})|$/).test(b1) || (/^|(\d{1,})|$/).test(a1)) {
+
+        if (pos === "right") {
+
+            return Math.abs(a1);
+
+        }
+
+        if (pos === "left") {
+
+            return Math.abs(b1);
+
+        }
+
+    }
+
+    if (pos === "right") {
+
+        return a1;
+
+    }
+
+    return b1;
+
+}
+
+_stk.calculate=calculate
 
 
 /**
@@ -1261,89 +1554,7 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 
 }
 
-global.arrayToObjectByDataFormat=arrayToObjectByDataFormat
-
-
-/**
- * Logic in convert string or number to valid number
- *
- * @since 1.4.8
- * @category Seq
- * @param {string} formula The second number in an addition.
- * @param {any[]} args The second number in an addition.
- * @returns {boolean|any} Returns the total.
- * @example
- *
- * calculate(/(\d)/g, 0,1)
- *=> 1
- */
-function calculate (formula, args) {
-
-    var regexpNumber = /([\d.%]+|[/=*-])/g;
-    var matches = formula.match(regexpNumber);
-
-    console.log(matches);
-
-}
-
-global.calculate=calculate
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Utility
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    try {
-
-        if (getTypeof(toReplace) === "function") {
-
-            var values = [];
-
-            String.prototype.replace.call(value, search, function () {
-
-    var arg=arguments;
-
-                values.push(toReplace(...arg));
-
-                return "";
-
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
-
-                });
-
-            });
-
-        }
-
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
-
-}
-
-global.asyncReplace=asyncReplace
+_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
 
 
 /**
@@ -1360,7 +1571,7 @@ global.asyncReplace=asyncReplace
  */
 function clone (objectValue) {
 
-    var variable=getEmptyVariable(objectValue);
+    var variable=empty(objectValue);
 
     each(objectValue, function (key, value) {
 
@@ -1372,13 +1583,52 @@ function clone (objectValue) {
 
 }
 
-global.clone=clone
+_stk.clone=clone
 
-global.count=count
+_stk.count=count
 
-global.each=each
 
-global.first=first
+/**
+ * Decrement value
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any} default_value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * dec(1)
+ *=>0
+ */
+function dec (value, default_value) {
+
+    var return_val = value;
+    var inc_n = 1;
+
+    if (getTypeof(default_value) === "number") {
+
+        inc_n = default_value;
+
+    }
+
+    if (getTypeof(return_val) === "number") {
+
+        return_val -= inc_n;
+
+        return return_val;
+
+    }
+
+    return 0;
+
+}
+
+_stk.dec=dec
+
+_stk.each=each
+
+_stk.empty=empty
 
 
 /**
@@ -1397,7 +1647,7 @@ global.first=first
  */
 function filter (objectValue, func) {
 
-    var jsn_var=getEmptyVariable(objectValue);
+    var jsn_var=empty(objectValue);
     var jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {
@@ -1426,11 +1676,11 @@ function filter (objectValue, func) {
 
 }
 
-global.filter=filter
+_stk.filter=filter
 
-global.getData=getData
+_stk.first=first
 
-global.getEmptyVariable=getEmptyVariable
+_stk.getData=getData
 
 
 /**
@@ -1451,9 +1701,9 @@ function getKey (objectValue) {
 
 }
 
-global.getKey=getKey
+_stk.getKey=getKey
 
-global.getTypeof=getTypeof
+_stk.getTypeof=getTypeof
 /**
  * Generate unique value id
  *
@@ -1489,7 +1739,7 @@ function getUniq (option) {
 
 }
 
-global.getUniq=getUniq
+_stk.getUniq=getUniq
 
 
 /**
@@ -1510,9 +1760,7 @@ function getValue (objectValue) {
 
 }
 
-global.getValue=getValue
-
-global.has=has
+_stk.getValue=getValue
 
 
 /**
@@ -1530,7 +1778,7 @@ global.has=has
  */
 function groupBy (objectValue, func) {
 
-    var value_arry=clone(getEmptyVariable(objectValue));
+    var value_arry=clone(empty(objectValue));
 
     var groupData = {};
 
@@ -1555,7 +1803,9 @@ function groupBy (objectValue, func) {
 
 }
 
-global.groupBy=groupBy
+_stk.groupBy=groupBy
+
+_stk.has=has
 
 
 /**
@@ -1596,11 +1846,52 @@ function ifUndefined (objectValue, value1, value2) {
 
 }
 
-global.ifUndefined=ifUndefined
+_stk.ifUndefined=ifUndefined
 
-global.indexOfExist=indexOfExist
 
-global.indexOfNotExist=indexOfNotExist
+/**
+ * To Increment value
+ *
+ * @since 1.4.8
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @param {any} default_value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * inc(1)
+ *=>2
+ */
+function inc (value, default_value) {
+
+    var return_val = value;
+    var inc_n = 1;
+
+    if (getTypeof(default_value) === "number") {
+
+        inc_n = default_value;
+
+    }
+
+    if (getTypeof(return_val) === "number") {
+
+        return_val += inc_n;
+
+        return return_val;
+
+    }
+
+    return 0;
+
+}
+
+_stk.inc=inc
+
+_stk.indexOf=indexOf
+
+_stk.indexOfExist=indexOfExist
+
+_stk.indexOfNotExist=indexOfNotExist
 
 
 /**
@@ -1642,11 +1933,7 @@ function insert (objectValue, value) {
 
 }
 
-global.insert=insert
-
-global.indexOf=indexOf
-
-global.isEmpty=isEmpty
+_stk.insert=insert
 
 
 /**
@@ -1755,7 +2042,7 @@ function isExact (objectValue1, objectValue2, isExist) {
 
 }
 
-global.isExact=isExact
+_stk.isExact=isExact
 
 
 /**
@@ -1842,9 +2129,9 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
 }
 
-global.isExactbyRegExp=isExactbyRegExp
+_stk.isExactbyRegExp=isExactbyRegExp
 
-global.isJson=isJson
+_stk.isJson=isJson
 
 
 /**
@@ -1888,28 +2175,9 @@ function jsonToArray (objectValue, value) {
 
 }
 
-global.jsonToArray=jsonToArray
+_stk.jsonToArray=jsonToArray
 
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-global.last=last
+_stk.isEmpty=isEmpty
 
 
 /**
@@ -1935,7 +2203,90 @@ function lastIndexOf (objectValue, value) {
 
 }
 
-global.lastIndexOf=lastIndexOf
+_stk.lastIndexOf=lastIndexOf
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last
+
+
+/**
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number=} maxValue Maximum value
+ * @param {Function=} func Callback function
+ * @returns {any} Returns the object.
+ * @example
+ *
+ * limit([1,2],1,2 )
+ *=>{'1':2}
+ */
+function limit (objectValue, minValue, maxValue, func) {
+
+    var cnt=0;
+    var glo_jsn={};
+    var glo_indtfd = null;
+    var emptyDefaultValue=0;
+    var minValueReserve=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    var maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+    var incrementDefaultValue=1;
+
+    each(objectValue, function (key, meth) {
+
+        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
+
+            if (has(func)) {
+
+                glo_indtfd=func(key, meth);
+
+                if (has(glo_indtfd)) {
+
+                    glo_jsn[key]=glo_indtfd;
+
+                }
+
+            } else {
+
+                glo_jsn[key]=meth;
+
+            }
+
+        }
+
+        cnt += incrementDefaultValue;
+
+    });
+
+    return glo_jsn;
+
+}
+
+_stk.limit=limit
 
 
 /**
@@ -1965,7 +2316,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         ? json_convertion
         : jsn;
     var whr_s=whr||{};
-    var variable=getEmptyVariable(jsn);
+    var variable=empty(jsn);
     var filterData = {};
 
     each(jsn_s, function (jk, jv) {
@@ -2036,9 +2387,9 @@ function like (objectValue, objectValueWhere, func) {
 
 }
 
-global.like=like
+_stk.like=like
 
-global.map=map
+_stk.map=map
 
 
 /**
@@ -2122,69 +2473,7 @@ function numberFormat (objectValue, value1, value2) {
 
 }
 
-global.numberFormat=numberFormat
-
-
-/**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Data must be array
- * @param {number} minValue Minimum value
- * @param {number=} maxValue Maximum value
- * @param {Function=} func Callback function
- * @returns {any} Returns the object.
- * @example
- *
- * limit([1,2],1,2 )
- *=>{'1':2}
- */
-function limit (objectValue, minValue, maxValue, func) {
-
-    var cnt=0;
-    var glo_jsn={};
-    var glo_indtfd = null;
-    var emptyDefaultValue=0;
-    var minValueReserve=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    var maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-    var incrementDefaultValue=1;
-
-    each(objectValue, function (key, meth) {
-
-        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(key, meth);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt += incrementDefaultValue;
-
-    });
-
-    return glo_jsn;
-
-}
-
-global.limit=limit
+_stk.numberFormat=numberFormat
 
 
 /**
@@ -2359,7 +2648,7 @@ ClassDelay.prototype.cancel = function () {
 
 };
 
-global.onDelay=onDelay
+_stk.onDelay=onDelay
 
 
 /**
@@ -2437,7 +2726,7 @@ ClassSequence.prototype.cancel = function () {
 
 };
 
-global.onSequence=onSequence
+_stk.onSequence=onSequence
 
 var getWindow = function () {
 
@@ -2532,7 +2821,7 @@ function onWait (func, wait) {
 
 }
 
-global.onWait=onWait
+_stk.onWait=onWait
 
 
 /**
@@ -2681,7 +2970,7 @@ function parseJson (value) {
 
 }
 
-global.parseJson=parseJson
+_stk.parseJson=parseJson
 
 
 /**
@@ -2828,7 +3117,7 @@ function parseString (value) {
 
 }
 
-global.parseString=parseString
+_stk.parseString=parseString
 
 
 /**
@@ -2871,9 +3160,9 @@ function random (valueArray, minValue, maxValue) {
 
 }
 
-global.random=random
+_stk.random=random
 
-global.range=range
+_stk.range=range
 
 
 /**
@@ -2896,7 +3185,7 @@ function regexCountGroup (value) {
 
 }
 
-global.regexCountGroup=regexCountGroup
+_stk.regexCountGroup=regexCountGroup
 
 
 /**
@@ -2998,9 +3287,9 @@ function remove (objectValue, value, value2) {
 
 }
 
-global.remove=remove
+_stk.remove=remove
 
-global.repeat=repeat
+_stk.repeat=repeat
 
 
 /**
@@ -3043,92 +3332,7 @@ function roundDecimal (value, maxValue) {
 
 }
 
-global.roundDecimal=roundDecimal
-/**
- * Split string for special cases
- *
- * @since 1.4.8
- * @category Seq
- * @param {string} value String to split
- * @returns {string} Returns the total.
- * @example
- *
- * stringSplit("split-this-string")
- *=>"split this string"
- */
-function stringSplit (value) {
-
-    return value.trim()
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/([-_.\s]{1,})/g, ' ')
-        .toLowerCase();
-
-}
-
-/**
- * String Camel case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
- */
-function stringCamelCase (value) {
-
-    return stringSplit(toString(value))
-        .replace(/(\s[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        })
-        .split(" ")
-        .join("");
-
-}
-
-global.stringCamelCase=stringCamelCase
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function stringCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-global.stringCapitalize=stringCapitalize
+_stk.roundDecimal=roundDecimal
 
 
 /**
@@ -3163,7 +3367,7 @@ function shuffle (objectValue) {
 
             randomIndex = Math.floor(Math.random() * currentIndex);
 
-            if (getTypeof(objectValue) === "array") {
+            if (getTypeof(o,bjectValue) === "array") {
 
                 temporaryValue = output[currentIndex];
                 output[currentIndex]=output[randomIndex];
@@ -3181,49 +3385,7 @@ function shuffle (objectValue) {
 
 }
 
-global.shuffle=shuffle
-
-
-/**
- * String Escape
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns escape string
- * @example
- *
- * stringEscape("yahii & adad ^ss")
- *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
- */
-function stringEscape (value, type) {
-
-    var typeVal = type || "entity";
-
-    if (indexOfNotExist(listType, typeVal)) {
-
-        return "";
-
-    }
-
-    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
-
-        var search = {"html": str1};
-
-        var whr = where(entity, search);
-
-        return isEmpty(whr)
-            ? str1
-            : first(whr)[typeVal];
-
-    });
-
-    return regexReplace;
-
-}
-
-global.stringEscape=stringEscape
+_stk.shuffle=shuffle
 
 
 /**
@@ -3315,28 +3477,134 @@ function sort (objectValue, order, func) {
 
 }
 
-global.sort=sort
+_stk.sort=sort
+/**
+ * Split string for special cases
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {string} value String to split
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringSplit("split-this-string")
+ *=>"split this string"
+ */
+function stringSplit (value) {
 
+    return value.trim()
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([-_.\s]{1,})/g, ' ')
+        .toLowerCase();
+
+}
 
 /**
- * String Lower case case
+ * String Camel case
  *
- * @since 1.4.5
+ * @since 1.3.1
  * @category String
  * @param {string} value String data
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
  */
-function stringLowerCase (value) {
+function stringCamelCase (value) {
 
-    return toString(value).toLowerCase();
+    return stringSplit(toString(value))
+        .replace(/(\s[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        })
+        .split(" ")
+        .join("");
 
 }
 
-global.stringLowerCase=stringLowerCase
+_stk.stringCamelCase=stringCamelCase
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize
+
+
+/**
+ * String Escape
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns escape string
+ * @example
+ *
+ * stringEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
+ */
+function stringEscape (value, type) {
+
+    var typeVal = type || "entity";
+
+    if (indexOfNotExist(listType, typeVal)) {
+
+        return "";
+
+    }
+
+    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
+
+        var search = {"html": str1};
+
+        var whr = where(entity, search);
+
+        return isEmpty(whr)
+            ? str1
+            : first(whr)[typeVal];
+
+    });
+
+    return regexReplace;
+
+}
+
+_stk.stringEscape=stringEscape
 
 
 /**
@@ -3359,7 +3627,28 @@ function stringKebabCase (value) {
 
 }
 
-global.stringKebabCase=stringKebabCase
+_stk.stringKebabCase=stringKebabCase
+
+
+/**
+ * String Lower case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+function stringLowerCase (value) {
+
+    return toString(value).toLowerCase();
+
+}
+
+_stk.stringLowerCase=stringLowerCase
 
 
 /**
@@ -3382,7 +3671,7 @@ function stringSnakeCase (value) {
 
 }
 
-global.stringSnakeCase=stringSnakeCase
+_stk.stringSnakeCase=stringSnakeCase
 
 
 /**
@@ -3411,9 +3700,9 @@ function stringSubs (value, minValue, maxValue) {
 
 }
 
-global.stringSubs=stringSubs
+_stk.stringSubs=stringSubs
 
-global.stringUnEscape=stringUnEscape
+_stk.stringUnEscape=stringUnEscape
 
 
 /**
@@ -3434,7 +3723,7 @@ function stringUpperCase (value) {
 
 }
 
-global.stringUpperCase=stringUpperCase
+_stk.stringUpperCase=stringUpperCase
 
 
 /**
@@ -3614,9 +3903,9 @@ function templateValueInternal (str_raw, reg) {
 
 }
 
-global.templateValue=templateValue
+_stk.templateValue=templateValue
 
-global.toArray=toArray
+_stk.toArray=toArray
 
 
 /**
@@ -3681,7 +3970,7 @@ function toDouble (value) {
 
 }
 
-global.toDouble=toDouble
+_stk.toDouble=toDouble
 
 
 /**
@@ -3706,8 +3995,275 @@ function toInteger (value) {
 
 }
 
-global.toInteger=toInteger
+_stk.toInteger=toInteger
 
+_stk.toString=toString
+
+_stk.varExtend=varExtend
+
+_stk.where=where
+
+
+/**
+ *  Get the type if arguments
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isArguments()
+ *=> true
+ */
+function isArguments (value) {
+
+    return getTypeof(value) === "arguments";
+
+}
+
+
+/**
+ *  Get the type if array
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isArray([])
+ *=> true
+ */
+function isArray (value) {
+
+    return getTypeof(value) === "array";
+
+}
+
+
+/**
+ *  Get the type if boolean
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isBoolean(true)
+ *=> true
+ */
+function isBoolean (value) {
+
+    return getTypeof(value) === "boolean";
+
+}
+
+
+/**
+ *  Get the type if date
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isDate(new Date())
+ *=> true
+ */
+function isDate (value) {
+
+    return getTypeof(value) === "date";
+
+}
+
+
+/**
+ *  Get the type if error
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isError(new Error())
+ *=> true
+ */
+function isError (value) {
+
+    return getTypeof(value) === "error";
+
+}
+
+
+/**
+ *  Get the type if function
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isFunction()
+ *=> true
+ */
+function isFunction (value) {
+
+    return getTypeof(value) === "function";
+
+}
+
+
+/**
+ *  Get the type if null
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isNull(null)
+ *=> true
+ */
+function isNull (value) {
+
+    return getTypeof(value) === "null";
+
+}
+
+
+/**
+ *  Get the type if number
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isNumber(1)
+ *=> true
+ */
+function isNumber (value) {
+
+    return getTypeof(value) === "number";
+
+}
+
+
+/**
+ *  Get the type if object
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isObject({})
+ *=> true
+ */
+function isObject (value) {
+
+    return getTypeof(value) === "object";
+
+}
+
+
+/**
+ *  Get the type if promise
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isPromise()
+ *=> true
+ */
+function isPromise (value) {
+
+    return getTypeof(value) === "promise";
+
+}
+
+
+/**
+ *  Get the type if regexp
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isRegexp(/(1)/g)
+ *=> true
+ */
+function isRegexp (value) {
+
+    return getTypeof(value) === "regexp";
+
+}
+
+
+/**
+ *  Get the type if string
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isString('string')
+ *=> true
+ */
+function isString (value) {
+
+    return getTypeof(value) === "string";
+
+}
+
+
+/**
+ *  Get the type if undefined
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isUndefined(undefined)
+ *=> true
+ */
+function isUndefined (value) {
+
+    return getTypeof(value) === "undefined";
+
+}
+
+
+_stk.isArguments=isArguments;
+_stk.isArray=isArray;
+_stk.isBoolean=isBoolean;
+_stk.isDate=isDate;
+_stk.isError=isError;
+_stk.isFunction=isFunction;
+_stk.isNull=isNull;
+_stk.isNumber=isNumber;
+_stk.isObject=isObject;
+_stk.isPromise=isPromise;
+_stk.isRegexp=isRegexp;
+_stk.isString=isString;
+_stk.isUndefined=isUndefined;
 
 /**
  * Get only the unique data from array
@@ -3745,7 +4301,7 @@ function unique (value) {
 
 }
 
-global.unique=unique
+_stk.unique=unique
 
 
 /**
@@ -3770,10 +4326,5 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 }
 
-global.whereNot=whereNot
+_stk.whereNot=whereNot
 
-global.varExtend=varExtend
-
-global.where=where
-
-global.toString=toString

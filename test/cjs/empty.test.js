@@ -1,17 +1,17 @@
-const {getEmptyVariable} = require("../../dist/cjs/structkit-full.cjs");
+const {empty} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const three =3;
 const two =2;
 const one =1;
 
-describe('CJS: getEmptyVariable method', function () {
+describe('CJS: empty method', function () {
 
 
     it('return empty array', function () {
 
         assert.deepStrictEqual(
-            getEmptyVariable([
+            empty([
                 one,
                 two,
                 three
@@ -24,7 +24,7 @@ describe('CJS: getEmptyVariable method', function () {
     it('return empty json', function () {
 
         assert.deepStrictEqual(
-            getEmptyVariable({"ones": one}),
+            empty({"ones": one}),
             {}
         );
 
