@@ -1,4 +1,5 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
+const {zero} = require("../core/defaultValue");
 
 const count = require('./count');
 
@@ -17,8 +18,6 @@ const indexOfExist = require('./indexOfExist');
  * // => true
  */
 function isEmpty (value) {
-
-    const zero =0;
 
     const typeofvalue = getTypeofInternal(value);
 

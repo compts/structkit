@@ -9,7 +9,7 @@ import getTypeof from './getTypeof';
  * @category Array
  * @param {any} value Value you want to convert in array
  * @param {any} default_value Value you want to convert in array
- * @returns {any[]} Return in array.
+ * @returns {number} Return in number.
  * @example
  *
  * inc(1)

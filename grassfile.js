@@ -108,23 +108,7 @@ exports.module=function (grassconf) {
                 "plugin": [
                     {
                         "name": "webIIfe",
-                        "transform": (config) => {
-
-                            if (config.currentPath === 'src/function/where.js') {
-
-                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '_default')+"\n"+structkit.map(objectCallTypeAll, function (value) {
-
-                                    const name = 'is'+structkit.stringCapitalize(value);
-
-                                    return "export const "+name+"="+name+"_default;";
-
-                                }).join("\n")+"\n";
-
-                            }
-
-                            return null;
-
-                        },
+                        "transform": () => null,
                         "transformFirstFile": () => null,
                         "transformLastFile": () => null
                     },
@@ -132,7 +116,25 @@ exports.module=function (grassconf) {
                 ]
 
             }
-        )
+        ).pipe(grassconf.streamPipe(function (data) {
+
+            if (data.path === 'src/function/whereNot.js') {
+
+                const getData = data.readData();
+
+
+                data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
+
+                    const name = 'is'+structkit.stringCapitalize(value);
+
+                    return "export const "+name+"="+name+"_default;";
+
+                }).join("\n")+"\n");
+
+            }
+            data.done();
+
+        }))
             .pipe(grass_concat("dist/esm/node.esm.js", {
                 "istruncate": true
             }));
@@ -194,7 +196,7 @@ exports.module=function (grassconf) {
                         "name": "webIIfes",
                         "transform": (config) => {
 
-                            if (config.currentPath === 'src/function/where.js') {
+                            if (config.currentPath === 'src/function/whereNot.js') {
 
                                 return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(objectCallTypeAll, function (value) {
 
@@ -237,7 +239,6 @@ exports.module=function (grassconf) {
             }));
 
     });
-
 
 };
 

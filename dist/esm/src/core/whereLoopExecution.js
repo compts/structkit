@@ -59,7 +59,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
         if (types === "where") {
 
-            if (isExact(filterData, whr_s, isExist)) {
+            if (isExact(whr_s, filterData, isExist)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {
@@ -73,7 +73,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         }
         if (types === "like") {
 
-            if (isExactbyRegExp(filterData, whr_s)) {
+            if (isExactbyRegExp(whr_s, filterData)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {

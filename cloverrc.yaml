@@ -11,5 +11,6 @@ scans:
      format_config:
       - check_trailing_space : true
       - string_literal: dobule_qoute
+      - check_indent_per_line: 4
      include:
       - 'src'

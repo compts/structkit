@@ -6,10 +6,10 @@ export default inc;
  * @category Array
  * @param {any} value Value you want to convert in array
  * @param {any} default_value Value you want to convert in array
- * @returns {any[]} Return in array.
+ * @returns {number} Return in number.
  * @example
  *
  * inc(1)
  *=>2
  */
-declare function inc(value: any, default_value: any): any[];
+declare function inc(value: any, default_value: any): number;

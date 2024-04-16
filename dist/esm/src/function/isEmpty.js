@@ -1,5 +1,7 @@
 import {getTypeofInternal} from '../core/getTypeOf';
 
+import {zero} from '../core/defaultValue';
+
 import count from './count';
 
 import indexOfExist from './indexOfExist';
@@ -17,8 +19,6 @@ import indexOfExist from './indexOfExist';
  * // => true
  */
 function isEmpty (value) {
-
-    const zero =0;
 
     const typeofvalue = getTypeofInternal(value);
 

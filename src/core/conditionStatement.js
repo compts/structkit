@@ -1,7 +1,6 @@
 /*
  * Const count = require('../function/count');
- * import getTypeof from '../function/getTypeof';
-
+ * const getTypeof = require('../function/getTypeof');
  */
 
 /**
@@ -67,5 +66,4 @@ statementAction.prototype.valueOfStatement = function (value) {
 
 };
 
-export default statementAction;
-
+module.exports=statementAction;
