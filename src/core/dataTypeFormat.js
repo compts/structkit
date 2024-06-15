@@ -1,4 +1,4 @@
-const has = require('../function/has');
+const has = require('./_has');
 const getTypeof = require('../function/getTypeof');
 
 /**

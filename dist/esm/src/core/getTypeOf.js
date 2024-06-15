@@ -1,7 +1,7 @@
 
 import isJson from '../function/isJson';
 
-import has from '../function/has';
+import has from './_has';
 
 import {objectCallTypeAll} from '../variable/types';
 

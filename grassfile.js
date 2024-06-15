@@ -219,21 +219,17 @@ exports.module=function (grassconf) {
         )
             .pipe(grass_concat("dist/web/structkit-full.iife.js", {
                 "istruncate": true
-            }));
+            }))
+            .pipe(grassconf.streamPipe(function (data) {
 
-    });
-    grassconf.load("cjs_compile", function () {
+                let getData = data.readData();
 
-        return grassconf.src(["dist/web/structkit-full.iife.js"]).pipe(grassconf.streamPipe(function (data) {
+                getData = getData.replace("(function(global){\nglobal._stk={};", "var _stk = exports;");
+                getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "");
+                data.writeData(getData);
+                data.done();
 
-            let getData = data.readData();
-
-            getData = getData.replace("(function(global){\nglobal._stk={};", "var _stk = exports;");
-            getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "");
-            data.writeData(getData);
-            data.done();
-
-        }))
+            }))
             .pipe(grass_concat("dist/cjs/structkit-full.cjs.js", {
                 "istruncate": true
             }));
@@ -250,8 +246,6 @@ exports.execute=function (lib) {
         strm.series("esm");
         strm.series("esm_only");
         strm.series("cjs_only");
-
-        strm.series("cjs_compile");
 
     };
 

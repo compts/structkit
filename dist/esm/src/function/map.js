@@ -6,6 +6,8 @@ import {getTypeofInternal} from '../core/getTypeOf';
 
 import empty from './empty';
 
+import curryArg from '../core/curryArg';
+
 /**
  * To map the value of json or array
  *
@@ -21,34 +23,41 @@ import empty from './empty';
  */
 function map (objectValue, func) {
 
-    const strTypeOf =getTypeofInternal(objectValue);
-    const emptyDefaultValue=0;
-    const incrementDefaultValue=1;
-    const value_arry=empty(objectValue);
-    let cnt=emptyDefaultValue;
+    return curryArg(function (rawObjectValue, rawFunc) {
 
-    each(objectValue, function (key, value) {
+        const strTypeOf =getTypeofInternal(rawObjectValue);
+        const emptyDefaultValue=0;
+        const incrementDefaultValue=1;
+        const value_arry=empty(rawObjectValue);
+        let cnt=emptyDefaultValue;
 
-        if (has(func)) {
+        each(rawObjectValue, function (key, value) {
 
-            if (strTypeOf === "array") {
+            if (has(rawFunc)) {
 
-                value_arry.push(func(value, key, cnt));
-                cnt += incrementDefaultValue;
+                if (strTypeOf === "array") {
 
-            } else {
+                    value_arry.push(rawFunc(value, key, cnt));
+                    cnt += incrementDefaultValue;
 
-                const dataFunc = func(value, key, cnt);
+                } else {
 
-                value_arry[key] = dataFunc;
+                    const dataFunc = rawFunc(value, key, cnt);
+
+                    value_arry[key] = dataFunc;
+
+                }
 
             }
 
-        }
+        });
 
-    });
+        return value_arry;
 
-    return value_arry;
+    }, [
+        objectValue,
+        func
+    ]);
 
 }
 export default map;

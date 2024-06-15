@@ -2,13 +2,15 @@ const each = require('./each');
 const toArray = require('./toArray');
 const arraySlice = require('./arraySlice');
 const first = require('./first');
+const curryArg = require("../core/curryArg");
+
 
 /**
  * Array Concat
  *
  * @since 1.0.1
  * @category Array
- * @param {...any} arg First array
+ * @param {...any?} arg First array
  * @returns {any[]} Returns the array.
  * @example
  *
@@ -17,24 +19,28 @@ const first = require('./first');
  */
 function arrayConcat (...arg) {
 
-    const one =1;
+    return curryArg(function (...argsub) {
 
-    if (arg.length < one) {
+        const one =1;
 
-        return [];
+        if (argsub.length < one) {
 
-    }
+            return [];
 
-    let return_val=toArray(first(arg));
-    const arrayValue = toArray(arraySlice(arg, one));
+        }
 
-    each(arrayValue, function (key, value) {
+        let return_val=toArray(first(argsub));
+        const arrayValue = toArray(arraySlice(argsub, one));
 
-        return_val = return_val.concat(toArray(value));
+        each(arrayValue, function (key, value) {
 
-    });
+            return_val = return_val.concat(toArray(value));
 
-    return return_val;
+        });
+
+        return return_val;
+
+    }, arg);
 
 }
 module.exports=arrayConcat;

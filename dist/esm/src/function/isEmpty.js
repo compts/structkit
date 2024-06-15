@@ -29,7 +29,7 @@ function isEmpty (value) {
 
     if (typeofvalue === "json" || typeofvalue === "array") {
 
-        return count(value, true) === zero;
+        return count(value, typeofvalue === "json") === zero;
 
     }
     if (typeofvalue === "number") {

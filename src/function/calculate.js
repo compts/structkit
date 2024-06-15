@@ -4,6 +4,7 @@ const getKey = require("./getKey");
 const getTypeof = require("./getTypeof");
 const toArray = require("./toArray");
 const {zero, one, two, three, four, oneHundred} = require("../core/defaultValue");
+const curryArg = require("../core/curryArg");
 
 /**
  * Logic in convert string or number to compute
@@ -20,28 +21,34 @@ const {zero, one, two, three, four, oneHundred} = require("../core/defaultValue"
  */
 function calculate (formula, args) {
 
-    const typeofs=getTypeof(args);
+    return curryArg(function (rawFormula, rawArgs) {
 
-    if (typeofs === "json") {
+        const typeofs=getTypeof(rawArgs);
 
-        const argsKey = new RegExp("\\b("+toArray(getKey(args)).join("|")+")\\b", "g");
+        if (typeofs === "json") {
 
-        formula = formula.replace(argsKey, function (mm, m1) {
+            const argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
-            return args[m1];
+            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
+
+                return rawArgs[m1];
+
+            });
+
+        }
+
+        const strFormula = rawFormula.replace(/\((.*?)\)/, function (mm, m1) {
+
+            return compute(m1);
 
         });
 
-    }
+        return parseFloat(compute(strFormula));
 
-
-    const strFormula = formula.replace(/\((.*?)\)/, function (mm, m1) {
-
-        return compute(m1);
-
-    });
-
-    return parseFloat(compute(strFormula));
+    }, [
+        formula,
+        args
+    ]);
 
 }
 
@@ -91,7 +98,7 @@ function compute (formula) {
     }
 
     let counter = zero;
-    let result = 0;
+    let result = zero;
 
     for (let ii = zero; ii<Math.ceil(count(matches)/limit); ii +=one) {
 
@@ -195,7 +202,7 @@ function convert (a1, b1, pos) {
 
     if ((/^(\d{1,})!$/).test(b1) || (/^(\d{1,})!$/).test(a1)) {
 
-        let value = 1;
+        let value = one;
 
         if (pos === "right") {
 
@@ -209,7 +216,7 @@ function convert (a1, b1, pos) {
 
         }
 
-        let inc = 1;
+        let inc = one;
 
         for (let vv = one; vv <= value;) {
 

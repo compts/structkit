@@ -1,9 +1,8 @@
 const has = require('./has');
-
 const getTypeof = require('./getTypeof');
-
 const indexOfExist = require('./indexOfExist');
 const getKey = require('./getKey');
+const curryArg = require("../core/curryArg");
 
 /**
  * Var extend is use for cloning Json, Array or Object
@@ -20,65 +19,73 @@ const getKey = require('./getKey');
  */
 function varExtend (objectValue, objectValueReplace) {
 
-    const jsn_bool={
-        "false": false,
-        "true": true
-    };
+    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
 
-    const listValid = [
-        "json",
-        "object"
-    ];
+        const jsn_bool={
+            "false": false,
+            "true": true
+        };
 
-    if (indexOfExist(listValid, getTypeof(objectValue)) && indexOfExist(listValid, getTypeof(objectValueReplace))) {
+        const listValid = [
+            "json",
+            "object"
+        ];
 
-        const jsn_s={};
+        if (indexOfExist(listValid, getTypeof(rawObjectValue)) && indexOfExist(listValid, getTypeof(rawObjectValueReplace))) {
 
-        for (const key in objectValue) {
+            const jsn_s={};
 
-            if (has(objectValue[key])) {
+            for (const key in rawObjectValue) {
 
-                if (indexOfExist(getKey(jsn_bool), objectValue[key].toString().toLowerCase())) {
+                if (has(rawObjectValue[key])) {
 
-                    jsn_s[key]=jsn_bool[objectValue[key].toString().toLowerCase()];
+                    if (indexOfExist(getKey(jsn_bool), rawObjectValue[key].toString().toLowerCase())) {
 
-                } else {
+                        jsn_s[key]=jsn_bool[rawObjectValue[key].toString().toLowerCase()];
 
-                    jsn_s[key]=objectValue[key];
+                    } else {
 
-                }
+                        jsn_s[key]=rawObjectValue[key];
 
-            } else {
-
-                jsn_s[key]=objectValue[key];
-
-            }
-
-        }
-
-        for (const key in objectValueReplace) {
-
-            if (has(jsn_s, key)) {
-
-                if (getTypeof(jsn_s[key]) === "json") {
-
-                    jsn_s[key]=replaceValue(jsn_s[key], objectValueReplace[key]);
+                    }
 
                 } else {
 
-                    jsn_s[key]=objectValueReplace[key];
+                    jsn_s[key]=rawObjectValue[key];
 
                 }
 
             }
 
+            for (const key in rawObjectValueReplace) {
+
+                if (has(jsn_s, key)) {
+
+                    if (getTypeof(jsn_s[key]) === "json") {
+
+                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValueReplace[key];
+
+                    }
+
+                }
+
+            }
+
+            return jsn_s;
+
         }
 
-        return jsn_s;
+        return objectValue;
 
-    }
+    }, [
+        objectValue,
+        objectValueReplace
+    ]);
 
-    return objectValue;
 
 }
 

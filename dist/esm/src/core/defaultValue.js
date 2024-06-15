@@ -1,3 +1,4 @@
+const negOne = -1;
 const zero = 0;
 const one = 1;
 const two = 2;
@@ -6,4 +7,4 @@ const four = 4;
 const five = 5;
 const oneHundred = 100;
 
-export {zero,one,two,three,four,five,oneHundred};
+export {negOne,zero,one,two,three,four,five,oneHundred};

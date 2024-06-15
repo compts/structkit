@@ -7,8 +7,8 @@
   "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
-    ".":{
-      "default":"./dist/cjs/structkit-full.cjs.js"
+    ".": {
+      "default": "./dist/cjs/structkit-full.cjs.js"
     },
     "./package.json": "./package.json"
   },

@@ -1,6 +1,6 @@
 
 const isJson = require("../function/isJson");
-const has = require("../function/has");
+const has = require("./_has");
 
 const {objectCallTypeAll} = require("../variable/types");
 

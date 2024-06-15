@@ -4,12 +4,11 @@ export default has;
  *
  * @since 1.0.1
  * @category Boolean
- * @param {any} value Either JSON or Array
- * @param {any=} key For key or index of data
+ * @param {...any?} args Either JSON or Array
  * @returns {boolean} Returns true or false.
  * @example
  *
  * has({'as':1}, 'as')
  * // => true
  */
-declare function has(value: any, key?: any | undefined): boolean;
+declare function has(...args: (any | null)[]): boolean;

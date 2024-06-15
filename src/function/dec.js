@@ -17,13 +17,9 @@ const getTypeof = require('./getTypeof');
 function dec (value, default_value) {
 
     let return_val = value;
-    let inc_n = one;
-
-    if (getTypeof(default_value) === "number") {
-
-        inc_n = default_value;
-
-    }
+    const inc_n = getTypeof(default_value) === "number"
+        ? one
+        : default_value;
 
     if (getTypeof(return_val) === "number") {
 

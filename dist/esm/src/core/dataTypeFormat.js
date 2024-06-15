@@ -1,4 +1,4 @@
-import has from '../function/has';
+import has from './_has';
 
 import getTypeof from '../function/getTypeof';
 

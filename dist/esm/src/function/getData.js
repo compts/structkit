@@ -4,6 +4,8 @@ import toString from './toString';
 
 import each from './each';
 
+import curryArg from '../core/curryArg';
+
 /**
  * Get Data in array or json using string to search the data
  *
@@ -22,54 +24,61 @@ import each from './each';
  */
 function getData (objectValue, split_str) {
 
-    const split_strReplace= toString(split_str).replace(/([.]{1,})/g, ":");
-    const spl_len=split_strReplace.split(":");
-    const spl=[];
-    let jsn_total={};
+    return curryArg(function (rawObjectValue, rawSplit_str) {
 
-    if (!has(objectValue)) {
+        const split_strReplace= toString(rawSplit_str).replace(/([.]{1,})/g, ":");
+        const spl_len=split_strReplace.split(":");
+        const spl=[];
+        let jsn_total={};
 
-        return "";
+        if (!has(rawObjectValue)) {
 
-    }
-
-    each(spl_len, function (key, value) {
-
-        spl.push(value);
-
-    });
-
-    each(spl, function (key, value) {
-
-        try {
-
-            if (has(objectValue, value)) {
-
-                if ((/^\s+$/).test(objectValue[value]) === false) {
-
-                    jsn_total=objectValue[value];
-
-                }
-
-            } else {
-
-                if (has(jsn_total, value)) {
-
-                    jsn_total=jsn_total[value];
-
-                }
-
-            }
-
-        } catch (error) {
-
-            console.log(error);
+            return "";
 
         }
 
-    });
+        each(spl_len, function (key, value) {
 
-    return jsn_total;
+            spl.push(value);
+
+        });
+
+        each(spl, function (key, value) {
+
+            try {
+
+                if (has(rawObjectValue, value)) {
+
+                    if ((/^\s+$/).test(rawObjectValue[value]) === false) {
+
+                        jsn_total=rawObjectValue[value];
+
+                    }
+
+                } else {
+
+                    if (has(jsn_total, value)) {
+
+                        jsn_total=jsn_total[value];
+
+                    }
+
+                }
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        });
+
+        return jsn_total;
+
+    }, [
+        objectValue,
+        split_str
+    ]);
 
 }
 export default getData;
