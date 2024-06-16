@@ -4,11 +4,12 @@ export default gt;
  *
  * @since 1.4.8
  * @category Boolean
- * @param {...any?} args Either JSON or Array
+ * @param {any} value1 Either JSON or Array
+ * @param {any} value2 Either JSON or Array
  * @returns {boolean} Returns true or false.
  * @example
  *
  * gt(1, 2)
  * // => false
  */
-declare function gt(...args: (any | null)[]): boolean;
+declare function gt(value1: any, value2: any): boolean;

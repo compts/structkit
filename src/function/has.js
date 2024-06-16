@@ -1,7 +1,6 @@
 const _has = require("../core/_has");
 const curryArg = require("../core/curryArg");
 
-
 /**
  * Check if object has value or null
  *

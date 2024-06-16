@@ -2,7 +2,6 @@ const __ = require("./__");
 const _has = require("./_has");
 const {one} = require("./defaultValue");
 
-
 /**
  * Get type of the variable
  *

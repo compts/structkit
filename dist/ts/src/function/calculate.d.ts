@@ -6,10 +6,10 @@ export default calculate;
  * @category Seq
  * @param {string} formula The second number in an addition.
  * @param {any=} args The second number in an addition.
- * @returns {boolean|any} Returns the total.
+ * @returns {number} Returns the total.
  * @example
  *
  * calculate('1+1')
  *=> 2
  */
-declare function calculate(formula: string, args?: any | undefined): boolean | any;
+declare function calculate(formula: string, args?: any | undefined): number;

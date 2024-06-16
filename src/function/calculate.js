@@ -5,6 +5,10 @@ const getTypeof = require("./getTypeof");
 const toArray = require("./toArray");
 const {zero, one, two, three, four, oneHundred} = require("../core/defaultValue");
 const curryArg = require("../core/curryArg");
+const add = require("./add");
+const divide = require("./divide");
+const multiply = require("./multiply");
+const subtract = require("./subtract");
 
 /**
  * Logic in convert string or number to compute
@@ -13,7 +17,7 @@ const curryArg = require("../core/curryArg");
  * @category Seq
  * @param {string} formula The second number in an addition.
  * @param {any=} args The second number in an addition.
- * @returns {boolean|any} Returns the total.
+ * @returns {number} Returns the total.
  * @example
  *
  * calculate('1+1')
@@ -142,14 +146,14 @@ function process (a1, operator, b1) {
     switch (operator) {
 
     case '+':
-        return parseFloat(a1) + parseFloat(b1);
+        return add(parseFloat(a1), parseFloat(b1));
     case '-':
-        return parseFloat(a1) - parseFloat(b1);
+        return subtract(parseFloat(a1), parseFloat(b1));
     case 'x':
     case '*':
-        return parseFloat(a1) * parseFloat(b1);
+        return multiply(parseFloat(a1), parseFloat(b1));
     case '/':
-        return parseFloat(a1) / parseFloat(b1);
+        return divide(parseFloat(a1), parseFloat(b1));
     case '%':
         return parseInt(a1) % parseInt(b1);
     case '^':

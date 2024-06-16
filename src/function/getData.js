@@ -3,7 +3,6 @@ const toString = require("./toString");
 const each = require('./each');
 const curryArg = require("../core/curryArg");
 
-
 /**
  * Get Data in array or json using string to search the data
  *
@@ -77,7 +76,6 @@ function getData (objectValue, split_str) {
         objectValue,
         split_str
     ]);
-
 
 }
 module.exports=getData;

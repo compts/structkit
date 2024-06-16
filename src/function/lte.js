@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-
+const {two} = require("../core/defaultValue");
 
 /**
  * To check if its less than to equal
@@ -19,7 +19,7 @@ function lte (...args) {
 
         return aa <= bb;
 
-    }, args);
+    }, args, two);
 
 }
 module.exports=lte;

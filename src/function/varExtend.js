@@ -86,7 +86,6 @@ function varExtend (objectValue, objectValueReplace) {
         objectValueReplace
     ]);
 
-
 }
 
 /**

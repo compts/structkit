@@ -10,6 +10,14 @@ import {zero, one, two, three, four, oneHundred} from '../core/defaultValue';
 
 import curryArg from '../core/curryArg';
 
+import add from './add';
+
+import divide from './divide';
+
+import multiply from './multiply';
+
+import subtract from './subtract';
+
 /**
  * Logic in convert string or number to compute
  *
@@ -17,7 +25,7 @@ import curryArg from '../core/curryArg';
  * @category Seq
  * @param {string} formula The second number in an addition.
  * @param {any=} args The second number in an addition.
- * @returns {boolean|any} Returns the total.
+ * @returns {number} Returns the total.
  * @example
  *
  * calculate('1+1')
@@ -146,14 +154,14 @@ function process (a1, operator, b1) {
     switch (operator) {
 
     case '+':
-        return parseFloat(a1) + parseFloat(b1);
+        return add(parseFloat(a1), parseFloat(b1));
     case '-':
-        return parseFloat(a1) - parseFloat(b1);
+        return subtract(parseFloat(a1), parseFloat(b1));
     case 'x':
     case '*':
-        return parseFloat(a1) * parseFloat(b1);
+        return multiply(parseFloat(a1), parseFloat(b1));
     case '/':
-        return parseFloat(a1) / parseFloat(b1);
+        return divide(parseFloat(a1), parseFloat(b1));
     case '%':
         return parseInt(a1) % parseInt(b1);
     case '^':

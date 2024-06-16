@@ -1,5 +1,7 @@
 import curryArg from '../core/curryArg';
 
+import {two} from '../core/defaultValue';
+
 /**
  * To check if its less than to equal
  *
@@ -18,7 +20,7 @@ function lte (...args) {
 
         return aa <= bb;
 
-    }, args);
+    }, args, two);
 
 }
 export default lte;

@@ -4,7 +4,6 @@ const arraySlice = require('./arraySlice');
 const first = require('./first');
 const curryArg = require("../core/curryArg");
 
-
 /**
  * Array Concat
  *

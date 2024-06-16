@@ -4,11 +4,12 @@ export default lt;
  *
  * @since 1.4.8
  * @category Boolean
- * @param {...any?} args Either JSON or Array
+ * @param {any} value1 Either JSON or Array
+ * @param {any} value2 Either JSON or Array
  * @returns {boolean} Returns true or false.
  * @example
  *
  * lt(1, 2)
  * // => true
  */
-declare function lt(...args: (any | null)[]): boolean;
+declare function lt(value1: any, value2: any): boolean;

@@ -1,7 +1,7 @@
 const curryArgReview = require("./curryArgReview");
 const {zero, one} = require("./defaultValue");
 const _has = require("./_has");
-
+const __ = require("./__");
 
 /**
  * Get type of the variable
@@ -10,13 +10,36 @@ const _has = require("./_has");
  * @category String
  * @param {any} fn Any data you want to check its property
  * @param {any[]} args Any data you want to check its property
+ * @param {number=} NoDefaultArgs Any data you want to check its property
  * @returns {string} Get the property of variable
  * @example
  *
  * curryArgNone(function(){}, [])
  * => array
  */
-function curryArg (fn, args) {
+function curryArg (fn, args, NoDefaultArgs) {
+
+
+    const RefNoDefaultArgs = NoDefaultArgs || zero;
+
+    if (RefNoDefaultArgs > args.length - argumentUndefinedCounter(args)) {
+
+        for (let kk=0; kk<RefNoDefaultArgs;) {
+
+            if (_has(args, kk)) {
+
+                if (typeof args[kk] === "undefined") {
+
+                    args[kk] = __;
+
+                }
+
+            }
+            kk += one;
+
+        }
+
+    }
 
     const checkValue = curryArgReview(args);
 
@@ -66,6 +89,43 @@ function curryArg (fn, args) {
     }
 
     return fn.apply(this, args);
+
+}
+
+/**
+ * Get type of the variable
+ *
+ * @since 1.4.8
+ * @category String
+ * @param {any[]} args Any data you want to check its property
+ * @param {number=} NoDefaultArgs Any data you want to check its property
+ * @returns {string} Get the property of variable
+ * @example
+ *
+ * curryArgNone(function(){}, [])
+ * => array
+ */
+function argumentUndefinedCounter (args) {
+
+    let counter = 0;
+
+    for (const arg in args) {
+
+        if (_has(args, arg)) {
+
+            const value = args[arg];
+
+            if (typeof value === "undefined") {
+
+                counter += one;
+
+            }
+
+        }
+
+    }
+
+    return counter;
 
 }
 

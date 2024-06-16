@@ -4,7 +4,6 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 const empty = require('./empty');
 const curryArg = require("../core/curryArg");
 
-
 /**
  * To map the value of json or array
  *
@@ -55,7 +54,6 @@ function map (objectValue, func) {
         objectValue,
         func
     ]);
-
 
 }
 module.exports=map;
