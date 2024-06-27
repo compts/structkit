@@ -27,4 +27,3 @@ function multiply (value1, value2) {
 
 }
 module.exports=multiply;
-

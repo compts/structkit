@@ -31,22 +31,32 @@ function map (objectValue, func) {
         const value_arry=empty(rawObjectValue);
         let cnt=emptyDefaultValue;
 
+        const that = this;
+
         each(rawObjectValue, function (key, value) {
 
             if (has(rawFunc)) {
 
+                const dataFunc = rawFunc.apply(
+                    that,
+                    [
+                        value,
+                        key,
+                        cnt
+                    ]
+                );
+
                 if (strTypeOf === "array") {
 
-                    value_arry.push(rawFunc(value, key, cnt));
-                    cnt += incrementDefaultValue;
+                    value_arry.push(dataFunc);
 
                 } else {
-
-                    const dataFunc = rawFunc(value, key, cnt);
 
                     value_arry[key] = dataFunc;
 
                 }
+
+                cnt += incrementDefaultValue;
 
             }
 

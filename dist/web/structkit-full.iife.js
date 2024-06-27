@@ -609,22 +609,32 @@ function map (objectValue, func) {
         var value_arry=empty(rawObjectValue);
         var cnt=emptyDefaultValue;
 
+        var that = this;
+
         each(rawObjectValue, function (key, value) {
 
             if (has(rawFunc)) {
 
+                var dataFunc = rawFunc.apply(
+                    that,
+                    [
+                        value,
+                        key,
+                        cnt
+                    ]
+                );
+
                 if (strTypeOf === "array") {
 
-                    value_arry.push(rawFunc(value, key, cnt));
-                    cnt += incrementDefaultValue;
+                    value_arry.push(dataFunc);
 
                 } else {
-
-                    var dataFunc = rawFunc(value, key, cnt);
 
                     value_arry[key] = dataFunc;
 
                 }
+
+                cnt += incrementDefaultValue;
 
             }
 
@@ -1377,6 +1387,38 @@ function isEmpty (value) {
 }
 
 /**
+ * Base reduce
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @param {any} func The data you want to map
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * baseReduce(2,[1,2],)
+ * // => 3.00
+ */
+function baseReduce (defaultValue, listData, func) {
+
+    var that = this;
+
+    each(listData, function (ak, av) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+/**
  * Array Sum
  *
  * @since 1.0.1
@@ -1391,20 +1433,11 @@ function isEmpty (value) {
  */
 function arraySum (arrayObject, delimeter) {
 
-    var sum=0;
-    var defaultLimitDecimal = 3;
+    var defaultLimitDecimal = 0;
     var arrayObjects=arrayObject||[];
     var delimeters=delimeter||defaultLimitDecimal;
 
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum += parseFloat(av);
-
-        }
-
-    });
+    var sum = baseReduce(zero, arrayObjects, add);
 
     return isEmpty(delimeters)
         ? parseInt(sum)
@@ -1727,9 +1760,7 @@ function calculate (formula, args) {
 
     return curryArg(function (rawFormula, rawArgs) {
 
-        var typeofs=getTypeof(rawArgs);
-
-        if (typeofs === "json") {
+        if (getTypeof(rawArgs) === "json") {
 
             var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
@@ -2276,8 +2307,6 @@ function gte (value1, value2) {
 
 _stk.gte=gte
 
-_stk.has=has
-
 
 /**
  * Check if data is undefined
@@ -2318,6 +2347,8 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined
+
+_stk.has=has
 
 
 /**
@@ -2695,6 +2726,107 @@ _stk.lastIndexOf=lastIndexOf
 
 
 /**
+ * Where Loop Execution
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} jsn The second number in an addition.
+ * @param {object} whr The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @param {boolean} isExist The second number in an addition.
+ * @param {string} types The second number in an addition.
+ * @returns {array|object} Returns the total.
+ * @example
+ *
+ * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function whereLoopExecution (jsn, whr, func, isExist, types) {
+
+    var zero =0;
+
+    var json_convertion = getTypeof(jsn) === "array"
+        ? jsn
+        : [jsn];
+    var jsn_s= count(jsn, true) === zero
+        ? json_convertion
+        : jsn;
+    var whr_s=whr||{};
+    var variable=empty(jsn);
+    var filterData = {};
+
+    each(jsn_s, function (jk, jv) {
+
+        if (getTypeof(jsn) === "array") {
+
+            filterData = jv;
+
+        }
+        if (getTypeof(jsn) === "json") {
+
+            filterData[jk]=jv;
+
+        }
+
+        if (types === "where") {
+
+            if (isExact(whr_s, filterData, isExist)) {
+
+                append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+        if (types === "like") {
+
+            if (isExactbyRegExp(whr_s, filterData)) {
+
+                append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+
+    });
+
+    return variable;
+
+}
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -2811,108 +2943,9 @@ function lte () {
 
 _stk.lte=lte
 
-
-/**
- * Where Loop Execution
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {object} whr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {boolean} isExist The second number in an addition.
- * @param {string} types The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function whereLoopExecution (jsn, whr, func, isExist, types) {
-
-    var zero =0;
-
-    var json_convertion = getTypeof(jsn) === "array"
-        ? jsn
-        : [jsn];
-    var jsn_s= count(jsn, true) === zero
-        ? json_convertion
-        : jsn;
-    var whr_s=whr||{};
-    var variable=empty(jsn);
-    var filterData = {};
-
-    each(jsn_s, function (jk, jv) {
-
-        if (getTypeof(jsn) === "array") {
-
-            filterData = jv;
-
-        }
-        if (getTypeof(jsn) === "json") {
-
-            filterData[jk]=jv;
-
-        }
-
-        if (types === "where") {
-
-            if (isExact(whr_s, filterData, isExist)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-        if (types === "like") {
-
-            if (isExactbyRegExp(whr_s, filterData)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return variable;
-
-}
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like
-
 _stk.map=map
+
+_stk.multiply=multiply
 
 
 /**
@@ -2997,8 +3030,6 @@ function numberFormat (objectValue, value1, value2) {
 }
 
 _stk.numberFormat=numberFormat
-
-_stk.multiply=multiply
 
 
 /**
@@ -3119,6 +3150,71 @@ function replaceValue (objectValue, objectValueReplace) {
 }
 
 /**
+ * On delay
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var zero = 0;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+
+    var timeout = setTimeout(function () {
+
+        func();
+
+    }, valueWaited);
+
+    var sequence = new ClassDelay(timeout, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} timeout timer for delay
+ * @param {object} extend option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassDelay (timeout, extend) {
+
+    this.timeout = timeout;
+
+    this.extend = extend;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+_stk.onDelay=onDelay
+
+
+/**
  * On sequence
  *
  * @since 1.4.1
@@ -3194,71 +3290,6 @@ ClassSequence.prototype.cancel = function () {
 };
 
 _stk.onSequence=onSequence
-
-
-/**
- * On delay
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function onDelay (func, wait, option) {
-
-    var zero = 0;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    var valueWaited = wait || zero;
-
-    var timeout = setTimeout(function () {
-
-        func();
-
-    }, valueWaited);
-
-    var sequence = new ClassDelay(timeout, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} timeout timer for delay
- * @param {object} extend option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
-
-    this.extend = extend;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-_stk.onDelay=onDelay
 
 var getWindow = function () {
 
@@ -3695,6 +3726,43 @@ function random (valueArray, minValue, maxValue) {
 _stk.random=random
 
 _stk.range=range
+
+
+/**
+ * Reduce function
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @param {any} func The data you want to map
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * baseReduce(2,[1,2],)
+ * // => 3.00
+ */
+function reduce (defaultValue, listData, func) {
+
+    var that = this;
+
+    return curryArg(function (rawDefaultValue, rawListData, rawFunc) {
+
+        return baseReduce.apply(that, [
+            rawDefaultValue,
+            rawListData,
+            rawFunc
+        ]);
+
+    }, [
+        defaultValue,
+        listData,
+        func
+    ], three);
+
+}
+
+_stk.reduce=reduce
 
 
 /**
@@ -4257,6 +4325,8 @@ function stringUpperCase (value) {
 
 _stk.stringUpperCase=stringUpperCase
 
+_stk.subtract=subtract
+
 
 /**
  * Template Value
@@ -4573,8 +4643,6 @@ _stk.unique=unique
 _stk.varExtend=varExtend
 
 _stk.where=where
-
-_stk.subtract=subtract
 
 
 /**

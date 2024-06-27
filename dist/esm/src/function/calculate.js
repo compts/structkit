@@ -35,9 +35,7 @@ function calculate (formula, args) {
 
     return curryArg(function (rawFormula, rawArgs) {
 
-        const typeofs=getTypeof(rawArgs);
-
-        if (typeofs === "json") {
+        if (getTypeof(rawArgs) === "json") {
 
             const argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 

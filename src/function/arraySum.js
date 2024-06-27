@@ -1,8 +1,9 @@
-const each = require('./each');
-
-const has = require('./has');
-
+const add = require('./add');
+const {zero} = require("../core/defaultValue");
 const isEmpty = require('./isEmpty');
+
+
+const baseReduce = require("../core/baseReduce");
 
 /**
  * Array Sum
@@ -10,7 +11,7 @@ const isEmpty = require('./isEmpty');
  * @since 1.0.1
  * @category Math
  * @param {number[]} arrayObject Array in number
- * @param {number=} delimeter decimal point and default value is 4
+ * @param {number=} delimeter decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example
  *
@@ -19,20 +20,11 @@ const isEmpty = require('./isEmpty');
  */
 function arraySum (arrayObject, delimeter) {
 
-    let sum=0;
-    const defaultLimitDecimal = 3;
+    const defaultLimitDecimal = 0;
     const arrayObjects=arrayObject||[];
     const delimeters=delimeter||defaultLimitDecimal;
 
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum += parseFloat(av);
-
-        }
-
-    });
+    const sum = baseReduce(zero, arrayObjects, add);
 
     return isEmpty(delimeters)
         ? parseInt(sum)

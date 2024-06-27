@@ -4,7 +4,7 @@ import assert from 'assert';
 
 
 const one =1,
-    three=3.000,
+    three=3,
     two =2;
 
 
@@ -15,7 +15,7 @@ describe('ESM: arraySum method', function () {
         assert.deepStrictEqual(arraySum([
             one,
             two
-        ]), three.toFixed(three));
+        ]), three);
 
     });
 

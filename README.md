@@ -1,4 +1,6 @@
 # Structkit
+Javascript framework in using functional programming.
+
 [![NPM version][npm-image]][npm-url] 
 
 [Site](https://structkit.codehyouka.xyz/) |

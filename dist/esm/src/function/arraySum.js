@@ -1,8 +1,10 @@
-import each from './each';
+import add from './add';
 
-import has from './has';
+import {zero} from '../core/defaultValue';
 
 import isEmpty from './isEmpty';
+
+import baseReduce from '../core/baseReduce';
 
 /**
  * Array Sum
@@ -19,20 +21,11 @@ import isEmpty from './isEmpty';
  */
 function arraySum (arrayObject, delimeter) {
 
-    let sum=0;
-    const defaultLimitDecimal = 3;
+    const defaultLimitDecimal = 0;
     const arrayObjects=arrayObject||[];
     const delimeters=delimeter||defaultLimitDecimal;
 
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum += parseFloat(av);
-
-        }
-
-    });
+    const sum = baseReduce(zero, arrayObjects, add);
 
     return isEmpty(delimeters)
         ? parseInt(sum)
