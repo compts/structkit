@@ -1,4 +1,4 @@
-const structkit = require("../../node.cjs");
+const structkit = require("../../dist/cjs/structkit-full.cjs");
 
 const localARGV =process.argv.splice(2).join(" ");
 
