@@ -4,3 +4,4 @@ src_old_copy export-ignore
 cloverrc.yaml export-ignore
 tsgenerate.sh  export-ignore
 grassfile.js  export-ignore
+src export-ignore

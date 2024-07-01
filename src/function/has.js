@@ -23,4 +23,3 @@ function has (...args) {
 
 }
 module.exports=has;
-

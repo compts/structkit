@@ -20,4 +20,3 @@ function like (objectValue, objectValueWhere, func) {
 
 }
 module.exports=like;
-

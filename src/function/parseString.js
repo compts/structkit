@@ -151,4 +151,3 @@ function parseString (value) {
 }
 
 module.exports=parseString;
-

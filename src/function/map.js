@@ -1,8 +1,5 @@
-const has = require('./has');
-const each = require('./each');
-const {getTypeofInternal} = require('../core/getTypeOf');
-const empty = require('./empty');
 const curryArg = require("../core/curryArg");
+const baseMap = require("../core/baseMap");
 
 /**
  * To map the value of json or array
@@ -21,45 +18,7 @@ function map (objectValue, func) {
 
     return curryArg(function (rawObjectValue, rawFunc) {
 
-        const strTypeOf =getTypeofInternal(rawObjectValue);
-        const emptyDefaultValue=0;
-        const incrementDefaultValue=1;
-        const value_arry=empty(rawObjectValue);
-        let cnt=emptyDefaultValue;
-
-        const that = this;
-
-        each(rawObjectValue, function (key, value) {
-
-            if (has(rawFunc)) {
-
-                const dataFunc = rawFunc.apply(
-                    that,
-                    [
-                        value,
-                        key,
-                        cnt
-                    ]
-                );
-
-                if (strTypeOf === "array") {
-
-                    value_arry.push(dataFunc);
-
-
-                } else {
-
-                    value_arry[key] = dataFunc;
-
-                }
-
-                cnt += incrementDefaultValue;
-
-            }
-
-        });
-
-        return value_arry;
+        return baseMap(rawObjectValue, rawFunc);
 
     }, [
         objectValue,

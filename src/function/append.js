@@ -1,4 +1,7 @@
-const getTypeof = require('./getTypeof');
+const curryArg = require("../core/curryArg");
+const baseAppend = require("../core/baseAppend");
+const {two} = require("../core/defaultValue");
+
 
 /**
  * Append data for json and array
@@ -16,20 +19,15 @@ const getTypeof = require('./getTypeof');
  */
 function append (objectValue, val, key) {
 
-    const typeofs=getTypeof(objectValue);
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
 
-    if (typeofs === "json") {
+        return baseAppend(rawObjectValue, rawVal, rawKey);
 
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
 
 }
 module.exports=append;

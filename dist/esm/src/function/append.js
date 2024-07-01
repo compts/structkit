@@ -1,4 +1,8 @@
-import getTypeof from './getTypeof';
+import curryArg from '../core/curryArg';
+
+import baseAppend from '../core/baseAppend';
+
+import {two} from '../core/defaultValue';
 
 /**
  * Append data for json and array
@@ -16,20 +20,15 @@ import getTypeof from './getTypeof';
  */
 function append (objectValue, val, key) {
 
-    const typeofs=getTypeof(objectValue);
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
 
-    if (typeofs === "json") {
+        return baseAppend(rawObjectValue, rawVal, rawKey);
 
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
 
 }
 export default append;

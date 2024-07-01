@@ -23,4 +23,3 @@ function lte (...args) {
 
 }
 module.exports=lte;
-

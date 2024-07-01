@@ -21,4 +21,3 @@ function indexOfExist (arrayObject, value) {
 
 }
 module.exports=indexOfExist;
-

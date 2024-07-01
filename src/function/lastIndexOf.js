@@ -26,4 +26,3 @@ function lastIndexOf (objectValue, value) {
 
 }
 module.exports=lastIndexOf;
-

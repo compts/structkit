@@ -26,4 +26,3 @@ function indexOf (objectValue, value) {
 
 }
 module.exports=indexOf;
-
