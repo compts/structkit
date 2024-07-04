@@ -51,7 +51,7 @@ keep in mind `_stk` is used as global library at html
 
 CJS, ESM and TS use this code below
 ```bash
-repeat(__,20)
+repeat("1",20)
 //11111111111111111111
 ```
 
