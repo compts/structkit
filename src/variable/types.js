@@ -19,6 +19,8 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Promise]": "promise",
     "[object RegExp]": "regexp",
     "[object String]": "string",
+    "[object Uint16Array]": "uint16Array",
+    "[object Uint8Array]": "uint8Array",
     "[object Undefined]": "undefined"};
 
 exports.objectCallType =objectCallType;

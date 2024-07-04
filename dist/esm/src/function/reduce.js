@@ -15,8 +15,8 @@ import {three} from '../core/defaultValue';
  * @returns {number} Returns the total.
  * @example
  *
- * baseReduce(2,[1,2],)
- * // => 3.00
+ * reduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
  */
 function reduce (defaultValue, listData, func) {
 

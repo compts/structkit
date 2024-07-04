@@ -11,8 +11,8 @@ import each from '../function/each';
  * @returns {number} Returns the total.
  * @example
  *
- * baseReduce(2,[1,2],)
- * // => 3.00
+ * baseReduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
  */
 function baseReduce (defaultValue, listData, func) {
 

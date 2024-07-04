@@ -38,6 +38,16 @@ function empty (value) {
         return zero;
 
     }
+    if (getTypeofInternal(value) === "uint16Array") {
+
+        return Uint16Array.from("");
+
+    }
+    if (getTypeofInternal(value) === "uint8Array") {
+
+        return Uint8Array.from("");
+
+    }
 
     return value;
 

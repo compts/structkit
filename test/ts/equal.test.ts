@@ -3,7 +3,7 @@ import assert from 'assert';
 import {expectType} from 'tsd';
 
 
-describe('ESM: equal method', function () {
+describe('TS: equal method', function () {
 
     it('check if equal value is true', function () {
 

@@ -10,7 +10,7 @@ export default baseReduce;
  * @returns {number} Returns the total.
  * @example
  *
- * baseReduce(2,[1,2],)
- * // => 3.00
+ * baseReduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
  */
 declare function baseReduce(defaultValue: any, listData: any[], func: any): number;

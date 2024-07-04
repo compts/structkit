@@ -16,6 +16,8 @@ export const objectCallTypeAll: {
     "[object Promise]": string;
     "[object RegExp]": string;
     "[object String]": string;
+    "[object Uint16Array]": string;
+    "[object Uint8Array]": string;
     "[object Undefined]": string;
 };
 export const listObjArrayType: string[];
