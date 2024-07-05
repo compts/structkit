@@ -241,6 +241,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Additional
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number} value2 Second number
+ * @returns {number} Returns true or false.
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add
+
+
+/**
  * Check if object has value or null
  *
  * @since 1.0.1
@@ -441,99 +470,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json and array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append
-
-
-/**
- * Additional
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number} value2 Second number
- * @returns {number} Returns true or false.
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add
-
 
 /**
  * Each or for loop function you are familiar with
@@ -778,6 +714,164 @@ _stk.allValid=allValid
 
 
 /**
+ * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} value Either Json or Array
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * empty([])
+ * => []
+ */
+function empty (value) {
+
+    var zero = 0;
+
+    if (getTypeofInternal(value) === "json") {
+
+        return {};
+
+    }
+
+    if (getTypeofInternal(value) === "array" || getTypeofInternal(value) === "arguments") {
+
+        return [];
+
+    }
+
+    if (getTypeofInternal(value) === "string") {
+
+        return '';
+
+    }
+    if (getTypeofInternal(value) === "number") {
+
+        return zero;
+
+    }
+    if (getTypeofInternal(value) === "uint16Array") {
+
+        return Uint16Array.from("");
+
+    }
+    if (getTypeofInternal(value) === "uint8Array") {
+
+        return Uint8Array.from("");
+
+    }
+
+    return value;
+
+}
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * To map the value of json or array
+ *
+ * @since 1.4.8
+ * @category Collection
+ * @param {any} objectValue The data you want to map
+ * @param {any=} func Callback function
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * baseMap([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
+ */
+function baseMap (objectValue, func) {
+
+    var emptyDefaultValue=0;
+    var incrementDefaultValue=1;
+    var value_arry=empty(objectValue);
+    var cnt=emptyDefaultValue;
+
+    var that = this;
+
+    each(objectValue, function (key, value) {
+
+        if (has(func)) {
+
+            var dataFunc = func.apply(
+                that,
+                [
+                    value,
+                    key,
+                    cnt
+                ]
+            );
+
+            value_arry = baseAppend(value_arry, dataFunc, key);
+            cnt += incrementDefaultValue;
+
+        }
+
+    });
+
+    return value_arry;
+
+}
+
+/**
+ * To map the value of json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue The data you want to map
+ * @param {any=} func Callback function
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * map([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
+ */
+function map (objectValue, func) {
+
+    return curryArg(function (rawObjectValue, rawFunc) {
+
+        return baseMap(rawObjectValue, rawFunc);
+
+    }, [
+        objectValue,
+        func
+    ]);
+
+}
+
+/**
  * Index Of array
  *
  * @since 1.0.1
@@ -904,152 +998,6 @@ function indexOf (objectValue, value) {
     var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
 
     return indexValue;
-
-}
-
-/**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Boolean
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return array.
- * @example
- *
- * indexOfNotExist([312], 32)
- * // => true
- */
-function indexOfNotExist (arrayObject, value) {
-
-    var zero = -1;
-
-    return indexOf(arrayObject, value) === zero;
-
-}
-
-/**
- * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
- *
- * @since 1.0.1
- * @category Any
- * @param {any} value Either Json or Array
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * empty([])
- * => []
- */
-function empty (value) {
-
-    var zero = 0;
-
-    if (getTypeofInternal(value) === "json") {
-
-        return {};
-
-    }
-
-    if (getTypeofInternal(value) === "array" || getTypeofInternal(value) === "arguments") {
-
-        return [];
-
-    }
-
-    if (getTypeofInternal(value) === "string") {
-
-        return '';
-
-    }
-    if (getTypeofInternal(value) === "number") {
-
-        return zero;
-
-    }
-    if (getTypeofInternal(value) === "uint16Array") {
-
-        return Uint16Array.from("");
-
-    }
-    if (getTypeofInternal(value) === "uint8Array") {
-
-        return Uint8Array.from("");
-
-    }
-
-    return value;
-
-}
-
-/**
- * To map the value of json or array
- *
- * @since 1.4.8
- * @category Collection
- * @param {any} objectValue The data you want to map
- * @param {any=} func Callback function
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * baseMap([1,2],function(value) { return value+2 } )
- *=> [3, 4]
- */
-function baseMap (objectValue, func) {
-
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
-    var value_arry=empty(objectValue);
-    var cnt=emptyDefaultValue;
-
-    var that = this;
-
-    each(objectValue, function (key, value) {
-
-        if (has(func)) {
-
-            var dataFunc = func.apply(
-                that,
-                [
-                    value,
-                    key,
-                    cnt
-                ]
-            );
-
-            value_arry = baseAppend(value_arry, dataFunc, key);
-            cnt += incrementDefaultValue;
-
-        }
-
-    });
-
-    return value_arry;
-
-}
-
-/**
- * To map the value of json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue The data you want to map
- * @param {any=} func Callback function
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * map([1,2],function(value) { return value+2 } )
- *=> [3, 4]
- */
-function map (objectValue, func) {
-
-    return curryArg(function (rawObjectValue, rawFunc) {
-
-        return baseMap(rawObjectValue, rawFunc);
-
-    }, [
-        objectValue,
-        func
-    ]);
 
 }
 
@@ -1189,47 +1137,6 @@ function getTypeof () {
         :getTypes;
 
 }
-
-/**
- * Append If Array not Exist
- *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    var ary_type=getTypeof(arrayObject);
-    var ary_type1=getTypeof(value);
-
-    if (ary_type === "array" && ary_type1 === "array") {
-
-        each(value, function (key, val) {
-
-            if (indexOfNotExist(arrayObject, val)) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-
-_stk.appendIsArrayExist=appendIsArrayExist
-
 
 /**
  * To Array
@@ -1475,7 +1382,100 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat
 
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append
+
 _stk.arraySlice=arraySlice
+
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Boolean
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return array.
+ * @example
+ *
+ * indexOfNotExist([312], 32)
+ * // => true
+ */
+function indexOfNotExist (arrayObject, value) {
+
+    var zero = -1;
+
+    return indexOf(arrayObject, value) === zero;
+
+}
+
+/**
+ * Append If Array not Exist
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} arrayObject Data is Array
+ * @param {any} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+function appendIsArrayExist (arrayObject, value) {
+
+    var ary_type=getTypeof(arrayObject);
+    var ary_type1=getTypeof(value);
+
+    if (ary_type === "array" && ary_type1 === "array") {
+
+        each(value, function (key, val) {
+
+            if (indexOfNotExist(arrayObject, val)) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
+
+}
+
+_stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
@@ -2162,9 +2162,38 @@ _stk.dec=dec
 
 _stk.divide=divide
 
+_stk.empty=empty
+
 _stk.each=each
 
-_stk.empty=empty
+
+/**
+ * To check if its equal
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Either JSON or Array
+ * @param {any} value2 Either JSON or Array
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * equal('as', 'as')
+ * // => true
+ */
+function equal (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa === bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.equal=equal
 
 
 /**
@@ -2214,40 +2243,11 @@ function filter (objectValue, func) {
 
 _stk.filter=filter
 
-
-/**
- * To check if its equal
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Either JSON or Array
- * @param {any} value2 Either JSON or Array
- * @returns {boolean} Returns true or false.
- * @example
- *
- * equal('as', 'as')
- * // => true
- */
-function equal (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa === bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.equal=equal
-
 _stk.first=first
 
-_stk.getData=getData
-
 _stk.getKey=getKey
+
+_stk.getData=getData
 
 _stk.getTypeof=getTypeof
 /**
@@ -2452,8 +2452,6 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined
 
-_stk.indexOfExist=indexOfExist
-
 _stk.indexOf=indexOf
 
 
@@ -2491,9 +2489,9 @@ function inc (value, default_value) {
 
 _stk.inc=inc
 
-_stk.indexOfNotExist=indexOfNotExist
+_stk.indexOfExist=indexOfExist
 
-_stk.isEmpty=isEmpty
+_stk.indexOfNotExist=indexOfNotExist
 
 
 /**
@@ -2536,6 +2534,8 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert
+
+_stk.isEmpty=isEmpty
 
 
 /**
@@ -2737,6 +2737,27 @@ _stk.isJson=isJson
 
 
 /**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last
+
+
+/**
  * Convert Json To Array base on search value you provide
  *
  * @since 1.0.1
@@ -2778,27 +2799,6 @@ function jsonToArray (objectValue, value) {
 }
 
 _stk.jsonToArray=jsonToArray
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last
 
 
 /**
@@ -3047,8 +3047,6 @@ _stk.lte=lte
 
 _stk.map=map
 
-_stk.multiply=multiply
-
 
 /**
  * To check if its not equal
@@ -3077,90 +3075,6 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
-    var nm_str=value||"";
-
-    return arrayRepeat(nm_str, nm_rpt).join("");
-
-}
-
-/**
- * Number format
- *
- * @since 1.0.1
- * @category Math
- * @param {array|object} objectValue The data you want to format
- * @param {string} value1 The start number.
- * @param {string=} value2 The end number.
- * @returns {null} Return format number
- * @example
- *
- * numberFormat(1,1,2)
- *=>1.00
- */
-function numberFormat (objectValue, value1, value2) {
-
-    var incrementDefaultValue=1;
-    var emptyDefaultValue=0;
-    var threeDefaultValue=3;
-    var valueZero=value2||emptyDefaultValue;
-    var objectValueEvaluate=objectValue.toString();
-    var splt_dec=objectValueEvaluate.split(".");
-    var reg_exp=new RegExp("(\\d)(?=(\\d{"+(value1||threeDefaultValue)+"})+(?:\\.\\d+)?$)", "g");
-    var num_deli=splt_dec[emptyDefaultValue].replace(reg_exp, "$1, ");
-    var ssd_va=num_deli+count(splt_dec)>incrementDefaultValue
-        ?"."+splt_dec[incrementDefaultValue]
-        :"";
-
-    if (valueZero>emptyDefaultValue) {
-
-        var str_dec=ssd_va.split(".");
-
-        if (count(str_dec) === incrementDefaultValue) {
-
-            ssd_va=ssd_va+"."+repeat("0", valueZero);
-
-        } else {
-
-            var dec_num=str_dec[incrementDefaultValue];
-
-            if (dec_num.length >= valueZero) {
-
-                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num.substr(emptyDefaultValue, valueZero);
-
-            } else {
-
-                ssd_va=str_dec[emptyDefaultValue]+"."+dec_num+repeat("0", dec_num.length-valueZero);
-
-            }
-
-        }
-
-    }
-
-    return ssd_va;
-
-}
-
-_stk.numberFormat=numberFormat
 
 
 /**
@@ -3281,71 +3195,6 @@ function replaceValue (objectValue, objectValueReplace) {
 }
 
 /**
- * On delay
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function onDelay (func, wait, option) {
-
-    var zero = 0;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    var valueWaited = wait || zero;
-
-    var timeout = setTimeout(function () {
-
-        func();
-
-    }, valueWaited);
-
-    var sequence = new ClassDelay(timeout, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} timeout timer for delay
- * @param {object} extend option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
-
-    this.extend = extend;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-_stk.onDelay=onDelay
-
-
-/**
  * On sequence
  *
  * @since 1.4.1
@@ -3421,6 +3270,71 @@ ClassSequence.prototype.cancel = function () {
 };
 
 _stk.onSequence=onSequence
+
+_stk.multiply=multiply
+
+
+/**
+ * On delay
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var zero = 0;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+
+    var timeout = setTimeout(function () {
+
+        func();
+
+    }, valueWaited);
+
+    var sequence = new ClassDelay(timeout, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} timeout timer for delay
+ * @param {object} extend option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassDelay (timeout, extend) {
+
+    this.timeout = timeout;
+
+    this.extend = extend;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
 
 var getWindow = function () {
 
@@ -3516,6 +3430,8 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait
+
+_stk.onDelay=onDelay
 
 
 /**
@@ -4020,7 +3936,84 @@ function remove (objectValue, value, value2) {
 
 _stk.remove=remove
 
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+    var nm_str=value||"";
+
+    return arrayRepeat(nm_str, nm_rpt).join("");
+
+}
+
 _stk.repeat=repeat
+
+
+/**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} objectValue Array argmuments
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+function shuffle (objectValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var output=objectValue;
+    var valueType=[
+        "array",
+        "json"
+    ];
+
+    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+
+        var counts=count(objectValue)-onceDefaultValue;
+        var randomIndex=emptyDefaultValue;
+        var temporaryValue=null;
+
+        for (var currentIndex=counts; currentIndex>emptyDefaultValue;) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+
+            if (getTypeof(objectValue) === "array") {
+
+                temporaryValue = output[currentIndex];
+                output[currentIndex]=output[randomIndex];
+                output[randomIndex] = temporaryValue;
+
+            }
+
+            currentIndex -= onceDefaultValue;
+
+        }
+
+    }
+
+    return output;
+
+}
+
+_stk.shuffle=shuffle
 
 
 /**
@@ -4089,59 +4082,6 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal
-
-
-/**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} objectValue Array argmuments
- * @returns {any[]} Returns the total.
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-function shuffle (objectValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var output=objectValue;
-    var valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
-
-        var counts=count(objectValue)-onceDefaultValue;
-        var randomIndex=emptyDefaultValue;
-        var temporaryValue=null;
-
-        for (var currentIndex=counts; currentIndex>emptyDefaultValue;) {
-
-            randomIndex = Math.floor(Math.random() * currentIndex);
-
-            if (getTypeof(objectValue) === "array") {
-
-                temporaryValue = output[currentIndex];
-                output[currentIndex]=output[randomIndex];
-                output[randomIndex] = temporaryValue;
-
-            }
-
-            currentIndex -= onceDefaultValue;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle
 
 
 /**
@@ -4284,6 +4224,44 @@ _stk.stringCamelCase=stringCamelCase
 
 
 /**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize
+
+
+/**
  * String Escape
  *
  * @since 1.3.1
@@ -4323,44 +4301,6 @@ function stringEscape (value, type) {
 }
 
 _stk.stringEscape=stringEscape
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function stringCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize
 
 
 /**
@@ -4756,6 +4696,27 @@ function toInteger (value) {
 _stk.toInteger=toInteger
 
 _stk.toString=toString
+
+
+/**
+ * String trim
+ *
+ * @since 1.4.8
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * trim(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss'
+ */
+function trim (value) {
+
+    return toString(value).trim();
+
+}
+
+_stk.trim=trim
 
 
 /**
