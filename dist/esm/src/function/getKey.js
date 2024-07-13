@@ -1,4 +1,4 @@
-import getKeyVal from '../core/getKeyVal';
+import getKeyVal from '../core/getKeyVal.js';
 
 /**
  * Get key Object or JSON

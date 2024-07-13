@@ -1,4 +1,4 @@
-import each from '../function/each';
+import each from '../function/each.js';
 
 /**
  * Base reduce

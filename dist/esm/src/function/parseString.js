@@ -1,10 +1,10 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import count from './count';
+import count from './count.js';
 
 /**
  * Data String from JSON object

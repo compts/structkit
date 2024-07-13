@@ -1,4 +1,4 @@
-import dataNumberFormat from '../core/dataTypeFormat';
+import dataNumberFormat from '../core/dataTypeFormat.js';
 
 /**
  * To extract number in string and convert to double

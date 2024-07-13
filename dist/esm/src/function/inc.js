@@ -1,6 +1,6 @@
-import {zero, one} from '../core/defaultValue';
+import {zero, one} from '../core/defaultValue.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
 /**
  * To Increment value

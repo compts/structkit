@@ -1,6 +1,6 @@
-import _has from '../core/_has';
+import _has from '../core/_has.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
 /**
  * Check if object has value or null

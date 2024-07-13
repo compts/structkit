@@ -1,4 +1,4 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+import whereLoopExecution from '../core/whereLoopExecution.js';
 
 /**
  * Get the value in array the value in json given the search value was in json

@@ -1,8 +1,8 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * Insert value in Json object or array

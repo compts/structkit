@@ -1,8 +1,8 @@
-import indexOfExist from '../function/indexOfExist';
+import indexOfExist from '../function/indexOfExist.js';
 
-import each from '../function/each';
+import each from '../function/each.js';
 
-import count from '../function/count';
+import count from '../function/count.js';
 
 /**
  * Get key value

@@ -1,10 +1,10 @@
-import has from './_has';
+import has from './_has.js';
 
-import each from '../function/each';
+import each from '../function/each.js';
 
-import empty from '../function/empty';
+import empty from '../function/empty.js';
 
-import baseAppend from './baseAppend';
+import baseAppend from './baseAppend.js';
 
 /**
  * To map the value of json or array

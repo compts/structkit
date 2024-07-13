@@ -1,4 +1,4 @@
-import {getTypeofInternal} from '../core/getTypeOf';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
 /**
  * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)

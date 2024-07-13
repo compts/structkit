@@ -1,6 +1,6 @@
-import baseReduce from './baseReduce';
+import baseReduce from './baseReduce.js';
 
-import {zero, one} from './defaultValue';
+import {zero, one} from './defaultValue.js';
 
 /**
  * Append data for json and array

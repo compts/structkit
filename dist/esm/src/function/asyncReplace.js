@@ -1,6 +1,6 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
 /**
  * Async replace

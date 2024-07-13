@@ -1,4 +1,4 @@
-import count from './count';
+import count from './count.js';
 
 /**
  * Random Decimal

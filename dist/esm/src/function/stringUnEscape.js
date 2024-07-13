@@ -1,14 +1,14 @@
-import where from './where';
+import where from './where.js';
 
-import indexOfNotExist from './indexOfNotExist';
+import indexOfNotExist from './indexOfNotExist.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
 
-import first from './first';
+import first from './first.js';
 
-import {entity, listType} from '../variable/htmlentity';
+import {entity, listType} from '../variable/htmlentity.js';
 
-import toString from './toString';
+import toString from './toString.js';
 
 /**
  * String Unescape

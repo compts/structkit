@@ -1,10 +1,10 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
 
 /**
  * Sort array

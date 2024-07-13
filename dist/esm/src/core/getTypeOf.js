@@ -1,9 +1,9 @@
 
-import isJson from '../function/isJson';
+import isJson from '../function/isJson.js';
 
-import has from './_has';
+import has from './_has.js';
 
-import {objectCallTypeAll} from '../variable/types';
+import {objectCallTypeAll} from '../variable/types.js';
 
 /**
  * Get type of the variable

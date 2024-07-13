@@ -1,10 +1,10 @@
-import has from './has';
+import has from './has.js';
 
-import toString from './toString';
+import toString from './toString.js';
 
-import each from './each';
+import each from './each.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
 /**
  * Get Data in array or json using string to search the data

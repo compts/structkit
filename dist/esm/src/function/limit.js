@@ -1,8 +1,8 @@
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import count from './count';
+import count from './count.js';
 
 /**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format

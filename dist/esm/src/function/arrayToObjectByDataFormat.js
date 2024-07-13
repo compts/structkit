@@ -1,6 +1,6 @@
-import map from './map';
+import map from './map.js';
 
-import getData from './getData';
+import getData from './getData.js';
 
 /**
  * Array To Object By DataFormat

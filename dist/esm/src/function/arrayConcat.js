@@ -1,12 +1,12 @@
-import each from './each';
+import each from './each.js';
 
-import toArray from './toArray';
+import toArray from './toArray.js';
 
-import arraySlice from './arraySlice';
+import arraySlice from './arraySlice.js';
 
-import first from './first';
+import first from './first.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
 /**
  * Array Concat

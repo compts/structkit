@@ -1,8 +1,8 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * Looking the data in JSON and Array base on object value with the help regexp

@@ -1,18 +1,18 @@
-import count from '../function/count';
+import count from '../function/count.js';
 
-import getTypeof from '../function/getTypeof';
+import getTypeof from '../function/getTypeof.js';
 
-import each from '../function/each';
+import each from '../function/each.js';
 
-import empty from '../function/empty';
+import empty from '../function/empty.js';
 
-import isExact from '../function/isExact';
+import isExact from '../function/isExact.js';
 
-import isExactbyRegExp from '../function/isExactbyRegExp';
+import isExactbyRegExp from '../function/isExactbyRegExp.js';
 
-import has from '../function/has';
+import has from '../function/has.js';
 
-import append from '../function/append';
+import append from '../function/append.js';
 
 /**
  * Where Loop Execution

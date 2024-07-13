@@ -1,6 +1,6 @@
-import {getTypeofInternal} from '../core/getTypeOf';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import has from './has';
+import has from './has.js';
 
 /**
  * Each or for loop function you are familiar with

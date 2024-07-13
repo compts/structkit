@@ -1,4 +1,4 @@
-import stringLowerCase from './toString';
+import stringLowerCase from './toString.js';
 
 /**
  * String Capitalize

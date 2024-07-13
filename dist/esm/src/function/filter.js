@@ -1,12 +1,12 @@
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import empty from './empty';
+import empty from './empty.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import append from './append';
+import append from './append.js';
 
 /**
  * Filter the data in loop

@@ -1,6 +1,6 @@
-import has from './_has';
+import has from './_has.js';
 
-import getTypeof from '../function/getTypeof';
+import getTypeof from '../function/getTypeof.js';
 
 /**
  * Logic in convert string or number to valid number

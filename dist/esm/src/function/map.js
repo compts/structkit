@@ -1,6 +1,6 @@
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
-import baseMap from '../core/baseMap';
+import baseMap from '../core/baseMap.js';
 
 /**
  * To map the value of json or array

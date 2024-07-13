@@ -1,6 +1,6 @@
-import stringUnEscape from './stringUnEscape';
+import stringUnEscape from './stringUnEscape.js';
 
-import isJson from './isJson';
+import isJson from './isJson.js';
 
 /**
  * Parse Json object

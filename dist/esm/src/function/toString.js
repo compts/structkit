@@ -1,8 +1,8 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import indexOfNotExist from './indexOfNotExist';
+import indexOfNotExist from './indexOfNotExist.js';
 
-import has from './has';
+import has from './has.js';
 
 /**
  * To String

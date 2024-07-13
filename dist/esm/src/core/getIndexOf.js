@@ -1,10 +1,10 @@
-import count from '../function/count';
+import count from '../function/count.js';
 
-import each from '../function/each';
+import each from '../function/each.js';
 
-import has from '../function/has';
+import has from '../function/has.js';
 
-import {getTypeofInternal} from './getTypeOf';
+import {getTypeofInternal} from './getTypeOf.js';
 
 /**
  * Index Of array

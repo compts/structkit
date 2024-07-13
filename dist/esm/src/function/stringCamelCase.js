@@ -1,6 +1,6 @@
-import stringSplit from '../core/stringSplit';
+import stringSplit from '../core/stringSplit.js';
 
-import toString from './toString';
+import toString from './toString.js';
 
 /**
  * String Camel case

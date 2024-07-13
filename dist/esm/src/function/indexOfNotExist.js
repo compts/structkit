@@ -1,4 +1,4 @@
-import indexOf from './indexOf';
+import indexOf from './indexOf.js';
 
 /**
  * Check index of array Not or exist

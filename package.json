@@ -3,11 +3,13 @@
   "version": "1.4.8",
   "description": "JS utility tool",
   "main": "./dist/cjs/structkit-full.cjs.js",
-  "module": "./dist/esm/node.es.js",
+  "module": "./dist/esm/node.esm.js",
   "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
+      "require": "./dist/cjs/structkit-full.cjs.js",
+      "import": "./dist/esm/node.esm.js",
       "default": "./dist/cjs/structkit-full.cjs.js"
     },
     "./package.json": "./package.json"

@@ -1,8 +1,8 @@
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
-import baseAppend from '../core/baseAppend';
+import baseAppend from '../core/baseAppend.js';
 
-import {two} from '../core/defaultValue';
+import {two} from '../core/defaultValue.js';
 
 /**
  * Append data for json and array

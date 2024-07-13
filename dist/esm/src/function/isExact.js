@@ -1,16 +1,16 @@
-import {getTypeofInternal} from '../core/getTypeOf';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import indexOf from './indexOf';
+import indexOf from './indexOf.js';
 
-import count from './count';
+import count from './count.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
 
-import getData from './getData';
+import getData from './getData.js';
 
 /**
  * Looking the data in JSON and Array base on object value

@@ -1,12 +1,12 @@
-import has from './has';
+import has from './has.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import indexOfExist from './indexOfExist';
+import indexOfExist from './indexOfExist.js';
 
-import getKey from './getKey';
+import getKey from './getKey.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
 /**
  * Var extend is use for cloning Json, Array or Object

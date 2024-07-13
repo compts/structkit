@@ -1,8 +1,8 @@
-import has from './has';
+import has from './has.js';
 
-import {getTypeofInternal} from '../core/getTypeOf';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * Array Count

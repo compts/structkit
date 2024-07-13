@@ -1,12 +1,12 @@
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import clone from './clone';
+import clone from './clone.js';
 
-import empty from './empty';
+import empty from './empty.js';
 
-import append from './append';
+import append from './append.js';
 
 /**
  * To group the value of json or array

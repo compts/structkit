@@ -1,8 +1,8 @@
-import empty from './empty';
+import empty from './empty.js';
 
-import each from './each';
+import each from './each.js';
 
-import append from './append';
+import append from './append.js';
 
 /**
  * Cloning the data either in JSON or array that be used as different property

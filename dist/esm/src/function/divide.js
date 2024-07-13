@@ -1,6 +1,6 @@
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
-import {two} from '../core/defaultValue';
+import {two} from '../core/defaultValue.js';
 
 /**
  * Divide

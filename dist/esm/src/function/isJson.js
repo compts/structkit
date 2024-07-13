@@ -1,6 +1,6 @@
-import has from './has';
+import has from './has.js';
 
-import {objectCallType} from '../variable/types';
+import {objectCallType} from '../variable/types.js';
 
 /**
  * Is Json valid

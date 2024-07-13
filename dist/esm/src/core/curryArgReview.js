@@ -1,8 +1,8 @@
-import __ from './__';
+import __ from './__.js';
 
-import _has from './_has';
+import _has from './_has.js';
 
-import {one} from './defaultValue';
+import {one} from './defaultValue.js';
 
 /**
  * Get type of the variable

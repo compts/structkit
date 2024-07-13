@@ -1,4 +1,4 @@
-import __ from '../core/__';
+import __ from '../core/__.js';
 
 /**
  * Placeholder of argument

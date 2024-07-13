@@ -1,11 +1,11 @@
 
-import map from './map';
+import map from './map.js';
 
-import first from './first';
+import first from './first.js';
 
-import count from './count';
+import count from './count.js';
 
-import {getTypeofInternal} from '../core/getTypeOf';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
 /**
  * Get type of the variable

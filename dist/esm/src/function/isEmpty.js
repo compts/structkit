@@ -1,10 +1,10 @@
-import {getTypeofInternal} from '../core/getTypeOf';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {zero} from '../core/defaultValue';
+import {zero} from '../core/defaultValue.js';
 
-import count from './count';
+import count from './count.js';
 
-import indexOfExist from './indexOfExist';
+import indexOfExist from './indexOfExist.js';
 
 /**
  * Check if data is empty, null and undefined are now considered as empty

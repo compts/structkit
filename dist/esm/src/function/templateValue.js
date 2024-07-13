@@ -1,16 +1,16 @@
-import varExtend from './varExtend';
+import varExtend from './varExtend.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import indexOf from './indexOf';
+import indexOf from './indexOf.js';
 
-import parseString from './parseString';
+import parseString from './parseString.js';
 
-import getData from './getData';
+import getData from './getData.js';
 
-import has from './has';
+import has from './has.js';
 
-import toString from './toString';
+import toString from './toString.js';
 
 /**
  * Template Value

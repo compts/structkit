@@ -1,22 +1,22 @@
-import count from './count';
+import count from './count.js';
 
-import getKey from './getKey';
+import getKey from './getKey.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import toArray from './toArray';
+import toArray from './toArray.js';
 
-import {zero, one, two, three, four, oneHundred} from '../core/defaultValue';
+import {zero, one, two, three, four, oneHundred} from '../core/defaultValue.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
-import add from './add';
+import add from './add.js';
 
-import divide from './divide';
+import divide from './divide.js';
 
-import multiply from './multiply';
+import multiply from './multiply.js';
 
-import subtract from './subtract';
+import subtract from './subtract.js';
 
 /**
  * Logic in convert string or number to compute

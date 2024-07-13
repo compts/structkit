@@ -1,6 +1,6 @@
-import map from './map';
+import map from './map.js';
 
-import range from './range';
+import range from './range.js';
 
 /**
  * Repeat  value in array

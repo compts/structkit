@@ -1,10 +1,10 @@
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import getData from './getData';
+import getData from './getData.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
 
 /**
  * Convert Json To Array base on search value you provide

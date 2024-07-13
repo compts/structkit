@@ -1,10 +1,10 @@
-import curryArgReview from './curryArgReview';
+import curryArgReview from './curryArgReview.js';
 
-import {zero, one} from './defaultValue';
+import {zero, one} from './defaultValue.js';
 
-import _has from './_has';
+import _has from './_has.js';
 
-import __ from './__';
+import __ from './__.js';
 
 /**
  * Get type of the variable

@@ -1,8 +1,8 @@
-import each from './each';
+import each from './each.js';
 
-import indexOfNotExist from './indexOfNotExist';
+import indexOfNotExist from './indexOfNotExist.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
 /**
  * Append If Array not Exist

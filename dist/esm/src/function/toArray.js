@@ -1,4 +1,4 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
 /**
  * To Array

@@ -1,7 +1,7 @@
 
-import count from './count';
+import count from './count.js';
 
-import {getIndexOf} from '../core/getIndexOf';
+import {getIndexOf} from '../core/getIndexOf.js';
 
 /**
  * Index of array

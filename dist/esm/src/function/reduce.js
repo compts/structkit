@@ -1,8 +1,8 @@
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
-import baseReduce from '../core/baseReduce';
+import baseReduce from '../core/baseReduce.js';
 
-import {three} from '../core/defaultValue';
+import {three} from '../core/defaultValue.js';
 
 /**
  * Reduce function

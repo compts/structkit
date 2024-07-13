@@ -1,8 +1,8 @@
-import has from './has';
+import has from './has.js';
 
-import count from './count';
+import count from './count.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * To get value of array given start and end(optional) of the array

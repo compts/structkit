@@ -1,10 +1,10 @@
-import add from './add';
+import add from './add.js';
 
-import {zero} from '../core/defaultValue';
+import {zero} from '../core/defaultValue.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
 
-import baseReduce from '../core/baseReduce';
+import baseReduce from '../core/baseReduce.js';
 
 /**
  * Array Sum

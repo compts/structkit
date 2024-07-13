@@ -1,8 +1,8 @@
-import baseCountValidList from '../core/baseCountValidList';
+import baseCountValidList from '../core/baseCountValidList.js';
 
-import curryArg from '../core/curryArg';
+import curryArg from '../core/curryArg.js';
 
-import {one, zero} from '../core/defaultValue';
+import {one, zero} from '../core/defaultValue.js';
 
 /**
  * In array, you need to check atleast one true
