@@ -1,6 +1,6 @@
-import has from './has';
+import has from './has.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -34,7 +34,7 @@ function range (maxValue, minValue, step) {
         :tenDefaultValue;
     const output=[];
 
-    for (let inc=minValueRef; inc<=maxValueRef;) {
+    for (let inc=minValueRef; inc <= maxValueRef;) {
 
         if (getTypeof(incrementValue) === "string") {
 

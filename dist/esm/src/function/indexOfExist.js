@@ -1,4 +1,4 @@
-import indexOf from './indexOf';
+import indexOf from './indexOf.js';
 
 /**
  * Check index of array is Exist or not
@@ -17,7 +17,7 @@ function indexOfExist (arrayObject, value) {
 
     const zero = 0;
 
-    return indexOf(arrayObject, value)>=zero;
+    return indexOf(arrayObject, value) >= zero;
 
 }
 export default indexOfExist;

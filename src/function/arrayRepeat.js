@@ -2,7 +2,7 @@ const map = require('./map');
 const range = require('./range');
 
 /**
- * Repeat  value in array
+ * Repeat value in array
  *
  * @since 1.4.7
  * @category Array
@@ -11,7 +11,7 @@ const range = require('./range');
  * @returns {any[]} Return in string or number.
  * @example
  *
- * arrayRepeat("s",1 )
+ * arrayRepeat("s",2 )
  *=>['s','s']
  */
 function arrayRepeat (value, valueRepetion) {

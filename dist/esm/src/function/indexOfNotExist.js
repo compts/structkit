@@ -1,4 +1,4 @@
-import indexOf from './indexOf';
+import indexOf from './indexOf.js';
 
 /**
  * Check index of array Not or exist
@@ -17,7 +17,7 @@ function indexOfNotExist (arrayObject, value) {
 
     const zero = -1;
 
-    return indexOf(arrayObject, value)===zero;
+    return indexOf(arrayObject, value) === zero;
 
 }
 export default indexOfNotExist;

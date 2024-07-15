@@ -1,8 +1,7 @@
 
 const count = require('./count');
 
-const getIndexOf = require('../core/getIndexOf');
-
+const {getIndexOf} = require('../core/getIndexOf');
 
 /**
  * Index of array
@@ -21,11 +20,9 @@ function indexOf (objectValue, value) {
 
     const start = 0;
 
-
     const indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
 
     return indexValue;
 
 }
 module.exports=indexOf;
-

@@ -1,8 +1,8 @@
-import getJSONVariable from './getJSONVariable';
+import empty from './empty.js';
 
-import each from './each';
+import each from './each.js';
 
-import append from './append';
+import append from './append.js';
 
 /**
  * Cloning the data either in JSON or array that be used as different property
@@ -18,7 +18,7 @@ import append from './append';
  */
 function clone (objectValue) {
 
-    const variable=getJSONVariable(objectValue);
+    const variable=empty(objectValue);
 
     each(objectValue, function (key, value) {
 

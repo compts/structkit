@@ -1,4 +1,4 @@
-import varExtend from './varExtend';
+import varExtend from './varExtend.js';
 
 /**
  * On delay

@@ -1,8 +1,8 @@
-import indexOfExist from '../function/indexOfExist';
+import indexOfExist from '../function/indexOfExist.js';
 
-import each from '../function/each';
+import each from '../function/each.js';
 
-import count from '../function/count';
+import count from '../function/count.js';
 
 /**
  * Get key value
@@ -41,23 +41,24 @@ function getKeyVal (jsn, typ) {
         "value"
     ], typ)) {
 
-        const ars=typ==="key"
+        const ars=typ === "key"
             ?ky
             :vl;
 
-        return count(ars)===one
+        return count(ars) === one
+
             ?ars[zero]
             :ars;
 
     }
-    if (typ ==="first_index") {
+    if (typ === "first_index") {
 
         return count(list_raw)>zero
             ?list_raw[zero]
             :{"value": ''};
 
     }
-    if (typ ==="last_index") {
+    if (typ === "last_index") {
 
         return count(list_raw)>zero
             ?list_raw[count(list_raw)-one]

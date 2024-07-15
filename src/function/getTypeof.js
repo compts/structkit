@@ -1,38 +1,36 @@
-const isJson = require("./isJson");
-const has = require("./has");
-const {objectCallTypeAll} = require("../variable/types");
+
+const map = require("./map");
+const first = require("./first");
+const count = require("./count");
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 /**
  * Get type of the variable
  *
  * @since 1.0.1
  * @category String
- * @param {any} objectValue Any data you want to check its property
- * @returns {string} Get the property of variable
+ * @param {...any} args Any data you want to check its property in multiple arguments
+ * @returns {string|string[]} Get the property of variable
  * @example
  *
  * getTypeof([])
  * => array
+ * getTypeof([],{})
+ * => [array,json]
  */
-function getTypeof (objectValue) {
+function getTypeof (...args) {
 
-    const objectType = Object.prototype.toString.call(objectValue);
+    const one = 1;
 
-    if (objectType==="[object Object]") {
+    const getTypes = map(args, function (value) {
 
-        return isJson(objectValue, "object")
-            ?"json"
-            :"object";
+        return getTypeofInternal(value);
 
-    }
+    });
 
-    if (has(objectCallTypeAll, objectType)) {
-
-        return objectCallTypeAll[objectType];
-
-    }
-
-    return typeof objectValue;
+    return count(getTypes) === one
+        ?first(getTypes)
+        :getTypes;
 
 }
 module.exports=getTypeof;

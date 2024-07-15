@@ -1,6 +1,5 @@
-const has = require('../function/has');
+const has = require('./_has');
 const getTypeof = require('../function/getTypeof');
-
 
 /**
  * Logic in convert string or number to valid number
@@ -8,8 +7,8 @@ const getTypeof = require('../function/getTypeof');
  * @since 1.0.1
  * @category Seq
  * @param {any} regexp The second number in an addition.
- * @param {string|mumber} defaultVariable The second number in an addition.
- * @param {string|mumber} nullReplacement The second number in an addition.
+ * @param {string|number} defaultVariable The second number in an addition.
+ * @param {string|number} nullReplacement The second number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
@@ -27,7 +26,7 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
     }
 
-    if (!has(nullReplacement) || nullReplacement.toString()==="NaN") {
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
 
         intr=defaultVariable;
 

@@ -1,8 +1,8 @@
-import has from './has';
+import has from './has.js';
 
-import count from './count';
+import count from './count.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * Random value from array list
@@ -32,7 +32,7 @@ function random (valueArray, minValue, maxValue) {
 
     each(valueArray, function (key, value) {
 
-        if (math_random===parseInt(key)) {
+        if (math_random === parseInt(key)) {
 
             ran_var.push(value);
 

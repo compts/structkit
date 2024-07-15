@@ -1,8 +1,10 @@
-import getTypeof from './getTypeof';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import count from './count';
+import {zero} from '../core/defaultValue.js';
 
-import indexOfExist from './indexOfExist';
+import count from './count.js';
+
+import indexOfExist from './indexOfExist.js';
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -18,23 +20,21 @@ import indexOfExist from './indexOfExist';
  */
 function isEmpty (value) {
 
-    const zero =0;
-
-    const typeofvalue = getTypeof(value);
+    const typeofvalue = getTypeofInternal(value);
 
     const invalidList = [
         'null',
         'undefined'
     ];
 
-    if (typeofvalue=== "json" || typeofvalue === "array") {
+    if (typeofvalue === "json" || typeofvalue === "array") {
 
-        return count(value, true)===zero;
+        return count(value, typeofvalue === "json") === zero;
 
     }
-    if (typeofvalue=== "number") {
+    if (typeofvalue === "number") {
 
-        return value===zero;
+        return value === zero;
 
     }
 

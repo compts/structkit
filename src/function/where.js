@@ -1,6 +1,5 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
 
-
 /**
  * Get the value in array the value in json given the search value was in json
  *
@@ -14,6 +13,8 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  *
  * where({"s1":1,"s2":1},{"s1":1})
  *=>{"s1":1,"s2":1}
+ * where([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
+ *=>[{"s1":{"s2":2}}]
  */
 function where (objectValue, objectValueWhere, func) {
 
@@ -21,4 +22,3 @@ function where (objectValue, objectValueWhere, func) {
 
 }
 module.exports=where;
-

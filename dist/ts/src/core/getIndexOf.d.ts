@@ -1,4 +1,3 @@
-export default getIndexOf;
 /**
  * Index Of array
  *
@@ -15,4 +14,4 @@ export default getIndexOf;
  * indexOf([1,2], 1)
  * // => 0
  */
-declare function getIndexOf(objectValue: any[] | object, value: number, start: number, end: number, isGetLast: boolean): number | object | string;
+export function getIndexOf(objectValue: any[] | object, value: number, start: number, end: number, isGetLast: boolean): number | object | string;

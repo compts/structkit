@@ -1,8 +1,8 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import count from './count';
+import count from './count.js';
 
-import indexOf from './indexOf';
+import indexOf from './indexOf.js';
 
 /**
  * Shuffle data in array
@@ -36,7 +36,7 @@ function shuffle (objectValue) {
 
             randomIndex = Math.floor(Math.random() * currentIndex);
 
-            if (getTypeof(objectValue)==="array") {
+            if (getTypeof(objectValue) === "array") {
 
                 temporaryValue = output[currentIndex];
                 output[currentIndex]=output[randomIndex];

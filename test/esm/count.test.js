@@ -1,6 +1,7 @@
 import {count} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
+const seven = 7;
 const zero =0;
 const one =1;
 
@@ -19,5 +20,11 @@ describe('ESM: count method', function () {
 
     });
 
+
+    it('check string length', function () {
+
+        assert.deepStrictEqual(count("asasasd"), seven);
+
+    });
 
 });

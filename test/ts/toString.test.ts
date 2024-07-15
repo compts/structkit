@@ -5,7 +5,7 @@ import {expectType} from 'tsd';
 const ten=10;
 const one=1;
 
-describe('ESM: toString method', function () {
+describe('TS: toString method', function () {
 
     it('check if value exist', function () {
 

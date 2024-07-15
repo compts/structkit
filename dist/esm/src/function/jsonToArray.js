@@ -1,10 +1,10 @@
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import getData from './getData';
+import getData from './getData.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
 
 /**
  * Convert Json To Array base on search value you provide
@@ -29,7 +29,7 @@ function jsonToArray (objectValue, value) {
 
             const valueData = getData(_value, value);
 
-            if (isEmpty(valueData) ===false) {
+            if (isEmpty(valueData) === false) {
 
                 arry.push(valueData);
 

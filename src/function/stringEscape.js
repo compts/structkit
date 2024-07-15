@@ -5,7 +5,6 @@ const first = require("./first");
 const {entity, listType} = require("../variable/htmlentity");
 const toString = require("./toString");
 
-
 /**
  * String Escape
  *

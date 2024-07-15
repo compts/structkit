@@ -1,8 +1,8 @@
-import has from './has';
+import has from './has.js';
 
-import count from './count';
+import count from './count.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * To get value of array given start and end(optional) of the array
@@ -20,7 +20,7 @@ import each from './each';
  * // => [2]
  *
  * arraySlice([1,2,3,4],2,4)
- * // => [2, 3, 4]
+ * // => [3, 4]
  */
 function arraySlice (objectValue, min, max) {
 

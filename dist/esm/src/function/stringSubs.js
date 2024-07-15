@@ -1,6 +1,6 @@
-import toString from './toString';
+import toString from './toString.js';
 
-import has from './has';
+import has from './has.js';
 
 /**
  * String Substr

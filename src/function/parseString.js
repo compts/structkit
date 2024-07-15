@@ -6,7 +6,6 @@ const each = require('./each');
 
 const count = require('./count');
 
-
 /**
  * Data String from JSON object
  *
@@ -23,7 +22,7 @@ function datastring (str) {
 
     let data_s="";
 
-    if (typeof str ==="string") {
+    if (typeof str === "string") {
 
         if (str.indexOf("'")) {
 
@@ -92,7 +91,7 @@ function parseString (value) {
 
     if (has(value)) {
 
-        if (getTypeof(value)==="json") {
+        if (getTypeof(value) === "json") {
 
             str_strt="{";
             str_end="}";
@@ -103,22 +102,22 @@ function parseString (value) {
                     ?","
                     :"";
 
-                if (typeof _value==="object"&&_value!==null) {
+                if (typeof _value === "object"&&_value !== null) {
 
-                    str+=datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
+                    str += datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
 
                 } else {
 
-                    str+=datastring(_key)+":"+datastring(_value)+""+inc_main;
+                    str += datastring(_key)+":"+datastring(_value)+""+inc_main;
 
                 }
 
-                inc+=incrementDefaultValue;
+                inc += incrementDefaultValue;
 
             });
 
         }
-        if (getTypeof(value)==="array") {
+        if (getTypeof(value) === "array") {
 
             str_strt="[";
             str_end="]";
@@ -129,17 +128,17 @@ function parseString (value) {
                     ?","
                     :"";
 
-                if (typeof _value==="object") {
+                if (typeof _value === "object") {
 
-                    str+=returnLoop(_value, parseString, inc_main);
+                    str += returnLoop(_value, parseString, inc_main);
 
                 } else {
 
-                    str+=datastring(_value)+""+inc_main;
+                    str += datastring(_value)+""+inc_main;
 
                 }
 
-                inc+=incrementDefaultValue;
+                inc += incrementDefaultValue;
 
             });
 
@@ -152,4 +151,3 @@ function parseString (value) {
 }
 
 module.exports=parseString;
-

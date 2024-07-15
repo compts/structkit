@@ -4,7 +4,6 @@ const has = require('./has');
 
 const each = require('./each');
 
-
 /**
  * Insert value in Json object or array
  *
@@ -24,7 +23,7 @@ function insert (objectValue, value) {
 
         const jsn_type=getTypeof(value);
 
-        if (jsn_type==="json") {
+        if (jsn_type === "json") {
 
             each(value, function (key, _value) {
 
@@ -34,7 +33,7 @@ function insert (objectValue, value) {
 
         }
 
-        if (jsn_type==="array") {
+        if (jsn_type === "array") {
 
             objectValue.push(value);
 
@@ -44,4 +43,3 @@ function insert (objectValue, value) {
 
 }
 module.exports=insert;
-

@@ -1,8 +1,7 @@
 
 const count = require('./count');
 
-const getIndexOf = require('../core/getIndexOf');
-
+const {getIndexOf} = require('../core/getIndexOf');
 
 /**
  * Get the last index Of array
@@ -21,11 +20,9 @@ function lastIndexOf (objectValue, value) {
 
     const start = 0;
 
-
     const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
 
     return indexValue;
 
 }
 module.exports=lastIndexOf;
-

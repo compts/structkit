@@ -1,4 +1,4 @@
-const {like} = require("../../src/node.cjs");
+const {like} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one=1;

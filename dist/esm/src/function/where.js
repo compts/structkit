@@ -1,4 +1,4 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+import whereLoopExecution from '../core/whereLoopExecution.js';
 
 /**
  * Get the value in array the value in json given the search value was in json
@@ -13,6 +13,8 @@ import whereLoopExecution from '../core/whereLoopExecution';
  *
  * where({"s1":1,"s2":1},{"s1":1})
  *=>{"s1":1,"s2":1}
+ * where([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
+ *=>[{"s1":{"s2":2}}]
  */
 function where (objectValue, objectValueWhere, func) {
 

@@ -1,4 +1,4 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+import whereLoopExecution from '../core/whereLoopExecution.js';
 
 /**
  * Searching the data either in array or json object to get similar value of data

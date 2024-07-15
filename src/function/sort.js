@@ -6,7 +6,6 @@ const each = require('./each');
 
 const isEmpty = require('./isEmpty');
 
-
 /**
  * Sort array
  *
@@ -27,25 +26,25 @@ function sort (objectValue, order, func) {
     let asc=true;
     let types='any';
 
-    if (has(order) && getTypeof(order) ==='boolean') {
+    if (has(order) && getTypeof(order) === 'boolean') {
 
         asc= order;
 
     }
 
-    if (has(func) && getTypeof(func) ==='string') {
+    if (has(func) && getTypeof(func) === 'string') {
 
         types= func;
 
     }
 
-    const js_m=getTypeof(jsonn)==="json"
+    const js_m=getTypeof(jsonn) === "json"
         ?each(jsonn)
         :jsonn;
 
     const finalResponse=js_m.sort(function (orderA, orderB) {
 
-        if (has(func) && getTypeof(func) ==='function') {
+        if (has(func) && getTypeof(func) === 'function') {
 
             return func(orderA, orderB);
 
@@ -58,20 +57,20 @@ function sort (objectValue, order, func) {
 
             if (isEmpty(types) === false) {
 
-                if (types ==='any') {
+                if (types === 'any') {
 
                     sortOrderA =orderA.charCodeAt();
                     sortOrderB= orderB.charCodeAt();
 
                 }
-                if (types ==='lowercase') {
+                if (types === 'lowercase') {
 
                     sortOrderA =orderA.toLowerCase().charCodeAt();
                     sortOrderB= orderB.toLowerCase().charCodeAt();
 
                 }
 
-                if (types ==='uppercase') {
+                if (types === 'uppercase') {
 
                     sortOrderA =orderA.toUpperCase().charCodeAt();
                     sortOrderB= orderB.toUpperCase().charCodeAt();
@@ -79,7 +78,6 @@ function sort (objectValue, order, func) {
                 }
 
             }
-
 
         }
 
@@ -90,7 +88,6 @@ function sort (objectValue, order, func) {
         }
 
         return sortOrderB - sortOrderA;
-
 
     });
 

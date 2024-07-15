@@ -1,4 +1,4 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
 /**
  * To Array
@@ -16,7 +16,7 @@ function toArray (value) {
 
     let return_val = value;
 
-    if (getTypeof(return_val)!=="array") {
+    if (getTypeof(return_val) !== "array") {
 
         return_val = [value];
 

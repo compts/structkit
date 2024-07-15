@@ -1,8 +1,8 @@
-const {arraySum} = require("../../src/node.cjs");
+const {arraySum} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one =1,
-    three=3.000,
+    three=3,
     two =2;
 
 
@@ -13,7 +13,7 @@ describe('CJS: arraySum method', function () {
         assert.deepStrictEqual(arraySum([
             one,
             two
-        ]), three.toFixed(three));
+        ]), three);
 
     });
 

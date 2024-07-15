@@ -1,8 +1,8 @@
-import each from './each';
+import each from './each.js';
 
-import indexOfNotExist from './indexOfNotExist';
+import indexOfNotExist from './indexOfNotExist.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
 /**
  * Append If Array not Exist
@@ -22,7 +22,7 @@ function appendIsArrayExist (arrayObject, value) {
     const ary_type=getTypeof(arrayObject);
     const ary_type1=getTypeof(value);
 
-    if (ary_type ==="array" && ary_type1 ==="array") {
+    if (ary_type === "array" && ary_type1 === "array") {
 
         each(value, function (key, val) {
 

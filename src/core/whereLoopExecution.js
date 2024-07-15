@@ -4,7 +4,7 @@ const getTypeof = require('../function/getTypeof');
 
 const each = require('../function/each');
 
-const getJSONVariable = require('../function/getJSONVariable');
+const empty = require('../function/empty');
 
 const isExact = require('../function/isExact');
 
@@ -13,7 +13,6 @@ const isExactbyRegExp = require('../function/isExactbyRegExp');
 const has = require('../function/has');
 
 const append = require('../function/append');
-
 
 /**
  * Where Loop Execution
@@ -38,23 +37,21 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     const json_convertion = getTypeof(jsn) === "array"
         ? jsn
         : [jsn];
-    const jsn_s= count(jsn, true) ===zero
+    const jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
     const whr_s=whr||{};
-    const variable=getJSONVariable(jsn);
+    const variable=empty(jsn);
     let filterData = {};
 
     each(jsn_s, function (jk, jv) {
 
-
-        if (getTypeof(jsn)==="array") {
+        if (getTypeof(jsn) === "array") {
 
             filterData = jv;
 
         }
-        if (getTypeof(jsn)==="json") {
-
+        if (getTypeof(jsn) === "json") {
 
             filterData[jk]=jv;
 
@@ -62,7 +59,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
         if (types === "where") {
 
-            if (isExact(filterData, whr_s, isExist)) {
+            if (isExact(whr_s, filterData, isExist)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {
@@ -76,7 +73,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         }
         if (types === "like") {
 
-            if (isExactbyRegExp(filterData, whr_s)) {
+            if (isExactbyRegExp(whr_s, filterData)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {

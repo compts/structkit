@@ -1,4 +1,4 @@
-import whereLoopExecution from '../core/whereLoopExecution';
+import whereLoopExecution from '../core/whereLoopExecution.js';
 
 /**
  *  Get the value in array the value in json that should not in search value of json
@@ -13,6 +13,8 @@ import whereLoopExecution from '../core/whereLoopExecution';
  *
  * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
  *=>[{"s1":2,"s2":2}]
+ * whereNot([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
+ *=>[{"s1":{"s2":3}}]
  */
 function whereNot (objectValue, objectValueWhere, func) {
 

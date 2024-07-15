@@ -1,4 +1,4 @@
-const {varExtend} = require("../../src/node.cjs");
+const {varExtend} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 

@@ -64,4 +64,15 @@ describe('TS: IndexOf', function () {
         ], seven));
   
     });
+
+    it('check if value exist in JSON object', function () {
+
+        assert.deepStrictEqual(indexOf([
+            {"s1": "sd"},
+            {"s1": "32"},
+            {"s1": "32"}
+        ], {"s1": "32"}), one);
+
+    });
+
 });

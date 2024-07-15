@@ -1,6 +1,5 @@
 const getTypeof = require('./getTypeof');
 
-
 /**
  * To Array
  *
@@ -17,7 +16,7 @@ function toArray (value) {
 
     let return_val = value;
 
-    if (getTypeof(return_val)!=="array") {
+    if (getTypeof(return_val) !== "array") {
 
         return_val = [value];
 

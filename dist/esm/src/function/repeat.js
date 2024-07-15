@@ -1,4 +1,4 @@
-import arrayRepeat from './arrayRepeat';
+import arrayRepeat from './arrayRepeat.js';
 
 /**
  * Repeat string value

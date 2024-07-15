@@ -1,4 +1,4 @@
-const {clone} = require("../../src/node.cjs");
+const {clone} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 

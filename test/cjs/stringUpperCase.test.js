@@ -1,5 +1,5 @@
 
-const {stringUpperCase} = require("../../src/node.cjs");
+const {stringUpperCase} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: stringUpperCase method', function () {

@@ -1,14 +1,14 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import has from './has';
+import has from './has.js';
 
-import count from './count';
+import count from './count.js';
 
-import each from './each';
+import each from './each.js';
 
-import indexOfExist from './indexOfExist';
+import indexOfExist from './indexOfExist.js';
 
-import where from './where';
+import where from './where.js';
 
 /**
  * Remove data in either JSON or Array using key or woth value
@@ -29,9 +29,9 @@ function remove (objectValue, value, value2) {
     const type_js=getTypeof(objectValue);
     let reslt =null;
 
-    const isValueAFunction = getTypeof(value)==="function";
+    const isValueAFunction = getTypeof(value) === "function";
 
-    if (type_js==="array") {
+    if (type_js === "array") {
 
         const lastRow = has(value2)
             ?value2
@@ -64,7 +64,7 @@ function remove (objectValue, value, value2) {
 
     }
 
-    if (type_js==="json") {
+    if (type_js === "json") {
 
         reslt={};
         const jsn_vw=[];
@@ -91,7 +91,7 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (indexOfExist(jsn_vw, av)===false) {
+                if (indexOfExist(jsn_vw, av) === false) {
 
                     reslt[ak]=av;
 

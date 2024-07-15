@@ -1,6 +1,6 @@
-import has from '../function/has';
+import has from './_has.js';
 
-import getTypeof from '../function/getTypeof';
+import getTypeof from '../function/getTypeof.js';
 
 /**
  * Logic in convert string or number to valid number
@@ -8,8 +8,8 @@ import getTypeof from '../function/getTypeof';
  * @since 1.0.1
  * @category Seq
  * @param {any} regexp The second number in an addition.
- * @param {string|mumber} defaultVariable The second number in an addition.
- * @param {string|mumber} nullReplacement The second number in an addition.
+ * @param {string|number} defaultVariable The second number in an addition.
+ * @param {string|number} nullReplacement The second number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
@@ -27,7 +27,7 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
     }
 
-    if (!has(nullReplacement) || nullReplacement.toString()==="NaN") {
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
 
         intr=defaultVariable;
 

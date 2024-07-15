@@ -1,8 +1,8 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import each from './each';
+import each from './each.js';
 
-import indexOfNotExist from './indexOfNotExist';
+import indexOfNotExist from './indexOfNotExist.js';
 
 /**
  * Get only the unique data from array
@@ -18,7 +18,7 @@ import indexOfNotExist from './indexOfNotExist';
  */
 function unique (value) {
 
-    if (getTypeof(value)==="array") {
+    if (getTypeof(value) === "array") {
 
         const uniqArrData = [];
 

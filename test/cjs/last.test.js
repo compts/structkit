@@ -1,5 +1,5 @@
 
-const {last}= require("../../src/node.cjs");
+const {last}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const eight=8,

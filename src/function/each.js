@@ -1,7 +1,6 @@
-const getTypeof = require('./getTypeof');
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 const has = require('./has');
-
 
 /**
  * Each or for loop function you are familiar with
@@ -19,9 +18,9 @@ const has = require('./has');
 function each (objectValue, func) {
 
     let re_loop=[];
-    const typeofs=getTypeof(objectValue);
+    const typeofs=getTypeofInternal(objectValue);
 
-    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
+    if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
 
         for (const ins in objectValue) {
 
@@ -29,7 +28,7 @@ function each (objectValue, func) {
 
                 let bool_func = true;
 
-                if (getTypeof(objectValue[ins])==="function") {
+                if (getTypeofInternal(objectValue[ins]) === "function") {
 
                     if ((/\b_/g).test(ins)) {
 

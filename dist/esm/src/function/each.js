@@ -1,6 +1,6 @@
-import getTypeof from './getTypeof';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import has from './has';
+import has from './has.js';
 
 /**
  * Each or for loop function you are familiar with
@@ -18,9 +18,9 @@ import has from './has';
 function each (objectValue, func) {
 
     let re_loop=[];
-    const typeofs=getTypeof(objectValue);
+    const typeofs=getTypeofInternal(objectValue);
 
-    if (typeofs==="json"||typeofs==="array"||typeofs==="object"||typeofs==="arguments") {
+    if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
 
         for (const ins in objectValue) {
 
@@ -28,7 +28,7 @@ function each (objectValue, func) {
 
                 let bool_func = true;
 
-                if (getTypeof(objectValue[ins])==="function") {
+                if (getTypeofInternal(objectValue[ins]) === "function") {
 
                     if ((/\b_/g).test(ins)) {
 

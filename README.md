@@ -1,13 +1,18 @@
 # Structkit
+Javascript framework in using functional syntax for programmer.
+
 [![NPM version][npm-image]][npm-url] 
 
 [Site](https://structkit.codehyouka.xyz/) |
 [Docs](https://structkit.codehyouka.xyz/api) |
 
+## Why Structkit
+A Javascript library that make easier in working with arrays, number,object, String and etc.
+
 ## Download
 
 To download this JS library and install in your local library
- * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~60KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/web/structkit-full.iife.js))
+ * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~74KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
 
 Using npm to install in your project folder:
 ```shell
@@ -39,6 +44,7 @@ import {repeat} from 'structkit';
 In a browser
 ```html
 _stk.repeat("1",20)
+//11111111111111111111
 ```
 keep in mind `_stk` is used as global library at html
 
@@ -46,13 +52,19 @@ keep in mind `_stk` is used as global library at html
 CJS, ESM and TS use this code below
 ```bash
 repeat("1",20)
-
+//11111111111111111111
 ```
 
-
+If you are familiar in curry function, good thing structkit is now also supported.
+```bash
+test = repeat(__,20)
+test("1")
+//11111111111111111111
+```
+In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.7-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.8-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function

@@ -1,4 +1,4 @@
-const {stringSubs} = require("../../src/node.cjs");
+const {stringSubs} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const two=2;

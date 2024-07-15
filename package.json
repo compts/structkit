@@ -1,11 +1,19 @@
 {
   "name": "structkit",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "JS utility tool",
-  "main": "src/node.cjs.js",
-  "module": "dist/esm/node.es.js",
-  "types": "dist/ts/node.esm.d.ts",
+  "main": "./dist/cjs/structkit-full.cjs.js",
+  "module": "./dist/esm/node.esm.js",
+  "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/structkit-full.cjs.js",
+      "import": "./dist/esm/node.esm.js",
+      "default": "./dist/cjs/structkit-full.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "structkit": "./bin/structkit"
   },
@@ -47,7 +55,7 @@
   "devDependencies": {
     "@types/assert": "^1.5.6",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^20.4.4",
+    "@types/node": "^20.5.9",
     "eslint": "^7.16.0",
     "eslint-config-strongloop": "^2.1.0",
     "eslint-plugin-import": "^2.22.1",

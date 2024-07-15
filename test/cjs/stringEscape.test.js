@@ -1,5 +1,5 @@
 
-const {stringEscape} = require("../../src/node.cjs");
+const {stringEscape} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: stringEscape method', function () {

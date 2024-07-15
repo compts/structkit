@@ -1,9 +1,9 @@
-const getTypeof = require('./getTypeof');
+const {getTypeofInternal} = require('../core/getTypeOf');
+const {zero} = require("../core/defaultValue");
 
 const count = require('./count');
 
 const indexOfExist = require('./indexOfExist');
-
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -19,23 +19,21 @@ const indexOfExist = require('./indexOfExist');
  */
 function isEmpty (value) {
 
-    const zero =0;
-
-    const typeofvalue = getTypeof(value);
+    const typeofvalue = getTypeofInternal(value);
 
     const invalidList = [
         'null',
         'undefined'
     ];
 
-    if (typeofvalue=== "json" || typeofvalue === "array") {
+    if (typeofvalue === "json" || typeofvalue === "array") {
 
-        return count(value, true)===zero;
+        return count(value, typeofvalue === "json") === zero;
 
     }
-    if (typeofvalue=== "number") {
+    if (typeofvalue === "number") {
 
-        return value===zero;
+        return value === zero;
 
     }
 
@@ -49,4 +47,3 @@ function isEmpty (value) {
 
 }
 module.exports=isEmpty;
-

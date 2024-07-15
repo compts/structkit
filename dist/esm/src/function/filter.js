@@ -1,12 +1,12 @@
-import has from './has';
+import has from './has.js';
 
-import each from './each';
+import each from './each.js';
 
-import getJSONVariable from './getJSONVariable';
+import empty from './empty.js';
 
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
 
-import append from './append';
+import append from './append.js';
 
 /**
  * Filter the data in loop
@@ -15,24 +15,23 @@ import append from './append';
  * @category Collection
  * @param {any} objectValue The data either json or array
  * @param {Function=} func The second number in an addition.
- * @returns {null} Returns the total.
+ * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2],(key,value)=>{
+ * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
  *
- * })
- *
+ * => [2, 34]
  */
 function filter (objectValue, func) {
 
-    let jsn_var=getJSONVariable(objectValue);
+    let jsn_var=empty(objectValue);
     const jsn_type=getTypeof(objectValue);
 
     each(objectValue, function (key, value) {
 
         if (has(func)) {
 
-            if (func(key, value)===true) {
+            if (func(key, value) === true) {
 
                 if ((/(json|array)/g).test(jsn_type)) {
 

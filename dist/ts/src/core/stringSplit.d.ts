@@ -2,7 +2,7 @@ export default stringSplit;
 /**
  * Split string for special cases
  *
- * @since 1.3.1
+ * @since 1.4.8
  * @category Seq
  * @param {string} value String to split
  * @returns {string} Returns the total.

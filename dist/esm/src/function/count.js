@@ -1,8 +1,8 @@
-import has from './has';
+import has from './has.js';
 
-import getTypeof from './getTypeof';
+import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import each from './each';
+import each from './each.js';
 
 /**
  * Array Count
@@ -17,7 +17,7 @@ import each from './each';
  * count([1,2])
  * // => 2
  *
- * count({"s" :1, "s2": 2}, true)
+ * count({"s" :1, "s2": 2}, true)// Counting the object inside, you must this to true
  * // => 2
  */
 function count (objectValue, json_is_empty_check) {
@@ -26,25 +26,25 @@ function count (objectValue, json_is_empty_check) {
     const incByOne=1;
     const defaultValueForFalse=0;
     const json_is_empty_check_default=json_is_empty_check||false;
-    const get_json=getTypeof(objectValue);
+    const get_json=getTypeofInternal(objectValue);
 
-    if (has(objectValue)===false) {
+    if (has(objectValue) === false) {
 
         return defaultValueForFalse;
 
     }
 
-    if (get_json==="array") {
+    if (get_json === "array") {
 
         return objectValue.length;
 
-    } else if (get_json==="object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
+    } else if (get_json === "object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
 
         for (const inc in objectValue) {
 
             if (!isNaN(inc)) {
 
-                cnt+=incByOne;
+                cnt += incByOne;
 
             }
 
@@ -52,22 +52,30 @@ function count (objectValue, json_is_empty_check) {
 
     } else {
 
-        each(objectValue, function () {
+        let rawObjectValue = objectValue;
 
-            cnt+=incByOne;
+        if (get_json === "string") {
+
+            rawObjectValue = rawObjectValue.split("");
+
+        }
+
+        each(rawObjectValue, function () {
+
+            cnt += incByOne;
 
         });
 
     }
 
-    if (get_json==="json"&&json_is_empty_check_default===true) {
+    if (get_json === "json"&&json_is_empty_check_default === true) {
 
         const jsn_parse=objectValue;
         let cnts=0;
 
         each(jsn_parse, function () {
 
-            cnts+=incByOne;
+            cnts += incByOne;
 
         });
 

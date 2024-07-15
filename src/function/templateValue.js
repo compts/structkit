@@ -11,7 +11,6 @@ const getData = require('./getData');
 const has = require('./has');
 const toString = require("./toString");
 
-
 /**
  * Template Value
  *
@@ -49,7 +48,7 @@ function templateValue (templateString, data, option) {
         default_option.escape
     ].join("|")+"|$", "g");
 
-    let source = "__p+='";
+    let source = "__p += '";
     let index = 0;
 
     const escapes = {
@@ -71,24 +70,24 @@ function templateValue (templateString, data, option) {
 
     templateString.replace(regexp, function (match, evaluate, interpolate, escape, offset) {
 
-        source+=templateString.slice(index, offset).replace(escaper, escapeChar);
+        source += templateString.slice(index, offset).replace(escaper, escapeChar);
         index = offset+match.length;
 
         if (evaluate) {
 
-            source+="';\n"+evaluate+"\n__p+='";
+            source += "';\n"+evaluate+"\n__p += '";
 
         }
 
         if (interpolate) {
 
-            source+="'+\n((__t=("+interpolate+"))==null?'':__t)+\n'";
+            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
 
         }
 
         if (escape) {
 
-            source+="'+\n((__t=("+interpolate+"))==null?'':__t)+\n'";
+            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
 
         }
 
@@ -96,23 +95,23 @@ function templateValue (templateString, data, option) {
 
     });
 
-    source+="';\n";
+    source += "';\n";
 
     source = "var __t,__p='',__j=[].join," +
-        "print=function(){__p+=__j.call(arguments,'');};\n" +
+        "print=function(){__p += __j.call(arguments,'');};\n" +
     source + " return __p;\n";
 
     try {
 
         let val_source = "";
 
-        if (getTypeof(data)==="json") {
+        if (getTypeof(data) === "json") {
 
             for (const key in data) {
 
                 if (has(data, key)) {
 
-                    val_source+='var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
+                    val_source += 'var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
                         ?parseString(data[key])
                         :'"'+data[key]+'"')+';';
 
@@ -165,7 +164,7 @@ function templateValueInternal (str_raw, reg) {
                 const strs_perd=mes1.replace(".", ":");
                 const gtdata=getData(reg, strs_perd);
 
-                return getTypeof(gtdata)==="json"
+                return getTypeof(gtdata) === "json"
                     ?""
                     :gtdata;
 

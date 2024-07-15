@@ -1,6 +1,6 @@
-import onDelay from './onDelay';
+import onDelay from './onDelay.js';
 
-import {getWindow} from '../core/global';
+import {getWindow} from '../core/global.js';
 
 /**
  * On wait

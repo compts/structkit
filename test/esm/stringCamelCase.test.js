@@ -1,7 +1,7 @@
 import {stringCamelCase} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('CJS: stringCamelCase method', function () {
+describe('ESM: stringCamelCase method', function () {
 
     it('check Value', function () {
 

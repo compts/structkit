@@ -1,5 +1,5 @@
 
-const {indexOf}= require("../../src/node.cjs");
+const {indexOf}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const eight=8,
@@ -44,6 +44,17 @@ describe('CJS: IndexOf', function () {
             nine,
             ten
         ], seven), six);
+
+    });
+
+
+    it('check if value exist in JSON object', function () {
+
+        assert.deepStrictEqual(indexOf([
+            {"s1": "sd"},
+            {"s1": "32"},
+            {"s1": "32"}
+        ], {"s1": "32"}), one);
 
     });
 

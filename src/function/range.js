@@ -34,7 +34,7 @@ function range (maxValue, minValue, step) {
         :tenDefaultValue;
     const output=[];
 
-    for (let inc=minValueRef; inc<=maxValueRef;) {
+    for (let inc=minValueRef; inc <= maxValueRef;) {
 
         if (getTypeof(incrementValue) === "string") {
 

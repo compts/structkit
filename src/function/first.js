@@ -1,6 +1,5 @@
 const getKeyVal = require('../core/getKeyVal');
 
-
 /**
  * Get the first value of array or JSON
  *

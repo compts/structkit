@@ -1,300 +1,709 @@
-const dataNumberFormat=require('./core/dataTypeFormat.js');
+const baseAppend = require('./core/baseAppend.js');
 
-exports.dataNumberFormat =dataNumberFormat;
+exports.baseAppend = baseAppend;
 
-const getIndexOf=require('./core/getIndexOf.js');
+const __p = require('./core/__.js');
 
-exports.getIndexOf =getIndexOf;
+exports.__p = __p;
 
-const getWindow=require('./core/global.js');
+const baseCountValidList = require('./core/baseCountValidList.js');
 
-exports.getWindow =getWindow;
+exports.baseCountValidList = baseCountValidList;
 
-const getKeyVal=require('./core/getKeyVal.js');
+const _has = require('./core/_has.js');
 
-exports.getKeyVal =getKeyVal;
+exports._has = _has;
 
-const stringSplit=require('./core/stringSplit.js');
+const baseMap = require('./core/baseMap.js');
 
-exports.stringSplit =stringSplit;
+exports.baseMap = baseMap;
 
-const append=require('./function/append.js');
+const curryArg = require('./core/curryArg.js');
 
-exports.append =append;
+exports.curryArg = curryArg;
 
-const whereLoopExecution=require('./core/whereLoopExecution.js');
+const baseReduce = require('./core/baseReduce.js');
 
-exports.whereLoopExecution =whereLoopExecution;
+exports.baseReduce = baseReduce;
 
-const appendIsArrayExist=require('./function/appendIsArrayExist.js');
+const curryArgReview = require('./core/curryArgReview.js');
 
-exports.appendIsArrayExist =appendIsArrayExist;
+exports.curryArgReview = curryArgReview;
 
-const arrayRepeat=require('./function/arrayRepeat.js');
+const negOne = require('./core/defaultValue.js');
 
-exports.arrayRepeat =arrayRepeat;
+exports.negOne = negOne;
 
-const arrayConcat=require('./function/arrayConcat.js');
+const getIndexOf = require('./core/getIndexOf.js');
 
-exports.arrayConcat =arrayConcat;
+exports.getIndexOf = getIndexOf;
 
-const arraySlice=require('./function/arraySlice.js');
+const dataNumberFormat = require('./core/dataTypeFormat.js');
 
-exports.arraySlice =arraySlice;
+exports.dataNumberFormat = dataNumberFormat;
 
-const arraySum=require('./function/arraySum.js');
+const getKeyVal = require('./core/getKeyVal.js');
 
-exports.arraySum =arraySum;
+exports.getKeyVal = getKeyVal;
 
-const arrayToObjectByDataFormat=require('./function/arrayToObjectByDataFormat.js');
+const getTypeofInternal = require('./core/getTypeOf.js');
 
-exports.arrayToObjectByDataFormat =arrayToObjectByDataFormat;
+exports.getTypeofInternal = getTypeofInternal;
 
-const clone=require('./function/clone.js');
+const getWindow = require('./core/global.js');
 
-exports.clone =clone;
+exports.getWindow = getWindow;
 
-const asyncReplace=require('./function/asyncReplace.js');
+const stringSplit = require('./core/stringSplit.js');
 
-exports.asyncReplace =asyncReplace;
+exports.stringSplit = stringSplit;
 
-const count=require('./function/count.js');
+const whereLoopExecution = require('./core/whereLoopExecution.js');
 
-exports.count =count;
+exports.whereLoopExecution = whereLoopExecution;
 
-const each=require('./function/each.js');
+const __ = require('./function/__.js');
 
-exports.each =each;
+exports.__ = __;
 
-const filter=require('./function/filter.js');
+const add = require('./function/add.js');
 
-exports.filter =filter;
+exports.add = add;
 
-const first=require('./function/first.js');
+const allValid = require('./function/allValid.js');
 
-exports.first =first;
+exports.allValid = allValid;
 
-const getData=require('./function/getData.js');
+const append = require('./function/append.js');
 
-exports.getData =getData;
+exports.append = append;
 
-const getJSONVariable=require('./function/getJSONVariable.js');
+const appendIsArrayExist = require('./function/appendIsArrayExist.js');
 
-exports.getJSONVariable =getJSONVariable;
+exports.appendIsArrayExist = appendIsArrayExist;
 
-const getTypeof=require('./function/getTypeof.js');
+const arrayRepeat = require('./function/arrayRepeat.js');
 
-exports.getTypeof =getTypeof;
+exports.arrayRepeat = arrayRepeat;
 
-const getKey=require('./function/getKey.js');
+const arraySlice = require('./function/arraySlice.js');
 
-exports.getKey =getKey;
+exports.arraySlice = arraySlice;
 
-const getUniq=require('./function/getUniq.js');
+const arraySum = require('./function/arraySum.js');
 
-exports.getUniq =getUniq;
+exports.arraySum = arraySum;
 
-const getValue=require('./function/getValue.js');
+const arrayToObjectByDataFormat = require('./function/arrayToObjectByDataFormat.js');
 
-exports.getValue =getValue;
+exports.arrayToObjectByDataFormat = arrayToObjectByDataFormat;
 
-const has=require('./function/has.js');
+const asyncReplace = require('./function/asyncReplace.js');
 
-exports.has =has;
+exports.asyncReplace = asyncReplace;
 
-const indexOf=require('./function/indexOf.js');
+const arrayConcat = require('./function/arrayConcat.js');
 
-exports.indexOf =indexOf;
+exports.arrayConcat = arrayConcat;
 
-const ifUndefined=require('./function/ifUndefined.js');
+const clone = require('./function/clone.js');
 
-exports.ifUndefined =ifUndefined;
+exports.clone = clone;
 
-const indexOfExist=require('./function/indexOfExist.js');
+const count = require('./function/count.js');
 
-exports.indexOfExist =indexOfExist;
+exports.count = count;
 
-const indexOfNotExist=require('./function/indexOfNotExist.js');
+const dec = require('./function/dec.js');
 
-exports.indexOfNotExist =indexOfNotExist;
+exports.dec = dec;
 
-const insert=require('./function/insert.js');
+const calculate = require('./function/calculate.js');
 
-exports.insert =insert;
+exports.calculate = calculate;
 
-const isEmpty=require('./function/isEmpty.js');
+const divide = require('./function/divide.js');
 
-exports.isEmpty =isEmpty;
+exports.divide = divide;
 
-const isExact=require('./function/isExact.js');
+const each = require('./function/each.js');
 
-exports.isExact =isExact;
+exports.each = each;
 
-const isExactbyRegExp=require('./function/isExactbyRegExp.js');
+const empty = require('./function/empty.js');
 
-exports.isExactbyRegExp =isExactbyRegExp;
+exports.empty = empty;
 
-const isJson=require('./function/isJson.js');
+const equal = require('./function/equal.js');
 
-exports.isJson =isJson;
+exports.equal = equal;
 
-const jsonToArray=require('./function/jsonToArray.js');
+const filter = require('./function/filter.js');
 
-exports.jsonToArray =jsonToArray;
+exports.filter = filter;
 
-const last=require('./function/last.js');
+const first = require('./function/first.js');
 
-exports.last =last;
+exports.first = first;
 
-const lastIndexOf=require('./function/lastIndexOf.js');
+const getKey = require('./function/getKey.js');
 
-exports.lastIndexOf =lastIndexOf;
+exports.getKey = getKey;
 
-const like=require('./function/like.js');
+const getTypeof = require('./function/getTypeof.js');
 
-exports.like =like;
+exports.getTypeof = getTypeof;
 
-const limit=require('./function/limit.js');
+const getUniq = require('./function/getUniq.js');
 
-exports.limit =limit;
+exports.getUniq = getUniq;
 
-const map=require('./function/map.js');
+const getData = require('./function/getData.js');
 
-exports.map =map;
+exports.getData = getData;
 
-const numberFormat=require('./function/numberFormat.js');
+const groupBy = require('./function/groupBy.js');
 
-exports.numberFormat =numberFormat;
+exports.groupBy = groupBy;
 
-const onDelay=require('./function/onDelay.js');
+const getValue = require('./function/getValue.js');
 
-exports.onDelay =onDelay;
+exports.getValue = getValue;
 
-const onSequence=require('./function/onSequence.js');
+const gt = require('./function/gt.js');
 
-exports.onSequence =onSequence;
+exports.gt = gt;
 
-const onWait=require('./function/onWait.js');
+const has = require('./function/has.js');
 
-exports.onWait =onWait;
+exports.has = has;
 
-const parseJson=require('./function/parseJson.js');
+const gte = require('./function/gte.js');
 
-exports.parseJson =parseJson;
+exports.gte = gte;
 
-const parseString=require('./function/parseString.js');
+const inc = require('./function/inc.js');
 
-exports.parseString =parseString;
+exports.inc = inc;
 
-const random=require('./function/random.js');
+const indexOf = require('./function/indexOf.js');
 
-exports.random =random;
+exports.indexOf = indexOf;
 
-const range=require('./function/range.js');
+const ifUndefined = require('./function/ifUndefined.js');
 
-exports.range =range;
+exports.ifUndefined = ifUndefined;
 
-const regexCountGroup=require('./function/regexCountGroup.js');
+const indexOfExist = require('./function/indexOfExist.js');
 
-exports.regexCountGroup =regexCountGroup;
+exports.indexOfExist = indexOfExist;
 
-const remove=require('./function/remove.js');
+const insert = require('./function/insert.js');
 
-exports.remove =remove;
+exports.insert = insert;
 
-const repeat=require('./function/repeat.js');
+const indexOfNotExist = require('./function/indexOfNotExist.js');
 
-exports.repeat =repeat;
+exports.indexOfNotExist = indexOfNotExist;
 
-const roundDecimal=require('./function/roundDecimal.js');
+const isEmpty = require('./function/isEmpty.js');
 
-exports.roundDecimal =roundDecimal;
+exports.isEmpty = isEmpty;
 
-const shuffle=require('./function/shuffle.js');
+const isExact = require('./function/isExact.js');
 
-exports.shuffle =shuffle;
+exports.isExact = isExact;
 
-const stringCamelCase=require('./function/stringCamelCase.js');
+const isExactbyRegExp = require('./function/isExactbyRegExp.js');
 
-exports.stringCamelCase =stringCamelCase;
+exports.isExactbyRegExp = isExactbyRegExp;
 
-const sort=require('./function/sort.js');
+const last = require('./function/last.js');
 
-exports.sort =sort;
+exports.last = last;
 
-const stringCapitalize=require('./function/stringCapitalize.js');
+const isJson = require('./function/isJson.js');
 
-exports.stringCapitalize =stringCapitalize;
+exports.isJson = isJson;
 
-const stringEscape=require('./function/stringEscape.js');
+const lastIndexOf = require('./function/lastIndexOf.js');
 
-exports.stringEscape =stringEscape;
+exports.lastIndexOf = lastIndexOf;
 
-const stringKebabCase=require('./function/stringKebabCase.js');
+const jsonToArray = require('./function/jsonToArray.js');
 
-exports.stringKebabCase =stringKebabCase;
+exports.jsonToArray = jsonToArray;
 
-const stringLowerCase=require('./function/stringLowerCase.js');
+const limit = require('./function/limit.js');
 
-exports.stringLowerCase =stringLowerCase;
+exports.limit = limit;
 
-const stringSnakeCase=require('./function/stringSnakeCase.js');
+const lt = require('./function/lt.js');
 
-exports.stringSnakeCase =stringSnakeCase;
+exports.lt = lt;
 
-const stringSubs=require('./function/stringSubs.js');
+const like = require('./function/like.js');
 
-exports.stringSubs =stringSubs;
+exports.like = like;
 
-const stringUnEscape=require('./function/stringUnEscape.js');
+const lte = require('./function/lte.js');
 
-exports.stringUnEscape =stringUnEscape;
+exports.lte = lte;
 
-const stringUpperCase=require('./function/stringUpperCase.js');
+const map = require('./function/map.js');
 
-exports.stringUpperCase =stringUpperCase;
+exports.map = map;
 
-const templateValue=require('./function/templateValue.js');
+const multiply = require('./function/multiply.js');
 
-exports.templateValue =templateValue;
+exports.multiply = multiply;
 
-const toArray=require('./function/toArray.js');
+const noteq = require('./function/noteq.js');
 
-exports.toArray =toArray;
+exports.noteq = noteq;
 
-const toDouble=require('./function/toDouble.js');
+const onDelay = require('./function/onDelay.js');
 
-exports.toDouble =toDouble;
+exports.onDelay = onDelay;
 
-const toInteger=require('./function/toInteger.js');
+const onSequence = require('./function/onSequence.js');
 
-exports.toInteger =toInteger;
+exports.onSequence = onSequence;
 
-const toString=require('./function/toString.js');
+const parseJson = require('./function/parseJson.js');
 
-exports.toString =toString;
+exports.parseJson = parseJson;
 
-const unique=require('./function/unique.js');
+const parseString = require('./function/parseString.js');
 
-exports.unique =unique;
+exports.parseString = parseString;
 
-const varExtend=require('./function/varExtend.js');
+const onWait = require('./function/onWait.js');
 
-exports.varExtend =varExtend;
+exports.onWait = onWait;
 
-const where=require('./function/where.js');
+const random = require('./function/random.js');
 
-exports.where =where;
+exports.random = random;
 
-const whereNot=require('./function/whereNot.js');
+const reduce = require('./function/reduce.js');
 
-exports.whereNot =whereNot;
+exports.reduce = reduce;
 
-const entity=require('./variable/htmlentity.js');
+const range = require('./function/range.js');
 
-exports.entity =entity;
+exports.range = range;
 
-const objectCallType=require('./variable/types.js');
+const regexCountGroup = require('./function/regexCountGroup.js');
 
-exports.objectCallType =objectCallType;
+exports.regexCountGroup = regexCountGroup;
 
+const repeat = require('./function/repeat.js');
+
+exports.repeat = repeat;
+
+const remove = require('./function/remove.js');
+
+exports.remove = remove;
+
+const roundDecimal = require('./function/roundDecimal.js');
+
+exports.roundDecimal = roundDecimal;
+
+const shuffle = require('./function/shuffle.js');
+
+exports.shuffle = shuffle;
+
+const someValid = require('./function/someValid.js');
+
+exports.someValid = someValid;
+
+const sort = require('./function/sort.js');
+
+exports.sort = sort;
+
+const stringCamelCase = require('./function/stringCamelCase.js');
+
+exports.stringCamelCase = stringCamelCase;
+
+const stringCapitalize = require('./function/stringCapitalize.js');
+
+exports.stringCapitalize = stringCapitalize;
+
+const stringKebabCase = require('./function/stringKebabCase.js');
+
+exports.stringKebabCase = stringKebabCase;
+
+const stringLowerCase = require('./function/stringLowerCase.js');
+
+exports.stringLowerCase = stringLowerCase;
+
+const stringEscape = require('./function/stringEscape.js');
+
+exports.stringEscape = stringEscape;
+
+const stringSubs = require('./function/stringSubs.js');
+
+exports.stringSubs = stringSubs;
+
+const stringSnakeCase = require('./function/stringSnakeCase.js');
+
+exports.stringSnakeCase = stringSnakeCase;
+
+const stringUpperCase = require('./function/stringUpperCase.js');
+
+exports.stringUpperCase = stringUpperCase;
+
+const stringUnEscape = require('./function/stringUnEscape.js');
+
+exports.stringUnEscape = stringUnEscape;
+
+const subtract = require('./function/subtract.js');
+
+exports.subtract = subtract;
+
+const toArray = require('./function/toArray.js');
+
+exports.toArray = toArray;
+
+const templateValue = require('./function/templateValue.js');
+
+exports.templateValue = templateValue;
+
+const toDouble = require('./function/toDouble.js');
+
+exports.toDouble = toDouble;
+
+const toInteger = require('./function/toInteger.js');
+
+exports.toInteger = toInteger;
+
+const toString = require('./function/toString.js');
+
+exports.toString = toString;
+
+const trim = require('./function/trim.js');
+
+exports.trim = trim;
+
+const unique = require('./function/unique.js');
+
+exports.unique = unique;
+
+const varExtend = require('./function/varExtend.js');
+
+exports.varExtend = varExtend;
+
+const where = require('./function/where.js');
+
+exports.where = where;
+
+const entity = require('./variable/htmlentity.js');
+
+exports.entity = entity;
+
+const whereNot = require('./function/whereNot.js');
+
+exports.whereNot = whereNot;
+
+
+/**
+ *  Get the type if arguments
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isArguments()
+ *=> true
+ */
+function isArguments_default (value) {
+
+    return getTypeof(value) === "arguments";
+
+}
+
+
+/**
+ *  Get the type if array
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isArray([])
+ *=> true
+ */
+function isArray_default (value) {
+
+    return getTypeof(value) === "array";
+
+}
+
+
+/**
+ *  Get the type if boolean
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isBoolean(true)
+ *=> true
+ */
+function isBoolean_default (value) {
+
+    return getTypeof(value) === "boolean";
+
+}
+
+
+/**
+ *  Get the type if date
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isDate(new Date())
+ *=> true
+ */
+function isDate_default (value) {
+
+    return getTypeof(value) === "date";
+
+}
+
+
+/**
+ *  Get the type if error
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isError(new Error())
+ *=> true
+ */
+function isError_default (value) {
+
+    return getTypeof(value) === "error";
+
+}
+
+
+/**
+ *  Get the type if function
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isFunction()
+ *=> true
+ */
+function isFunction_default (value) {
+
+    return getTypeof(value) === "function";
+
+}
+
+
+/**
+ *  Get the type if null
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isNull(null)
+ *=> true
+ */
+function isNull_default (value) {
+
+    return getTypeof(value) === "null";
+
+}
+
+
+/**
+ *  Get the type if number
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isNumber(1)
+ *=> true
+ */
+function isNumber_default (value) {
+
+    return getTypeof(value) === "number";
+
+}
+
+
+/**
+ *  Get the type if object
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isObject({})
+ *=> true
+ */
+function isObject_default (value) {
+
+    return getTypeof(value) === "object";
+
+}
+
+
+/**
+ *  Get the type if promise
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isPromise()
+ *=> true
+ */
+function isPromise_default (value) {
+
+    return getTypeof(value) === "promise";
+
+}
+
+
+/**
+ *  Get the type if regexp
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isRegexp(/(1)/g)
+ *=> true
+ */
+function isRegexp_default (value) {
+
+    return getTypeof(value) === "regexp";
+
+}
+
+
+/**
+ *  Get the type if string
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isString('string')
+ *=> true
+ */
+function isString_default (value) {
+
+    return getTypeof(value) === "string";
+
+}
+
+
+/**
+ *  Get the type if uint16Array
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isUint16Array()
+ *=> true
+ */
+function isUint16Array_default (value) {
+
+    return getTypeof(value) === "uint16Array";
+
+}
+
+
+/**
+ *  Get the type if uint8Array
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isUint8Array()
+ *=> true
+ */
+function isUint8Array_default (value) {
+
+    return getTypeof(value) === "uint8Array";
+
+}
+
+
+/**
+ *  Get the type if undefined
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isUndefined(undefined)
+ *=> true
+ */
+function isUndefined_default (value) {
+
+    return getTypeof(value) === "undefined";
+
+}
+
+
+exports.isArguments=isArguments_default;
+exports.isArray=isArray_default;
+exports.isBoolean=isBoolean_default;
+exports.isDate=isDate_default;
+exports.isError=isError_default;
+exports.isFunction=isFunction_default;
+exports.isNull=isNull_default;
+exports.isNumber=isNumber_default;
+exports.isObject=isObject_default;
+exports.isPromise=isPromise_default;
+exports.isRegexp=isRegexp_default;
+exports.isString=isString_default;
+exports.isUint16Array=isUint16Array_default;
+exports.isUint8Array=isUint8Array_default;
+exports.isUndefined=isUndefined_default;

@@ -1,4 +1,6 @@
-import getTypeof from './getTypeof';
+import getTypeof from './getTypeof.js';
+
+import curryArg from '../core/curryArg.js';
 
 /**
  * Async replace
@@ -16,39 +18,47 @@ import getTypeof from './getTypeof';
  */
 function asyncReplace (value, search, toReplace) {
 
-    try {
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
-        if (getTypeof(toReplace) === "function") {
+        try {
 
-            const values = [];
+            if (getTypeof(rawToReplace) === "function") {
 
-            String.prototype.replace.call(value, search, function (...arg) {
+                const values = [];
 
-                values.push(toReplace(...arg));
+                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
 
-                return "";
+                    values.push(rawToReplace(...arg));
 
-            });
-
-            return Promise.all(values).then(function (resolvedValues) {
-
-                return String.prototype.replace.call(value, search, function () {
-
-                    return resolvedValues.shift();
+                    return "";
 
                 });
 
-            });
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
 
         }
 
-        return Promise.resolve(String.prototype.replace.call(value, search, toReplace));
-
-    } catch (error) {
-
-        return Promise.reject(error);
-
-    }
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
 
 }
 export default asyncReplace;

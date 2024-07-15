@@ -2,7 +2,6 @@ const getTypeof = require('./getTypeof');
 const each = require('./each');
 const indexOfNotExist = require('./indexOfNotExist');
 
-
 /**
  * Get only the unique data from array
  *
@@ -17,7 +16,7 @@ const indexOfNotExist = require('./indexOfNotExist');
  */
 function unique (value) {
 
-    if (getTypeof(value)==="array") {
+    if (getTypeof(value) === "array") {
 
         const uniqArrData = [];
 

@@ -1,18 +1,18 @@
-import count from '../function/count';
+import count from '../function/count.js';
 
-import getTypeof from '../function/getTypeof';
+import getTypeof from '../function/getTypeof.js';
 
-import each from '../function/each';
+import each from '../function/each.js';
 
-import getJSONVariable from '../function/getJSONVariable';
+import empty from '../function/empty.js';
 
-import isExact from '../function/isExact';
+import isExact from '../function/isExact.js';
 
-import isExactbyRegExp from '../function/isExactbyRegExp';
+import isExactbyRegExp from '../function/isExactbyRegExp.js';
 
-import has from '../function/has';
+import has from '../function/has.js';
 
-import append from '../function/append';
+import append from '../function/append.js';
 
 /**
  * Where Loop Execution
@@ -37,21 +37,21 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     const json_convertion = getTypeof(jsn) === "array"
         ? jsn
         : [jsn];
-    const jsn_s= count(jsn, true) ===zero
+    const jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
     const whr_s=whr||{};
-    const variable=getJSONVariable(jsn);
+    const variable=empty(jsn);
     let filterData = {};
 
     each(jsn_s, function (jk, jv) {
 
-        if (getTypeof(jsn)==="array") {
+        if (getTypeof(jsn) === "array") {
 
             filterData = jv;
 
         }
-        if (getTypeof(jsn)==="json") {
+        if (getTypeof(jsn) === "json") {
 
             filterData[jk]=jv;
 
@@ -59,7 +59,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
         if (types === "where") {
 
-            if (isExact(filterData, whr_s, isExist)) {
+            if (isExact(whr_s, filterData, isExist)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {
@@ -73,7 +73,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
         }
         if (types === "like") {
 
-            if (isExactbyRegExp(filterData, whr_s)) {
+            if (isExactbyRegExp(whr_s, filterData)) {
 
                 append(variable, jv, jk);
                 if (has(func)) {

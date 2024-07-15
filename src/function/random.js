@@ -4,7 +4,6 @@ const count = require('./count');
 
 const each = require('./each');
 
-
 /**
  * Random value from array list
  *
@@ -33,7 +32,7 @@ function random (valueArray, minValue, maxValue) {
 
     each(valueArray, function (key, value) {
 
-        if (math_random===parseInt(key)) {
+        if (math_random === parseInt(key)) {
 
             ran_var.push(value);
 

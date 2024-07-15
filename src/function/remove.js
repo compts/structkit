@@ -10,7 +10,6 @@ const indexOfExist = require('./indexOfExist');
 
 const where = require('./where');
 
-
 /**
  * Remove data in either JSON or Array using key or woth value
  *
@@ -30,9 +29,9 @@ function remove (objectValue, value, value2) {
     const type_js=getTypeof(objectValue);
     let reslt =null;
 
-    const isValueAFunction = getTypeof(value)==="function";
+    const isValueAFunction = getTypeof(value) === "function";
 
-    if (type_js==="array") {
+    if (type_js === "array") {
 
         const lastRow = has(value2)
             ?value2
@@ -65,7 +64,7 @@ function remove (objectValue, value, value2) {
 
     }
 
-    if (type_js==="json") {
+    if (type_js === "json") {
 
         reslt={};
         const jsn_vw=[];
@@ -92,7 +91,7 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (indexOfExist(jsn_vw, av)===false) {
+                if (indexOfExist(jsn_vw, av) === false) {
 
                     reslt[ak]=av;
 

@@ -4,9 +4,8 @@ const each = require('./each');
 
 const count = require('./count');
 
-
 /**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
  * @category Seq
@@ -36,8 +35,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
     each(objectValue, function (key, meth) {
 
-        if (cnt>=minValueReserve && cnt<=maxValueReserve) {
-
+        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
 
             if (has(func)) {
 
@@ -57,7 +55,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         }
 
-        cnt+=incrementDefaultValue;
+        cnt += incrementDefaultValue;
 
     });
 
@@ -65,4 +63,3 @@ function limit (objectValue, minValue, maxValue, func) {
 
 }
 module.exports=limit;
-

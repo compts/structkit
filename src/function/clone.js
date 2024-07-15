@@ -1,9 +1,8 @@
-const getJSONVariable = require('./getJSONVariable');
+const empty = require('./empty');
 
 const each = require('./each');
 
 const append = require('./append');
-
 
 /**
  * Cloning the data either in JSON or array that be used as different property
@@ -19,7 +18,7 @@ const append = require('./append');
  */
 function clone (objectValue) {
 
-    const variable=getJSONVariable(objectValue);
+    const variable=empty(objectValue);
 
     each(objectValue, function (key, value) {
 

@@ -4,7 +4,7 @@ import assert from 'assert';
 import {expectType} from 'tsd';
 
 const one =1,
-    three=3.000,
+    three=3,
     two =2;
 
 
@@ -15,7 +15,7 @@ describe('TS: arraySum method', function () {
         assert.deepStrictEqual(arraySum([
             one,
             two
-        ]), three.toFixed(three));
+        ]), three);
 
     });
     it('check expected type', function () {

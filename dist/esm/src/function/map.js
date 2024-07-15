@@ -1,17 +1,15 @@
-import has from './has';
+import curryArg from '../core/curryArg.js';
 
-import each from './each';
-
-import getTypeof from './getTypeof';
+import baseMap from '../core/baseMap.js';
 
 /**
- * To map the value of json ot array
+ * To map the value of json or array
  *
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValue The data you want to map
  * @param {any=} func Callback function
- * @returns {null} Return map either JSON or Array
+ * @returns {any} Return map either JSON or Array
  * @example
  *
  * map([1,2],function(value) { return value+2 } )
@@ -19,36 +17,14 @@ import getTypeof from './getTypeof';
  */
 function map (objectValue, func) {
 
-    const strTypeOf =getTypeof(objectValue);
-    const emptyDefaultValue=0;
-    const incrementDefaultValue=1;
-    const value_arry=strTypeOf==="array"
-        ?[]
-        :{};
-    let cnt=emptyDefaultValue;
+    return curryArg(function (rawObjectValue, rawFunc) {
 
-    each(objectValue, function (key, value) {
+        return baseMap(rawObjectValue, rawFunc);
 
-        if (has(func)) {
-
-            if (strTypeOf==="array") {
-
-                value_arry.push(func(value, key, cnt));
-                cnt+=incrementDefaultValue;
-
-            } else {
-
-                const dataFunc = func(value, key, cnt);
-
-                value_arry[key] = dataFunc;
-
-            }
-
-        }
-
-    });
-
-    return value_arry;
+    }, [
+        objectValue,
+        func
+    ]);
 
 }
 export default map;

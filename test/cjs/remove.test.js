@@ -1,4 +1,4 @@
-const {remove} = require("../../src/node.cjs");
+const {remove} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const three =3;

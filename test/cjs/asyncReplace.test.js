@@ -1,4 +1,4 @@
-const {asyncReplace} = require("../../src/node.cjs");
+const {asyncReplace} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 

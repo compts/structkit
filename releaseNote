@@ -1,1 +1,2 @@
 remove numberFormat
+update package to fix the issue in cjs

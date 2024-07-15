@@ -1,17 +1,19 @@
-import each from './each';
+import each from './each.js';
 
-import toArray from './toArray';
+import toArray from './toArray.js';
 
-import arraySlice from './arraySlice';
+import arraySlice from './arraySlice.js';
 
-import first from './first';
+import first from './first.js';
+
+import curryArg from '../core/curryArg.js';
 
 /**
  * Array Concat
  *
  * @since 1.0.1
  * @category Array
- * @param {...any} arg First array
+ * @param {...any?} arg First array
  * @returns {any[]} Returns the array.
  * @example
  *
@@ -20,24 +22,28 @@ import first from './first';
  */
 function arrayConcat (...arg) {
 
-    const one =1;
+    return curryArg(function (...argsub) {
 
-    if (arg.length < one) {
+        const one =1;
 
-        return [];
+        if (argsub.length < one) {
 
-    }
+            return [];
 
-    let return_val=toArray(first(arg));
-    const arrayValue = toArray(arraySlice(arg, one));
+        }
 
-    each(arrayValue, function (key, value) {
+        let return_val=toArray(first(argsub));
+        const arrayValue = toArray(arraySlice(argsub, one));
 
-        return_val = return_val.concat(toArray(value));
+        each(arrayValue, function (key, value) {
 
-    });
+            return_val = return_val.concat(toArray(value));
 
-    return return_val;
+        });
+
+        return return_val;
+
+    }, arg);
 
 }
 export default arrayConcat;

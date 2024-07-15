@@ -6,3 +6,6 @@ src_old_copy
 compts-labs
 coverage
 dist/web/*
+tsgenerate.sh
+grassfile.js
+

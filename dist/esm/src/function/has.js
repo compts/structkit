@@ -1,25 +1,26 @@
+import _has from '../core/_has.js';
+
+import curryArg from '../core/curryArg.js';
+
 /**
  * Check if object has value or null
  *
  * @since 1.0.1
  * @category Boolean
- * @param {any} value Either JSON or Array
- * @param {any=} key For key or index of data
+ * @param {...any?} args Either JSON or Array
  * @returns {boolean} Returns true or false.
  * @example
  *
  * has({'as':1}, 'as')
  * // => true
  */
-function has (value, key) {
+function has (...args) {
 
-    if (typeof key==="undefined") {
+    return curryArg(function (aa, bb) {
 
-        return value!==null && typeof value !=="undefined";
+        return _has(aa, bb);
 
-    }
-
-    return Object.prototype.hasOwnProperty.call(value, key);
+    }, args);
 
 }
 export default has;

@@ -4,31 +4,30 @@ const has = require('./has');
 
 const each = require('./each');
 
-
 /**
  * Looking the data in JSON and Array base on object value with the help regexp
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} objectValue1 Either Json or array
- * @param {string} objectValue2 use as lookup data in data
+ * @param {any} whereValue Either Json or array
+ * @param {any} objectValue1 use as lookup data in data
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
  * @example
  *
  * isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})
  * // => false
  */
-function isExactbyRegExp (objectValue1, objectValue2) {
+function isExactbyRegExp (whereValue, objectValue1) {
 
     const zero =0;
 
-    if (objectValue2===null) {
+    if (objectValue1 === null) {
 
         return false;
 
     }
 
-    if (getTypeof(objectValue2)!=="json" && getTypeof(objectValue2)!=="string" && getTypeof(objectValue2)!=="regexp" && getTypeof(objectValue2)!=="number") {
+    if (getTypeof(whereValue) !== "json" && getTypeof(whereValue) !== "string" && getTypeof(whereValue) !== "regexp" && getTypeof(whereValue) !== "number") {
 
         return false;
 
@@ -43,22 +42,22 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
     each(key_s, function (kk, kv) {
 
-        if (getTypeof(objectValue2)==="json") {
+        if (getTypeof(whereValue) === "json") {
 
-            if (has(objectValue2[kk])) {
+            if (has(whereValue[kk])) {
 
-                if (getTypeof(objectValue2[kk])==="regexp") {
+                if (getTypeof(whereValue[kk]) === "regexp") {
 
-                    local_is_valid = objectValue2[kk];
+                    local_is_valid = whereValue[kk];
 
                 } else {
 
-                    local_is_valid = new RegExp(objectValue2[kk]);
+                    local_is_valid = new RegExp(whereValue[kk]);
 
                 }
                 if (local_is_valid.test(kv)) {
 
-                    cnt+=incrementDefaultValue;
+                    cnt += incrementDefaultValue;
 
                 }
 
@@ -66,18 +65,18 @@ function isExactbyRegExp (objectValue1, objectValue2) {
 
         } else {
 
-            if (getTypeof(objectValue2)==="regexp") {
+            if (getTypeof(whereValue) === "regexp") {
 
-                local_is_valid = objectValue2;
+                local_is_valid = whereValue;
 
             } else {
 
-                local_is_valid = new RegExp(objectValue2);
+                local_is_valid = new RegExp(whereValue);
 
             }
             if (local_is_valid.test(kv)) {
 
-                cnt+=incrementDefaultValue;
+                cnt += incrementDefaultValue;
 
             }
 

@@ -18,12 +18,13 @@ grassfile copy.js
 grassfile_copy_old.js
 package-lock.json
 .DS_Store
-.DS_Store
 dist/.DS_Store
 dist/cjs/.DS_Store
 dist/.DS_Store
 dist/web/.DS_Store
 .DS_Store
-src/node.cjs.js
+src/node.cjs.copy_js
 coverage
 notes
+note_write.txt
+dist/cjs/structkit-full.cjs_backup.js

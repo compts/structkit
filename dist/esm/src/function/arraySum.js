@@ -1,8 +1,10 @@
-import each from './each';
+import add from './add.js';
 
-import has from './has';
+import {zero} from '../core/defaultValue.js';
 
-import isEmpty from './isEmpty';
+import isEmpty from './isEmpty.js';
+
+import baseReduce from '../core/baseReduce.js';
 
 /**
  * Array Sum
@@ -10,29 +12,22 @@ import isEmpty from './isEmpty';
  * @since 1.0.1
  * @category Math
  * @param {number[]} arrayObject Array in number
- * @param {number=} delimeter decimal point and default value is 4
+ * @param {number=} delimeter decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example
  *
  * arraySum([1,2], 2)
  * // => 3.00
+ * arraySum([1,2])
+ * // => 3
  */
 function arraySum (arrayObject, delimeter) {
 
-    let sum=0;
-    const defaultLimitDecimal = 3;
+    const defaultLimitDecimal = 0;
     const arrayObjects=arrayObject||[];
     const delimeters=delimeter||defaultLimitDecimal;
 
-    each(arrayObjects, function (ak, av) {
-
-        if (has(av)) {
-
-            sum+=parseFloat(av);
-
-        }
-
-    });
+    const sum = baseReduce(zero, arrayObjects, add);
 
     return isEmpty(delimeters)
         ? parseInt(sum)

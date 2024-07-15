@@ -6,7 +6,6 @@ const getData = require('./getData');
 
 const isEmpty = require('./isEmpty');
 
-
 /**
  * Convert Json To Array base on search value you provide
  *
@@ -24,16 +23,13 @@ function jsonToArray (objectValue, value) {
 
     const arry=[];
 
-
     each(objectValue, function (_key, _value) {
 
         if (has(value)) {
 
-
             const valueData = getData(_value, value);
 
-
-            if (isEmpty(valueData) ===false) {
+            if (isEmpty(valueData) === false) {
 
                 arry.push(valueData);
 
