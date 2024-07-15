@@ -2,27 +2,27 @@ import baseCountValidList from '../core/baseCountValidList.js';
 
 import curryArg from '../core/curryArg.js';
 
-import {one, zero} from '../core/defaultValue.js';
+import {one} from '../core/defaultValue.js';
 
 /**
- * In array, you need to check atleast one true
+ * In array, you need to check all value atleast one true
  *
  * @since 1.4.8
  * @category Condition
- * @param {any[]} value First number
+ * @param {...boolean?} arg First number
  * @returns {boolean} Returns true or false.
  * @example
  *
  * someValid(true, false)
  * // => true
  */
-function someValid (value) {
+function someValid (...arg) {
 
-    return curryArg(function (rawValue) {
+    return curryArg(function (...rawValue) {
 
         return baseCountValidList(rawValue);
 
-    }, [value], one) !== zero;
+    }, arg) >= one;
 
 }
 export default someValid;

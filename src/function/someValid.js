@@ -1,26 +1,26 @@
 const baseCountValidList = require("../core/baseCountValidList");
 const curryArg = require("../core/curryArg");
-const {one, zero} = require("../core/defaultValue");
+const {one} = require("../core/defaultValue");
 
 /**
- * In array, you need to check atleast one true
+ * In array, you need to check all value atleast one true
  *
  * @since 1.4.8
  * @category Condition
- * @param {any[]} value First number
+ * @param {...boolean?} arg First number
  * @returns {boolean} Returns true or false.
  * @example
  *
  * someValid(true, false)
  * // => true
  */
-function someValid (value) {
+function someValid (...arg) {
 
-    return curryArg(function (rawValue) {
+    return curryArg(function (...rawValue) {
 
         return baseCountValidList(rawValue);
 
-    }, [value], one) !== zero;
+    }, arg) >= one;
 
 }
 module.exports=someValid;

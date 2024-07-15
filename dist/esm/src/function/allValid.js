@@ -4,27 +4,25 @@ import curryArg from '../core/curryArg.js';
 
 import count from './count.js';
 
-import {one} from '../core/defaultValue.js';
-
 /**
- * In array, you need to check all is true
+ * In array, you need to check all value is true
  *
  * @since 1.4.8
  * @category Condition
- * @param {any[]} value First number
+ * @param {...boolean?} arg First number
  * @returns {boolean} Returns true or false.
  * @example
  *
  * allValid(true, false)
  * // => false
  */
-function allValid (value) {
+function allValid (...arg) {
 
-    return curryArg(function (rawValue) {
+    return curryArg(function (...rawValue) {
 
         return baseCountValidList(rawValue);
 
-    }, [value], one) === count(value);
+    }, arg) === count(arg);
 
 }
 export default allValid;
