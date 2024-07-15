@@ -3,7 +3,7 @@ import map from './map.js';
 import range from './range.js';
 
 /**
- * Repeat  value in array
+ * Repeat value in array
  *
  * @since 1.4.7
  * @category Array

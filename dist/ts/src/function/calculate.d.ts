@@ -11,5 +11,7 @@ export default calculate;
  *
  * calculate('1+1')
  *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
  */
 declare function calculate(formula: string, args?: any | undefined): number;

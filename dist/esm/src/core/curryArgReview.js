@@ -5,7 +5,7 @@ import _has from './_has.js';
 import {one} from './defaultValue.js';
 
 /**
- * Get type of the variable
+ * Reviewing your curry arguments details
  *
  * @since 1.4.8
  * @category String
@@ -13,8 +13,8 @@ import {one} from './defaultValue.js';
  * @returns {string} Get the property of variable
  * @example
  *
- * getTypeofInternal([])
- * => array
+ * curryArgReview([])
+ * => {}
  */
 function curryArgReview (args) {
 

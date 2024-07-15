@@ -3,7 +3,7 @@ import curryArg from '../core/curryArg.js';
 import {two} from '../core/defaultValue.js';
 
 /**
- * Additional
+ * Addition logic
  *
  * @since 1.4.8
  * @category Math

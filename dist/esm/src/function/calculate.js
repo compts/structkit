@@ -30,6 +30,8 @@ import subtract from './subtract.js';
  *
  * calculate('1+1')
  *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
  */
 function calculate (formula, args) {
 

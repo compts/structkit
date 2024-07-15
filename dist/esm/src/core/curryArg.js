@@ -7,17 +7,17 @@ import _has from './_has.js';
 import __ from './__.js';
 
 /**
- * Get type of the variable
+ * Create your curry function
  *
  * @since 1.4.8
- * @category String
+ * @category Function
  * @param {any} fn Any data you want to check its property
  * @param {any[]} args Any data you want to check its property
  * @param {number=} NoDefaultArgs Any data you want to check its property
  * @returns {string} Get the property of variable
  * @example
  *
- * curryArgNone(function(){}, [])
+ * curryArg(function(){}, [])
  * => array
  */
 function curryArg (fn, args, NoDefaultArgs) {
@@ -95,7 +95,7 @@ function curryArg (fn, args, NoDefaultArgs) {
 }
 
 /**
- * Get type of the variable
+ * Check undefined in arguments
  *
  * @since 1.4.8
  * @category String

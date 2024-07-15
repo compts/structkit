@@ -11,5 +11,7 @@ export default arraySum;
  *
  * arraySum([1,2], 2)
  * // => 3.00
+ * arraySum([1,2])
+ * // => 3
  */
 declare function arraySum(arrayObject: number[], delimeter?: number | undefined): number;

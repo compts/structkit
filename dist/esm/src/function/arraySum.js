@@ -18,6 +18,8 @@ import baseReduce from '../core/baseReduce.js';
  *
  * arraySum([1,2], 2)
  * // => 3.00
+ * arraySum([1,2])
+ * // => 3
  */
 function arraySum (arrayObject, delimeter) {
 

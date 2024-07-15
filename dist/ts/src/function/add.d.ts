@@ -1,6 +1,6 @@
 export default add;
 /**
- * Additional
+ * Addition logic
  *
  * @since 1.4.8
  * @category Math

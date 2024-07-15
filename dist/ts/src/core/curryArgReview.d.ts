@@ -1,6 +1,6 @@
 export default curryArgReview;
 /**
- * Get type of the variable
+ * Reviewing your curry arguments details
  *
  * @since 1.4.8
  * @category String
@@ -8,7 +8,7 @@ export default curryArgReview;
  * @returns {string} Get the property of variable
  * @example
  *
- * getTypeofInternal([])
- * => array
+ * curryArgReview([])
+ * => {}
  */
 declare function curryArgReview(args: any[]): string;
