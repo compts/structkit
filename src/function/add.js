@@ -2,7 +2,7 @@ const curryArg = require("../core/curryArg");
 const {two} = require("../core/defaultValue");
 
 /**
- * Additional
+ * Addition logic
  *
  * @since 1.4.8
  * @category Math

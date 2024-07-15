@@ -3,16 +3,16 @@ const {zero, one} = require("./defaultValue");
 
 
 /**
- * Append data for json and array
+ * Counting the true in list of array
  *
  * @since 1.4.8
  * @category Any
- * @param {any[]} objectValue The data either json or array
+ * @param {any[]} objectValue The data is array
  * @returns {any} Returns the total.
  * @example
  *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
+ * baseCountValidList([true,true])
+ * // => 2
  */
 function baseCountValidList (objectValue) {
 

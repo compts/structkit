@@ -3,7 +3,7 @@ const _has = require("./_has");
 const {one} = require("./defaultValue");
 
 /**
- * Get type of the variable
+ * Reviewing your curry arguments details
  *
  * @since 1.4.8
  * @category String
@@ -11,8 +11,8 @@ const {one} = require("./defaultValue");
  * @returns {string} Get the property of variable
  * @example
  *
- * getTypeofInternal([])
- * => array
+ * curryArgReview([])
+ * => {}
  */
 function curryArgReview (args) {
 

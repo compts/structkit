@@ -17,6 +17,8 @@ const baseReduce = require("../core/baseReduce");
  *
  * arraySum([1,2], 2)
  * // => 3.00
+ * arraySum([1,2])
+ * // => 3
  */
 function arraySum (arrayObject, delimeter) {
 

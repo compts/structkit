@@ -17,7 +17,7 @@ const each = require('./each');
  * count([1,2])
  * // => 2
  *
- * count({"s" :1, "s2": 2}, true)
+ * count({"s" :1, "s2": 2}, true)// Counting the object inside, you must this to true
  * // => 2
  */
 function count (objectValue, json_is_empty_check) {

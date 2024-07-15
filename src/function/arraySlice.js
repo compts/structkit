@@ -1,7 +1,5 @@
 const has = require('./has');
-
 const count = require('./count');
-
 const each = require('./each');
 
 /**
