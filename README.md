@@ -2,6 +2,7 @@
 Javascript framework in using functional syntax for programmer.
 
 [![NPM version][npm-image]][npm-url] 
+[![NPM version][npm-ts-image]][npm-url-ts] 
 
 [Site](https://structkit.codehyouka.xyz/) |
 [Docs](https://structkit.codehyouka.xyz/api) |
@@ -17,6 +18,11 @@ To download this JS library and install in your local library
 Using npm to install in your project folder:
 ```shell
 $ npm i structkit
+```
+
+Due to conflict in Typescript and ES, it was decided to separate in separate package for typescript(Still working in progess)
+```shell
+$ npm i structkit-ts
 ```
 
 
@@ -64,7 +70,9 @@ test("1")
 In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit
+[npm-url-ts]: https://www.npmjs.com/package/structkit-ts
 [npm-image]: https://img.shields.io/badge/structkit-1.4.842-brightgreen
+[npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.8-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function
