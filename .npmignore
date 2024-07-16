@@ -7,9 +7,9 @@ src
 compts-labs
 coverage
 dist/web/*
-dist/cjs/structkit-full.cjs_backup.js
 tsgenerate.sh
 grassfile.js
 releaseNote
 notes
 cloverrc.yaml
+note_write.txt
