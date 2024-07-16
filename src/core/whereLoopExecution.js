@@ -1,18 +1,12 @@
 const count = require('../function/count');
-
 const getTypeof = require('../function/getTypeof');
-
 const each = require('../function/each');
-
 const empty = require('../function/empty');
-
 const isExact = require('../function/isExact');
-
 const isExactbyRegExp = require('../function/isExactbyRegExp');
-
 const has = require('../function/has');
-
 const append = require('../function/append');
+const {zero} = require("./defaultValue");
 
 /**
  * Where Loop Execution
@@ -32,7 +26,6 @@ const append = require('../function/append');
  */
 function whereLoopExecution (jsn, whr, func, isExist, types) {
 
-    const zero =0;
 
     const json_convertion = getTypeof(jsn) === "array"
         ? jsn

@@ -15,7 +15,7 @@ __=__p
  * // => true
  */
 
-_stk.__=__
+_stk.__=__;
 
 /**
  * Create a separate has inside core folder
@@ -48,7 +48,6 @@ var one = 1;
 var two = 2;
 var three = 3;
 var four = 4;
-var five = 5;
 var oneHundred = 100;
 
 /**
@@ -241,6 +240,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Addition logic
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number} value2 Second number
+ * @returns {number} Returns true or false.
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null
  *
  * @since 1.0.1
@@ -267,11 +295,6 @@ function has () {
 var objectCallType = {"[object Array]": "object",
     "[object Object]": "object",
     "[object String]": "string"};
-
-var listObjArrayType = [
-    "[object Object]",
-    "[object Array]"
-];
 
 var objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Array]": "array",
@@ -371,7 +394,6 @@ function checkIfFunctionNotExistObject (obj) {
     }
 
     var isValid = false;
-    var zero = 0;
 
     if (getValueType === "[object Object]") {
 
@@ -441,70 +463,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json and array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append
-
 
 /**
  * Each or for loop function you are familiar with
@@ -577,6 +535,66 @@ function each (objectValue, func) {
     }
 
     return null;
+
+}
+
+/**
+ * Base reduce
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @param {any} func The data you want to map
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * baseReduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
+ */
+function baseReduce (defaultValue, listData, func) {
+
+    var that = this;
+
+    each(listData, function (ak, av) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+/**
+ * Counting the true in list of array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any[]} objectValue The data is array
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseCountValidList([true,true])
+ * // => 2
+ */
+function baseCountValidList (objectValue) {
+
+    return baseReduce(zero, objectValue, function (total, value) {
+
+        if (value) {
+
+            return total +one;
+
+        }
+
+        return total;
+
+    });
 
 }
 
@@ -662,6 +680,99 @@ function count (objectValue, json_is_empty_check) {
     return cnt;
 
 }
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Condition
+ * @param {...boolean?} arg First number
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+function allValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) === count(arg);
+
+}
+
+_stk.allValid=allValid;
+
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
 
 /**
  * Index Of array
@@ -808,9 +919,7 @@ function indexOf (objectValue, value) {
  */
 function indexOfNotExist (arrayObject, value) {
 
-    var zero = -1;
-
-    return indexOf(arrayObject, value) === zero;
+    return indexOf(arrayObject, value) === negOne;
 
 }
 
@@ -827,8 +936,6 @@ function indexOfNotExist (arrayObject, value) {
  * => []
  */
 function empty (value) {
-
-    var zero = 0;
 
     if (getTypeofInternal(value) === "json") {
 
@@ -882,10 +989,8 @@ function empty (value) {
  */
 function baseMap (objectValue, func) {
 
-    var emptyDefaultValue=0;
-    var incrementDefaultValue=1;
     var value_arry=empty(objectValue);
-    var cnt=emptyDefaultValue;
+    var cnt=zero;
 
     var that = this;
 
@@ -903,7 +1008,7 @@ function baseMap (objectValue, func) {
             );
 
             value_arry = baseAppend(value_arry, dataFunc, key);
-            cnt += incrementDefaultValue;
+            cnt += one;
 
         }
 
@@ -954,8 +1059,6 @@ function map (objectValue, func) {
  */
 function indexOfExist (arrayObject, value) {
 
-    var zero = 0;
-
     return indexOf(arrayObject, value) >= zero;
 
 }
@@ -974,9 +1077,6 @@ function indexOfExist (arrayObject, value) {
  *=>{"key":1,"value":1}
  */
 function getKeyVal (jsn, typ) {
-
-    var one =1,
-        zero =0;
 
     var ky=[],
         vl=[];
@@ -1062,8 +1162,6 @@ function getTypeof () {
 
     var args=arguments;
 
-    var one = 1;
-
     var getTypes = map(args, function (value) {
 
         return getTypeofInternal(value);
@@ -1114,125 +1212,7 @@ function appendIsArrayExist (arrayObject, value) {
 
 }
 
-_stk.appendIsArrayExist=appendIsArrayExist
-
-
-/**
- * Addition logic
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number} value2 Second number
- * @returns {number} Returns true or false.
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add
-
-
-/**
- * Base reduce
- *
- * @since 1.4.8
- * @category Core
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
- * @returns {number} Returns the total.
- * @example
- *
- * baseReduce(2,[1,2],(total,value)=>total+value)
- * // => 5
- */
-function baseReduce (defaultValue, listData, func) {
-
-    var that = this;
-
-    each(listData, function (ak, av) {
-
-        defaultValue = func.apply(that, [
-            defaultValue,
-            av,
-            ak
-        ]);
-
-    });
-
-    return defaultValue;
-
-}
-
-/**
- * Counting the true in list of array
- *
- * @since 1.4.8
- * @category Any
- * @param {any[]} objectValue The data is array
- * @returns {any} Returns the total.
- * @example
- *
- * baseCountValidList([true,true])
- * // => 2
- */
-function baseCountValidList (objectValue) {
-
-    return baseReduce(zero, objectValue, function (total, value) {
-
-        if (value) {
-
-            return total +one;
-
-        }
-
-        return total;
-
-    });
-
-}
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Condition
- * @param {...boolean?} arg First number
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-function allValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) === count(arg);
-
-}
-
-_stk.allValid=allValid
+_stk.appendIsArrayExist=appendIsArrayExist;
 
 
 /**
@@ -1361,8 +1341,6 @@ function arrayConcat () {
 
     var argsub=arguments;
 
-        var one =1;
-
         if (argsub.length < one) {
 
             return [];
@@ -1384,7 +1362,7 @@ function arrayConcat () {
 
 }
 
-_stk.arrayConcat=arrayConcat
+_stk.arrayConcat=arrayConcat;
 
 
 /**
@@ -1477,7 +1455,9 @@ function arrayRepeat (value, valueRepetion) {
 
 }
 
-_stk.arrayRepeat=arrayRepeat
+_stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -1551,74 +1531,7 @@ function arraySum (arrayObject, delimeter) {
 
 }
 
-_stk.arraySum=arraySum
-
-_stk.arraySlice=arraySlice
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Utility
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace
+_stk.arraySum=arraySum;
 
 
 /**
@@ -1752,7 +1665,72 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 
 }
 
-_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
+_stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat;
+
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Utility
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -1913,7 +1891,6 @@ function compute (formula) {
 
     var regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
     var matches = formula.match(regexpNumber);
-    var limit = 3;
 
     if (count(matches) === one) {
 
@@ -1936,7 +1913,7 @@ function compute (formula) {
 
     }
 
-    if (count(matches) < limit) {
+    if (count(matches) < three) {
 
         throw new Error("Invalid formula");
 
@@ -1945,7 +1922,7 @@ function compute (formula) {
     var counter = zero;
     var result = zero;
 
-    for (var ii = zero; ii<Math.ceil(count(matches)/limit); ii +=one) {
+    for (var ii = zero; ii<Math.ceil(count(matches)/three); ii +=one) {
 
         if (ii === zero) {
 
@@ -2100,7 +2077,7 @@ function convert (a1, b1, pos) {
 
 }
 
-_stk.calculate=calculate
+_stk.calculate=calculate;
 
 
 /**
@@ -2129,9 +2106,9 @@ function clone (objectValue) {
 
 }
 
-_stk.clone=clone
+_stk.clone=clone;
 
-_stk.count=count
+_stk.count=count;
 
 
 /**
@@ -2166,13 +2143,13 @@ function dec (value, default_value) {
 
 }
 
-_stk.dec=dec
+_stk.dec=dec;
 
-_stk.divide=divide
+_stk.divide=divide;
 
-_stk.each=each
+_stk.each=each;
 
-_stk.empty=empty
+_stk.empty=empty;
 
 
 /**
@@ -2201,7 +2178,7 @@ function equal (value1, value2) {
 
 }
 
-_stk.equal=equal
+_stk.equal=equal;
 
 
 /**
@@ -2249,15 +2226,15 @@ function filter (objectValue, func) {
 
 }
 
-_stk.filter=filter
+_stk.filter=filter;
 
-_stk.first=first
+_stk.first=first;
 
-_stk.getData=getData
+_stk.getData=getData;
 
-_stk.getKey=getKey
+_stk.getKey=getKey;
 
-_stk.getTypeof=getTypeof
+_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -2293,7 +2270,7 @@ function getUniq (option) {
 
 }
 
-_stk.getUniq=getUniq
+_stk.getUniq=getUniq;
 
 
 /**
@@ -2314,7 +2291,7 @@ function getValue (objectValue) {
 
 }
 
-_stk.getValue=getValue
+_stk.getValue=getValue;
 
 
 /**
@@ -2357,7 +2334,7 @@ function groupBy (objectValue, func) {
 
 }
 
-_stk.groupBy=groupBy
+_stk.groupBy=groupBy;
 
 
 /**
@@ -2386,7 +2363,7 @@ function gt (value1, value2) {
 
 }
 
-_stk.gt=gt
+_stk.gt=gt;
 
 
 /**
@@ -2415,9 +2392,9 @@ function gte (value1, value2) {
 
 }
 
-_stk.gte=gte
+_stk.gte=gte;
 
-_stk.has=has
+_stk.has=has;
 
 
 /**
@@ -2458,7 +2435,7 @@ function ifUndefined (objectValue, value1, value2) {
 
 }
 
-_stk.ifUndefined=ifUndefined
+_stk.ifUndefined=ifUndefined;
 
 
 /**
@@ -2493,13 +2470,13 @@ function inc (value, default_value) {
 
 }
 
-_stk.inc=inc
+_stk.inc=inc;
 
-_stk.indexOf=indexOf
+_stk.indexOf=indexOf;
 
-_stk.indexOfExist=indexOfExist
+_stk.indexOfExist=indexOfExist;
 
-_stk.indexOfNotExist=indexOfNotExist
+_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -2541,9 +2518,9 @@ function insert (objectValue, value) {
 
 }
 
-_stk.insert=insert
+_stk.insert=insert;
 
-_stk.isEmpty=isEmpty
+_stk.isEmpty=isEmpty;
 
 
 /**
@@ -2701,7 +2678,7 @@ function localValidation (keys, vals, isExist) {
 
 }
 
-_stk.isExact=isExact
+_stk.isExact=isExact;
 
 
 /**
@@ -2788,9 +2765,9 @@ function isExactbyRegExp (whereValue, objectValue1) {
 
 }
 
-_stk.isExactbyRegExp=isExactbyRegExp
+_stk.isExactbyRegExp=isExactbyRegExp;
 
-_stk.isJson=isJson
+_stk.isJson=isJson;
 
 
 /**
@@ -2834,7 +2811,7 @@ function jsonToArray (objectValue, value) {
 
 }
 
-_stk.jsonToArray=jsonToArray
+_stk.jsonToArray=jsonToArray;
 
 
 /**
@@ -2855,7 +2832,7 @@ function last (objectValue) {
 
 }
 
-_stk.last=last
+_stk.last=last;
 
 
 /**
@@ -2881,7 +2858,7 @@ function lastIndexOf (objectValue, value) {
 
 }
 
-_stk.lastIndexOf=lastIndexOf
+_stk.lastIndexOf=lastIndexOf;
 
 
 /**
@@ -2901,8 +2878,6 @@ _stk.lastIndexOf=lastIndexOf
  *=>{"s1":1,"s2":1}
  */
 function whereLoopExecution (jsn, whr, func, isExist, types) {
-
-    var zero =0;
 
     var json_convertion = getTypeof(jsn) === "array"
         ? jsn
@@ -2982,36 +2957,7 @@ function like (objectValue, objectValueWhere, func) {
 
 }
 
-_stk.like=like
-
-
-/**
- *  To check if its less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt
+_stk.like=like;
 
 
 /**
@@ -3073,7 +3019,36 @@ function limit (objectValue, minValue, maxValue, func) {
 
 }
 
-_stk.limit=limit
+_stk.limit=limit;
+
+
+/**
+ *  To check if its less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -3102,9 +3077,11 @@ function lte (value1, value2) {
 
 }
 
-_stk.lte=lte
+_stk.lte=lte;
 
-_stk.map=map
+_stk.map=map;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -3133,9 +3110,7 @@ function noteq (value1, value2) {
 
 }
 
-_stk.noteq=noteq
-
-_stk.multiply=multiply
+_stk.noteq=noteq;
 
 
 /**
@@ -3317,7 +3292,7 @@ ClassDelay.prototype.cancel = function () {
 
 };
 
-_stk.onDelay=onDelay
+_stk.onDelay=onDelay;
 
 
 /**
@@ -3395,7 +3370,7 @@ ClassSequence.prototype.cancel = function () {
 
 };
 
-_stk.onSequence=onSequence
+_stk.onSequence=onSequence;
 
 var getWindow = function () {
 
@@ -3490,7 +3465,7 @@ function onWait (func, wait) {
 
 }
 
-_stk.onWait=onWait
+_stk.onWait=onWait;
 
 
 /**
@@ -3639,7 +3614,7 @@ function parseJson (value) {
 
 }
 
-_stk.parseJson=parseJson
+_stk.parseJson=parseJson;
 
 
 /**
@@ -3786,7 +3761,7 @@ function parseString (value) {
 
 }
 
-_stk.parseString=parseString
+_stk.parseString=parseString;
 
 
 /**
@@ -3829,9 +3804,9 @@ function random (valueArray, minValue, maxValue) {
 
 }
 
-_stk.random=random
+_stk.random=random;
 
-_stk.range=range
+_stk.range=range;
 
 
 /**
@@ -3868,7 +3843,7 @@ function reduce (defaultValue, listData, func) {
 
 }
 
-_stk.reduce=reduce
+_stk.reduce=reduce;
 
 
 /**
@@ -3891,7 +3866,7 @@ function regexCountGroup (value) {
 
 }
 
-_stk.regexCountGroup=regexCountGroup
+_stk.regexCountGroup=regexCountGroup;
 
 
 /**
@@ -3993,7 +3968,7 @@ function remove (objectValue, value, value2) {
 
 }
 
-_stk.remove=remove
+_stk.remove=remove;
 
 
 /**
@@ -4019,7 +3994,7 @@ function repeat (value, valueRepetion) {
 
 }
 
-_stk.repeat=repeat
+_stk.repeat=repeat;
 
 
 /**
@@ -4062,7 +4037,7 @@ function roundDecimal (value, maxValue) {
 
 }
 
-_stk.roundDecimal=roundDecimal
+_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -4115,7 +4090,7 @@ function shuffle (objectValue) {
 
 }
 
-_stk.shuffle=shuffle
+_stk.shuffle=shuffle;
 
 
 /**
@@ -4144,7 +4119,7 @@ function someValid () {
 
 }
 
-_stk.someValid=someValid
+_stk.someValid=someValid;
 
 
 /**
@@ -4236,7 +4211,7 @@ function sort (objectValue, order, func) {
 
 }
 
-_stk.sort=sort
+_stk.sort=sort;
 /**
  * Split string for special cases
  *
@@ -4283,7 +4258,7 @@ function stringCamelCase (value) {
 
 }
 
-_stk.stringCamelCase=stringCamelCase
+_stk.stringCamelCase=stringCamelCase;
 
 
 /**
@@ -4321,7 +4296,7 @@ function stringCapitalize (value, option) {
 
 }
 
-_stk.stringCapitalize=stringCapitalize
+_stk.stringCapitalize=stringCapitalize;
 
 
 /**
@@ -4363,7 +4338,7 @@ function stringEscape (value, type) {
 
 }
 
-_stk.stringEscape=stringEscape
+_stk.stringEscape=stringEscape;
 
 
 /**
@@ -4386,7 +4361,7 @@ function stringKebabCase (value) {
 
 }
 
-_stk.stringKebabCase=stringKebabCase
+_stk.stringKebabCase=stringKebabCase;
 
 
 /**
@@ -4407,7 +4382,7 @@ function stringLowerCase (value) {
 
 }
 
-_stk.stringLowerCase=stringLowerCase
+_stk.stringLowerCase=stringLowerCase;
 
 
 /**
@@ -4430,7 +4405,7 @@ function stringSnakeCase (value) {
 
 }
 
-_stk.stringSnakeCase=stringSnakeCase
+_stk.stringSnakeCase=stringSnakeCase;
 
 
 /**
@@ -4459,9 +4434,9 @@ function stringSubs (value, minValue, maxValue) {
 
 }
 
-_stk.stringSubs=stringSubs
+_stk.stringSubs=stringSubs;
 
-_stk.stringUnEscape=stringUnEscape
+_stk.stringUnEscape=stringUnEscape;
 
 
 /**
@@ -4482,9 +4457,9 @@ function stringUpperCase (value) {
 
 }
 
-_stk.stringUpperCase=stringUpperCase
+_stk.stringUpperCase=stringUpperCase;
 
-_stk.subtract=subtract
+_stk.subtract=subtract;
 
 
 /**
@@ -4664,7 +4639,9 @@ function templateValueInternal (str_raw, reg) {
 
 }
 
-_stk.templateValue=templateValue
+_stk.templateValue=templateValue;
+
+_stk.toArray=toArray;
 
 
 /**
@@ -4708,35 +4685,6 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
- * To extract number in string and convert to integer
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger
-
-_stk.toString=toString
-
-_stk.toArray=toArray
-
-
-/**
  * To extract number in string and convert to double
  *
  * @since 1.0.1
@@ -4758,7 +4706,34 @@ function toDouble (value) {
 
 }
 
-_stk.toDouble=toDouble
+_stk.toDouble=toDouble;
+
+
+/**
+ * To extract number in string and convert to integer
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger;
+
+_stk.toString=toString;
 
 
 /**
@@ -4779,7 +4754,7 @@ function trim (value) {
 
 }
 
-_stk.trim=trim
+_stk.trim=trim;
 
 
 /**
@@ -4818,11 +4793,11 @@ function unique (value) {
 
 }
 
-_stk.unique=unique
+_stk.unique=unique;
 
-_stk.varExtend=varExtend
+_stk.varExtend=varExtend;
 
-_stk.where=where
+_stk.where=where;
 
 
 /**
@@ -4847,6 +4822,7 @@ function whereNot (objectValue, objectValueWhere, func) {
 
 }
 
-_stk.whereNot=whereNot
+_stk.whereNot=whereNot;
 
-})(typeof window !== "undefined" ? window : this);
+
+ })(typeof window !== "undefined" ? window : this);

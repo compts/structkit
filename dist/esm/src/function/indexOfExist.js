@@ -1,5 +1,7 @@
 import indexOf from './indexOf.js';
 
+import {zero} from '../core/defaultValue.js';
+
 /**
  * Check index of array is Exist or not
  *
@@ -14,8 +16,6 @@ import indexOf from './indexOf.js';
  * // => false
  */
 function indexOfExist (arrayObject, value) {
-
-    const zero = 0;
 
     return indexOf(arrayObject, value) >= zero;
 

@@ -1,5 +1,7 @@
 const has = require('./has');
 const {objectCallType} = require("../variable/types");
+const {zero} = require("../core/defaultValue");
+
 
 /**
  * Is Json valid
@@ -83,7 +85,6 @@ function checkIfFunctionNotExistObject (obj) {
     }
 
     let isValid = false;
-    const zero = 0;
 
     if (getValueType === "[object Object]") {
 

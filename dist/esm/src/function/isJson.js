@@ -2,6 +2,8 @@ import has from './has.js';
 
 import {objectCallType} from '../variable/types.js';
 
+import {zero} from '../core/defaultValue.js';
+
 /**
  * Is Json valid
  *
@@ -84,7 +86,6 @@ function checkIfFunctionNotExistObject (obj) {
     }
 
     let isValid = false;
-    const zero = 0;
 
     if (getValueType === "[object Object]") {
 

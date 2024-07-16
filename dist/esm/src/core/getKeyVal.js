@@ -1,5 +1,7 @@
 import indexOfExist from '../function/indexOfExist.js';
 
+import {zero, one} from '../core/defaultValue.js';
+
 import each from '../function/each.js';
 
 import count from '../function/count.js';
@@ -18,9 +20,6 @@ import count from '../function/count.js';
  *=>{"key":1,"value":1}
  */
 function getKeyVal (jsn, typ) {
-
-    const one =1,
-        zero =0;
 
     const ky=[],
         vl=[];

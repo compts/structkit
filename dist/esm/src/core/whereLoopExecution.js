@@ -14,6 +14,8 @@ import has from '../function/has.js';
 
 import append from '../function/append.js';
 
+import {zero} from './defaultValue.js';
+
 /**
  * Where Loop Execution
  *
@@ -31,8 +33,6 @@ import append from '../function/append.js';
  *=>{"s1":1,"s2":1}
  */
 function whereLoopExecution (jsn, whr, func, isExist, types) {
-
-    const zero =0;
 
     const json_convertion = getTypeof(jsn) === "array"
         ? jsn

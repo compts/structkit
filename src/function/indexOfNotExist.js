@@ -1,4 +1,5 @@
 const indexOf = require('./indexOf');
+const {negOne} = require("../core/defaultValue");
 
 /**
  * Check index of array Not or exist
@@ -15,9 +16,7 @@ const indexOf = require('./indexOf');
  */
 function indexOfNotExist (arrayObject, value) {
 
-    const zero = -1;
-
-    return indexOf(arrayObject, value) === zero;
+    return indexOf(arrayObject, value) === negOne;
 
 }
 module.exports=indexOfNotExist;

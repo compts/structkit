@@ -1,5 +1,5 @@
 const indexOfExist = require('../function/indexOfExist');
-
+const {zero, one} = require("../core/defaultValue");
 const each = require('../function/each');
 
 const count = require('../function/count');
@@ -18,9 +18,6 @@ const count = require('../function/count');
  *=>{"key":1,"value":1}
  */
 function getKeyVal (jsn, typ) {
-
-    const one =1,
-        zero =0;
 
     const ky=[],
         vl=[];

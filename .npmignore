@@ -10,4 +10,5 @@ dist/web/*
 dist/cjs/structkit-full.cjs_backup.js
 tsgenerate.sh
 grassfile.js
-
+releaseNote
+notes

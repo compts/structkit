@@ -3,6 +3,8 @@ const toArray = require('./toArray');
 const arraySlice = require('./arraySlice');
 const first = require('./first');
 const curryArg = require("../core/curryArg");
+const {one} = require("../core/defaultValue");
+
 
 /**
  * Array Concat
@@ -19,8 +21,6 @@ const curryArg = require("../core/curryArg");
 function arrayConcat (...arg) {
 
     return curryArg(function (...argsub) {
-
-        const one =1;
 
         if (argsub.length < one) {
 
