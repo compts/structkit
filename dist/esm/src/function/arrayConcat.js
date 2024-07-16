@@ -8,6 +8,8 @@ import first from './first.js';
 
 import curryArg from '../core/curryArg.js';
 
+import {one} from '../core/defaultValue.js';
+
 /**
  * Array Concat
  *
@@ -23,8 +25,6 @@ import curryArg from '../core/curryArg.js';
 function arrayConcat (...arg) {
 
     return curryArg(function (...argsub) {
-
-        const one =1;
 
         if (argsub.length < one) {
 

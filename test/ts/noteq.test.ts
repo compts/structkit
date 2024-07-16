@@ -3,7 +3,7 @@ import assert from 'assert';
 import {expectType} from 'tsd';
 
 
-describe('ESM: noteq method', function () {
+describe('TS: noteq method', function () {
 
     it('check if noteq value is false', function () {
 

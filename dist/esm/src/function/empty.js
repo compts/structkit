@@ -1,5 +1,7 @@
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
+import {zero} from '../core/defaultValue.js';
+
 /**
  * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
  *
@@ -13,8 +15,6 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
  * => []
  */
 function empty (value) {
-
-    const zero = 0;
 
     if (getTypeofInternal(value) === "json") {
 

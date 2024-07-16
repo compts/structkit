@@ -2,11 +2,6 @@ const objectCallType = {"[object Array]": "object",
     "[object Object]": "object",
     "[object String]": "string"};
 
-const listObjArrayType = [
-    "[object Object]",
-    "[object Array]"
-];
-
 const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Array]": "array",
     "[object Boolean]": "boolean",
@@ -23,4 +18,4 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Uint8Array]": "uint8Array",
     "[object Undefined]": "undefined"};
 
-export {objectCallType,objectCallTypeAll,listObjArrayType};
+export {objectCallType,objectCallTypeAll};

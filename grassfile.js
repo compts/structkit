@@ -65,6 +65,7 @@ function isTypeFunction (objectCallTypeAll, suffix) {
 exports.module=function (grassconf) {
 
     const grass_concat = grassconf.require("grass_concat");
+    const {convertIifeFunction} = grassconf.require("pack-extract");
 
     const packpier = grassconf.require("packpier");
 
@@ -216,21 +217,35 @@ exports.module=function (grassconf) {
                     }
                 ]
             }
-        )
-            .pipe(grass_concat("dist/web/structkit-full.iife.js", {
+        ).pipe(grassconf.streamPipe(function (data) {
+
+            let getData = data.readData();
+
+
+            getData = getData.replace("(function(global){\nglobal._stk={};", "const _stk = exports;");
+
+            getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "\n //end of file");
+            data.writeData(getData);
+            data.done();
+
+        }))
+            .pipe(grass_concat("dist/cjs/structkit-full.cjs.js", {
                 "istruncate": true
             }))
+
             .pipe(grassconf.streamPipe(function (data) {
 
                 let getData = data.readData();
 
-                getData = getData.replace("(function(global){\nglobal._stk={};", "var _stk = exports;");
-                getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "");
+                getData = convertIifeFunction(getData, true);
+                getData = getData.replace("const _stk = exports;", "(function(global){\nglobal._stk={};");
+                getData = getData.replace("//end of file", '})(typeof window !== "undefined" ? window : this);');
+                getData = getData.replace(/([\s\n\r\t]{0,})(const|let)\s{1,}/g, "$1var ");
                 data.writeData(getData);
                 data.done();
 
             }))
-            .pipe(grass_concat("dist/cjs/structkit-full.cjs.js", {
+            .pipe(grass_concat("dist/web/structkit-full.iife.js", {
                 "istruncate": true
             }));
 
@@ -241,6 +256,7 @@ exports.module=function (grassconf) {
 exports.execute=function (lib) {
 
     lib.default=function (strm) {
+
 
         strm.series("web_iife");
         strm.series("esm");

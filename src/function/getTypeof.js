@@ -3,6 +3,7 @@ const map = require("./map");
 const first = require("./first");
 const count = require("./count");
 const {getTypeofInternal} = require('../core/getTypeOf');
+const {one} = require("../core/defaultValue");
 
 /**
  * Get type of the variable
@@ -19,8 +20,6 @@ const {getTypeofInternal} = require('../core/getTypeOf');
  * => [array,json]
  */
 function getTypeof (...args) {
-
-    const one = 1;
 
     const getTypes = map(args, function (value) {
 

@@ -72,7 +72,6 @@ function compute (formula) {
 
     const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
     let matches = formula.match(regexpNumber);
-    const limit = 3;
 
     if (count(matches) === one) {
 
@@ -95,7 +94,7 @@ function compute (formula) {
 
     }
 
-    if (count(matches) < limit) {
+    if (count(matches) < three) {
 
         throw new Error("Invalid formula");
 
@@ -104,7 +103,7 @@ function compute (formula) {
     let counter = zero;
     let result = zero;
 
-    for (let ii = zero; ii<Math.ceil(count(matches)/limit); ii +=one) {
+    for (let ii = zero; ii<Math.ceil(count(matches)/three); ii +=one) {
 
         if (ii === zero) {
 

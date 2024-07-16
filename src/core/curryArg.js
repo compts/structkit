@@ -93,7 +93,7 @@ function curryArg (fn, args, NoDefaultArgs) {
 }
 
 /**
- * Check undefined in arguments
+ * Count undefined in arguments
  *
  * @since 1.4.8
  * @category String
@@ -102,8 +102,8 @@ function curryArg (fn, args, NoDefaultArgs) {
  * @returns {string} Get the property of variable
  * @example
  *
- * curryArgNone(function(){}, [])
- * => array
+ * argumentUndefinedCounter([])
+ * => 0
  */
 function argumentUndefinedCounter (args) {
 

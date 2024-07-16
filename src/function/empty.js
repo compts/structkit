@@ -1,4 +1,5 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
+const {zero} = require("../core/defaultValue");
 
 /**
  * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
@@ -14,7 +15,6 @@ const {getTypeofInternal} = require('../core/getTypeOf');
  */
 function empty (value) {
 
-    const zero = 0;
 
     if (getTypeofInternal(value) === "json") {
 

@@ -2,6 +2,7 @@ const has = require('./_has');
 const each = require('../function/each');
 const empty = require('../function/empty');
 const baseAppend = require("./baseAppend");
+const {zero, one} = require("./defaultValue");
 
 
 /**
@@ -19,10 +20,8 @@ const baseAppend = require("./baseAppend");
  */
 function baseMap (objectValue, func) {
 
-    const emptyDefaultValue=0;
-    const incrementDefaultValue=1;
     let value_arry=empty(objectValue);
-    let cnt=emptyDefaultValue;
+    let cnt=zero;
 
     const that = this;
 
@@ -40,7 +39,7 @@ function baseMap (objectValue, func) {
             );
 
             value_arry = baseAppend(value_arry, dataFunc, key);
-            cnt += incrementDefaultValue;
+            cnt += one;
 
         }
 

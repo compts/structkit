@@ -64,7 +64,7 @@ test("1")
 In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.8-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.8.1-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function
@@ -86,5 +86,5 @@ arraySlice([1,2],1)// [2]
 
 [get sum of array](#get-sum-of-array)
 ``` javascript
-arraySum([1,2])// 3.00
+arraySum([1,2])// 3
 ```

@@ -6,6 +6,8 @@ import empty from '../function/empty.js';
 
 import baseAppend from './baseAppend.js';
 
+import {zero, one} from './defaultValue.js';
+
 /**
  * To map the value of json or array
  *
@@ -21,10 +23,8 @@ import baseAppend from './baseAppend.js';
  */
 function baseMap (objectValue, func) {
 
-    const emptyDefaultValue=0;
-    const incrementDefaultValue=1;
     let value_arry=empty(objectValue);
-    let cnt=emptyDefaultValue;
+    let cnt=zero;
 
     const that = this;
 
@@ -42,7 +42,7 @@ function baseMap (objectValue, func) {
             );
 
             value_arry = baseAppend(value_arry, dataFunc, key);
-            cnt += incrementDefaultValue;
+            cnt += one;
 
         }
 

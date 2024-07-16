@@ -5,7 +5,7 @@ import {expectType} from 'tsd';
 const one =1;
 const two =2;
 
-describe('ESM: less than equal method', function () {
+describe('TS: less than equal method', function () {
 
     it('check if less than equal value is true', function () {
 

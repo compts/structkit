@@ -7,6 +7,8 @@ import count from './count.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
+import {one} from '../core/defaultValue.js';
+
 /**
  * Get type of the variable
  *
@@ -22,8 +24,6 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
  * => [array,json]
  */
 function getTypeof (...args) {
-
-    const one = 1;
 
     const getTypes = map(args, function (value) {
 
