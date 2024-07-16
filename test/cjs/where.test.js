@@ -1,5 +1,7 @@
-const {where} = require("../../dist/cjs/structkit-full.cjs");
+const {where, lt} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
+
+const one = 1;
 
 describe('CJS: where method', function () {
 
@@ -26,6 +28,21 @@ describe('CJS: where method', function () {
 
     });
 
+    it('check if value is less', function () {
+
+        assert.deepStrictEqual(where(
+            [
+                {"d": 1},
+                {"d": 2}
+            ],
+            {"d": lt(one)}
+        ), [
+            {
+                "d": 2
+            }
+        ]);
+
+    });
 
 });
 

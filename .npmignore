@@ -3,9 +3,11 @@ test
 notes
 node_modules
 src_old_copy
+src
 compts-labs
 coverage
 dist/web/*
+dist/cjs/structkit-full.cjs_backup.js
 tsgenerate.sh
 grassfile.js
 

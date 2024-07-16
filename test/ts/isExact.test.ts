@@ -1,7 +1,8 @@
 
-import {isExact} from "../../dist/esm/node.esm";
+import {isExact ,lt} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
+const one = 1;
 
 describe('TS: isExact method', function () {
 
@@ -18,6 +19,17 @@ describe('TS: isExact method', function () {
         "test2": 11}, true));
     });
 
+
+    it('check if value is less', function () {
+
+        assert.deepStrictEqual(isExact(
+
+            {"d": 2},
+
+            {"d": lt(one)}
+        ), true);
+
+    });
 
     it('check if repetion is correct', function () {
 

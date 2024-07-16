@@ -6,20 +6,24 @@ const {two} = require("../core/defaultValue");
  *
  * @since 1.4.8
  * @category Boolean
- * @param {...any?} args Either JSON or Array
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
  * @returns {boolean} Returns true or false.
  * @example
  *
  * lte(1, 2)
  * // => true
  */
-function lte (...args) {
+function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
         return aa <= bb;
 
-    }, args, two);
+    }, [
+        value1,
+        value2
+    ], two);
 
 }
 module.exports=lte;

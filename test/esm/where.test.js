@@ -1,6 +1,7 @@
 
-import {where} from "../../dist/esm/node.esm";
+import {where, lt} from "../../dist/esm/node.esm";
 import assert from 'assert';
+const one =1;
 
 describe('ESM: where method', function () {
 
@@ -27,5 +28,20 @@ describe('ESM: where method', function () {
 
     });
 
+    it('check if value is less', function () {
+
+        assert.deepStrictEqual(where(
+            [
+                {"d": 1},
+                {"d": 2}
+            ],
+            {"d": lt(one)}
+        ), [
+            {
+                "d": 2
+            }
+        ]);
+
+    });
 
 });

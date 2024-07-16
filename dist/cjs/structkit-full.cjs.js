@@ -240,35 +240,6 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
- * Addition logic
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number} value2 Second number
- * @returns {number} Returns true or false.
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add
-
-
-/**
  * Check if object has value or null
  *
  * @since 1.0.1
@@ -469,6 +440,70 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append
+
 
 /**
  * Each or for loop function you are familiar with
@@ -832,39 +867,6 @@ function empty (value) {
 }
 
 /**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1115,6 +1117,124 @@ _stk.appendIsArrayExist=appendIsArrayExist
 
 
 /**
+ * Addition logic
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number} value2 Second number
+ * @returns {number} Returns true or false.
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add
+
+
+/**
+ * Base reduce
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @param {any} func The data you want to map
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * baseReduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
+ */
+function baseReduce (defaultValue, listData, func) {
+
+    var that = this;
+
+    each(listData, function (ak, av) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+/**
+ * Counting the true in list of array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any[]} objectValue The data is array
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseCountValidList([true,true])
+ * // => 2
+ */
+function baseCountValidList (objectValue) {
+
+    return baseReduce(zero, objectValue, function (total, value) {
+
+        if (value) {
+
+            return total +one;
+
+        }
+
+        return total;
+
+    });
+
+}
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Condition
+ * @param {...boolean?} arg First number
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+function allValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) === count(arg);
+
+}
+
+_stk.allValid=allValid
+
+
+/**
  * To Array
  *
  * @since 1.0.1
@@ -1267,126 +1387,6 @@ _stk.arrayConcat=arrayConcat
 
 
 /**
- * Append data for json and array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append
-
-
-/**
- * Base reduce
- *
- * @since 1.4.8
- * @category Core
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
- * @returns {number} Returns the total.
- * @example
- *
- * baseReduce(2,[1,2],(total,value)=>total+value)
- * // => 5
- */
-function baseReduce (defaultValue, listData, func) {
-
-    var that = this;
-
-    each(listData, function (ak, av) {
-
-        defaultValue = func.apply(that, [
-            defaultValue,
-            av,
-            ak
-        ]);
-
-    });
-
-    return defaultValue;
-
-}
-
-/**
- * Counting the true in list of array
- *
- * @since 1.4.8
- * @category Any
- * @param {any[]} objectValue The data is array
- * @returns {any} Returns the total.
- * @example
- *
- * baseCountValidList([true,true])
- * // => 2
- */
-function baseCountValidList (objectValue) {
-
-    return baseReduce(zero, objectValue, function (total, value) {
-
-        if (value) {
-
-            return total +one;
-
-        }
-
-        return total;
-
-    });
-
-}
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Condition
- * @param {...boolean?} arg First number
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-function allValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) === count(arg);
-
-}
-
-_stk.allValid=allValid
-
-
-/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -1478,8 +1478,6 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat
 
-_stk.arraySlice=arraySlice
-
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -1553,6 +1551,73 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum
+
+_stk.arraySlice=arraySlice
+
+
+/**
+ * Async replace
+ *
+ * @since 1.3.1
+ * @category Utility
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace
 
 
 /**
@@ -1687,71 +1752,6 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
 }
 
 _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Utility
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace
 
 
 /**
@@ -2130,6 +2130,8 @@ function clone (objectValue) {
 
 _stk.clone=clone
 
+_stk.count=count
+
 
 /**
  * Decrement value
@@ -2167,11 +2169,38 @@ _stk.dec=dec
 
 _stk.divide=divide
 
-_stk.count=count
-
 _stk.each=each
 
 _stk.empty=empty
+
+
+/**
+ * To check if its equal
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * equal('as', 'as')
+ * // => true
+ */
+function equal (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa === bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.equal=equal
 
 
 /**
@@ -2267,35 +2296,6 @@ _stk.getUniq=getUniq
 
 
 /**
- * To check if its equal
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Either JSON or Array
- * @param {any} value2 Either JSON or Array
- * @returns {boolean} Returns true or false.
- * @example
- *
- * equal('as', 'as')
- * // => true
- */
-function equal (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa === bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.equal=equal
-
-
-/**
  * Get value of json or array
  *
  * @since 1.0.1
@@ -2364,8 +2364,8 @@ _stk.groupBy=groupBy
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Either JSON or Array
- * @param {any} value2 Either JSON or Array
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -2393,8 +2393,8 @@ _stk.gt=gt
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Either JSON or Array
- * @param {any} value2 Either JSON or Array
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -2564,74 +2564,36 @@ _stk.isEmpty=isEmpty
  */
 function isExact (whereValue, objectValue1, isExist) {
 
-    if (objectValue1 === null) {
+    return curryArg(function (rawWhereValue, rawObjectValue1, rawIsExist) {
 
-        return false;
+        if (rawObjectValue1 === null) {
 
-    }
-
-    var local_is_exist=has(isExist)&&getTypeofInternal(isExist) === "boolean"
-        ?isExist
-        :true;
-    var val_s=(/(json|array|object)/g).test(getTypeofInternal(whereValue))
-        ?whereValue
-        :[whereValue];
-    var key_s=(/(json|array|object)/g).test(getTypeofInternal(objectValue1))
-        ?objectValue1
-        :[objectValue1];
-    var cnt=0;
-    var incrementDefaultValue=1;
-    var notExistArrayDefaultValue=-1;
-
-    each(key_s, function (kk, kv) {
-
-        if (getTypeofInternal(whereValue) === "json") {
-
-            if (has(val_s, kk)) {
-
-                var local_is_valid = local_is_exist
-                    ?val_s[kk] === kv
-                    :val_s[kk] !== kv;
-
-                if (local_is_valid) {
-
-                    cnt += incrementDefaultValue;
-
-                }
-
-            }
+            return false;
 
         }
 
-        if (getTypeofInternal(whereValue) === "array") {
+        var local_is_exist=has(rawIsExist)&&getTypeofInternal(rawIsExist) === "boolean"
+            ?rawIsExist
+            :true;
+        var val_s=(/(json|array|object)/g).test(getTypeofInternal(rawWhereValue))
+            ?rawWhereValue
+            :[rawWhereValue];
+        var key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
+            ?rawObjectValue1
+            :[rawObjectValue1];
+        var cnt=0;
+        var incrementDefaultValue=1;
 
-            var local_is_valid = local_is_exist
-                ?indexOf(val_s, kv)>notExistArrayDefaultValue
-                :indexOf(val_s, kv) === notExistArrayDefaultValue;
+        each(key_s, function (kk, kv) {
 
-            if (local_is_valid) {
+            if (indexOfExist([
+                "json",
+                "object"
+            ], getTypeofInternal(rawWhereValue))) {
 
-                cnt += incrementDefaultValue;
+                if (has(val_s, kk)) {
 
-            }
-
-        }
-
-    });
-
-    if (isEmpty(cnt)) {
-
-        each(val_s, function (kk, kv) {
-
-            if (getTypeofInternal(whereValue) === "json") {
-
-                var gdata = getData(key_s, kk);
-
-                if (!isEmpty(gdata)) {
-
-                    var local_is_valid = local_is_exist
-                        ?gdata === kv
-                        :gdata !== kv;
+                    var local_is_valid = localValidation(val_s[kk], kv, local_is_exist);
 
                     if (local_is_valid) {
 
@@ -2643,11 +2605,98 @@ function isExact (whereValue, objectValue1, isExist) {
 
             }
 
+            if (getTypeofInternal(rawWhereValue) === "array") {
+
+                var local_is_valid = local_is_exist
+                    ?indexOfExist(val_s, kv)
+                    :indexOfNotExist(val_s, kv);
+
+                if (local_is_valid) {
+
+                    cnt += incrementDefaultValue;
+
+                }
+
+            }
+
         });
+
+        if (isEmpty(cnt)) {
+
+            each(val_s, function (kk, kv) {
+
+                if (indexOfExist([
+                    "json",
+                    "object"
+                ], getTypeofInternal(rawWhereValue))) {
+
+                    var gdata = getData(key_s, kk);
+
+                    if (!isEmpty(gdata)) {
+
+                        var local_is_valid = localValidation(gdata, kv, local_is_exist);
+
+                        if (local_is_valid) {
+
+                            cnt += incrementDefaultValue;
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+        return cnt === count(rawWhereValue);
+
+    }, [
+        whereValue,
+        objectValue1,
+        isExist
+    ], two);
+
+}
+
+/**
+ * Check the value if equal to each value
+ *
+ * @since 1.4.8.1
+ * @category Collection
+ * @param {any} keys string or number
+ * @param {any} vals string, number or function
+ * @param {boolean=} isExist Default value is True
+ * @returns {boolean} Returns the boolean if the has the value you are looking at.
+ * @example
+ *
+ * localValidation("as","as",true)
+ * // => true
+ * localValidation("as","as",false)
+ * // => false
+ */
+function localValidation (keys, vals, isExist) {
+
+    if (isExist) {
+
+        if (getTypeofInternal(vals) === "function") {
+
+            return vals(keys);
+
+        }
+
+        return keys === vals;
 
     }
 
-    return cnt === count(whereValue);
+    if (getTypeofInternal(vals) === "function") {
+
+        return vals(keys) === false;
+
+    }
+
+    return keys !== vals;
 
 }
 
@@ -2744,6 +2793,50 @@ _stk.isJson=isJson
 
 
 /**
+ * Convert Json To Array base on search value you provide
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {boolean} Returns Array
+ * @example
+ *
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
+ */
+function jsonToArray (objectValue, value) {
+
+    var arry=[];
+
+    each(objectValue, function (_key, _value) {
+
+        if (has(value)) {
+
+            var valueData = getData(_value, value);
+
+            if (isEmpty(valueData) === false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
+
+}
+
+_stk.jsonToArray=jsonToArray
+
+
+/**
  * Get the last value of array or JSON
  *
  * @since 1.0.1
@@ -2788,50 +2881,6 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf
-
-
-/**
- * Convert Json To Array base on search value you provide
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Json
- * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
- * @example
- *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
- * => [2, 3]
- */
-function jsonToArray (objectValue, value) {
-
-    var arry=[];
-
-    each(objectValue, function (_key, _value) {
-
-        if (has(value)) {
-
-            var valueData = getData(_value, value);
-
-            if (isEmpty(valueData) === false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
-
-_stk.jsonToArray=jsonToArray
 
 
 /**
@@ -2940,8 +2989,8 @@ _stk.like=like
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Either JSON or Array
- * @param {any} value2 Either JSON or Array
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -3031,22 +3080,24 @@ _stk.limit=limit
  *
  * @since 1.4.8
  * @category Boolean
- * @param {...any?} args Either JSON or Array
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
  * @returns {boolean} Returns true or false.
  * @example
  *
  * lte(1, 2)
  * // => true
  */
-function lte () {
-
-    var args=arguments;
+function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
         return aa <= bb;
 
-    }, args, two);
+    }, [
+        value1,
+        value2
+    ], two);
 
 }
 
@@ -3082,6 +3133,8 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq
+
+_stk.multiply=multiply
 
 
 /**
@@ -3437,8 +3490,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait
-
-_stk.multiply=multiply
 
 
 /**
@@ -4235,6 +4286,44 @@ _stk.stringCamelCase=stringCamelCase
 
 
 /**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize
+
+
+/**
  * String Escape
  *
  * @since 1.3.1
@@ -4297,44 +4386,6 @@ function stringKebabCase (value) {
 }
 
 _stk.stringKebabCase=stringKebabCase
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function stringCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize
 
 
 /**
@@ -4409,6 +4460,8 @@ function stringSubs (value, minValue, maxValue) {
 
 _stk.stringSubs=stringSubs
 
+_stk.stringUnEscape=stringUnEscape
+
 
 /**
  * String Upper case case
@@ -4431,10 +4484,6 @@ function stringUpperCase (value) {
 _stk.stringUpperCase=stringUpperCase
 
 _stk.subtract=subtract
-
-_stk.toArray=toArray
-
-_stk.stringUnEscape=stringUnEscape
 
 
 /**
@@ -4658,6 +4707,35 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
+ * To extract number in string and convert to integer
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger
+
+_stk.toString=toString
+
+_stk.toArray=toArray
+
+
+/**
  * To extract number in string and convert to double
  *
  * @since 1.0.1
@@ -4683,28 +4761,24 @@ _stk.toDouble=toDouble
 
 
 /**
- * To extract number in string and convert to integer
+ * String trim
  *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
+ * @since 1.4.8
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
  * @example
  *
- * toInteger(1)
- *=>1
+ * trim(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss'
  */
-function toInteger (value) {
+function trim (value) {
 
-    var zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
+    return toString(value).trim();
 
 }
 
-_stk.toInteger=toInteger
+_stk.trim=trim
 
 
 /**
@@ -4747,27 +4821,6 @@ _stk.unique=unique
 
 _stk.varExtend=varExtend
 
-
-/**
- * String trim
- *
- * @since 1.4.8
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * trim(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss'
- */
-function trim (value) {
-
-    return toString(value).trim();
-
-}
-
-_stk.trim=trim
-
 _stk.where=where
 
 
@@ -4794,307 +4847,4 @@ function whereNot (objectValue, objectValueWhere, func) {
 }
 
 _stk.whereNot=whereNot
-
-
-/**
- *  Get the type if arguments
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isArguments()
- *=> true
- */
-function isArguments (value) {
-
-    return getTypeof(value) === "arguments";
-
-}
-
-
-/**
- *  Get the type if array
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isArray([])
- *=> true
- */
-function isArray (value) {
-
-    return getTypeof(value) === "array";
-
-}
-
-
-/**
- *  Get the type if boolean
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isBoolean(true)
- *=> true
- */
-function isBoolean (value) {
-
-    return getTypeof(value) === "boolean";
-
-}
-
-
-/**
- *  Get the type if date
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isDate(new Date())
- *=> true
- */
-function isDate (value) {
-
-    return getTypeof(value) === "date";
-
-}
-
-
-/**
- *  Get the type if error
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isError(new Error())
- *=> true
- */
-function isError (value) {
-
-    return getTypeof(value) === "error";
-
-}
-
-
-/**
- *  Get the type if function
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isFunction()
- *=> true
- */
-function isFunction (value) {
-
-    return getTypeof(value) === "function";
-
-}
-
-
-/**
- *  Get the type if null
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isNull(null)
- *=> true
- */
-function isNull (value) {
-
-    return getTypeof(value) === "null";
-
-}
-
-
-/**
- *  Get the type if number
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isNumber(1)
- *=> true
- */
-function isNumber (value) {
-
-    return getTypeof(value) === "number";
-
-}
-
-
-/**
- *  Get the type if object
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isObject({})
- *=> true
- */
-function isObject (value) {
-
-    return getTypeof(value) === "object";
-
-}
-
-
-/**
- *  Get the type if promise
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isPromise()
- *=> true
- */
-function isPromise (value) {
-
-    return getTypeof(value) === "promise";
-
-}
-
-
-/**
- *  Get the type if regexp
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isRegexp(/(1)/g)
- *=> true
- */
-function isRegexp (value) {
-
-    return getTypeof(value) === "regexp";
-
-}
-
-
-/**
- *  Get the type if string
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isString('string')
- *=> true
- */
-function isString (value) {
-
-    return getTypeof(value) === "string";
-
-}
-
-
-/**
- *  Get the type if uint16Array
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isUint16Array()
- *=> true
- */
-function isUint16Array (value) {
-
-    return getTypeof(value) === "uint16Array";
-
-}
-
-
-/**
- *  Get the type if uint8Array
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isUint8Array()
- *=> true
- */
-function isUint8Array (value) {
-
-    return getTypeof(value) === "uint8Array";
-
-}
-
-
-/**
- *  Get the type if undefined
- *
- * @since 1.4.7
- * @category Collection
- * @param {any} value Pass any value to check its type
- * @returns {boolean} Return either Json to Array.
- * @example
- *
- * isUndefined(undefined)
- *=> true
- */
-function isUndefined (value) {
-
-    return getTypeof(value) === "undefined";
-
-}
-
-
-_stk.isArguments=isArguments;
-_stk.isArray=isArray;
-_stk.isBoolean=isBoolean;
-_stk.isDate=isDate;
-_stk.isError=isError;
-_stk.isFunction=isFunction;
-_stk.isNull=isNull;
-_stk.isNumber=isNumber;
-_stk.isObject=isObject;
-_stk.isPromise=isPromise;
-_stk.isRegexp=isRegexp;
-_stk.isString=isString;
-_stk.isUint16Array=isUint16Array;
-_stk.isUint8Array=isUint8Array;
-_stk.isUndefined=isUndefined;
-_stk.toString=toString
 
