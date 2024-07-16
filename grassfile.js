@@ -217,23 +217,18 @@ exports.module=function (grassconf) {
                     }
                 ]
             }
-        )   
-            .pipe(grassconf.streamPipe(function (data) {
+        ).pipe(grassconf.streamPipe(function (data) {
 
-                let getData = data.readData();
+            let getData = data.readData();
 
-                
-                    getData = getData.replace("(function(global){\nglobal._stk={};", "const _stk = exports;");
-                
-                
 
-                    getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "\n //end of file");
-                
-                
-                data.writeData(getData);
-                data.done();
+            getData = getData.replace("(function(global){\nglobal._stk={};", "const _stk = exports;");
 
-            }))
+            getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "\n //end of file");
+            data.writeData(getData);
+            data.done();
+
+        }))
             .pipe(grass_concat("dist/cjs/structkit-full.cjs.js", {
                 "istruncate": true
             }))
@@ -241,21 +236,11 @@ exports.module=function (grassconf) {
             .pipe(grassconf.streamPipe(function (data) {
 
                 let getData = data.readData();
-                //console.log(data.path,":data");
+
                 getData = convertIifeFunction(getData, true);
                 getData = getData.replace("const _stk = exports;", "(function(global){\nglobal._stk={};");
                 getData = getData.replace("//end of file", '})(typeof window !== "undefined" ? window : this);');
                 getData = getData.replace(/([\s\n\r\t]{0,})(const|let)\s{1,}/g, "$1var ");
-               
-                if (data.path === 'src/function/__.js') {
-//getData ="(function(global){\nglobal._stk={};"+getData;
-                }
-                if (data.path === 'src/function/varExtend.js') {
-//getData = getData+'})(typeof window !== "undefined" ? window : this);';
-                }
-
-               
-                //console.log(getData,"::getData");
                 data.writeData(getData);
                 data.done();
 
@@ -266,8 +251,6 @@ exports.module=function (grassconf) {
 
     });
 
-    
-
 };
 
 exports.execute=function (lib) {
@@ -275,7 +258,6 @@ exports.execute=function (lib) {
     lib.default=function (strm) {
 
 
-//strm.series("web_iife_for_cjs");
         strm.series("web_iife");
         strm.series("esm");
         strm.series("esm_only");

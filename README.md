@@ -86,5 +86,5 @@ arraySlice([1,2],1)// [2]
 
 [get sum of array](#get-sum-of-array)
 ``` javascript
-arraySum([1,2])// 3.00
+arraySum([1,2])// 3
 ```

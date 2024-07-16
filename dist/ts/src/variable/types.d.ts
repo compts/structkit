@@ -20,4 +20,3 @@ export const objectCallTypeAll: {
     "[object Uint8Array]": string;
     "[object Undefined]": string;
 };
-export const listObjArrayType: string[];
