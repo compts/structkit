@@ -5,7 +5,7 @@ import {objectCallType} from '../variable/types.js';
 import {zero} from '../core/defaultValue.js';
 
 /**
- * Is Json valid
+ * Is Json valid format
  *
  * @since 1.3.1
  * @category Seq

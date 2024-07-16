@@ -4,7 +4,7 @@ const {zero} = require("../core/defaultValue");
 
 
 /**
- * Is Json valid
+ * Is Json valid format
  *
  * @since 1.3.1
  * @category Seq
