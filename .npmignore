@@ -7,7 +7,7 @@ src
 compts-labs
 coverage
 dist/web/*
-dist/ts/*
+dist/ts
 tsgenerate.sh
 grassfile.js
 releaseNote

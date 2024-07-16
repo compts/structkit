@@ -4,7 +4,6 @@
   "description": "JS utility tool",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.js",
-  "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -18,7 +17,6 @@
     "structkit": "./bin/structkit"
   },
   "files": [
-    "dist/ts",
     "dist/cjs",
     "dist/esm"
   ],
@@ -30,9 +28,6 @@
     "validate": "npm run style && npm run test",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
-  },
-  "tsd": {
-    "directory": "test/ts"
   },
   "repository": {
     "type": "git",
@@ -59,9 +54,7 @@
     "url": "https://github.com/compts/structkit/issues"
   },
   "homepage": "https://structkit.codehyouka.xyz",
-  "dependencies": {
-    "tsd": "^0.19.1"
-  },
+ 
   "devDependencies": {
     "@types/assert": "^1.5.6",
     "@types/mocha": "^10.0.1",
@@ -76,8 +69,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "*.js",
-      "*.ts"
+      "*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
