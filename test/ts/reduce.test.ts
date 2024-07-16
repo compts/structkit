@@ -9,7 +9,7 @@ const one =1,
     zero =0;
 
 
-describe('ESM: reduce method', function () {
+describe('TS: reduce method', function () {
 
     it('check reduce array sum', function () {
 

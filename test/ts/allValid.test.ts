@@ -2,7 +2,7 @@ import {allValid} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
-describe('ESM: allValid method', function () {
+describe('TS: allValid method', function () {
 
     it('check if all value is true then true', function () {
 

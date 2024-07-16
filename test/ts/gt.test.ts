@@ -5,7 +5,7 @@ import {expectType} from 'tsd';
 const one =1;
 const two =2;
 
-describe('ESM: greater than method', function () {
+describe('TS: greater than method', function () {
 
     it('check if greater than value is true', function () {
 
