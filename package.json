@@ -1,8 +1,8 @@
 {
   "name": "structkit-ts",
-  "version": "1.4.83",
-  "description": "JS utility tool",
-  "main": "./dist/cjs/structkit-full.cjs.js",
+  "version": "1.4.84",
+  "description": "TS utility tool",
+  "main": "./dist/ts/node.esm.d.ts",
   "module": "./dist/esm/node.esm.js",
   "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
