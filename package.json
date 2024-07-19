@@ -1,6 +1,6 @@
 {
   "name": "structkit-ts",
-  "version": "1.4.81",
+  "version": "1.4.82",
   "description": "JS utility tool",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.js",
@@ -8,9 +8,9 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/cjs/structkit-full.cjs.js",
+      "require": "./dist/ts/node.esm.d.ts",
       "import": "./dist/esm/node.esm.js",
-      "default": "./dist/cjs/structkit-full.cjs.js"
+      "default": "./dist/ts/node.esm.d.ts"
     },
     "./package.json": "./package.json"
   },

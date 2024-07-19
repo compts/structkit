@@ -1,5 +1,5 @@
 # Structkit
-Javascript framework in using functional syntax for programmer.
+Typescript framework in using functional syntax for programmer.
 
 [![NPM version][npm-image]][npm-url] 
 
@@ -7,11 +7,11 @@ Javascript framework in using functional syntax for programmer.
 [Docs](https://structkit.codehyouka.xyz/api) |
 
 ## Why Structkit
-A Javascript library that make easier in working with arrays, number,object, String and etc.
+A Typescript library that make easier in working with arrays, number,object, String and etc.
 
 ## Download
 
-To download this JS library and install in your local library
+To download this TS library and install in your local library
  * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~74KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
 
 Using npm to install in your project folder:
@@ -22,34 +22,16 @@ $ npm i structkit-ts
 
 ## How to import the Library
 
-In a browser :
-```html
-<script src="structkit-full.iife.js"></script>
-```
-
-Import on cjs
-```bash
-const {repeat} = require('structkit');
-
-```
 
 Import on ESM or TS
 ```bash
-import {repeat} from 'structkit';
+import {repeat} from 'structkit-ts';
 
 ```
 
 ## Example
 
-In a browser
-```html
-_stk.repeat("1",20)
-//11111111111111111111
-```
-keep in mind `_stk` is used as global library at html
-
-
-CJS, ESM and TS use this code below
+ ESM and TS use this code below
 ```bash
 repeat("1",20)
 //11111111111111111111
@@ -64,7 +46,7 @@ test("1")
 In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit:ts-1.4.81-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit:ts-1.4.82-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function
