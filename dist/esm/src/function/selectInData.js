@@ -29,11 +29,17 @@ function selectInData (objectValue, whereValue) {
 
     return curryArg(function (rawObjectValue, rawWhereValue) {
 
-        const rawDataToArray = baseMap(toArray(rawObjectValue), function (value) {
+        return baseMap(rawWhereValue, function (value) {
 
-            return baseMap(rawWhereValue, function (value2) {
+            //const rawData = getData(rawObjectValue, value);
 
-                const rawData= getData(value, value2);
+            //return isEmpty(rawData)
+            //    ?value
+            //    :rawData;
+
+            const rawDataToArray = baseMap(toArray(rawObjectValue), function (value2) {
+
+                const rawData = getData(value2, value);
 
                 return isEmpty(rawData)
                     ?value
@@ -41,11 +47,15 @@ function selectInData (objectValue, whereValue) {
 
             });
 
+            return getTypeof(rawObjectValue)==="json"
+                ?first(rawDataToArray)
+                :rawDataToArray;
+
         });
 
-        return getTypeof(rawObjectValue)==="json"
-            ?first(rawDataToArray)
-            :rawDataToArray;
+        //return getTypeof(rawObjectValue)==="json"
+        //    ?first(rawDataToArray)
+        //    :rawDataToArray;
 
     }, [
         objectValue,
