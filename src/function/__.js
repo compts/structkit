@@ -8,7 +8,7 @@ const __ = require('../core/__');
  * @example
  *
  * __
- * // => true
+ * // => @argument/place
  */
 module.exports=__;
 

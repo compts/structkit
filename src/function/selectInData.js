@@ -2,6 +2,9 @@ const curryArg = require("../core/curryArg");
 const baseMap = require("../core/baseMap");
 const isEmpty = require("./isEmpty");
 const getData = require("./getData");
+const toArray = require("./toArray");
+const getTypeof = require("./getTypeof");
+const first = require("./first");
 
 /**
  * Selecting multiple search data using `getData` logic in the loop
@@ -20,16 +23,23 @@ function selectInData (objectValue, whereValue) {
 
     return curryArg(function (rawObjectValue, rawWhereValue) {
 
-        return baseMap(rawWhereValue, function (value) {
+        const rawDataToArray = baseMap(toArray(rawObjectValue), function (value) {
 
-            const rawData = getData(rawObjectValue, value);
+            return baseMap(rawWhereValue, function (value2) {
 
-            return isEmpty(rawData)
-                ?value
-                :rawData;
+                const rawData= getData(value, value2);
+
+                return isEmpty(rawData)
+                    ?value
+                    :rawData;
+
+            });
 
         });
 
+        return getTypeof(rawObjectValue)==="json"
+            ?first(rawDataToArray)
+            :rawDataToArray;
 
     }, [
         objectValue,
