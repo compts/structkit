@@ -13,7 +13,6 @@ const toString = require("./toString");
  *=> 'The fish is goad   with Goat-1ss'
  */
 function trim (value) {
-
     return toString(value).trim();
 
 }

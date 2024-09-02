@@ -1,4 +1,4 @@
-const __p = "@argument/place";
+//const __p = "@argument/place";
 
-export default __p;
+export default "@argument/place";
 

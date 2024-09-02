@@ -1,4 +1,4 @@
-const __p = "@argument/place";
+//const __p = "@argument/place";
 
-module.exports=__p;
+module.exports="@argument/place";
 

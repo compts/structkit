@@ -28,3 +28,4 @@ coverage
 notes
 note_write.txt
 dist/cjs/structkit-full.cjs_backup.js
+.nyc_output

@@ -21,12 +21,14 @@
     "dist/esm"
   ],
   "scripts": {
+    "coverage:summary": "BABEL_ENV=cjs nyc --reporter=text-summary mocha -- --reporter=min --require @babel/register",
+    "coverage:details": "BABEL_ENV=cjs nyc --reporter=text mocha -- --reporter=min --require @babel/register",
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
     "test_esm": "mocha -r esm test/esm/*.test.js",
     "test_cjs": "mocha test/cjs/*.test.js",
     "test_ts": "mocha --require ts-node/register test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
-    "test": "jest --coverage",
+    "test:conv": "jest --coverage",
     "test:watch": "jest --watch"
   },
   "repository": {
@@ -55,6 +57,8 @@
   },
   "homepage": "https://structkit.codehyouka.xyz",
   "devDependencies": {
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-typescript": "^7.24.7",
     "@types/assert": "^1.5.6",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.9",
@@ -68,6 +72,8 @@
     "tsd": "^0.31.1"
   },
   "jest": {
+    "collectCoverage": true,
+    "coverageReporters": ["json", "html"],
     "collectCoverageFrom": [
       "*.js"
     ],
@@ -76,7 +82,10 @@
       "/compts-labs/",
       "/src_old_copy/",
       "/dist/",
-      "/test/esm/"
+      "/test/esm/",
+      "grassfile.js",
+      ".eslintrc.js",
+      "babel.config.js"
     ],
     "coverageThreshold": {
       "global": {
