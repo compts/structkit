@@ -31,12 +31,6 @@ function selectInData (objectValue, whereValue) {
 
         return baseMap(rawWhereValue, function (value) {
 
-            //const rawData = getData(rawObjectValue, value);
-
-            //return isEmpty(rawData)
-            //    ?value
-            //    :rawData;
-
             const rawDataToArray = baseMap(toArray(rawObjectValue), function (value2) {
 
                 const rawData = getData(value2, value);
@@ -52,10 +46,6 @@ function selectInData (objectValue, whereValue) {
                 :rawDataToArray;
 
         });
-
-        //return getTypeof(rawObjectValue)==="json"
-        //    ?first(rawDataToArray)
-        //    :rawDataToArray;
 
     }, [
         objectValue,

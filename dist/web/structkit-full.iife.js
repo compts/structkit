@@ -240,6 +240,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Addition logic
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number} value2 Second number
+ * @returns {number} Returns true or false.
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null
  *
  * @since 1.0.1
@@ -434,6 +463,70 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
 
 /**
  * Each or for loop function you are familiar with
@@ -679,99 +772,6 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-
-
-/**
- * Addition logic
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number} value2 Second number
- * @returns {number} Returns true or false.
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json and array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 
 
 /**
@@ -1364,6 +1364,8 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
+_stk.arraySlice=arraySlice;
+
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -1456,8 +1458,6 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-
-_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2117,7 +2117,7 @@ _stk.count=count;
  * @since 1.4.8
  * @category Math
  * @param {any} value Value you want to convert in array
- * @param {any} default_value Value you want to convert in array
+ * @param {any=} default_value Value you want to convert in array
  * @returns {number} Return in number.
  * @example
  *
@@ -2128,8 +2128,8 @@ function dec (value, default_value) {
 
     var return_val = value;
     var inc_n = getTypeof(default_value) === "number"
-        ? one
-        : default_value;
+        ? default_value
+        : one;
 
     if (getTypeof(return_val) === "number") {
 
@@ -2180,6 +2180,8 @@ function equal (value1, value2) {
 
 _stk.equal=equal;
 
+_stk.first=first;
+
 
 /**
  * Filter the data in loop
@@ -2227,8 +2229,6 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter;
-
-_stk.first=first;
 
 _stk.getData=getData;
 
@@ -2444,7 +2444,7 @@ _stk.ifUndefined=ifUndefined;
  * @since 1.4.8
  * @category Array
  * @param {any} value Value you want to convert in array
- * @param {any} default_value Value you want to convert in array
+ * @param {any=} default_value Value you want to convert in array
  * @returns {number} Return in number.
  * @example
  *
@@ -2455,8 +2455,8 @@ function inc (value, default_value) {
 
     var return_val = value;
     var inc_n = getTypeof(default_value) === "number"
-        ? one
-        : default_value;
+        ? default_value
+        : one;
 
     if (getTypeof(return_val) === "number") {
 
@@ -2475,6 +2475,8 @@ _stk.inc=inc;
 _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -2517,8 +2519,6 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
-
-_stk.indexOfNotExist=indexOfNotExist;
 
 _stk.isEmpty=isEmpty;
 
@@ -2862,105 +2862,6 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
- * Where Loop Execution
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {object} whr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {boolean} isExist The second number in an addition.
- * @param {string} types The second number in an addition.
- * @returns {array|object} Returns the total.
- * @example
- *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
- *=>{"s1":1,"s2":1}
- */
-function whereLoopExecution (jsn, whr, func, isExist, types) {
-
-    var json_convertion = getTypeof(jsn) === "array"
-        ? jsn
-        : [jsn];
-    var jsn_s= count(jsn, true) === zero
-        ? json_convertion
-        : jsn;
-    var whr_s=whr||{};
-    var variable=empty(jsn);
-    var filterData = {};
-
-    each(jsn_s, function (jk, jv) {
-
-        if (getTypeof(jsn) === "array") {
-
-            filterData = jv;
-
-        }
-        if (getTypeof(jsn) === "json") {
-
-            filterData[jk]=jv;
-
-        }
-
-        if (types === "where") {
-
-            if (isExact(whr_s, filterData, isExist)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-        if (types === "like") {
-
-            if (isExactbyRegExp(whr_s, filterData)) {
-
-                append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk);
-
-                }
-
-            }
-
-        }
-
-    });
-
-    return variable;
-
-}
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json to Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
-
-
-/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -3079,6 +2980,105 @@ function lte (value1, value2) {
 
 _stk.lte=lte;
 
+
+/**
+ * Where Loop Execution
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} jsn The second number in an addition.
+ * @param {object} whr The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @param {boolean} isExist The second number in an addition.
+ * @param {string} types The second number in an addition.
+ * @returns {array|object} Returns the total.
+ * @example
+ *
+ * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
+ *=>{"s1":1,"s2":1}
+ */
+function whereLoopExecution (jsn, whr, func, isExist, types) {
+
+    var json_convertion = getTypeof(jsn) === "array"
+        ? jsn
+        : [jsn];
+    var jsn_s= count(jsn, true) === zero
+        ? json_convertion
+        : jsn;
+    var whr_s=whr||{};
+    var variable=empty(jsn);
+    var filterData = {};
+
+    each(jsn_s, function (jk, jv) {
+
+        if (getTypeof(jsn) === "array") {
+
+            filterData = jv;
+
+        }
+        if (getTypeof(jsn) === "json") {
+
+            filterData[jk]=jv;
+
+        }
+
+        if (types === "where") {
+
+            if (isExact(whr_s, filterData, isExist)) {
+
+                append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+        if (types === "like") {
+
+            if (isExactbyRegExp(whr_s, filterData)) {
+
+                append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+
+    });
+
+    return variable;
+
+}
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json to Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
 _stk.map=map;
 
 
@@ -3169,12 +3169,6 @@ function selectInData (objectValue, whereValue) {
 
         return baseMap(rawWhereValue, function (value) {
 
-            //var rawData = getData(rawObjectValue, value);
-
-            //return isEmpty(rawData)
-            //    ?value
-            //    :rawData;
-
             var rawDataToArray = baseMap(toArray(rawObjectValue), function (value2) {
 
                 var rawData = getData(value2, value);
@@ -3190,10 +3184,6 @@ function selectInData (objectValue, whereValue) {
                 :rawDataToArray;
 
         });
-
-        //return getTypeof(rawObjectValue)==="json"
-        //    ?first(rawDataToArray)
-        //    :rawDataToArray;
 
     }, [
         objectValue,
@@ -3476,6 +3466,84 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay;
 
+
+/**
+ * On sequence
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {string} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var zero = 0;
+    var one = 1;
+    var extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    var valueWaited = wait || zero;
+    var counter = 0;
+
+    var interval = setInterval(function () {
+
+        func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+    var sequence = new ClassSequence(interval, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (interval, extend) {
+
+    this.interval = interval;
+
+    this.extend = extend;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+_stk.onSequence=onSequence;
+
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3570,231 +3638,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {string} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var zero = 0;
-    var one = 1;
-    var extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    var valueWaited = wait || zero;
-    var counter = 0;
-
-    var interval = setInterval(function () {
-
-        func();
-        if (extend.limitCounterClear >zero) {
-
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    var sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-_stk.onSequence=onSequence;
-
-
-/**
- * Data String from JSON object
- *
- * @since 1.0.1
- * @category Collection
- * @param {string} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function datastring (str) {
-
-    var data_s="";
-
-    if (typeof str === "string") {
-
-        if (str.indexOf("'")) {
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else if (str.indexOf('"')) {
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else {
-
-            data_s=str;
-
-        }
-
-    } else {
-
-        data_s=str;
-
-    }
-
-    return data_s;
-
-}
-
-/**
- * Return loop
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} dstr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {string} dl The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function returnLoop (dstr, func, dl) {
-
-    return func(dstr)+""+dl;
-
-}
-
-/**
- * Parse String
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} value The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value) {
-
-    var str="";
-    var str_strt="";
-    var str_end="";
-    var inc=0;
-    var incrementDefaultValue=1;
-    var inc_main=null;
-
-    if (has(value)) {
-
-        if (getTypeof(value) === "json") {
-
-            str_strt="{";
-            str_end="}";
-
-            each(value, function (_key, _value) {
-
-                inc_main=inc<count(value)-incrementDefaultValue
-                    ?","
-                    :"";
-
-                if (typeof _value === "object"&&_value !== null) {
-
-                    str += datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
-
-                } else {
-
-                    str += datastring(_key)+":"+datastring(_value)+""+inc_main;
-
-                }
-
-                inc += incrementDefaultValue;
-
-            });
-
-        }
-        if (getTypeof(value) === "array") {
-
-            str_strt="[";
-            str_end="]";
-
-            each(value, function (_key, _value) {
-
-                inc_main=inc<count(value)-incrementDefaultValue
-                    ?","
-                    :"";
-
-                if (typeof _value === "object") {
-
-                    str += returnLoop(_value, parseString, inc_main);
-
-                } else {
-
-                    str += datastring(_value)+""+inc_main;
-
-                }
-
-                inc += incrementDefaultValue;
-
-            });
-
-        }
-
-    }
-
-    return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
-
-}
-
-_stk.parseString=parseString;
 
 
 var entity = [
@@ -3960,6 +3803,155 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
+
+
+/**
+ * Data String from JSON object
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {string} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function datastring (str) {
+
+    var data_s="";
+
+    if (typeof str === "string") {
+
+        if (str.indexOf("'")) {
+
+            data_s='&quot;'+str+'&quot;';
+
+        } else if (str.indexOf('"')) {
+
+            data_s='&quot;'+str+'&quot;';
+
+        } else {
+
+            data_s=str;
+
+        }
+
+    } else {
+
+        data_s=str;
+
+    }
+
+    return data_s;
+
+}
+
+/**
+ * Return loop
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {string} dstr The second number in an addition.
+ * @param {function} func The second number in an addition.
+ * @param {string} dl The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function returnLoop (dstr, func, dl) {
+
+    return func(dstr)+""+dl;
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} value The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value) {
+
+    var str="";
+    var str_strt="";
+    var str_end="";
+    var inc=0;
+    var incrementDefaultValue=1;
+    var inc_main=null;
+
+    if (has(value)) {
+
+        if (getTypeof(value) === "json") {
+
+            str_strt="{";
+            str_end="}";
+
+            each(value, function (_key, _value) {
+
+                inc_main=inc<count(value)-incrementDefaultValue
+                    ?","
+                    :"";
+
+                if (typeof _value === "object"&&_value !== null) {
+
+                    str += datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
+
+                } else {
+
+                    str += datastring(_key)+":"+datastring(_value)+""+inc_main;
+
+                }
+
+                inc += incrementDefaultValue;
+
+            });
+
+        }
+        if (getTypeof(value) === "array") {
+
+            str_strt="[";
+            str_end="]";
+
+            each(value, function (_key, _value) {
+
+                inc_main=inc<count(value)-incrementDefaultValue
+                    ?","
+                    :"";
+
+                if (typeof _value === "object") {
+
+                    str += returnLoop(_value, parseString, inc_main);
+
+                } else {
+
+                    str += datastring(_value)+""+inc_main;
+
+                }
+
+                inc += incrementDefaultValue;
+
+            });
+
+        }
+
+    }
+
+    return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+
+}
+
+_stk.parseString=parseString;
+
+_stk.range=range;
 
 
 /**
@@ -4221,8 +4213,6 @@ function repeat (value, valueRepetion) {
 
 _stk.repeat=repeat;
 
-_stk.range=range;
-
 
 /**
  * Random Decimal
@@ -4265,8 +4255,6 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
-
-_stk.selectInData=selectInData;
 
 
 /**
@@ -4313,6 +4301,8 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
+
+_stk.selectInData=selectInData;
 
 
 /**
@@ -4587,6 +4577,27 @@ _stk.stringKebabCase=stringKebabCase;
 
 
 /**
+ * String Lower case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+function stringLowerCase (value) {
+
+    return toString(value).toLowerCase();
+
+}
+
+_stk.stringLowerCase=stringLowerCase;
+
+
+/**
  * String Snake case
  *
  * @since 1.3.1
@@ -4637,27 +4648,6 @@ function stringSubs (value, minValue, maxValue) {
 
 _stk.stringSubs=stringSubs;
 
-
-/**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-function stringLowerCase (value) {
-
-    return toString(value).toLowerCase();
-
-}
-
-_stk.stringLowerCase=stringLowerCase;
-
 _stk.stringUnEscape=stringUnEscape;
 
 
@@ -4682,8 +4672,6 @@ function stringUpperCase (value) {
 _stk.stringUpperCase=stringUpperCase;
 
 _stk.subtract=subtract;
-
-_stk.toArray=toArray;
 
 
 /**
@@ -4865,6 +4853,8 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue;
 
+_stk.toArray=toArray;
+
 
 /**
  * Logic in convert string or number to valid number
@@ -4932,6 +4922,33 @@ _stk.toDouble=toDouble;
 
 
 /**
+ * To extract number in string and convert to integer
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger(1)
+ *=>1
+ */
+function toInteger (value) {
+
+    var zero = 0;
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger;
+
+_stk.toString=toString;
+
+
+/**
  * String trim
  *
  * @since 1.4.8
@@ -4950,8 +4967,6 @@ function trim (value) {
 }
 
 _stk.trim=trim;
-
-_stk.toString=toString;
 
 
 /**
@@ -4993,31 +5008,6 @@ function unique (value) {
 _stk.unique=unique;
 
 _stk.varExtend=varExtend;
-
-
-/**
- * To extract number in string and convert to integer
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger(1)
- *=>1
- */
-function toInteger (value) {
-
-    var zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger;
 
 _stk.where=where;
 

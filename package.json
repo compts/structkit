@@ -54,7 +54,6 @@
     "url": "https://github.com/compts/structkit/issues"
   },
   "homepage": "https://structkit.codehyouka.xyz",
- 
   "devDependencies": {
     "@types/assert": "^1.5.6",
     "@types/mocha": "^10.0.1",
@@ -65,7 +64,8 @@
     "esm": "^3.2.25",
     "jest": "^27.5.1",
     "mocha": "^5.2.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsd": "^0.31.1"
   },
   "jest": {
     "collectCoverageFrom": [

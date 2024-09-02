@@ -7,7 +7,7 @@ const getTypeof = require('./getTypeof');
  * @since 1.4.8
  * @category Math
  * @param {any} value Value you want to convert in array
- * @param {any} default_value Value you want to convert in array
+ * @param {any=} default_value Value you want to convert in array
  * @returns {number} Return in number.
  * @example
  *
@@ -18,8 +18,8 @@ function dec (value, default_value) {
 
     let return_val = value;
     const inc_n = getTypeof(default_value) === "number"
-        ? one
-        : default_value;
+        ? default_value
+        : one;
 
     if (getTypeof(return_val) === "number") {
 

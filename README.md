@@ -3,6 +3,7 @@ Javascript framework in using functional syntax for programmer.
 
 [![NPM version][npm-image]][npm-url] 
 [![NPM version][npm-ts-image]][npm-url-ts] 
+[![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
 
 [Site](https://structkit.codehyouka.xyz/) |
 [Docs](https://structkit.codehyouka.xyz/api) |
