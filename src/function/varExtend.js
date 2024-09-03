@@ -37,7 +37,7 @@ function varExtend (objectValue, objectValueReplace) {
 
             for (const key in rawObjectValue) {
 
-                if (has(rawObjectValue[key])) {
+                if (has(rawObjectValue, key)) {
 
                     if (indexOfExist(getKey(jsn_bool), rawObjectValue[key].toString().toLowerCase())) {
 
@@ -48,10 +48,6 @@ function varExtend (objectValue, objectValueReplace) {
                         jsn_s[key]=rawObjectValue[key];
 
                     }
-
-                } else {
-
-                    jsn_s[key]=rawObjectValue[key];
 
                 }
 

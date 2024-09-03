@@ -10,4 +10,10 @@ describe('CJS: getData method', function () {
 
     });
 
+    it('check if arg is empty', function () {
+
+        assert.strictEqual(getData(), "");
+
+    });
+
 });

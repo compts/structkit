@@ -6,6 +6,7 @@ import {expectType} from 'tsd';
 const three =3;
 const two =2;
 const one =1;
+const zero = 0;
 
 describe('TS: inc method', function () {
 
@@ -23,6 +24,15 @@ describe('TS: inc method', function () {
         assert.strictEqual(
             inc(one, two),
             three
+        );
+
+    });
+
+    it('if argument is string type return zero', function () {
+
+        assert.strictEqual(
+            inc("1"),
+            zero
         );
 
     });

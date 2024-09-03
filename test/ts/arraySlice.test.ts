@@ -34,6 +34,54 @@ describe('TS: arraySlice method', function () {
         ]);
 
     });
+
+    it('check Array arraySlice has max 3 and min 2', function () {
+
+        assert.deepStrictEqual(arraySlice([
+            one,
+            two,
+            three
+        ], two, three), [three]);
+
+    });
+
+    it('check Array arraySlice has -1', function () {
+
+        assert.deepStrictEqual(arraySlice([
+            one,
+            two,
+            three
+        ], -one), [
+            one,
+            two
+        ]);
+
+    });
+
+    it('check Array arraySlice has max -1 and min 2', function () {
+
+        assert.deepStrictEqual(arraySlice([
+            one,
+            two,
+            three
+        ], two, -one), [three]);
+
+    });
+
+    it('check Array arraySlice has max -1 and min -2', function () {
+
+        assert.deepStrictEqual(arraySlice([
+            one,
+            two,
+            three
+        ], -two, -one), [
+            one,
+            two,
+            three
+        ]);
+
+    });
+
     it('check expected type', function () {
        
         expectType<any[]>(arraySlice([

@@ -2,6 +2,8 @@ import stringUnEscape from './stringUnEscape.js';
 
 import isJson from './isJson.js';
 
+import isEmpty from './isEmpty.js';
+
 /**
  * Parse Json object
  *
@@ -16,21 +18,19 @@ import isJson from './isJson.js';
  */
 function parseJson (value) {
 
-    const emptyDefaultValue=0;
     const stripValue=stringUnEscape(value);
-    let returnValue=null;
 
-    if (isJson(value)) {
+    if (isJson(stripValue, "string")) {
 
-        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
+        if (!isEmpty(stripValue)) {
 
-            returnValue = eval('(' + stripValue + ')');
+            return eval('(' + stripValue + ')');
 
         }
 
     }
 
-    return returnValue;
+    return null;
 
 }
 export default parseJson;

@@ -13,6 +13,13 @@ describe('TS: repeat method', function () {
         assert.strictEqual(repeat("as", two), "asas");
 
     });
+
+    it('check if repetion is empty', function () {
+
+        assert.strictEqual(repeat(), "");
+
+    });
+    
     it('check expected type', function () {
        
         expectType<any>(repeat("as", two));

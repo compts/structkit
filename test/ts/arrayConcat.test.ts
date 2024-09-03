@@ -33,6 +33,12 @@ describe('TS: arrayConcat method', function () {
 
     });
 
+    it('check Array arrayConcat is empty', function () {
+
+        assert.deepStrictEqual(arrayConcat(), []);
+
+    });
+
     it('check expected type', function () {
        
         expectType<any[]>(arrayConcat([

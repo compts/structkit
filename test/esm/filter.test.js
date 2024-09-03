@@ -22,5 +22,14 @@ describe('ESM: filter method', function () {
 
     });
 
+    it('check array if filter arg is invalid json or array', function () {
+
+        assert.deepStrictEqual(filter(one, function (key, value) {
+
+            return value.s1 === one;
+
+        }), []);
+
+    });
 
 });

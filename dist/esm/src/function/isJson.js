@@ -9,7 +9,7 @@ import {zero} from '../core/defaultValue.js';
  *
  * @since 1.3.1
  * @category Seq
- * @param {string|object|array} value Value you want to check JSON is Valid
+ * @param {any} value Value you want to check JSON is Valid
  * @param {string=} valueType Get value type
  * @returns {any} Returns true or false if valid json format
  * @example
@@ -37,6 +37,12 @@ function isJson (value, valueType) {
 
     if (getValueTypeRef === "string") {
 
+        if (!(/\[(.*?)\]/g).test(value) && !(/\{(.*?)\}/g).test(value)) {
+
+            return false;
+
+        }
+
         const stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
 
         return (/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
@@ -45,21 +51,15 @@ function isJson (value, valueType) {
 
     }
 
-    if (getValueTypeRef === "object") {
+    try {
 
-        try {
+        return checkIfFunctionNotExistObject(value);
 
-            return checkIfFunctionNotExistObject(value);
+    } catch (err) {
 
-        } catch (err) {
-
-            return false;
-
-        }
+        return false;
 
     }
-
-    return false;
 
 }
 

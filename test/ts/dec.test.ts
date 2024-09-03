@@ -25,6 +25,14 @@ describe('TS: dec method', function () {
         );
 
     });
+    it('if argument is string type return zero', function () {
+
+        assert.strictEqual(
+            dec("1"),
+            zero
+        );
+
+    });
     it('check expected type', function () {
        
         expectType<number>(dec(one));

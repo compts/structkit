@@ -5,6 +5,7 @@ import assert from 'assert';
 const three =3;
 const two =2;
 const one =1;
+const zero = 0;
 
 describe('ESM: inc method', function () {
 
@@ -26,6 +27,14 @@ describe('ESM: inc method', function () {
 
     });
 
+    it('if argument is string type return zero', function () {
+
+        assert.strictEqual(
+            inc("1"),
+            zero
+        );
+
+    });
 
 });
 

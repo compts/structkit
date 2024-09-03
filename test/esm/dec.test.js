@@ -15,6 +15,14 @@ describe('ESM: dec method', function () {
         );
 
     });
+    it('if argument is string type return zero', function () {
+
+        assert.strictEqual(
+            dec("1"),
+            zero
+        );
+
+    });
     it('return three', function () {
 
         assert.strictEqual(
