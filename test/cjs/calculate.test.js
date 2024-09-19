@@ -42,4 +42,13 @@ describe('CJS: calculate method', function () {
 
     });
 
+    it('check calculate formula text in factorial', function () {
+
+        assert.deepStrictEqual(calculate("s2!+s!", {
+            "s": one,
+            "s2": two
+        }), three);
+
+    });
+
 });

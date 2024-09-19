@@ -4,11 +4,11 @@ export default someValid;
  *
  * @since 1.4.8
  * @category Condition
- * @param {...boolean?} arg First number
+ * @param {...any?} arg First number
  * @returns {boolean} Returns true or false.
  * @example
  *
  * someValid(true, false)
  * // => true
  */
-declare function someValid(...arg: (boolean | null)[]): boolean;
+declare function someValid(...arg: (any | null)[]): boolean;

@@ -1,4 +1,6 @@
 const curryArg = require("../core/curryArg");
+const {getTypeofInternal} = require('../core/getTypeOf');
+
 const {two} = require("../core/defaultValue");
 
 /**
@@ -18,6 +20,12 @@ function equal (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
+        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
+
+            return false;
+
+        }
+
         return aa === bb;
 
     }, [
@@ -27,4 +35,3 @@ function equal (value1, value2) {
 
 }
 module.exports=equal;
-

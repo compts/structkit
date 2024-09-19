@@ -7,7 +7,7 @@ const count = require('./count');
  *
  * @since 1.4.8
  * @category Condition
- * @param {...boolean?} arg First number
+ * @param {...any?} arg First number
  * @returns {boolean} Returns true or false.
  * @example
  *

@@ -15,4 +15,10 @@ describe('CJS: allValid method', function () {
 
     });
 
+    it('check if some value is string then false', function () {
+
+        assert.deepStrictEqual(allValid(true, "2"), false);
+
+    });
+
 });

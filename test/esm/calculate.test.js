@@ -4,6 +4,7 @@ import assert from 'assert';
 
 const one =1;
 const two =2;
+const three = 3;
 
 describe('ESM: calculate method', function () {
 
@@ -37,6 +38,15 @@ describe('ESM: calculate method', function () {
             "s": one,
             "s2": two
         }), one);
+
+    });
+
+    it('check calculate formula text in factorial', function () {
+
+        assert.deepStrictEqual(calculate("s2!+s!", {
+            "s": one,
+            "s2": two
+        }), three);
 
     });
 

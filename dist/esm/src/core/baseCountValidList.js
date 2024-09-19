@@ -1,5 +1,7 @@
 import baseReduce from './baseReduce.js';
 
+import {getTypeofInternal} from './getTypeOf.js';
+
 import {zero, one} from './defaultValue.js';
 
 /**
@@ -18,7 +20,7 @@ function baseCountValidList (objectValue) {
 
     return baseReduce(zero, objectValue, function (total, value) {
 
-        if (value) {
+        if (value && getTypeofInternal(value) === "boolean") {
 
             return total +one;
 

@@ -1,5 +1,7 @@
 import curryArg from '../core/curryArg.js';
 
+import {getTypeofInternal} from '../core/getTypeOf.js';
+
 import {two} from '../core/defaultValue.js';
 
 /**
@@ -18,6 +20,12 @@ import {two} from '../core/defaultValue.js';
 function equal (value1, value2) {
 
     return curryArg(function (aa, bb) {
+
+        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
+
+            return false;
+
+        }
 
         return aa === bb;
 

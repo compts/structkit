@@ -1,4 +1,5 @@
 const baseReduce = require('./baseReduce');
+const {getTypeofInternal} = require("./getTypeOf");
 const {zero, one} = require("./defaultValue");
 
 
@@ -18,7 +19,8 @@ function baseCountValidList (objectValue) {
 
     return baseReduce(zero, objectValue, function (total, value) {
 
-        if (value) {
+
+        if (value && getTypeofInternal(value) === "boolean") {
 
             return total +one;
 
