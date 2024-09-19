@@ -25,6 +25,13 @@ describe('TS: count method', function () {
         assert.deepStrictEqual(count("asasasd"), seven);
 
     });
+
+    it('check empty is zero', function () {
+
+        assert.deepStrictEqual(count(), zero);
+
+    });
+
     it('check expected type', function () {
        
       expectType<number>(count([one, zero]));

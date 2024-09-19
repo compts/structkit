@@ -22,6 +22,15 @@ describe('CJS: first method', function () {
 
     });
 
+    it('check Array empty then return empty string', function () {
+
+        assert.deepStrictEqual(
+            first([]),
+            ''
+        );
+
+    });
+
 });
 
 

@@ -22,6 +22,16 @@ describe('TS: first method', function () {
         );
 
     });
+
+    it('check Array empty then return empty string', function () {
+
+        assert.deepStrictEqual(
+            first([]),
+            ''
+        );
+
+    });
+
     it('check expected type', function () {
        
         expectType<any>(first([
