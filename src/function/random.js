@@ -2,7 +2,7 @@ const has = require('./has');
 
 const count = require('./count');
 
-const each = require('./each');
+const toArray = require('./toArray');
 
 /**
  * Random value from array list
@@ -20,7 +20,6 @@ const each = require('./each');
  */
 function random (valueArray, minValue, maxValue) {
 
-    const ran_var=[];
     const emptyDefaultValue=0;
     const ran_min=has(minValue)
         ?minValue
@@ -30,17 +29,14 @@ function random (valueArray, minValue, maxValue) {
         :count(valueArray);
     const math_random = Math.round(Math.random()*ran_max);
 
-    each(valueArray, function (key, value) {
+    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
 
-        if (math_random === parseInt(key)) {
+        return toArray(valueArray[math_random]);
 
-            ran_var.push(value);
+    }
 
-        }
+    return toArray(valueArray[math_random % count(valueArray)]);
 
-    });
-
-    return ran_var;
 
 }
 module.exports=random;

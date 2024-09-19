@@ -2,7 +2,7 @@ import has from './has.js';
 
 import count from './count.js';
 
-import each from './each.js';
+import toArray from './toArray.js';
 
 /**
  * Random value from array list
@@ -20,7 +20,6 @@ import each from './each.js';
  */
 function random (valueArray, minValue, maxValue) {
 
-    const ran_var=[];
     const emptyDefaultValue=0;
     const ran_min=has(minValue)
         ?minValue
@@ -30,17 +29,13 @@ function random (valueArray, minValue, maxValue) {
         :count(valueArray);
     const math_random = Math.round(Math.random()*ran_max);
 
-    each(valueArray, function (key, value) {
+    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
 
-        if (math_random === parseInt(key)) {
+        return toArray(valueArray[math_random]);
 
-            ran_var.push(value);
+    }
 
-        }
-
-    });
-
-    return ran_var;
+    return toArray(valueArray[math_random % count(valueArray)]);
 
 }
 export default random;

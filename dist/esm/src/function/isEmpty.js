@@ -44,6 +44,17 @@ function isEmpty (value) {
 
     }
 
+    if (typeofvalue === "uint16Array") {
+
+        return value.length ===zero;
+
+    }
+    if (typeofvalue === "uint8Array") {
+
+        return value.length ===zero;
+
+    }
+
     return (/^\s*$/gmi).test(value);
 
 }

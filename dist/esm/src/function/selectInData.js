@@ -6,6 +6,12 @@ import isEmpty from './isEmpty.js';
 
 import getData from './getData.js';
 
+import toArray from './toArray.js';
+
+import getTypeof from './getTypeof.js';
+
+import first from './first.js';
+
 /**
  * Selecting multiple search data using `getData` logic in the loop
  *
@@ -25,11 +31,19 @@ function selectInData (objectValue, whereValue) {
 
         return baseMap(rawWhereValue, function (value) {
 
-            const rawData = getData(rawObjectValue, value);
+            const rawDataToArray = baseMap(toArray(rawObjectValue), function (value2) {
 
-            return isEmpty(rawData)
-                ?value
-                :rawData;
+                const rawData = getData(value2, value);
+
+                return isEmpty(rawData)
+                    ?value
+                    :rawData;
+
+            });
+
+            return getTypeof(rawObjectValue)==="json"
+                ?first(rawDataToArray)
+                :rawDataToArray;
 
         });
 

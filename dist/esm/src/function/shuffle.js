@@ -2,7 +2,15 @@ import getTypeof from './getTypeof.js';
 
 import count from './count.js';
 
+import clone from './clone.js';
+
+import first from './first.js';
+
 import indexOf from './indexOf.js';
+
+import random from './random.js';
+
+import removeFromKey from './removeFromKey.js';
 
 /**
  * Shuffle data in array
@@ -20,7 +28,8 @@ function shuffle (objectValue) {
 
     const emptyDefaultValue=0;
     const onceDefaultValue=1;
-    const output=objectValue;
+    const output=[];
+    let rawObjectValue = clone(objectValue);
     const valueType=[
         "array",
         "json"
@@ -29,21 +38,13 @@ function shuffle (objectValue) {
     if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
 
         const counts=count(objectValue)-onceDefaultValue;
-        let randomIndex=emptyDefaultValue;
-        let temporaryValue=null;
 
-        for (let currentIndex=counts; currentIndex>emptyDefaultValue;) {
+        for (let currentIndex=counts; currentIndex>=emptyDefaultValue;) {
 
-            randomIndex = Math.floor(Math.random() * currentIndex);
+            const rowValue = random(rawObjectValue);
 
-            if (getTypeof(objectValue) === "array") {
-
-                temporaryValue = output[currentIndex];
-                output[currentIndex]=output[randomIndex];
-                output[randomIndex] = temporaryValue;
-
-            }
-
+            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
+            output.push(first(rowValue));
             currentIndex -= onceDefaultValue;
 
         }

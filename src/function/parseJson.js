@@ -1,5 +1,6 @@
 const stringUnEscape = require('./stringUnEscape');
 const isJson = require('./isJson');
+const isEmpty = require("./isEmpty");
 
 /**
  * Parse Json object
@@ -15,21 +16,19 @@ const isJson = require('./isJson');
  */
 function parseJson (value) {
 
-    const emptyDefaultValue=0;
     const stripValue=stringUnEscape(value);
-    let returnValue=null;
 
-    if (isJson(value)) {
+    if (isJson(stripValue, "string")) {
 
-        if (stripValue.length>emptyDefaultValue && !(/^\s*$/).test(stripValue)) {
+        if (!isEmpty(stripValue)) {
 
-            returnValue = eval('(' + stripValue + ')');
+            return eval('(' + stripValue + ')');
 
         }
 
     }
 
-    return returnValue;
+    return null;
 
 }
 module.exports=parseJson;

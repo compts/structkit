@@ -11,8 +11,8 @@ import curryArg from '../core/curryArg.js';
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue Either Json or Array data.
- * @param {any} split_str Search key or index.
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} split_str Search key or index.
  * @returns {any} Returns the total.
  * @example
  *
@@ -45,29 +45,21 @@ function getData (objectValue, split_str) {
 
         each(spl, function (key, value) {
 
-            try {
+            if (has(rawObjectValue, value)) {
 
-                if (has(rawObjectValue, value)) {
+                if ((/^\s+$/).test(rawObjectValue[value]) === false) {
 
-                    if ((/^\s+$/).test(rawObjectValue[value]) === false) {
-
-                        jsn_total=rawObjectValue[value];
-
-                    }
-
-                } else {
-
-                    if (has(jsn_total, value)) {
-
-                        jsn_total=jsn_total[value];
-
-                    }
+                    jsn_total=rawObjectValue[value];
 
                 }
 
-            } catch (error) {
+            } else {
 
-                console.log(error);
+                if (has(jsn_total, value)) {
+
+                    jsn_total=jsn_total[value];
+
+                }
 
             }
 

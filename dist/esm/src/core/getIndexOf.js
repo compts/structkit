@@ -87,11 +87,6 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  */
 function searchValueInJson (objectValue, searchValue) {
 
-    if (count(objectValue) !== count(searchValue)) {
-
-        return false;
-
-    }
     let counter = 0;
     const increment = 1;
 

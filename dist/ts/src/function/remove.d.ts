@@ -1,8 +1,8 @@
 export default remove;
 /**
- * Remove data in either JSON or Array using key or woth value
+ * Remove data in either JSON or Array using key or woth value, a revise logic
  *
- * @since 1.0.1
+ * @since 1.4.85
  * @category Collection
  * @param {any} objectValue Json or array
  * @param {any} value if objectValue, json is must be object or array index you want to remove
