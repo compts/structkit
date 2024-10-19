@@ -4,12 +4,22 @@
   "description": "JS utility tool",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.js",
+  "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/cjs/structkit-full.cjs.js",
-      "import": "./dist/esm/node.esm.js",
-      "default": "./dist/cjs/structkit-full.cjs.js"
+      "types": {
+        "require": "./dist/ts/node.esm.d.ts",
+        "default": "./dist/ts/node.esm.d.ts"
+      },
+      "browser": {
+        "require": "./dist/cjs/structkit-full.cjs.js",
+        "default": "./dist/cjs/structkit-full.cjs.js"
+      },
+      "default": {
+        "require": "./dist/cjs/structkit-full.cjs.js",
+        "default": "./dist/cjs/structkit-full.cjs.js"
+      }
     },
     "./package.json": "./package.json"
   },
