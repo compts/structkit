@@ -13,7 +13,7 @@ const baseTake = require("../core/baseTake");
  * @returns {number} Returns true or false.
  * @example
  *
- * take(1, 1)
+ * take(1, [1])
  * // => 1
  */
 function take (value, valueList) {
