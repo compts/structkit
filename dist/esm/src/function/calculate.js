@@ -25,7 +25,7 @@ import subtract from './subtract.js';
  * @category Seq
  * @param {string} formula The second number in an addition.
  * @param {any=} args The second number in an addition.
- * @returns {number} Returns the total.
+ * @returns {number|any} Returns the total.
  * @example
  *
  * calculate('1+1')

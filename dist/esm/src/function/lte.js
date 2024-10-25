@@ -9,7 +9,7 @@ import {two} from '../core/defaultValue.js';
  * @category Boolean
  * @param {any} value1 Any value type
  * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
  * lte(1, 2)

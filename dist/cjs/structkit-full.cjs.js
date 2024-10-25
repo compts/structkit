@@ -1817,7 +1817,7 @@ function subtract (value1, value2) {
  * @category Seq
  * @param {string} formula The second number in an addition.
  * @param {any=} args The second number in an addition.
- * @returns {number} Returns the total.
+ * @returns {number|any} Returns the total.
  * @example
  *
  * calculate('1+1')
@@ -2140,7 +2140,7 @@ _stk.empty=empty;
  * @category Boolean
  * @param {any} value1 Any value type
  * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
  * equal('as', 'as')
@@ -2219,27 +2219,6 @@ _stk.getData=getData;
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
 /**
  * Generate unique value id
  *
@@ -2276,6 +2255,27 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -2515,7 +2515,7 @@ _stk.isEmpty=isEmpty;
  * @param {any} whereValue Json or Array
  * @param {any} objectValue1 Json or Array for lookup to objectValue1
  * @param {boolean=} isExist Default value is True
- * @returns {boolean} Returns the boolean if the has the value you are looking at.
+ * @returns {boolean|any} Returns the boolean if the has the value you are looking at.
  * @example
  *
  * isExact({"test": 11,"test2": 11}, {"test2": 11})
@@ -3011,7 +3011,7 @@ _stk.limit=limit;
  * @category Boolean
  * @param {any} value1 Any value type
  * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
  * lt(1, 2)
@@ -3040,7 +3040,7 @@ _stk.lt=lt;
  * @category Boolean
  * @param {any} value1 Any value type
  * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
  * lte(1, 2)
@@ -3233,38 +3233,7 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.mergeWithKey=mergeWithKey;
-
 _stk.multiply=multiply;
-
-
-/**
- * To check if its not equal
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any value type
- * @param {any} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * noteq('as', 'as')
- * // => false
- */
-function noteq (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa !== bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.noteq=noteq;
 
 
 /**
@@ -3446,6 +3415,35 @@ _stk.onDelay=onDelay;
 
 
 /**
+ * To check if its not equal
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any value type
+ * @param {any} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * noteq('as', 'as')
+ * // => false
+ */
+function noteq (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa !== bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.noteq=noteq;
+
+
+/**
  * On sequence
  *
  * @since 1.4.1
@@ -3616,6 +3614,8 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+_stk.mergeWithKey=mergeWithKey;
 
 
 const entity = [
@@ -4590,27 +4590,6 @@ _stk.stringKebabCase=stringKebabCase;
 
 
 /**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-function stringLowerCase (value) {
-
-    return toString(value).toLowerCase();
-
-}
-
-_stk.stringLowerCase=stringLowerCase;
-
-
-/**
  * String Snake case
  *
  * @since 1.3.1
@@ -4665,6 +4644,27 @@ _stk.stringUnEscape=stringUnEscape;
 
 
 /**
+ * String Lower case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+function stringLowerCase (value) {
+
+    return toString(value).toLowerCase();
+
+}
+
+_stk.stringLowerCase=stringLowerCase;
+
+
+/**
  * String Upper case case
  *
  * @since 1.4.5
@@ -4683,6 +4683,58 @@ function stringUpperCase (value) {
 }
 
 _stk.stringUpperCase=stringUpperCase;
+
+
+/**
+ * Swapping the value either string or array
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue where clause for you to merge the two set of data, where clause at `$1`  for `objectValue` and `$2`  for `mergeValue`
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        let cloneRawListValueReturn = rawListValue;
+        let isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        const cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 _stk.subtract=subtract;
 
@@ -4925,8 +4977,6 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue;
 
-_stk.toArray=toArray;
-
 
 /**
  * Logic in convert string or number to valid number
@@ -5018,6 +5068,8 @@ function toInteger (value) {
 _stk.toInteger=toInteger;
 
 _stk.toString=toString;
+
+_stk.toArray=toArray;
 
 
 /**
