@@ -1,10 +1,16 @@
 import getTypeof from './getTypeof.js';
 
+import curryArg from '../core/curryArg.js';
+
 import has from './has.js';
 
 import each from './each.js';
 
 import count from './count.js';
+
+import varExtend from './varExtend.js';
+
+import {two, one, zero} from '../core/defaultValue.js';
 
 /**
  * Data String from JSON object
@@ -49,104 +55,117 @@ function datastring (str) {
 }
 
 /**
- * Return loop
+ * Parse String
  *
  * @since 1.0.1
  * @category Seq
- * @param {string} dstr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {string} dl The second number in an addition.
+ * @param {number} rawCount The second number in an addition.
+ * @param {any} rawConfig The second number in an addition.
+ * @param {any} rawValue The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
  * parseString({} )
  *=>'{}'
  */
-function returnLoop (dstr, func, dl) {
+function parseStringCore (rawCount, rawConfig, rawValue) {
 
-    return func(dstr)+""+dl;
+    return curryArg(function (refCount, refConfig, value) {
+
+        let str="";
+        let str_strt="";
+        let str_end="";
+        let inc=0;
+        const incrementDefaultValue=1;
+        let inc_main=null;
+
+        if (has(value)) {
+
+            if (getTypeof(value) === "json") {
+
+                str_strt="{";
+                str_end="}";
+
+                each(value, function (_key, _value) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object"&&_value !== null) {
+
+                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+            if (getTypeof(value) === "array") {
+
+                str_strt="[";
+                str_end="]";
+
+                each(value, function (_key, _value) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object") {
+
+                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+
+        }
+
+        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
 
 }
 
 /**
  * Parse String
  *
- * @since 1.0.1
- * @category Seq
+ * @since 1.4.86
+ * @category
  * @param {any} value The second number in an addition.
+ * @param {any=} config The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
  * parseString({} )
  *=>'{}'
  */
-function parseString (value) {
+function parseString (value, config) {
 
-    let str="";
-    let str_strt="";
-    let str_end="";
-    let inc=0;
-    const incrementDefaultValue=1;
-    let inc_main=null;
+    const defaultConfig = varExtend(config, {});
 
-    if (has(value)) {
+    const data = parseStringCore(zero, defaultConfig, value);
 
-        if (getTypeof(value) === "json") {
-
-            str_strt="{";
-            str_end="}";
-
-            each(value, function (_key, _value) {
-
-                inc_main=inc<count(value)-incrementDefaultValue
-                    ?","
-                    :"";
-
-                if (typeof _value === "object"&&_value !== null) {
-
-                    str += datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
-
-                } else {
-
-                    str += datastring(_key)+":"+datastring(_value)+""+inc_main;
-
-                }
-
-                inc += incrementDefaultValue;
-
-            });
-
-        }
-        if (getTypeof(value) === "array") {
-
-            str_strt="[";
-            str_end="]";
-
-            each(value, function (_key, _value) {
-
-                inc_main=inc<count(value)-incrementDefaultValue
-                    ?","
-                    :"";
-
-                if (typeof _value === "object") {
-
-                    str += returnLoop(_value, parseString, inc_main);
-
-                } else {
-
-                    str += datastring(_value)+""+inc_main;
-
-                }
-
-                inc += incrementDefaultValue;
-
-            });
-
-        }
-
-    }
-
-    return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+    return data;
 
 }
 

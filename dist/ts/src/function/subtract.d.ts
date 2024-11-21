@@ -6,10 +6,10 @@ export default subtract;
  * @category Math
  * @param {number} value1 First number
  * @param {number=} value2 Second number
- * @returns {number} Returns true or false.
+ * @returns {number|any} Returns true or false.
  * @example
  *
  * subtract(1, 1)
  * // => 0
  */
-declare function subtract(value1: number, value2?: number | undefined): number;
+declare function subtract(value1: number, value2?: number | undefined): number | any;

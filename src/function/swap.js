@@ -10,7 +10,7 @@ const toString = require("./toString");
  * @category Collection
  * @param {number} firstValue The data you want to map
  * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue where clause for you to merge the two set of data, where clause at `$1`  for `objectValue` and `$2`  for `mergeValue`
+ * @param {any[]|string} listValue Passing value either array or string
  * @returns {any} Return map either JSON or Array
  * @example
  *
