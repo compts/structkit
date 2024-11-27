@@ -5,7 +5,8 @@ describe('CJS: parseJson method', function () {
 
     it('check if repetion is correct', function () {
 
-        assert.deepStrictEqual(parseJson('{"a": 1}'), {
+
+        assert.deepStrictEqual(parseJson("{'a': 1}"), {
             "a": 1
         });
         assert.deepStrictEqual(parseJson('{"a": ["1","2" ]}'), {"a": [

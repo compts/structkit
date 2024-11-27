@@ -39,4 +39,3 @@ function getTypeofInternal (objectValue) {
 }
 
 exports.getTypeofInternal = getTypeofInternal;
-
