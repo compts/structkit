@@ -3,6 +3,7 @@ export default shuffle;
  * Shuffle data in array
  *
  * @since 1.0.1
+ * @update 1.4.86
  * @category Array
  * @param {any} objectValue Array argmuments
  * @returns {any[]} Returns the total.
