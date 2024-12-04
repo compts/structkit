@@ -237,6 +237,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Addition logic
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number} value2 Second number
+ * @returns {number} Returns true or false.
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null
  *
  * @since 1.0.1
@@ -429,70 +458,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    const typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json and array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
 
 /**
  * Each or for loop function you are familiar with
@@ -852,6 +817,39 @@ function empty (value) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    const typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1091,35 +1089,6 @@ _stk.appendIsArrayExist=appendIsArrayExist;
 
 
 /**
- * Addition logic
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number} value2 Second number
- * @returns {number} Returns true or false.
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Base reduce
  *
  * @since 1.4.8
@@ -1351,6 +1320,37 @@ _stk.arrayConcat=arrayConcat;
 
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -1441,6 +1441,8 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2089,8 +2091,6 @@ function clone (objectValue) {
 
 _stk.clone=clone;
 
-_stk.count=count;
-
 
 /**
  * Decrement value
@@ -2125,6 +2125,8 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
+
+_stk.count=count;
 
 _stk.divide=divide;
 
@@ -2211,34 +2213,45 @@ _stk.filter=filter;
 
 _stk.first=first;
 
-_stk.arraySlice=arraySlice;
-
 _stk.getData=getData;
 
 _stk.getKey=getKey;
-
-_stk.getTypeof=getTypeof;
-
-
 /**
- * Get value of json or array
+ * Generate unique value id
  *
  * @since 1.0.1
  * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
  * @example
  *
- * getValue({"s":1})
- * => 1
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
  */
-function getValue (objectValue) {
+function getUniq (option) {
 
-    return getKeyVal(objectValue, "value");
+    const optionValue = option||"default";
+
+    if (optionValue === "default") {
+
+        const defaultRandomValue=2;
+        const defaultSubstrValue=36;
+        const str_rand1=Math
+            .random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue)+Math.random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue);
+
+        return str_rand1;
+
+    }
+
+    return "";
 
 }
 
-_stk.getValue=getValue;
+_stk.getUniq=getUniq;
 
 
 /**
@@ -2283,6 +2296,29 @@ function groupBy (objectValue, func) {
 
 _stk.groupBy=groupBy;
 
+_stk.getTypeof=getTypeof;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
+
 
 /**
  *  To check if its greater
@@ -2311,37 +2347,6 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
-
-
-/**
- *  To check if its greater than to equal
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gte(1, 2)
- * // => false
- */
-function gte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa >= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gte=gte;
-
-_stk.has=has;
 
 
 /**
@@ -2383,6 +2388,37 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
+
+
+/**
+ *  To check if its greater than to equal
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any value type
+ * @param {any=} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gte(1, 2)
+ * // => false
+ */
+function gte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa >= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gte=gte;
+
+_stk.has=has;
 
 
 /**
@@ -2466,6 +2502,8 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
+
+_stk.isEmpty=isEmpty;
 
 
 /**
@@ -2624,8 +2662,6 @@ function localValidation (keys, vals, isExist) {
 }
 
 _stk.isExact=isExact;
-
-_stk.isEmpty=isEmpty;
 
 
 /**
@@ -3025,42 +3061,6 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-function getUniq (option) {
-
-    const optionValue = option||"default";
-
-    if (optionValue === "default") {
-
-        const defaultRandomValue=2;
-        const defaultSubstrValue=36;
-        const str_rand1=Math
-            .random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue)+Math.random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue);
-
-        return str_rand1;
-
-    }
-
-    return "";
-
-}
-
-_stk.getUniq=getUniq;
 
 _stk.map=map;
 
@@ -3441,84 +3441,6 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay;
 
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Seq
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {string} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    const zero = 0;
-    const one = 1;
-    const extend = varExtend(option, {
-        "limitCounterClear": 0
-    });
-
-    const valueWaited = wait || zero;
-    let counter = 0;
-
-    const interval = setInterval(function () {
-
-        func();
-        if (extend.limitCounterClear >zero) {
-
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    const sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-_stk.onSequence=onSequence;
-
 const getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3613,6 +3535,84 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+
+/**
+ * On sequence
+ *
+ * @since 1.4.1
+ * @category Seq
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {string} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    const zero = 0;
+    const one = 1;
+    const extend = varExtend(option, {
+        "limitCounterClear": 0
+    });
+
+    const valueWaited = wait || zero;
+    let counter = 0;
+
+    const interval = setInterval(function () {
+
+        func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+    const sequence = new ClassSequence(interval, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (interval, extend) {
+
+    this.interval = interval;
+
+    this.extend = extend;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+_stk.onSequence=onSequence;
 
 
 const entity = [
@@ -3888,6 +3888,8 @@ function parseString (value) {
 
 _stk.parseString=parseString;
 
+_stk.range=range;
+
 
 /**
  * Random value from array list
@@ -3930,8 +3932,6 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-
-_stk.range=range;
 
 
 /**
@@ -4168,78 +4168,6 @@ _stk.selectInData=selectInData;
 
 
 /**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Condition
- * @param {...boolean?} arg First number
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-/**
- * Split string for special cases
- *
- * @since 1.4.8
- * @category Seq
- * @param {string} value String to split
- * @returns {string} Returns the total.
- * @example
- *
- * stringSplit("split-this-string")
- *=>"split this string"
- */
-function stringSplit (value) {
-
-    return value.trim()
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/([-_.\s]{1,})/g, ' ')
-        .toLowerCase();
-
-}
-
-/**
- * String Camel case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
- */
-function stringCamelCase (value) {
-
-    return stringSplit(toString(value))
-        .replace(/(\s[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        })
-        .split(" ")
-        .join("");
-
-}
-
-_stk.stringCamelCase=stringCamelCase;
-
-
-/**
  * Shuffle data in array
  *
  * @since 1.0.1
@@ -4293,41 +4221,28 @@ _stk.shuffle=shuffle;
 
 
 /**
- * String Capitalize
+ * In array, you need to check all value atleast one true
  *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
+ * @since 1.4.8
+ * @category Condition
+ * @param {...boolean?} arg First number
+ * @returns {boolean} Returns true or false.
  * @example
  *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
+ * someValid(true, false)
+ * // => true
  */
-function stringCapitalize (value, option) {
+function someValid (...arg) {
 
-    if (option === "all") {
+    return curryArg(function (...rawValue) {
 
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+        return baseCountValidList(rawValue);
 
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
+    }, arg) >= one;
 
 }
 
-_stk.stringCapitalize=stringCapitalize;
+_stk.someValid=someValid;
 
 
 /**
@@ -4420,6 +4335,91 @@ function sort (objectValue, order, func) {
 }
 
 _stk.sort=sort;
+/**
+ * Split string for special cases
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {string} value String to split
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringSplit("split-this-string")
+ *=>"split this string"
+ */
+function stringSplit (value) {
+
+    return value.trim()
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([-_.\s]{1,})/g, ' ')
+        .toLowerCase();
+
+}
+
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+function stringCamelCase (value) {
+
+    return stringSplit(toString(value))
+        .replace(/(\s[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        })
+        .split(" ")
+        .join("");
+
+}
+
+_stk.stringCamelCase=stringCamelCase;
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize;
 
 
 /**
@@ -4581,8 +4581,6 @@ function stringUpperCase (value) {
 }
 
 _stk.stringUpperCase=stringUpperCase;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -4831,6 +4829,8 @@ function toDouble (value) {
 
 _stk.toDouble=toDouble;
 
+_stk.subtract=subtract;
+
 
 /**
  * To extract number in string and convert to integer
@@ -4918,9 +4918,9 @@ function unique (value) {
 
 _stk.unique=unique;
 
-_stk.varExtend=varExtend;
-
 _stk.where=where;
+
+_stk.varExtend=varExtend;
 
 
 /**
