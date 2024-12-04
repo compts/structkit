@@ -1,7 +1,7 @@
 const _stk = exports;
 const __p = "@argument/place";
 
-__=__p
+const __=__p;
 
 /**
  * Placeholder of argument
@@ -235,35 +235,6 @@ function argumentUndefinedCounter (args) {
     return counter;
 
 }
-
-/**
- * Addition logic
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns true or false.
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
 
 /**
  * Check if object has value or null
@@ -1441,91 +1412,6 @@ _stk.arraySlice=arraySlice;
 
 
 /**
- * Check if data is empty, null and undefined are now considered as empty
- *
- * @since 1.0.1
- * @category Boolean
- * @param {any} value JSON , Array and String
- * @returns {boolean} Returns true or false
- * @example
- *
- * isEmpty('')
- * // => true
- */
-function isEmpty (value) {
-
-    const typeofvalue = getTypeofInternal(value);
-
-    const invalidList = [
-        'null',
-        'undefined'
-    ];
-
-    if (typeofvalue === "json" || typeofvalue === "array") {
-
-        return count(value, typeofvalue === "json") === zero;
-
-    }
-    if (typeofvalue === "number") {
-
-        return value === zero;
-
-    }
-
-    if (indexOfExist(invalidList, typeofvalue)) {
-
-        return true;
-
-    }
-
-    if (typeofvalue === "uint16Array") {
-
-        return value.length ===zero;
-
-    }
-    if (typeofvalue === "uint8Array") {
-
-        return value.length ===zero;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
-
-/**
- * Array Sum
- *
- * @since 1.0.1
- * @category Math
- * @param {number[]} arrayObject Array in number
- * @param {number=} delimeter decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- * arraySum([1,2])
- * // => 3
- */
-function arraySum (arrayObject, delimeter) {
-
-    const defaultLimitDecimal = 0;
-    const arrayObjects=arrayObject||[];
-    const delimeters=delimeter||defaultLimitDecimal;
-
-    const sum = baseReduce(zero, arrayObjects, add);
-
-    return isEmpty(delimeters)
-        ? parseInt(sum)
-        :sum.toFixed(delimeters);
-
-}
-
-_stk.arraySum=arraySum;
-
-
-/**
  * To String
  *
  * @since 1.4.5
@@ -1715,6 +1601,35 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    const variable=empty(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone;
+
+
+/**
  * Get key Object or JSON
  *
  * @since 1.0.1
@@ -1729,6 +1644,32 @@ _stk.asyncReplace=asyncReplace;
 function getKey (objectValue) {
 
     return getKeyVal(objectValue, "key");
+
+}
+
+/**
+ * Addition logic
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns true or false.
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
 
 }
 
@@ -2062,34 +2003,88 @@ _stk.calculate=calculate;
 
 
 /**
- * Cloning the data either in JSON or array that be used as different property
+ * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
- * @category Any
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
+ * @category Boolean
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
  * @example
  *
- * clone([1,2])
- * // => [1,2]
+ * isEmpty('')
+ * // => true
  */
-function clone (objectValue) {
+function isEmpty (value) {
 
-    const variable=empty(objectValue);
+    const typeofvalue = getTypeofInternal(value);
 
-    each(objectValue, function (key, value) {
+    const invalidList = [
+        'null',
+        'undefined'
+    ];
 
-        append(variable, value, key);
+    if (typeofvalue === "json" || typeofvalue === "array") {
 
-    });
+        return count(value, typeofvalue === "json") === zero;
 
-    return variable;
+    }
+    if (typeofvalue === "number") {
+
+        return value === zero;
+
+    }
+
+    if (indexOfExist(invalidList, typeofvalue)) {
+
+        return true;
+
+    }
+
+    if (typeofvalue === "uint16Array") {
+
+        return value.length ===zero;
+
+    }
+    if (typeofvalue === "uint8Array") {
+
+        return value.length ===zero;
+
+    }
+
+    return (/^\s*$/gmi).test(value);
 
 }
 
-_stk.clone=clone;
+/**
+ * Array Sum
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number[]} arrayObject Array in number
+ * @param {number=} delimeter decimal point and default value is 0
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ * arraySum([1,2])
+ * // => 3
+ */
+function arraySum (arrayObject, delimeter) {
 
-_stk.count=count;
+    const defaultLimitDecimal = 0;
+    const arrayObjects=arrayObject||[];
+    const delimeters=delimeter||defaultLimitDecimal;
+
+    const sum = baseReduce(zero, arrayObjects, add);
+
+    return isEmpty(delimeters)
+        ? parseInt(sum)
+        :sum.toFixed(delimeters);
+
+}
+
+_stk.arraySum=arraySum;
 
 
 /**
@@ -2126,11 +2121,13 @@ function dec (value, default_value) {
 
 _stk.dec=dec;
 
+_stk.count=count;
+
 _stk.divide=divide;
 
-_stk.each=each;
-
 _stk.empty=empty;
+
+_stk.each=each;
 
 
 /**
@@ -2217,6 +2214,8 @@ _stk.first=first;
 _stk.getData=getData;
 
 _stk.getKey=getKey;
+
+_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -2253,6 +2252,29 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
+
+_stk.add=add;
 
 
 /**
@@ -2297,8 +2319,6 @@ function groupBy (objectValue, func) {
 
 _stk.groupBy=groupBy;
 
-_stk.getTypeof=getTypeof;
-
 
 /**
  *  To check if its greater
@@ -2327,8 +2347,6 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
-
-_stk.has=has;
 
 
 /**
@@ -2359,26 +2377,7 @@ function gte (value1, value2) {
 
 _stk.gte=gte;
 
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
+_stk.has=has;
 
 
 /**
@@ -2753,50 +2752,6 @@ _stk.isJson=isJson;
 
 
 /**
- * Convert Json To Array base on search value you provide
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Json
- * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
- * @example
- *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
- * => [2, 3]
- */
-function jsonToArray (objectValue, value) {
-
-    const arry=[];
-
-    each(objectValue, function (_key, _value) {
-
-        if (has(value)) {
-
-            const valueData = getData(_value, value);
-
-            if (isEmpty(valueData) === false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
-
-_stk.jsonToArray=jsonToArray;
-
-
-/**
  * Get the last value of array or JSON
  *
  * @since 1.0.1
@@ -2841,6 +2796,50 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
+
+
+/**
+ * Convert Json To Array base on search value you provide
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {boolean} Returns Array
+ * @example
+ *
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
+ */
+function jsonToArray (objectValue, value) {
+
+    const arry=[];
+
+    each(objectValue, function (_key, _value) {
+
+        if (has(value)) {
+
+            const valueData = getData(_value, value);
+
+            if (isEmpty(valueData) === false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
+
+}
+
+_stk.jsonToArray=jsonToArray;
 
 
 /**
@@ -3233,9 +3232,9 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.mergeWithKey=mergeWithKey;
-
 _stk.multiply=multiply;
+
+_stk.mergeWithKey=mergeWithKey;
 
 
 /**
@@ -4321,29 +4320,6 @@ _stk.reduce=reduce;
 
 
 /**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category String
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-function regexCountGroup (value) {
-
-    const one =1;
-
-    return new RegExp(toString(value) + '|').exec('').length - one;
-
-}
-
-_stk.regexCountGroup=regexCountGroup;
-
-
-/**
  * Remove data in either JSON or Array using key or woth value, a revise logic
  *
  * @since 1.4.85
@@ -4455,6 +4431,29 @@ function remove (objectValue, value, value2) {
 }
 
 _stk.remove=remove;
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category String
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+function regexCountGroup (value) {
+
+    const one =1;
+
+    return new RegExp(toString(value) + '|').exec('').length - one;
+
+}
+
+_stk.regexCountGroup=regexCountGroup;
 
 
 /**
@@ -4997,8 +4996,6 @@ function stringUpperCase (value) {
 
 _stk.stringUpperCase=stringUpperCase;
 
-_stk.subtract=subtract;
-
 
 /**
  * Swapping the value either string or array
@@ -5050,6 +5047,8 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+
+_stk.subtract=subtract;
 
 
 /**
@@ -5382,8 +5381,6 @@ function toInteger (value) {
 
 _stk.toInteger=toInteger;
 
-_stk.toString=toString;
-
 
 /**
  * String trim
@@ -5404,6 +5401,8 @@ function trim (value) {
 }
 
 _stk.trim=trim;
+
+_stk.toString=toString;
 
 
 /**
