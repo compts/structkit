@@ -84,6 +84,7 @@ function checkIfFunctionNotExistObject (obj) {
 
         throw new Error("Function must not exist");
 
+
     }
 
     let isValid = false;

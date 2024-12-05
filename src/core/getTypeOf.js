@@ -22,9 +22,17 @@ function getTypeofInternal (objectValue) {
 
     if (objectType === "[object Object]") {
 
-        return isJson(objectValue, "object")
-            ?"json"
-            :"object";
+        try {
+
+            return isJson(objectValue, "object")
+                ?"json"
+                :"object";
+
+        } catch (err) {
+
+            return "object";
+
+        }
 
     }
 
