@@ -51,15 +51,23 @@ function isJson (value, valueType) {
 
     }
 
+    let isValid =true;
+
     try {
 
         return checkIfFunctionNotExistObject(value);
 
     } catch (err) {
 
-        return false;
+        isValid = false;
+
+    } finally {
+
+        isValid = false;
 
     }
+
+    return isValid;
 
 }
 

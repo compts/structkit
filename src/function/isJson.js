@@ -50,6 +50,7 @@ function isJson (value, valueType) {
 
     }
 
+    let isValid =true;
 
     try {
 
@@ -57,10 +58,15 @@ function isJson (value, valueType) {
 
     } catch (err) {
 
-        return false;
+        isValid = false;
+
+    } finally {
+
+        isValid = false;
 
     }
 
+    return isValid;
 
 }
 
