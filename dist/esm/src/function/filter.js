@@ -36,9 +36,7 @@ function filter (objectValue, func) {
 
         if (has(func)) {
 
-            const returnVal = func(key, value);
-
-            if (returnVal === true && getTypeof(returnVal) === "boolean") {
+            if (func(key, value)) {
 
                 append(jsn_var, value, key);
 
