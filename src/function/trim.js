@@ -1,4 +1,6 @@
 const toString = require("./toString");
+const trimStart = require("./trimStart");
+const trimEnd = require("./trimEnd");
 
 /**
  * String trim
@@ -14,7 +16,12 @@ const toString = require("./toString");
  */
 function trim (value) {
 
-    return toString(value).trim();
+    let rawValue = toString(value);
+
+    rawValue = trimStart(rawValue);
+    rawValue = trimEnd(rawValue);
+
+    return rawValue.trim();
 
 }
 module.exports=trim;

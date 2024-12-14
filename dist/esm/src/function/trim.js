@@ -1,5 +1,9 @@
 import toString from './toString.js';
 
+import trimStart from './trimStart.js';
+
+import trimEnd from './trimEnd.js';
+
 /**
  * String trim
  *
@@ -14,7 +18,12 @@ import toString from './toString.js';
  */
 function trim (value) {
 
-    return toString(value).trim();
+    let rawValue = toString(value);
+
+    rawValue = trimStart(rawValue);
+    rawValue = trimEnd(rawValue);
+
+    return rawValue.trim();
 
 }
 export default trim;
