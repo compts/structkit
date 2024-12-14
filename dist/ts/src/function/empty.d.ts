@@ -1,10 +1,10 @@
 export default empty;
 /**
- * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
+ * Ge the empty value of specify argument type
  *
  * @since 1.0.1
  * @category Any
- * @param {any} value Either Json or Array
+ * @param {any} value Any value type that you want an empty return
  * @returns {any} Returns empty either Json or Array
  * @example
  *

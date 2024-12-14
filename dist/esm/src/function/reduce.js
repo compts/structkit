@@ -9,10 +9,10 @@ import {three} from '../core/defaultValue.js';
  *
  * @since 1.4.8
  * @category Core
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
- * @returns {number} Returns the total.
+ * @param {any} defaultValue Starting value that you want to use as reference
+ * @param {any[]} listData Array value that you want to map
+ * @param {any} func Callback function for how to map the data
+ * @returns {number} Return redue value
  * @example
  *
  * reduce(2,[1,2],(total,value)=>total+value)

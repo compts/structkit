@@ -1,7 +1,7 @@
 const _stk = exports;
 const __p = "@argument/place";
 
-const __=__p;
+__=__p
 
 /**
  * Placeholder of argument
@@ -17,7 +17,7 @@ const __=__p;
 _stk.__=__;
 
 /**
- * Create a separate has inside core folder
+ * Create a separate `has` inside core folder
  *
  * @since 1.4.8
  * @category Boolean
@@ -237,7 +237,7 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
- * Addition logic
+ * Addition logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
@@ -473,7 +473,7 @@ function getTypeofInternal (objectValue) {
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValue Array or json.
- * @param {Function=} func Function data
+ * @param {Function=} func Function to execute the loop with callback key,value
  * @returns {any} Array or json
  * @example
  *
@@ -602,7 +602,7 @@ function baseCountValidList (objectValue) {
 }
 
 /**
- * Array Count
+ * Counting the lenght in array, json or string
  *
  * @since 1.0.1
  * @category Math
@@ -689,7 +689,7 @@ function count (objectValue, json_is_empty_check) {
  *
  * @since 1.4.8
  * @category Condition
- * @param {...any?} arg First number
+ * @param {...any?} arg List of value you need to check if true
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -743,7 +743,7 @@ function baseAppend (objectValue, val, key) {
 }
 
 /**
- * Append data for json and array
+ * Append data for json or array
  *
  * @since 1.0.1
  * @category Any
@@ -918,11 +918,11 @@ function indexOfNotExist (arrayObject, value) {
 }
 
 /**
- * Get JSON or  Array as empty variable(rename from `getEmptyVariable`)
+ * Ge the empty value of specify argument type
  *
  * @since 1.0.1
  * @category Any
- * @param {any} value Either Json or Array
+ * @param {any} value Any value type that you want an empty return
  * @returns {any} Returns empty either Json or Array
  * @example
  *
@@ -1121,7 +1121,7 @@ function getKeyVal (jsn, typ) {
 }
 
 /**
- * Get the first value of array or JSON
+ * Get the first value of array
  *
  * @since 1.0.1
  * @category Any
@@ -1167,7 +1167,7 @@ function getTypeof (...args) {
 }
 
 /**
- * Append If Array not Exist
+ * Append If Array does not Exist
  *
  * @since 1.0.1
  * @category Array
@@ -1234,8 +1234,7 @@ function toArray (value) {
 }
 
 /**
- * To get value of array given start and end(optional) of the array
- * This is a rename of delimiter
+ * To return the value selected either start or start to end index
  *
  * @since 1.3.1
  * @category Array
@@ -1502,7 +1501,7 @@ function isEmpty (value) {
 }
 
 /**
- * Array Sum
+ * Array sum of value
  *
  * @since 1.0.1
  * @category Math
@@ -1531,69 +1530,6 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum;
-
-
-/**
- * Async replace
- *
- * @since 1.3.1
- * @category Utility
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                const values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -1629,7 +1565,7 @@ function toString (value) {
 }
 
 /**
- * Get Data in array or json using string to search the data
+ * Get Data in array or json using string to search the data either by its key or index
  *
  * @since 1.0.1
  * @category Collection
@@ -1723,36 +1659,70 @@ _stk.arrayToObjectByDataFormat=arrayToObjectByDataFormat;
 
 
 /**
- * Cloning the data either in JSON or array that be used as different property
+ * Async replace regexp argument
  *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
+ * @since 1.3.1
+ * @category Utility
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String
  * @example
  *
- * clone([1,2])
- * // => [1,2]
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-function clone (objectValue) {
+function asyncReplace (value, search, toReplace) {
 
-    const variable=empty(objectValue);
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
-    each(objectValue, function (key, value) {
+        try {
 
-        append(variable, value, key);
+            if (getTypeof(rawToReplace) === "function") {
 
-    });
+                const values = [];
 
-    return variable;
+                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
 
 }
 
-_stk.clone=clone;
+_stk.asyncReplace=asyncReplace;
 
 
 /**
- * Get key Object or JSON
+ * Get key Array or JSON
  *
  * @since 1.0.1
  * @category String
@@ -1770,7 +1740,7 @@ function getKey (objectValue) {
 }
 
 /**
- * Divide
+ * Divide logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
@@ -1796,7 +1766,7 @@ function divide (value1, value2) {
 }
 
 /**
- * Multiply
+ * Multiply logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
@@ -1822,7 +1792,7 @@ function multiply (value1, value2) {
 }
 
 /**
- * Subtract
+ * Subtract logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
@@ -1848,11 +1818,11 @@ function subtract (value1, value2) {
 }
 
 /**
- * Logic in convert string or number to compute
+ * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
  * @category Seq
- * @param {string} formula The second number in an addition.
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
@@ -2097,6 +2067,35 @@ function convert (a1, b1, pos) {
 
 _stk.calculate=calculate;
 
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    const variable=empty(objectValue);
+
+    each(objectValue, function (key, value) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone;
+
 _stk.count=count;
 
 
@@ -2106,7 +2105,7 @@ _stk.count=count;
  * @since 1.4.8
  * @category Math
  * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
  * @returns {number} Return in number.
  * @example
  *
@@ -2142,12 +2141,12 @@ _stk.empty=empty;
 
 
 /**
- * To check if its equal
+ * To check if the two arguments are equal
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
  * @example
  *
@@ -2175,9 +2174,11 @@ function equal (value1, value2) {
 
 _stk.equal=equal;
 
+_stk.first=first;
+
 
 /**
- * Filter the data in loop
+ * Filter the data in for loop
  *
  * @since 1.0.1
  * @category Collection
@@ -2219,8 +2220,6 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter;
-
-_stk.first=first;
 
 _stk.getData=getData;
 
@@ -2330,12 +2329,12 @@ _stk.groupBy=groupBy;
 
 
 /**
- *  To check if its greater
+ *  To check if the two arguments are greater
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -2359,12 +2358,12 @@ _stk.gt=gt;
 
 
 /**
- *  To check if its greater than to equal
+ *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -2436,7 +2435,7 @@ _stk.ifUndefined=ifUndefined;
  * @since 1.4.8
  * @category Array
  * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
  * @returns {number} Return in number.
  * @example
  *
@@ -2467,8 +2466,6 @@ _stk.inc=inc;
 _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
-
-_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -2511,6 +2508,8 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 _stk.isEmpty=isEmpty;
 
@@ -3013,12 +3012,12 @@ _stk.limit=limit;
 
 
 /**
- *  To check if its less
+ * To check if the two arguments are less
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
  * @example
  *
@@ -3042,12 +3041,12 @@ _stk.lt=lt;
 
 
 /**
- * To check if its less than to equal
+ * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
  * @example
  *
@@ -3243,6 +3242,8 @@ _stk.mergeInWhere=mergeInWhere;
 
 _stk.mergeWithKey=mergeWithKey;
 
+_stk.multiply=multiply;
+
 
 /**
  * To check if its not equal
@@ -3271,8 +3272,6 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -3642,6 +3641,245 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+
+/**
+ * Data String from JSON object
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {string} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function datastring (str) {
+
+    let data_s="";
+
+    if (typeof str === "string") {
+
+        if (str.indexOf("'")) {
+
+            data_s='&quot;'+str+'&quot;';
+
+        } else if (str.indexOf('"')) {
+
+            data_s='&quot;'+str+'&quot;';
+
+        } else {
+
+            data_s=str;
+
+        }
+
+    } else {
+
+        data_s=str;
+
+    }
+
+    return data_s;
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} rawCount The second number in an addition.
+ * @param {any} rawConfig The second number in an addition.
+ * @param {any} rawValue The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        let str="";
+        let str_strt="";
+        let str_end="";
+        let inc=0;
+        const incrementDefaultValue=1;
+        let inc_main=null;
+
+        if (has(value)) {
+
+            if (getTypeof(value) === "json") {
+
+                str_strt="{";
+                str_end="}";
+
+                each(value, function (_key, _value) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object"&&_value !== null) {
+
+                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+            if (getTypeof(value) === "array") {
+
+                str_strt="[";
+                str_end="]";
+
+                each(value, function (_key, _value) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object") {
+
+                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+
+        }
+
+        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The second number in an addition.
+ * @param {any=} config The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value, config) {
+
+    const defaultConfig = varExtend(config, {});
+
+    const data = parseStringCore(zero, defaultConfig, value);
+
+    return data;
+
+}
+
+_stk.parseString=parseString;
+
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Condition
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+function pipe (...arg) {
+
+    const pipeConst = first(arg);
+    const varLimit = limit(arg, one);
+    const that = this;
+
+    return curryArg(function (...rawValue) {
+
+        return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        });
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+
+
+/**
+ * Random value from array list
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const emptyDefaultValue=0;
+    const ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 
 
 const entity = [
@@ -4071,246 +4309,30 @@ function parseJson (value, config) {
 
 _stk.parseJson=parseJson;
 
-
-/**
- * Data String from JSON object
- *
- * @since 1.0.1
- * @category Collection
- * @param {string} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function datastring (str) {
-
-    let data_s="";
-
-    if (typeof str === "string") {
-
-        if (str.indexOf("'")) {
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else if (str.indexOf('"')) {
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else {
-
-            data_s=str;
-
-        }
-
-    } else {
-
-        data_s=str;
-
-    }
-
-    return data_s;
-
-}
-
-/**
- * Parse String
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} rawCount The second number in an addition.
- * @param {any} rawConfig The second number in an addition.
- * @param {any} rawValue The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        let str="";
-        let str_strt="";
-        let str_end="";
-        let inc=0;
-        const incrementDefaultValue=1;
-        let inc_main=null;
-
-        if (has(value)) {
-
-            if (getTypeof(value) === "json") {
-
-                str_strt="{";
-                str_end="}";
-
-                each(value, function (_key, _value) {
-
-                    inc_main=inc<count(value)-incrementDefaultValue
-                        ?","
-                        :"";
-
-                    if (typeof _value === "object"&&_value !== null) {
-
-                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
-
-                    } else {
-
-                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
-
-                    }
-
-                    inc += incrementDefaultValue;
-
-                });
-
-            }
-            if (getTypeof(value) === "array") {
-
-                str_strt="[";
-                str_end="]";
-
-                each(value, function (_key, _value) {
-
-                    inc_main=inc<count(value)-incrementDefaultValue
-                        ?","
-                        :"";
-
-                    if (typeof _value === "object") {
-
-                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
-
-                    } else {
-
-                        str += datastring(_value)+""+inc_main;
-
-                    }
-
-                    inc += incrementDefaultValue;
-
-                });
-
-            }
-
-        }
-
-        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
-
-}
-
-/**
- * Parse String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The second number in an addition.
- * @param {any=} config The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value, config) {
-
-    const defaultConfig = varExtend(config, {});
-
-    const data = parseStringCore(zero, defaultConfig, value);
-
-    return data;
-
-}
-
-_stk.parseString=parseString;
-
-
-/**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Condition
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-function pipe (...arg) {
-
-    const pipeConst = first(arg);
-    const varLimit = limit(arg, one);
-    const that = this;
-
-    return curryArg(function (...rawValue) {
-
-        return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        });
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-
-
-/**
- * Random value from array list
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const emptyDefaultValue=0;
-    const ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
 _stk.range=range;
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category String
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+function regexCountGroup (value) {
+
+    const one =1;
+
+    return new RegExp(toString(value) + '|').exec('').length - one;
+
+}
+
+_stk.regexCountGroup=regexCountGroup;
 
 
 /**
@@ -4318,10 +4340,10 @@ _stk.range=range;
  *
  * @since 1.4.8
  * @category Core
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
- * @returns {number} Returns the total.
+ * @param {any} defaultValue Starting value that you want to use as reference
+ * @param {any[]} listData Array value that you want to map
+ * @param {any} func Callback function for how to map the data
+ * @returns {number} Return redue value
  * @example
  *
  * reduce(2,[1,2],(total,value)=>total+value)
@@ -4348,29 +4370,6 @@ function reduce (defaultValue, listData, func) {
 }
 
 _stk.reduce=reduce;
-
-
-/**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category String
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-function regexCountGroup (value) {
-
-    const one =1;
-
-    return new RegExp(toString(value) + '|').exec('').length - one;
-
-}
-
-_stk.regexCountGroup=regexCountGroup;
 
 
 /**
@@ -4624,8 +4623,8 @@ _stk.selectInData=selectInData;
  * @since 1.0.1
  * @update 1.4.86
  * @category Array
- * @param {any} objectValue Array argmuments
- * @returns {any[]} Returns the total.
+ * @param {any[]} objectValue Array argmuments that you want to shuffle
+ * @returns {any[]} Shuffle return value in array
  * @example
  *
  * shuffle([1,2,3])
@@ -4670,7 +4669,7 @@ _stk.shuffle=shuffle;
  *
  * @since 1.4.8
  * @category Condition
- * @param {...any?} arg First number
+ * @param {...any?} arg List of value you need to check if some are true
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -4695,7 +4694,7 @@ _stk.someValid=someValid;
  *
  * @since 1.0.1
  * @category Array
- * @param {any} objectValue Array
+ * @param {any[]} objectValue List of array you want to sort
  * @param {boolean=} order True for ascend then false for descend
  * @param {any=} func Callback function or sort type
  * @returns {any[]} Returns the total.
@@ -4780,44 +4779,53 @@ function sort (objectValue, order, func) {
 }
 
 _stk.sort=sort;
+/**
+ * Split string for special cases
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {string} value String to split
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringSplit("split-this-string")
+ *=>"split this string"
+ */
+function stringSplit (value) {
 
+    return value.trim()
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([-_.\s]{1,})/g, ' ')
+        .toLowerCase();
+
+}
 
 /**
- * String Capitalize
+ * String Camel case
  *
  * @since 1.3.1
  * @category String
  * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
+ * @returns {string} Returns camel sting data
  * @example
  *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
  */
-function stringCapitalize (value, option) {
+function stringCamelCase (value) {
 
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+    return stringSplit(toString(value))
+        .replace(/(\s[a-z])/g, function (ss1) {
 
             return ss1.toUpperCase();
 
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
+        })
+        .split(" ")
+        .join("");
 
 }
 
-_stk.stringCapitalize=stringCapitalize;
+_stk.stringCamelCase=stringCamelCase;
 
 
 /**
@@ -4860,26 +4868,45 @@ function stringEscape (value, type) {
 }
 
 _stk.stringEscape=stringEscape;
+
+
 /**
- * Split string for special cases
+ * String Capitalize
  *
- * @since 1.4.8
- * @category Seq
- * @param {string} value String to split
- * @returns {string} Returns the total.
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
  * @example
  *
- * stringSplit("split-this-string")
- *=>"split this string"
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
  */
-function stringSplit (value) {
+function stringCapitalize (value, option) {
 
-    return value.trim()
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/([-_.\s]{1,})/g, ' ')
-        .toLowerCase();
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
 
 }
+
+_stk.stringCapitalize=stringCapitalize;
+
 
 /**
  * String Kebab case
@@ -4902,34 +4929,6 @@ function stringKebabCase (value) {
 }
 
 _stk.stringKebabCase=stringKebabCase;
-
-
-/**
- * String Camel case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
- */
-function stringCamelCase (value) {
-
-    return stringSplit(toString(value))
-        .replace(/(\s[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        })
-        .split(" ")
-        .join("");
-
-}
-
-_stk.stringCamelCase=stringCamelCase;
 
 _stk.stringLowerCase=stringLowerCase;
 
@@ -5012,7 +5011,7 @@ _stk.subtract=subtract;
 
 
 /**
- * Swapping the value either string or array
+ * Swapping the value either string or array in there specific position
  *
  * @since 1.4.86
  * @category Collection
@@ -5393,16 +5392,14 @@ function toInteger (value) {
 
 _stk.toInteger=toInteger;
 
-_stk.toString=toString;
-
 
 /**
- * String trim
+ * String trim  at the end only
  *
  * @since 1.4.86
  * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @param {string} value String data that you want to trim
+ * @returns {string} Returns trim data in start of string
  * @example
  *
  * trimStart(' The fish is goad   with Goat-1ss ')
@@ -5417,12 +5414,12 @@ function trimStart (value) {
 }
 
 /**
- * String trim
+ * String trim at the end only
  *
  * @since 1.4.86
  * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @param {string} value String data that you want to trim
+ * @returns {string} Returns trim data in end of string
  * @example
  *
  * trimEnd(' The fish is goad   with Goat-1ss ')
@@ -5441,8 +5438,8 @@ function trimEnd (value) {
  *
  * @since 1.4.8
  * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @param {string} value String data that you want to trim
+ * @returns {string} Returns trim data
  * @example
  *
  * trim(' The fish is goad   with Goat-1ss ')
@@ -5464,6 +5461,8 @@ _stk.trim=trim;
 _stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
+
+_stk.toString=toString;
 
 
 /**

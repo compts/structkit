@@ -11,11 +11,11 @@ const multiply = require("./multiply");
 const subtract = require("./subtract");
 
 /**
- * Logic in convert string or number to compute
+ * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
  * @category Seq
- * @param {string} formula The second number in an addition.
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example

@@ -1,6 +1,6 @@
 export default arraySum;
 /**
- * Array Sum
+ * Array sum of value
  *
  * @since 1.0.1
  * @category Math

@@ -1,6 +1,6 @@
 export default asyncReplace;
 /**
- * Async replace
+ * Async replace regexp argument
  *
  * @since 1.3.1
  * @category Utility

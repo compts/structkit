@@ -5,12 +5,12 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
 import {two} from '../core/defaultValue.js';
 
 /**
- * To check if its equal
+ * To check if the two arguments are equal
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
  * @example
  *

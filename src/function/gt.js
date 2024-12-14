@@ -2,12 +2,12 @@ const curryArg = require("../core/curryArg");
 const {two} = require("../core/defaultValue");
 
 /**
- *  To check if its greater
+ *  To check if the two arguments are greater
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
  * @example
  *

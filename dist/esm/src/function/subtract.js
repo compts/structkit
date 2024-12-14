@@ -3,7 +3,7 @@ import curryArg from '../core/curryArg.js';
 import {two} from '../core/defaultValue.js';
 
 /**
- * Subtract
+ * Subtract logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math

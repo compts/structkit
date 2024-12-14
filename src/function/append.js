@@ -4,7 +4,7 @@ const {two} = require("../core/defaultValue");
 
 
 /**
- * Append data for json and array
+ * Append data for json or array
  *
  * @since 1.0.1
  * @category Any

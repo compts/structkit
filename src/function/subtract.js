@@ -2,7 +2,7 @@ const curryArg = require("../core/curryArg");
 const {two} = require("../core/defaultValue");
 
 /**
- * Subtract
+ * Subtract logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math

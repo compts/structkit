@@ -7,7 +7,7 @@ import isEmpty from './isEmpty.js';
 import baseReduce from '../core/baseReduce.js';
 
 /**
- * Array Sum
+ * Array sum of value
  *
  * @since 1.0.1
  * @category Math

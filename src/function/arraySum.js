@@ -6,7 +6,7 @@ const isEmpty = require('./isEmpty');
 const baseReduce = require("../core/baseReduce");
 
 /**
- * Array Sum
+ * Array sum of value
  *
  * @since 1.0.1
  * @category Math

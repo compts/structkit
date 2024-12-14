@@ -1,6 +1,6 @@
 export default getKey;
 /**
- * Get key Object or JSON
+ * Get key Array or JSON
  *
  * @since 1.0.1
  * @category String

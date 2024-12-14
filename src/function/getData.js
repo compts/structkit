@@ -4,7 +4,7 @@ const each = require('./each');
 const curryArg = require("../core/curryArg");
 
 /**
- * Get Data in array or json using string to search the data
+ * Get Data in array or json using string to search the data either by its key or index
  *
  * @since 1.0.1
  * @category Collection

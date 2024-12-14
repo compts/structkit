@@ -5,7 +5,7 @@ const indexOfNotExist = require('./indexOfNotExist');
 const getTypeof = require('./getTypeof');
 
 /**
- * Append If Array not Exist
+ * Append If Array does not Exist
  *
  * @since 1.0.1
  * @category Array

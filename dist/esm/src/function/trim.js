@@ -9,8 +9,8 @@ import trimEnd from './trimEnd.js';
  *
  * @since 1.4.8
  * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @param {string} value String data that you want to trim
+ * @returns {string} Returns trim data
  * @example
  *
  * trim(' The fish is goad   with Goat-1ss ')

@@ -1,6 +1,6 @@
 export default count;
 /**
- * Array Count
+ * Counting the lenght in array, json or string
  *
  * @since 1.0.1
  * @category Math

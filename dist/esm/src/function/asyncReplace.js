@@ -3,7 +3,7 @@ import getTypeof from './getTypeof.js';
 import curryArg from '../core/curryArg.js';
 
 /**
- * Async replace
+ * Async replace regexp argument
  *
  * @since 1.3.1
  * @category Utility

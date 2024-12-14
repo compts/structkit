@@ -9,7 +9,7 @@ const getTypeof = require('./getTypeof');
 const append = require('./append');
 
 /**
- * Filter the data in loop
+ * Filter the data in for loop
  *
  * @since 1.0.1
  * @category Collection

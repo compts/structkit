@@ -1,6 +1,6 @@
 export default add;
 /**
- * Addition logic
+ * Addition logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math

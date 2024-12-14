@@ -1,11 +1,11 @@
 export default trimEnd;
 /**
- * String trim
+ * String trim at the end only
  *
  * @since 1.4.86
  * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @param {string} value String data that you want to trim
+ * @returns {string} Returns trim data in end of string
  * @example
  *
  * trimEnd(' The fish is goad   with Goat-1ss ')

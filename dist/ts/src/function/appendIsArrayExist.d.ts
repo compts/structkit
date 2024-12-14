@@ -1,6 +1,6 @@
 export default appendIsArrayExist;
 /**
- * Append If Array not Exist
+ * Append If Array does not Exist
  *
  * @since 1.0.1
  * @category Array

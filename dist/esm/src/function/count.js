@@ -5,7 +5,7 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
 import each from './each.js';
 
 /**
- * Array Count
+ * Counting the lenght in array, json or string
  *
  * @since 1.0.1
  * @category Math

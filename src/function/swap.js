@@ -4,7 +4,7 @@ const clone = require("./clone");
 const toString = require("./toString");
 
 /**
- * Swapping the value either string or array
+ * Swapping the value either string or array in there specific position
  *
  * @since 1.4.86
  * @category Collection

@@ -2,7 +2,7 @@ const getTypeof = require('./getTypeof');
 const curryArg = require("../core/curryArg");
 
 /**
- * Async replace
+ * Async replace regexp argument
  *
  * @since 1.3.1
  * @category Utility

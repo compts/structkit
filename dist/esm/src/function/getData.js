@@ -7,7 +7,7 @@ import each from './each.js';
 import curryArg from '../core/curryArg.js';
 
 /**
- * Get Data in array or json using string to search the data
+ * Get Data in array or json using string to search the data either by its key or index
  *
  * @since 1.0.1
  * @category Collection

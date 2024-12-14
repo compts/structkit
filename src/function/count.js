@@ -5,7 +5,7 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 const each = require('./each');
 
 /**
- * Array Count
+ * Counting the lenght in array, json or string
  *
  * @since 1.0.1
  * @category Math

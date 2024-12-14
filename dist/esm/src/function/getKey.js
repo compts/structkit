@@ -1,7 +1,7 @@
 import getKeyVal from '../core/getKeyVal.js';
 
 /**
- * Get key Object or JSON
+ * Get key Array or JSON
  *
  * @since 1.0.1
  * @category String

@@ -1,6 +1,6 @@
 export default subtract;
 /**
- * Subtract
+ * Subtract logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math

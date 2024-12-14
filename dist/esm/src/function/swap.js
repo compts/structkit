@@ -7,7 +7,7 @@ import clone from './clone.js';
 import toString from './toString.js';
 
 /**
- * Swapping the value either string or array
+ * Swapping the value either string or array in there specific position
  *
  * @since 1.4.86
  * @category Collection

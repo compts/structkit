@@ -4,7 +4,7 @@ export default someValid;
  *
  * @since 1.4.8
  * @category Condition
- * @param {...any?} arg First number
+ * @param {...any?} arg List of value you need to check if some are true
  * @returns {boolean} Returns true or false.
  * @example
  *

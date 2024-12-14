@@ -5,7 +5,7 @@ import baseAppend from '../core/baseAppend.js';
 import {two} from '../core/defaultValue.js';
 
 /**
- * Append data for json and array
+ * Append data for json or array
  *
  * @since 1.0.1
  * @category Any
