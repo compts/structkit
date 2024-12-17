@@ -8,6 +8,8 @@
   "sideEffects": false,
   "exports": {
     ".": {
+      "import": "./dist/esm/node.esm.js",
+      "require": "./dist/cjs/structkit-full.cjs.js",
       "types": {
         "require": "./dist/ts/node.esm.d.ts",
         "default": "./dist/ts/node.esm.d.ts"
