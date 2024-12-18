@@ -9,7 +9,7 @@ import {negOne} from '../core/defaultValue.js';
  * @category Boolean
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
- * @returns {boolean} Return array.
+ * @returns {boolean} Return boolean.
  * @example
  *
  * indexOfNotExist([312], 32)

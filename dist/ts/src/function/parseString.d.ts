@@ -1,12 +1,12 @@
 export default parseString;
 /**
- * Parse String
+ * Parse from JSON object to String
  *
  * @since 1.4.86
  * @category
- * @param {any} value The second number in an addition.
- * @param {any=} config The second number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
  * @example
  *
  * parseString({} )

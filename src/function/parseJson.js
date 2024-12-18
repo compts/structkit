@@ -5,7 +5,7 @@ const varExtend = require('./varExtend');
 
 
 /**
- * Parse Json object
+ * Cleanup unnecessary character
  *
  * @since 1.4.86
  * @category Collection
@@ -36,7 +36,7 @@ function cleanValue (value) {
  * @returns {any} Returns the json.
  * @example
  *
- * parseJson('{}' )
+ * getTagVal('{}' )
  *=>{}
  */
 function getTagVal (value) {
@@ -306,13 +306,13 @@ function callbackParse (glb, config) {
 }
 
 /**
- * Parse Json object
+ * Parse from String to JSON object
  *
  * @since 1.4.86
  * @category Collection
- * @param {string} value String you want to convert to
- * @param {any=} config The second number in an addition.
- * @returns {any} Returns the json.
+ * @param {string} value String you want to convert to json object
+ * @param {any=} config Option you want to set in this function.
+ * @returns {any} Returns the json object.
  * @example
  *
  * parseJson('{}' )

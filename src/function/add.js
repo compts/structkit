@@ -8,7 +8,7 @@ const {two} = require("../core/defaultValue");
  * @category Math
  * @param {number} value1 First number
  * @param {number=} value2 Second number
- * @returns {number|any} Returns true or false.
+ * @returns {number|any} Returns number for added value
  * @example
  *
  * add(1, 1)

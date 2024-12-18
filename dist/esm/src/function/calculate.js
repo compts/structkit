@@ -24,7 +24,7 @@ import subtract from './subtract.js';
  * @since 1.4.8
  * @category Seq
  * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
- * @param {any=} args The second number in an addition.
+ * @param {any=} args Object argument that to fill in variable define at algbraic expression
  * @returns {number|any} Returns the total.
  * @example
  *

@@ -7,7 +7,7 @@ export default asyncReplace;
  * @param {any} value String data
  * @param {any} search Regexp or string to look for match
  * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String
+ * @returns {Promise<string>} String in promise function
  * @example
  *
  * asyncReplace("asd",/s/g,"@")

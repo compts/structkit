@@ -10,7 +10,7 @@ const baseReduce = require("../core/baseReduce");
  *
  * @since 1.0.1
  * @category Math
- * @param {number[]} arrayObject Array in number
+ * @param {number[]} arrayObject Array of number
  * @param {number=} delimeter decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example

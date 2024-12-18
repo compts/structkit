@@ -6,7 +6,7 @@ export default multiply;
  * @category Math
  * @param {number} value1 First number
  * @param {number=} value2 Second number
- * @returns {number|any} Returns true or false.
+ * @returns {number|any} Returns number for mutiplied value
  * @example
  *
  * multiply(1, 1)
