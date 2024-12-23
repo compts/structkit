@@ -12,5 +12,10 @@ describe('ESM: repeat method', function () {
 
     });
 
+    it('check if repetion is empty', function () {
+
+        assert.strictEqual(repeat(), "");
+
+    });
 
 });

@@ -28,6 +28,12 @@ describe('CJS: count method', function () {
 
     });
 
+    it('check empty is zero', function () {
+
+        assert.deepStrictEqual(count(), zero);
+
+    });
+
 });
 
 

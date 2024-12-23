@@ -7,14 +7,20 @@ const one =1,
     two =2;
 
 
-describe('CJS: arraySum method', function () {
+describe('CJS: appendIsArrayExist method', function () {
 
-    it('check arraySum array sum', function () {
+    it('check arraappendIsArrayExist  array append', function () {
 
         assert.deepStrictEqual(appendIsArrayExist([one], [two]), [
             one,
             two
         ]);
+
+    });
+
+    it('check appendIsArrayExist array empty', function () {
+
+        assert.deepStrictEqual(appendIsArrayExist([one]), []);
 
     });
 

@@ -18,4 +18,10 @@ describe('ESM: arraySum method', function () {
 
     });
 
+    it('check appendIsArrayExist array empty', function () {
+
+        assert.deepStrictEqual(appendIsArrayExist([one]), []);
+
+    });
+
 });

@@ -1,2 +1,2 @@
 export default __;
-import __ from "../core/__.js";
+import __ from '../core/__.js';

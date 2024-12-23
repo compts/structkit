@@ -46,5 +46,14 @@ describe('ESM: LastIndexOf', function () {
 
     });
 
+    it('check if value exist in JSON object', function () {
+
+        assert.deepStrictEqual(lastIndexOf([
+            {"s1": "sd"},
+            {"s1": "32"},
+            {"s1": "32"}
+        ], {"s1": "32"}), two);
+
+    });
 
 });

@@ -5,11 +5,11 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
 import each from './each.js';
 
 /**
- * Array Count
+ * Counting the lenght in array, json or string
  *
  * @since 1.0.1
  * @category Math
- * @param {any} objectValue Json or array
+ * @param {any=} objectValue Json or array that you want to cound
  * @param {boolean=} json_is_empty_check If data is json, it will check its map data
  * @returns {number} Returns the total.
  * @example

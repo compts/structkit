@@ -22,6 +22,7 @@ function getTypeofInternal (objectValue) {
 
     if (objectType === "[object Object]") {
 
+
         return isJson(objectValue, "object")
             ?"json"
             :"object";
@@ -39,4 +40,3 @@ function getTypeofInternal (objectValue) {
 }
 
 exports.getTypeofInternal = getTypeofInternal;
-

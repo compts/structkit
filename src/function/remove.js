@@ -11,9 +11,9 @@ const indexOfExist = require('./indexOfExist');
 const where = require('./where');
 
 /**
- * Remove data in either JSON or Array using key or woth value
+ * Remove data in either JSON or Array using key or woth value, a revise logic
  *
- * @since 1.0.1
+ * @since 1.4.85
  * @category Collection
  * @param {any} objectValue Json or array
  * @param {any} value if objectValue, json is must be object or array index you want to remove
@@ -50,9 +50,21 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (ak > value && ak <= lastRow) {
+                if (value === lastRow) {
 
-                    reslt.push(av);
+                    if (parseInt(ak) !== value) {
+
+                        reslt.push(av);
+
+                    }
+
+                } else {
+
+                    if (parseInt(ak) > value && parseInt(ak) <= lastRow) {
+
+                        reslt.push(av);
+
+                    }
 
                 }
 

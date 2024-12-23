@@ -11,7 +11,7 @@ import each from './each.js';
  * @category Object
  * @param {any} objectValue Either Json or array
  * @param {any} value Data you want to insert
- * @returns {any} Returns Json or array
+ * @returns {null} Returns null
  * @example
  * var ss = {"A":1}
  * insert(ss,{'as':1})

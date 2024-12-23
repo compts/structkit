@@ -11,7 +11,7 @@ const indexOfExist = require("./indexOfExist");
  * @since 1.4.8.1
  * @category Collection
  * @param {any} objectValue The data you want to map
- * @param {any} mergeValue data that you want to merge
+ * @param {any} mergeValue data that you want to merge or replace from `objectValue`
  * @returns {any} Return map either JSON or Array
  * @example
  *

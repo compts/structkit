@@ -9,7 +9,7 @@ import getTypeof from './getTypeof.js';
 import append from './append.js';
 
 /**
- * Filter the data in loop
+ * Filter the data in for loop
  *
  * @since 1.0.1
  * @category Collection
@@ -24,24 +24,21 @@ import append from './append.js';
  */
 function filter (objectValue, func) {
 
-    let jsn_var=empty(objectValue);
+    const jsn_var=empty(objectValue);
     const jsn_type=getTypeof(objectValue);
 
+    if (!(/(json|array)/g).test(jsn_type)) {
+
+        return [];
+
+    }
     each(objectValue, function (key, value) {
 
         if (has(func)) {
 
-            if (func(key, value) === true) {
+            if (func(key, value)) {
 
-                if ((/(json|array)/g).test(jsn_type)) {
-
-                    append(jsn_var, value, key);
-
-                } else {
-
-                    jsn_var=value;
-
-                }
+                append(jsn_var, value, key);
 
             }
 

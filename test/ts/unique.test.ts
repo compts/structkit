@@ -18,6 +18,13 @@ describe('TS: unique method', function () {
         ]);
 
     });
+
+    it('check if unique empty', function () {
+
+        assert.deepStrictEqual(unique({}), []);
+
+    });
+
     it('check expected type', async function () {
        
         expectType<number[]>(unique([

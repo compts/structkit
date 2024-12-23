@@ -31,5 +31,14 @@ describe('CJS: Last', function () {
 
     });
 
+    it('check Array empty then return empty string', function () {
+
+        assert.deepStrictEqual(
+            last([]),
+            ''
+        );
+
+    });
+
 
 });

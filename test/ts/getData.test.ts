@@ -10,6 +10,11 @@ describe('TS: getData method', function () {
         assert.strictEqual(getData({"a": {"b": "b1"}}, "a:b"), "b1");
 
     });
+    it('check if arg is empty', function () {
+
+        assert.strictEqual(getData(), "");
+
+    });
     it('check expected type', function () {
        
         expectType<any>(getData({"a": "1"}, "a"));

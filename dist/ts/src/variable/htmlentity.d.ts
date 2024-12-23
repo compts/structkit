@@ -6,3 +6,4 @@ export const entity: {
     title: string;
 }[];
 export const listType: string[];
+export const whitespace: string;

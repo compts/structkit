@@ -1,7 +1,7 @@
 const getTypeof = require('./getTypeof');
 
 const has = require('./has');
-
+const {zero} = require("../core/defaultValue");
 const each = require('./each');
 
 /**
@@ -19,7 +19,6 @@ const each = require('./each');
  */
 function isExactbyRegExp (whereValue, objectValue1) {
 
-    const zero =0;
 
     if (objectValue1 === null) {
 

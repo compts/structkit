@@ -9,7 +9,7 @@ import count from './count.js';
  *
  * @since 1.4.8
  * @category Condition
- * @param {...boolean?} arg First number
+ * @param {...any?} arg List of value you need to check if true
  * @returns {boolean} Returns true or false.
  * @example
  *

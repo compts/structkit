@@ -4,11 +4,11 @@ const {two} = require("../core/defaultValue");
 
 
 /**
- * Append data for json and array
+ * Append data for json or array
  *
  * @since 1.0.1
  * @category Any
- * @param {any} objectValue The data either json or array
+ * @param {any} objectValue Value either json or array
  * @param {any} val Value for array index and json
  * @param {any=} key Json key
  * @returns {any} Returns the total.

@@ -2,6 +2,8 @@ import getTypeof from './getTypeof.js';
 
 import has from './has.js';
 
+import {zero} from '../core/defaultValue.js';
+
 import each from './each.js';
 
 /**
@@ -18,8 +20,6 @@ import each from './each.js';
  * // => false
  */
 function isExactbyRegExp (whereValue, objectValue1) {
-
-    const zero =0;
 
     if (objectValue1 === null) {
 
