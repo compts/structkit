@@ -11,6 +11,7 @@
       "require": "./dist/ts/node.esm.d.ts",
       "import": "./dist/esm/node.esm.js",
       "default": "./dist/ts/node.esm.d.ts"
+
     },
     "./package.json": "./package.json"
   },

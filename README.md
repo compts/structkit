@@ -26,6 +26,11 @@ Due to conflict in Typescript and ES, it was decided to separate in separate pac
 $ npm i structkit-ts
 ```
 
+Due to conflict in Typescript and ES, it was decided to separate in separate package for typescript(Still working in progess)
+```shell
+$ npm i structkit-ts
+```
+
 
 ## How to import the Library
 
@@ -55,7 +60,6 @@ In the example you noticed that we can apply and arguments if we are unsure of p
 
 [npm-url]: https://www.npmjs.com/package/structkit-ts
 [npm-image]: https://img.shields.io/badge/structkit:ts-1.4.86-brightgreen
-
 
 
 ## Partial sampe you can use as your utitlity function
