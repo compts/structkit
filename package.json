@@ -1,27 +1,16 @@
 {
-  "name": "structkit",
-  "version": "1.4.862",
-  "description": "JS utility tool",
-  "main": "./dist/cjs/structkit-full.cjs.js",
+  "name": "structkit-ts",
+  "version": "1.4.86",
+  "description": "TS utility tool",
+  "main": "./dist/ts/node.esm.d.ts",
   "module": "./dist/esm/node.esm.js",
   "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
+      "require": "./dist/ts/node.esm.d.ts",
       "import": "./dist/esm/node.esm.js",
-      "require": "./dist/cjs/structkit-full.cjs.js",
-      "types": {
-        "require": "./dist/ts/node.esm.d.ts",
-        "default": "./dist/ts/node.esm.d.ts"
-      },
-      "browser": {
-        "require": "./dist/cjs/structkit-full.cjs.js",
-        "default": "./dist/cjs/structkit-full.cjs.js"
-      },
-      "default": {
-        "require": "./dist/cjs/structkit-full.cjs.js",
-        "default": "./dist/cjs/structkit-full.cjs.js"
-      }
+      "default": "./dist/ts/node.esm.d.ts"
     },
     "./package.json": "./package.json"
   },
@@ -29,9 +18,8 @@
     "structkit": "./bin/structkit"
   },
   "files": [
-    "dist/cjs",
-    "dist/esm",
-    "dist/ts"
+    "dist/ts",
+    "dist/esm"
   ],
   "scripts": {
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
