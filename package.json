@@ -23,7 +23,7 @@
     "dist/esm"
   ],
   "scripts": {
-    "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
+    "es_linter": "eslint dist/esm/src/function/*.js dist/esm/src/core/*.js dist/esm/*.js --fix",
     "test_ts": "mocha --require ts-node/register test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
     "test:conv": "jest --coverage --no-cache",
