@@ -24,8 +24,6 @@
   ],
   "scripts": {
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
-    "test_esm": "mocha -r esm test/esm/*.test.js",
-    "test_cjs": "mocha test/cjs/*.test.js",
     "test_ts": "mocha --require ts-node/register test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
     "test:conv": "jest --coverage --no-cache",
