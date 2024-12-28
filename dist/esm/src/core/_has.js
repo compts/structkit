@@ -1,5 +1,5 @@
 /**
- * Create a separate has inside core folder
+ * Create a separate `has` inside core folder
  *
  * @since 1.4.8
  * @category Boolean

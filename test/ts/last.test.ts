@@ -30,6 +30,16 @@ describe('TS: Last', function () {
         ]), ten);
 
     });
+
+    it('check Array empty then return empty string', function () {
+
+        assert.deepStrictEqual(
+            last([]),
+            ''
+        );
+
+    });
+
     it('check expected type', function () {
        
         expectType<any>(last([

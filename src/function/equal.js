@@ -1,14 +1,16 @@
 const curryArg = require("../core/curryArg");
+const {getTypeofInternal} = require('../core/getTypeOf');
+
 const {two} = require("../core/defaultValue");
 
 /**
- * To check if its equal
+ * To check if the two arguments are equal
  *
  * @since 1.4.8
  * @category Boolean
- * @param {any} value1 Any value type
- * @param {any=} value2 Any value type
- * @returns {boolean} Returns true or false.
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
  * equal('as', 'as')
@@ -17,6 +19,12 @@ const {two} = require("../core/defaultValue");
 function equal (value1, value2) {
 
     return curryArg(function (aa, bb) {
+
+        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
+
+            return false;
+
+        }
 
         return aa === bb;
 
@@ -27,4 +35,3 @@ function equal (value1, value2) {
 
 }
 module.exports=equal;
-

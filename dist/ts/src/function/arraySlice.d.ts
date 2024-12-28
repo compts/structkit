@@ -1,7 +1,6 @@
 export default arraySlice;
 /**
- * To get value of array given start and end(optional) of the array
- * This is a rename of delimiter
+ * To return the value selected either start or start to end index
  *
  * @since 1.3.1
  * @category Array

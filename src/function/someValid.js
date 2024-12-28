@@ -7,7 +7,7 @@ const {one} = require("../core/defaultValue");
  *
  * @since 1.4.8
  * @category Condition
- * @param {...boolean?} arg First number
+ * @param {...any?} arg List of value you need to check if some are true
  * @returns {boolean} Returns true or false.
  * @example
  *

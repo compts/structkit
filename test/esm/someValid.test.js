@@ -8,6 +8,13 @@ describe('ESM: someValid method', function () {
         assert.deepStrictEqual(someValid(false, false), false);
 
     });
+
+    it('check if some value is string then false', function () {
+
+        assert.deepStrictEqual(someValid(true, "2"), true);
+
+    });
+
     it('check if some value is true then true', function () {
 
         assert.deepStrictEqual(someValid(true, false), true);

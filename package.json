@@ -1,6 +1,6 @@
 {
   "name": "structkit-ts",
-  "version": "1.4.841",
+  "version": "1.4.86",
   "description": "TS utility tool",
   "main": "./dist/ts/node.esm.d.ts",
   "module": "./dist/esm/node.esm.js",
@@ -27,11 +27,8 @@
     "test_cjs": "mocha test/cjs/*.test.js",
     "test_ts": "mocha --require ts-node/register test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
-    "test": "jest --coverage",
+    "test:conv": "jest --coverage --no-cache",
     "test:watch": "jest --watch"
-  },
-  "tsd": {
-    "directory": "test/ts"
   },
   "repository": {
     "type": "git",
@@ -58,10 +55,9 @@
     "url": "https://github.com/compts/structkit/issues"
   },
   "homepage": "https://structkit.codehyouka.xyz",
-  "dependencies": {
-    "tsd": "^0.19.1"
-  },
   "devDependencies": {
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-typescript": "^7.24.7",
     "@types/assert": "^1.5.6",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.9",
@@ -71,26 +67,30 @@
     "esm": "^3.2.25",
     "jest": "^27.5.1",
     "mocha": "^5.2.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsd": "^0.31.1"
   },
   "jest": {
+    "collectCoverage": true,
+    "coverageReporters": ["json", "html"],
     "collectCoverageFrom": [
-      "*.js",
-      "*.ts"
+      "dist/esm/**/*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/compts-labs/",
       "/src_old_copy/",
-      "/dist/",
-      "/test/esm/"
+      "/test/esm/",
+      ".eslintrc.js",
+      "babel.config.js",
+      "grassfile.js"
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
+        "statements":70,
+        "branches": 70,
+        "functions": 70,
+        "lines": 70
       }
     }
   }

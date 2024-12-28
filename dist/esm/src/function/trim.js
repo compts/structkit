@@ -1,12 +1,16 @@
 import toString from './toString.js';
 
+import trimStart from './trimStart.js';
+
+import trimEnd from './trimEnd.js';
+
 /**
  * String trim
  *
  * @since 1.4.8
  * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @param {string} value String data that you want to trim
+ * @returns {string} Returns trim data
  * @example
  *
  * trim(' The fish is goad   with Goat-1ss ')
@@ -14,7 +18,12 @@ import toString from './toString.js';
  */
 function trim (value) {
 
-    return toString(value).trim();
+    let rawValue = toString(value);
+
+    rawValue = trimStart(rawValue);
+    rawValue = trimEnd(rawValue);
+
+    return rawValue.trim();
 
 }
 export default trim;

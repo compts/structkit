@@ -32,6 +32,12 @@ describe('CJS: arrayConcat method', function () {
 
     });
 
+    it('check Array arrayConcat is empty', function () {
+
+        assert.deepStrictEqual(arrayConcat(), []);
+
+    });
+
 });
 
 

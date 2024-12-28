@@ -17,6 +17,13 @@ describe('TS: arraySum method', function () {
         ]);
 
     });
+
+    it('check appendIsArrayExist array empty', function () {
+
+        assert.deepStrictEqual(appendIsArrayExist([one]), []);
+
+    });
+    
     it('check expected type', function () {
        
         expectType<any[]>(appendIsArrayExist([one], [two]));

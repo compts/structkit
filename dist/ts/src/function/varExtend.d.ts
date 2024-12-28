@@ -1,6 +1,6 @@
 export default varExtend;
 /**
- * Var extend is use for cloning Json, Array or Object
+ * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
  *
  * @since 1.0.1
  * @category Collection

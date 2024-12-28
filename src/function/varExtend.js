@@ -3,9 +3,10 @@ const getTypeof = require('./getTypeof');
 const indexOfExist = require('./indexOfExist');
 const getKey = require('./getKey');
 const curryArg = require("../core/curryArg");
+const stringLowerCase = require("./stringLowerCase");
 
 /**
- * Var extend is use for cloning Json, Array or Object
+ * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
  *
  * @since 1.0.1
  * @category Collection
@@ -37,21 +38,17 @@ function varExtend (objectValue, objectValueReplace) {
 
             for (const key in rawObjectValue) {
 
-                if (has(rawObjectValue[key])) {
+                if (has(rawObjectValue, key)) {
 
-                    if (indexOfExist(getKey(jsn_bool), rawObjectValue[key].toString().toLowerCase())) {
+                    if (indexOfExist(getKey(jsn_bool), stringLowerCase(rawObjectValue[key]))) {
 
-                        jsn_s[key]=jsn_bool[rawObjectValue[key].toString().toLowerCase()];
+                        jsn_s[key]=jsn_bool[stringLowerCase(rawObjectValue[key])];
 
                     } else {
 
                         jsn_s[key]=rawObjectValue[key];
 
                     }
-
-                } else {
-
-                    jsn_s[key]=rawObjectValue[key];
 
                 }
 

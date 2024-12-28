@@ -14,6 +14,13 @@ describe('TS: someValid method', function () {
         assert.deepStrictEqual(someValid(true, false), true);
 
     });
+
+    it('check if some value is string then false', function () {
+
+        assert.deepStrictEqual(someValid(true, "2"), true);
+
+    });
+
     it('check expected type', function () {
 
         expectType<boolean>(someValid(true, false));

@@ -1,10 +1,11 @@
 const getTypeof = require('./getTypeof');
-
+const curryArg = require("../core/curryArg");
 const has = require('./has');
 
 const each = require('./each');
-
 const count = require('./count');
+const varExtend = require('./varExtend');
+const {two, one, zero} = require("../core/defaultValue");
 
 /**
  * Data String from JSON object
@@ -48,105 +49,120 @@ function datastring (str) {
 
 }
 
-/**
- * Return loop
- *
- * @since 1.0.1
- * @category Seq
- * @param {string} dstr The second number in an addition.
- * @param {function} func The second number in an addition.
- * @param {string} dl The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function returnLoop (dstr, func, dl) {
-
-    return func(dstr)+""+dl;
-
-}
 
 /**
  * Parse String
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} value The second number in an addition.
+ * @param {number} rawCount The second number in an addition.
+ * @param {any} rawConfig The second number in an addition.
+ * @param {any} rawValue The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
  * parseString({} )
  *=>'{}'
  */
-function parseString (value) {
+function parseStringCore (rawCount, rawConfig, rawValue) {
 
-    let str="";
-    let str_strt="";
-    let str_end="";
-    let inc=0;
-    const incrementDefaultValue=1;
-    let inc_main=null;
 
-    if (has(value)) {
+    return curryArg(function (refCount, refConfig, value) {
 
-        if (getTypeof(value) === "json") {
+        let str="";
+        let str_strt="";
+        let str_end="";
+        let inc=0;
+        const incrementDefaultValue=1;
+        let inc_main=null;
 
-            str_strt="{";
-            str_end="}";
+        if (has(value)) {
 
-            each(value, function (_key, _value) {
+            if (getTypeof(value) === "json") {
 
-                inc_main=inc<count(value)-incrementDefaultValue
-                    ?","
-                    :"";
+                str_strt="{";
+                str_end="}";
 
-                if (typeof _value === "object"&&_value !== null) {
+                each(value, function (_key, _value) {
 
-                    str += datastring(_key)+":"+returnLoop(_value, parseString, inc_main);
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
 
-                } else {
+                    if (typeof _value === "object"&&_value !== null) {
 
-                    str += datastring(_key)+":"+datastring(_value)+""+inc_main;
+                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
 
-                }
+                    } else {
 
-                inc += incrementDefaultValue;
+                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
 
-            });
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+            if (getTypeof(value) === "array") {
+
+                str_strt="[";
+                str_end="]";
+
+                each(value, function (_key, _value) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object") {
+
+                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
 
         }
-        if (getTypeof(value) === "array") {
 
-            str_strt="[";
-            str_end="]";
+        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
 
-            each(value, function (_key, _value) {
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
 
-                inc_main=inc<count(value)-incrementDefaultValue
-                    ?","
-                    :"";
+}
 
-                if (typeof _value === "object") {
+/**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value, config) {
 
-                    str += returnLoop(_value, parseString, inc_main);
+    const defaultConfig = varExtend(config, {});
 
-                } else {
+    const data = parseStringCore(zero, defaultConfig, value);
 
-                    str += datastring(_value)+""+inc_main;
-
-                }
-
-                inc += incrementDefaultValue;
-
-            });
-
-        }
-
-    }
-
-    return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+    return data;
 
 }
 

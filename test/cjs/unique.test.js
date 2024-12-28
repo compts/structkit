@@ -19,4 +19,10 @@ describe('CJS: unique method', function () {
 
     });
 
+    it('check if unique empty', function () {
+
+        assert.deepStrictEqual(unique({}), []);
+
+    });
+
 });

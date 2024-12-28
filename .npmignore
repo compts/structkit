@@ -1,5 +1,6 @@
 test
 .github
+.clover
 notes
 node_modules
 src_old_copy

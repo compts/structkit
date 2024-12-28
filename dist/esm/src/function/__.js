@@ -8,7 +8,7 @@ import __ from '../core/__.js';
  * @example
  *
  * __
- * // => true
+ * // => @argument/place
  */
 export default __;
 
