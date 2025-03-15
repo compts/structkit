@@ -6,6 +6,8 @@ import each from '../function/each.js';
 
 import empty from '../function/empty.js';
 
+import isEmpty from '../function/isEmpty.js';
+
 import isExact from '../function/isExact.js';
 
 import isExactbyRegExp from '../function/isExactbyRegExp.js';
@@ -44,7 +46,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     const variable=empty(jsn);
     let filterData = {};
 
-    each(jsn_s, function (jk, jv) {
+    each(jsn_s, function (jk, jv, isContinueRef1) {
 
         if (getTypeof(jsn) === "array") {
 
@@ -62,6 +64,26 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
             if (isExact(whr_s, filterData, isExist)) {
 
                 append(variable, jv, jk);
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
+            }
+
+        }
+        if (types === "where_once") {
+
+            if (isExact(whr_s, filterData, isExist)) {
+
+                if (isEmpty(variable)) {
+
+                    append(variable, jv, jk);
+                    isContinueRef1.isContinue(false);
+
+                }
+
                 if (has(func)) {
 
                     func(jv, jk);
