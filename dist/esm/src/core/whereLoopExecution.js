@@ -46,7 +46,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     const variable=empty(jsn);
     let filterData = {};
 
-    each(jsn_s, function (jk, jv, isContinueRef1) {
+    each(jsn_s, function (jv, jk, isContinueRef1) {
 
         if (getTypeof(jsn) === "array") {
 

@@ -31,7 +31,7 @@ function arrayConcat (...arg) {
         let return_val=toArray(first(argsub));
         const arrayValue = toArray(arraySlice(argsub, one));
 
-        each(arrayValue, function (key, value) {
+        each(arrayValue, function (value) {
 
             return_val = return_val.concat(toArray(value));
 

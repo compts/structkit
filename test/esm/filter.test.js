@@ -11,7 +11,7 @@ describe('ESM: filter method', function () {
             {"s1": 1},
             {"s1": 2},
             {"s1": 1}
-        ], function (key, value) {
+        ], function (value) {
 
             return value.s1 === one;
 
@@ -24,7 +24,7 @@ describe('ESM: filter method', function () {
 
     it('check array if filter arg is invalid json or array', function () {
 
-        assert.deepStrictEqual(filter(one, function (key, value) {
+        assert.deepStrictEqual(filter(one, function (value) {
 
             return value.s1 === one;
 

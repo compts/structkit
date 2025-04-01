@@ -24,7 +24,7 @@ function appendIsArrayExist (arrayObject, value) {
 
     if (ary_type === "array" && ary_type1 === "array") {
 
-        each(value, function (key, val) {
+        each(value, function (val) {
 
             if (indexOfNotExist(arrayObject, val)) {
 

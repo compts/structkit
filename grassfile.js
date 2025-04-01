@@ -34,7 +34,7 @@ function isTypeFunction (objectCallTypeAll, suffix) {
 
     let stringCnt = '';
 
-    structkit.each(objectCallTypeAll, (key, value) => {
+    structkit.each(objectCallTypeAll, (value) => {
 
         const name = 'is'+structkit.stringCapitalize(value);
 

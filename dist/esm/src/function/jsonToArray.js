@@ -23,7 +23,7 @@ function jsonToArray (objectValue, value) {
 
     const arry=[];
 
-    each(objectValue, function (_key, _value) {
+    each(objectValue, function (_value) {
 
         if (has(value)) {
 

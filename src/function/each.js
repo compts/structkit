@@ -23,7 +23,7 @@ function GlobalEach () {
  * @returns {null} Null return
  * @example
  *
- * each([1,2],(key,value,localGlobal)=>{ })
+ * each([1,2],(value,key,localGlobal)=>{ })
  *
  */
 GlobalEach.prototype.isContinue = function (value) {
@@ -42,7 +42,7 @@ GlobalEach.prototype.isContinue = function (value) {
  * @returns {any} Array or json
  * @example
  *
- * each([1,2],(key,value,localGlobal)=>{ })
+ * each([1,2],(value,key,localGlobal)=>{ })
  *
  */
 function each (objectValue, func) {
@@ -83,7 +83,7 @@ function each (objectValue, func) {
 
                         if (has(func)) {
 
-                            func(ins, objectValue[ins], localGlobal);
+                            func(objectValue[ins], ins, localGlobal);
 
                         } else {
 

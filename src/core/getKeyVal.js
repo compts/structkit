@@ -23,7 +23,7 @@ function getKeyVal (jsn, typ) {
         vl=[];
     const list_raw = [];
 
-    each(jsn, function (kk, vv) {
+    each(jsn, function (vv, kk) {
 
         ky.push(kk);
         vl.push(vv);

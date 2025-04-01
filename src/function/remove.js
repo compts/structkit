@@ -38,11 +38,11 @@ function remove (objectValue, value, value2) {
             :count(objectValue);
 
         reslt=[];
-        each(objectValue, function (ak, av) {
+        each(objectValue, function (av, ak) {
 
             if (isValueAFunction) {
 
-                if (value(ak, av)) {
+                if (value(av, ak)) {
 
                     reslt.push(av);
 
@@ -91,11 +91,11 @@ function remove (objectValue, value, value2) {
 
         });
 
-        each(objectValue, function (ak, av) {
+        each(objectValue, function (av, ak) {
 
             if (isValueAFunction) {
 
-                if (value(ak, av)) {
+                if (value(av, ak)) {
 
                     reslt[ak]=av;
 

@@ -20,7 +20,7 @@ function clone (objectValue) {
 
     const variable=empty(objectValue);
 
-    each(objectValue, function (key, value) {
+    each(objectValue, function (value, key) {
 
         append(variable, value, key);
 

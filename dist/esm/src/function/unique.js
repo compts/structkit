@@ -22,7 +22,7 @@ function unique (value) {
 
         const uniqArrData = [];
 
-        each(value, function (key, val) {
+        each(value, function (val) {
 
             if (indexOfNotExist(uniqArrData, val)) {
 

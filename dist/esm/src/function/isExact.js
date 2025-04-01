@@ -57,7 +57,7 @@ function isExact (whereValue, objectValue1, isExist) {
         let cnt=0;
         const incrementDefaultValue=1;
 
-        each(key_s, function (kk, kv) {
+        each(key_s, function (kv, kk) {
 
             if (indexOfExist([
                 "json",
@@ -96,7 +96,7 @@ function isExact (whereValue, objectValue1, isExist) {
 
         if (isEmpty(cnt)) {
 
-            each(val_s, function (kk, kv) {
+            each(val_s, function (kv, kk) {
 
                 if (indexOfExist([
                     "json",

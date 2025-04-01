@@ -9,7 +9,7 @@ export default each;
  * @returns {any} Array or json
  * @example
  *
- * each([1,2],(key,value,localGlobal)=>{ })
+ * each([1,2],(value,key,localGlobal)=>{ })
  *
  */
 declare function each(objectValue: any, func?: Function | undefined): any;

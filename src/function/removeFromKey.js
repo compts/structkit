@@ -27,7 +27,7 @@ function removeFromKey (objectValue, value) {
 
 
         reslt=[];
-        each(objectValue, function (ak, av) {
+        each(objectValue, function (av, ak) {
 
             if (parseInt(ak) !== value) {
 
@@ -45,7 +45,7 @@ function removeFromKey (objectValue, value) {
 
         reslt={};
 
-        each(objectValue, function (ak, av) {
+        each(objectValue, function (av, ak) {
 
             if (has(objectValue, ak) === false) {
 

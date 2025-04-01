@@ -34,13 +34,13 @@ function getData (objectValue, split_str) {
 
         }
 
-        each(spl_len, function (key, value) {
+        each(spl_len, function (value) {
 
             spl.push(value);
 
         });
 
-        each(spl, function (key, value) {
+        each(spl, function (value) {
 
             if (has(rawObjectValue, value)) {
 

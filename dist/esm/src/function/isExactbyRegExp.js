@@ -40,7 +40,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
     const incrementDefaultValue=1;
     let local_is_valid = null;
 
-    each(key_s, function (kk, kv) {
+    each(key_s, function (kv, kk) {
 
         if (getTypeof(whereValue) === "json") {
 

@@ -39,7 +39,7 @@ function mergeWithKey (objectValue, mergeValue) {
 
         }
 
-        each(rawMergeValue, function (sKey, sVal) {
+        each(rawMergeValue, function (sVal, sKey) {
 
             rawObjectValue = baseAppend(rawObjectValue, sVal, sKey);
 

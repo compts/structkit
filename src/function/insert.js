@@ -25,7 +25,7 @@ function insert (objectValue, value) {
 
         if (jsn_type === "json") {
 
-            each(value, function (key, _value) {
+            each(value, function (_value, key) {
 
                 objectValue[key]=_value;
 
