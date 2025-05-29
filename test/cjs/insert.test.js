@@ -2,35 +2,74 @@ const {insert}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require('assert');
 
 // JavaScript
-
+const one = 1;
+const two = 2;
+const three = 3;
+const four = 4;
+const fourtytwo = 42;
 
 describe('insert', function () {
+
     it('should insert properties from one object into another', function () {
-        const obj = { a: 1 };
-        insert(obj, { b: 2, c: 3 });
-        assert.deepStrictEqual(obj, { a: 1, b: 2, c: 3 });
+
+        const obj = {"a": 1};
+
+        insert(obj, {"b": 2,
+            "c": 3});
+        assert.deepStrictEqual(obj, {"a": 1,
+            "b": 2,
+            "c": 3});
+
     });
 
     it('should insert an array into another array as a single element', function () {
-        const arr = [1, 2];
-        insert(arr, [3, 4]);
-        assert.deepStrictEqual(arr, [1, 2, [3, 4]]);
+
+        const arr = [
+            one,
+            two
+        ];
+
+        insert(arr, [
+            three,
+            four
+        ]);
+        assert.deepStrictEqual(arr, [
+            one,
+            two,
+            [
+                three,
+                four
+            ]
+        ]);
+
     });
 
     it('should do nothing if first argument is not an object or array', function () {
+
         const notObj = 42;
-        assert.strictEqual(insert(notObj, { a: 1 }), undefined);
+
+        // eslint-disable-next-line no-undefined
+        assert.strictEqual(insert(notObj, {"a": 1}), undefined);
+
     });
 
     it('should do nothing if second argument is not an object or array', function () {
-        const obj = { a: 1 };
-        insert(obj, 42);
-        assert.deepStrictEqual(obj, { a: 1 });
+
+        const obj = {"a": 1};
+
+        insert(obj, fourtytwo);
+        assert.deepStrictEqual(obj, {"a": 1});
+
     });
 
     it('should return undefined', function () {
+
         const obj = {};
-        const result = insert(obj, { b: 2 });
+        const result = insert(obj, {"b": 2});
+
+        // eslint-disable-next-line no-undefined
         assert.strictEqual(result, undefined);
+
     });
+
 });

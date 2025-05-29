@@ -1,19 +1,29 @@
+/* eslint-disable no-plusplus */
 import {shuffle} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-// JavaScript
-
+const one = 1;
+const two = 2;
+const three = 3;
+const four = 4;
+const five = 5;
+const six = 6;
+const seven = 7;
+const eight = 8;
+const nine = 9;
+const ten = 10;
+const fourtytwo = 42;
 
 describe('shuffle', function () {
 
     it('should return an array of the same length', function () {
 
         const arr = [
-            1,
-            2,
-            3,
-            4,
-            5
+            one,
+            two,
+            three,
+            four,
+            five
         ];
         const result = shuffle(arr);
 
@@ -24,11 +34,11 @@ describe('shuffle', function () {
     it('should return a permutation of the original array', function () {
 
         const arr = [
-            1,
-            2,
-            3,
-            4,
-            5
+            one,
+            two,
+            three,
+            four,
+            five
         ];
         const result = shuffle(arr);
 
@@ -39,11 +49,11 @@ describe('shuffle', function () {
     it('should not mutate the original array', function () {
 
         const arr = [
-            1,
-            2,
-            3,
-            4,
-            5
+            one,
+            two,
+            three,
+            four,
+            five
         ];
         const arrCopy = [...arr];
 
@@ -63,30 +73,31 @@ describe('shuffle', function () {
 
     it('should return the same single element for single-element array', function () {
 
-        const arr = [42];
+        const arr = [fourtytwo];
         const result = shuffle(arr);
 
-        assert.deepStrictEqual(result, [42]);
+        assert.deepStrictEqual(result, [fourtytwo]);
 
     });
 
     it('should produce different orders on repeated shuffles (probabilistic)', function () {
 
         const arr = [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10
+            one,
+            two,
+            three,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+            ten
         ];
         let sameOrderCount = 0;
 
-        for (let i = 0; i < 10; i++) {
+        // eslint-disable-next-line id-length
+        for (let i = 0; i < ten; i++) {
 
             const result = shuffle(arr);
 
@@ -99,7 +110,7 @@ describe('shuffle', function () {
 
         }
         // It's possible but unlikely to always get the same order
-        assert.ok(sameOrderCount < 10);
+        assert.ok(sameOrderCount < ten);
 
     });
 
