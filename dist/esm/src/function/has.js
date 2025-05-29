@@ -3,7 +3,7 @@ import _has from '../core/_has.js';
 import curryArg from '../core/curryArg.js';
 
 /**
- * Check if object has value or null
+ * Check if object has value or null or undefined
  *
  * @since 1.0.1
  * @category Boolean

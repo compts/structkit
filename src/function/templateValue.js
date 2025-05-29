@@ -12,7 +12,7 @@ const has = require('./has');
 const toString = require("./toString");
 
 /**
- * Template Value
+ * Template value
  *
  * @since 1.0.1
  * @category String

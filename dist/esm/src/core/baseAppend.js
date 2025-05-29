@@ -1,4 +1,4 @@
-import {getTypeofInternal} from '../core/getTypeOf.js';
+import {getTypeofInternal} from './getTypeOf.js';
 
 /**
  * Append data for json and array

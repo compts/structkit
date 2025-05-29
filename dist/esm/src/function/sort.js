@@ -1,8 +1,8 @@
 import getTypeof from './getTypeof.js';
 
-import has from './has.js';
+import baseSort from '../core/baseSort.js';
 
-import each from './each.js';
+import has from './has.js';
 
 import isEmpty from './isEmpty.js';
 
@@ -13,16 +13,15 @@ import isEmpty from './isEmpty.js';
  * @category Array
  * @param {any[]} objectValue List of array you want to sort
  * @param {boolean=} order True for ascend then false for descend
- * @param {any=} func Callback function or sort type
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
  * @returns {any[]} Returns the total.
  * @example
  *
  * sort([2,3,1])
  *=>[1,2,3]
  */
-function sort (objectValue, order, func) {
+function sort (objectValue, order, type) {
 
-    const jsonn=objectValue;
     let asc=true;
     let types='any';
 
@@ -32,23 +31,13 @@ function sort (objectValue, order, func) {
 
     }
 
-    if (has(func) && getTypeof(func) === 'string') {
+    if (has(type) && getTypeof(type) === 'string') {
 
-        types= func;
+        types= type;
 
     }
 
-    const js_m=getTypeof(jsonn) === "json"
-        ?each(jsonn)
-        :jsonn;
-
-    const finalResponse=js_m.sort(function (orderA, orderB) {
-
-        if (has(func) && getTypeof(func) === 'function') {
-
-            return func(orderA, orderB);
-
-        }
+    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
 
         let sortOrderA = orderA;
         let sortOrderB = orderB;

@@ -1,6 +1,6 @@
 export default random;
 /**
- * Random value from array list
+ * To create single random value from array
  *
  * @since 1.0.1
  * @category Seq

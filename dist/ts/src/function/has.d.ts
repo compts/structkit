@@ -1,6 +1,6 @@
 export default has;
 /**
- * Check if object has value or null
+ * Check if object has value or null or undefined
  *
  * @since 1.0.1
  * @category Boolean

@@ -1,7 +1,7 @@
 const dataNumberFormat = require('../core/dataTypeFormat');
 
 /**
- * To extract number in string and convert to integer
+ * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
  * @category Number
@@ -9,8 +9,8 @@ const dataNumberFormat = require('../core/dataTypeFormat');
  * @returns {number} Return in integer.
  * @example
  *
- * toInteger(1)
- *=>1
+ * toInteger("11d")
+ *=>11
  */
 function toInteger (value) {
 
