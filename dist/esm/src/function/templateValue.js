@@ -13,7 +13,7 @@ import has from './has.js';
 import toString from './toString.js';
 
 /**
- * Template Value
+ * Template value
  *
  * @since 1.0.1
  * @category String

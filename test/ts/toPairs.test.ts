@@ -72,7 +72,7 @@ describe('TS: toPairs method with non-array input', function () {
 // FromPairs test with mixed types
 describe('TS: toPairs method with mixed types', function () {
 
-    it('check if fromPairs with mixed types returns object with mixed key-value pairs', function () {
+    it('check if toPairs with mixed types returns object with mixed key-value pairs', function () {
 
         assert.deepStrictEqual(toPairs({
             "null": {"undefined": five},
@@ -99,7 +99,7 @@ describe('TS: toPairs method with mixed types', function () {
 
 });
 
-describe('TS: fromPairs method', function () {
+describe('TS: toPairs method', function () {
     
     it('check expected type', function () {
 
