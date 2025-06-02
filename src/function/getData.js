@@ -1,7 +1,9 @@
 const has = require('./has');
-const toString = require("./toString");
 const each = require('./each');
+const empty = require('./empty');
+const isEmpty = require('./isEmpty');
 const curryArg = require("../core/curryArg");
+const {schemaSplitData} = require("../core/baseGetData");
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -21,24 +23,18 @@ const curryArg = require("../core/curryArg");
  */
 function getData (objectValue, split_str) {
 
+    if (!has(objectValue) || isEmpty(objectValue)) {
+
+        return empty(objectValue);
+
+    }
+
     return curryArg(function (rawObjectValue, rawSplit_str) {
 
-        const split_strReplace= toString(rawSplit_str).replace(/([.]{1,})/g, ":");
-        const spl_len=split_strReplace.split(":");
-        const spl=[];
+        const spl= schemaSplitData(rawSplit_str);
+
         let jsn_total={};
 
-        if (!has(rawObjectValue)) {
-
-            return "";
-
-        }
-
-        each(spl_len, function (value) {
-
-            spl.push(value);
-
-        });
 
         each(spl, function (value) {
 

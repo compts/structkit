@@ -1,10 +1,14 @@
 import has from './has.js';
 
-import toString from './toString.js';
-
 import each from './each.js';
 
+import empty from './empty.js';
+
+import isEmpty from './isEmpty.js';
+
 import curryArg from '../core/curryArg.js';
+
+import {schemaSplitData} from '../core/baseGetData.js';
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -24,24 +28,17 @@ import curryArg from '../core/curryArg.js';
  */
 function getData (objectValue, split_str) {
 
+    if (!has(objectValue) || isEmpty(objectValue)) {
+
+        return empty(objectValue);
+
+    }
+
     return curryArg(function (rawObjectValue, rawSplit_str) {
 
-        const split_strReplace= toString(rawSplit_str).replace(/([.]{1,})/g, ":");
-        const spl_len=split_strReplace.split(":");
-        const spl=[];
+        const spl= schemaSplitData(rawSplit_str);
+
         let jsn_total={};
-
-        if (!has(rawObjectValue)) {
-
-            return "";
-
-        }
-
-        each(spl_len, function (value) {
-
-            spl.push(value);
-
-        });
 
         each(spl, function (value) {
 
