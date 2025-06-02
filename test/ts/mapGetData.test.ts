@@ -1,21 +1,21 @@
 
-import {arrayToObjectByDataFormat} from "../../dist/esm/node.esm";
+import {mapGetData} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
 const one =1;
 
 
-describe('TS: arrayToObjectByDataFormat method', function () {
+describe('TS: mapGetData method', function () {
 
-    it('check arrayToObjectByDataFormat array', function () {
+    it('check mapGetData array', function () {
 
-        assert.deepStrictEqual(arrayToObjectByDataFormat([{"Asd": one}], "Asd"), [one]);
+        assert.deepStrictEqual(mapGetData([{"Asd": one}], "Asd"), [one]);
 
     });
     it('check expected type', function () {
        
-        expectType<any[number]>(arrayToObjectByDataFormat([{"Asd": one}], "Asd"));
+        expectType<any[number]>(mapGetData([{"Asd": one}], "Asd"));
   
       });
 });
