@@ -4,6 +4,8 @@ Javascript framework in using functional syntax for programmer.
 [![NPM version][npm-image]][npm-url] 
 [![NPM version][npm-ts-image]][npm-url-ts] 
 [![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
+[![NPM Downloads](https://img.shields.io/npm/dm/structkit?logo=npm&style=flat-square)](https://npmtrends.com/structkit)
+[![Install Size](https://packagephobia.now.sh/badge?p=structkit)](https://packagephobia.now.sh/result?p=structkit)
 
 [Site](https://structkit.codehyouka.xyz/) |
 [Docs](https://structkit.codehyouka.xyz/api) |

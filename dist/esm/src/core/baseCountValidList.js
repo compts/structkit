@@ -1,5 +1,7 @@
 import baseReduce from './baseReduce.js';
 
+import toArray from '../function/toArray.js';
+
 import {getTypeofInternal} from './getTypeOf.js';
 
 import {zero, one} from './defaultValue.js';
@@ -20,11 +22,19 @@ function baseCountValidList (objectValue) {
 
     return baseReduce(zero, objectValue, function (total, value) {
 
-        if (value && getTypeofInternal(value) === "boolean") {
+        const values = toArray(value);
 
-            return total +one;
+        total +=baseReduce(zero, values, function (subtotal, subvalue) {
 
-        }
+            if (subvalue && getTypeofInternal(subvalue) === "boolean") {
+
+                return subtotal +one;
+
+            }
+
+            return subtotal;
+
+        });
 
         return total;
 

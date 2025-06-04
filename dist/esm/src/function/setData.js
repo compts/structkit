@@ -59,7 +59,7 @@ function setData (objectValue, split_str, updateValue) {
             }
             if (getTypeofInternal(total) === "array") {
 
-                const rawTotal = {};
+                const rawTotal = first(total);
 
                 valueToUpdate(rawTotal, value, rawUpdateValue);
                 total = [rawTotal];
@@ -105,7 +105,11 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 
     } else {
 
-        objectValue[first(whereStr)] = {};
+        if (has(objectValue, first(whereStr)) === false) {
+
+            objectValue[first(whereStr)] = {};
+
+        }
         valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
 
     }

@@ -8,6 +8,8 @@ import isEmpty from './isEmpty.js';
 
 import curryArg from '../core/curryArg.js';
 
+import inc from './inc.js';
+
 import {schemaSplitData} from '../core/baseGetData.js';
 
 /**
@@ -17,6 +19,7 @@ import {schemaSplitData} from '../core/baseGetData.js';
  * @category Collection
  * @param {any=} objectValue Either Json or Array data.
  * @param {any=} split_str Search key or index.
+ * @param {any=} isStrict to check if delimiter are match in counter, default value is false.
  * @returns {any} Returns the total.
  * @example
  *
@@ -26,7 +29,9 @@ import {schemaSplitData} from '../core/baseGetData.js';
  * getData({"a":{"a":2},"b":{"a":3}},"a:a")
  *=> {a: 2}
  */
-function getData (objectValue, split_str) {
+function getData (objectValue, split_str, isStrict) {
+
+    const refIsStrict = isStrict || false;
 
     if (!has(objectValue) || isEmpty(objectValue)) {
 
@@ -39,6 +44,7 @@ function getData (objectValue, split_str) {
         const spl= schemaSplitData(rawSplit_str);
 
         let jsn_total={};
+        let counter = 0;
 
         each(spl, function (value) {
 
@@ -47,6 +53,7 @@ function getData (objectValue, split_str) {
                 if ((/^\s+$/).test(rawObjectValue[value]) === false) {
 
                     jsn_total=rawObjectValue[value];
+                    counter=inc(counter);
 
                 }
 
@@ -55,12 +62,21 @@ function getData (objectValue, split_str) {
                 if (has(jsn_total, value)) {
 
                     jsn_total=jsn_total[value];
+                    counter=inc(counter);
 
                 }
 
             }
 
         });
+
+        if (refIsStrict && spl.length !== counter) {
+
+            return spl.length === counter
+                ?jsn_total
+                :null;
+
+        }
 
         return jsn_total;
 
