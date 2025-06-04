@@ -1,14 +1,11 @@
-name: Deploy
+name: Publish
 on:
   push:
     branches: 
     - release
-  pull_request:
-    branches: 
-    - release
 
 jobs:
-  deploy:
+  publish:
     name: Deploy
     runs-on: ubuntu-latest
 
@@ -30,8 +27,10 @@ jobs:
       uses: denoland/setup-deno@v2
       with:
         deno-version: v2.x
+    - uses: actions/checkout@v4
     - name: Deno publish
-      run: npx jsr publish --token ${{ secrets.DENO_TOKEN }}
+      run: |
+        npx jsr publish
       env:
         DENO_DEPLOY_TOKEN: ${{ secrets.DENO_TOKEN }}
     - name: NPM publish
