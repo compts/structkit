@@ -24,4 +24,3 @@ function someValid (...arg) {
 
 }
 module.exports=someValid;
-

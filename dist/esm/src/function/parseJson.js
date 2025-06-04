@@ -94,7 +94,7 @@ function encodeStripValueQoute (values) {
 
     let str_type = "";
 
-    each(values.split(""), function (key, value) {
+    each(values.split(""), function (value) {
 
         const value_indx=value;
 
@@ -231,7 +231,7 @@ function callbackParse (glb, config) {
 
         const list_obj = [];
 
-        each(valueSplit, function (key, value) {
+        each(valueSplit, function (value) {
 
             const value_split = value.split(":");
 
@@ -276,7 +276,7 @@ function callbackParse (glb, config) {
 
         const list_obj = [];
 
-        each(valueSplit, function (key, value) {
+        each(valueSplit, function (value) {
 
             const objSubVal = decodeStripValueQoute(cleanValue(value), encodeStr.arg_call_list, false);
             const tagVal = getTagVal(objSubVal);

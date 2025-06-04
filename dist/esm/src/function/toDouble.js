@@ -1,7 +1,7 @@
 import dataNumberFormat from '../core/dataTypeFormat.js';
 
 /**
- * To extract number in string and convert to double
+ * To extract number in string and convert to double, it will also remove all none numeric
  *
  * @since 1.0.1
  * @category Number
@@ -9,8 +9,8 @@ import dataNumberFormat from '../core/dataTypeFormat.js';
  * @returns {number} Return in double.
  * @example
  *
- * toDouble(1)
- *=>1.00
+ * toDouble("100.1d1")
+ *=>100.11
  */
 function toDouble (value) {
 

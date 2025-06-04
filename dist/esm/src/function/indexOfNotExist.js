@@ -6,7 +6,7 @@ import {negOne} from '../core/defaultValue.js';
  * Check index of array Not or exist
  *
  * @since 1.4.1
- * @category Boolean
+ * @category Relation
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return boolean.

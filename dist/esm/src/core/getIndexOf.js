@@ -90,7 +90,7 @@ function searchValueInJson (objectValue, searchValue) {
     let counter = 0;
     const increment = 1;
 
-    each(objectValue, function (key, value) {
+    each(objectValue, function (value, key) {
 
         if (has(searchValue, key)) {
 

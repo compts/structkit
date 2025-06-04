@@ -19,7 +19,7 @@ function baseReduce (defaultValue, listData, func) {
 
     const that = this;
 
-    each(listData, function (ak, av) {
+    each(listData, function (av, ak) {
 
         defaultValue = func.apply(that, [
             defaultValue,

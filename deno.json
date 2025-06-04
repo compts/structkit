@@ -1,0 +1,17 @@
+{
+  "name": "@compts/structkit",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./mod.ts",
+  "publish": {
+    "include": [
+      "./dist/**/**/*.ts",
+      "./LICENSE",
+      "./README.md"
+    ],
+    "exclude": [
+      "**/**/*.test.ts",
+      "**/**/*.test-d.ts"
+    ]
+  }
+}

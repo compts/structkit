@@ -18,5 +18,20 @@ describe('ESM: toInteger method', function () {
         assert.deepStrictEqual(toInteger(null), zero);
 
     });
+    it('check if value is not a number', function () {
+
+        assert.deepStrictEqual(toInteger('test'), zero);
+
+    });
+    it('check if value is a number', function () {
+
+        assert.deepStrictEqual(toInteger(ten), ten);
+
+    });
+    it('check if value is a number with string', function () {
+
+        assert.deepStrictEqual(toInteger('10.5'), ten);
+
+    });
 
 });

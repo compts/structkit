@@ -16,7 +16,7 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
- * @category Condition
+ * @category Function
  * @param {...any?} arg Arguments in function
  * @returns {any} Returns any value.
  * @example

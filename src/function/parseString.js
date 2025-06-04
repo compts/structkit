@@ -83,7 +83,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
                 str_strt="{";
                 str_end="}";
 
-                each(value, function (_key, _value) {
+                each(value, function (_value, _key) {
 
                     inc_main=inc<count(value)-incrementDefaultValue
                         ?","
@@ -109,7 +109,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
                 str_strt="[";
                 str_end="]";
 
-                each(value, function (_key, _value) {
+                each(value, function (_value) {
 
                     inc_main=inc<count(value)-incrementDefaultValue
                         ?","

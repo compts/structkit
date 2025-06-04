@@ -22,7 +22,7 @@ import curryArg from '../core/curryArg.js';
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Collection
+ * @category Relation
  * @param {any} whereValue Json or Array
  * @param {any} objectValue1 Json or Array for lookup to whereValue
  * @param {boolean=} isExist Default value is True
@@ -57,7 +57,7 @@ function isExact (whereValue, objectValue1, isExist) {
         let cnt=0;
         const incrementDefaultValue=1;
 
-        each(key_s, function (kk, kv) {
+        each(key_s, function (kv, kk) {
 
             if (indexOfExist([
                 "json",
@@ -96,7 +96,7 @@ function isExact (whereValue, objectValue1, isExist) {
 
         if (isEmpty(cnt)) {
 
-            each(val_s, function (kk, kv) {
+            each(val_s, function (kv, kk) {
 
                 if (indexOfExist([
                     "json",

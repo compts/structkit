@@ -1,7 +1,10 @@
 const has = require('./has');
-const toString = require("./toString");
 const each = require('./each');
+const empty = require('./empty');
+const isEmpty = require('./isEmpty');
 const curryArg = require("../core/curryArg");
+const inc = require("./inc");
+const {schemaSplitData} = require("../core/baseGetData");
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -10,6 +13,7 @@ const curryArg = require("../core/curryArg");
  * @category Collection
  * @param {any=} objectValue Either Json or Array data.
  * @param {any=} split_str Search key or index.
+ * @param {any=} isStrict to check if delimiter are match in counter, default value is false.
  * @returns {any} Returns the total.
  * @example
  *
@@ -19,34 +23,32 @@ const curryArg = require("../core/curryArg");
  * getData({"a":{"a":2},"b":{"a":3}},"a:a")
  *=> {a: 2}
  */
-function getData (objectValue, split_str) {
+function getData (objectValue, split_str, isStrict) {
+
+    const refIsStrict = isStrict || false;
+
+    if (!has(objectValue) || isEmpty(objectValue)) {
+
+        return empty(objectValue);
+
+    }
 
     return curryArg(function (rawObjectValue, rawSplit_str) {
 
-        const split_strReplace= toString(rawSplit_str).replace(/([.]{1,})/g, ":");
-        const spl_len=split_strReplace.split(":");
-        const spl=[];
+        const spl= schemaSplitData(rawSplit_str);
+
         let jsn_total={};
+        let counter = 0;
 
-        if (!has(rawObjectValue)) {
 
-            return "";
-
-        }
-
-        each(spl_len, function (key, value) {
-
-            spl.push(value);
-
-        });
-
-        each(spl, function (key, value) {
+        each(spl, function (value) {
 
             if (has(rawObjectValue, value)) {
 
                 if ((/^\s+$/).test(rawObjectValue[value]) === false) {
 
                     jsn_total=rawObjectValue[value];
+                    counter=inc(counter);
 
                 }
 
@@ -55,12 +57,21 @@ function getData (objectValue, split_str) {
                 if (has(jsn_total, value)) {
 
                     jsn_total=jsn_total[value];
+                    counter=inc(counter);
 
                 }
 
             }
 
         });
+
+        if (refIsStrict && spl.length !== counter) {
+
+            return spl.length === counter
+                ?jsn_total
+                :null;
+
+        }
 
         return jsn_total;
 

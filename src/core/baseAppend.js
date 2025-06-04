@@ -1,4 +1,4 @@
-const {getTypeofInternal} = require('../core/getTypeOf');
+const {getTypeofInternal} = require('./getTypeOf');
 
 /**
  * Append data for json and array

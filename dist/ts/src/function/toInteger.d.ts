@@ -1,6 +1,6 @@
 export default toInteger;
 /**
- * To extract number in string and convert to integer
+ * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
  * @category Number
@@ -8,7 +8,7 @@ export default toInteger;
  * @returns {number} Return in integer.
  * @example
  *
- * toInteger(1)
- *=>1
+ * toInteger("11d")
+ *=>11
  */
 declare function toInteger(value: any): number;

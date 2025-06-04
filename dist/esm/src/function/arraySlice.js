@@ -69,7 +69,7 @@ function arraySlice (objectValue, min, max) {
 
     }
 
-    each(objectValue, function (key, value) {
+    each(objectValue, function (value, key) {
 
         if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
 

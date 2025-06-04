@@ -4,7 +4,7 @@ import varExtend from './varExtend.js';
  * On sequence
  *
  * @since 1.4.1
- * @category Seq
+ * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
  * @param {object=} option option for delay
@@ -18,9 +18,9 @@ function onSequence (func, wait, option) {
 
     const zero = 0;
     const one = 1;
-    const extend = varExtend(option, {
+    const extend = varExtend({
         "limitCounterClear": 0
-    });
+    }, option);
 
     const valueWaited = wait || zero;
     let counter = 0;

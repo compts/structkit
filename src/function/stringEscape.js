@@ -1,4 +1,4 @@
-const where = require('./where');
+const whereOnce = require('./whereOnce');
 const indexOfNotExist = require('./indexOfNotExist');
 const isEmpty = require("./isEmpty");
 const first = require("./first");
@@ -32,7 +32,7 @@ function stringEscape (value, type) {
 
         const search = {"html": str1};
 
-        const whr = where(entity, search);
+        const whr = whereOnce(entity, search);
 
         return isEmpty(whr)
             ? str1

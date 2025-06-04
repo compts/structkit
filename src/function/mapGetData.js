@@ -1,21 +1,21 @@
-import map from './map.js';
+const map = require('./map');
 
-import getData from './getData.js';
+const getData = require('./getData');
 
 /**
- * Array To Object By DataFormat
+ * A Function to map the data either an array or an object using getData function.
  *
  * @since 1.3.1
- * @category Array
+ * @category Collection
  * @param {any[]} objectValue Json in array format
  * @param {string} valueFormat Key look up format
  * @returns {any[]} Return array or object.
  * @example
  *
- * arrayToObjectByDataFormat([{"Asd":1}],"Asd")
+ * mapGetData([{"Asd":1}],"Asd")
  *=>[1]
  */
-function arrayToObjectByDataFormat (objectValue, valueFormat) {
+function mapGetData (objectValue, valueFormat) {
 
     return map(objectValue, function (value) {
 
@@ -24,5 +24,5 @@ function arrayToObjectByDataFormat (objectValue, valueFormat) {
     });
 
 }
-export default arrayToObjectByDataFormat;
+module.exports=mapGetData;
 

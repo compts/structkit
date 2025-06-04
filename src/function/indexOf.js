@@ -7,7 +7,7 @@ const {getIndexOf} = require('../core/getIndexOf');
  * Index of array
  *
  * @since 1.0.1
- * @category Math
+ * @category Array
  * @param {any} objectValue Array
  * @param {any} value Value in array
  * @returns {number} Returns the index.

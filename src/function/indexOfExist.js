@@ -5,7 +5,7 @@ const {zero} = require("../core/defaultValue");
  * Check index of array is Exist or not
  *
  * @since 1.3.1
- * @category Boolean
+ * @category Relation
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return boolean.

@@ -8,17 +8,20 @@ import has from './has.js';
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValue Array or json.
- * @param {Function=} func Function to execute the loop with callback key,value
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
  * @returns {any} Array or json
  * @example
  *
- * each([1,2],(key,value)=>{ })
+ * each([1,2],(value,key,localGlobal)=>{ })
  *
  */
 function each (objectValue, func) {
 
     let re_loop=[];
+
     const typeofs=getTypeofInternal(objectValue);
+
+    const localGlobal = new GlobalEach();
 
     if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
 
@@ -26,6 +29,11 @@ function each (objectValue, func) {
 
             if (has(objectValue, ins)) {
 
+                if (localGlobal.continue === false) {
+
+                    break;
+
+                }
                 let bool_func = true;
 
                 if (getTypeofInternal(objectValue[ins]) === "function") {
@@ -37,14 +45,13 @@ function each (objectValue, func) {
                     }
 
                 }
-
                 if (bool_func) {
 
                     try {
 
                         if (has(func)) {
 
-                            func(ins, objectValue[ins]);
+                            func(objectValue[ins], ins, localGlobal);
 
                         } else {
 
@@ -75,5 +82,36 @@ function each (objectValue, func) {
     return null;
 
 }
+
+/**
+ * GlobalEach
+ * @category Seq
+ * @class
+ * @name getKit
+ */
+function GlobalEach () {
+
+    this.continue = true;
+
+}
+
+/**
+ * Each or for loop function you are familiar with
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {boolean} value Array or json.
+ * @returns {null} Null return
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+GlobalEach.prototype.isContinue = function (value) {
+
+    this.continue = value;
+
+};
+
 export default each;
 

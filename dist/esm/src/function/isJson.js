@@ -8,7 +8,7 @@ import {zero} from '../core/defaultValue.js';
  * Is Json valid format
  *
  * @since 1.3.1
- * @category Seq
+ * @category Relation
  * @param {any} value Value you want to check JSON is Valid
  * @param {string=} valueType Get value type
  * @returns {any} Returns true or false if valid json format

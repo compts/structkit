@@ -1,9 +1,9 @@
 export default random;
 /**
- * Random value from array list
+ * To create single random value from array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} valueArray Array
  * @param {number} minValue Minimum value base on index
  * @param {number} maxValue  Max value base on index

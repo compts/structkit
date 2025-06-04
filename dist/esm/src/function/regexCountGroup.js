@@ -4,7 +4,7 @@ import toString from './toString.js';
  * Regex Count Group number
  *
  * @since 1.4.7
- * @category String
+ * @category Function
  * @param {any} value Value you want to convert in array
  * @returns {number} Return in array.
  * @example

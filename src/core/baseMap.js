@@ -25,7 +25,7 @@ function baseMap (objectValue, func) {
 
     const that = this;
 
-    each(objectValue, function (key, value) {
+    each(objectValue, function (value, key) {
 
         if (has(func)) {
 

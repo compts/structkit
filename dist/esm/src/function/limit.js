@@ -33,13 +33,13 @@ function limit (objectValue, minValue, maxValue, func) {
         :count(objectValue);
     const incrementDefaultValue=1;
 
-    each(objectValue, function (key, meth) {
+    each(objectValue, function (meth, key) {
 
         if (cnt >= minValueReserve && cnt <= maxValueReserve) {
 
             if (has(func)) {
 
-                glo_indtfd=func(key, meth);
+                glo_indtfd=func(meth, key);
 
                 if (has(glo_indtfd)) {
 

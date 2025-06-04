@@ -1,7 +1,7 @@
 const getTypeof = require('./getTypeof');
 
 /**
- * To Array
+ * To convert any data type(except the data has been already been an array) into array type
  *
  * @since 1.0.1
  * @category Array

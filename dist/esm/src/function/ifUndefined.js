@@ -4,7 +4,7 @@ import has from './has.js';
  * Check if data is undefined
  *
  * @since 1.0.1
- * @category Collection
+ * @category Logic
  * @param {any} objectValue Either JSON or array
  * @param {any} value1 Check the key of value
  * @param {any=} value2 if value not exist, this value will be return

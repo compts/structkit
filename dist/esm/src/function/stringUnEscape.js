@@ -1,4 +1,4 @@
-import where from './where.js';
+import whereOnce from './whereOnce.js';
 
 import indexOfNotExist from './indexOfNotExist.js';
 
@@ -39,7 +39,7 @@ function stringUnEscape (value, type) {
 
         search[typeVal] =str1;
 
-        const whr = where(entity, search);
+        const whr = whereOnce(entity, search);
 
         return isEmpty(whr)
             ? str1

@@ -32,12 +32,12 @@ function filter (objectValue, func) {
         return [];
 
     }
-    each(objectValue, function (key, value) {
+    each(objectValue, function (value, key) {
 
         if (has(func)) {
 
 
-            if (func(key, value)) {
+            if (func(value, key)) {
 
                 append(jsn_var, value, key);
 

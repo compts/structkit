@@ -4,7 +4,7 @@ import getKeyVal from '../core/getKeyVal.js';
  * Get the last value of array or JSON
  *
  * @since 1.0.1
- * @category Seq
+ * @category Relation
  * @param {any} objectValue The data is array
  * @returns {any} Returns last value of `objectValue`.
  * @example

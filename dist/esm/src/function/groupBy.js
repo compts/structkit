@@ -27,7 +27,7 @@ function groupBy (objectValue, func) {
 
     const groupData = {};
 
-    each(objectValue, function (key, value) {
+    each(objectValue, function (value, key) {
 
         if (has(func)) {
 

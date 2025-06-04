@@ -4,6 +4,9 @@ Javascript framework in using functional syntax for programmer.
 [![NPM version][npm-image]][npm-url] 
 [![NPM version][npm-ts-image]][npm-url-ts] 
 [![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
+[![NPM Downloads](https://img.shields.io/npm/dm/structkit?logo=npm&style=flat-square)](https://npmtrends.com/structkit)
+[![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://deno.land/x/structkit@v0.1.0)
+[![Install Size](https://packagephobia.now.sh/badge?p=structkit)](https://packagephobia.now.sh/result?p=structkit)
 
 [Site](https://structkit.codehyouka.xyz/) |
 [Docs](https://structkit.codehyouka.xyz/api) |
@@ -14,7 +17,7 @@ A Javascript library that make easier in working with arrays, number,object, Str
 ## Download
 
 To download this JS library and install in your local library
- * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~74KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
+ * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~143KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
 
 Using npm to install in your project folder:
 ```shell
@@ -72,8 +75,8 @@ In the example you noticed that we can apply and arguments if we are unsure of p
 
 [npm-url]: https://www.npmjs.com/package/structkit
 [npm-url-ts]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit-1.4.862-brightgreen
-[npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.86-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.87-brightgreen
+[npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.87-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function

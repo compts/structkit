@@ -5,10 +5,10 @@ const count = require('./count');
 const toArray = require('./toArray');
 
 /**
- * Random value from array list
+ * To create single random value from array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} valueArray Array
  * @param {number} minValue Minimum value base on index
  * @param {number} maxValue  Max value base on index
@@ -37,7 +37,5 @@ function random (valueArray, minValue, maxValue) {
 
     return toArray(valueArray[math_random % count(valueArray)]);
 
-
 }
 module.exports=random;
-

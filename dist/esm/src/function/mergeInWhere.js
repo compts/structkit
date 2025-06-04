@@ -42,7 +42,7 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
         return baseMap(rawObjectValue, function (value) {
 
-            each(mergeValue, function (subKey, subValue) {
+            each(mergeValue, function (subValue) {
 
                 const joinValue = {
                     "$1": value,

@@ -1,0 +1,105 @@
+// filepath: /Users/paulyap/Desktop/Desktop_important/workspace/experiment/web_html/structkit/test/cjs/onDelay.test.js
+const assert = require('assert');
+const sinon = require('sinon');
+const path = require('path');
+
+// Use proxyquire to mock varExtend
+const proxyquire = require('proxyquire');
+
+describe('onDelay', function () {
+    let clock;
+    let varExtend;
+    let onDelay;
+
+    beforeEach(function () {
+        clock = sinon.useFakeTimers();
+        varExtend = sinon.stub().callsFake((option, defaults) => Object.assign({}, defaults, option));
+        onDelay = proxyquire(
+            path.resolve(__dirname, './onDelay'),
+            { './varExtend': varExtend }
+        );
+    });
+
+    afterEach(function () {
+        clock.restore();
+    });
+
+    it('calls the callback after the specified delay', function () {
+        const cb = sinon.spy();
+        const delay = 100;
+        onDelay(cb, delay);
+        assert.strictEqual(cb.called, false);
+        clock.tick(delay);
+        assert.strictEqual(cb.called, true);
+    });
+
+    it('uses default delay if not provided', function () {
+        const cb = sinon.spy();
+        onDelay(cb);
+        clock.tick(0);
+        assert.strictEqual(cb.called, true);
+    });
+
+    it('returns an object with a cancel method', function () {
+        const cb = sinon.spy();
+        const result = onDelay(cb, 100);
+        assert.strictEqual(typeof result.cancel, 'function');
+    });
+
+    it('cancel prevents the callback from being called', function () {
+        const cb = sinon.spy();
+        const result = onDelay(cb, 100);
+        result.cancel();
+        clock.tick(100);
+        assert.strictEqual(cb.called, false);
+    });
+
+    it('calls varExtend with correct arguments', function () {
+        const cb = sinon.spy();
+        const option = { foo: 1 };
+        onDelay(cb, 50, option);
+        assert(varExtend.calledWith(option, { limitCounterClear: 0 }));
+    });
+
+    it('passes the correct extend object to ClassDelay', function () {
+        const cb = sinon.spy();
+        const option = { bar: 2 };
+        const result = onDelay(cb, 10, option);
+        assert.deepStrictEqual(result.extend, { limitCounterClear: 0, bar: 2 });
+    });
+
+    it('does not throw if cancel is called multiple times', function () {
+        const cb = sinon.spy();
+        const result = onDelay(cb, 100);
+        assert.doesNotThrow(() => {
+            result.cancel();
+            result.cancel();
+        });
+    });
+
+    it('callback is not called if delay is negative', function () {
+        const cb = sinon.spy();
+        onDelay(cb, -10);
+        clock.tick(0);
+        assert.strictEqual(cb.called, true); // setTimeout with negative delay fires immediately
+    });
+
+    it('works with no options argument', function () {
+        const cb = sinon.spy();
+        const result = onDelay(cb, 10);
+        clock.tick(10);
+        assert.strictEqual(cb.called, true);
+        assert.deepStrictEqual(result.extend, { limitCounterClear: 0 });
+    });
+
+    it('works with no callback (should not throw)', function () {
+        assert.doesNotThrow(() => {
+            onDelay(undefined, 10);
+            clock.tick(10);
+        });
+    });
+});
+
+// We recommend installing an extension to run jest tests.
+
+// We recommend installing an extension to run jest tests.

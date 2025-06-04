@@ -8,7 +8,7 @@ const each = require('./each');
  * Insert value in Json object or array
  *
  * @since 1.0.1
- * @category Object
+ * @category Collection
  * @param {any} objectValue Either Json or array
  * @param {any} value Data you want to insert
  * @returns {null} Returns null
@@ -25,7 +25,7 @@ function insert (objectValue, value) {
 
         if (jsn_type === "json") {
 
-            each(value, function (key, _value) {
+            each(value, function (_value, key) {
 
                 objectValue[key]=_value;
 

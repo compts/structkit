@@ -1,6 +1,6 @@
 export default jsonToArray;
 /**
- * Convert Json To Array base on search value you provide
+ * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
  *
  * @since 1.0.1
  * @category Collection

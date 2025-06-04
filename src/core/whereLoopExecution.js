@@ -2,6 +2,7 @@ const count = require('../function/count');
 const getTypeof = require('../function/getTypeof');
 const each = require('../function/each');
 const empty = require('../function/empty');
+const isEmpty = require('../function/isEmpty');
 const isExact = require('../function/isExact');
 const isExactbyRegExp = require('../function/isExactbyRegExp');
 const has = require('../function/has');
@@ -37,7 +38,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
     const variable=empty(jsn);
     let filterData = {};
 
-    each(jsn_s, function (jk, jv) {
+    each(jsn_s, function (jv, jk, isContinueRef1) {
 
         if (getTypeof(jsn) === "array") {
 
@@ -60,6 +61,28 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
                     func(jv, jk);
 
                 }
+
+            }
+
+        }
+        if (types === "where_once") {
+
+            if (isExact(whr_s, filterData, isExist)) {
+
+                if (isEmpty(variable)) {
+
+                    append(variable, jv, jk);
+                    isContinueRef1.isContinue(false);
+
+
+                }
+
+                if (has(func)) {
+
+                    func(jv, jk);
+
+                }
+
 
             }
 

@@ -1,6 +1,6 @@
 export default templateValue;
 /**
- * Template Value
+ * Template value
  *
  * @since 1.0.1
  * @category String
