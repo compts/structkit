@@ -1,7 +1,7 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
 
 /**
- * Get the value in array the value in json given the search value was in json
+ * Get the value in array or json given in only one return the search value was in json
  *
  * @since 1.4.8.7
  * @category Collection
