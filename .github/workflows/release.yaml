@@ -31,7 +31,6 @@ jobs:
     - name: Deno publish
       run: |
         npx jsr publish
-    - run: npm ci    
     - name: NPM publish
       run: npm publish --provenance --access public
       env:
