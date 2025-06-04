@@ -2,11 +2,5 @@
   "name": "@compts/structkit",
   "version": "0.1.0",
   "license": "MIT",
-  "exports": "./mod.ts",
-   "imports": {
-            "structkit": "./dist/esm/node.esm.js"
-          },
-          "compilerOptions": {
-            "types": ["./dist/ts/node.esm.d.ts"]
-          }
+  "exports": "./dist/esm/node.esm.js"
 }
