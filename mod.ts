@@ -1,1 +1,1 @@
-export * from "./dist/ts/node.esm.ts";
+export * from "./dist/esm/node.esm.js";
