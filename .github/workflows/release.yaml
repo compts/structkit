@@ -30,8 +30,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Deno publish
       run: |
-        npx jsr publish 
+        npx jsr publish
+    - run: npm ci    
     - name: NPM publish
-      run: npm publish --access public
+      run: npm publish --provenance --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
