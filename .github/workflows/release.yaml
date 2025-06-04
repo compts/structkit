@@ -31,7 +31,7 @@ jobs:
       with:
         deno-version: v2.x
     - name: Deno publish
-      run: npx jsr publish --token ${{ secrets.DENO_TOKEN }} --prod
+      run: npx jsr publish --token ${{ secrets.DENO_TOKEN }}
       env:
         DENO_DEPLOY_TOKEN: ${{ secrets.DENO_TOKEN }}
     - name: NPM publish
