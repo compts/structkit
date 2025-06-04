@@ -7,7 +7,7 @@ const getValue = require('./getValue');
  *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
  * @since 1.4.87
- * @category Condition
+ * @category Collection
  * @param {any} value First number
  * @returns {any[]} Returns array
  * @example

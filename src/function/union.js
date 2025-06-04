@@ -8,7 +8,7 @@ const each = require('./each');
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
- * @category Relation
+ * @category Collection
  * @param {...any?} arg First number
  * @returns {any[]} Returns true or false.
  * @example

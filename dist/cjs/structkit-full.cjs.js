@@ -16,6 +16,66 @@ const __=__p;
 
 _stk.__=__;
 
+
+/**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
 /**
  * Create a separate `has` inside core folder
  *
@@ -237,39 +297,10 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
- * @category Boolean
+ * @category Logic
  * @param {...any?} args Either JSON or Array
  * @returns {boolean} Returns true or false.
  * @example
@@ -311,7 +342,7 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
  * Is Json valid format
  *
  * @since 1.3.1
- * @category Seq
+ * @category Relation
  * @param {any} value Value you want to check JSON is Valid
  * @param {string=} valueType Get value type
  * @returns {any} Returns true or false if valid json format
@@ -468,42 +499,12 @@ function getTypeofInternal (objectValue) {
 }
 
 /**
- * GlobalEach
- * @category Seq
- * @class
- * @name getKit
- */
-function GlobalEach () {
-
-    this.continue = true;
-
-}
-
-/**
- * Each or for loop function you are familiar with
- *
- * @since 1.0.1
- * @category Collection
- * @param {boolean} value Array or json.
- * @returns {null} Null return
- * @example
- *
- * each([1,2],(value,key,localGlobal)=>{ })
- *
- */
-GlobalEach.prototype.isContinue = function (value) {
-
-    this.continue = value;
-
-};
-
-/**
  * Each or for loop function you are familiar with
  *
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValue Array or json.
- * @param {Function=} func Function to execute the loop with callback key,
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
  * @returns {any} Array or json
  * @example
  *
@@ -579,6 +580,36 @@ function each (objectValue, func) {
 }
 
 /**
+ * GlobalEach
+ * @category Seq
+ * @class
+ * @name getKit
+ */
+function GlobalEach () {
+
+    this.continue = true;
+
+}
+
+/**
+ * Each or for loop function you are familiar with
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {boolean} value Array or json.
+ * @returns {null} Null return
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+GlobalEach.prototype.isContinue = function (value) {
+
+    this.continue = value;
+
+};
+
+/**
  * Base reduce
  *
  * @since 1.4.8
@@ -614,7 +645,7 @@ function baseReduce (defaultValue, listData, func) {
  * Ge the empty value of specify argument type
  *
  * @since 1.0.1
- * @category Any
+ * @category Function
  * @param {any} value Any value type that you want an empty return
  * @returns {any} Returns empty either Json or Array
  * @example
@@ -953,7 +984,7 @@ function searchValueInJson (objectValue, searchValue) {
  * Index of array
  *
  * @since 1.0.1
- * @category Math
+ * @category Array
  * @param {any} objectValue Array
  * @param {any} value Value in array
  * @returns {number} Returns the index.
@@ -976,7 +1007,7 @@ function indexOf (objectValue, value) {
  * Check index of array is Exist or not
  *
  * @since 1.3.1
- * @category Boolean
+ * @category Relation
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return boolean.
@@ -1188,41 +1219,10 @@ _stk.allValid=allValid;
 
 
 /**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
-
-/**
  * Check index of array Not or exist
  *
  * @since 1.4.1
- * @category Boolean
+ * @category Relation
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return boolean.
@@ -1401,7 +1401,7 @@ _stk.arrayConcat=arrayConcat;
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {number} maxValue Max value you to generate in array, default value 1
  * @param {number=} minValue Min value you to generate in array , default value 10
  * @param {string|number=} step  Specify the logic of increment or decrement
@@ -1496,7 +1496,7 @@ _stk.arraySlice=arraySlice;
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
- * @category Boolean
+ * @category Relation
  * @param {any} value JSON , Array and String
  * @returns {boolean} Returns true or false
  * @example
@@ -1581,7 +1581,7 @@ _stk.arraySum=arraySum;
  * Async replace regexp argument
  *
  * @since 1.3.1
- * @category Utility
+ * @category Function
  * @param {any} value String data
  * @param {any} search Regexp or string to look for match
  * @param {Function|String=} toReplace Replace value.
@@ -1740,7 +1740,7 @@ function subtract (value1, value2) {
  * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
- * @category Seq
+ * @category Logic
  * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args Object argument that to fill in variable define at algbraic expression
  * @returns {number|any} Returns the total.
@@ -1986,14 +1986,12 @@ function convert (a1, b1, pos) {
 
 _stk.calculate=calculate;
 
-_stk.count=count;
-
 
 /**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
- * @category Any
+ * @category Collection
  * @param {any} objectValue data you want to clone
  * @returns {any} Returns clone data
  * @example
@@ -2016,6 +2014,8 @@ function clone (objectValue) {
 }
 
 _stk.clone=clone;
+
+_stk.count=count;
 
 
 /**
@@ -2057,7 +2057,7 @@ _stk.dec=dec;
  *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
  *
  * @since 1.4.87
- * @category Boolean
+ * @category Logic
  * @param {any} defaultValue Any first value type
  * @param {any=} value2 Any first value type
  * @returns {any} Returns true or false.
@@ -2094,16 +2094,16 @@ _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
 
-_stk.empty=empty;
-
 _stk.each=each;
+
+_stk.empty=empty;
 
 
 /**
  * To check if the two arguments are equal
  *
  * @since 1.4.8
- * @category Boolean
+ * @category Relation
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
@@ -2182,10 +2182,53 @@ _stk.first=first;
 
 
 /**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce([], rawValue, function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        });
+
+    }, [arg]);
+
+}
+
+_stk.flatten=flatten;
+
+
+/**
  * To Increment value
  *
  * @since 1.4.8
- * @category Array
+ * @category Math
  * @param {any} value Value you want to convert in array
  * @param {any=} default_value Value to want to start counting
  * @returns {number} Return in number.
@@ -2352,57 +2395,11 @@ function getData (objectValue, split_str, isStrict) {
 
 }
 
-_stk.getData=getData;
-
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce([], rawValue, function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        });
-
-    }, [arg]);
-
-}
-
-_stk.flatten=flatten;
-
-
 /**
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Collection
+ * @category Relation
  * @param {any} whereValue Json or Array
  * @param {any} objectValue1 Json or Array for lookup to whereValue
  * @param {boolean=} isExist Default value is True
@@ -2557,7 +2554,7 @@ function localValidation (keys, vals, isExist) {
  * Looking the data in JSON and Array base on object value with the help regexp
  *
  * @since 1.0.1
- * @category Seq
+ * @category Relation
  * @param {any} whereValue Either Json or array
  * @param {any} objectValue1 use as lookup data in data
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
@@ -2940,9 +2937,11 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getKey=getKey;
+_stk.getData=getData;
 
 _stk.getTypeof=getTypeof;
+
+_stk.getKey=getKey;
 /**
  * Generate unique value id
  *
@@ -3049,7 +3048,7 @@ _stk.groupBy=groupBy;
  *  To check if the two arguments are greater
  *
  * @since 1.4.8
- * @category Boolean
+ * @category Relation
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
@@ -3078,7 +3077,7 @@ _stk.gt=gt;
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
- * @category Boolean
+ * @category Relation
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
@@ -3102,12 +3101,14 @@ function gte (value1, value2) {
 
 _stk.gte=gte;
 
+_stk.has=has;
+
 
 /**
  * Check if data is undefined
  *
  * @since 1.0.1
- * @category Collection
+ * @category Logic
  * @param {any} objectValue Either JSON or array
  * @param {any} value1 Check the key of value
  * @param {any=} value2 if value not exist, this value will be return
@@ -3143,8 +3144,6 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined;
 
-_stk.has=has;
-
 _stk.inc=inc;
 
 _stk.indexOf=indexOf;
@@ -3158,7 +3157,7 @@ _stk.indexOfNotExist=indexOfNotExist;
  * Insert value in Json object or array
  *
  * @since 1.0.1
- * @category Object
+ * @category Collection
  * @param {any} objectValue Either Json or array
  * @param {any} value Data you want to insert
  * @returns {null} Returns null
@@ -3205,7 +3204,7 @@ _stk.isJson=isJson;
 
 
 /**
- * Convert Json To Array base on search value you provide
+ * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
  *
  * @since 1.0.1
  * @category Collection
@@ -3252,7 +3251,7 @@ _stk.jsonToArray=jsonToArray;
  * Get the last value of array or JSON
  *
  * @since 1.0.1
- * @category Seq
+ * @category Relation
  * @param {any} objectValue The data is array
  * @returns {any} Returns last value of `objectValue`.
  * @example
@@ -3267,32 +3266,6 @@ function last (objectValue) {
 }
 
 _stk.last=last;
-
-
-/**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf([1,2], 1)
- * // => 0
- */
-function lastIndexOf (objectValue, value) {
-
-    const start = 0;
-
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
-
-}
-
-_stk.lastIndexOf=lastIndexOf;
 
 
 /**
@@ -3316,6 +3289,32 @@ function like (objectValue, objectValueWhere, func) {
 }
 
 _stk.like=like;
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    const start = 0;
+
+    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+
+_stk.lastIndexOf=lastIndexOf;
 
 
 /**
@@ -3412,32 +3411,6 @@ _stk.map=map;
 
 
 /**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Array
- * @param {any[]} objectValue Json in array format
- * @param {string} valueFormat Key look up format
- * @returns {any[]} Return array or object.
- * @example
- *
- * mapGetData([{"Asd":1}],"Asd")
- *=>[1]
- */
-function mapGetData (objectValue, valueFormat) {
-
-    return map(objectValue, function (value) {
-
-        return getData(value, valueFormat);
-
-    });
-
-}
-
-_stk.mapGetData=mapGetData;
-
-
-/**
  * To check if the two arguments are less
  *
  * @since 1.4.8
@@ -3464,6 +3437,32 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
+
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {any[]} objectValue Json in array format
+ * @param {string} valueFormat Key look up format
+ * @returns {any[]} Return array or object.
+ * @example
+ *
+ * mapGetData([{"Asd":1}],"Asd")
+ *=>[1]
+ */
+function mapGetData (objectValue, valueFormat) {
+
+    return map(objectValue, function (value) {
+
+        return getData(value, valueFormat);
+
+    });
+
+}
+
+_stk.mapGetData=mapGetData;
 
 
 /**
@@ -3511,9 +3510,6 @@ function mergeWithKey (objectValue, mergeValue) {
     ]);
 
 }
-
-_stk.mergeWithKey=mergeWithKey;
-
 
 /**
  * Selecting multiple search data using `getData` logic in the loop
@@ -3616,6 +3612,8 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
+_stk.mergeWithKey=mergeWithKey;
+
 _stk.multiply=multiply;
 
 
@@ -3623,7 +3621,7 @@ _stk.multiply=multiply;
  * To check if its not equal
  *
  * @since 1.4.8
- * @category Boolean
+ * @category Relation
  * @param {any} value1 Any value type
  * @param {any} value2 Any value type
  * @returns {boolean} Returns true or false.
@@ -3848,7 +3846,7 @@ _stk.onDelay=onDelay;
  * On sequence
  *
  * @since 1.4.1
- * @category Seq
+ * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
  * @param {object=} option option for delay
@@ -4015,166 +4013,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-
-
-/**
- * Data String from JSON object
- *
- * @since 1.0.1
- * @category Collection
- * @param {string} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function datastring (str) {
-
-    let data_s="";
-
-    if (typeof str === "string") {
-
-        if (str.indexOf("'")) {
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else if (str.indexOf('"')) {
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else {
-
-            data_s=str;
-
-        }
-
-    } else {
-
-        data_s=str;
-
-    }
-
-    return data_s;
-
-}
-
-/**
- * Parse String
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} rawCount The second number in an addition.
- * @param {any} rawConfig The second number in an addition.
- * @param {any} rawValue The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        let str="";
-        let str_strt="";
-        let str_end="";
-        let inc=0;
-        const incrementDefaultValue=1;
-        let inc_main=null;
-
-        if (has(value)) {
-
-            if (getTypeof(value) === "json") {
-
-                str_strt="{";
-                str_end="}";
-
-                each(value, function (_value, _key) {
-
-                    inc_main=inc<count(value)-incrementDefaultValue
-                        ?","
-                        :"";
-
-                    if (typeof _value === "object"&&_value !== null) {
-
-                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
-
-                    } else {
-
-                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
-
-                    }
-
-                    inc += incrementDefaultValue;
-
-                });
-
-            }
-            if (getTypeof(value) === "array") {
-
-                str_strt="[";
-                str_end="]";
-
-                each(value, function (_value) {
-
-                    inc_main=inc<count(value)-incrementDefaultValue
-                        ?","
-                        :"";
-
-                    if (typeof _value === "object") {
-
-                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
-
-                    } else {
-
-                        str += datastring(_value)+""+inc_main;
-
-                    }
-
-                    inc += incrementDefaultValue;
-
-                });
-
-            }
-
-        }
-
-        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
-
-}
-
-/**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in json format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in json format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value, config) {
-
-    const defaultConfig = varExtend(config, {});
-
-    const data = parseStringCore(zero, defaultConfig, value);
-
-    return data;
-
-}
-
-_stk.parseString=parseString;
 
 
 /**
@@ -5661,10 +5499,170 @@ _stk.parseJson=parseJson;
 
 
 /**
+ * Data String from JSON object
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {string} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function datastring (str) {
+
+    let data_s="";
+
+    if (typeof str === "string") {
+
+        if (str.indexOf("'")) {
+
+            data_s='&quot;'+str+'&quot;';
+
+        } else if (str.indexOf('"')) {
+
+            data_s='&quot;'+str+'&quot;';
+
+        } else {
+
+            data_s=str;
+
+        }
+
+    } else {
+
+        data_s=str;
+
+    }
+
+    return data_s;
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} rawCount The second number in an addition.
+ * @param {any} rawConfig The second number in an addition.
+ * @param {any} rawValue The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        let str="";
+        let str_strt="";
+        let str_end="";
+        let inc=0;
+        const incrementDefaultValue=1;
+        let inc_main=null;
+
+        if (has(value)) {
+
+            if (getTypeof(value) === "json") {
+
+                str_strt="{";
+                str_end="}";
+
+                each(value, function (_value, _key) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object"&&_value !== null) {
+
+                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+            if (getTypeof(value) === "array") {
+
+                str_strt="[";
+                str_end="]";
+
+                each(value, function (_value) {
+
+                    inc_main=inc<count(value)-incrementDefaultValue
+                        ?","
+                        :"";
+
+                    if (typeof _value === "object") {
+
+                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+
+                    } else {
+
+                        str += datastring(_value)+""+inc_main;
+
+                    }
+
+                    inc += incrementDefaultValue;
+
+                });
+
+            }
+
+        }
+
+        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+/**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value, config) {
+
+    const defaultConfig = varExtend(config, {});
+
+    const data = parseStringCore(zero, defaultConfig, value);
+
+    return data;
+
+}
+
+_stk.parseString=parseString;
+
+
+/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
- * @category Condition
+ * @category Function
  * @param {...any?} arg Arguments in function
  * @returns {any} Returns any value.
  * @example
@@ -5705,7 +5703,7 @@ _stk.pipe=pipe;
  * To create single random value from array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Array
  * @param {any} valueArray Array
  * @param {number} minValue Minimum value base on index
  * @param {number} maxValue  Max value base on index
@@ -5745,7 +5743,7 @@ _stk.range=range;
  * Reduce function
  *
  * @since 1.4.8
- * @category Core
+ * @category Function
  * @param {any} defaultValue Starting value that you want to use as reference
  * @param {any[]} listData Array value that you want to map
  * @param {any} func Callback function for how to map the data
@@ -5782,7 +5780,7 @@ _stk.reduce=reduce;
  * Regex Count Group number
  *
  * @since 1.4.7
- * @category String
+ * @category Function
  * @param {any} value Value you want to convert in array
  * @returns {number} Return in array.
  * @example
@@ -6145,40 +6143,6 @@ function baseSort (objectValue, func) {
 }
 
 /**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {Function} func Callback function or sort type
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sortBy (objectValue, func) {
-
-    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
-
-        if (has(func) && getTypeof(func) === 'function') {
-
-            return func(orderA, orderB);
-
-        }
-
-        return orderA - orderB;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sortBy=sortBy;
-
-
-/**
  * Sort array
  *
  * @since 1.0.1
@@ -6257,6 +6221,40 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {Function} func Callback function or sort type
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sortBy (objectValue, func) {
+
+    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
+
+        if (has(func) && getTypeof(func) === 'function') {
+
+            return func(orderA, orderB);
+
+        }
+
+        return orderA - orderB;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sortBy=sortBy;
 /**
  * Split string for special cases
  *
@@ -6875,7 +6873,7 @@ _stk.toInteger=toInteger;
  *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
  * @since 1.4.87
- * @category Condition
+ * @category Collection
  * @param {any} value First number
  * @returns {any[]} Returns array
  * @example
@@ -7048,7 +7046,7 @@ function unique (value) {
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
- * @category Relation
+ * @category Collection
  * @param {...any?} arg First number
  * @returns {any[]} Returns true or false.
  * @example
@@ -7083,8 +7081,6 @@ function union (...arg) {
 _stk.union=union;
 
 _stk.unique=unique;
-
-_stk.varExtend=varExtend;
 
 _stk.where=where;
 
@@ -7414,12 +7410,14 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
+_stk.whereOnce=whereOnce;
+
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
  *
  * @since 1.4.86
- * @category Condition
+ * @category Array
  * @param {...any?} arg First number
  * @returns {any} Returns true or false.
  * @example
@@ -7453,7 +7451,7 @@ function zip (...arg) {
 
 _stk.zip=zip;
 
-_stk.whereOnce=whereOnce;
+_stk.varExtend=varExtend;
 
 
  //end of file

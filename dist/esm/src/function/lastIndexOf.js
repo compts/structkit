@@ -7,7 +7,7 @@ import {getIndexOf} from '../core/getIndexOf.js';
  * Get the last index Of array
  *
  * @since 1.0.1
- * @category Seq
+ * @category Relation
  * @param {any} objectValue Array
  * @param {any} value Value you are searching for
  * @returns {any} Return get the index or array

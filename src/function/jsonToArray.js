@@ -7,7 +7,7 @@ const getData = require('./getData');
 const isEmpty = require('./isEmpty');
 
 /**
- * Convert Json To Array base on search value you provide
+ * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
  *
  * @since 1.0.1
  * @category Collection

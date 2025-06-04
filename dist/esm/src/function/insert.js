@@ -8,7 +8,7 @@ import each from './each.js';
  * Insert value in Json object or array
  *
  * @since 1.0.1
- * @category Object
+ * @category Collection
  * @param {any} objectValue Either Json or array
  * @param {any} value Data you want to insert
  * @returns {null} Returns null
