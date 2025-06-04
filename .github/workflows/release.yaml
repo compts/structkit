@@ -31,8 +31,6 @@ jobs:
         with:
           deno-version: v2.x
         #run: npx jsr publish
-      - name: Build step
-        run: "deno task build"
       - name: Deno publish
         run: npx jsr publish
       - name: Notify success
