@@ -17,7 +17,7 @@ A Javascript library that make easier in working with arrays, number,object, Str
 ## Download
 
 To download this JS library and install in your local library
- * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~74KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
+ * [Core build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~143KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js))
 
 Using npm to install in your project folder:
 ```shell

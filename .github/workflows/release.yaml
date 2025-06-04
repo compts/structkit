@@ -38,8 +38,8 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "@structkit/structkit"
-          entrypoint: "mod.ts"
+          project: "@compts/structkit"
+          entrypoint: "./mod.ts"
           root: "."
           token: ${{ secrets.DENO_DEPLOY_TOKEN }}
           environment: "production"
