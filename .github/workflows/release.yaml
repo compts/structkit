@@ -3,7 +3,8 @@ on:
   push:
     branches: 
     - release
-
+  release:
+    types: [published]
 jobs:
   publish:
     name: Deploy
@@ -31,26 +32,19 @@ jobs:
     - name: Deno publish
       run: |
         npx jsr publish
-    - uses: actions/checkout@v4
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
       # Setup .npmrc file to publish to npm
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        registry-url: 'https://registry.npmjs.org' 
-    - name: Configure npm
-      run: |
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-        echo "always-auth=true" >> ~/.npmrc
-        echo "strict-ssl=false" >> ~/.npmrc
-        echo "loglevel=error" >> ~/.npmrc
-        echo "fetch-retries=5" >> ~/.npmrc
-        echo "fetch-retry-factor=10" >> ~/.npmrc
-        echo "fetch-retry-mintimeout=20000" >> ~/.npmrc
-        echo "fetch-retry-maxtimeout=120000" >> ~/.npmrc
-        echo "cache-min=86400" >> ~/.npmrc
-        echo "cache-max=86400" >> ~/.npmrc
-        echo "cache=~/.npm" >> ~/.npmrc     
-    - name: NPM publish
-      run: npm publish --provenance --access public
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
