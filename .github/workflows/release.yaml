@@ -49,8 +49,7 @@ jobs:
         echo "fetch-retry-maxtimeout=120000" >> ~/.npmrc
         echo "cache-min=86400" >> ~/.npmrc
         echo "cache-max=86400" >> ~/.npmrc
-        echo "cache=~/.npm" >> ~/.npmrc
-    - run: npm ci             
+        echo "cache=~/.npm" >> ~/.npmrc     
     - name: NPM publish
       run: npm publish --provenance --access public
       env:
