@@ -17,9 +17,9 @@ const varExtend = require('./varExtend');
 function onDelay (func, wait, option) {
 
     const zero = 0;
-    const extend = varExtend(option, {
+    const extend = varExtend({
         "limitCounterClear": 0
-    });
+    }, option);
 
     const valueWaited = wait || zero;
 

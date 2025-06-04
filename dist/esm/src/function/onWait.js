@@ -20,7 +20,14 @@ function onWait (func, wait) {
     const browserWindow = getWindow();
     let timerId = null;
 
-    const useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+    let useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
 
     /**
      * On wait
@@ -41,7 +48,7 @@ function onWait (func, wait) {
 
             clearTimer();
 
-            return browserWindow.requestAnimationFrame();
+            return browserWindow.requestAnimationFrame(pendingFunc);
 
         }
 
@@ -61,8 +68,11 @@ function onWait (func, wait) {
             browserWindow.cancelAnimationFrame(timerId);
 
         }
+        if (timerId !== null && typeof timerId.cancel === "function") {
 
-        timerId.cancel();
+            timerId.cancel();
+
+        }
 
     }
 

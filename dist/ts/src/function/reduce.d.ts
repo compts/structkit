@@ -3,7 +3,7 @@ export default reduce;
  * Reduce function
  *
  * @since 1.4.8
- * @category Core
+ * @category Function
  * @param {any} defaultValue Starting value that you want to use as reference
  * @param {any[]} listData Array value that you want to map
  * @param {any} func Callback function for how to map the data

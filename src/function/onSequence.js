@@ -18,9 +18,9 @@ function onSequence (func, wait, option) {
 
     const zero = 0;
     const one = 1;
-    const extend = varExtend(option, {
+    const extend = varExtend({
         "limitCounterClear": 0
-    });
+    }, option);
 
     const valueWaited = wait || zero;
     let counter = 0;

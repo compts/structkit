@@ -3,7 +3,7 @@ export default calculate;
  * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
- * @category Seq
+ * @category Logic
  * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args Object argument that to fill in variable define at algbraic expression
  * @returns {number|any} Returns the total.

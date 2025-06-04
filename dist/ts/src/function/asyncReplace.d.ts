@@ -3,7 +3,7 @@ export default asyncReplace;
  * Async replace regexp argument
  *
  * @since 1.3.1
- * @category Utility
+ * @category Function
  * @param {any} value String data
  * @param {any} search Regexp or string to look for match
  * @param {Function|String=} toReplace Replace value.

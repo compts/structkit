@@ -5,7 +5,7 @@ export default each;
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValue Array or json.
- * @param {Function=} func Function to execute the loop with callback key,
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
  * @returns {any} Array or json
  * @example
  *

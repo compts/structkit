@@ -3,7 +3,7 @@ export default isExact;
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Collection
+ * @category Relation
  * @param {any} whereValue Json or Array
  * @param {any} objectValue1 Json or Array for lookup to whereValue
  * @param {boolean=} isExist Default value is True
