@@ -1,0 +1,7 @@
+{
+  "name": "@compts/structkit",
+  "description": "JS utility tool",
+  "version": "0.1.12",
+  "license": "MIT",
+  "exports": "./dist/esm/node.esm.js"
+}
