@@ -12,7 +12,7 @@ const stringLowerCase = require("./stringLowerCase");
  * @category Collection
  * @param {object} objectValue Json, Array or Object
  * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
- * @returns {array} Return Json or Array or Object.
+ * @returns {any} Return Json or Array or Object.
  * @example
  *
  * varExtend({"s1":1},{"s1":2})
