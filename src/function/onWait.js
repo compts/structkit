@@ -8,7 +8,7 @@ const {getWindow} = require('../core/global');
  * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
+ * @returns {object} Returns the total.
  * @example
  *
  *  onWait(()=>{})
