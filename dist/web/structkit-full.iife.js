@@ -240,6 +240,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -1170,35 +1199,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Append data for json or array
  *
  * @since 1.0.1
@@ -1227,129 +1227,6 @@ function append (objectValue, val, key) {
 }
 
 _stk.append=append;
-
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-function arraySlice (objectValue, min, max) {
-
-    var ran_var=[];
-    var defaultValueZero=0;
-    var defaultValueNegativeOne=-1;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
-
-    if (has(min)) {
-
-        if (defaultValueZero > min) {
-
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
-
-        }
-
-    }
-
-    if (has(max)) {
-
-        if (defaultValueZero > max) {
-
-            var raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            var raw_ran_max =count(objectValue) + max;
-
-            if (raw_ran_min < raw_ran_max) {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
-
-            } else {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
-
-            }
-
-        }
-
-    }
-
-    each(objectValue, function (value, key) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var argsub=arguments;
-
-        if (argsub.length < one) {
-
-            return [];
-
-        }
-
-        var return_val=toArray(first(argsub));
-        var arrayValue = toArray(arraySlice(argsub, one));
-
-        each(arrayValue, function (value) {
-
-            return_val = return_val.concat(toArray(value));
-
-        });
-
-        return return_val;
-
-    }, arg);
-
-}
-
-_stk.arrayConcat=arrayConcat;
 
 
 /**
@@ -1504,6 +1381,129 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat;
 
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+function arraySlice (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            var raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            var raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (value, key) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var argsub=arguments;
+
+        if (argsub.length < one) {
+
+            return [];
+
+        }
+
+        var return_val=toArray(first(argsub));
+        var arrayValue = toArray(arraySlice(argsub, one));
+
+        each(arrayValue, function (value) {
+
+            return_val = return_val.concat(toArray(value));
+
+        });
+
+        return return_val;
+
+    }, arg);
+
+}
+
+_stk.arrayConcat=arrayConcat;
+
 _stk.arraySlice=arraySlice;
 
 
@@ -1590,6 +1590,71 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum;
+
+
+/**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -1940,71 +2005,6 @@ _stk.calculate=calculate;
 
 
 /**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
-
-
-/**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
@@ -2113,8 +2113,6 @@ _stk.divide=divide;
 
 _stk.each=each;
 
-_stk.empty=empty;
-
 
 /**
  * To check if the two arguments are equal
@@ -2149,6 +2147,8 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
+
+_stk.empty=empty;
 
 
 /**
@@ -3118,6 +3118,8 @@ function gte (value1, value2) {
 
 _stk.gte=gte;
 
+_stk.has=has;
+
 
 /**
  * Check if data is undefined
@@ -3159,8 +3161,6 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined;
 
-_stk.has=has;
-
 _stk.inc=inc;
 
 _stk.indexOf=indexOf;
@@ -3168,6 +3168,48 @@ _stk.indexOf=indexOf;
 _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
+
+
+/**
+ * Insert value in Json object or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Either Json or array
+ * @param {any} value Data you want to insert
+ * @returns {null} Returns null
+ * @example
+ * var ss = {"A":1}
+ * insert(ss,{'as':1})
+ * // => {A: 1, as: 1}
+ */
+function insert (objectValue, value) {
+
+    if (has(objectValue)) {
+
+        var jsn_type=getTypeof(value);
+
+        if (jsn_type === "json") {
+
+            each(value, function (_value, key) {
+
+                objectValue[key]=_value;
+
+            });
+
+        }
+
+        if (jsn_type === "array") {
+
+            objectValue.push(value);
+
+        }
+
+    }
+
+}
+
+_stk.insert=insert;
 
 _stk.isEmpty=isEmpty;
 
@@ -5644,48 +5686,6 @@ _stk.parseString=parseString;
 
 
 /**
- * Insert value in Json object or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Either Json or array
- * @param {any} value Data you want to insert
- * @returns {null} Returns null
- * @example
- * var ss = {"A":1}
- * insert(ss,{'as':1})
- * // => {A: 1, as: 1}
- */
-function insert (objectValue, value) {
-
-    if (has(objectValue)) {
-
-        var jsn_type=getTypeof(value);
-
-        if (jsn_type === "json") {
-
-            each(value, function (_value, key) {
-
-                objectValue[key]=_value;
-
-            });
-
-        }
-
-        if (jsn_type === "array") {
-
-            objectValue.push(value);
-
-        }
-
-    }
-
-}
-
-_stk.insert=insert;
-
-
-/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
@@ -6178,87 +6178,6 @@ function baseSort (objectValue, func) {
 }
 
 /**
- * Sort array
- *
- * @since 1.0.1
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, order, type) {
-
-    var asc=true;
-    var types='any';
-
-    if (has(order) && getTypeof(order) === 'boolean') {
-
-        asc= order;
-
-    }
-
-    if (has(type) && getTypeof(type) === 'string') {
-
-        types= type;
-
-    }
-
-    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
-
-        var sortOrderA = orderA;
-        var sortOrderB = orderB;
-
-        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-            if (isEmpty(types) === false) {
-
-                if (types === 'any') {
-
-                    sortOrderA =orderA.charCodeAt();
-                    sortOrderB= orderB.charCodeAt();
-
-                }
-                if (types === 'lowercase') {
-
-                    sortOrderA =orderA.toLowerCase().charCodeAt();
-                    sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                }
-
-                if (types === 'uppercase') {
-
-                    sortOrderA =orderA.toUpperCase().charCodeAt();
-                    sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                }
-
-            }
-
-        }
-
-        if (asc) {
-
-            return sortOrderA - sortOrderB;
-
-        }
-
-        return sortOrderB - sortOrderA;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sort=sort;
-
-
-/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -6378,28 +6297,84 @@ _stk.stringCapitalize=stringCapitalize;
 
 
 /**
- * String Kebab case
+ * Sort array
  *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
+ * @since 1.0.1
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
+ * @returns {any[]} Returns the total.
  * @example
  *
- * stringKebabCase('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
+ * sort([2,3,1])
+ *=>[1,2,3]
  */
-function stringKebabCase (value) {
+function sort (objectValue, order, type) {
 
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
+    var asc=true;
+    var types='any';
+
+    if (has(order) && getTypeof(order) === 'boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(type) && getTypeof(type) === 'string') {
+
+        types= type;
+
+    }
+
+    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
+
+        var sortOrderA = orderA;
+        var sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types === 'any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types === 'lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types === 'uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
+
+        }
+
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
+
+    });
+
+    return finalResponse;
 
 }
 
-_stk.stringKebabCase=stringKebabCase;
-
-_stk.stringLowerCase=stringLowerCase;
+_stk.sort=sort;
 
 
 /**
@@ -6445,6 +6420,31 @@ _stk.stringEscape=stringEscape;
 
 
 /**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * stringKebabCase('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function stringKebabCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.stringKebabCase=stringKebabCase;
+
+_stk.stringLowerCase=stringLowerCase;
+
+
+/**
  * String Snake case
  *
  * @since 1.3.1
@@ -6465,8 +6465,6 @@ function stringSnakeCase (value) {
 }
 
 _stk.stringSnakeCase=stringSnakeCase;
-
-_stk.stringUnEscape=stringUnEscape;
 
 
 /**
@@ -6496,6 +6494,8 @@ function stringSubs (value, minValue, maxValue) {
 }
 
 _stk.stringSubs=stringSubs;
+
+_stk.stringUnEscape=stringUnEscape;
 
 
 /**
@@ -6855,31 +6855,6 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
- * To extract number in string and convert to double, it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @returns {number} Return in double.
- * @example
- *
- * toDouble("100.1d1")
- *=>100.11
- */
-function toDouble (value) {
-
-    var zero = 0.00;
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble;
-
-
-/**
  * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
@@ -6969,6 +6944,31 @@ function setDepthValue (arryData, value) {
 _stk.toPairs=toPairs;
 
 _stk.toString=toString;
+
+
+/**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value) {
+
+    var zero = 0.00;
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble;
 
 
 /**
@@ -7077,53 +7077,11 @@ function unique (value) {
 
 }
 
-/**
- * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
- *
- * @since 1.4.7
- * @category Collection
- * @param {...any?} arg First number
- * @returns {any[]} Returns true or false.
- * @example
- *
- * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
- * // => [1, 2, 3, 4, 7, 5, 6, 8]
- */
-function union () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce([], rawValue, function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            }
-
-            return unique(total);
-
-        });
-
-    }, arg);
-
-}
-
-_stk.union=union;
-
 _stk.unique=unique;
 
-_stk.varExtend=varExtend;
-
 _stk.where=where;
+
+_stk.varExtend=varExtend;
 
 
 /**
@@ -7451,6 +7409,8 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
+_stk.whereOnce=whereOnce;
+
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
@@ -7494,7 +7454,48 @@ function zip () {
 
 _stk.zip=zip;
 
-_stk.whereOnce=whereOnce;
+
+/**
+ * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {...any?} arg First number
+ * @returns {any[]} Returns true or false.
+ * @example
+ *
+ * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
+ * // => [1, 2, 3, 4, 7, 5, 6, 8]
+ */
+function union () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce([], rawValue, function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            }
+
+            return unique(total);
+
+        });
+
+    }, arg);
+
+}
+
+_stk.union=union;
 
 
  })(typeof window !== "undefined" ? window : this);

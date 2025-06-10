@@ -113,15 +113,16 @@ exports.module=function (grassconf) {
                         "transformFirstFile": () => null,
                         "transformLastFile": () => null
                     },
-                    cjsToEsmFileNameOnly()
+                    cjsToEsmFileNameOnly({"isAddComment": true})
                 ]
 
             }
         ).pipe(grassconf.streamPipe(function (data) {
 
-            if (data.path === 'src/function/whereNot.js') {
+            const getData = data.readData();
 
-                const getData = data.readData();
+
+            if (data.path === 'src/function/whereNot.js') {
 
 
                 data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
@@ -133,6 +134,7 @@ exports.module=function (grassconf) {
                 }).join("\n")+"\n");
 
             }
+
             data.done();
 
         }))
