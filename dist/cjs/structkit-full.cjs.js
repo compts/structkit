@@ -1219,6 +1219,125 @@ _stk.append=append;
 
 
 /**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+function arraySlice (objectValue, min, max) {
+
+    const ran_var=[];
+    const defaultValueZero=0;
+    const defaultValueNegativeOne=-1;
+    let ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    let ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            const raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            const raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (value, key) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat (...arg) {
+
+    return curryArg(function (...argsub) {
+
+        if (argsub.length < one) {
+
+            return [];
+
+        }
+
+        let return_val=toArray(first(argsub));
+        const arrayValue = toArray(arraySlice(argsub, one));
+
+        each(arrayValue, function (value) {
+
+            return_val = return_val.concat(toArray(value));
+
+        });
+
+        return return_val;
+
+    }, arg);
+
+}
+
+_stk.arrayConcat=arrayConcat;
+
+
+/**
  * Check index of array Not or exist
  *
  * @since 1.4.1
@@ -1370,126 +1489,70 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat;
 
+_stk.arraySlice=arraySlice;
+
 
 /**
- * To return the value selected either start or start to end index
+ * Async replace regexp argument
  *
  * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
  * @example
  *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-function arraySlice (objectValue, min, max) {
+function asyncReplace (value, search, toReplace) {
 
-    const ran_var=[];
-    const defaultValueZero=0;
-    const defaultValueNegativeOne=-1;
-    let ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    let ran_max=has(max)
-        ?max
-        :count(objectValue);
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
-    if (has(min)) {
+        try {
 
-        if (defaultValueZero > min) {
+            if (getTypeof(rawToReplace) === "function") {
 
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+                const values = [];
 
-        }
+                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
 
-    }
+                    values.push(rawToReplace(...arg));
 
-    if (has(max)) {
+                    return "";
 
-        if (defaultValueZero > max) {
+                });
 
-            const raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            const raw_ran_max =count(objectValue) + max;
+                return Promise.all(values).then(function (resolvedValues) {
 
-            if (raw_ran_min < raw_ran_max) {
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
 
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
+                        return resolvedValues.shift();
 
-            } else {
+                    });
 
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
+                });
 
             }
 
-        }
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
 
-    }
+        } catch (error) {
 
-    each(objectValue, function (value, key) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
+            return Promise.reject(error);
 
         }
 
-    });
-
-    return ran_var;
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
 
 }
 
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat (...arg) {
-
-    return curryArg(function (...argsub) {
-
-        if (argsub.length < one) {
-
-            return [];
-
-        }
-
-        let return_val=toArray(first(argsub));
-        const arrayValue = toArray(arraySlice(argsub, one));
-
-        each(arrayValue, function (value) {
-
-            return_val = return_val.concat(toArray(value));
-
-        });
-
-        return return_val;
-
-    }, arg);
-
-}
-
-_stk.arrayConcat=arrayConcat;
-
-_stk.arraySlice=arraySlice;
+_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -1575,69 +1638,6 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum;
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                const values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -2096,6 +2096,8 @@ _stk.divide=divide;
 
 _stk.each=each;
 
+_stk.empty=empty;
+
 
 /**
  * To check if the two arguments are equal
@@ -2130,8 +2132,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-_stk.empty=empty;
 
 
 /**
@@ -2939,9 +2939,9 @@ _stk.fromPairs=fromPairs;
 
 _stk.getData=getData;
 
-_stk.getKey=getKey;
-
 _stk.getTypeof=getTypeof;
+
+_stk.getKey=getKey;
 /**
  * Generate unique value id
  *
@@ -3411,6 +3411,32 @@ _stk.map=map;
 
 
 /**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {any[]} objectValue Json in array format
+ * @param {string} valueFormat Key look up format
+ * @returns {any[]} Return array or object.
+ * @example
+ *
+ * mapGetData([{"Asd":1}],"Asd")
+ *=>[1]
+ */
+function mapGetData (objectValue, valueFormat) {
+
+    return map(objectValue, function (value) {
+
+        return getData(value, valueFormat);
+
+    });
+
+}
+
+_stk.mapGetData=mapGetData;
+
+
+/**
  * To check if the two arguments are less
  *
  * @since 1.4.8
@@ -3437,32 +3463,6 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
-
-
-/**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {any[]} objectValue Json in array format
- * @param {string} valueFormat Key look up format
- * @returns {any[]} Return array or object.
- * @example
- *
- * mapGetData([{"Asd":1}],"Asd")
- *=>[1]
- */
-function mapGetData (objectValue, valueFormat) {
-
-    return map(objectValue, function (value) {
-
-        return getData(value, valueFormat);
-
-    });
-
-}
-
-_stk.mapGetData=mapGetData;
 
 
 /**
@@ -3669,7 +3669,7 @@ function stringLowerCase (value) {
  *
  * @since 1.0.1
  * @category Collection
- * @param {object} objectValue Json, Array or Object
+ * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
  * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
  * @returns {any} Return Json or Array or Object.
  * @example
@@ -5785,6 +5785,8 @@ function reduce (defaultValue, listData, func) {
 
 _stk.reduce=reduce;
 
+_stk.remove=remove;
+
 
 /**
  * Regex Count Group number
@@ -5807,8 +5809,6 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
 
 
 /**
@@ -6153,6 +6153,87 @@ function baseSort (objectValue, func) {
 }
 
 /**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, order, type) {
+
+    let asc=true;
+    let types='any';
+
+    if (has(order) && getTypeof(order) === 'boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(type) && getTypeof(type) === 'string') {
+
+        types= type;
+
+    }
+
+    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
+
+        let sortOrderA = orderA;
+        let sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types === 'any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types === 'lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types === 'uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
+
+        }
+
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sort=sort;
+
+
+/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -6269,87 +6350,6 @@ function stringCapitalize (value, option) {
 }
 
 _stk.stringCapitalize=stringCapitalize;
-
-
-/**
- * Sort array
- *
- * @since 1.0.1
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, order, type) {
-
-    let asc=true;
-    let types='any';
-
-    if (has(order) && getTypeof(order) === 'boolean') {
-
-        asc= order;
-
-    }
-
-    if (has(type) && getTypeof(type) === 'string') {
-
-        types= type;
-
-    }
-
-    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
-
-        let sortOrderA = orderA;
-        let sortOrderB = orderB;
-
-        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-            if (isEmpty(types) === false) {
-
-                if (types === 'any') {
-
-                    sortOrderA =orderA.charCodeAt();
-                    sortOrderB= orderB.charCodeAt();
-
-                }
-                if (types === 'lowercase') {
-
-                    sortOrderA =orderA.toLowerCase().charCodeAt();
-                    sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                }
-
-                if (types === 'uppercase') {
-
-                    sortOrderA =orderA.toUpperCase().charCodeAt();
-                    sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                }
-
-            }
-
-        }
-
-        if (asc) {
-
-            return sortOrderA - sortOrderB;
-
-        }
-
-        return sortOrderB - sortOrderA;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sort=sort;
 
 
 /**
@@ -6830,6 +6830,31 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value) {
+
+    const zero = 0.00;
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble;
+
+
+/**
  * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
@@ -6919,31 +6944,6 @@ function setDepthValue (arryData, value) {
 _stk.toPairs=toPairs;
 
 _stk.toString=toString;
-
-
-/**
- * To extract number in string and convert to double, it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @returns {number} Return in double.
- * @example
- *
- * toDouble("100.1d1")
- *=>100.11
- */
-function toDouble (value) {
-
-    const zero = 0.00;
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble;
 
 
 /**
@@ -7052,9 +7052,45 @@ function unique (value) {
 
 }
 
-_stk.unique=unique;
+/**
+ * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {...any?} arg First number
+ * @returns {any[]} Returns true or false.
+ * @example
+ *
+ * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
+ * // => [1, 2, 3, 4, 7, 5, 6, 8]
+ */
+function union (...arg) {
 
-_stk.where=where;
+    return curryArg(function (...rawValue) {
+
+        return baseReduce([], rawValue, function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            }
+
+            return unique(total);
+
+        });
+
+    }, arg);
+
+}
+
+_stk.union=union;
+
+_stk.unique=unique;
 
 _stk.varExtend=varExtend;
 
@@ -7425,44 +7461,7 @@ function zip (...arg) {
 
 _stk.zip=zip;
 
-
-/**
- * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
- *
- * @since 1.4.7
- * @category Collection
- * @param {...any?} arg First number
- * @returns {any[]} Returns true or false.
- * @example
- *
- * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
- * // => [1, 2, 3, 4, 7, 5, 6, 8]
- */
-function union (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        return baseReduce([], rawValue, function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            }
-
-            return unique(total);
-
-        });
-
-    }, arg);
-
-}
-
-_stk.union=union;
+_stk.where=where;
 
 
  //end of file

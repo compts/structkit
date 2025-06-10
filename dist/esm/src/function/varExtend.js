@@ -15,7 +15,7 @@ import stringLowerCase from './stringLowerCase.js';
  *
  * @since 1.0.1
  * @category Collection
- * @param {object} objectValue Json, Array or Object
+ * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
  * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
  * @returns {any} Return Json or Array or Object.
  * @example
