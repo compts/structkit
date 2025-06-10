@@ -1,7 +1,31 @@
 {
   "name": "@compts/structkit",
   "description": "JS utility tool",
-  "version": "0.1.12",
+  "version": "0.1.14",
   "license": "MIT",
-  "exports": "./dist/esm/node.esm.js"
+  "exports": "./dist/esm/node.esm.js",
+  "publish": {
+    "exclude": [
+      "./src",
+      "./cloverrc.yaml",
+      "test",
+      ".github",
+      ".clover",
+      "notes",
+      "src",
+      "coverage",
+      "dist/web",
+      "tsgenerate.sh",
+      "grassfile.js",
+      "releaseNote",
+      "notes",
+      "cloverrc.yaml",
+      "note_write.txt",
+      "script",
+      ".mocharc.json",
+      ".npmignore",
+      "package.json"
+    ]
+  
+  }
 }
