@@ -4,12 +4,18 @@ import curryArg from '../core/curryArg.js';
 
 import count from './count.js';
 
+import baseReduce from '../core/baseReduce.js';
+
+import toArray from './toArray.js';
+
+import {zero} from '../core/defaultValue.js';
+
 /**
  * In array, you need to check all value is true
  *
  * @since 1.4.8
  * @category Condition
- * @param {...any?} arg List of value you need to check if true
+ * @param {...any?} arg List of value you need to check if all true
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -18,11 +24,19 @@ import count from './count.js';
  */
 function allValid (...arg) {
 
+    const mapCount = baseReduce(zero, arg, function (total, value) {
+
+        total+= count(toArray(value));
+
+        return total;
+
+    });
+
     return curryArg(function (...rawValue) {
 
         return baseCountValidList(rawValue);
 
-    }, arg) === count(arg);
+    }, arg) === mapCount;
 
 }
 export default allValid;

@@ -21,6 +21,27 @@ describe('TS: someValid method', function () {
 
     });
 
+    it('check if some array of values is true then false', function () {
+
+        assert.deepStrictEqual(someValid([true], [false]), true);
+
+    });
+
+    it('check if all array of values is false then false', function () {
+
+        assert.deepStrictEqual(someValid([false], [false]), false);
+
+    });
+
+    it('check if some multi array of values is true then true', function () {
+
+        assert.deepStrictEqual(someValid([true], [
+            true,
+            false
+        ]), true);
+
+    });
+
     it('check expected type', function () {
 
         expectType<boolean>(someValid(true, false));

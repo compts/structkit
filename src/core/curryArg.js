@@ -11,7 +11,7 @@ const __ = require("./__");
  * @param {any} fn Any data you want to check its property
  * @param {any[]} args Any data you want to check its property
  * @param {number=} NoDefaultArgs Any data you want to check its property
- * @returns {string} Get the property of variable
+ * @returns {any} Get the property of variable
  * @example
  *
  * curryArg(function(){}, [])

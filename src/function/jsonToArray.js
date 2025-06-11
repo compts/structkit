@@ -13,7 +13,7 @@ const isEmpty = require('./isEmpty');
  * @category Collection
  * @param {any} objectValue Json
  * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
+ * @returns {any} Returns Array
  * @example
  *
  * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")

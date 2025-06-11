@@ -11,7 +11,7 @@ import baseTake from '../core/baseTake.js';
  * @category Math
  * @param {number} value First number, our first index will start at zero
  * @param {any[]|string} valueList Second number
- * @returns {number} Returns true or false.
+ * @returns {any} Returns true or false.
  * @example
  *
  * take(1, [1])

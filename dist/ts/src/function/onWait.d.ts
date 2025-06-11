@@ -6,10 +6,10 @@ export default onWait;
  * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
+ * @returns {object} Returns the total.
  * @example
  *
  *  onWait(()=>{})
  *=>'11'
  */
-declare function onWait(func: any, wait?: object | undefined): string;
+declare function onWait(func: any, wait?: object | undefined): object;
