@@ -11,7 +11,7 @@ const getValue = require("../function/getValue");
  * @param {any[]|string} rawList Second number
  * @param {number} startIndex Second number
  * @param {number} lastIndex Second number
- * @returns {number} Returns true or false.
+ * @returns {any} Returns true or false.
  * @example
  *
  * baseTake(1, 1)

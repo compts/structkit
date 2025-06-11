@@ -9,7 +9,7 @@ const each = require('../function/each');
  * @param {any} defaultValue Array in number
  * @param {any[]} listData decimal point and default value is
  * @param {any} func The data you want to map
- * @returns {number} Returns the total.
+ * @returns {any} Returns the aggregrated.
  * @example
  *
  * baseReduce(2,[1,2],(total,value)=>total+value)

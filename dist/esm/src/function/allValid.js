@@ -15,7 +15,7 @@ import {zero} from '../core/defaultValue.js';
  *
  * @since 1.4.8
  * @category Condition
- * @param {...any?} arg List of value you need to check if true
+ * @param {...any?} arg List of value you need to check if all true
  * @returns {boolean} Returns true or false.
  * @example
  *
