@@ -20,4 +20,26 @@ describe('ESM: allValid method', function () {
 
     });
 
+    it('check if some array of values is true then false', function () {
+
+        assert.deepStrictEqual(allValid([true], [false]), false);
+
+    });
+
+    it('check if some array of values is true then true', function () {
+
+        assert.deepStrictEqual(allValid([true], [true]), true);
+
+    });
+
+    it('check if some multi array of values is true then true', function () {
+
+        assert.deepStrictEqual(allValid([true], [
+            true,
+            true
+        ]), true);
+
+    });
+
+
 });
