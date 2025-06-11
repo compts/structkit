@@ -5,7 +5,7 @@ Javascript framework in using functional syntax for programmer.
 [![NPM version][npm-ts-image]][npm-url-ts] 
 [![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
 [![NPM Downloads](https://img.shields.io/npm/dm/structkit?logo=npm&style=flat-square)](https://npmtrends.com/structkit)
-[![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://deno.land/x/structkit@v0.1.0)
+[![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://jsr.io/@compts/structkit)
 [![Install Size](https://packagephobia.now.sh/badge?p=structkit)](https://packagephobia.now.sh/result?p=structkit)
 
 [Site](https://structkit.codehyouka.xyz/) |
@@ -75,7 +75,7 @@ In the example you noticed that we can apply and arguments if we are unsure of p
 
 [npm-url]: https://www.npmjs.com/package/structkit
 [npm-url-ts]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit-1.4.87-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.871-brightgreen
 [npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.87-brightgreen
 
 

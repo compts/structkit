@@ -55,7 +55,7 @@ const oneHundred = 100;
  * @since 1.4.8
  * @category String
  * @param {any[]} args Any data you want to check its property
- * @returns {string} Get the property of variable
+ * @returns {any} Get the property of variable
  * @example
  *
  * curryArgReview([])
@@ -119,7 +119,7 @@ function curryArgReview (args) {
  * @param {any} fn Any data you want to check its property
  * @param {any[]} args Any data you want to check its property
  * @param {number=} NoDefaultArgs Any data you want to check its property
- * @returns {string} Get the property of variable
+ * @returns {any} Get the property of variable
  * @example
  *
  * curryArg(function(){}, [])
@@ -557,7 +557,7 @@ GlobalEach.prototype.isContinue = function (value) {
  * @param {any} defaultValue Array in number
  * @param {any[]} listData decimal point and default value is
  * @param {any} func The data you want to map
- * @returns {number} Returns the total.
+ * @returns {any} Returns the aggregrated.
  * @example
  *
  * baseReduce(2,[1,2],(total,value)=>total+value)
@@ -1138,7 +1138,7 @@ function baseCountValidList (objectValue) {
  *
  * @since 1.4.8
  * @category Condition
- * @param {...any?} arg List of value you need to check if true
+ * @param {...any?} arg List of value you need to check if all true
  * @returns {boolean} Returns true or false.
  * @example
  *
@@ -1147,11 +1147,19 @@ function baseCountValidList (objectValue) {
  */
 function allValid (...arg) {
 
+    const mapCount = baseReduce(zero, arg, function (total, value) {
+
+        total+= count(toArray(value));
+
+        return total;
+
+    });
+
     return curryArg(function (...rawValue) {
 
         return baseCountValidList(rawValue);
 
-    }, arg) === count(arg);
+    }, arg) === mapCount;
 
 }
 
@@ -1216,66 +1224,6 @@ function append (objectValue, val, key) {
 }
 
 _stk.append=append;
-
-
-/**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Relation
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return boolean.
- * @example
- *
- * indexOfNotExist([312], 32)
- * // => true
- */
-function indexOfNotExist (arrayObject, value) {
-
-    return indexOf(arrayObject, value) === negOne;
-
-}
-
-/**
- * Append If Array does not Exist
- *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any=} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    const ary_type=getTypeof(arrayObject);
-    const ary_type1=getTypeof(value);
-
-    if (ary_type === "array" && ary_type1 === "array") {
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(arrayObject, val)) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-
-_stk.appendIsArrayExist=appendIsArrayExist;
 
 
 /**
@@ -1395,6 +1343,66 @@ function arrayConcat (...arg) {
 }
 
 _stk.arrayConcat=arrayConcat;
+
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Relation
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return boolean.
+ * @example
+ *
+ * indexOfNotExist([312], 32)
+ * // => true
+ */
+function indexOfNotExist (arrayObject, value) {
+
+    return indexOf(arrayObject, value) === negOne;
+
+}
+
+/**
+ * Append If Array does not Exist
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} arrayObject Data is Array
+ * @param {any=} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+function appendIsArrayExist (arrayObject, value) {
+
+    const ary_type=getTypeof(arrayObject);
+    const ary_type1=getTypeof(value);
+
+    if (ary_type === "array" && ary_type1 === "array") {
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(arrayObject, val)) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
+
+}
+
+_stk.appendIsArrayExist=appendIsArrayExist;
 
 
 /**
@@ -3146,9 +3154,9 @@ _stk.ifUndefined=ifUndefined;
 
 _stk.inc=inc;
 
-_stk.indexOfExist=indexOfExist;
-
 _stk.indexOf=indexOf;
+
+_stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
@@ -3204,39 +3212,13 @@ _stk.isJson=isJson;
 
 
 /**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf([1,2], 1)
- * // => 0
- */
-function lastIndexOf (objectValue, value) {
-
-    const start = 0;
-
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
-
-}
-
-_stk.lastIndexOf=lastIndexOf;
-
-
-/**
  * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
  *
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValue Json
  * @param {string} value Search key or index.
- * @returns {boolean} Returns Array
+ * @returns {any} Returns Array
  * @example
  *
  * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
@@ -3274,6 +3256,53 @@ _stk.jsonToArray=jsonToArray;
 
 
 /**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last;
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    const start = 0;
+
+    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+
+_stk.lastIndexOf=lastIndexOf;
+
+
+/**
  * Searching the data either in array or json object to get similar value of data
  *
  * @since 1.0.1
@@ -3294,27 +3323,6 @@ function like (objectValue, objectValueWhere, func) {
 }
 
 _stk.like=like;
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
 
 
 /**
@@ -3380,6 +3388,35 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3434,35 +3471,6 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -3669,9 +3677,9 @@ function stringLowerCase (value) {
  *
  * @since 1.0.1
  * @category Collection
- * @param {object} objectValue Json, Array or Object
+ * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
  * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
- * @returns {array} Return Json or Array or Object.
+ * @returns {any} Return Json or Array or Object.
  * @example
  *
  * varExtend({"s1":1},{"s1":2})
@@ -3850,7 +3858,7 @@ _stk.onDelay=onDelay;
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
  * @param {object=} option option for delay
- * @returns {string} Returns object.
+ * @returns {object} Returns object.
  * @example
  *
  *  onSequence(()=>{})
@@ -3938,7 +3946,7 @@ const getWindow = function () {
  * @category Function
  * @param {any} func a Callback function
  * @param {object=} wait timer for delay
- * @returns {string} Returns the total.
+ * @returns {object} Returns the total.
  * @example
  *
  *  onWait(()=>{})
@@ -4183,6 +4191,85 @@ function parseString (value, config) {
 }
 
 _stk.parseString=parseString;
+
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+function pipe (...arg) {
+
+    const pipeConst = first(arg);
+    const varLimit = limit(arg, one);
+    const that = this;
+
+    return curryArg(function (...rawValue) {
+
+        return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        });
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const emptyDefaultValue=0;
+    const ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 
 
 /**
@@ -5667,85 +5754,6 @@ function parseJson (value, config) {
 
 _stk.parseJson=parseJson;
 
-
-/**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-function pipe (...arg) {
-
-    const pipeConst = first(arg);
-    const varLimit = limit(arg, one);
-    const that = this;
-
-    return curryArg(function (...rawValue) {
-
-        return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        });
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-
-
-/**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const emptyDefaultValue=0;
-    const ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
 _stk.range=range;
 
 
@@ -5757,7 +5765,7 @@ _stk.range=range;
  * @param {any} defaultValue Starting value that you want to use as reference
  * @param {any[]} listData Array value that you want to map
  * @param {any} func Callback function for how to map the data
- * @returns {number} Return redue value
+ * @returns {any} Return redue value
  * @example
  *
  * reduce(2,[1,2],(total,value)=>total+value)
@@ -6556,7 +6564,7 @@ _stk.swap=swap;
  * @param {any[]|string} rawList Second number
  * @param {number} startIndex Second number
  * @param {number} lastIndex Second number
- * @returns {number} Returns true or false.
+ * @returns {any} Returns true or false.
  * @example
  *
  * baseTake(1, 1)
@@ -6585,7 +6593,7 @@ function baseTake (rawList, startIndex, lastIndex) {
  * @category Math
  * @param {number} value First number, our first index will start at zero
  * @param {any[]|string} valueList Second number
- * @returns {number} Returns true or false.
+ * @returns {any} Returns true or false.
  * @example
  *
  * take(1, [1])
@@ -6830,31 +6838,6 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
- * To extract number in string and convert to double, it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @returns {number} Return in double.
- * @example
- *
- * toDouble("100.1d1")
- *=>100.11
- */
-function toDouble (value) {
-
-    const zero = 0.00;
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble;
-
-
-/**
  * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
@@ -6944,6 +6927,31 @@ function setDepthValue (arryData, value) {
 _stk.toPairs=toPairs;
 
 _stk.toString=toString;
+
+
+/**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value) {
+
+    const zero = 0.00;
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble;
 
 
 /**
@@ -7092,9 +7100,9 @@ _stk.union=union;
 
 _stk.unique=unique;
 
-_stk.varExtend=varExtend;
-
 _stk.where=where;
+
+_stk.varExtend=varExtend;
 
 
 /**
