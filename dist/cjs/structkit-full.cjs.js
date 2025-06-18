@@ -1227,66 +1227,6 @@ _stk.append=append;
 
 
 /**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Relation
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
- * @returns {boolean} Return boolean.
- * @example
- *
- * indexOfNotExist([312], 32)
- * // => true
- */
-function indexOfNotExist (arrayObject, value) {
-
-    return indexOf(arrayObject, value) === negOne;
-
-}
-
-/**
- * Append If Array does not Exist
- *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any=} value Value for array lookup
- * @returns {any[]} Return array.
- * @example
- *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
- */
-function appendIsArrayExist (arrayObject, value) {
-
-    const ary_type=getTypeof(arrayObject);
-    const ary_type1=getTypeof(value);
-
-    if (ary_type === "array" && ary_type1 === "array") {
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(arrayObject, val)) {
-
-                arrayObject.push(val);
-
-            }
-
-        });
-
-        return arrayObject;
-
-    }
-
-    return [];
-
-}
-
-_stk.appendIsArrayExist=appendIsArrayExist;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1404,7 +1344,65 @@ function arrayConcat (...arg) {
 
 _stk.arrayConcat=arrayConcat;
 
-_stk.arraySlice=arraySlice;
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Relation
+ * @param {any[]} arrayObject Array
+ * @param {any} value Value for array lookup
+ * @returns {boolean} Return boolean.
+ * @example
+ *
+ * indexOfNotExist([312], 32)
+ * // => true
+ */
+function indexOfNotExist (arrayObject, value) {
+
+    return indexOf(arrayObject, value) === negOne;
+
+}
+
+/**
+ * Append If Array does not Exist
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} arrayObject Data is Array
+ * @param {any=} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+function appendIsArrayExist (arrayObject, value) {
+
+    const ary_type=getTypeof(arrayObject);
+    const ary_type1=getTypeof(value);
+
+    if (ary_type === "array" && ary_type1 === "array") {
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(arrayObject, val)) {
+
+                arrayObject.push(val);
+
+            }
+
+        });
+
+        return arrayObject;
+
+    }
+
+    return [];
+
+}
+
+_stk.appendIsArrayExist=appendIsArrayExist;
 
 
 /**
@@ -1498,6 +1496,8 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -3158,6 +3158,8 @@ _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
+_stk.indexOfNotExist=indexOfNotExist;
+
 
 /**
  * Insert value in Json object or array
@@ -3199,8 +3201,6 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
-
-_stk.indexOfNotExist=indexOfNotExist;
 
 _stk.isEmpty=isEmpty;
 
@@ -3277,6 +3277,29 @@ _stk.last=last;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+
+/**
  * Get the last index Of array
  *
  * @since 1.0.1
@@ -3300,29 +3323,6 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -3388,6 +3388,35 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3442,35 +3471,6 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -5543,7 +5543,7 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
-            data_s='&apos;'+str+'&apos;';
+            data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
@@ -5690,44 +5690,6 @@ _stk.parseString=parseString;
 
 
 /**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const emptyDefaultValue=0;
-    const ran_min=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-
-/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
@@ -5767,7 +5729,43 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
-_stk.range=range;
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const emptyDefaultValue=0;
+    const ran_min=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 
 
 /**
@@ -5829,7 +5827,7 @@ function regexCountGroup (value) {
 
 _stk.regexCountGroup=regexCountGroup;
 
-_stk.remove=remove;
+_stk.range=range;
 
 
 /**
@@ -5890,6 +5888,8 @@ function removeFromKey (objectValue, value) {
 }
 
 _stk.removeFromKey=removeFromKey;
+
+_stk.remove=remove;
 
 
 /**
@@ -6065,6 +6065,53 @@ _stk.setData=setData;
 
 
 /**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @update 1.4.86
+ * @category Array
+ * @param {any[]} objectValue Array argmuments that you want to shuffle
+ * @returns {any[]} Shuffle return value in array
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+function shuffle (objectValue) {
+
+    const emptyDefaultValue=0;
+    const onceDefaultValue=1;
+    const output=[];
+    let rawObjectValue = clone(objectValue);
+    const valueType=[
+        "array",
+        "json"
+    ];
+
+    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+
+        const counts=count(objectValue)-onceDefaultValue;
+
+        for (let currentIndex=counts; currentIndex>=emptyDefaultValue;) {
+
+            const rowValue = random(rawObjectValue);
+
+            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
+            output.push(first(rowValue));
+            currentIndex -= onceDefaultValue;
+
+        }
+
+    }
+
+    return output;
+
+}
+
+_stk.shuffle=shuffle;
+
+
+/**
  * In array, you need to check all value atleast one true
  *
  * @since 1.4.8
@@ -6205,53 +6252,6 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
-
-
-/**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @update 1.4.86
- * @category Array
- * @param {any[]} objectValue Array argmuments that you want to shuffle
- * @returns {any[]} Shuffle return value in array
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-function shuffle (objectValue) {
-
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const output=[];
-    let rawObjectValue = clone(objectValue);
-    const valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
-
-        const counts=count(objectValue)-onceDefaultValue;
-
-        for (let currentIndex=counts; currentIndex>=emptyDefaultValue;) {
-
-            const rowValue = random(rawObjectValue);
-
-            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
-            output.push(first(rowValue));
-            currentIndex -= onceDefaultValue;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle;
 
 
 /**
@@ -6807,8 +6807,6 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue;
 
-_stk.toArray=toArray;
-
 
 /**
  * Logic in convert string or number to valid number
@@ -6899,70 +6897,7 @@ function toInteger (value) {
 
 _stk.toInteger=toInteger;
 
-
-/**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
- * @example
- *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
- */
-function toPairs (value) {
-
-    if (getTypeofInternal(value) !== "json") {
-
-        throw new Error("Value must be an json");
-
-    }
-
-    return baseReduce([], value, function (total, subValue, subKey) {
-
-        const subArray = [];
-
-        subArray.push(subKey);
-        setDepthValue(subArray, subValue);
-        total.push(subArray);
-
-        return total;
-
-    });
-
-}
-
-/**
- * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arryData First number
- * @param {number} value First number
- * @returns {null} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-function setDepthValue (arryData, value) {
-
-    if (getTypeofInternal(value) === "json") {
-
-        arryData.push(getKey(value));
-        setDepthValue(arryData, getValue(value));
-
-    } else {
-
-        arryData.push(value);
-
-    }
-
-}
-
-_stk.toPairs=toPairs;
+_stk.toArray=toArray;
 
 _stk.toString=toString;
 
@@ -7068,9 +7003,9 @@ function trim (value, remove_value) {
 
 _stk.trim=trim;
 
-_stk.trimEnd=trimEnd;
-
 _stk.trimStart=trimStart;
+
+_stk.trimEnd=trimEnd;
 
 
 /**
@@ -7519,6 +7454,71 @@ function zip (...arg) {
 }
 
 _stk.zip=zip;
+
+
+/**
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} value First number
+ * @returns {any[]} Returns array
+ * @example
+ *
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
+ */
+function toPairs (value) {
+
+    if (getTypeofInternal(value) !== "json") {
+
+        throw new Error("Value must be an json");
+
+    }
+
+    return baseReduce([], value, function (total, subValue, subKey) {
+
+        const subArray = [];
+
+        subArray.push(subKey);
+        setDepthValue(subArray, subValue);
+        total.push(subArray);
+
+        return total;
+
+    });
+
+}
+
+/**
+ * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arryData First number
+ * @param {number} value First number
+ * @returns {null} Returns array
+ * @example
+ *
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
+ */
+function setDepthValue (arryData, value) {
+
+    if (getTypeofInternal(value) === "json") {
+
+        arryData.push(getKey(value));
+        setDepthValue(arryData, getValue(value));
+
+    } else {
+
+        arryData.push(value);
+
+    }
+
+}
+
+_stk.toPairs=toPairs;
 
 
  //end of file

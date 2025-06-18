@@ -30,7 +30,7 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
-            data_s='&apos;'+str+'&apos;';
+            data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
