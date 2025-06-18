@@ -168,6 +168,7 @@ function parseString (value, config) {
         data = stringUnEscape(data);
 
     }
+    data = data.replaceAll(/("')/g, "\\$1");
 
     return data;
 
