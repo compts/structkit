@@ -5,6 +5,7 @@ const has = require('./has');
 const each = require('./each');
 const count = require('./count');
 const varExtend = require('./varExtend');
+const stringUnEscape = require("./stringUnEscape");
 const {two, one, zero} = require("../core/defaultValue");
 
 /**
@@ -158,9 +159,15 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend(config, {});
+    const defaultConfig = varExtend(config, {"unscapeEntity": false});
 
-    const data = parseStringCore(zero, defaultConfig, value);
+    let data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
 
     return data;
 

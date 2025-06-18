@@ -10,6 +10,8 @@ import count from './count.js';
 
 import varExtend from './varExtend.js';
 
+import stringUnEscape from './stringUnEscape.js';
+
 import {two, one, zero} from '../core/defaultValue.js';
 
 /**
@@ -161,9 +163,15 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend(config, {});
+    const defaultConfig = varExtend(config, {"unscapeEntity": false});
 
-    const data = parseStringCore(zero, defaultConfig, value);
+    let data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
 
     return data;
 

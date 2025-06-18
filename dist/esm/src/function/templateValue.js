@@ -113,7 +113,7 @@ function templateValue (templateString, data, option) {
                 if (has(data, key)) {
 
                     val_source += 'var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
-                        ?parseString(data[key])
+                        ?parseString(data[key], {"unscapeEntity": true})
                         :'"'+data[key]+'"')+';';
 
                 }
