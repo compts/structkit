@@ -320,7 +320,7 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend(config, {});
+    const defaultConfig = varExtend({}, config);
 
     const stripValue=cleanValue(stringUnEscape(value));
 

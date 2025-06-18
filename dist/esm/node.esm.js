@@ -31,24 +31,39 @@ import {default as add_module} from './src/function/add.js';
  */
 export const add = add_module;
 
-import {default as append_module} from './src/function/append.js';
+import {default as arrayConcat_module} from './src/function/arrayConcat.js';
 
 
 /**
- * Append data for json or array
+ * Array Concat
  *
  * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * arrayConcat([1], 2)
+ * // => [1,2]
  */
-export const append = append_module;
+export const arrayConcat = arrayConcat_module;
+
+import {default as allValid_module} from './src/function/allValid.js';
+
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Condition
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+export const allValid = allValid_module;
 
 import {default as appendIsArrayExist_module} from './src/function/appendIsArrayExist.js';
 
@@ -68,23 +83,6 @@ import {default as appendIsArrayExist_module} from './src/function/appendIsArray
  */
 export const appendIsArrayExist = appendIsArrayExist_module;
 
-import {default as arrayConcat_module} from './src/function/arrayConcat.js';
-
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-export const arrayConcat = arrayConcat_module;
-
 import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
 
 
@@ -102,26 +100,6 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
  *=>['s','s']
  */
 export const arrayRepeat = arrayRepeat_module;
-
-import {default as arraySum_module} from './src/function/arraySum.js';
-
-
-/**
- * Array sum of value
- *
- * @since 1.0.1
- * @category Math
- * @param {number[]} arrayObject Array of number
- * @param {number=} delimeter decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- * arraySum([1,2])
- * // => 3
- */
-export const arraySum = arraySum_module;
 
 import {default as arraySlice_module} from './src/function/arraySlice.js';
 
@@ -145,6 +123,25 @@ import {default as arraySlice_module} from './src/function/arraySlice.js';
  */
 export const arraySlice = arraySlice_module;
 
+import {default as append_module} from './src/function/append.js';
+
+
+/**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+export const append = append_module;
+
 import {default as asyncReplace_module} from './src/function/asyncReplace.js';
 
 
@@ -163,6 +160,43 @@ import {default as asyncReplace_module} from './src/function/asyncReplace.js';
  * // => Promise{<fulfilled>: 'a@d'}
  */
 export const asyncReplace = asyncReplace_module;
+
+import {default as arraySum_module} from './src/function/arraySum.js';
+
+
+/**
+ * Array sum of value
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number[]} arrayObject Array of number
+ * @param {number=} delimeter decimal point and default value is 0
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ * arraySum([1,2])
+ * // => 3
+ */
+export const arraySum = arraySum_module;
+
+import {default as clone_module} from './src/function/clone.js';
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+export const clone = clone_module;
 
 import {default as calculate_module} from './src/function/calculate.js';
 
@@ -183,23 +217,6 @@ import {default as calculate_module} from './src/function/calculate.js';
  *=> 2
  */
 export const calculate = calculate_module;
-
-import {default as clone_module} from './src/function/clone.js';
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-export const clone = clone_module;
 
 import {default as count_module} from './src/function/count.js';
 
@@ -222,24 +239,6 @@ import {default as count_module} from './src/function/count.js';
  */
 export const count = count_module;
 
-import {default as defaultTo_module} from './src/function/defaultTo.js';
-
-
-/**
- *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
- *
- * @since 1.4.87
- * @category Logic
- * @param {any} defaultValue Any first value type
- * @param {any=} value2 Any first value type
- * @returns {any} Returns true or false.
- * @example
- *
- * defaultTo(1,2)
- * // => 2
- */
-export const defaultTo = defaultTo_module;
-
 import {default as dec_module} from './src/function/dec.js';
 
 
@@ -257,6 +256,24 @@ import {default as dec_module} from './src/function/dec.js';
  *=>0
  */
 export const dec = dec_module;
+
+import {default as defaultTo_module} from './src/function/defaultTo.js';
+
+
+/**
+ *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
+ *
+ * @since 1.4.87
+ * @category Logic
+ * @param {any} defaultValue Any first value type
+ * @param {any=} value2 Any first value type
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * defaultTo(1,2)
+ * // => 2
+ */
+export const defaultTo = defaultTo_module;
 
 import {default as divide_module} from './src/function/divide.js';
 
@@ -294,6 +311,23 @@ import {default as each_module} from './src/function/each.js';
  */
 export const each = each_module;
 
+import {default as empty_module} from './src/function/empty.js';
+
+
+/**
+ * Ge the empty value of specify argument type
+ *
+ * @since 1.0.1
+ * @category Function
+ * @param {any} value Any value type that you want an empty return
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * empty([])
+ * => []
+ */
+export const empty = empty_module;
+
 import {default as equal_module} from './src/function/equal.js';
 
 
@@ -312,22 +346,22 @@ import {default as equal_module} from './src/function/equal.js';
  */
 export const equal = equal_module;
 
-import {default as empty_module} from './src/function/empty.js';
+import {default as first_module} from './src/function/first.js';
 
 
 /**
- * Ge the empty value of specify argument type
+ * Get the first value of array
  *
  * @since 1.0.1
- * @category Function
- * @param {any} value Any value type that you want an empty return
- * @returns {any} Returns empty either Json or Array
+ * @category Any
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns first value of `objectValue`.
  * @example
  *
- * empty([])
- * => []
+ * first([1,2,3])
+ *=> 1
  */
-export const empty = empty_module;
+export const first = first_module;
 
 import {default as filter_module} from './src/function/filter.js';
 
@@ -348,40 +382,6 @@ import {default as filter_module} from './src/function/filter.js';
  */
 export const filter = filter_module;
 
-import {default as first_module} from './src/function/first.js';
-
-
-/**
- * Get the first value of array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data is array
- * @returns {any} Returns first value of `objectValue`.
- * @example
- *
- * first([1,2,3])
- *=> 1
- */
-export const first = first_module;
-
-import {default as flatten_module} from './src/function/flatten.js';
-
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-export const flatten = flatten_module;
-
 import {default as fromPairs_module} from './src/function/fromPairs.js';
 
 
@@ -399,6 +399,23 @@ import {default as fromPairs_module} from './src/function/fromPairs.js';
  * // => {5:6,7:2}
  */
 export const fromPairs = fromPairs_module;
+
+import {default as flatten_module} from './src/function/flatten.js';
+
+
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+export const flatten = flatten_module;
 
 import {default as getData_module} from './src/function/getData.js';
 
@@ -492,6 +509,24 @@ import {default as getValue_module} from './src/function/getValue.js';
  */
 export const getValue = getValue_module;
 
+import {default as gt_module} from './src/function/gt.js';
+
+
+/**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Relation
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+export const gt = gt_module;
+
 import {default as groupBy_module} from './src/function/groupBy.js';
 
 
@@ -527,24 +562,6 @@ import {default as gte_module} from './src/function/gte.js';
  * // => false
  */
 export const gte = gte_module;
-
-import {default as gt_module} from './src/function/gt.js';
-
-
-/**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Relation
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-export const gt = gt_module;
 
 import {default as has_module} from './src/function/has.js';
 
@@ -582,24 +599,6 @@ import {default as ifUndefined_module} from './src/function/ifUndefined.js';
  */
 export const ifUndefined = ifUndefined_module;
 
-import {default as indexOf_module} from './src/function/indexOf.js';
-
-
-/**
- * Index of array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} objectValue Array
- * @param {any} value Value in array
- * @returns {number} Returns the index.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-export const indexOf = indexOf_module;
-
 import {default as inc_module} from './src/function/inc.js';
 
 
@@ -617,6 +616,24 @@ import {default as inc_module} from './src/function/inc.js';
  *=>2
  */
 export const inc = inc_module;
+
+import {default as indexOf_module} from './src/function/indexOf.js';
+
+
+/**
+ * Index of array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {any} value Value in array
+ * @returns {number} Returns the index.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+export const indexOf = indexOf_module;
 
 import {default as indexOfExist_module} from './src/function/indexOfExist.js';
 
@@ -711,24 +728,6 @@ import {default as isExact_module} from './src/function/isExact.js';
  */
 export const isExact = isExact_module;
 
-import {default as isExactbyRegExp_module} from './src/function/isExactbyRegExp.js';
-
-
-/**
- * Looking the data in JSON and Array base on object value with the help regexp
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} whereValue Either Json or array
- * @param {any} objectValue1 use as lookup data in data
- * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
- * @example
- *
- * isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})
- * // => false
- */
-export const isExactbyRegExp = isExactbyRegExp_module;
-
 import {default as isJson_module} from './src/function/isJson.js';
 
 
@@ -746,6 +745,24 @@ import {default as isJson_module} from './src/function/isJson.js';
  *=> true
  */
 export const isJson = isJson_module;
+
+import {default as isExactbyRegExp_module} from './src/function/isExactbyRegExp.js';
+
+
+/**
+ * Looking the data in JSON and Array base on object value with the help regexp
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} whereValue Either Json or array
+ * @param {any} objectValue1 use as lookup data in data
+ * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
+ * @example
+ *
+ * isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})
+ * // => false
+ */
+export const isExactbyRegExp = isExactbyRegExp_module;
 
 import {default as jsonToArray_module} from './src/function/jsonToArray.js';
 
@@ -857,6 +874,24 @@ import {default as lte_module} from './src/function/lte.js';
  */
 export const lte = lte_module;
 
+import {default as map_module} from './src/function/map.js';
+
+
+/**
+ * To map the value of json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue The data you want to map
+ * @param {any=} func Callback function
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * map([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
+ */
+export const map = map_module;
+
 import {default as mapGetData_module} from './src/function/mapGetData.js';
 
 
@@ -875,23 +910,23 @@ import {default as mapGetData_module} from './src/function/mapGetData.js';
  */
 export const mapGetData = mapGetData_module;
 
-import {default as map_module} from './src/function/map.js';
+import {default as lt_module} from './src/function/lt.js';
 
 
 /**
- * To map the value of json or array
+ * To check if the two arguments are less
  *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue The data you want to map
- * @param {any=} func Callback function
- * @returns {any} Return map either JSON or Array
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * map([1,2],function(value) { return value+2 } )
- *=> [3, 4]
+ * lt(1, 2)
+ * // => true
  */
-export const map = map_module;
+export const lt = lt_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.js';
 
@@ -929,23 +964,6 @@ import {default as mergeWithKey_module} from './src/function/mergeWithKey.js';
  *=> {"s":1,"ss":1}
  */
 export const mergeWithKey = mergeWithKey_module;
-
-import {default as allValid_module} from './src/function/allValid.js';
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Condition
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-export const allValid = allValid_module;
 
 import {default as multiply_module} from './src/function/multiply.js';
 
@@ -1002,6 +1020,24 @@ import {default as onDelay_module} from './src/function/onDelay.js';
  */
 export const onDelay = onDelay_module;
 
+import {default as onWait_module} from './src/function/onWait.js';
+
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+export const onWait = onWait_module;
+
 import {default as onSequence_module} from './src/function/onSequence.js';
 
 
@@ -1020,24 +1056,6 @@ import {default as onSequence_module} from './src/function/onSequence.js';
  *=>'11'
  */
 export const onSequence = onSequence_module;
-
-import {default as onWait_module} from './src/function/onWait.js';
-
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-export const onWait = onWait_module;
 
 import {default as parseJson_module} from './src/function/parseJson.js';
 
@@ -1255,25 +1273,6 @@ import {default as selectInData_module} from './src/function/selectInData.js';
  */
 export const selectInData = selectInData_module;
 
-import {default as setData_module} from './src/function/setData.js';
-
-
-/**
- * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any=} objectValue Either Json or Array data.
- * @param {any=} split_str Search key or index.
- * @param {any=} updateValue Value to update the data.
- * @returns {any} Returns the total.
- * @example
- *
- * setData({"s":1},"s",2)
- *=> 2
- */
-export const setData = setData_module;
-
 import {default as shuffle_module} from './src/function/shuffle.js';
 
 
@@ -1346,23 +1345,6 @@ import {default as sortBy_module} from './src/function/sortBy.js';
  */
 export const sortBy = sortBy_module;
 
-import {default as stringCamelCase_module} from './src/function/stringCamelCase.js';
-
-
-/**
- * String Camel case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
- */
-export const stringCamelCase = stringCamelCase_module;
-
 import {default as stringCapitalize_module} from './src/function/stringCapitalize.js';
 
 
@@ -1383,6 +1365,23 @@ import {default as stringCapitalize_module} from './src/function/stringCapitaliz
  */
 export const stringCapitalize = stringCapitalize_module;
 
+import {default as stringCamelCase_module} from './src/function/stringCamelCase.js';
+
+
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+export const stringCamelCase = stringCamelCase_module;
+
 import {default as stringEscape_module} from './src/function/stringEscape.js';
 
 
@@ -1401,23 +1400,22 @@ import {default as stringEscape_module} from './src/function/stringEscape.js';
  */
 export const stringEscape = stringEscape_module;
 
-import {default as lt_module} from './src/function/lt.js';
+import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
 
 
 /**
- * To check if the two arguments are less
+ * String Lower case case
  *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
  * @example
  *
- * lt(1, 2)
- * // => true
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
  */
-export const lt = lt_module;
+export const stringLowerCase = stringLowerCase_module;
 
 import {default as stringKebabCase_module} from './src/function/stringKebabCase.js';
 
@@ -1435,23 +1433,6 @@ import {default as stringKebabCase_module} from './src/function/stringKebabCase.
  *=> 'the-fish-is-goad-with-goat-1ss'
  */
 export const stringKebabCase = stringKebabCase_module;
-
-import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
-
-
-/**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-export const stringLowerCase = stringLowerCase_module;
 
 import {default as stringSnakeCase_module} from './src/function/stringSnakeCase.js';
 
@@ -1507,6 +1488,23 @@ import {default as stringUnEscape_module} from './src/function/stringUnEscape.js
  */
 export const stringUnEscape = stringUnEscape_module;
 
+import {default as stringUpperCase_module} from './src/function/stringUpperCase.js';
+
+
+/**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringUpperCase('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+export const stringUpperCase = stringUpperCase_module;
+
 import {default as subtract_module} from './src/function/subtract.js';
 
 
@@ -1525,22 +1523,23 @@ import {default as subtract_module} from './src/function/subtract.js';
  */
 export const subtract = subtract_module;
 
-import {default as stringUpperCase_module} from './src/function/stringUpperCase.js';
+import {default as take_module} from './src/function/take.js';
 
 
 /**
- * String Upper case case
+ * Get the value from index zero until the last value
  *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @since 1.4.86
+ * @category Math
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns true or false.
  * @example
  *
- * stringUpperCase('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ * take(1, [1])
+ * // => 1
  */
-export const stringUpperCase = stringUpperCase_module;
+export const take = take_module;
 
 import {default as swap_module} from './src/function/swap.js';
 
@@ -1561,23 +1560,22 @@ import {default as swap_module} from './src/function/swap.js';
  */
 export const swap = swap_module;
 
-import {default as take_module} from './src/function/take.js';
+import {default as toArray_module} from './src/function/toArray.js';
 
 
 /**
- * Get the value from index zero until the last value
+ * To convert any data type(except the data has been already been an array) into array type
  *
- * @since 1.4.86
- * @category Math
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns true or false.
+ * @since 1.0.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
  * @example
  *
- * take(1, [1])
- * // => 1
+ * toArray(1)
+ *=>[1]
  */
-export const take = take_module;
+export const toArray = toArray_module;
 
 import {default as templateValue_module} from './src/function/templateValue.js';
 
@@ -1597,23 +1595,6 @@ import {default as templateValue_module} from './src/function/templateValue.js';
  *=>'11'
  */
 export const templateValue = templateValue_module;
-
-import {default as toArray_module} from './src/function/toArray.js';
-
-
-/**
- * To convert any data type(except the data has been already been an array) into array type
- *
- * @since 1.0.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-export const toArray = toArray_module;
 
 import {default as toDouble_module} from './src/function/toDouble.js';
 
@@ -1649,23 +1630,6 @@ import {default as toInteger_module} from './src/function/toInteger.js';
  */
 export const toInteger = toInteger_module;
 
-import {default as toPairs_module} from './src/function/toPairs.js';
-
-
-/**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
- * @example
- *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
- */
-export const toPairs = toPairs_module;
-
 import {default as toString_module} from './src/function/toString.js';
 
 
@@ -1682,6 +1646,23 @@ import {default as toString_module} from './src/function/toString.js';
  *=> '1'
  */
 export const toString = toString_module;
+
+import {default as toPairs_module} from './src/function/toPairs.js';
+
+
+/**
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} value First number
+ * @returns {any[]} Returns array
+ * @example
+ *
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
+ */
+export const toPairs = toPairs_module;
 
 import {default as trim_module} from './src/function/trim.js';
 
@@ -2169,4 +2150,23 @@ import {default as zip_module} from './src/function/zip.js';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
+
+import {default as setData_module} from './src/function/setData.js';
+
+
+/**
+ * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} split_str Search key or index.
+ * @param {any=} updateValue Value to update the data.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * setData({"s":1},"s",2)
+ *=> 2
+ */
+export const setData = setData_module;
 

@@ -159,7 +159,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend(config, {"unscapeEntity": false});
+    const defaultConfig = varExtend({"unscapeEntity": false}, config);
 
     let data = parseStringCore(zero, defaultConfig, value);
 
