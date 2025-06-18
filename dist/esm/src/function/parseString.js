@@ -19,7 +19,7 @@ import {two, one, zero} from '../core/defaultValue.js';
  *
  * @since 1.0.1
  * @category Collection
- * @param {string} str Object you want to convert to JSON string
+ * @param {any} str Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example
  *
@@ -32,9 +32,11 @@ function datastring (str) {
 
     if (typeof str === "string") {
 
+        str = str.replaceAll(/(["'])/g, "\\$1");
+
         if (str.indexOf("'")) {
 
-            data_s='&quot;'+str+'&quot;';
+            data_s='&apos;'+str+'&apos;';
 
         } else if (str.indexOf('"')) {
 
@@ -172,7 +174,6 @@ function parseString (value, config) {
         data = stringUnEscape(data);
 
     }
-    data = data.replaceAll(/("')/g, "\\$1");
 
     return data;
 
