@@ -26,7 +26,7 @@ function datastring (str) {
 
     if (typeof str === "string") {
 
-        str = str.replaceAll(/(["'])/g, "\\$1");
+        str = str.replace(/(["'])/g, "\\$1");
 
         if (str.indexOf("'")) {
 

@@ -1,6 +1,6 @@
 export default trimStart;
 /**
- * String trim  at the end only
+ * String trim  at the start only
  *
  * @since 1.4.86
  * @category String

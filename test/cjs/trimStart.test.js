@@ -10,4 +10,10 @@ describe('CJS: trimStart method', function () {
 
     });
 
+    it('trimStart the string with char want to remove', function () {
+
+        assert.deepStrictEqual(trimStart(" 2The fish is goad2   with Goat-1ss2 ", "2"), 'The fish is goad2   with Goat-1ss2 ');
+
+    });
+
 });

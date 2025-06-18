@@ -5,7 +5,7 @@ const getTypeof = require('./getTypeof');
 const indexOfExist = require('./indexOfExist');
 
 /**
- * String trim
+ * String trim in removing whitespace both start and end
  *
  * @since 1.4.8
  * @category String

@@ -7,7 +7,7 @@ import getTypeof from './getTypeof.js';
 import indexOfExist from './indexOfExist.js';
 
 /**
- * String trim  at the end only
+ * String trim  at the start only
  *
  * @since 1.4.86
  * @category String
@@ -25,12 +25,11 @@ function trimStart (value, remove_value) {
 
     let rawValue = toString(value).replace(rx, "");
 
-    if (indexOfExist([
-        "string",
-        "regexp"
-    ], getTypeof(remove_value))) {
+    if (indexOfExist(["string"], getTypeof(remove_value))) {
 
-        rawValue = rawValue.replace(remove_value, "");
+        const regData = new RegExp("^("+remove_value+")", "g");
+
+        rawValue = rawValue.replace(regData, "");
 
     }
 
