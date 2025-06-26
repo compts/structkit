@@ -4,6 +4,8 @@ import {two} from '../core/defaultValue.js';
 
 import _has from '../core/_has.js';
 
+import {getTypeofInternal} from '../core/getTypeOf.js';
+
 /**
  *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
  *
@@ -21,7 +23,7 @@ function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
-        if (isNaN(bb)) {
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
 
             return aa;
 

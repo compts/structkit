@@ -1419,8 +1419,6 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
-_stk.arraySlice=arraySlice;
-
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -1513,6 +1511,8 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2095,7 +2095,7 @@ function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
-        if (isNaN(bb)) {
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
 
             return aa;
 
@@ -2157,51 +2157,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-
-/**
- * Filter the data in for loop
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue The data either json or array
- * @param {Function=} func The second number in an addition.
- * @returns {any} Returns data either json or array.
- * @example
- *
- * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
- *
- * => [2, 34]
- */
-function filter (objectValue, func) {
-
-    var jsn_var=empty(objectValue);
-    var jsn_type=getTypeof(objectValue);
-
-    if (!(/(json|array)/g).test(jsn_type)) {
-
-        return [];
-
-    }
-    each(objectValue, function (value, key) {
-
-        if (has(func)) {
-
-            if (func(value, key)) {
-
-                append(jsn_var, value, key);
-
-            }
-
-        }
-
-    });
-
-    return jsn_var;
-
-}
-
-_stk.filter=filter;
 
 _stk.first=first;
 
@@ -2962,6 +2917,51 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
+
+/**
+ * Filter the data in for loop
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue The data either json or array
+ * @param {Function=} func The second number in an addition.
+ * @returns {any} Returns data either json or array.
+ * @example
+ *
+ * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
+ *
+ * => [2, 34]
+ */
+function filter (objectValue, func) {
+
+    var jsn_var=empty(objectValue);
+    var jsn_type=getTypeof(objectValue);
+
+    if (!(/(json|array)/g).test(jsn_type)) {
+
+        return [];
+
+    }
+    each(objectValue, function (value, key) {
+
+        if (has(func)) {
+
+            if (func(value, key)) {
+
+                append(jsn_var, value, key);
+
+            }
+
+        }
+
+    });
+
+    return jsn_var;
+
+}
+
+_stk.filter=filter;
+
 _stk.getData=getData;
 
 _stk.getKey=getKey;
@@ -3462,35 +3462,6 @@ _stk.mapGetData=mapGetData;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * Merging two json object
  *
  * @since 1.4.8.1
@@ -3636,6 +3607,35 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6199,87 +6199,6 @@ function baseSort (objectValue, func) {
 }
 
 /**
- * Sort array
- *
- * @since 1.0.1
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, order, type) {
-
-    var asc=true;
-    var types='any';
-
-    if (has(order) && getTypeof(order) === 'boolean') {
-
-        asc= order;
-
-    }
-
-    if (has(type) && getTypeof(type) === 'string') {
-
-        types= type;
-
-    }
-
-    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
-
-        var sortOrderA = orderA;
-        var sortOrderB = orderB;
-
-        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-            if (isEmpty(types) === false) {
-
-                if (types === 'any') {
-
-                    sortOrderA =orderA.charCodeAt();
-                    sortOrderB= orderB.charCodeAt();
-
-                }
-                if (types === 'lowercase') {
-
-                    sortOrderA =orderA.toLowerCase().charCodeAt();
-                    sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                }
-
-                if (types === 'uppercase') {
-
-                    sortOrderA =orderA.toUpperCase().charCodeAt();
-                    sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                }
-
-            }
-
-        }
-
-        if (asc) {
-
-            return sortOrderA - sortOrderB;
-
-        }
-
-        return sortOrderB - sortOrderA;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sort=sort;
-
-
-/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -6396,6 +6315,87 @@ function stringCapitalize (value, option) {
 }
 
 _stk.stringCapitalize=stringCapitalize;
+
+
+/**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, order, type) {
+
+    var asc=true;
+    var types='any';
+
+    if (has(order) && getTypeof(order) === 'boolean') {
+
+        asc= order;
+
+    }
+
+    if (has(type) && getTypeof(type) === 'string') {
+
+        types= type;
+
+    }
+
+    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
+
+        var sortOrderA = orderA;
+        var sortOrderB = orderB;
+
+        if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+            if (isEmpty(types) === false) {
+
+                if (types === 'any') {
+
+                    sortOrderA =orderA.charCodeAt();
+                    sortOrderB= orderB.charCodeAt();
+
+                }
+                if (types === 'lowercase') {
+
+                    sortOrderA =orderA.toLowerCase().charCodeAt();
+                    sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                }
+
+                if (types === 'uppercase') {
+
+                    sortOrderA =orderA.toUpperCase().charCodeAt();
+                    sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                }
+
+            }
+
+        }
+
+        if (asc) {
+
+            return sortOrderA - sortOrderB;
+
+        }
+
+        return sortOrderB - sortOrderA;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sort=sort;
 
 
 /**
@@ -6539,57 +6539,7 @@ function stringUpperCase (value) {
 
 _stk.stringUpperCase=stringUpperCase;
 
-
-/**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        var cloneRawListValueReturn = rawListValue;
-        var isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = cloneRawListValueReturn.join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
+_stk.subtract=subtract;
 
 
 /**
@@ -6649,6 +6599,58 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
+
+
+/**
+ * Swapping the value either string or array in there specific position
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        var cloneRawListValueReturn = rawListValue;
+        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 
 /**
@@ -6830,8 +6832,6 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue;
 
-_stk.subtract=subtract;
-
 _stk.toArray=toArray;
 
 
@@ -6983,73 +6983,6 @@ _stk.toInteger=toInteger;
 
 
 /**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
- * @example
- *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
- */
-function toPairs (value) {
-
-    if (getTypeofInternal(value) !== "json") {
-
-        throw new Error("Value must be an json");
-
-    }
-
-    return baseReduce([], value, function (total, subValue, subKey) {
-
-        var subArray = [];
-
-        subArray.push(subKey);
-        setDepthValue(subArray, subValue);
-        total.push(subArray);
-
-        return total;
-
-    });
-
-}
-
-/**
- * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arryData First number
- * @param {number} value First number
- * @returns {null} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-function setDepthValue (arryData, value) {
-
-    if (getTypeofInternal(value) === "json") {
-
-        arryData.push(getKey(value));
-        setDepthValue(arryData, getValue(value));
-
-    } else {
-
-        arryData.push(value);
-
-    }
-
-}
-
-_stk.toPairs=toPairs;
-
-_stk.toString=toString;
-
-
-/**
  * String trim  at the start only
  *
  * @since 1.4.86
@@ -7147,6 +7080,8 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
+
+_stk.toString=toString;
 
 _stk.trimEnd=trimEnd;
 
@@ -7607,6 +7542,71 @@ function zip () {
 }
 
 _stk.zip=zip;
+
+
+/**
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} value First number
+ * @returns {any[]} Returns array
+ * @example
+ *
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
+ */
+function toPairs (value) {
+
+    if (getTypeofInternal(value) !== "json") {
+
+        throw new Error("Value must be an json");
+
+    }
+
+    return baseReduce([], value, function (total, subValue, subKey) {
+
+        var subArray = [];
+
+        subArray.push(subKey);
+        setDepthValue(subArray, subValue);
+        total.push(subArray);
+
+        return total;
+
+    });
+
+}
+
+/**
+ * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arryData First number
+ * @param {number} value First number
+ * @returns {null} Returns array
+ * @example
+ *
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
+ */
+function setDepthValue (arryData, value) {
+
+    if (getTypeofInternal(value) === "json") {
+
+        arryData.push(getKey(value));
+        setDepthValue(arryData, getValue(value));
+
+    } else {
+
+        arryData.push(value);
+
+    }
+
+}
+
+_stk.toPairs=toPairs;
 
 
  })(typeof window !== "undefined" ? window : this);
