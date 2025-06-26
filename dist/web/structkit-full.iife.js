@@ -2117,9 +2117,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
-
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -5938,8 +5938,6 @@ function repeat (value, valueRepetion) {
 
 _stk.repeat=repeat;
 
-_stk.selectInData=selectInData;
-
 
 /**
  * Random Decimal
@@ -5982,6 +5980,109 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
+
+_stk.selectInData=selectInData;
+
+
+/**
+ * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} split_str Search key or index.
+ * @param {any=} updateValue Value to update the data.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * setData({"s":1},"s",2)
+ *=> 2
+ */
+function setData (objectValue, split_str, updateValue) {
+
+    if (!has(objectValue)) {
+
+        return empty(objectValue);
+
+    }
+
+    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
+
+        if (isEmpty(rawSplit_str)) {
+
+            return empty(rawObjectValue);
+
+        }
+
+        var spl= schemaSplitData(rawSplit_str);
+
+        return baseReduce(rawObjectValue, [spl], function (total, value) {
+
+            if (getTypeofInternal(total) === "json") {
+
+                valueToUpdate(total, value, rawUpdateValue);
+
+            }
+            if (getTypeofInternal(total) === "array") {
+
+                var rawTotal = first(total);
+
+                valueToUpdate(rawTotal, value, rawUpdateValue);
+                total = [rawTotal];
+
+            }
+
+            return total;
+
+        });
+
+    }, [
+        objectValue,
+        split_str,
+        updateValue
+    ]);
+
+}
+
+/**
+ * Given a value to update the data in array or json
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} objectValue Either Json or Array data.
+ * @param {any[]} whereStr Either Json or Array data.
+ * @param {any} updateValue Search key or index.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * getData({"s":1},"s")
+ *=> 1
+ * @example
+ * getData({"a":{"a":2},"b":{"a":3}},"a:a")
+ *=> {a: 2}
+ */
+function valueToUpdate (objectValue, whereStr, updateValue) {
+
+    var getRmoveValue = remove(whereStr, zero);
+
+    if (isEmpty(getRmoveValue)) {
+
+        objectValue[first(whereStr)] = updateValue;
+
+    } else {
+
+        if (has(objectValue, first(whereStr)) === false) {
+
+            objectValue[first(whereStr)] = {};
+
+        }
+        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
+
+    }
+
+}
+
+_stk.setData=setData;
 
 
 /**
@@ -6260,107 +6361,6 @@ _stk.stringCamelCase=stringCamelCase;
 
 
 /**
- * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any=} objectValue Either Json or Array data.
- * @param {any=} split_str Search key or index.
- * @param {any=} updateValue Value to update the data.
- * @returns {any} Returns the total.
- * @example
- *
- * setData({"s":1},"s",2)
- *=> 2
- */
-function setData (objectValue, split_str, updateValue) {
-
-    if (!has(objectValue)) {
-
-        return empty(objectValue);
-
-    }
-
-    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
-
-        if (isEmpty(rawSplit_str)) {
-
-            return empty(rawObjectValue);
-
-        }
-
-        var spl= schemaSplitData(rawSplit_str);
-
-        return baseReduce(rawObjectValue, [spl], function (total, value) {
-
-            if (getTypeofInternal(total) === "json") {
-
-                valueToUpdate(total, value, rawUpdateValue);
-
-            }
-            if (getTypeofInternal(total) === "array") {
-
-                var rawTotal = first(total);
-
-                valueToUpdate(rawTotal, value, rawUpdateValue);
-                total = [rawTotal];
-
-            }
-
-            return total;
-
-        });
-
-    }, [
-        objectValue,
-        split_str,
-        updateValue
-    ]);
-
-}
-
-/**
- * Given a value to update the data in array or json
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} objectValue Either Json or Array data.
- * @param {any[]} whereStr Either Json or Array data.
- * @param {any} updateValue Search key or index.
- * @returns {any} Returns the total.
- * @example
- *
- * getData({"s":1},"s")
- *=> 1
- * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
- *=> {a: 2}
- */
-function valueToUpdate (objectValue, whereStr, updateValue) {
-
-    var getRmoveValue = remove(whereStr, zero);
-
-    if (isEmpty(getRmoveValue)) {
-
-        objectValue[first(whereStr)] = updateValue;
-
-    } else {
-
-        if (has(objectValue, first(whereStr)) === false) {
-
-            objectValue[first(whereStr)] = {};
-
-        }
-        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
-
-    }
-
-}
-
-_stk.setData=setData;
-
-
-/**
  * String Capitalize
  *
  * @since 1.3.1
@@ -6538,8 +6538,6 @@ function stringUpperCase (value) {
 }
 
 _stk.stringUpperCase=stringUpperCase;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -6832,7 +6830,55 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue;
 
+_stk.subtract=subtract;
+
 _stk.toArray=toArray;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist([
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ], stringLowerCase(value));
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist([one], value);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
 
 
 /**
@@ -6881,15 +6927,26 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
  * @since 1.0.1
  * @category Number
  * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
  * @returns {number} Return in double.
  * @example
  *
  * toDouble("100.1d1")
  *=>100.11
  */
-function toDouble (value) {
+function toDouble (value, config) {
 
     var zero = 0.00;
+
+    var defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
 
     return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
         ?zero
@@ -7175,6 +7232,8 @@ function union () {
 _stk.union=union;
 
 _stk.unique=unique;
+
+_stk.varExtend=varExtend;
 
 _stk.where=where;
 
@@ -7504,8 +7563,6 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
-_stk.varExtend=varExtend;
-
 _stk.whereOnce=whereOnce;
 
 

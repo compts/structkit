@@ -1,5 +1,5 @@
 # Structkit
-Javascript framework in using functional syntax for programmer.
+Javascript framework is a utility tool, that helps you simplify in dealing data issue in your projects
 
 [![NPM version][npm-image]][npm-url] 
 [![NPM version][npm-ts-image]][npm-url-ts] 
