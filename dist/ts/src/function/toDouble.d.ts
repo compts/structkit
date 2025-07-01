@@ -5,10 +5,11 @@ export default toDouble;
  * @since 1.0.1
  * @category Number
  * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
  * @returns {number} Return in double.
  * @example
  *
  * toDouble("100.1d1")
  *=>100.11
  */
-declare function toDouble(value: any): number;
+declare function toDouble(value: any, config?: any | undefined): number;

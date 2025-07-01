@@ -4,6 +4,7 @@ import assert from 'assert';
 import {expectType} from 'tsd';
 
 const ten=10;
+const tenOne=10.1;
 const zero=0;
 
 describe('TS: toDouble method', function () {
@@ -19,6 +20,20 @@ describe('TS: toDouble method', function () {
         assert.deepStrictEqual(toDouble(null), zero);
 
     });
+
+    it('check if value exist 10.1 is valid', function () {
+
+        assert.deepStrictEqual(toDouble('10.1'), tenOne);
+
+
+    });
+
+    it('check if value exist 10,1 is valid with decSeparator ,', function () {
+
+        assert.deepStrictEqual(toDouble('10,1', {"decSeparator": ","}), tenOne);
+
+
+    });    
 
     it('check expected type', async function () {
        

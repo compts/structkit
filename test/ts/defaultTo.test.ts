@@ -10,11 +10,19 @@ describe('TS: defaultTo method', function () {
 
     });
 
-    it('check if defaultTo default value is "as"', function () {
+    it('check if defaultTo default value is "as" if null', function () {
 
         const _defaultTo = defaultTo("as");
 
         assert.strictEqual(_defaultTo(null), "as");
+
+    });
+
+    it('check if defaultTo default value is "as" if NaN', function () {
+
+        const _defaultTo = defaultTo("as");
+
+        assert.strictEqual(_defaultTo(NaN), "as");
 
     });
 

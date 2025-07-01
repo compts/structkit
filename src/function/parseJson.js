@@ -209,7 +209,7 @@ function callbackParse (glb, config) {
 
     if (glb.type === 'json') {
 
-        const encodeStr = encodeStripValueQoute(glb.ret_value, config);
+        const encodeStr = encodeStripValueQoute(glb.ret_value);
 
         const splitKeyValue = encodeStr.str_call.split(":");
 
@@ -265,7 +265,7 @@ function callbackParse (glb, config) {
 
     if (glb.type === 'array') {
 
-        const encodeStr = encodeStripValueQoute(glb.ret_value, config);
+        const encodeStr = encodeStripValueQoute(glb.ret_value);
 
         const valueSplit = encodeStr.str_call.split(",");
 
@@ -320,7 +320,7 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend(config, {});
+    const defaultConfig = varExtend({}, config);
 
     const stripValue=cleanValue(stringUnEscape(value));
 

@@ -1,6 +1,7 @@
 const curryArg = require("../core/curryArg");
 const {two} = require("../core/defaultValue");
 const _has = require("../core/_has");
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 /**
  *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
@@ -19,7 +20,7 @@ function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
-        if (isNaN(bb)) {
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
 
             return aa;
 
