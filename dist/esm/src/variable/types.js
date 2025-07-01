@@ -18,4 +18,4 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Uint8Array]": "uint8Array",
     "[object Undefined]": "undefined"};
 
-export {objectCallType,objectCallTypeAll};
+export {objectCallType, objectCallTypeAll};

@@ -5,14 +5,33 @@ const has = require('./has');
 const each = require('./each');
 const count = require('./count');
 const varExtend = require('./varExtend');
+const stringUnEscape = require("./stringUnEscape");
 const {two, one, zero} = require("../core/defaultValue");
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotes("'" )
+ *=>"\\'"
+ */
+function escapeQuotes (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
 
 /**
  * Data String from JSON object
  *
  * @since 1.0.1
  * @category Collection
- * @param {string} str Object you want to convert to JSON string
+ * @param {any} str Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example
  *
@@ -27,10 +46,12 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -38,6 +59,7 @@ function datastring (str) {
             data_s=str;
 
         }
+
 
     } else {
 
@@ -158,9 +180,15 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend(config, {});
+    const defaultConfig = varExtend({"unscapeEntity": false}, config);
 
-    const data = parseStringCore(zero, defaultConfig, value);
+    let data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
 
     return data;
 

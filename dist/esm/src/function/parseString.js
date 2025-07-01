@@ -10,14 +10,34 @@ import count from './count.js';
 
 import varExtend from './varExtend.js';
 
+import stringUnEscape from './stringUnEscape.js';
+
 import {two, one, zero} from '../core/defaultValue.js';
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotes("'" )
+ *=>"\\'"
+ */
+function escapeQuotes (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
 
 /**
  * Data String from JSON object
  *
  * @since 1.0.1
  * @category Collection
- * @param {string} str Object you want to convert to JSON string
+ * @param {any} str Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example
  *
@@ -32,10 +52,12 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -161,9 +183,15 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend(config, {});
+    const defaultConfig = varExtend({"unscapeEntity": false}, config);
 
-    const data = parseStringCore(zero, defaultConfig, value);
+    let data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
 
     return data;
 

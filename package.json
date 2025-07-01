@@ -1,7 +1,7 @@
 {
   "name": "structkit",
-  "version": "1.4.871",
-  "description": "JS utility tool",
+  "version": "1.4.872",
+  "description": "JS utility tool that offers your wide varity of function to simplify your problem with the data",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.js",
   "types": "./dist/ts/node.esm.d.ts",
@@ -56,7 +56,8 @@
     "array",
     "pure",
     "point-free",
-    "curried"
+    "curried",
+    "data"
   ],
   "author": "Pein Freccs",
   "license": "MIT",

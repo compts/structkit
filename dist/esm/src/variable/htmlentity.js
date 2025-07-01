@@ -6,11 +6,23 @@ const entity = [
         "html": " ",
         "hex": "&#xA0;"
     },
+    {
+        "decimal": "&#92;",
+        "entity": "&bsol;",
+        "html": "\\",
+        "hex": "&#x5c;",
+        "title": "backslash"
+    },
     {"decimal": "&#34;",
         "entity": "&quot;",
         "hex": "&#x22;",
         "html": '"',
-        "title": "quotation mark = APL quote"},
+        "title": "quotation mark = double quote"},
+    {"decimal": "&#39;",
+        "entity": "&apos;",
+        "hex": "&#x27;",
+        "html": "'",
+        "title": "quotation mark = single quote"},
     {"decimal": "&#38;",
         "entity": "&amp;",
         "hex": "&#x26;",
@@ -1086,4 +1098,4 @@ const whitespace = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003' 
          '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
          '\u2029\uFEFF';
 
-export {entity,listType,whitespace};
+export {entity, listType, whitespace};

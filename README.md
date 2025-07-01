@@ -1,5 +1,5 @@
 # Structkit
-Javascript framework in using functional syntax for programmer.
+Javascript framework is a utility tool, that helps you simplify in dealing data issue in your projects
 
 [![NPM version][npm-image]][npm-url] 
 [![NPM version][npm-ts-image]][npm-url-ts] 
@@ -75,7 +75,7 @@ In the example you noticed that we can apply and arguments if we are unsure of p
 
 [npm-url]: https://www.npmjs.com/package/structkit
 [npm-url-ts]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit-1.4.871-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.872-brightgreen
 [npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.87-brightgreen
 
 
