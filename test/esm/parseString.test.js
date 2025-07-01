@@ -14,5 +14,11 @@ describe('ESM: parseString method', function () {
 
     });
 
+    it('check if repetion is correct single qoute', function () {
+
+        assert.strictEqual(parseString({"a": "11s's"}, {"unscapeEntity": true}), '{"a":"11s\'s"}');
+
+    });
+
 
 });

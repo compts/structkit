@@ -28,7 +28,7 @@ import {two, one, zero} from '../core/defaultValue.js';
  */
 function escapeQuotes (str) {
 
-    return str.replace(/'/g, "''").replace(/"/g, '""');
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
 
 }
 

@@ -22,7 +22,7 @@ const {two, one, zero} = require("../core/defaultValue");
  */
 function escapeQuotes (str) {
 
-    return str.replace(/'/g, "''").replace(/"/g, '""');
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
 
 }
 

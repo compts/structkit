@@ -36,7 +36,7 @@ function isJson (value, valueType) {
 
     if (getValueTypeRef === "string") {
 
-        if (!(/\[(.*?)\]/g).test(value) && !(/\{(.*?)\}/g).test(value)) {
+        if (!(/\[.*\]|\{.*\}/).test(value)) {
 
             return false;
 

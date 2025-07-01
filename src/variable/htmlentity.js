@@ -6,6 +6,13 @@ const entity = [
         "html": " ",
         "hex": "&#xA0;"
     },
+    {
+        "decimal": "&#92;",
+        "entity": "&bsol;",
+        "html": "\\",
+        "hex": "&#x5c;",
+        "title": "backslash"
+    },
     {"decimal": "&#34;",
         "entity": "&quot;",
         "hex": "&#x22;",
@@ -14,7 +21,7 @@ const entity = [
     {"decimal": "&#39;",
         "entity": "&apos;",
         "hex": "&#x27;",
-        "html": '"',
+        "html": "'",
         "title": "quotation mark = single quote"},
     {"decimal": "&#38;",
         "entity": "&amp;",
