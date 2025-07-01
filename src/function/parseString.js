@@ -22,7 +22,7 @@ const {two, one, zero} = require("../core/defaultValue");
  */
 function escapeQuotes (str) {
 
-    return str.replace(/(["'])/g, "\\$1");
+    return str.replace(/'/g, "''").replace(/"/g, '""');
 
 }
 
@@ -44,14 +44,14 @@ function datastring (str) {
 
     if (typeof str === "string") {
 
-        str = escapeQuotes(str);
-
         if (str.indexOf("'")) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else {

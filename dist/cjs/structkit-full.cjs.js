@@ -237,6 +237,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -1167,35 +1196,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Append data for json or array
  *
  * @since 1.0.1
@@ -2023,8 +2023,6 @@ function clone (objectValue) {
 
 _stk.clone=clone;
 
-_stk.count=count;
-
 
 /**
  * Decrement value
@@ -2059,6 +2057,8 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
+
+_stk.count=count;
 
 
 /**
@@ -2102,6 +2102,10 @@ _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
 
+_stk.each=each;
+
+_stk.empty=empty;
+
 
 /**
  * To check if the two arguments are equal
@@ -2136,10 +2140,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-_stk.empty=empty;
-
-_stk.each=each;
 
 
 /**
@@ -2185,6 +2185,49 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter;
+
+
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce([], rawValue, function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        });
+
+    }, [arg]);
+
+}
+
+_stk.flatten=flatten;
 
 _stk.first=first;
 
@@ -2902,49 +2945,6 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce([], rawValue, function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        });
-
-    }, [arg]);
-
-}
-
-_stk.flatten=flatten;
-
 _stk.getData=getData;
 
 _stk.getKey=getKey;
@@ -3080,6 +3080,8 @@ function gt (value1, value2) {
 
 _stk.gt=gt;
 
+_stk.has=has;
+
 
 /**
  *  To check if the two arguments are greater than to equal
@@ -3108,8 +3110,6 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-
-_stk.has=has;
 
 
 /**
@@ -3202,6 +3202,8 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
+_stk.isExact=isExact;
+
 _stk.isEmpty=isEmpty;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
@@ -3273,8 +3275,6 @@ function last (objectValue) {
 
 _stk.last=last;
 
-_stk.isExact=isExact;
-
 
 /**
  * Searching the data either in array or json object to get similar value of data
@@ -3297,6 +3297,32 @@ function like (objectValue, objectValueWhere, func) {
 }
 
 _stk.like=like;
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    const start = 0;
+
+    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+
+_stk.lastIndexOf=lastIndexOf;
 
 
 /**
@@ -3362,35 +3388,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3445,6 +3442,35 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -5509,7 +5535,7 @@ _stk.parseJson=parseJson;
  */
 function escapeQuotes (str) {
 
-    return str.replace(/(["'])/g, "\\$1");
+    return str.replace(/'/g, "''").replace(/"/g, '""');
 
 }
 
@@ -5531,14 +5557,14 @@ function datastring (str) {
 
     if (typeof str === "string") {
 
-        str = escapeQuotes(str);
-
         if (str.indexOf("'")) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -5760,32 +5786,6 @@ function random (valueArray, minValue, maxValue) {
 _stk.random=random;
 
 _stk.range=range;
-
-
-/**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf([1,2], 1)
- * // => 0
- */
-function lastIndexOf (objectValue, value) {
-
-    const start = 0;
-
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
-
-}
-
-_stk.lastIndexOf=lastIndexOf;
 
 
 /**
@@ -6354,44 +6354,6 @@ _stk.stringCamelCase=stringCamelCase;
 
 
 /**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function stringCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize;
-
-
-/**
  * String Escape
  *
  * @since 1.3.1
@@ -6456,6 +6418,44 @@ function stringKebabCase (value) {
 _stk.stringKebabCase=stringKebabCase;
 
 _stk.stringLowerCase=stringLowerCase;
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize;
 
 
 /**
@@ -6531,6 +6531,8 @@ function stringUpperCase (value) {
 }
 
 _stk.stringUpperCase=stringUpperCase;
+
+_stk.subtract=subtract;
 
 
 /**
@@ -6642,8 +6644,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -6915,6 +6915,42 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value, config) {
+
+    const zero = 0.00;
+
+    const defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble;
+
+
+/**
  * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
@@ -7002,42 +7038,6 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
-
-
-/**
- * To extract number in string and convert to double, it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @param {any=} config Option you want to set in this function.
- * @returns {number} Return in double.
- * @example
- *
- * toDouble("100.1d1")
- *=>100.11
- */
-function toDouble (value, config) {
-
-    const zero = 0.00;
-
-    const defaultConfig = varExtend({"decSeparator": "."}, config);
-
-    if (defaultConfig.decSeparator !== ".") {
-
-        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
-
-        value = value.replace(sepRegexp, ".");
-
-    }
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble;
 
 _stk.toString=toString;
 
