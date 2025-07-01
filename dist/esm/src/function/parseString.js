@@ -15,6 +15,24 @@ import stringUnEscape from './stringUnEscape.js';
 import {two, one, zero} from '../core/defaultValue.js';
 
 /**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotes("'" )
+ *=>"\\'"
+ */
+function escapeQuotes (str) {
+
+    return str.replace(/(["'])/g, "\\$1");
+
+}
+
+/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -32,7 +50,7 @@ function datastring (str) {
 
     if (typeof str === "string") {
 
-        str = str.replace(/(["'])/g, "\\$1");
+        str = escapeQuotes(str);
 
         if (str.indexOf("'")) {
 
