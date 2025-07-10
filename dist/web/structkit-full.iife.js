@@ -2117,9 +2117,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.divide=divide;
-
 _stk.each=each;
+
+_stk.divide=divide;
 
 _stk.empty=empty;
 
@@ -2169,7 +2169,7 @@ _stk.equal=equal;
  * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
+ * filter([1,2,3,34],function(value, key){ return value%2 === 0 })
  *
  * => [2, 34]
  */
@@ -3027,35 +3027,6 @@ _stk.getValue=getValue;
 
 
 /**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Relation
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
-
-
-/**
  * To group the value of json or array
  *
  * @since 1.4.8
@@ -3099,6 +3070,35 @@ _stk.groupBy=groupBy;
 
 
 /**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Relation
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+
+
+/**
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
@@ -3125,6 +3125,8 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
+
+_stk.has=has;
 
 
 /**
@@ -3166,8 +3168,6 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
-
-_stk.has=has;
 
 _stk.inc=inc;
 
@@ -3222,6 +3222,8 @@ _stk.insert=insert;
 _stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
+
+_stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
 
@@ -3289,8 +3291,6 @@ function last (objectValue) {
 }
 
 _stk.last=last;
-
-_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -3405,35 +3405,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3463,6 +3434,37 @@ _stk.lte=lte;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+_stk.map=map;
+
+
+/**
  * A Function to map the data either an array or an object using getData function.
  *
  * @since 1.3.1
@@ -3486,8 +3488,6 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
-
-_stk.map=map;
 
 
 /**
@@ -3866,6 +3866,84 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay;
 
+
+/**
+ * On sequence
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var zero = 0;
+    var one = 1;
+    var extend = varExtend({
+        "limitCounterClear": 0
+    }, option);
+
+    var valueWaited = wait || zero;
+    var counter = 0;
+
+    var interval = setInterval(function () {
+
+        func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+    var sequence = new ClassSequence(interval, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (interval, extend) {
+
+    this.interval = interval;
+
+    this.extend = extend;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+_stk.onSequence=onSequence;
+
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3970,84 +4048,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var zero = 0;
-    var one = 1;
-    var extend = varExtend({
-        "limitCounterClear": 0
-    }, option);
-
-    var valueWaited = wait || zero;
-    var counter = 0;
-
-    var interval = setInterval(function () {
-
-        func();
-        if (extend.limitCounterClear >zero) {
-
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    var sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-_stk.onSequence=onSequence;
 
 
 /**
@@ -5214,6 +5214,24 @@ function stringUnEscape (value, type) {
 }
 
 /**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesJson (str) {
+
+    return str.replace(/&quot;/g, "&bsol;&quot;");
+
+}
+
+/**
  * Cleanup unnecessary character
  *
  * @since 1.4.86
@@ -5300,6 +5318,9 @@ function encodeStripValueQoute (values) {
     var arg_call_list = [];
 
     var str_type = "";
+    var last_str_value = "";
+    var counter_double_qoute = 0;
+    var counter_single_qoute = 0;
 
     each(values.split(""), function (value) {
 
@@ -5309,14 +5330,26 @@ function encodeStripValueQoute (values) {
 
         if (value_indx === '"') {
 
-            row_str_type = "double_qoute";
+            if (counter_single_qoute %two === zero && last_str_value !== "\\") {
+
+                row_str_type = "double_qoute";
+
+            }
+
+            counter_double_qoute += one;
 
         }
         if (value_indx === "'") {
 
-            row_str_type = "single_qoute";
+            if (counter_double_qoute %two === zero) {
+
+                row_str_type = "single_qoute";
+
+            }
+            counter_single_qoute += one;
 
         }
+
         if (str_type === "") {
 
             // eslint-disable-next-line no-negated-condition
@@ -5351,6 +5384,7 @@ function encodeStripValueQoute (values) {
             }
 
         }
+        last_str_value = value;
 
     });
 
@@ -5525,7 +5559,7 @@ function parseJson (value, config) {
 
     var defaultConfig = varExtend({}, config);
 
-    var stripValue=cleanValue(stringUnEscape(value));
+    var stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
     var tagVal = getTagVal(stripValue);
 
@@ -5554,10 +5588,10 @@ _stk.parseJson=parseJson;
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotes("'" )
+ * escapeQuotesStr("'" )
  *=>"\\'"
  */
-function escapeQuotes (str) {
+function escapeQuotesStr (str) {
 
     return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
 
@@ -5583,12 +5617,12 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
-            str = escapeQuotes(str);
+            str = escapeQuotesStr(str);
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
-            str = escapeQuotes(str);
+            str = escapeQuotesStr(str);
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -5724,7 +5758,7 @@ function parseString (value, config) {
 
     }
 
-    return data;
+    return data.toString();
 
 }
 
@@ -5879,6 +5913,32 @@ _stk.remove=remove;
 
 
 /**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+    var nm_str=value||"";
+
+    return arrayRepeat(nm_str, nm_rpt).join("");
+
+}
+
+_stk.repeat=repeat;
+
+
+/**
  * Remove data in either JSON or Array using key or woth value, a revise logic
  *
  * @since 1.4.85
@@ -5936,75 +5996,6 @@ function removeFromKey (objectValue, value) {
 }
 
 _stk.removeFromKey=removeFromKey;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    var emptyDefaultValue=0;
-    var nm_rpt=valueRepetion||emptyDefaultValue;
-    var nm_str=value||"";
-
-    return arrayRepeat(nm_str, nm_rpt).join("");
-
-}
-
-_stk.repeat=repeat;
-
-
-/**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Math
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
-    var str_dec=jsn.toString().split(".");
-    var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec) === twoDefaultValue) {
-
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        var delmts=p_cnts <= s_dmin
-            ?s_dmin
-            :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-
-_stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
 
@@ -6620,6 +6611,108 @@ _stk.swap=swap;
 
 
 /**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {any[]|string} rawList Second number
+ * @param {number} startIndex Second number
+ * @param {number} lastIndex Second number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * baseTake(1, 1)
+ * // => 1
+ */
+function baseTake (rawList, startIndex, lastIndex) {
+
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;
+
+    var varLimit = limit(refRawList, startIndex, lastIndex);
+
+    var rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?rawGetValue.join("")
+        :rawGetValue;
+
+}
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
+
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec) === twoDefaultValue) {
+
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts <= s_dmin
+            ?s_dmin
+            :s_dmax;
+        var dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+
+_stk.roundDecimal=roundDecimal;
+
+
+/**
  * Template value
  *
  * @since 1.0.1
@@ -6921,65 +7014,6 @@ function toDouble (value, config) {
 }
 
 _stk.toDouble=toDouble;
-
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {any[]|string} rawList Second number
- * @param {number} startIndex Second number
- * @param {number} lastIndex Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * baseTake(1, 1)
- * // => 1
- */
-function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;
-
-    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?rawGetValue.join("")
-        :rawGetValue;
-
-}
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
 
 
 /**
