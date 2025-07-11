@@ -6,7 +6,7 @@ const varExtend = require('./varExtend');
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @param {object=} option option for delay
  * @returns {object} Returns object.
  * @example

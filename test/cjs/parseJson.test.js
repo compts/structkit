@@ -36,7 +36,7 @@ describe('CJS: parseJson method', function () {
             "comment": "Repeat value in array",
             "example": "arrayRepeat(\"s\",2 )=>['s','s']/",
             "name": "arrayRepeat",
-            "return": "Return in string or number.",
+            "return": "Return in string or number."
         });
 
     });

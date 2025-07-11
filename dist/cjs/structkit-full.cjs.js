@@ -237,35 +237,6 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -1196,6 +1167,35 @@ _stk.allValid=allValid;
 
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Append data for json or array
  *
  * @since 1.0.1
@@ -2100,8 +2100,6 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
-
 _stk.divide=divide;
 
 _stk.empty=empty;
@@ -2987,6 +2985,8 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq;
 
+_stk.each=each;
+
 
 /**
  * Get value of json or array
@@ -3277,6 +3277,29 @@ _stk.last=last;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+
+/**
  * Get the last index Of array
  *
  * @since 1.0.1
@@ -3300,29 +3323,6 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -3388,35 +3388,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
-
-
-/**
  * To check if the two arguments are less
  *
  * @since 1.4.8
@@ -3443,6 +3414,35 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
+
+
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
 
 _stk.map=map;
 
@@ -3791,7 +3791,7 @@ function replaceValue (objectValue, objectValueReplace) {
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @param {object=} option option for delay
  * @returns {object} Returns object.
  * @example
@@ -3856,7 +3856,7 @@ _stk.onDelay=onDelay;
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @param {object=} option option for delay
  * @returns {object} Returns object.
  * @example
@@ -3945,7 +3945,7 @@ const getWindow = function () {
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @returns {object} Returns the total.
  * @example
  *
@@ -5892,32 +5892,6 @@ _stk.remove=remove;
 
 
 /**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
-
-    return arrayRepeat(nm_str, nm_rpt).join("");
-
-}
-
-_stk.repeat=repeat;
-
-
-/**
  * Remove data in either JSON or Array using key or woth value, a revise logic
  *
  * @since 1.4.85
@@ -5975,6 +5949,75 @@ function removeFromKey (objectValue, value) {
 }
 
 _stk.removeFromKey=removeFromKey;
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    const emptyDefaultValue=0;
+    const nm_rpt=valueRepetion||emptyDefaultValue;
+    const nm_str=value||"";
+
+    return arrayRepeat(nm_str, nm_rpt).join("");
+
+}
+
+_stk.repeat=repeat;
+
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+function roundDecimal (value, maxValue) {
+
+    const emptyDefaultValue=0;
+    const onceDefaultValue=1;
+    const twoDefaultValue=2;
+    const tenDefaultValue=10;
+    const jsn=value||emptyDefaultValue;
+    const str_dec=jsn.toString().split(".");
+    const s_dmin=0;
+    const s_dmax=maxValue||twoDefaultValue;
+
+    if (count(str_dec) === twoDefaultValue) {
+
+        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        const delmts=p_cnts <= s_dmin
+            ?s_dmin
+            :s_dmax;
+        const dec_s=tenDefaultValue**delmts;
+
+        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+
+    }
+
+    return jsn;
+
+}
+
+_stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
 
@@ -6642,49 +6685,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-
-/**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Math
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const twoDefaultValue=2;
-    const tenDefaultValue=10;
-    const jsn=value||emptyDefaultValue;
-    const str_dec=jsn.toString().split(".");
-    const s_dmin=0;
-    const s_dmax=maxValue||twoDefaultValue;
-
-    if (count(str_dec) === twoDefaultValue) {
-
-        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        const delmts=p_cnts <= s_dmin
-            ?s_dmin
-            :s_dmax;
-        const dec_s=tenDefaultValue**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-
-_stk.roundDecimal=roundDecimal;
 
 
 /**
