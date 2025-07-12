@@ -355,8 +355,21 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({}, config);
+    const defaultConfig = varExtend({"disableCorrection": false}, config);
 
+    if (defaultConfig.disableCorrection) {
+
+        const rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
     const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
     const tagVal = getTagVal(stripValue);

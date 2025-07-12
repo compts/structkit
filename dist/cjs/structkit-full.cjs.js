@@ -237,6 +237,35 @@ function argumentUndefinedCounter (args) {
 }
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -1167,35 +1196,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Append data for json or array
  *
  * @since 1.0.1
@@ -2102,6 +2102,8 @@ _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
 
+_stk.each=each;
+
 _stk.empty=empty;
 
 
@@ -2985,8 +2987,6 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq;
 
-_stk.each=each;
-
 
 /**
  * Get value of json or array
@@ -3277,29 +3277,6 @@ _stk.last=last;
 
 
 /**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
-
-
-/**
  * Get the last index Of array
  *
  * @since 1.0.1
@@ -3323,6 +3300,29 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
+
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
 
 
 /**
@@ -5540,8 +5540,21 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({}, config);
+    const defaultConfig = varExtend({"disableCorrection": false}, config);
 
+    if (defaultConfig.disableCorrection) {
+
+        const rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
     const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
     const tagVal = getTagVal(stripValue);
@@ -6870,52 +6883,6 @@ _stk.toArray=toArray;
 
 
 /**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist([
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ], stringLowerCase(value));
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist([one], value);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
-
-
-/**
  * Logic in convert string or number to valid number
  *
  * @since 1.0.1
@@ -6989,6 +6956,52 @@ function toDouble (value, config) {
 }
 
 _stk.toDouble=toDouble;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist([
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ], stringLowerCase(value));
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist([one], value);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
 
 
 /**
