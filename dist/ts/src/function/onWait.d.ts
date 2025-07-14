@@ -5,11 +5,11 @@ export default onWait;
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @returns {object} Returns the total.
  * @example
  *
  *  onWait(()=>{})
  *=>'11'
  */
-declare function onWait(func: any, wait?: object | undefined): object;
+declare function onWait(func: any, wait?: number | undefined): object;

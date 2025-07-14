@@ -23,10 +23,10 @@ import {two, one, zero} from '../core/defaultValue.js';
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotes("'" )
+ * escapeQuotesStr("'" )
  *=>"\\'"
  */
-function escapeQuotes (str) {
+function escapeQuotesStr (str) {
 
     return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
 
@@ -52,12 +52,14 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
-            str = escapeQuotes(str);
+            str = escapeQuotesStr(str);
+
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
-            str = escapeQuotes(str);
+            str = escapeQuotesStr(str);
+
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -193,7 +195,13 @@ function parseString (value, config) {
 
     }
 
-    return data;
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
+
+    return data.toString();
 
 }
 
