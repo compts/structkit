@@ -53,11 +53,13 @@ function datastring (str) {
         if (str.indexOf("'")) {
 
             str = escapeQuotesStr(str);
+
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
             str = escapeQuotesStr(str);
+
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -186,6 +188,12 @@ function parseString (value, config) {
     const defaultConfig = varExtend({"unscapeEntity": false}, config);
 
     let data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
 
     if (defaultConfig.unscapeEntity) {
 

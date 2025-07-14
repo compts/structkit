@@ -357,6 +357,7 @@ function parseJson (value, config) {
 
     const defaultConfig = varExtend({"disableCorrection": false}, config);
 
+
     if (defaultConfig.disableCorrection) {
 
         const rawValue = cleanValue(value);
