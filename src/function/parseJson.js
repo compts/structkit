@@ -5,6 +5,24 @@ const varExtend = require('./varExtend');
 
 
 /**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesJson (str) {
+
+    return str.replace(/&quot;/g, "&bsol;&quot;");
+
+}
+
+/**
  * Cleanup unnecessary character
  *
  * @since 1.4.86
@@ -92,6 +110,9 @@ function encodeStripValueQoute (values) {
     const arg_call_list = [];
 
     let str_type = "";
+    let last_str_value = "";
+    let counter_double_qoute = 0;
+    let counter_single_qoute = 0;
 
     each(values.split(""), function (value) {
 
@@ -101,14 +122,27 @@ function encodeStripValueQoute (values) {
 
         if (value_indx === '"') {
 
-            row_str_type = "double_qoute";
+            if (counter_single_qoute %two === zero && last_str_value !== "\\") {
+
+                row_str_type = "double_qoute";
+
+            }
+
+            counter_double_qoute += one;
 
         }
         if (value_indx === "'") {
 
-            row_str_type = "single_qoute";
+            if (counter_double_qoute %two === zero) {
+
+                row_str_type = "single_qoute";
+
+            }
+            counter_single_qoute += one;
+
 
         }
+
         if (str_type === "") {
 
             // eslint-disable-next-line no-negated-condition
@@ -143,6 +177,7 @@ function encodeStripValueQoute (values) {
             }
 
         }
+        last_str_value = value;
 
     });
 
@@ -320,9 +355,23 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({}, config);
+    const defaultConfig = varExtend({"disableCorrection": false}, config);
 
-    const stripValue=cleanValue(stringUnEscape(value));
+
+    if (defaultConfig.disableCorrection) {
+
+        const rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
+    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
     const tagVal = getTagVal(stripValue);
 

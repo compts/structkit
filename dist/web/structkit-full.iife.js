@@ -2169,7 +2169,7 @@ _stk.equal=equal;
  * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2,3,34],function(value, key){ return key%2 === 0 })
+ * filter([1,2,3,34],function(value, key){ return value%2 === 0 })
  *
  * => [2, 34]
  */
@@ -3006,6 +3006,49 @@ _stk.getUniq=getUniq;
 
 
 /**
+ * To group the value of json or array
+ *
+ * @since 1.4.8
+ * @category Collection
+ * @param {any} objectValue The data you want to map
+ * @param {any=} func Callback function
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * groupBy([1,2,3,4,5,6,7], function (value) { return value % 2})
+ *=> {0:[2,4,6], 1:[1,3,5,7]}
+ */
+function groupBy (objectValue, func) {
+
+    var value_arry=clone(empty(objectValue));
+
+    var groupData = {};
+
+    each(objectValue, function (value, key) {
+
+        if (has(func)) {
+
+            var dataFunc = func(value, key);
+
+            if (!has(groupData, dataFunc)) {
+
+                groupData[dataFunc] = value_arry;
+
+            }
+            groupData[dataFunc] = append(clone(groupData[dataFunc]), value, key);
+
+        }
+
+    });
+
+    return groupData;
+
+}
+
+_stk.groupBy=groupBy;
+
+
+/**
  * Get value of json or array
  *
  * @since 1.0.1
@@ -3056,49 +3099,6 @@ _stk.gt=gt;
 
 
 /**
- * To group the value of json or array
- *
- * @since 1.4.8
- * @category Collection
- * @param {any} objectValue The data you want to map
- * @param {any=} func Callback function
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * groupBy([1,2,3,4,5,6,7], function (value) { return value % 2})
- *=> {0:[2,4,6], 1:[1,3,5,7]}
- */
-function groupBy (objectValue, func) {
-
-    var value_arry=clone(empty(objectValue));
-
-    var groupData = {};
-
-    each(objectValue, function (value, key) {
-
-        if (has(func)) {
-
-            var dataFunc = func(value, key);
-
-            if (!has(groupData, dataFunc)) {
-
-                groupData[dataFunc] = value_arry;
-
-            }
-            groupData[dataFunc] = append(clone(groupData[dataFunc]), value, key);
-
-        }
-
-    });
-
-    return groupData;
-
-}
-
-_stk.groupBy=groupBy;
-
-
-/**
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
@@ -3125,6 +3125,8 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
+
+_stk.has=has;
 
 
 /**
@@ -3167,11 +3169,9 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined;
 
-_stk.has=has;
+_stk.indexOf=indexOf;
 
 _stk.inc=inc;
-
-_stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
@@ -3223,7 +3223,7 @@ _stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
 
-_stk.isJson=isJson;
+_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -3269,6 +3269,8 @@ function jsonToArray (objectValue, value) {
 
 _stk.jsonToArray=jsonToArray;
 
+_stk.isJson=isJson;
+
 
 /**
  * Get the last value of array or JSON
@@ -3289,8 +3291,6 @@ function last (objectValue) {
 }
 
 _stk.last=last;
-
-_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -3405,35 +3405,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3461,6 +3432,8 @@ function lte (value1, value2) {
 
 _stk.lte=lte;
 
+_stk.map=map;
+
 
 /**
  * A Function to map the data either an array or an object using getData function.
@@ -3487,7 +3460,34 @@ function mapGetData (objectValue, valueFormat) {
 
 _stk.mapGetData=mapGetData;
 
-_stk.map=map;
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -3808,7 +3808,7 @@ function replaceValue (objectValue, objectValueReplace) {
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @param {object=} option option for delay
  * @returns {object} Returns object.
  * @example
@@ -3866,6 +3866,84 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay;
 
+
+/**
+ * On sequence
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var zero = 0;
+    var one = 1;
+    var extend = varExtend({
+        "limitCounterClear": 0
+    }, option);
+
+    var valueWaited = wait || zero;
+    var counter = 0;
+
+    var interval = setInterval(function () {
+
+        func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+    var sequence = new ClassSequence(interval, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (interval, extend) {
+
+    this.interval = interval;
+
+    this.extend = extend;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+_stk.onSequence=onSequence;
+
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3884,7 +3962,7 @@ var getWindow = function () {
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @returns {object} Returns the total.
  * @example
  *
@@ -3970,84 +4048,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var zero = 0;
-    var one = 1;
-    var extend = varExtend({
-        "limitCounterClear": 0
-    }, option);
-
-    var valueWaited = wait || zero;
-    var counter = 0;
-
-    var interval = setInterval(function () {
-
-        func();
-        if (extend.limitCounterClear >zero) {
-
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    var sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-_stk.onSequence=onSequence;
 
 
 /**
@@ -5214,6 +5214,24 @@ function stringUnEscape (value, type) {
 }
 
 /**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesJson (str) {
+
+    return str.replace(/&quot;/g, "&bsol;&quot;");
+
+}
+
+/**
  * Cleanup unnecessary character
  *
  * @since 1.4.86
@@ -5300,6 +5318,9 @@ function encodeStripValueQoute (values) {
     var arg_call_list = [];
 
     var str_type = "";
+    var last_str_value = "";
+    var counter_double_qoute = 0;
+    var counter_single_qoute = 0;
 
     each(values.split(""), function (value) {
 
@@ -5309,14 +5330,26 @@ function encodeStripValueQoute (values) {
 
         if (value_indx === '"') {
 
-            row_str_type = "double_qoute";
+            if (counter_single_qoute %two === zero && last_str_value !== "\\") {
+
+                row_str_type = "double_qoute";
+
+            }
+
+            counter_double_qoute += one;
 
         }
         if (value_indx === "'") {
 
-            row_str_type = "single_qoute";
+            if (counter_double_qoute %two === zero) {
+
+                row_str_type = "single_qoute";
+
+            }
+            counter_single_qoute += one;
 
         }
+
         if (str_type === "") {
 
             // eslint-disable-next-line no-negated-condition
@@ -5351,6 +5384,7 @@ function encodeStripValueQoute (values) {
             }
 
         }
+        last_str_value = value;
 
     });
 
@@ -5523,9 +5557,22 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    var defaultConfig = varExtend({}, config);
+    var defaultConfig = varExtend({"disableCorrection": false}, config);
 
-    var stripValue=cleanValue(stringUnEscape(value));
+    if (defaultConfig.disableCorrection) {
+
+        var rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
+    var stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
     var tagVal = getTagVal(stripValue);
 
@@ -5554,10 +5601,10 @@ _stk.parseJson=parseJson;
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotes("'" )
+ * escapeQuotesStr("'" )
  *=>"\\'"
  */
-function escapeQuotes (str) {
+function escapeQuotesStr (str) {
 
     return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
 
@@ -5583,12 +5630,14 @@ function datastring (str) {
 
         if (str.indexOf("'")) {
 
-            str = escapeQuotes(str);
+            str = escapeQuotesStr(str);
+
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
-            str = escapeQuotes(str);
+            str = escapeQuotesStr(str);
+
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -5724,7 +5773,13 @@ function parseString (value, config) {
 
     }
 
-    return data;
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
+
+    return data.toString();
 
 }
 
@@ -5775,6 +5830,8 @@ function pipe () {
 
 _stk.pipe=pipe;
 
+_stk.range=range;
+
 
 /**
  * To create single random value from array
@@ -5812,8 +5869,6 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-
-_stk.range=range;
 
 
 /**
@@ -6541,8 +6596,6 @@ function stringSubs (value, minValue, maxValue) {
 
 _stk.stringSubs=stringSubs;
 
-_stk.stringUnEscape=stringUnEscape;
-
 
 /**
  * String Upper case case
@@ -6563,6 +6616,8 @@ function stringUpperCase (value) {
 }
 
 _stk.stringUpperCase=stringUpperCase;
+
+_stk.stringUnEscape=stringUnEscape;
 
 _stk.subtract=subtract;
 
@@ -6617,6 +6672,65 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {any[]|string} rawList Second number
+ * @param {number} startIndex Second number
+ * @param {number} lastIndex Second number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * baseTake(1, 1)
+ * // => 1
+ */
+function baseTake (rawList, startIndex, lastIndex) {
+
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;
+
+    var varLimit = limit(refRawList, startIndex, lastIndex);
+
+    var rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?rawGetValue.join("")
+        :rawGetValue;
+
+}
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 
 
 /**
@@ -6921,65 +7035,6 @@ function toDouble (value, config) {
 }
 
 _stk.toDouble=toDouble;
-
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {any[]|string} rawList Second number
- * @param {number} startIndex Second number
- * @param {number} lastIndex Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * baseTake(1, 1)
- * // => 1
- */
-function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;
-
-    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?rawGetValue.join("")
-        :rawGetValue;
-
-}
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
 
 
 /**

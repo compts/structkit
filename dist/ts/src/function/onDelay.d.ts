@@ -5,7 +5,7 @@ export default onDelay;
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
- * @param {object=} wait timer for delay
+ * @param {number=} wait timer for delay
  * @param {object=} option option for delay
  * @returns {object} Returns object.
  * @example
@@ -13,4 +13,4 @@ export default onDelay;
  *  onDelay(()=>{})
  *=>'11'
  */
-declare function onDelay(func: any, wait?: object | undefined, option?: object | undefined): object;
+declare function onDelay(func: any, wait?: number | undefined, option?: object | undefined): object;
