@@ -1,6 +1,6 @@
 {
   "name": "structkit",
-  "version": "1.4.873",
+  "version": "1.4.874",
   "description": "JS/TS utility tool that offers your wide varity of function to simplify your problem with the data",
 
   "main": "./dist/cjs/structkit-full.cjs.js",
