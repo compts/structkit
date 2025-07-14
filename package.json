@@ -2,6 +2,7 @@
   "name": "structkit",
   "version": "1.4.873",
   "description": "JS/TS utility tool that offers your wide varity of function to simplify your problem with the data",
+
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.js",
   "types": "./dist/ts/node.esm.d.ts",

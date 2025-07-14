@@ -1,5 +1,6 @@
-const _stk = exports;
-const __p = "@argument/place";
+(function(global){
+global._stk={};
+var __p = "@argument/place";
 
 __=__p
 
@@ -41,13 +42,13 @@ function _has (value, key) {
 
 }
 
-const negOne = -1;
-const zero = 0;
-const one = 1;
-const two = 2;
-const three = 3;
-const four = 4;
-const oneHundred = 100;
+var negOne = -1;
+var zero = 0;
+var one = 1;
+var two = 2;
+var three = 3;
+var four = 4;
+var oneHundred = 100;
 
 /**
  * Reviewing your curry arguments details
@@ -63,16 +64,16 @@ const oneHundred = 100;
  */
 function curryArgReview (args) {
 
-    const objs = {};
-    const placeList = [];
-    const validList = [];
-    let argIncter = 0;
+    var objs = {};
+    var placeList = [];
+    var validList = [];
+    var argIncter = 0;
 
-    for (const arg in args) {
+    for (var arg in args) {
 
         if (_has(args, arg)) {
 
-            const value = args[arg];
+            var value = args[arg];
 
             if (__ === value) {
 
@@ -127,11 +128,11 @@ function curryArgReview (args) {
  */
 function curryArg (fn, args, NoDefaultArgs) {
 
-    const RefNoDefaultArgs = NoDefaultArgs || zero;
+    var RefNoDefaultArgs = NoDefaultArgs || zero;
 
     if (RefNoDefaultArgs > args.length - argumentUndefinedCounter(args)) {
 
-        for (let kk=0; kk<RefNoDefaultArgs;) {
+        for (var kk=0; kk<RefNoDefaultArgs;) {
 
             if (_has(args, kk)) {
 
@@ -148,26 +149,28 @@ function curryArg (fn, args, NoDefaultArgs) {
 
     }
 
-    const checkValue = curryArgReview(args);
+    var checkValue = curryArgReview(args);
 
     if (checkValue.place.length > zero) {
 
-        return function (...argSub) {
+        return function () {
 
-            const clneCheckValue = [];
+    var argSub=arguments;
 
-            const reviewArgValue = curryArgReview(argSub);
+            var clneCheckValue = [];
+
+            var reviewArgValue = curryArgReview(argSub);
 
             if (reviewArgValue.place.length > zero) {
 
                 return curryArg(fn, args);
 
             }
-            for (let ii=0; ii<checkValue.argInc;) {
+            for (var ii=0; ii<checkValue.argInc;) {
 
                 if (_has(checkValue.argss, ii)) {
 
-                    const argValue = checkValue.argss[ii];
+                    var argValue = checkValue.argss[ii];
 
                     if (argValue.type === "place") {
 
@@ -214,13 +217,13 @@ function curryArg (fn, args, NoDefaultArgs) {
  */
 function argumentUndefinedCounter (args) {
 
-    let counter = 0;
+    var counter = 0;
 
-    for (const arg in args) {
+    for (var arg in args) {
 
         if (_has(args, arg)) {
 
-            const value = args[arg];
+            var value = args[arg];
 
             if (typeof value === "undefined") {
 
@@ -277,7 +280,9 @@ _stk.add=add;
  * has({'as':1}, 'as')
  * // => true
  */
-function has (...args) {
+function has () {
+
+    var args=arguments;
 
     return curryArg(function (aa, bb) {
 
@@ -287,11 +292,11 @@ function has (...args) {
 
 }
 
-const objectCallType = {"[object Array]": "object",
+var objectCallType = {"[object Array]": "object",
     "[object Object]": "object",
     "[object String]": "string"};
 
-const objectCallTypeAll = {"[object Arguments]": "arguments",
+var objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Array]": "array",
     "[object Boolean]": "boolean",
     "[object Date]": "date",
@@ -322,7 +327,7 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
  */
 function isJson (value, valueType) {
 
-    const getValueType = Object.prototype.toString.call(value);
+    var getValueType = Object.prototype.toString.call(value);
 
     if (has(objectCallType, getValueType) === false) {
 
@@ -330,7 +335,7 @@ function isJson (value, valueType) {
 
     }
 
-    let getValueTypeRef = objectCallType[getValueType];
+    var getValueTypeRef = objectCallType[getValueType];
 
     if (has(valueType)) {
 
@@ -346,7 +351,7 @@ function isJson (value, valueType) {
 
         }
 
-        const stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
+        var stripValue=value.replace(/(&quot;)/gi, '"', value).replace(/(&nbsp;)/gi, ' ', value);
 
         return (/^[\],:{}\s]*$/).test(stripValue.replace(/\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
             .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
@@ -354,7 +359,7 @@ function isJson (value, valueType) {
 
     }
 
-    let isValid =true;
+    var isValid =true;
 
     try {
 
@@ -388,7 +393,7 @@ function isJson (value, valueType) {
  */
 function checkIfFunctionNotExistObject (obj) {
 
-    const getValueType = Object.prototype.toString.call(obj);
+    var getValueType = Object.prototype.toString.call(obj);
 
     if (getValueType === "[object Function]") {
 
@@ -396,7 +401,7 @@ function checkIfFunctionNotExistObject (obj) {
 
     }
 
-    let isValid = false;
+    var isValid = false;
 
     if (getValueType === "[object Object]") {
 
@@ -417,7 +422,7 @@ function checkIfFunctionNotExistObject (obj) {
     }
     if (isValid) {
 
-        for (const key in obj) {
+        for (var key in obj) {
 
             if (has(obj, key)) {
 
@@ -447,7 +452,7 @@ function checkIfFunctionNotExistObject (obj) {
  */
 function getTypeofInternal (objectValue) {
 
-    const objectType = Object.prototype.toString.call(objectValue);
+    var objectType = Object.prototype.toString.call(objectValue);
 
     if (objectType === "[object Object]") {
 
@@ -482,15 +487,15 @@ function getTypeofInternal (objectValue) {
  */
 function each (objectValue, func) {
 
-    let re_loop=[];
+    var re_loop=[];
 
-    const typeofs=getTypeofInternal(objectValue);
+    var typeofs=getTypeofInternal(objectValue);
 
-    const localGlobal = new GlobalEach();
+    var localGlobal = new GlobalEach();
 
     if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
 
-        for (const ins in objectValue) {
+        for (var ins in objectValue) {
 
             if (has(objectValue, ins)) {
 
@@ -499,7 +504,7 @@ function each (objectValue, func) {
                     break;
 
                 }
-                let bool_func = true;
+                var bool_func = true;
 
                 if (getTypeofInternal(objectValue[ins]) === "function") {
 
@@ -594,7 +599,7 @@ GlobalEach.prototype.isContinue = function (value) {
  */
 function baseReduce (defaultValue, listData, func) {
 
-    const that = this;
+    var that = this;
 
     each(listData, function (av, ak) {
 
@@ -677,7 +682,7 @@ function empty (value) {
  */
 function baseAppend (objectValue, val, key) {
 
-    const typeofs=getTypeofInternal(objectValue);
+    var typeofs=getTypeofInternal(objectValue);
 
     if (typeofs === "json") {
 
@@ -709,16 +714,16 @@ function baseAppend (objectValue, val, key) {
  */
 function baseMap (objectValue, func) {
 
-    let value_arry=empty(objectValue);
-    let cnt=zero;
+    var value_arry=empty(objectValue);
+    var cnt=zero;
 
-    const that = this;
+    var that = this;
 
     each(objectValue, function (value, key) {
 
         if (has(func)) {
 
-            const dataFunc = func.apply(
+            var dataFunc = func.apply(
                 that,
                 [
                     value,
@@ -782,11 +787,11 @@ function map (objectValue, func) {
  */
 function count (objectValue, json_is_empty_check) {
 
-    let cnt=0;
-    const incByOne=1;
-    const defaultValueForFalse=0;
-    const json_is_empty_check_default=json_is_empty_check||false;
-    const get_json=getTypeofInternal(objectValue);
+    var cnt=0;
+    var incByOne=1;
+    var defaultValueForFalse=0;
+    var json_is_empty_check_default=json_is_empty_check||false;
+    var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
 
@@ -800,7 +805,7 @@ function count (objectValue, json_is_empty_check) {
 
     } else if (get_json === "object" && has(objectValue, "style")&&has(objectValue, "nodeType")&&has(objectValue, "ownerDocument")) {
 
-        for (const inc in objectValue) {
+        for (var inc in objectValue) {
 
             if (!isNaN(inc)) {
 
@@ -812,7 +817,7 @@ function count (objectValue, json_is_empty_check) {
 
     } else {
 
-        let rawObjectValue = objectValue;
+        var rawObjectValue = objectValue;
 
         if (get_json === "string") {
 
@@ -830,8 +835,8 @@ function count (objectValue, json_is_empty_check) {
 
     if (get_json === "json"&&json_is_empty_check_default === true) {
 
-        const jsn_parse=objectValue;
-        let cnts=0;
+        var jsn_parse=objectValue;
+        var cnts=0;
 
         each(jsn_parse, function () {
 
@@ -865,16 +870,16 @@ function count (objectValue, json_is_empty_check) {
  */
 function getIndexOf (objectValue, value, start, end, isGetLast) {
 
-    const indexOfDefaultValue=-1;
-    const incrementDefaultValue=1;
+    var indexOfDefaultValue=-1;
+    var incrementDefaultValue=1;
 
-    let referenceValue = -1;
+    var referenceValue = -1;
 
     if (getTypeofInternal(objectValue) === "array") {
 
-        for (let inc=start; inc<end;) {
+        for (var inc=start; inc<end;) {
 
-            let isValidMatch = false;
+            var isValidMatch = false;
 
             if (getTypeofInternal(value) === "json") {
 
@@ -928,8 +933,8 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  */
 function searchValueInJson (objectValue, searchValue) {
 
-    let counter = 0;
-    const increment = 1;
+    var counter = 0;
+    var increment = 1;
 
     each(objectValue, function (value, key) {
 
@@ -964,9 +969,9 @@ function searchValueInJson (objectValue, searchValue) {
  */
 function indexOf (objectValue, value) {
 
-    const start = 0;
+    var start = 0;
 
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
 
     return indexValue;
 
@@ -1006,9 +1011,9 @@ function indexOfExist (arrayObject, value) {
  */
 function getKeyVal (jsn, typ) {
 
-    const ky=[],
+    var ky=[],
         vl=[];
-    const list_raw = [];
+    var list_raw = [];
 
     each(jsn, function (vv, kk) {
 
@@ -1025,7 +1030,7 @@ function getKeyVal (jsn, typ) {
         "value"
     ], typ)) {
 
-        const ars=typ === "key"
+        var ars=typ === "key"
             ?ky
             :vl;
 
@@ -1086,9 +1091,11 @@ function first (objectValue) {
  * getTypeof([],{})
  * => [array,json]
  */
-function getTypeof (...args) {
+function getTypeof () {
 
-    const getTypes = map(args, function (value) {
+    var args=arguments;
+
+    var getTypes = map(args, function (value) {
 
         return getTypeofInternal(value);
 
@@ -1114,7 +1121,7 @@ function getTypeof (...args) {
  */
 function toArray (value) {
 
-    let return_val = value;
+    var return_val = value;
 
     if (getTypeof(return_val) !== "array") {
 
@@ -1142,7 +1149,7 @@ function baseCountValidList (objectValue) {
 
     return baseReduce(zero, objectValue, function (total, value) {
 
-        const values = toArray(value);
+        var values = toArray(value);
 
         total +=baseReduce(zero, values, function (subtotal, subvalue) {
 
@@ -1174,9 +1181,11 @@ function baseCountValidList (objectValue) {
  * allValid(true, false)
  * // => false
  */
-function allValid (...arg) {
+function allValid () {
 
-    const mapCount = baseReduce(zero, arg, function (total, value) {
+    var arg=arguments;
+
+    var mapCount = baseReduce(zero, arg, function (total, value) {
 
         total+= count(toArray(value));
 
@@ -1184,7 +1193,9 @@ function allValid (...arg) {
 
     });
 
-    return curryArg(function (...rawValue) {
+    return curryArg(function () {
+
+    var rawValue=arguments;
 
         return baseCountValidList(rawValue);
 
@@ -1260,8 +1271,8 @@ function indexOfNotExist (arrayObject, value) {
  */
 function appendIsArrayExist (arrayObject, value) {
 
-    const ary_type=getTypeof(arrayObject);
-    const ary_type1=getTypeof(value);
+    var ary_type=getTypeof(arrayObject);
+    var ary_type1=getTypeof(value);
 
     if (ary_type === "array" && ary_type1 === "array") {
 
@@ -1305,13 +1316,13 @@ _stk.appendIsArrayExist=appendIsArrayExist;
  */
 function arraySlice (objectValue, min, max) {
 
-    const ran_var=[];
-    const defaultValueZero=0;
-    const defaultValueNegativeOne=-1;
-    let ran_min=has(min)
+    var ran_var=[];
+    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
         ?min
         :defaultValueZero;
-    let ran_max=has(max)
+    var ran_max=has(max)
         ?max
         :count(objectValue);
 
@@ -1330,10 +1341,10 @@ function arraySlice (objectValue, min, max) {
 
         if (defaultValueZero > max) {
 
-            const raw_ran_min = defaultValueZero > min
+            var raw_ran_min = defaultValueZero > min
                 ?count(objectValue) + (defaultValueNegativeOne+ min)
                 :min;
-            const raw_ran_max =count(objectValue) + max;
+            var raw_ran_max =count(objectValue) + max;
 
             if (raw_ran_min < raw_ran_max) {
 
@@ -1377,9 +1388,13 @@ function arraySlice (objectValue, min, max) {
  * arrayConcat([1], 2)
  * // => [1,2]
  */
-function arrayConcat (...arg) {
+function arrayConcat () {
 
-    return curryArg(function (...argsub) {
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var argsub=arguments;
 
         if (argsub.length < one) {
 
@@ -1387,8 +1402,8 @@ function arrayConcat (...arg) {
 
         }
 
-        let return_val=toArray(first(argsub));
-        const arrayValue = toArray(arraySlice(argsub, one));
+        var return_val=toArray(first(argsub));
+        var arrayValue = toArray(arraySlice(argsub, one));
 
         each(arrayValue, function (value) {
 
@@ -1421,29 +1436,29 @@ _stk.arrayConcat=arrayConcat;
  */
 function range (maxValue, minValue, step) {
 
-    const emptyDefaultValue=0;
-    const tenDefaultValue=10;
+    var emptyDefaultValue=0;
+    var tenDefaultValue=10;
 
-    const incrementDefaultValue=1;
+    var incrementDefaultValue=1;
 
-    const incrementValue=has(step)
+    var incrementValue=has(step)
         ?step
         :incrementDefaultValue;
-    const minValueRef=has(minValue)
+    var minValueRef=has(minValue)
         ?minValue
         :incrementDefaultValue;
-    const maxValueRef=has(maxValue)
+    var maxValueRef=has(maxValue)
         ?maxValue
         :tenDefaultValue;
-    const output=[];
+    var output=[];
 
-    for (let inc=minValueRef; inc <= maxValueRef;) {
+    for (var inc=minValueRef; inc <= maxValueRef;) {
 
         if (getTypeof(incrementValue) === "string") {
 
             output.push(inc);
 
-            const render = new Function('inc', "return "+inc+incrementValue);
+            var render = new Function('inc', "return "+inc+incrementValue);
 
             inc = render.call(inc);
 
@@ -1484,8 +1499,8 @@ function range (maxValue, minValue, step) {
  */
 function arrayRepeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
 
     return map(range(nm_rpt), function () {
 
@@ -1514,9 +1529,9 @@ _stk.arraySlice=arraySlice;
  */
 function isEmpty (value) {
 
-    const typeofvalue = getTypeofInternal(value);
+    var typeofvalue = getTypeofInternal(value);
 
-    const invalidList = [
+    var invalidList = [
         'null',
         'undefined'
     ];
@@ -1570,11 +1585,11 @@ function isEmpty (value) {
  */
 function arraySum (arrayObject, delimeter) {
 
-    const defaultLimitDecimal = 0;
-    const arrayObjects=arrayObject||[];
-    const delimeters=delimeter||defaultLimitDecimal;
+    var defaultLimitDecimal = 0;
+    var arrayObjects=arrayObject||[];
+    var delimeters=delimeter||defaultLimitDecimal;
 
-    const sum = baseReduce(zero, arrayObjects, add);
+    var sum = baseReduce(zero, arrayObjects, add);
 
     return isEmpty(delimeters)
         ? parseInt(sum)
@@ -1607,9 +1622,11 @@ function asyncReplace (value, search, toReplace) {
 
             if (getTypeof(rawToReplace) === "function") {
 
-                const values = [];
+                var values = [];
 
-                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
 
                     values.push(rawToReplace(...arg));
 
@@ -1765,7 +1782,7 @@ function calculate (formula, args) {
 
         if (getTypeof(rawArgs) === "json") {
 
-            const argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
+            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
             rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
 
@@ -1775,7 +1792,7 @@ function calculate (formula, args) {
 
         }
 
-        const strFormula = rawFormula.replace(/\((.*?)\)/, function (mm, m1) {
+        var strFormula = rawFormula.replace(/\((.*?)\)/, function (mm, m1) {
 
             return compute(m1);
 
@@ -1804,8 +1821,8 @@ function calculate (formula, args) {
  */
 function compute (formula) {
 
-    const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
-    let matches = formula.match(regexpNumber);
+    var regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
+    var matches = formula.match(regexpNumber);
 
     if (count(matches) === one) {
 
@@ -1834,10 +1851,10 @@ function compute (formula) {
 
     }
 
-    let counter = zero;
-    let result = zero;
+    var counter = zero;
+    var result = zero;
 
-    for (let ii = zero; ii<Math.ceil(count(matches)/three); ii +=one) {
+    for (var ii = zero; ii<Math.ceil(count(matches)/three); ii +=one) {
 
         if (ii === zero) {
 
@@ -1939,7 +1956,7 @@ function convert (a1, b1, pos) {
 
     if ((/^(\d{1,})!$/).test(b1) || (/^(\d{1,})!$/).test(a1)) {
 
-        let value = one;
+        var value = one;
 
         if (pos === "right") {
 
@@ -1953,9 +1970,9 @@ function convert (a1, b1, pos) {
 
         }
 
-        let inc = one;
+        var inc = one;
 
-        for (let vv = one; vv <= value;) {
+        for (var vv = one; vv <= value;) {
 
             inc *= vv;
             vv+=one;
@@ -2009,7 +2026,7 @@ _stk.calculate=calculate;
  */
 function clone (objectValue) {
 
-    const variable=empty(objectValue);
+    var variable=empty(objectValue);
 
     each(objectValue, function (value, key) {
 
@@ -2041,8 +2058,8 @@ _stk.count=count;
  */
 function dec (value, default_value) {
 
-    let return_val = value;
-    const inc_n = getTypeof(default_value) === "number"
+    var return_val = value;
+    var inc_n = getTypeof(default_value) === "number"
         ? default_value
         : one;
 
@@ -2158,8 +2175,8 @@ _stk.equal=equal;
  */
 function filter (objectValue, func) {
 
-    const jsn_var=empty(objectValue);
-    const jsn_type=getTypeof(objectValue);
+    var jsn_var=empty(objectValue);
+    var jsn_type=getTypeof(objectValue);
 
     if (!(/(json|array)/g).test(jsn_type)) {
 
@@ -2247,8 +2264,8 @@ _stk.flatten=flatten;
  */
 function inc (value, default_value) {
 
-    let return_val = value;
-    const inc_n = getTypeof(default_value) === "number"
+    var return_val = value;
+    var inc_n = getTypeof(default_value) === "number"
         ? default_value
         : one;
 
@@ -2278,13 +2295,13 @@ function inc (value, default_value) {
  */
 function toString (value) {
 
-    const notInList = [
+    var notInList = [
         "object",
         "json",
         "promise"
     ];
 
-    const gettypeof = getTypeof(value);
+    var gettypeof = getTypeof(value);
 
     if (has(value) && indexOfNotExist(notInList, gettypeof)) {
 
@@ -2313,10 +2330,10 @@ function toString (value) {
  */
 function schemaSplitData (data) {
 
-    const split_strReplace= toString(data).replace(/([.]{1,})/g, ":");
+    var split_strReplace= toString(data).replace(/([.]{1,})/g, ":");
 
-    const spl_len= split_strReplace.split(":");
-    const spl=[];
+    var spl_len= split_strReplace.split(":");
+    var spl=[];
 
     each(spl_len, function (value) {
 
@@ -2347,7 +2364,7 @@ function schemaSplitData (data) {
  */
 function getData (objectValue, split_str, isStrict) {
 
-    const refIsStrict = isStrict || false;
+    var refIsStrict = isStrict || false;
 
     if (!has(objectValue) || isEmpty(objectValue)) {
 
@@ -2357,10 +2374,10 @@ function getData (objectValue, split_str, isStrict) {
 
     return curryArg(function (rawObjectValue, rawSplit_str) {
 
-        const spl= schemaSplitData(rawSplit_str);
+        var spl= schemaSplitData(rawSplit_str);
 
-        let jsn_total={};
-        let counter = 0;
+        var jsn_total={};
+        var counter = 0;
 
         each(spl, function (value) {
 
@@ -2430,17 +2447,17 @@ function isExact (whereValue, objectValue1, isExist) {
 
         }
 
-        const local_is_exist=has(rawIsExist)&&getTypeofInternal(rawIsExist) === "boolean"
+        var local_is_exist=has(rawIsExist)&&getTypeofInternal(rawIsExist) === "boolean"
             ?rawIsExist
             :true;
-        const val_s=(/(json|array|object)/g).test(getTypeofInternal(rawWhereValue))
+        var val_s=(/(json|array|object)/g).test(getTypeofInternal(rawWhereValue))
             ?rawWhereValue
             :[rawWhereValue];
-        const key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
+        var key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
             ?rawObjectValue1
             :[rawObjectValue1];
-        let cnt=0;
-        const incrementDefaultValue=1;
+        var cnt=0;
+        var incrementDefaultValue=1;
 
         each(key_s, function (kv, kk) {
 
@@ -2451,7 +2468,7 @@ function isExact (whereValue, objectValue1, isExist) {
 
                 if (has(val_s, kk)) {
 
-                    const local_is_valid = localValidation(val_s[kk], kv, local_is_exist);
+                    var local_is_valid = localValidation(val_s[kk], kv, local_is_exist);
 
                     if (local_is_valid) {
 
@@ -2465,7 +2482,7 @@ function isExact (whereValue, objectValue1, isExist) {
 
             if (getTypeofInternal(rawWhereValue) === "array") {
 
-                const local_is_valid = local_is_exist
+                var local_is_valid = local_is_exist
                     ?indexOfExist(val_s, kv)
                     :indexOfNotExist(val_s, kv);
 
@@ -2488,11 +2505,11 @@ function isExact (whereValue, objectValue1, isExist) {
                     "object"
                 ], getTypeofInternal(rawWhereValue))) {
 
-                    const gdata = getData(key_s, kk);
+                    var gdata = getData(key_s, kk);
 
                     if (!isEmpty(gdata)) {
 
-                        const local_is_valid = localValidation(gdata, kv, local_is_exist);
+                        var local_is_valid = localValidation(gdata, kv, local_is_exist);
 
                         if (local_is_valid) {
 
@@ -2585,12 +2602,12 @@ function isExactbyRegExp (whereValue, objectValue1) {
 
     }
 
-    const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
+    var key_s=(/(json|array)/g).test(getTypeof(objectValue1))
         ?objectValue1
         :[objectValue1];
-    let cnt=0;
-    const incrementDefaultValue=1;
-    let local_is_valid = null;
+    var cnt=0;
+    var incrementDefaultValue=1;
+    var local_is_valid = null;
 
     each(key_s, function (kv, kk) {
 
@@ -2658,15 +2675,15 @@ function isExactbyRegExp (whereValue, objectValue1) {
  */
 function whereLoopExecution (jsn, whr, func, isExist, types) {
 
-    const json_convertion = getTypeof(jsn) === "array"
+    var json_convertion = getTypeof(jsn) === "array"
         ? jsn
         : [jsn];
-    const jsn_s= count(jsn, true) === zero
+    var jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
-    const whr_s=whr||{};
-    const variable=empty(jsn);
-    let filterData = {};
+    var whr_s=whr||{};
+    var variable=empty(jsn);
+    var filterData = {};
 
     each(jsn_s, function (jv, jk, isContinueRef1) {
 
@@ -2774,14 +2791,14 @@ function where (objectValue, objectValueWhere, func) {
  */
 function remove (objectValue, value, value2) {
 
-    const type_js=getTypeof(objectValue);
-    let reslt =null;
+    var type_js=getTypeof(objectValue);
+    var reslt =null;
 
-    const isValueAFunction = getTypeof(value) === "function";
+    var isValueAFunction = getTypeof(value) === "function";
 
     if (type_js === "array") {
 
-        const lastRow = has(value2)
+        var lastRow = has(value2)
             ?value2
             :count(objectValue);
 
@@ -2827,7 +2844,7 @@ function remove (objectValue, value, value2) {
     if (type_js === "json") {
 
         reslt={};
-        const jsn_vw=[];
+        var jsn_vw=[];
 
         each(objectValue, function () {
 
@@ -2884,7 +2901,7 @@ function remove (objectValue, value, value2) {
  */
 function fromPairs (value, deepLimit) {
 
-    const defineDeepLimit = defaultTo(two);
+    var defineDeepLimit = defaultTo(two);
 
     if (getTypeofInternal(value) !== "array") {
 
@@ -2898,7 +2915,7 @@ function fromPairs (value, deepLimit) {
 
             if (subBalue.length > one) {
 
-                const depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit)));
+                var depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit)));
 
                 append(total, depthValue, subBalue[zero]);
 
@@ -2927,7 +2944,7 @@ function fromPairs (value, deepLimit) {
  */
 function getDepthValue (value) {
 
-    const getRmoveValue = remove(value, zero);
+    var getRmoveValue = remove(value, zero);
 
     if (isEmpty(getRmoveValue)) {
 
@@ -2935,7 +2952,7 @@ function getDepthValue (value) {
 
     }
 
-    const dataObj = {};
+    var dataObj = {};
 
     dataObj[first(value)] = getDepthValue(getRmoveValue);
 
@@ -2964,13 +2981,13 @@ _stk.getTypeof=getTypeof;
  */
 function getUniq (option) {
 
-    const optionValue = option||"default";
+    var optionValue = option||"default";
 
     if (optionValue === "default") {
 
-        const defaultRandomValue=2;
-        const defaultSubstrValue=36;
-        const str_rand1=Math
+        var defaultRandomValue=2;
+        var defaultSubstrValue=36;
+        var str_rand1=Math
             .random()
             .toString(defaultSubstrValue)
             .substring(defaultRandomValue)+Math.random()
@@ -3003,15 +3020,15 @@ _stk.getUniq=getUniq;
  */
 function groupBy (objectValue, func) {
 
-    const value_arry=clone(empty(objectValue));
+    var value_arry=clone(empty(objectValue));
 
-    const groupData = {};
+    var groupData = {};
 
     each(objectValue, function (value, key) {
 
         if (has(func)) {
 
-            const dataFunc = func(value, key);
+            var dataFunc = func(value, key);
 
             if (!has(groupData, dataFunc)) {
 
@@ -3178,7 +3195,7 @@ function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
-        const jsn_type=getTypeof(value);
+        var jsn_type=getTypeof(value);
 
         if (jsn_type === "json") {
 
@@ -3224,13 +3241,13 @@ _stk.isExactbyRegExp=isExactbyRegExp;
  */
 function jsonToArray (objectValue, value) {
 
-    const arry=[];
+    var arry=[];
 
     each(objectValue, function (_value) {
 
         if (has(value)) {
 
-            const valueData = getData(_value, value);
+            var valueData = getData(_value, value);
 
             if (isEmpty(valueData) === false) {
 
@@ -3291,9 +3308,9 @@ _stk.last=last;
  */
 function lastIndexOf (objectValue, value) {
 
-    const start = 0;
+    var start = 0;
 
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
 
     return indexValue;
 
@@ -3342,17 +3359,17 @@ _stk.like=like;
  */
 function limit (objectValue, minValue, maxValue, func) {
 
-    let cnt=0;
-    const glo_jsn={};
-    let glo_indtfd = null;
-    const emptyDefaultValue=0;
-    const minValueReserve=has(minValue)
+    var cnt=0;
+    var glo_jsn={};
+    var glo_indtfd = null;
+    var emptyDefaultValue=0;
+    var minValueReserve=has(minValue)
         ?minValue
         :emptyDefaultValue;
-    const maxValueReserve=has(maxValue)
+    var maxValueReserve=has(maxValue)
         ?maxValue
         :count(objectValue);
-    const incrementDefaultValue=1;
+    var incrementDefaultValue=1;
 
     each(objectValue, function (meth, key) {
 
@@ -3538,9 +3555,9 @@ function selectInData (objectValue, whereValue) {
 
         return baseMap(rawWhereValue, function (value) {
 
-            const rawDataToArray = baseMap(toArray(rawObjectValue), function (value2) {
+            var rawDataToArray = baseMap(toArray(rawObjectValue), function (value2) {
 
-                const rawData = getData(value2, value);
+                var rawData = getData(value2, value);
 
                 return isEmpty(rawData)
                     ?value
@@ -3579,7 +3596,7 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue, rawWhereValue) {
 
-        const rawObjectType = getTypeofInternal(rawObjectValue);
+        var rawObjectType = getTypeofInternal(rawObjectValue);
 
         if (getTypeofInternal(rawMergeValue) !== rawObjectType) {
 
@@ -3591,12 +3608,12 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
             each(mergeValue, function (subValue) {
 
-                const joinValue = {
+                var joinValue = {
                     "$1": value,
                     "$2": subValue
                 };
-                const selectData = selectInData(joinValue, rawWhereValue);
-                const whereData = where(subValue, selectData);
+                var selectData = selectInData(joinValue, rawWhereValue);
+                var whereData = where(subValue, selectData);
 
                 if (isEmpty(whereData) === false) {
 
@@ -3689,21 +3706,21 @@ function varExtend (objectValue, objectValueReplace) {
 
     return curryArg(function (rawObjectValue, rawObjectValueReplace) {
 
-        const jsn_bool={
+        var jsn_bool={
             "false": false,
             "true": true
         };
 
-        const listValid = [
+        var listValid = [
             "json",
             "object"
         ];
 
         if (indexOfExist(listValid, getTypeof(rawObjectValue)) && indexOfExist(listValid, getTypeof(rawObjectValueReplace))) {
 
-            const jsn_s={};
+            var jsn_s={};
 
-            for (const key in rawObjectValue) {
+            for (var key in rawObjectValue) {
 
                 if (has(rawObjectValue, key)) {
 
@@ -3721,7 +3738,7 @@ function varExtend (objectValue, objectValueReplace) {
 
             }
 
-            for (const key in rawObjectValueReplace) {
+            for (var key in rawObjectValueReplace) {
 
                 if (has(jsn_s, key)) {
 
@@ -3767,7 +3784,7 @@ function varExtend (objectValue, objectValueReplace) {
  */
 function replaceValue (objectValue, objectValueReplace) {
 
-    for (const key in objectValueReplace) {
+    for (var key in objectValueReplace) {
 
         if (getTypeof(objectValue[key]) === "json") {
 
@@ -3801,20 +3818,20 @@ function replaceValue (objectValue, objectValueReplace) {
  */
 function onDelay (func, wait, option) {
 
-    const zero = 0;
-    const extend = varExtend({
+    var zero = 0;
+    var extend = varExtend({
         "limitCounterClear": 0
     }, option);
 
-    const valueWaited = wait || zero;
+    var valueWaited = wait || zero;
 
-    const timeout = setTimeout(function () {
+    var timeout = setTimeout(function () {
 
         func();
 
     }, valueWaited);
 
-    const sequence = new ClassDelay(timeout, extend);
+    var sequence = new ClassDelay(timeout, extend);
 
     return sequence;
 
@@ -3866,16 +3883,16 @@ _stk.onDelay=onDelay;
  */
 function onSequence (func, wait, option) {
 
-    const zero = 0;
-    const one = 1;
-    const extend = varExtend({
+    var zero = 0;
+    var one = 1;
+    var extend = varExtend({
         "limitCounterClear": 0
     }, option);
 
-    const valueWaited = wait || zero;
-    let counter = 0;
+    var valueWaited = wait || zero;
+    var counter = 0;
 
-    const interval = setInterval(function () {
+    var interval = setInterval(function () {
 
         func();
         if (extend.limitCounterClear >zero) {
@@ -3892,7 +3909,7 @@ function onSequence (func, wait, option) {
 
     }, valueWaited);
 
-    const sequence = new ClassSequence(interval, extend);
+    var sequence = new ClassSequence(interval, extend);
 
     return sequence;
 
@@ -3927,7 +3944,7 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence;
 
-const getWindow = function () {
+var getWindow = function () {
 
     if (typeof window !== 'undefined') {
 
@@ -3954,10 +3971,10 @@ const getWindow = function () {
  */
 function onWait (func, wait) {
 
-    const browserWindow = getWindow();
-    let timerId = null;
+    var browserWindow = getWindow();
+    var timerId = null;
 
-    let useReqeustAdnimation = null;
+    var useReqeustAdnimation = null;
 
     if (browserWindow) {
 
@@ -4056,7 +4073,7 @@ function whereOnce (objectValue, objectValueWhere, func) {
 }
 
 /* eslint-disable sort-keys */
-const entity = [
+var entity = [
     {
         "decimal": "&#160;",
         "entity": "&nbsp;",
@@ -5145,13 +5162,13 @@ const entity = [
 
 ];
 
-const listType = [
+var listType = [
     'decimal',
     'entity',
     'hex'
 ];
 
-const whitespace = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003' +
+var whitespace = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003' +
          '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
          '\u2029\uFEFF';
 
@@ -5170,7 +5187,7 @@ const whitespace = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003' 
  */
 function stringUnEscape (value, type) {
 
-    const typeVal = type || "entity";
+    var typeVal = type || "entity";
 
     if (indexOfNotExist(listType, typeVal)) {
 
@@ -5178,13 +5195,13 @@ function stringUnEscape (value, type) {
 
     }
 
-    const regexReplace = toString(value).replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
+    var regexReplace = toString(value).replace(/(&[#]{0,1}[a-zA-Z-0-9]{1,};)/g, function (str1) {
 
-        const search = {};
+        var search = {};
 
         search[typeVal] =str1;
 
-        const whr = whereOnce(entity, search);
+        var whr = whereOnce(entity, search);
 
         return isEmpty(whr)
             ? str1
@@ -5228,7 +5245,7 @@ function escapeQuotesJson (str) {
  */
 function cleanValue (value) {
 
-    let refValue = value;
+    var refValue = value;
 
     refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
     refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
@@ -5296,20 +5313,20 @@ function getTagVal (value) {
  */
 function encodeStripValueQoute (values) {
 
-    let str_call = "";
-    let reserv_str = "";
-    const arg_call_list = [];
+    var str_call = "";
+    var reserv_str = "";
+    var arg_call_list = [];
 
-    let str_type = "";
-    let last_str_value = "";
-    let counter_double_qoute = 0;
-    let counter_single_qoute = 0;
+    var str_type = "";
+    var last_str_value = "";
+    var counter_double_qoute = 0;
+    var counter_single_qoute = 0;
 
     each(values.split(""), function (value) {
 
-        const value_indx=value;
+        var value_indx=value;
 
-        let row_str_type = "-";
+        var row_str_type = "-";
 
         if (value_indx === '"') {
 
@@ -5394,11 +5411,11 @@ function encodeStripValueQoute (values) {
  */
 function decodeStripValueQoute (str_call, arg_call_list, keyOnly) {
 
-    let count = 0;
+    var count = 0;
 
-    let repl= str_call.replace(/#@([0-9]{1,})@#/gi, function (__, va1) {
+    var repl= str_call.replace(/#@([0-9]{1,})@#/gi, function (__, va1) {
 
-        const getObj = arg_call_list[va1];
+        var getObj = arg_call_list[va1];
 
         count +=one;
 
@@ -5433,9 +5450,9 @@ function callbackParse (glb, config) {
 
     if (glb.type === 'json') {
 
-        const encodeStr = encodeStripValueQoute(glb.ret_value);
+        var encodeStr = encodeStripValueQoute(glb.ret_value);
 
-        const splitKeyValue = encodeStr.str_call.split(":");
+        var splitKeyValue = encodeStr.str_call.split(":");
 
         if (splitKeyValue.length <two) {
 
@@ -5443,7 +5460,7 @@ function callbackParse (glb, config) {
 
         }
 
-        const reviewSubValue = getTagVal(decodeStripValueQoute(cleanValue(splitKeyValue.splice(one).join(": ")), encodeStr.arg_call_list, false));
+        var reviewSubValue = getTagVal(decodeStripValueQoute(cleanValue(splitKeyValue.splice(one).join(": ")), encodeStr.arg_call_list, false));
 
         if (reviewSubValue.type !== "none") {
 
@@ -5451,22 +5468,22 @@ function callbackParse (glb, config) {
 
         }
 
-        const valueSplit = encodeStr.str_call.split(",");
+        var valueSplit = encodeStr.str_call.split(",");
 
-        const list_obj = [];
+        var list_obj = [];
 
         each(valueSplit, function (value) {
 
-            const value_split = value.split(":");
+            var value_split = value.split(":");
 
             if (value_split.length <two) {
 
                 throw new Error("No Key found");
 
             }
-            const argValueJoin =value_split.splice(one).join(": ");
-            const objSubVal = decodeStripValueQoute(cleanValue(argValueJoin), encodeStr.arg_call_list, false);
-            const tagVal = getTagVal(objSubVal);
+            var argValueJoin =value_split.splice(one).join(": ");
+            var objSubVal = decodeStripValueQoute(cleanValue(argValueJoin), encodeStr.arg_call_list, false);
+            var tagVal = getTagVal(objSubVal);
 
             if (tagVal.type === 'none') {
 
@@ -5486,11 +5503,11 @@ function callbackParse (glb, config) {
 
     if (glb.type === 'array') {
 
-        const encodeStr = encodeStripValueQoute(glb.ret_value);
+        var encodeStr = encodeStripValueQoute(glb.ret_value);
 
-        const valueSplit = encodeStr.str_call.split(",");
+        var valueSplit = encodeStr.str_call.split(",");
 
-        const reviewSubValue = getTagVal(glb.ret_value);
+        var reviewSubValue = getTagVal(glb.ret_value);
 
         if (reviewSubValue.type !== "none") {
 
@@ -5498,12 +5515,12 @@ function callbackParse (glb, config) {
 
         }
 
-        const list_obj = [];
+        var list_obj = [];
 
         each(valueSplit, function (value) {
 
-            const objSubVal = decodeStripValueQoute(cleanValue(value), encodeStr.arg_call_list, false);
-            const tagVal = getTagVal(objSubVal);
+            var objSubVal = decodeStripValueQoute(cleanValue(value), encodeStr.arg_call_list, false);
+            var tagVal = getTagVal(objSubVal);
 
             if (tagVal.type === 'none') {
 
@@ -5540,11 +5557,11 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({"disableCorrection": false}, config);
+    var defaultConfig = varExtend({"disableCorrection": false}, config);
 
     if (defaultConfig.disableCorrection) {
 
-        const rawValue = cleanValue(value);
+        var rawValue = cleanValue(value);
 
         if (rawValue === "") {
 
@@ -5555,18 +5572,18 @@ function parseJson (value, config) {
         return JSON.parse(rawValue);
 
     }
-    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
+    var stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
-    const tagVal = getTagVal(stripValue);
+    var tagVal = getTagVal(stripValue);
 
-    const obgM = callbackParse(tagVal, defaultConfig);
+    var obgM = callbackParse(tagVal, defaultConfig);
 
     if (obgM === "") {
 
         return null;
 
     }
-    const dataObj = JSON.parse(obgM);
+    var dataObj = JSON.parse(obgM);
 
     return dataObj;
 
@@ -5607,7 +5624,7 @@ function escapeQuotesStr (str) {
  */
 function datastring (str) {
 
-    let data_s="";
+    var data_s="";
 
     if (typeof str === "string") {
 
@@ -5657,12 +5674,12 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
     return curryArg(function (refCount, refConfig, value) {
 
-        let str="";
-        let str_strt="";
-        let str_end="";
-        let inc=0;
-        const incrementDefaultValue=1;
-        let inc_main=null;
+        var str="";
+        var str_strt="";
+        var str_end="";
+        var inc=0;
+        var incrementDefaultValue=1;
+        var inc_main=null;
 
         if (has(value)) {
 
@@ -5746,9 +5763,9 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend({"unscapeEntity": false}, config);
+    var defaultConfig = varExtend({"unscapeEntity": false}, config);
 
-    let data = parseStringCore(zero, defaultConfig, value);
+    var data = parseStringCore(zero, defaultConfig, value);
 
     if (defaultConfig.unscapeEntity) {
 
@@ -5774,20 +5791,24 @@ _stk.parseString=parseString;
  *
  * @since 1.4.86
  * @category Function
- * @param {...any?} arg Arguments in function
+ * @param {?} arg Arguments in function
  * @returns {any} Returns any value.
  * @example
  *
  * pipe(Math.pow,add(1))(11,2)
  * // => 122
  */
-function pipe (...arg) {
+function pipe () {
 
-    const pipeConst = first(arg);
-    const varLimit = limit(arg, one);
-    const that = this;
+    var arg=arguments;
 
-    return curryArg(function (...rawValue) {
+    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
 
         return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
 
@@ -5828,14 +5849,14 @@ _stk.range=range;
  */
 function random (valueArray, minValue, maxValue) {
 
-    const emptyDefaultValue=0;
-    const ran_min=has(minValue)
+    var emptyDefaultValue=0;
+    var ran_min=has(minValue)
         ?minValue
         :emptyDefaultValue;
-    const ran_max=has(maxValue)
+    var ran_max=has(maxValue)
         ?maxValue+ran_min
         :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
+    var math_random = Math.round(Math.random()*ran_max);
 
     if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
 
@@ -5866,7 +5887,7 @@ _stk.random=random;
  */
 function reduce (defaultValue, listData, func) {
 
-    const that = this;
+    var that = this;
 
     return curryArg(function (rawDefaultValue, rawListData, rawFunc) {
 
@@ -5901,7 +5922,7 @@ _stk.reduce=reduce;
  */
 function regexCountGroup (value) {
 
-    const one =1;
+    var one =1;
 
     return new RegExp(toString(value) + '|').exec('').length - one;
 
@@ -5927,8 +5948,8 @@ _stk.remove=remove;
  */
 function removeFromKey (objectValue, value) {
 
-    const type_js=getTypeof(objectValue);
-    let reslt =null;
+    var type_js=getTypeof(objectValue);
+    var reslt =null;
 
     if (type_js === "array") {
 
@@ -5987,9 +6008,9 @@ _stk.removeFromKey=removeFromKey;
  */
 function repeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
+    var emptyDefaultValue=0;
+    var nm_rpt=valueRepetion||emptyDefaultValue;
+    var nm_str=value||"";
 
     return arrayRepeat(nm_str, nm_rpt).join("");
 
@@ -6013,22 +6034,22 @@ _stk.repeat=repeat;
  */
 function roundDecimal (value, maxValue) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const twoDefaultValue=2;
-    const tenDefaultValue=10;
-    const jsn=value||emptyDefaultValue;
-    const str_dec=jsn.toString().split(".");
-    const s_dmin=0;
-    const s_dmax=maxValue||twoDefaultValue;
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var twoDefaultValue=2;
+    var tenDefaultValue=10;
+    var jsn=value||emptyDefaultValue;
+    var str_dec=jsn.toString().split(".");
+    var s_dmin=0;
+    var s_dmax=maxValue||twoDefaultValue;
 
     if (count(str_dec) === twoDefaultValue) {
 
-        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        const delmts=p_cnts <= s_dmin
+        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var delmts=p_cnts <= s_dmin
             ?s_dmin
             :s_dmax;
-        const dec_s=tenDefaultValue**delmts;
+        var dec_s=tenDefaultValue**delmts;
 
         return Math.round(parseFloat(jsn*dec_s))/dec_s;
 
@@ -6073,7 +6094,7 @@ function setData (objectValue, split_str, updateValue) {
 
         }
 
-        const spl= schemaSplitData(rawSplit_str);
+        var spl= schemaSplitData(rawSplit_str);
 
         return baseReduce(rawObjectValue, [spl], function (total, value) {
 
@@ -6084,7 +6105,7 @@ function setData (objectValue, split_str, updateValue) {
             }
             if (getTypeofInternal(total) === "array") {
 
-                const rawTotal = first(total);
+                var rawTotal = first(total);
 
                 valueToUpdate(rawTotal, value, rawUpdateValue);
                 total = [rawTotal];
@@ -6122,7 +6143,7 @@ function setData (objectValue, split_str, updateValue) {
  */
 function valueToUpdate (objectValue, whereStr, updateValue) {
 
-    const getRmoveValue = remove(whereStr, zero);
+    var getRmoveValue = remove(whereStr, zero);
 
     if (isEmpty(getRmoveValue)) {
 
@@ -6159,22 +6180,22 @@ _stk.setData=setData;
  */
 function shuffle (objectValue) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const output=[];
-    let rawObjectValue = clone(objectValue);
-    const valueType=[
+    var emptyDefaultValue=0;
+    var onceDefaultValue=1;
+    var output=[];
+    var rawObjectValue = clone(objectValue);
+    var valueType=[
         "array",
         "json"
     ];
 
     if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
 
-        const counts=count(objectValue)-onceDefaultValue;
+        var counts=count(objectValue)-onceDefaultValue;
 
-        for (let currentIndex=counts; currentIndex>=emptyDefaultValue;) {
+        for (var currentIndex=counts; currentIndex>=emptyDefaultValue;) {
 
-            const rowValue = random(rawObjectValue);
+            var rowValue = random(rawObjectValue);
 
             rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
             output.push(first(rowValue));
@@ -6203,9 +6224,13 @@ _stk.shuffle=shuffle;
  * someValid(true, false)
  * // => true
  */
-function someValid (...arg) {
+function someValid () {
 
-    return curryArg(function (...rawValue) {
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
 
         return baseCountValidList(rawValue);
 
@@ -6231,13 +6256,13 @@ _stk.someValid=someValid;
  */
 function baseSort (objectValue, func) {
 
-    const jsonn=objectValue;
+    var jsonn=objectValue;
 
-    const js_m=getTypeofInternal(jsonn) === "json"
+    var js_m=getTypeofInternal(jsonn) === "json"
         ?each(jsonn)
         :jsonn;
 
-    const finalResponse=js_m.sort(function (orderA, orderB) {
+    var finalResponse=js_m.sort(function (orderA, orderB) {
 
         if (has(func) && getTypeofInternal(func) === 'function') {
 
@@ -6269,8 +6294,8 @@ function baseSort (objectValue, func) {
  */
 function sort (objectValue, order, type) {
 
-    let asc=true;
-    let types='any';
+    var asc=true;
+    var types='any';
 
     if (has(order) && getTypeof(order) === 'boolean') {
 
@@ -6284,10 +6309,10 @@ function sort (objectValue, order, type) {
 
     }
 
-    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
+    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
 
-        let sortOrderA = orderA;
-        let sortOrderB = orderB;
+        var sortOrderA = orderA;
+        var sortOrderB = orderB;
 
         if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
 
@@ -6349,7 +6374,7 @@ _stk.sort=sort;
  */
 function sortBy (objectValue, func) {
 
-    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
+    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
 
         if (has(func) && getTypeof(func) === 'function') {
 
@@ -6468,7 +6493,7 @@ _stk.stringCapitalize=stringCapitalize;
  */
 function stringEscape (value, type) {
 
-    const typeVal = type || "entity";
+    var typeVal = type || "entity";
 
     if (indexOfNotExist(listType, typeVal)) {
 
@@ -6476,11 +6501,11 @@ function stringEscape (value, type) {
 
     }
 
-    const regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
+    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
 
-        const search = {"html": str1};
+        var search = {"html": str1};
 
-        const whr = whereOnce(entity, search);
+        var whr = whereOnce(entity, search);
 
         return isEmpty(whr)
             ? str1
@@ -6615,8 +6640,8 @@ function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
-        let cloneRawListValueReturn = rawListValue;
-        let isSplit = false;
+        var cloneRawListValueReturn = rawListValue;
+        var isSplit = false;
 
         if (getTypeof(cloneRawListValueReturn) !== "array") {
 
@@ -6625,7 +6650,7 @@ function swap (firstValue, secondValue, listValue) {
 
         }
 
-        const cloneRawListValue = clone(cloneRawListValueReturn);
+        var cloneRawListValue = clone(cloneRawListValueReturn);
 
         cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
         cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
@@ -6665,13 +6690,13 @@ _stk.swap=swap;
  */
 function baseTake (rawList, startIndex, lastIndex) {
 
-    const refRawList = getTypeofInternal(rawList) === "string"
+    var refRawList = getTypeofInternal(rawList) === "string"
         ?rawList.split("")
         :rawList;
 
-    const varLimit = limit(refRawList, startIndex, lastIndex);
+    var varLimit = limit(refRawList, startIndex, lastIndex);
 
-    const rawGetValue = getValue(varLimit);
+    var rawGetValue = getValue(varLimit);
 
     return getTypeofInternal(rawList) === "string"
         ?rawGetValue.join("")
@@ -6724,31 +6749,31 @@ _stk.take=take;
  */
 function templateValue (templateString, data, option) {
 
-    const oneDefaultValue=1;
+    var oneDefaultValue=1;
 
     templateString = templateValueInternal(toString(templateString), data);
 
-    const default_option=varExtend({
+    var default_option=varExtend({
         "escape": "<!-([\\s\\S]+?)!>",
         "evaluate": "<![^=-]([\\s\\S]+?)!>",
         "interpolate": "<!=([\\s\\S]+?)!>"
     }, option);
 
-    const valueType=[
+    var valueType=[
         "array",
         "json"
     ];
 
-    const regexp = new RegExp([
+    var regexp = new RegExp([
         default_option.evaluate,
         default_option.interpolate,
         default_option.escape
     ].join("|")+"|$", "g");
 
-    let source = "__p += '";
-    let index = 0;
+    var source = "__p += '";
+    var index = 0;
 
-    const escapes = {
+    var escapes = {
         '\n': 'n',
         '\r': 'r',
         "'": "'",
@@ -6757,9 +6782,9 @@ function templateValue (templateString, data, option) {
         '\u2029': 'u2029'
     };
 
-    const escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+    var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
 
-    const escapeChar = function (match) {
+    var escapeChar = function (match) {
 
         return '\\' + escapes[match];
 
@@ -6800,11 +6825,11 @@ function templateValue (templateString, data, option) {
 
     try {
 
-        let val_source = "";
+        var val_source = "";
 
         if (getTypeof(data) === "json") {
 
-            for (const key in data) {
+            for (var key in data) {
 
                 if (has(data, key)) {
 
@@ -6818,7 +6843,7 @@ function templateValue (templateString, data, option) {
 
         }
 
-        const render = new Function('obj', '_', val_source+source);
+        var render = new Function('obj', '_', val_source+source);
 
         return render.call(this, data, templateValue);
 
@@ -6847,19 +6872,19 @@ function templateValue (templateString, data, option) {
  */
 function templateValueInternal (str_raw, reg) {
 
-    const str=str_raw;
-    let strs=str;
+    var str=str_raw;
+    var strs=str;
 
     try {
 
         try {
 
-            const regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
+            var regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
 
             strs=strs.replace(regs, function (word, mes1) {
 
-                const strs_perd=mes1.replace(".", ":");
-                const gtdata=getData(reg, strs_perd);
+                var strs_perd=mes1.replace(".", ":");
+                var gtdata=getData(reg, strs_perd);
 
                 return getTypeof(gtdata) === "json"
                     ?""
@@ -6879,7 +6904,7 @@ function templateValueInternal (str_raw, reg) {
 
     }
 
-    const strs_finl=strs;
+    var strs_finl=strs;
 
     return strs_finl;
 
@@ -6952,8 +6977,8 @@ _stk.toBoolean=toBoolean;
  */
 function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
-    const regp=regexp;
-    let intr=defaultVariable;
+    var regp=regexp;
+    var intr=defaultVariable;
 
     if (regp.test(nullReplacement.toString())) {
 
@@ -6991,13 +7016,13 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
  */
 function toDouble (value, config) {
 
-    const zero = 0.00;
+    var zero = 0.00;
 
-    const defaultConfig = varExtend({"decSeparator": "."}, config);
+    var defaultConfig = varExtend({"decSeparator": "."}, config);
 
     if (defaultConfig.decSeparator !== ".") {
 
-        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
 
         value = value.replace(sepRegexp, ".");
 
@@ -7026,7 +7051,7 @@ _stk.toDouble=toDouble;
  */
 function toInteger (value) {
 
-    const zero = 0;
+    var zero = 0;
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
@@ -7059,7 +7084,7 @@ function toPairs (value) {
 
     return baseReduce([], value, function (total, subValue, subKey) {
 
-        const subArray = [];
+        var subArray = [];
 
         subArray.push(subKey);
         setDepthValue(subArray, subValue);
@@ -7119,13 +7144,13 @@ _stk.toString=toString;
  */
 function trimStart (value, remove_value) {
 
-    const rx = new RegExp('^[' + whitespace + ']*');
+    var rx = new RegExp('^[' + whitespace + ']*');
 
-    let rawValue = toString(value).replace(rx, "");
+    var rawValue = toString(value).replace(rx, "");
 
     if (indexOfExist(["string"], getTypeof(remove_value))) {
 
-        const regData = new RegExp("^("+remove_value+")", "g");
+        var regData = new RegExp("^("+remove_value+")", "g");
 
         rawValue = rawValue.replace(regData, "");
 
@@ -7150,13 +7175,13 @@ function trimStart (value, remove_value) {
  */
 function trimEnd (value, remove_value) {
 
-    const rx = new RegExp('[' + whitespace + ']*$');
+    var rx = new RegExp('[' + whitespace + ']*$');
 
-    let rawValue= toString(value).replace(rx, "");
+    var rawValue= toString(value).replace(rx, "");
 
     if (indexOfExist(["string"], getTypeof(remove_value))) {
 
-        const regData = new RegExp("("+remove_value+")$", "g");
+        var regData = new RegExp("("+remove_value+")$", "g");
 
         rawValue = rawValue.replace(regData, "");
 
@@ -7181,7 +7206,7 @@ function trimEnd (value, remove_value) {
  */
 function trim (value, remove_value) {
 
-    let rawValue = toString(value);
+    var rawValue = toString(value);
 
     rawValue = trimStart(rawValue);
     rawValue = trimEnd(rawValue);
@@ -7224,7 +7249,7 @@ function unique (value) {
 
     if (getTypeof(value) === "array") {
 
-        const uniqArrData = [];
+        var uniqArrData = [];
 
         each(value, function (val) {
 
@@ -7256,9 +7281,13 @@ function unique (value) {
  * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
  * // => [1, 2, 3, 4, 7, 5, 6, 8]
  */
-function union (...arg) {
+function union () {
 
-    return curryArg(function (...rawValue) {
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
 
         return baseReduce([], rawValue, function (total, value) {
 
@@ -7629,11 +7658,15 @@ _stk.whereOnce=whereOnce;
  * zip([1],[2],[3])
  * // => [[1,2,3]]
  */
-function zip (...arg) {
+function zip () {
 
-    return curryArg(function (...rawValue) {
+    var arg=arguments;
 
-        const varLimit = limit(rawValue, one);
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        var varLimit = limit(rawValue, one);
 
         return baseReduce([], first(rawValue), function (total, value, key) {
 
@@ -7656,4 +7689,4 @@ function zip (...arg) {
 _stk.zip=zip;
 
 
- //end of file
+ })(typeof window !== "undefined" ? window : this);

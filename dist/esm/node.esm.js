@@ -67,6 +67,24 @@ import {default as append_module} from './src/function/append.js';
  */
 export const append = append_module;
 
+import {default as appendIsArrayExist_module} from './src/function/appendIsArrayExist.js';
+
+
+/**
+ * Append If Array does not Exist
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} arrayObject Data is Array
+ * @param {any=} value Value for array lookup
+ * @returns {any[]} Return array.
+ * @example
+ *
+ * appendIsArrayExist([312], [32])
+ * // => [312, 32]
+ */
+export const appendIsArrayExist = appendIsArrayExist_module;
+
 import {default as arrayConcat_module} from './src/function/arrayConcat.js';
 
 
@@ -102,6 +120,28 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
  */
 export const arrayRepeat = arrayRepeat_module;
 
+import {default as arraySlice_module} from './src/function/arraySlice.js';
+
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+export const arraySlice = arraySlice_module;
+
 import {default as arraySum_module} from './src/function/arraySum.js';
 
 
@@ -121,25 +161,6 @@ import {default as arraySum_module} from './src/function/arraySum.js';
  * // => 3
  */
 export const arraySum = arraySum_module;
-
-import {default as asyncReplace_module} from './src/function/asyncReplace.js';
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-export const asyncReplace = asyncReplace_module;
 
 import {default as calculate_module} from './src/function/calculate.js';
 
@@ -161,23 +182,24 @@ import {default as calculate_module} from './src/function/calculate.js';
  */
 export const calculate = calculate_module;
 
-import {default as appendIsArrayExist_module} from './src/function/appendIsArrayExist.js';
+import {default as asyncReplace_module} from './src/function/asyncReplace.js';
 
 
 /**
- * Append If Array does not Exist
+ * Async replace regexp argument
  *
- * @since 1.0.1
- * @category Array
- * @param {any} arrayObject Data is Array
- * @param {any=} value Value for array lookup
- * @returns {any[]} Return array.
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
  * @example
  *
- * appendIsArrayExist([312], [32])
- * // => [312, 32]
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-export const appendIsArrayExist = appendIsArrayExist_module;
+export const asyncReplace = asyncReplace_module;
 
 import {default as clone_module} from './src/function/clone.js';
 
@@ -217,6 +239,24 @@ import {default as count_module} from './src/function/count.js';
  */
 export const count = count_module;
 
+import {default as defaultTo_module} from './src/function/defaultTo.js';
+
+
+/**
+ *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
+ *
+ * @since 1.4.87
+ * @category Logic
+ * @param {any} defaultValue Any first value type
+ * @param {any=} value2 Any first value type
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * defaultTo(1,2)
+ * // => 2
+ */
+export const defaultTo = defaultTo_module;
+
 import {default as dec_module} from './src/function/dec.js';
 
 
@@ -253,24 +293,6 @@ import {default as divide_module} from './src/function/divide.js';
  */
 export const divide = divide_module;
 
-import {default as defaultTo_module} from './src/function/defaultTo.js';
-
-
-/**
- *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
- *
- * @since 1.4.87
- * @category Logic
- * @param {any} defaultValue Any first value type
- * @param {any=} value2 Any first value type
- * @returns {any} Returns true or false.
- * @example
- *
- * defaultTo(1,2)
- * // => 2
- */
-export const defaultTo = defaultTo_module;
-
 import {default as each_module} from './src/function/each.js';
 
 
@@ -289,6 +311,23 @@ import {default as each_module} from './src/function/each.js';
  */
 export const each = each_module;
 
+import {default as empty_module} from './src/function/empty.js';
+
+
+/**
+ * Ge the empty value of specify argument type
+ *
+ * @since 1.0.1
+ * @category Function
+ * @param {any} value Any value type that you want an empty return
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * empty([])
+ * => []
+ */
+export const empty = empty_module;
+
 import {default as equal_module} from './src/function/equal.js';
 
 
@@ -306,23 +345,6 @@ import {default as equal_module} from './src/function/equal.js';
  * // => true
  */
 export const equal = equal_module;
-
-import {default as empty_module} from './src/function/empty.js';
-
-
-/**
- * Ge the empty value of specify argument type
- *
- * @since 1.0.1
- * @category Function
- * @param {any} value Any value type that you want an empty return
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * empty([])
- * => []
- */
-export const empty = empty_module;
 
 import {default as filter_module} from './src/function/filter.js';
 
@@ -343,23 +365,6 @@ import {default as filter_module} from './src/function/filter.js';
  */
 export const filter = filter_module;
 
-import {default as first_module} from './src/function/first.js';
-
-
-/**
- * Get the first value of array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data is array
- * @returns {any} Returns first value of `objectValue`.
- * @example
- *
- * first([1,2,3])
- *=> 1
- */
-export const first = first_module;
-
 import {default as flatten_module} from './src/function/flatten.js';
 
 
@@ -376,6 +381,23 @@ import {default as flatten_module} from './src/function/flatten.js';
  * // => [1,2,3,4,5,6,7]
  */
 export const flatten = flatten_module;
+
+import {default as first_module} from './src/function/first.js';
+
+
+/**
+ * Get the first value of array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns first value of `objectValue`.
+ * @example
+ *
+ * first([1,2,3])
+ *=> 1
+ */
+export const first = first_module;
 
 import {default as fromPairs_module} from './src/function/fromPairs.js';
 
@@ -558,42 +580,6 @@ import {default as has_module} from './src/function/has.js';
  */
 export const has = has_module;
 
-import {default as inc_module} from './src/function/inc.js';
-
-
-/**
- * To Increment value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * inc(1)
- *=>2
- */
-export const inc = inc_module;
-
-import {default as indexOf_module} from './src/function/indexOf.js';
-
-
-/**
- * Index of array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} objectValue Array
- * @param {any} value Value in array
- * @returns {number} Returns the index.
- * @example
- *
- * indexOf([1,2], 1)
- * // => 0
- */
-export const indexOf = indexOf_module;
-
 import {default as ifUndefined_module} from './src/function/ifUndefined.js';
 
 
@@ -612,6 +598,24 @@ import {default as ifUndefined_module} from './src/function/ifUndefined.js';
  * // => 1
  */
 export const ifUndefined = ifUndefined_module;
+
+import {default as inc_module} from './src/function/inc.js';
+
+
+/**
+ * To Increment value
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
+ * @example
+ *
+ * inc(1)
+ *=>2
+ */
+export const inc = inc_module;
 
 import {default as indexOfExist_module} from './src/function/indexOfExist.js';
 
@@ -648,6 +652,24 @@ import {default as indexOfNotExist_module} from './src/function/indexOfNotExist.
  * // => true
  */
 export const indexOfNotExist = indexOfNotExist_module;
+
+import {default as indexOf_module} from './src/function/indexOf.js';
+
+
+/**
+ * Index of array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {any} value Value in array
+ * @returns {number} Returns the index.
+ * @example
+ *
+ * indexOf([1,2], 1)
+ * // => 0
+ */
+export const indexOf = indexOf_module;
 
 import {default as insert_module} from './src/function/insert.js';
 
@@ -777,24 +799,6 @@ import {default as last_module} from './src/function/last.js';
  */
 export const last = last_module;
 
-import {default as lastIndexOf_module} from './src/function/lastIndexOf.js';
-
-
-/**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf([1,2], 1)
- * // => 0
- */
-export const lastIndexOf = lastIndexOf_module;
-
 import {default as like_module} from './src/function/like.js';
 
 
@@ -813,6 +817,24 @@ import {default as like_module} from './src/function/like.js';
  *=>{s1: 1, s2: 1}
  */
 export const like = like_module;
+
+import {default as lastIndexOf_module} from './src/function/lastIndexOf.js';
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+export const lastIndexOf = lastIndexOf_module;
 
 import {default as limit_module} from './src/function/limit.js';
 
@@ -833,6 +855,24 @@ import {default as limit_module} from './src/function/limit.js';
  *=>{'1':2}
  */
 export const limit = limit_module;
+
+import {default as lt_module} from './src/function/lt.js';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as lte_module} from './src/function/lte.js';
 
@@ -887,24 +927,6 @@ import {default as mapGetData_module} from './src/function/mapGetData.js';
  *=>[1]
  */
 export const mapGetData = mapGetData_module;
-
-import {default as lt_module} from './src/function/lt.js';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.js';
 
@@ -1143,6 +1165,23 @@ import {default as reduce_module} from './src/function/reduce.js';
  */
 export const reduce = reduce_module;
 
+import {default as regexCountGroup_module} from './src/function/regexCountGroup.js';
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category Function
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+export const regexCountGroup = regexCountGroup_module;
+
 import {default as remove_module} from './src/function/remove.js';
 
 
@@ -1161,23 +1200,6 @@ import {default as remove_module} from './src/function/remove.js';
  *=>[2, 3]
  */
 export const remove = remove_module;
-
-import {default as regexCountGroup_module} from './src/function/regexCountGroup.js';
-
-
-/**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category Function
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-export const regexCountGroup = regexCountGroup_module;
 
 import {default as removeFromKey_module} from './src/function/removeFromKey.js';
 
@@ -1288,28 +1310,6 @@ import {default as shuffle_module} from './src/function/shuffle.js';
  */
 export const shuffle = shuffle_module;
 
-import {default as arraySlice_module} from './src/function/arraySlice.js';
-
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-export const arraySlice = arraySlice_module;
-
 import {default as someValid_module} from './src/function/someValid.js';
 
 
@@ -1381,24 +1381,6 @@ import {default as stringCamelCase_module} from './src/function/stringCamelCase.
  */
 export const stringCamelCase = stringCamelCase_module;
 
-import {default as stringEscape_module} from './src/function/stringEscape.js';
-
-
-/**
- * String Escape
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns escape string
- * @example
- *
- * stringEscape("yahii & adad ^ss")
- *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
- */
-export const stringEscape = stringEscape_module;
-
 import {default as stringCapitalize_module} from './src/function/stringCapitalize.js';
 
 
@@ -1419,6 +1401,24 @@ import {default as stringCapitalize_module} from './src/function/stringCapitaliz
  */
 export const stringCapitalize = stringCapitalize_module;
 
+import {default as stringEscape_module} from './src/function/stringEscape.js';
+
+
+/**
+ * String Escape
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns escape string
+ * @example
+ *
+ * stringEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
+ */
+export const stringEscape = stringEscape_module;
+
 import {default as stringKebabCase_module} from './src/function/stringKebabCase.js';
 
 
@@ -1435,6 +1435,23 @@ import {default as stringKebabCase_module} from './src/function/stringKebabCase.
  *=> 'the-fish-is-goad-with-goat-1ss'
  */
 export const stringKebabCase = stringKebabCase_module;
+
+import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
+
+
+/**
+ * String Lower case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+export const stringLowerCase = stringLowerCase_module;
 
 import {default as stringSnakeCase_module} from './src/function/stringSnakeCase.js';
 
@@ -2170,21 +2187,4 @@ import {default as zip_module} from './src/function/zip.js';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
-
-import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
-
-
-/**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-export const stringLowerCase = stringLowerCase_module;
 
