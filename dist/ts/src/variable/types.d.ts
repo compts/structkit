@@ -6,6 +6,7 @@ export const objectCallType: {
 export const objectCallTypeAll: {
     "[object Arguments]": string;
     "[object Array]": string;
+    "[object BigInt]": string;
     "[object Boolean]": string;
     "[object Date]": string;
     "[object Error]": string;

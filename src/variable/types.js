@@ -5,6 +5,7 @@ const objectCallType = {"[object Array]": "object",
 
 const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Array]": "array",
+    "[object BigInt]": "bigInt",
     "[object Boolean]": "boolean",
     "[object Date]": "date",
     "[object Error]": "error",

@@ -1,4 +1,4 @@
-import {isArray, isBoolean, isDate, isError, isFunction, isNumber, isObject, isNull} from "../../dist/esm/node.esm";
+import {isArray, isBoolean, isDate, isError, isFunction, isNumber, isBigInt, isObject, isNull} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
 describe('ESM: _isDefaultTypeFunc method', function () {
@@ -43,6 +43,14 @@ describe('ESM: _isDefaultTypeFunc method', function () {
         const zero = 0;
 
         assert.deepStrictEqual(isNumber(zero), true);
+
+    });
+
+    it('check if isBigint is true', function () {
+
+        const zero = 0;
+
+        assert.deepStrictEqual(isBigInt(BigInt(zero)), true);
 
     });
 

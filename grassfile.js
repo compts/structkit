@@ -6,6 +6,7 @@ const list_package_utility_js1 = ["src/*/*.js"];
 
 const listOfType = {
     "array": "[]",
+    "bigint": "BigInt(10)",
     "boolean": "true",
     "date": "new Date()",
     "error": "new Error()",
