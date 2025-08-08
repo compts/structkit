@@ -14,7 +14,7 @@ import {zero} from '../core/defaultValue.js';
  * In array, you need to check all value is true
  *
  * @since 1.4.8
- * @category Condition
+ * @category Predicate
  * @param {...any?} arg List of value you need to check if all true
  * @returns {boolean} Returns true or false.
  * @example

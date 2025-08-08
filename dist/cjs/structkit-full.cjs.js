@@ -269,7 +269,7 @@ _stk.add=add;
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
- * @category Logic
+ * @category Predicate
  * @param {...any?} args Either JSON or Array
  * @returns {boolean} Returns true or false.
  * @example
@@ -311,7 +311,7 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
  * Is Json valid format
  *
  * @since 1.3.1
- * @category Relation
+ * @category Predicate
  * @param {any} value Value you want to check JSON is Valid
  * @param {string=} valueType Get value type
  * @returns {any} Returns true or false if valid json format
@@ -953,7 +953,7 @@ function searchValueInJson (objectValue, searchValue) {
  * Index of array
  *
  * @since 1.0.1
- * @category Array
+ * @category Logic
  * @param {any} objectValue Array
  * @param {any} value Value in array
  * @returns {number} Returns the index.
@@ -976,7 +976,7 @@ function indexOf (objectValue, value) {
  * Check index of array is Exist or not
  *
  * @since 1.3.1
- * @category Relation
+ * @category Predicate
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return boolean.
@@ -1166,7 +1166,7 @@ function baseCountValidList (objectValue) {
  * In array, you need to check all value is true
  *
  * @since 1.4.8
- * @category Condition
+ * @category Predicate
  * @param {...any?} arg List of value you need to check if all true
  * @returns {boolean} Returns true or false.
  * @example
@@ -1230,7 +1230,7 @@ _stk.append=append;
  * Check index of array Not or exist
  *
  * @since 1.4.1
- * @category Relation
+ * @category Predicate
  * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
  * @returns {boolean} Return boolean.
@@ -1504,7 +1504,7 @@ _stk.arraySlice=arraySlice;
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
- * @category Relation
+ * @category Predicate
  * @param {any} value JSON , Array and String
  * @returns {boolean} Returns true or false
  * @example
@@ -2111,7 +2111,7 @@ _stk.empty=empty;
  * To check if the two arguments are equal
  *
  * @since 1.4.8
- * @category Relation
+ * @category Predicate
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
@@ -2407,7 +2407,7 @@ function getData (objectValue, split_str, isStrict) {
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Relation
+ * @category Predicate
  * @param {any} whereValue Json or Array
  * @param {any} objectValue1 Json or Array for lookup to whereValue
  * @param {boolean=} isExist Default value is True
@@ -2562,7 +2562,7 @@ function localValidation (keys, vals, isExist) {
  * Looking the data in JSON and Array base on object value with the help regexp
  *
  * @since 1.0.1
- * @category Relation
+ * @category Predicate
  * @param {any} whereValue Either Json or array
  * @param {any} objectValue1 use as lookup data in data
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
@@ -2989,6 +2989,27 @@ _stk.getUniq=getUniq;
 
 
 /**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {string} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
+
+
+/**
  * To group the value of json or array
  *
  * @since 1.4.8
@@ -3032,31 +3053,10 @@ _stk.groupBy=groupBy;
 
 
 /**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
-
-
-/**
  *  To check if the two arguments are greater
  *
  * @since 1.4.8
- * @category Relation
+ * @category Predicate
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
@@ -3085,7 +3085,7 @@ _stk.gt=gt;
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
- * @category Relation
+ * @category Predicate
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean} Returns true or false.
@@ -3152,9 +3152,9 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined;
 
-_stk.indexOf=indexOf;
-
 _stk.inc=inc;
+
+_stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
@@ -3208,6 +3208,8 @@ _stk.isExact=isExact;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
 
+_stk.isJson=isJson;
+
 
 /**
  * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
@@ -3251,8 +3253,6 @@ function jsonToArray (objectValue, value) {
 }
 
 _stk.jsonToArray=jsonToArray;
-
-_stk.isJson=isJson;
 
 
 /**
@@ -3300,29 +3300,6 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -3388,10 +3365,39 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
- * @category Boolean
+ * @category Predicate
  * @param {any} value1 Any first value type
  * @param {any=} value2 Any second value type
  * @returns {boolean|any} Returns true or false.
@@ -3442,35 +3448,6 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -3629,7 +3606,7 @@ _stk.multiply=multiply;
  * To check if its not equal
  *
  * @since 1.4.8
- * @category Relation
+ * @category Predicate
  * @param {any} value1 Any value type
  * @param {any} value2 Any value type
  * @returns {boolean} Returns true or false.
@@ -5809,8 +5786,6 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
-_stk.range=range;
-
 
 /**
  * To create single random value from array
@@ -5848,6 +5823,31 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
+
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+_stk.range=range;
 
 
 /**
@@ -6195,7 +6195,7 @@ _stk.shuffle=shuffle;
  * In array, you need to check all value atleast one true
  *
  * @since 1.4.8
- * @category Condition
+ * @category Predicate
  * @param {...any?} arg List of value you need to check if some are true
  * @returns {boolean} Returns true or false.
  * @example
@@ -6542,6 +6542,8 @@ function stringSnakeCase (value) {
 
 _stk.stringSnakeCase=stringSnakeCase;
 
+_stk.stringUnEscape=stringUnEscape;
+
 
 /**
  * String Substr
@@ -6591,10 +6593,6 @@ function stringUpperCase (value) {
 }
 
 _stk.stringUpperCase=stringUpperCase;
-
-_stk.stringUnEscape=stringUnEscape;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -7282,6 +7280,8 @@ function union (...arg) {
 
 _stk.union=union;
 
+_stk.subtract=subtract;
+
 _stk.unique=unique;
 
 _stk.varExtend=varExtend;
@@ -7318,7 +7318,7 @@ _stk.whereNot=whereNot;
  *  Get the type if arguments
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7337,7 +7337,7 @@ function isArguments (value) {
  *  Get the type if array
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7356,7 +7356,7 @@ function isArray (value) {
  *  Get the type if boolean
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7375,7 +7375,7 @@ function isBoolean (value) {
  *  Get the type if date
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7394,7 +7394,7 @@ function isDate (value) {
  *  Get the type if error
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7413,7 +7413,7 @@ function isError (value) {
  *  Get the type if function
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7432,7 +7432,7 @@ function isFunction (value) {
  *  Get the type if null
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7451,7 +7451,7 @@ function isNull (value) {
  *  Get the type if number
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7470,7 +7470,7 @@ function isNumber (value) {
  *  Get the type if object
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7489,7 +7489,7 @@ function isObject (value) {
  *  Get the type if promise
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7508,7 +7508,7 @@ function isPromise (value) {
  *  Get the type if regexp
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7527,7 +7527,7 @@ function isRegexp (value) {
  *  Get the type if string
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7546,7 +7546,7 @@ function isString (value) {
  *  Get the type if uint16Array
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7565,7 +7565,7 @@ function isUint16Array (value) {
  *  Get the type if uint8Array
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -7584,7 +7584,7 @@ function isUint8Array (value) {
  *  Get the type if undefined
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example

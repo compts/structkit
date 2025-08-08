@@ -43,7 +43,7 @@ function isTypeFunction (objectCallTypeAll, suffix) {
  *  Get the type if ${value}
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
