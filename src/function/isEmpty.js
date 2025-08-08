@@ -43,14 +43,20 @@ function isEmpty (value) {
 
     }
 
-    if (typeofvalue === "uint16Array") {
+    if (indexOfExist([
+        "uint16Array",
+        "uint8Array"
+    ], typeofvalue)) {
 
         return value.length ===zero;
 
     }
-    if (typeofvalue === "uint8Array") {
+    if (indexOfExist([
+        "set",
+        "map"
+    ], typeofvalue)) {
 
-        return value.length ===zero;
+        return value.size ===zero;
 
     }
 

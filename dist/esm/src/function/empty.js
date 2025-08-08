@@ -48,6 +48,16 @@ function empty (value) {
         return Uint8Array.from([]);
 
     }
+    if (getTypeofInternal(value) === "set") {
+
+        return new Set();
+
+    }
+    if (getTypeofInternal(value) === "map") {
+
+        return new Map();
+
+    }
 
     return value;
 
