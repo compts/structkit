@@ -1,8 +1,8 @@
 const curryArg = require("../core/curryArg");
 const baseReduce = require("../core/baseReduce");
-const unique = require("./unique");
 const {getTypeofInternal} = require('../core/getTypeOf');
 const each = require('./each');
+const indexOfNotExist = require('./indexOfNotExist');
 
 /**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
@@ -27,13 +27,17 @@ function union (...arg) {
 
                 each(value, function (valEach) {
 
-                    total.push(valEach);
+                    if (indexOfNotExist(total, valEach)) {
+
+                        total.push(valEach);
+
+                    }
 
                 });
 
             }
 
-            return unique(total);
+            return total;
 
         });
 

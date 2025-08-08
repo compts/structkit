@@ -2,11 +2,11 @@ import curryArg from '../core/curryArg.js';
 
 import baseReduce from '../core/baseReduce.js';
 
-import unique from './unique.js';
-
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
 import each from './each.js';
+
+import indexOfNotExist from './indexOfNotExist.js';
 
 /**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
@@ -30,13 +30,17 @@ function union (...arg) {
 
                 each(value, function (valEach) {
 
-                    total.push(valEach);
+                    if (indexOfNotExist(total, valEach)) {
+
+                        total.push(valEach);
+
+                    }
 
                 });
 
             }
 
-            return unique(total);
+            return total;
 
         });
 
