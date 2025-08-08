@@ -12,7 +12,7 @@ const has = require('./has');
  * @returns {any[]} Returns the total.
  * @example
  *
- * sort([2,3,1])
+ * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
  *=>[1,2,3]
  */
 function sortBy (objectValue, func) {
