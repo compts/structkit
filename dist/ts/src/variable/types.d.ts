@@ -11,11 +11,13 @@ export const objectCallTypeAll: {
     "[object Date]": string;
     "[object Error]": string;
     "[object Function]": string;
+    "[object Map]": string;
     "[object Null]": string;
     "[object Number]": string;
     "[object Object]": string;
     "[object Promise]": string;
     "[object RegExp]": string;
+    "[object Set]": string;
     "[object String]": string;
     "[object Uint16Array]": string;
     "[object Uint8Array]": string;

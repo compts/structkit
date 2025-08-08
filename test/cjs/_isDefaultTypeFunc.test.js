@@ -1,4 +1,4 @@
-const {isArray, isBoolean, isDate, isError, isFunction, isNumber, isBigInt, isObject, isNull} = require("../../dist/cjs/structkit-full.cjs");
+const {isArray, isBoolean, isDate, isError, isFunction, isNumber, isBigInt, isSet, isMap, isObject, isNull} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: _isDefaultTypeFunc method', function () {
@@ -50,6 +50,26 @@ describe('CJS: _isDefaultTypeFunc method', function () {
         const zero = 0;
 
         assert.deepStrictEqual(isBigInt(BigInt(zero)), true);
+
+    });
+    it('check if isSet is true', function () {
+
+        const zero = 0;
+
+        assert.deepStrictEqual(isSet(new Set([
+            zero,
+            zero
+        ])), true);
+
+    });
+    it('check if isMap is true', function () {
+
+        assert.deepStrictEqual(isMap(new Map([
+            [
+                'hello',
+                'world'
+            ]
+        ])), true);
 
     });
     it('check if isObject is true', function () {

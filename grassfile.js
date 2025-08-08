@@ -10,10 +10,12 @@ const listOfType = {
     "boolean": "true",
     "date": "new Date()",
     "error": "new Error()",
+    "map": "new Map([['hello', 'world']])",
     "null": "null",
     "number": "1",
     "object": "{}",
     "regexp": "/(1)/g",
+    "set": 'new Set(["a","b","c"])',
     "string": "'string'",
     "undefined": "undefined"
 };

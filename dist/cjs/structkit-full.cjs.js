@@ -269,11 +269,13 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Date]": "date",
     "[object Error]": "error",
     "[object Function]": "function",
+    "[object Map]": "map",
     "[object Null]": "null",
     "[object Number]": "number",
     "[object Object]": "object",
     "[object Promise]": "promise",
     "[object RegExp]": "regexp",
+    "[object Set]": "set",
     "[object String]": "string",
     "[object Uint16Array]": "uint16Array",
     "[object Uint8Array]": "uint8Array",
@@ -504,6 +506,35 @@ _stk.append=append;
 
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa + bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Each or for loop function you are familiar with
  *
  * @since 1.0.1
@@ -613,38 +644,6 @@ GlobalEach.prototype.isContinue = function (value) {
     this.continue = value;
 
 };
-
-/**
- * Base reduce
- *
- * @since 1.4.8
- * @category Core
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
- * @returns {any} Returns the aggregrated.
- * @example
- *
- * baseReduce(2,[1,2],(total,value)=>total+value)
- * // => 5
- */
-function baseReduce (defaultValue, listData, func) {
-
-    const that = this;
-
-    each(listData, function (av, ak) {
-
-        defaultValue = func.apply(that, [
-            defaultValue,
-            av,
-            ak
-        ]);
-
-    });
-
-    return defaultValue;
-
-}
 
 /**
  * Ge the empty value of specify argument type
@@ -1130,104 +1129,6 @@ function toArray (value) {
 }
 
 /**
- * Counting the true in list of array
- *
- * @since 1.4.8
- * @category Any
- * @param {any[]} objectValue The data is array
- * @returns {any} Returns the total.
- * @example
- *
- * baseCountValidList([true,true])
- * // => 2
- */
-function baseCountValidList (objectValue) {
-
-    return baseReduce(zero, objectValue, function (total, value) {
-
-        const values = toArray(value);
-
-        total +=baseReduce(zero, values, function (subtotal, subvalue) {
-
-            if (subvalue && getTypeofInternal(subvalue) === "boolean") {
-
-                return subtotal +one;
-
-            }
-
-            return subtotal;
-
-        });
-
-        return total;
-
-    });
-
-}
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-function allValid (...arg) {
-
-    const mapCount = baseReduce(zero, arg, function (total, value) {
-
-        total+= count(toArray(value));
-
-        return total;
-
-    });
-
-    return curryArg(function (...rawValue) {
-
-        return baseCountValidList(rawValue);
-
-    }, arg) === mapCount;
-
-}
-
-_stk.allValid=allValid;
-
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1347,6 +1248,109 @@ _stk.arrayConcat=arrayConcat;
 
 
 /**
+ * Base reduce
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @param {any} func The data you want to map
+ * @returns {any} Returns the aggregrated.
+ * @example
+ *
+ * baseReduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
+ */
+function baseReduce (defaultValue, listData, func) {
+
+    const that = this;
+
+    each(listData, function (av, ak) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+/**
+ * Counting the true in list of array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any[]} objectValue The data is array
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseCountValidList([true,true])
+ * // => 2
+ */
+function baseCountValidList (objectValue) {
+
+    return baseReduce(zero, objectValue, function (total, value) {
+
+        const values = toArray(value);
+
+        total +=baseReduce(zero, values, function (subtotal, subvalue) {
+
+            if (subvalue && getTypeofInternal(subvalue) === "boolean") {
+
+                return subtotal +one;
+
+            }
+
+            return subtotal;
+
+        });
+
+        return total;
+
+    });
+
+}
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+function allValid (...arg) {
+
+    const mapCount = baseReduce(zero, arg, function (total, value) {
+
+        total+= count(toArray(value));
+
+        return total;
+
+    });
+
+    return curryArg(function (...rawValue) {
+
+        return baseCountValidList(rawValue);
+
+    }, arg) === mapCount;
+
+}
+
+_stk.allValid=allValid;
+
+_stk.arraySlice=arraySlice;
+
+
+/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -1437,8 +1441,6 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-
-_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2001,8 +2003,6 @@ function dec (value, default_value) {
 
 _stk.dec=dec;
 
-_stk.divide=divide;
-
 
 /**
  *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
@@ -2042,6 +2042,8 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
+
+_stk.divide=divide;
 
 _stk.each=each;
 
@@ -2362,13 +2364,6 @@ function getData (objectValue, split_str, isStrict) {
     ]);
 
 }
-
-_stk.getData=getData;
-
-_stk.getKey=getKey;
-
-_stk.getTypeof=getTypeof;
-
 
 /**
  * Looking the data in JSON and Array base on object value
@@ -2911,6 +2906,12 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
+
+_stk.getKey=getKey;
+
+_stk.getData=getData;
+
+_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -3072,6 +3073,8 @@ _stk.gte=gte;
 
 _stk.has=has;
 
+_stk.inc=inc;
+
 
 /**
  * Check if data is undefined
@@ -3112,8 +3115,6 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
-
-_stk.inc=inc;
 
 _stk.indexOf=indexOf;
 
@@ -3264,6 +3265,29 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -3326,29 +3350,6 @@ _stk.limit=limit;
 
 
 /**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3403,6 +3404,35 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -3551,35 +3581,6 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -5808,8 +5809,6 @@ function random (valueArray, minValue, maxValue) {
 
 _stk.random=random;
 
-_stk.range=range;
-
 
 /**
  * Reduce function
@@ -5846,6 +5845,8 @@ function reduce (defaultValue, listData, func) {
 }
 
 _stk.reduce=reduce;
+
+_stk.range=range;
 
 
 /**
@@ -6001,6 +6002,8 @@ function roundDecimal (value, maxValue) {
 
 _stk.roundDecimal=roundDecimal;
 
+_stk.selectInData=selectInData;
+
 
 /**
  * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
@@ -6102,33 +6105,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 
 _stk.setData=setData;
 
-_stk.selectInData=selectInData;
-
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
 
 /**
  * Shuffle data in array
@@ -6178,6 +6154,31 @@ _stk.shuffle=shuffle;
 
 
 /**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid (...arg) {
+
+    return curryArg(function (...rawValue) {
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
+
+
+/**
  * Sort By
  *
  * @since 1.4.87
@@ -6213,6 +6214,40 @@ function baseSort (objectValue, func) {
     return finalResponse;
 
 }
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {Function} func Callback function or sort type
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sortBy (objectValue, func) {
+
+    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
+
+        if (has(func) && getTypeof(func) === 'function') {
+
+            return func(orderA, orderB);
+
+        }
+
+        return orderA - orderB;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sortBy=sortBy;
+
 
 /**
  * Sort array
@@ -6293,40 +6328,6 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
-
-
-/**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {Function} func Callback function or sort type
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sortBy (objectValue, func) {
-
-    const finalResponse=baseSort(objectValue, function (orderA, orderB) {
-
-        if (has(func) && getTypeof(func) === 'function') {
-
-            return func(orderA, orderB);
-
-        }
-
-        return orderA - orderB;
-
-    });
-
-    return finalResponse;
-
-}
-
-_stk.sortBy=sortBy;
 /**
  * Split string for special cases
  *
@@ -6482,6 +6483,29 @@ _stk.stringLowerCase=stringLowerCase;
 
 
 /**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function stringSnakeCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+_stk.stringSnakeCase=stringSnakeCase;
+
+
+/**
  * String Substr
  *
  * @since 1.4.5
@@ -6508,29 +6532,6 @@ function stringSubs (value, minValue, maxValue) {
 }
 
 _stk.stringSubs=stringSubs;
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function stringSnakeCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-_stk.stringSnakeCase=stringSnakeCase;
 
 _stk.stringUnEscape=stringUnEscape;
 
@@ -7414,6 +7415,25 @@ function isFunction (value) {
 
 
 /**
+ *  Get the type if map
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isMap(new Map([['hello', 'world']]))
+ *=> true
+ */
+function isMap (value) {
+
+    return getTypeof(value) === "map";
+
+}
+
+
+/**
  *  Get the type if null
  *
  * @since 1.4.7
@@ -7509,6 +7529,25 @@ function isRegexp (value) {
 
 
 /**
+ *  Get the type if set
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isSet(new Set(["a","b","c"]))
+ *=> true
+ */
+function isSet (value) {
+
+    return getTypeof(value) === "set";
+
+}
+
+
+/**
  *  Get the type if string
  *
  * @since 1.4.7
@@ -7591,11 +7630,13 @@ _stk.isBoolean=isBoolean;
 _stk.isDate=isDate;
 _stk.isError=isError;
 _stk.isFunction=isFunction;
+_stk.isMap=isMap;
 _stk.isNull=isNull;
 _stk.isNumber=isNumber;
 _stk.isObject=isObject;
 _stk.isPromise=isPromise;
 _stk.isRegexp=isRegexp;
+_stk.isSet=isSet;
 _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
