@@ -192,12 +192,6 @@ function parseString (value, config) {
 
     }
 
-    if (defaultConfig.unscapeEntity) {
-
-        data = stringUnEscape(data);
-
-    }
-
     return data.toString();
 
 }

@@ -1,5 +1,7 @@
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
+import indexOfExist from './indexOfExist.js';
+
 import has from './has.js';
 
 /**
@@ -17,13 +19,18 @@ import has from './has.js';
  */
 function each (objectValue, func) {
 
-    let re_loop=[];
+    const re_loop=[];
 
     const typeofs=getTypeofInternal(objectValue);
 
     const localGlobal = new GlobalEach();
 
-    if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
+    if (indexOfExist([
+        "json",
+        "array",
+        "object",
+        "arguments"
+    ], typeofs)) {
 
         for (const ins in objectValue) {
 
@@ -34,42 +41,33 @@ function each (objectValue, func) {
                     break;
 
                 }
-                let bool_func = true;
 
-                if (getTypeofInternal(objectValue[ins]) === "function") {
+                callbackEach(ins, objectValue, localGlobal, re_loop, func);
 
-                    if ((/\b_/g).test(ins)) {
+            }
 
-                        bool_func= false;
+        }
 
-                    }
+        return re_loop;
 
-                }
-                if (bool_func) {
+    }
 
-                    try {
+    if (indexOfExist([
+        "set",
+        "map"
+    ], typeofs)) {
 
-                        if (has(func)) {
+        for (const ins of objectValue) {
 
-                            func(objectValue[ins], ins, localGlobal);
+            if (has(objectValue, ins)) {
 
-                        } else {
+                if (localGlobal.continue === false) {
 
-                            re_loop[ins]=objectValue[ins];
-
-                        }
-
-                    } catch (error) {
-
-                        console.log(error);
-
-                    }
-
-                } else {
-
-                    re_loop=null;
+                    break;
 
                 }
+
+                callbackEach(ins, objectValue, localGlobal, re_loop, func);
 
             }
 
@@ -80,6 +78,63 @@ function each (objectValue, func) {
     }
 
     return null;
+
+}
+
+/**
+ * Create a callback function for each that will be used in the loop
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} ins Array or json.
+ * @param {any} objectValue Index of the objectValue.
+ * @param {any} localGlobal Global variable to control the loop.
+ * @param {any} re_loop Re loop array or json.
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @returns {any} Array or json
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+function callbackEach (ins, objectValue, localGlobal, re_loop, func) {
+
+    let bool_func = true;
+
+    if (getTypeofInternal(objectValue[ins]) === "function") {
+
+        if ((/\b_/g).test(ins)) {
+
+            bool_func= false;
+
+        }
+
+    }
+    if (bool_func) {
+
+        try {
+
+            if (has(func)) {
+
+                func(objectValue[ins], ins, localGlobal);
+
+            } else {
+
+                re_loop[ins]=objectValue[ins];
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    } else {
+
+        re_loop=null;
+
+    }
 
 }
 
