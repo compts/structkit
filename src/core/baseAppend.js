@@ -29,6 +29,18 @@ function baseAppend (objectValue, val, key) {
 
     }
 
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
     return objectValue;
 
 }
