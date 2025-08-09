@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 import {arrayRepeat} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
@@ -13,6 +14,30 @@ describe('ESM: arrayRepeat method', function () {
         ), [
             "as",
             "as"
+        ]);
+
+    });
+
+    it('check if repetion is correct even null', function () {
+
+        assert.deepStrictEqual(arrayRepeat(
+            null,
+            two
+        ), [
+            null,
+            null
+        ]);
+
+    });
+
+    it('check if repetion is correct even undefined', function () {
+
+        assert.deepStrictEqual(arrayRepeat(
+            undefined,
+            two
+        ), [
+            undefined,
+            undefined
         ]);
 
     });

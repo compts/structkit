@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 const {arrayRepeat} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
@@ -13,6 +14,30 @@ describe('CJS: arrayRepeat method', function () {
         ), [
             "as",
             "as"
+        ]);
+
+    });
+
+    it('check if repetion is correct even null', function () {
+
+        assert.deepStrictEqual(arrayRepeat(
+            null,
+            two
+        ), [
+            null,
+            null
+        ]);
+
+    });
+
+    it('check if repetion is correct even undefined', function () {
+
+        assert.deepStrictEqual(arrayRepeat(
+            undefined,
+            two
+        ), [
+            undefined,
+            undefined
         ]);
 
     });

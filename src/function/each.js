@@ -43,7 +43,6 @@ function each (objectValue, func) {
 
                 }
 
-
                 callbackEach(ins, objectValue, localGlobal, re_loop, func);
 
             }
@@ -70,7 +69,6 @@ function each (objectValue, func) {
                     break;
 
                 }
-
 
                 callbackEach(ins, objectValue, localGlobal, re_loop, func);
 
