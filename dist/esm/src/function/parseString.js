@@ -73,7 +73,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
             each(value, function (ev, ek) {
 
                 const delimeter=inc<count(value)-one
-                    ?",\n"
+                    ?","
                     :"";
 
                 if (getTypeDetails.isKey) {

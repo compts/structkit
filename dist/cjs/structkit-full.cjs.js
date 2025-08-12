@@ -480,6 +480,82 @@ function getTypeofInternal (objectValue) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    const typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * Counting the lenght in array, json or string
  *
  * @since 1.0.1
@@ -993,51 +1069,6 @@ function empty (value) {
 }
 
 /**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    const typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1312,34 +1343,32 @@ _stk.allValid=allValid;
 
 
 /**
- * Append data for json or array
+ * Addition logic in satisfying two argument
  *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * add(1, 1)
+ * // => 2
  */
-function append (objectValue, val, key) {
+function add (value1, value2) {
 
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+    return curryArg(function (aa, bb) {
 
-        return baseAppend(rawObjectValue, rawVal, rawKey);
+        return aa + bb;
 
     }, [
-        objectValue,
-        val,
-        key
+        value1,
+        value2
     ], two);
 
 }
 
-_stk.append=append;
+_stk.add=add;
 
 
 /**
@@ -1557,32 +1586,6 @@ _stk.arraySlice=arraySlice;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa + bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-/**
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
@@ -1734,37 +1737,6 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    const variable=empty(objectValue);
-
-    each(objectValue, function (value, key) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
-
-}
-
-_stk.clone=clone;
-
-_stk.count=count;
 
 
 /**
@@ -2115,6 +2087,37 @@ _stk.calculate=calculate;
 
 
 /**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    const variable=empty(objectValue);
+
+    each(objectValue, function (value, key) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone;
+
+_stk.count=count;
+
+
+/**
  * Create your own curry for your onw function
  *
  * @since 1.4.874
@@ -2137,6 +2140,41 @@ function curry (fun, num) {
 }
 
 _stk.curry=curry;
+
+
+/**
+ * Decrement value
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
+ * @example
+ *
+ * dec(1)
+ *=>0
+ */
+function dec (value, default_value) {
+
+    let return_val = value;
+    const inc_n = getTypeof(default_value) === "number"
+        ? default_value
+        : one;
+
+    if (getTypeof(return_val) === "number") {
+
+        return_val -= inc_n;
+
+        return return_val;
+
+    }
+
+    return zero;
+
+}
+
+_stk.dec=dec;
 
 
 /**
@@ -2177,41 +2215,6 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-
-
-/**
- * Decrement value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * dec(1)
- *=>0
- */
-function dec (value, default_value) {
-
-    let return_val = value;
-    const inc_n = getTypeof(default_value) === "number"
-        ? default_value
-        : one;
-
-    if (getTypeof(return_val) === "number") {
-
-        return_val -= inc_n;
-
-        return return_val;
-
-    }
-
-    return zero;
-
-}
-
-_stk.dec=dec;
 
 _stk.divide=divide;
 
@@ -3185,35 +3188,6 @@ _stk.groupBy=groupBy;
 
 
 /**
- *  To check if the two arguments are greater than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gte(1, 2)
- * // => false
- */
-function gte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa >= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gte=gte;
-
-
-/**
  *  To check if the two arguments are greater
  *
  * @since 1.4.8
@@ -3240,6 +3214,35 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
+
+
+/**
+ *  To check if the two arguments are greater than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gte(1, 2)
+ * // => false
+ */
+function gte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa >= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gte=gte;
 
 _stk.has=has;
 
@@ -3283,8 +3286,6 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
-
-_stk.add=add;
 
 _stk.inc=inc;
 
@@ -3346,6 +3347,112 @@ _stk.isJson=isJson;
 
 
 /**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last;
+
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+
+/**
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number=} maxValue Maximum value
+ * @param {Function=} func Callback function
+ * @returns {any} Returns the object.
+ * @example
+ *
+ * limit([1,2],1,2 )
+ *=>{'1':2}
+ */
+function limit (objectValue, minValue, maxValue, func) {
+
+    let cnt=0;
+    const glo_jsn={};
+    let glo_indtfd = null;
+    const emptyDefaultValue=0;
+    const minValueReserve=has(minValue)
+        ?minValue
+        :emptyDefaultValue;
+    const maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+    const incrementDefaultValue=1;
+
+    each(objectValue, function (meth, key) {
+
+        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
+
+            if (has(func)) {
+
+                glo_indtfd=func(meth, key);
+
+                if (has(glo_indtfd)) {
+
+                    glo_jsn[key]=glo_indtfd;
+
+                }
+
+            } else {
+
+                glo_jsn[key]=meth;
+
+            }
+
+        }
+
+        cnt += incrementDefaultValue;
+
+    });
+
+    return glo_jsn;
+
+}
+
+_stk.limit=limit;
+
+
+/**
  * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
  *
  * @since 1.0.1
@@ -3390,27 +3497,6 @@ _stk.jsonToArray=jsonToArray;
 
 
 /**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
-
-
-/**
  * Get the last index Of array
  *
  * @since 1.0.1
@@ -3434,58 +3520,6 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -3692,9 +3726,36 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.mergeWithKey=mergeWithKey;
 
-_stk.multiply=multiply;
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+_stk.mergeWithKey=mergeWithKey;
 
 
 /**
@@ -3725,67 +3786,7 @@ function noteq (value1, value2) {
 
 _stk.noteq=noteq;
 
-
-/**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Data must be array
- * @param {number} minValue Minimum value
- * @param {number=} maxValue Maximum value
- * @param {Function=} func Callback function
- * @returns {any} Returns the object.
- * @example
- *
- * limit([1,2],1,2 )
- *=>{'1':2}
- */
-function limit (objectValue, minValue, maxValue, func) {
-
-    let cnt=0;
-    const glo_jsn={};
-    let glo_indtfd = null;
-    const emptyDefaultValue=0;
-    const minValueReserve=has(minValue)
-        ?minValue
-        :emptyDefaultValue;
-    const maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-    const incrementDefaultValue=1;
-
-    each(objectValue, function (meth, key) {
-
-        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(meth, key);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt += incrementDefaultValue;
-
-    });
-
-    return glo_jsn;
-
-}
-
-_stk.limit=limit;
+_stk.multiply=multiply;
 
 
 /**
@@ -3982,111 +3983,6 @@ ClassDelay.prototype.cancel = function () {
 };
 
 _stk.onDelay=onDelay;
-
-const getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    const browserWindow = getWindow();
-    let timerId = null;
-
-    let useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
 
 
 /**
@@ -5705,7 +5601,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
             each(value, function (ev, ek) {
 
                 const delimeter=inc<count(value)-one
-                    ?",\n"
+                    ?","
                     :"";
 
                 if (getTypeDetails.isKey) {
@@ -5831,6 +5727,111 @@ function parseString (value, config) {
 }
 
 _stk.parseString=parseString;
+
+const getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    const browserWindow = getWindow();
+    let timerId = null;
+
+    let useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame(pendingFunc);
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+_stk.onWait=onWait;
 
 
 /**
@@ -5975,31 +5976,7 @@ _stk.regexCountGroup=regexCountGroup;
 
 _stk.remove=remove;
 
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
-
-    return arrayRepeat(nm_str, nm_rpt).join("");
-
-}
-
-_stk.repeat=repeat;
+_stk.removeFromKey=removeFromKey;
 
 
 /**
@@ -6193,6 +6170,32 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    const emptyDefaultValue=0;
+    const nm_rpt=valueRepetion||emptyDefaultValue;
+    const nm_str=value||"";
+
+    return arrayRepeat(nm_str, nm_rpt).join("");
+
+}
+
+_stk.repeat=repeat;
 
 
 /**
@@ -6455,8 +6458,6 @@ function stringCapitalize (value, option) {
 }
 
 _stk.stringCapitalize=stringCapitalize;
-
-_stk.removeFromKey=removeFromKey;
 
 
 /**
@@ -7017,6 +7018,8 @@ function toDouble (value, config) {
 
 _stk.toDouble=toDouble;
 
+_stk.toString=toString;
+
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -7041,73 +7044,6 @@ function toInteger (value) {
 }
 
 _stk.toInteger=toInteger;
-
-
-/**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
- * @example
- *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
- */
-function toPairs (value) {
-
-    if (getTypeofInternal(value) !== "json") {
-
-        throw new Error("Value must be an json");
-
-    }
-
-    return baseReduce([], value, function (total, subValue, subKey) {
-
-        const subArray = [];
-
-        subArray.push(subKey);
-        setDepthValue(subArray, subValue);
-        total.push(subArray);
-
-        return total;
-
-    });
-
-}
-
-/**
- * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arryData First number
- * @param {number} value First number
- * @returns {null} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-function setDepthValue (arryData, value) {
-
-    if (getTypeofInternal(value) === "json") {
-
-        arryData.push(getKey(value));
-        setDepthValue(arryData, getValue(value));
-
-    } else {
-
-        arryData.push(value);
-
-    }
-
-}
-
-_stk.toPairs=toPairs;
-
-_stk.toString=toString;
 
 
 /**
@@ -7208,6 +7144,71 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
+
+
+/**
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} value First number
+ * @returns {any[]} Returns array
+ * @example
+ *
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
+ */
+function toPairs (value) {
+
+    if (getTypeofInternal(value) !== "json") {
+
+        throw new Error("Value must be an json");
+
+    }
+
+    return baseReduce([], value, function (total, subValue, subKey) {
+
+        const subArray = [];
+
+        subArray.push(subKey);
+        setDepthValue(subArray, subValue);
+        total.push(subArray);
+
+        return total;
+
+    });
+
+}
+
+/**
+ * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arryData First number
+ * @param {number} value First number
+ * @returns {null} Returns array
+ * @example
+ *
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
+ */
+function setDepthValue (arryData, value) {
+
+    if (getTypeofInternal(value) === "json") {
+
+        arryData.push(getKey(value));
+        setDepthValue(arryData, getValue(value));
+
+    } else {
+
+        arryData.push(value);
+
+    }
+
+}
+
+_stk.toPairs=toPairs;
 
 _stk.trimEnd=trimEnd;
 
