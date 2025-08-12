@@ -12,7 +12,17 @@ import varExtend from './varExtend.js';
 
 import stringUnEscape from './stringUnEscape.js';
 
+import removeFromKey from './removeFromKey.js';
+
+import indexOfNotExist from './indexOfNotExist.js';
+
+import getKey from './getKey.js';
+
+import toString from './toString.js';
+
 import {two, one, zero} from '../core/defaultValue.js';
+
+import {validTypeJson} from '../variable/types.js';
 
 /**
  * String escape qoutes
@@ -33,59 +43,13 @@ function escapeQuotesStr (str) {
 }
 
 /**
- * Data String from JSON object
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function datastring (str) {
-
-    let data_s="";
-
-    if (typeof str === "string") {
-
-        if (str.indexOf("'")) {
-
-            str = escapeQuotesStr(str);
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else if (str.indexOf('"')) {
-
-            str = escapeQuotesStr(str);
-
-            data_s='&quot;'+str+'&quot;';
-
-        } else {
-
-            data_s=str;
-
-        }
-
-    } else {
-
-        data_s=str;
-
-    }
-
-    return data_s;
-
-}
-
-/**
  * Parse String
  *
  * @since 1.0.1
  * @category Seq
- * @param {number} rawCount The second number in an addition.
- * @param {any} rawConfig The second number in an addition.
- * @param {any} rawValue The second number in an addition.
+ * @param {number} rawCount This will define deep was nested
+ * @param {any} rawConfig The config by user
+ * @param {any} rawValue The data that you want to covert to a string from json/array
  * @returns {string} Returns the total.
  * @example
  *
@@ -96,71 +60,98 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
     return curryArg(function (refCount, refConfig, value) {
 
-        let str="";
-        let str_strt="";
-        let str_end="";
-        let inc=0;
-        const incrementDefaultValue=1;
-        let inc_main=null;
+        let prepStr = "";
 
-        if (has(value)) {
+        if (has(rawCount === zero
+            ?validTypeJson
+            :removeFromKey(validTypeJson, "object"), getTypeof(value))) {
 
-            if (getTypeof(value) === "json") {
+            const getTypeDetails = validTypeJson[getTypeof(value)];
 
-                str_strt="{";
-                str_end="}";
+            let inc=0;
 
-                each(value, function (_value, _key) {
+            each(value, function (ev, ek) {
 
-                    inc_main=inc<count(value)-incrementDefaultValue
-                        ?","
-                        :"";
+                const delimeter=inc<count(value)-one
+                    ?",\n"
+                    :"";
 
-                    if (typeof _value === "object"&&_value !== null) {
+                if (getTypeDetails.isKey) {
 
-                        str += datastring(_key)+":"+ parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
 
-                    } else {
+                } else {
 
-                        str += datastring(_key)+":"+datastring(_value)+""+inc_main;
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
 
-                    }
+                }
 
-                    inc += incrementDefaultValue;
+                inc += one;
 
-                });
+            });
 
-            }
-            if (getTypeof(value) === "array") {
-
-                str_strt="[";
-                str_end="]";
-
-                each(value, function (_value) {
-
-                    inc_main=inc<count(value)-incrementDefaultValue
-                        ?","
-                        :"";
-
-                    if (typeof _value === "object") {
-
-                        str += parseStringCore(refCount+one, refConfig, _value) +""+inc_main;
-
-                    } else {
-
-                        str += datastring(_value)+""+inc_main;
-
-                    }
-
-                    inc += incrementDefaultValue;
-
-                });
-
-            }
+            return getTypeDetails.start+prepStr+getTypeDetails.end;
 
         }
 
-        return (str_strt+str+str_end).replace(/[\r\t\n\s]{1,}/g, "&nbsp;").replace(/(&quot;)/gi, '"');
+        if (getTypeof(value) === "string") {
+
+            return '"'+escapeQuotesStr(value)+'"';
+
+        }
+        if (getTypeof(value) === "undefined") {
+
+            return '"undefined"';
+
+        }
+        if (getTypeof(value) === "date") {
+
+            return '"'+toString(value)+'"';
+
+        }
+        if (getTypeof(value) === "regexp") {
+
+            return '"new RegExp(' + value.source +','+ value.flags+')"';
+
+        }
+
+        if (getTypeof(value) === "number") {
+
+            if (isNaN(value)) {
+
+                return '"NaN"';
+
+            }
+
+            if (Infinity === value) {
+
+                return '"Infinity"';
+
+            }
+
+            return value;
+
+        }
+
+        if (getTypeof(value) === "object") {
+
+            return '"'+value+'"';
+
+        }
+
+        if (getTypeof(value) === "function") {
+
+            if (refConfig.ignoreFunction) {
+
+                return null;
+
+            }
+
+            return '"'+value+'"';
+
+        }
+
+        return value;
 
     }, [
         rawCount,
@@ -185,7 +176,15 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
  */
 function parseString (value, config) {
 
-    const defaultConfig = varExtend({"unscapeEntity": false}, config);
+    const defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "unscapeEntity": false}, config);
+
+    if (indexOfNotExist(getKey(validTypeJson), getTypeof(value))) {
+
+        throw new Error("Allow only " +getKey(validTypeJson).join(","));
+
+    }
 
     let data = parseStringCore(zero, defaultConfig, value);
 

@@ -1,3 +1,6 @@
+
+const {zero} = require("./defaultValue");
+
 /**
  * Create a separate `has` inside core folder
  *
@@ -16,6 +19,15 @@ function _has (value, key) {
     if (typeof key === "undefined") {
 
         return value !== null && typeof value !== "undefined";
+
+    }
+
+    if ([
+        "[object Set]",
+        "[object Map]"
+    ].indexOf(Object.prototype.toString.call(value)) >=zero) {
+
+        return value.has(key);
 
     }
 

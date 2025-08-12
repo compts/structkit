@@ -2,9 +2,11 @@ import stringUnEscape from './stringUnEscape.js';
 
 import each from './each.js';
 
-import {two, one, zero} from '../core/defaultValue.js';
+import {one} from '../core/defaultValue.js';
 
 import varExtend from './varExtend.js';
+
+import indexOfExist from './indexOfExist.js';
 
 /**
  * String escape qoutes
@@ -42,8 +44,33 @@ function cleanValue (value) {
 
     refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
     refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
+    refValue = refValue.replace(/[,]$/g, "");
 
     return refValue;
+
+}
+
+/**
+ * Clean character that will throw error to parse json
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value The second number in an addition.
+ * @returns {any} Returns the json.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function cleanChar (value) {
+
+    if (value === "'") {
+
+        return '"';
+
+    }
+
+    return value;
 
 }
 
@@ -97,241 +124,98 @@ function getTagVal (value) {
  *
  * @since 1.4.86
  * @category Collection
- * @param {any} values The second number in an addition.
+ * @param {any} glb String you want to convert to
  * @returns {any} Returns the json.
  * @example
  *
  * parseJson('{}' )
  *=>{}
  */
-function encodeStripValueQoute (values) {
+function callbackParse (glb) {
 
-    let str_call = "";
-    let reserv_str = "";
-    const arg_call_list = [];
-
-    let str_type = "";
-    let last_str_value = "";
-    let counter_double_qoute = 0;
-    let counter_single_qoute = 0;
-
-    each(values.split(""), function (value) {
-
-        const value_indx=value;
-
-        let row_str_type = "-";
-
-        if (value_indx === '"') {
-
-            if (counter_single_qoute %two === zero && last_str_value !== "\\") {
-
-                row_str_type = "double_qoute";
-
-            }
-
-            counter_double_qoute += one;
-
-        }
-        if (value_indx === "'") {
-
-            if (counter_double_qoute %two === zero) {
-
-                row_str_type = "single_qoute";
-
-            }
-            counter_single_qoute += one;
-
-        }
-
-        if (str_type === "") {
-
-            // eslint-disable-next-line no-negated-condition
-            if (row_str_type !== '-') {
-
-                str_type = row_str_type;
-                str_call += "#@"+arg_call_list.length+"@#";
-
-            } else {
-
-                str_call += value_indx;
-
-            }
-
-        } else {
-
-            if (row_str_type ==="-") {
-
-                reserv_str += value_indx;
-
-            }
-
-            if (str_type === row_str_type) {
-
-                arg_call_list.push({
-                    "arg": reserv_str,
-                    "qoute_type": str_type
-                });
-                str_type = "";
-                reserv_str = "";
-
-            }
-
-        }
-        last_str_value = value;
-
-    });
-
-    return {
-        arg_call_list,
-        str_call
+    const charList = [];
+    let isOpen = false;
+    let recCount = 0;
+    const groupData = {};
+    const lType = {
+        "[": "array",
+        "{": "json"
     };
 
-}
+    each(glb.ret_value.split(""), function (value) {
 
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} str_call String you want to convert to
- * @param {any} arg_call_list The second number in an addition.
- * @param {boolean} keyOnly The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function decodeStripValueQoute (str_call, arg_call_list, keyOnly) {
+        // Console.log(value, ":");
 
-    let count = 0;
+        let clnValue = value;
 
-    let repl= str_call.replace(/#@([0-9]{1,})@#/gi, function (__, va1) {
+        if (indexOfExist([
+            "{",
+            "["
+        ], value)) {
 
-        const getObj = arg_call_list[va1];
+            isOpen =true;
+            recCount +=one;
+            charList.push("#$"+recCount+"$#");
 
-        count +=one;
+            groupData[recCount] = {"type": lType[value],
+                "value": clnValue};
+            clnValue = "";
 
-        return '"'+ getObj.arg +'"';
+        }
+        if (isOpen===false) {
+
+            charList.push(cleanChar(value));
+
+        }
+        if (isOpen) {
+
+            groupData[recCount].value +=clnValue;
+
+        }
+
+        if (indexOfExist([
+            "}",
+            "]"
+        ], value)) {
+
+            isOpen =false;
+
+        }
 
     });
 
-    if (count===zero && keyOnly) {
+    // Console.log(charList.join(""), groupData);
 
-        repl = '"'+repl+'"';
+    const groupChart = [];
 
-    }
+    each(charList.join("").split(","), function (value) {
 
-    return repl;
+        groupChart.push(cleanValue(value));
 
-}
+    });
 
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} glb String you want to convert to
- * @param {any} config The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function callbackParse (glb, config) {
+    let joinGroupChart = groupChart.join(",");
 
-    if (glb.type === 'json') {
+    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
 
-        const encodeStr = encodeStripValueQoute(glb.ret_value);
+        const indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
 
-        const splitKeyValue = encodeStr.str_call.split(":");
+        if (indexV1.type === "json") {
 
-        if (splitKeyValue.length <two) {
+            return cleanValue(indexV1.value);
 
-            throw new Error("No Key found");
+        }
+        if (indexV1.type === "array") {
+
+            return cleanValue(indexV1.value);
 
         }
 
-        const reviewSubValue = getTagVal(decodeStripValueQoute(cleanValue(splitKeyValue.splice(one).join(": ")), encodeStr.arg_call_list, false));
+        return null;
 
-        if (reviewSubValue.type !== "none") {
+    });
 
-            return glb.tag_open+decodeStripValueQoute(cleanValue(splitKeyValue[zero]), encodeStr.arg_call_list, true)+": "+callbackParse(reviewSubValue, config) +glb.tag_close;
-
-        }
-
-        const valueSplit = encodeStr.str_call.split(",");
-
-        const list_obj = [];
-
-        each(valueSplit, function (value) {
-
-            const value_split = value.split(":");
-
-            if (value_split.length <two) {
-
-                throw new Error("No Key found");
-
-            }
-            const argValueJoin =value_split.splice(one).join(": ");
-            const objSubVal = decodeStripValueQoute(cleanValue(argValueJoin), encodeStr.arg_call_list, false);
-            const tagVal = getTagVal(objSubVal);
-
-            if (tagVal.type === 'none') {
-
-                list_obj.push(decodeStripValueQoute(cleanValue(value_split[zero]), encodeStr.arg_call_list, true).toString()+ ": "+ objSubVal);
-
-            } else {
-
-                list_obj.push(decodeStripValueQoute(cleanValue(value_split[zero]), encodeStr.arg_call_list, true).toString()+ ": "+ callbackParse(tagVal, config));
-
-            }
-
-        });
-
-        return glb.tag_open+ list_obj.join(", ") +glb.tag_close;
-
-    }
-
-    if (glb.type === 'array') {
-
-        const encodeStr = encodeStripValueQoute(glb.ret_value);
-
-        const valueSplit = encodeStr.str_call.split(",");
-
-        const reviewSubValue = getTagVal(glb.ret_value);
-
-        if (reviewSubValue.type !== "none") {
-
-            return glb.tag_open+callbackParse(reviewSubValue, config) +glb.tag_close;
-
-        }
-
-        const list_obj = [];
-
-        each(valueSplit, function (value) {
-
-            const objSubVal = decodeStripValueQoute(cleanValue(value), encodeStr.arg_call_list, false);
-            const tagVal = getTagVal(objSubVal);
-
-            if (tagVal.type === 'none') {
-
-                list_obj.push(objSubVal);
-
-            } else {
-
-                list_obj.push(callbackParse(tagVal, config));
-
-            }
-
-        });
-
-        return glb.tag_open+ list_obj.join(", ") +glb.tag_close;
-
-    }
-
-    return "";
+    return joinGroupChart;
 
 }
 
@@ -369,14 +253,24 @@ function parseJson (value, config) {
 
     const tagVal = getTagVal(stripValue);
 
-    const obgM = callbackParse(tagVal, defaultConfig);
+    if (tagVal.type === 'none') {
+
+        return null;
+
+    }
+
+    const obgM = callbackParse(tagVal);
 
     if (obgM === "") {
 
         return null;
 
     }
-    const dataObj = JSON.parse(obgM);
+    const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (revKey, revValue) {
+
+        return revValue;
+
+    });
 
     return dataObj;
 

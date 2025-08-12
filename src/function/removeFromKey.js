@@ -47,7 +47,7 @@ function removeFromKey (objectValue, value) {
 
         each(objectValue, function (av, ak) {
 
-            if (has(objectValue, ak) === false) {
+            if (ak !== value) {
 
                 reslt[ak]=av;
 

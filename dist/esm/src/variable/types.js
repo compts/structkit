@@ -21,4 +21,32 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Uint8Array]": "uint8Array",
     "[object Undefined]": "undefined"};
 
-export {objectCallType, objectCallTypeAll};
+const validTypeJson = {
+    "array": {
+        "end": "]",
+        "isKey": false,
+        "start": "["
+    },
+    "json": {
+        "end": "}",
+        "isKey": true,
+        "start": "{"
+    },
+    "map": {
+        "end": "}",
+        "isKey": true,
+        "start": "{"
+    },
+    "object": {
+        "end": "}",
+        "isKey": true,
+        "start": "{"
+    },
+    "set": {
+        "end": "]",
+        "isKey": false,
+        "start": "["
+    }
+};
+
+export {objectCallType, objectCallTypeAll, validTypeJson};

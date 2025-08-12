@@ -1,5 +1,6 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
 const indexOfExist = require('./indexOfExist');
+const {one} = require("../core/defaultValue");
 
 
 const has = require('./has');
@@ -43,7 +44,7 @@ function each (objectValue, func) {
 
                 }
 
-                callbackEach(ins, objectValue, localGlobal, re_loop, func);
+                callbackEach(ins, objectValue, localGlobal, re_loop, func, true);
 
             }
 
@@ -54,11 +55,9 @@ function each (objectValue, func) {
 
     }
 
-    if (indexOfExist([
-        "set",
-        "map"
-    ], typeofs)) {
+    if (indexOfExist(["set"], typeofs)) {
 
+        let key = 0;
 
         for (const ins of objectValue) {
 
@@ -69,12 +68,24 @@ function each (objectValue, func) {
                     break;
 
                 }
-
-                callbackEach(ins, objectValue, localGlobal, re_loop, func);
+                callbackEach(key, ins, localGlobal, re_loop, func, false);
+                key += one;
 
             }
 
         }
+
+        return re_loop;
+
+    }
+    if (indexOfExist(["map"], typeofs)) {
+
+        objectValue.forEach(function (value, key) {
+
+            callbackEach(key, value, localGlobal, re_loop, func, false);
+
+
+        });
 
         return re_loop;
 
@@ -95,18 +106,21 @@ function each (objectValue, func) {
  * @param {any} localGlobal Global variable to control the loop.
  * @param {any} re_loop Re loop array or json.
  * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @param {boolean} notSetMap Is set or Map data
  * @returns {any} Array or json
  * @example
  *
  * each([1,2],(value,key,localGlobal)=>{ })
  *
  */
-function callbackEach (ins, objectValue, localGlobal, re_loop, func) {
+function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) {
 
 
     let bool_func = true;
 
-    if (getTypeofInternal(objectValue[ins]) === "function") {
+    if (getTypeofInternal(notSetMap
+        ? objectValue[ins]
+        : objectValue) === "function") {
 
         if ((/\b_/g).test(ins)) {
 
@@ -121,11 +135,28 @@ function callbackEach (ins, objectValue, localGlobal, re_loop, func) {
 
             if (has(func)) {
 
-                func(objectValue[ins], ins, localGlobal);
+                if (notSetMap) {
+
+                    func(objectValue[ins], ins, localGlobal);
+
+                } else {
+
+                    func(objectValue, ins, localGlobal);
+
+                }
 
             } else {
 
-                re_loop[ins]=objectValue[ins];
+                if (notSetMap) {
+
+                    re_loop[ins]=objectValue[ins];
+
+                } else {
+
+                    re_loop[ins]=objectValue;
+
+                }
+
 
             }
 
