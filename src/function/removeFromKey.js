@@ -1,7 +1,5 @@
 const getTypeof = require('./getTypeof');
 
-const has = require('./has');
-
 const each = require('./each');
 
 

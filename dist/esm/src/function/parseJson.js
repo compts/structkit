@@ -144,8 +144,6 @@ function callbackParse (glb) {
 
     each(glb.ret_value.split(""), function (value) {
 
-        // Console.log(value, ":");
-
         let clnValue = value;
 
         if (indexOfExist([

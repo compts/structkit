@@ -1,7 +1,5 @@
 import getTypeof from './getTypeof.js';
 
-import has from './has.js';
-
 import each from './each.js';
 
 /**
