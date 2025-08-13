@@ -14,7 +14,7 @@ import {zero} from '../core/defaultValue.js';
  * @returns {any} Returns true or false if valid json format
  * @example
  *
- * isJson('{}' )
+ * isJson({})
  *=> true
  */
 function isJson (value, valueType) {

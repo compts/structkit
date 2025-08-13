@@ -13,6 +13,23 @@ import {default as ___module} from './src/function/__.js';
  */
 export const __ = ___module;
 
+import {default as allValid_module} from './src/function/allValid.js';
+
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+export const allValid = allValid_module;
+
 import {default as add_module} from './src/function/add.js';
 
 
@@ -30,23 +47,6 @@ import {default as add_module} from './src/function/add.js';
  * // => 2
  */
 export const add = add_module;
-
-import {default as allValid_module} from './src/function/allValid.js';
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-export const allValid = allValid_module;
 
 import {default as append_module} from './src/function/append.js';
 
@@ -66,24 +66,6 @@ import {default as append_module} from './src/function/append.js';
  * // => {'as':2}
  */
 export const append = append_module;
-
-import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
-
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-export const arrayRepeat = arrayRepeat_module;
 
 import {default as arrayConcat_module} from './src/function/arrayConcat.js';
 
@@ -124,6 +106,24 @@ import {default as arraySlice_module} from './src/function/arraySlice.js';
  */
 export const arraySlice = arraySlice_module;
 
+import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
+
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+export const arrayRepeat = arrayRepeat_module;
+
 import {default as arraySum_module} from './src/function/arraySum.js';
 
 
@@ -162,6 +162,26 @@ import {default as asyncReplace_module} from './src/function/asyncReplace.js';
  * // => Promise{<fulfilled>: 'a@d'}
  */
 export const asyncReplace = asyncReplace_module;
+
+import {default as calculate_module} from './src/function/calculate.js';
+
+
+/**
+ * Logic in convert string to compute, similar on how the calculator works
+ *
+ * @since 1.4.8
+ * @category Logic
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
+ * @param {any=} args Object argument that to fill in variable define at algbraic expression
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * calculate('1+1')
+ *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
+ */
+export const calculate = calculate_module;
 
 import {default as clone_module} from './src/function/clone.js';
 
@@ -273,23 +293,22 @@ import {default as divide_module} from './src/function/divide.js';
  */
 export const divide = divide_module;
 
-import {default as each_module} from './src/function/each.js';
+import {default as empty_module} from './src/function/empty.js';
 
 
 /**
- * Each or for loop function you are familiar with
+ * Ge the empty value of specify argument type
  *
  * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Array or json.
- * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
- * @returns {any} Array or json
+ * @category Function
+ * @param {any} value Any value type that you want an empty return
+ * @returns {any} Returns empty either Json or Array
  * @example
  *
- * each([1,2],(value,key,localGlobal)=>{ })
- *
+ * empty([])
+ * => []
  */
-export const each = each_module;
+export const empty = empty_module;
 
 import {default as equal_module} from './src/function/equal.js';
 
@@ -309,6 +328,24 @@ import {default as equal_module} from './src/function/equal.js';
  */
 export const equal = equal_module;
 
+import {default as each_module} from './src/function/each.js';
+
+
+/**
+ * Each or for loop function you are familiar with
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Array or json.
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @returns {any} Array or json
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+export const each = each_module;
+
 import {default as filter_module} from './src/function/filter.js';
 
 
@@ -327,23 +364,6 @@ import {default as filter_module} from './src/function/filter.js';
  * => [2, 34]
  */
 export const filter = filter_module;
-
-import {default as empty_module} from './src/function/empty.js';
-
-
-/**
- * Ge the empty value of specify argument type
- *
- * @since 1.0.1
- * @category Function
- * @param {any} value Any value type that you want an empty return
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * empty([])
- * => []
- */
-export const empty = empty_module;
 
 import {default as first_module} from './src/function/first.js';
 
@@ -419,6 +439,23 @@ import {default as getData_module} from './src/function/getData.js';
  */
 export const getData = getData_module;
 
+import {default as getKey_module} from './src/function/getKey.js';
+
+
+/**
+ * Get key Array or JSON
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array type
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+export const getKey = getKey_module;
+
 import {default as getTypeof_module} from './src/function/getTypeof.js';
 
 
@@ -454,23 +491,6 @@ import {default as getUniq_module} from './src/function/getUniq.js';
  * => dur82ht126uqgszn62j04a
  */
 export const getUniq = getUniq_module;
-
-import {default as getKey_module} from './src/function/getKey.js';
-
-
-/**
- * Get key Array or JSON
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array type
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-export const getKey = getKey_module;
 
 import {default as getValue_module} from './src/function/getValue.js';
 
@@ -739,7 +759,7 @@ import {default as isJson_module} from './src/function/isJson.js';
  * @returns {any} Returns true or false if valid json format
  * @example
  *
- * isJson('{}' )
+ * isJson({})
  *=> true
  */
 export const isJson = isJson_module;
@@ -797,25 +817,24 @@ import {default as lastIndexOf_module} from './src/function/lastIndexOf.js';
  */
 export const lastIndexOf = lastIndexOf_module;
 
-import {default as calculate_module} from './src/function/calculate.js';
+import {default as like_module} from './src/function/like.js';
 
 
 /**
- * Logic in convert string to compute, similar on how the calculator works
+ * Searching the data either in array or json object to get similar value of data
  *
- * @since 1.4.8
- * @category Logic
- * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
- * @param {any=} args Object argument that to fill in variable define at algbraic expression
- * @returns {number|any} Returns the total.
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
  * @example
  *
- * calculate('1+1')
- *=> 2
- * calculate('1+as',{as:1})
- *=> 2
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
  */
-export const calculate = calculate_module;
+export const like = like_module;
 
 import {default as limit_module} from './src/function/limit.js';
 
@@ -855,25 +874,6 @@ import {default as lte_module} from './src/function/lte.js';
  */
 export const lte = lte_module;
 
-import {default as like_module} from './src/function/like.js';
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-export const like = like_module;
-
 import {default as map_module} from './src/function/map.js';
 
 
@@ -910,24 +910,6 @@ import {default as mapGetData_module} from './src/function/mapGetData.js';
  */
 export const mapGetData = mapGetData_module;
 
-import {default as lt_module} from './src/function/lt.js';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
-
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.js';
 
 
@@ -946,6 +928,24 @@ import {default as mergeInWhere_module} from './src/function/mergeInWhere.js';
  *=> [{ "id":1, "s":23, "title":"test only"}]
  */
 export const mergeInWhere = mergeInWhere_module;
+
+import {default as lt_module} from './src/function/lt.js';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as mergeWithKey_module} from './src/function/mergeWithKey.js';
 
@@ -1039,6 +1039,23 @@ import {default as onSequence_module} from './src/function/onSequence.js';
  */
 export const onSequence = onSequence_module;
 
+import {default as parseJson_module} from './src/function/parseJson.js';
+
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+export const parseJson = parseJson_module;
+
 import {default as onWait_module} from './src/function/onWait.js';
 
 
@@ -1056,23 +1073,6 @@ import {default as onWait_module} from './src/function/onWait.js';
  *=>'11'
  */
 export const onWait = onWait_module;
-
-import {default as parseJson_module} from './src/function/parseJson.js';
-
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-export const parseJson = parseJson_module;
 
 import {default as parseString_module} from './src/function/parseString.js';
 
@@ -1237,22 +1237,23 @@ import {default as repeat_module} from './src/function/repeat.js';
  */
 export const repeat = repeat_module;
 
-import {default as reverse_module} from './src/function/reverse.js';
+import {default as roundDecimal_module} from './src/function/roundDecimal.js';
 
 
 /**
- * Return reverse order of array
+ * Random Decimal
  *
- * @since 1.4.874
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
+ * @since 1.0.1
+ * @category Math
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
  * @example
  *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
  */
-export const reverse = reverse_module;
+export const roundDecimal = roundDecimal_module;
 
 import {default as selectInData_module} from './src/function/selectInData.js';
 
@@ -1272,23 +1273,22 @@ import {default as selectInData_module} from './src/function/selectInData.js';
  */
 export const selectInData = selectInData_module;
 
-import {default as roundDecimal_module} from './src/function/roundDecimal.js';
+import {default as reverse_module} from './src/function/reverse.js';
 
 
 /**
- * Random Decimal
+ * Return reverse order of array
  *
- * @since 1.0.1
- * @category Math
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
  */
-export const roundDecimal = roundDecimal_module;
+export const reverse = reverse_module;
 
 import {default as setData_module} from './src/function/setData.js';
 
@@ -1344,6 +1344,24 @@ import {default as someValid_module} from './src/function/someValid.js';
  */
 export const someValid = someValid_module;
 
+import {default as sortBy_module} from './src/function/sortBy.js';
+
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {Function} func Callback function or sort type
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
+ *=>[1,2,3]
+ */
+export const sortBy = sortBy_module;
+
 import {default as sort_module} from './src/function/sort.js';
 
 
@@ -1362,24 +1380,6 @@ import {default as sort_module} from './src/function/sort.js';
  *=>[1,2,3]
  */
 export const sort = sort_module;
-
-import {default as sortBy_module} from './src/function/sortBy.js';
-
-
-/**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {Function} func Callback function or sort type
- * @returns {any[]} Returns the total.
- * @example
- *
- * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
- *=>[1,2,3]
- */
-export const sortBy = sortBy_module;
 
 import {default as stringCamelCase_module} from './src/function/stringCamelCase.js';
 
@@ -1453,23 +1453,6 @@ import {default as stringKebabCase_module} from './src/function/stringKebabCase.
  */
 export const stringKebabCase = stringKebabCase_module;
 
-import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
-
-
-/**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringLowerCase('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-export const stringLowerCase = stringLowerCase_module;
-
 import {default as stringSnakeCase_module} from './src/function/stringSnakeCase.js';
 
 
@@ -1486,6 +1469,23 @@ import {default as stringSnakeCase_module} from './src/function/stringSnakeCase.
  *=> 'the_fish_is_goad_with_goat_1ss'
  */
 export const stringSnakeCase = stringSnakeCase_module;
+
+import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
+
+
+/**
+ * String Lower case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringLowerCase('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+export const stringLowerCase = stringLowerCase_module;
 
 import {default as stringSubs_module} from './src/function/stringSubs.js';
 
@@ -1541,24 +1541,6 @@ import {default as stringUpperCase_module} from './src/function/stringUpperCase.
  */
 export const stringUpperCase = stringUpperCase_module;
 
-import {default as subtract_module} from './src/function/subtract.js';
-
-
-/**
- * Subtract logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for subtracted value
- * @example
- *
- * subtract(1, 1)
- * // => 0
- */
-export const subtract = subtract_module;
-
 import {default as swap_module} from './src/function/swap.js';
 
 
@@ -1577,6 +1559,24 @@ import {default as swap_module} from './src/function/swap.js';
  *=> off
  */
 export const swap = swap_module;
+
+import {default as subtract_module} from './src/function/subtract.js';
+
+
+/**
+ * Subtract logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for subtracted value
+ * @example
+ *
+ * subtract(1, 1)
+ * // => 0
+ */
+export const subtract = subtract_module;
 
 import {default as take_module} from './src/function/take.js';
 
@@ -1684,22 +1684,22 @@ import {default as toInteger_module} from './src/function/toInteger.js';
  */
 export const toInteger = toInteger_module;
 
-import {default as toString_module} from './src/function/toString.js';
+import {default as toPairs_module} from './src/function/toPairs.js';
 
 
 /**
- * To String
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} value First number
+ * @returns {any[]} Returns array
  * @example
  *
- * toString(1)
- *=> '1'
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
  */
-export const toString = toString_module;
+export const toPairs = toPairs_module;
 
 import {default as trim_module} from './src/function/trim.js';
 
@@ -1718,6 +1718,23 @@ import {default as trim_module} from './src/function/trim.js';
  *=> 'The fish is goad   with Goat-1ss'
  */
 export const trim = trim_module;
+
+import {default as toString_module} from './src/function/toString.js';
+
+
+/**
+ * To String
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
+ * @example
+ *
+ * toString(1)
+ *=> '1'
+ */
+export const toString = toString_module;
 
 import {default as trimEnd_module} from './src/function/trimEnd.js';
 
@@ -1771,6 +1788,23 @@ import {default as union_module} from './src/function/union.js';
  * // => [1, 2, 3, 4, 7, 5, 6, 8]
  */
 export const union = union_module;
+
+import {default as unique_module} from './src/function/unique.js';
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+export const unique = unique_module;
 
 import {default as varExtend_module} from './src/function/varExtend.js';
 
@@ -2230,38 +2264,4 @@ import {default as zip_module} from './src/function/zip.js';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
-
-import {default as unique_module} from './src/function/unique.js';
-
-
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-export const unique = unique_module;
-
-import {default as toPairs_module} from './src/function/toPairs.js';
-
-
-/**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
- * @example
- *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
- */
-export const toPairs = toPairs_module;
 

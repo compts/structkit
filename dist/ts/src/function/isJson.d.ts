@@ -9,7 +9,7 @@ export default isJson;
  * @returns {any} Returns true or false if valid json format
  * @example
  *
- * isJson('{}' )
+ * isJson({})
  *=> true
  */
 declare function isJson(value: any, valueType?: string | undefined): any;

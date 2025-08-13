@@ -363,7 +363,7 @@ var validTypeJson = {
  * @returns {any} Returns true or false if valid json format
  * @example
  *
- * isJson('{}' )
+ * isJson({})
  *=> true
  */
 function isJson (value, valueType) {
@@ -512,82 +512,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
 
 /**
  * Counting the lenght in array, json or string
@@ -1103,6 +1027,51 @@ function empty (value) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1383,6 +1352,37 @@ _stk.allValid=allValid;
 
 
 /**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1598,71 +1598,6 @@ function arrayRepeat (value, valueRepetion) {
 _stk.arrayRepeat=arrayRepeat;
 
 _stk.arraySlice=arraySlice;
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -2102,32 +2037,70 @@ function convert (a1, b1, pos) {
 
 _stk.calculate=calculate;
 
-_stk.count=count;
-
 
 /**
- * Create your own curry for your onw function
+ * Async replace regexp argument
  *
- * @since 1.4.874
+ * @since 1.3.1
  * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
  * @example
  *
- * asd = curry((test) =>{})
- * // => (test) =>{}
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-function curry (fun, num) {
+function asyncReplace (value, search, toReplace) {
 
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
-    return curryArg(fun, argDummy, count(argDummy));
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
 
 }
 
-_stk.curry=curry;
+_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -2157,6 +2130,33 @@ function clone (objectValue) {
 }
 
 _stk.clone=clone;
+
+_stk.count=count;
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.874
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 
 
 /**
@@ -2235,9 +2235,9 @@ _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
 
-_stk.empty=empty;
-
 _stk.each=each;
+
+_stk.empty=empty;
 
 
 /**
@@ -2318,6 +2318,51 @@ function filter (objectValue, func) {
 }
 
 _stk.filter=filter;
+
+_stk.first=first;
+
+
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce([], rawValue, function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        });
+
+    }, [arg]);
+
+}
+
+_stk.flatten=flatten;
 
 
 /**
@@ -3158,51 +3203,6 @@ function groupBy (objectValue, func) {
 
 _stk.groupBy=groupBy;
 
-_stk.first=first;
-
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce([], rawValue, function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        });
-
-    }, [arg]);
-
-}
-
-_stk.flatten=flatten;
-
 
 /**
  *  To check if the two arguments are greater
@@ -3310,8 +3310,6 @@ _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
-_stk.indexOfNotExist=indexOfNotExist;
-
 
 /**
  * Insert value in Json object or array
@@ -3356,7 +3354,13 @@ _stk.insert=insert;
 
 _stk.isEmpty=isEmpty;
 
+_stk.indexOfNotExist=indexOfNotExist;
+
 _stk.isExact=isExact;
+
+_stk.isExactbyRegExp=isExactbyRegExp;
+
+_stk.isJson=isJson;
 
 
 /**
@@ -3448,10 +3452,6 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-_stk.isExactbyRegExp=isExactbyRegExp;
-
-_stk.isJson=isJson;
 
 
 /**
@@ -3567,6 +3567,8 @@ function lte (value1, value2) {
 
 _stk.lte=lte;
 
+_stk.map=map;
+
 
 /**
  * A Function to map the data either an array or an object using getData function.
@@ -3592,35 +3594,6 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -3770,11 +3743,38 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.map=map;
 
-_stk.multiply=multiply;
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -6184,107 +6184,6 @@ _stk.someValid=someValid;
 
 
 /**
- * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any=} objectValue Either Json or Array data.
- * @param {any=} split_str Search key or index.
- * @param {any=} updateValue Value to update the data.
- * @returns {any} Returns the total.
- * @example
- *
- * setData({"s":1},"s",2)
- *=> 2
- */
-function setData (objectValue, split_str, updateValue) {
-
-    if (!has(objectValue)) {
-
-        return empty(objectValue);
-
-    }
-
-    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
-
-        if (isEmpty(rawSplit_str)) {
-
-            return empty(rawObjectValue);
-
-        }
-
-        var spl= schemaSplitData(rawSplit_str);
-
-        return baseReduce(rawObjectValue, [spl], function (total, value) {
-
-            if (getTypeofInternal(total) === "json") {
-
-                valueToUpdate(total, value, rawUpdateValue);
-
-            }
-            if (getTypeofInternal(total) === "array") {
-
-                var rawTotal = first(total);
-
-                valueToUpdate(rawTotal, value, rawUpdateValue);
-                total = [rawTotal];
-
-            }
-
-            return total;
-
-        });
-
-    }, [
-        objectValue,
-        split_str,
-        updateValue
-    ]);
-
-}
-
-/**
- * Given a value to update the data in array or json
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} objectValue Either Json or Array data.
- * @param {any[]} whereStr Either Json or Array data.
- * @param {any} updateValue Search key or index.
- * @returns {any} Returns the total.
- * @example
- *
- * getData({"s":1},"s")
- *=> 1
- * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
- *=> {a: 2}
- */
-function valueToUpdate (objectValue, whereStr, updateValue) {
-
-    var getRmoveValue = remove(whereStr, zero);
-
-    if (isEmpty(getRmoveValue)) {
-
-        objectValue[first(whereStr)] = updateValue;
-
-    } else {
-
-        if (has(objectValue, first(whereStr)) === false) {
-
-            objectValue[first(whereStr)] = {};
-
-        }
-        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
-
-    }
-
-}
-
-_stk.setData=setData;
-
-
-/**
  * Sort By
  *
  * @since 1.4.87
@@ -6403,37 +6302,104 @@ _stk.sort=sort;
 
 
 /**
- * Sort By function is used to sort an array of values.
+ * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
  *
  * @since 1.4.87
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {Function} func Callback function or sort type
- * @returns {any[]} Returns the total.
+ * @category Collection
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} split_str Search key or index.
+ * @param {any=} updateValue Value to update the data.
+ * @returns {any} Returns the total.
  * @example
  *
- * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
- *=>[1,2,3]
+ * setData({"s":1},"s",2)
+ *=> 2
  */
-function sortBy (objectValue, func) {
+function setData (objectValue, split_str, updateValue) {
 
-    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
+    if (!has(objectValue)) {
 
-        if (has(func) && getTypeof(func) === 'function') {
+        return empty(objectValue);
 
-            return func(orderA, orderB);
+    }
+
+    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
+
+        if (isEmpty(rawSplit_str)) {
+
+            return empty(rawObjectValue);
 
         }
 
-        return orderA - orderB;
+        var spl= schemaSplitData(rawSplit_str);
 
-    });
+        return baseReduce(rawObjectValue, [spl], function (total, value) {
 
-    return finalResponse;
+            if (getTypeofInternal(total) === "json") {
+
+                valueToUpdate(total, value, rawUpdateValue);
+
+            }
+            if (getTypeofInternal(total) === "array") {
+
+                var rawTotal = first(total);
+
+                valueToUpdate(rawTotal, value, rawUpdateValue);
+                total = [rawTotal];
+
+            }
+
+            return total;
+
+        });
+
+    }, [
+        objectValue,
+        split_str,
+        updateValue
+    ]);
 
 }
 
-_stk.sortBy=sortBy;
+/**
+ * Given a value to update the data in array or json
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} objectValue Either Json or Array data.
+ * @param {any[]} whereStr Either Json or Array data.
+ * @param {any} updateValue Search key or index.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * getData({"s":1},"s")
+ *=> 1
+ * @example
+ * getData({"a":{"a":2},"b":{"a":3}},"a:a")
+ *=> {a: 2}
+ */
+function valueToUpdate (objectValue, whereStr, updateValue) {
+
+    var getRmoveValue = remove(whereStr, zero);
+
+    if (isEmpty(getRmoveValue)) {
+
+        objectValue[first(whereStr)] = updateValue;
+
+    } else {
+
+        if (has(objectValue, first(whereStr)) === false) {
+
+            objectValue[first(whereStr)] = {};
+
+        }
+        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
+
+    }
+
+}
+
+_stk.setData=setData;
 /**
  * Split string for special cases
  *
@@ -6481,6 +6447,40 @@ function stringCamelCase (value) {
 }
 
 _stk.stringCamelCase=stringCamelCase;
+
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {Function} func Callback function or sort type
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
+ *=>[1,2,3]
+ */
+function sortBy (objectValue, func) {
+
+    var finalResponse=baseSort(objectValue, function (orderA, orderB) {
+
+        if (has(func) && getTypeof(func) === 'function') {
+
+            return func(orderA, orderB);
+
+        }
+
+        return orderA - orderB;
+
+    });
+
+    return finalResponse;
+
+}
+
+_stk.sortBy=sortBy;
 
 
 /**
@@ -7169,6 +7169,8 @@ function setDepthValue (arryData, value) {
 
 _stk.toPairs=toPairs;
 
+_stk.toString=toString;
+
 
 /**
  * String trim  at the start only
@@ -7268,8 +7270,6 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-
-_stk.toString=toString;
 
 _stk.trimEnd=trimEnd;
 
