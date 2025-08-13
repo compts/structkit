@@ -8,10 +8,10 @@ const getValue = require("../function/getValue");
  *
  * @since 1.4.86
  * @category Math
- * @param {any[]|string} rawList Second number
- * @param {number} startIndex Second number
- * @param {number} lastIndex Second number
- * @returns {any} Returns true or false.
+ * @param {any[]|string} rawList List data
+ * @param {number} startIndex Start index number
+ * @param {number} lastIndex Last index number
+ * @returns {any} Returns array
  * @example
  *
  * baseTake(1, 1)

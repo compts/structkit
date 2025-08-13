@@ -52,6 +52,20 @@ export const allValid: typeof allValid_module;
  */
 export const append: typeof append_module;
 /**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+export const arrayRepeat: typeof arrayRepeat_module;
+/**
  * Array Concat
  *
  * @since 1.0.1
@@ -83,35 +97,6 @@ export const arrayConcat: typeof arrayConcat_module;
  */
 export const arraySlice: typeof arraySlice_module;
 /**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-export const asyncReplace: typeof asyncReplace_module;
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-export const arrayRepeat: typeof arrayRepeat_module;
-/**
  * Array sum of value
  *
  * @since 1.0.1
@@ -127,6 +112,34 @@ export const arrayRepeat: typeof arrayRepeat_module;
  * // => 3
  */
 export const arraySum: typeof arraySum_module;
+/**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+export const asyncReplace: typeof asyncReplace_module;
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+export const clone: typeof clone_module;
 /**
  * Counting the lenght in array, json or string
  *
@@ -144,35 +157,6 @@ export const arraySum: typeof arraySum_module;
  * // => 2
  */
 export const count: typeof count_module;
-/**
- * Logic in convert string to compute, similar on how the calculator works
- *
- * @since 1.4.8
- * @category Logic
- * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
- * @param {any=} args Object argument that to fill in variable define at algbraic expression
- * @returns {number|any} Returns the total.
- * @example
- *
- * calculate('1+1')
- *=> 2
- * calculate('1+as',{as:1})
- *=> 2
- */
-export const calculate: typeof calculate_module;
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-export const clone: typeof clone_module;
 /**
  * Create your own curry for your onw function
  *
@@ -244,19 +228,6 @@ export const divide: typeof divide_module;
  */
 export const each: typeof each_module;
 /**
- * Ge the empty value of specify argument type
- *
- * @since 1.0.1
- * @category Function
- * @param {any} value Any value type that you want an empty return
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * empty([])
- * => []
- */
-export const empty: typeof empty_module;
-/**
  * To check if the two arguments are equal
  *
  * @since 1.4.8
@@ -285,6 +256,19 @@ export const equal: typeof equal_module;
  * => [2, 34]
  */
 export const filter: typeof filter_module;
+/**
+ * Ge the empty value of specify argument type
+ *
+ * @since 1.0.1
+ * @category Function
+ * @param {any} value Any value type that you want an empty return
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * empty([])
+ * => []
+ */
+export const empty: typeof empty_module;
 /**
  * Get the first value of array
  *
@@ -344,19 +328,6 @@ export const fromPairs: typeof fromPairs_module;
  */
 export const getData: typeof getData_module;
 /**
- * Get key Array or JSON
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array type
- * @returns {string} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-export const getKey: typeof getKey_module;
-/**
  * Get type of the variable
  *
  * @since 1.0.1
@@ -371,6 +342,32 @@ export const getKey: typeof getKey_module;
  * => [array,json]
  */
 export const getTypeof: typeof getTypeof_module;
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+export const getUniq: typeof getUniq_module;
+/**
+ * Get key Array or JSON
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array type
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+export const getKey: typeof getKey_module;
 /**
  * Get value of json or array
  *
@@ -413,18 +410,19 @@ export const groupBy: typeof groupBy_module;
  */
 export const gt: typeof gt_module;
 /**
- * Generate unique value id
+ *  To check if the two arguments are greater than to equal
  *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
  * @example
  *
- * getUniq()
- * => dur82ht126uqgszn62j04a
+ * gte(1, 2)
+ * // => false
  */
-export const getUniq: typeof getUniq_module;
+export const gte: typeof gte_module;
 /**
  * Check if object has value or null or undefined
  *
@@ -523,20 +521,6 @@ export const indexOfNotExist: typeof indexOfNotExist_module;
  * // => {A: 1, as: 1}
  */
 export const insert: typeof insert_module;
-/**
- *  To check if the two arguments are greater than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gte(1, 2)
- * // => false
- */
-export const gte: typeof gte_module;
 /**
  * Check if data is empty, null and undefined are now considered as empty
  *
@@ -638,20 +622,21 @@ export const last: typeof last_module;
  */
 export const lastIndexOf: typeof lastIndexOf_module;
 /**
- * Searching the data either in array or json object to get similar value of data
+ * Logic in convert string to compute, similar on how the calculator works
  *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
+ * @since 1.4.8
+ * @category Logic
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
+ * @param {any=} args Object argument that to fill in variable define at algbraic expression
+ * @returns {number|any} Returns the total.
  * @example
  *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
+ * calculate('1+1')
+ *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
  */
-export const like: typeof like_module;
+export const calculate: typeof calculate_module;
 /**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
@@ -683,6 +668,21 @@ export const limit: typeof limit_module;
  */
 export const lte: typeof lte_module;
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+export const like: typeof like_module;
+/**
  * To map the value of json or array
  *
  * @since 1.0.1
@@ -710,6 +710,20 @@ export const map: typeof map_module;
  *=>[1]
  */
 export const mapGetData: typeof mapGetData_module;
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt: typeof lt_module;
 /**
  * Merging two json/array object with the help of where clause
  *
@@ -783,20 +797,6 @@ export const noteq: typeof noteq_module;
  */
 export const onDelay: typeof onDelay_module;
 /**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-export const onWait: typeof onWait_module;
-/**
  * On sequence
  *
  * @since 1.4.1
@@ -812,19 +812,19 @@ export const onWait: typeof onWait_module;
  */
 export const onSequence: typeof onSequence_module;
 /**
- * To check if the two arguments are less
+ * On wait
  *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
  * @example
  *
- * lt(1, 2)
- * // => true
+ *  onWait(()=>{})
+ *=>'11'
  */
-export const lt: typeof lt_module;
+export const onWait: typeof onWait_module;
 /**
  * String escape qoutes
  *
@@ -895,6 +895,21 @@ export const random: typeof random_module;
  */
 export const range: typeof range_module;
 /**
+ * Reduce function
+ *
+ * @since 1.4.8
+ * @category Function
+ * @param {any} defaultValue Starting value that you want to use as reference
+ * @param {any[]} listData Array value that you want to map
+ * @param {any} func Callback function for how to map the data
+ * @returns {any} Return redue value
+ * @example
+ *
+ * reduce(2,[1,2],(total,value)=>total+value)
+ * // => 5
+ */
+export const reduce: typeof reduce_module;
+/**
  * Regex Count Group number
  *
  * @since 1.4.7
@@ -951,19 +966,18 @@ export const removeFromKey: typeof removeFromKey_module;
  */
 export const repeat: typeof repeat_module;
 /**
- * Random Decimal
+ * Return reverse order of array
  *
- * @since 1.0.1
- * @category Math
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
  * @example
  *
- * roundDecimal(11.1111111,3 )
- *=>11.11
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
  */
-export const roundDecimal: typeof roundDecimal_module;
+export const reverse: typeof reverse_module;
 /**
  * Selecting multiple search data using `getData` logic in the loop
  *
@@ -978,6 +992,20 @@ export const roundDecimal: typeof roundDecimal_module;
  *=> {"ss":1}
  */
 export const selectInData: typeof selectInData_module;
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number} value Int or Double value type
+ * @param {number=} maxValue limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.11
+ */
+export const roundDecimal: typeof roundDecimal_module;
 /**
  * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
  *
@@ -1020,21 +1048,6 @@ export const shuffle: typeof shuffle_module;
  * // => true
  */
 export const someValid: typeof someValid_module;
-/**
- * Reduce function
- *
- * @since 1.4.8
- * @category Function
- * @param {any} defaultValue Starting value that you want to use as reference
- * @param {any[]} listData Array value that you want to map
- * @param {any} func Callback function for how to map the data
- * @returns {any} Return redue value
- * @example
- *
- * reduce(2,[1,2],(total,value)=>total+value)
- * // => 5
- */
-export const reduce: typeof reduce_module;
 /**
  * Sort array
  *
@@ -1147,6 +1160,21 @@ export const stringLowerCase: typeof stringLowerCase_module;
  */
 export const stringSnakeCase: typeof stringSnakeCase_module;
 /**
+ * String Substr
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @param {number} minValue minimum value
+ * @param {number=} maxValue maximum value
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringSubs('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+export const stringSubs: typeof stringSubs_module;
+/**
  * String Unescape
  *
  * @since 1.3.1
@@ -1188,35 +1216,6 @@ export const stringUpperCase: typeof stringUpperCase_module;
  */
 export const subtract: typeof subtract_module;
 /**
- * String Substr
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @param {number} minValue minimum value
- * @param {number=} maxValue maximum value
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringSubs('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-export const stringSubs: typeof stringSubs_module;
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-export const take: typeof take_module;
-/**
  * Swapping the value either string or array in there specific position
  *
  * @since 1.4.86
@@ -1231,6 +1230,35 @@ export const take: typeof take_module;
  *=> off
  */
 export const swap: typeof swap_module;
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+export const take: typeof take_module;
+/**
+ * Template value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
+ */
+export const templateValue: typeof templateValue_module;
 /**
  * To convert any data type(except the data has been already been an array) into array type
  *
@@ -1284,21 +1312,6 @@ export const toDouble: typeof toDouble_module;
  *=>11
  */
 export const toInteger: typeof toInteger_module;
-/**
- * Template value
- *
- * @since 1.0.1
- * @category String
- * @param {string} templateString Template string
- * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  templateValue("<!- test !>", {"test": 11})
- *=>'11'
- */
-export const templateValue: typeof templateValue_module;
 /**
  * To String
  *
@@ -1367,19 +1380,6 @@ export const trimStart: typeof trimStart_module;
  * // => [1, 2, 3, 4, 7, 5, 6, 8]
  */
 export const union: typeof union_module;
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-export const unique: typeof unique_module;
 /**
  * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
  *
@@ -1693,6 +1693,19 @@ export const whereOnce: typeof whereOnce_module;
  */
 export const zip: typeof zip_module;
 /**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+export const unique: typeof unique_module;
+/**
  *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
  * @since 1.4.87
@@ -1708,32 +1721,32 @@ export const toPairs: typeof toPairs_module;
 import { default as add_module } from './src/function/add.js';
 import { default as allValid_module } from './src/function/allValid.js';
 import { default as append_module } from './src/function/append.js';
+import { default as arrayRepeat_module } from './src/function/arrayRepeat.js';
 import { default as arrayConcat_module } from './src/function/arrayConcat.js';
 import { default as arraySlice_module } from './src/function/arraySlice.js';
-import { default as asyncReplace_module } from './src/function/asyncReplace.js';
-import { default as arrayRepeat_module } from './src/function/arrayRepeat.js';
 import { default as arraySum_module } from './src/function/arraySum.js';
-import { default as count_module } from './src/function/count.js';
-import { default as calculate_module } from './src/function/calculate.js';
+import { default as asyncReplace_module } from './src/function/asyncReplace.js';
 import { default as clone_module } from './src/function/clone.js';
+import { default as count_module } from './src/function/count.js';
 import { default as curry_module } from './src/function/curry.js';
 import { default as dec_module } from './src/function/dec.js';
 import { default as defaultTo_module } from './src/function/defaultTo.js';
 import { default as divide_module } from './src/function/divide.js';
 import { default as each_module } from './src/function/each.js';
-import { default as empty_module } from './src/function/empty.js';
 import { default as equal_module } from './src/function/equal.js';
 import { default as filter_module } from './src/function/filter.js';
+import { default as empty_module } from './src/function/empty.js';
 import { default as first_module } from './src/function/first.js';
 import { default as flatten_module } from './src/function/flatten.js';
 import { default as fromPairs_module } from './src/function/fromPairs.js';
 import { default as getData_module } from './src/function/getData.js';
-import { default as getKey_module } from './src/function/getKey.js';
 import { default as getTypeof_module } from './src/function/getTypeof.js';
+import { default as getUniq_module } from './src/function/getUniq.js';
+import { default as getKey_module } from './src/function/getKey.js';
 import { default as getValue_module } from './src/function/getValue.js';
 import { default as groupBy_module } from './src/function/groupBy.js';
 import { default as gt_module } from './src/function/gt.js';
-import { default as getUniq_module } from './src/function/getUniq.js';
+import { default as gte_module } from './src/function/gte.js';
 import { default as has_module } from './src/function/has.js';
 import { default as ifUndefined_module } from './src/function/ifUndefined.js';
 import { default as inc_module } from './src/function/inc.js';
@@ -1741,7 +1754,6 @@ import { default as indexOf_module } from './src/function/indexOf.js';
 import { default as indexOfExist_module } from './src/function/indexOfExist.js';
 import { default as indexOfNotExist_module } from './src/function/indexOfNotExist.js';
 import { default as insert_module } from './src/function/insert.js';
-import { default as gte_module } from './src/function/gte.js';
 import { default as isEmpty_module } from './src/function/isEmpty.js';
 import { default as isExact_module } from './src/function/isExact.js';
 import { default as isExactbyRegExp_module } from './src/function/isExactbyRegExp.js';
@@ -1749,34 +1761,36 @@ import { default as isJson_module } from './src/function/isJson.js';
 import { default as jsonToArray_module } from './src/function/jsonToArray.js';
 import { default as last_module } from './src/function/last.js';
 import { default as lastIndexOf_module } from './src/function/lastIndexOf.js';
-import { default as like_module } from './src/function/like.js';
+import { default as calculate_module } from './src/function/calculate.js';
 import { default as limit_module } from './src/function/limit.js';
 import { default as lte_module } from './src/function/lte.js';
+import { default as like_module } from './src/function/like.js';
 import { default as map_module } from './src/function/map.js';
 import { default as mapGetData_module } from './src/function/mapGetData.js';
+import { default as lt_module } from './src/function/lt.js';
 import { default as mergeInWhere_module } from './src/function/mergeInWhere.js';
 import { default as mergeWithKey_module } from './src/function/mergeWithKey.js';
 import { default as multiply_module } from './src/function/multiply.js';
 import { default as noteq_module } from './src/function/noteq.js';
 import { default as onDelay_module } from './src/function/onDelay.js';
-import { default as onWait_module } from './src/function/onWait.js';
 import { default as onSequence_module } from './src/function/onSequence.js';
-import { default as lt_module } from './src/function/lt.js';
+import { default as onWait_module } from './src/function/onWait.js';
 import { default as parseJson_module } from './src/function/parseJson.js';
 import { default as parseString_module } from './src/function/parseString.js';
 import { default as pipe_module } from './src/function/pipe.js';
 import { default as random_module } from './src/function/random.js';
 import { default as range_module } from './src/function/range.js';
+import { default as reduce_module } from './src/function/reduce.js';
 import { default as regexCountGroup_module } from './src/function/regexCountGroup.js';
 import { default as remove_module } from './src/function/remove.js';
 import { default as removeFromKey_module } from './src/function/removeFromKey.js';
 import { default as repeat_module } from './src/function/repeat.js';
-import { default as roundDecimal_module } from './src/function/roundDecimal.js';
+import { default as reverse_module } from './src/function/reverse.js';
 import { default as selectInData_module } from './src/function/selectInData.js';
+import { default as roundDecimal_module } from './src/function/roundDecimal.js';
 import { default as setData_module } from './src/function/setData.js';
 import { default as shuffle_module } from './src/function/shuffle.js';
 import { default as someValid_module } from './src/function/someValid.js';
-import { default as reduce_module } from './src/function/reduce.js';
 import { default as sort_module } from './src/function/sort.js';
 import { default as sortBy_module } from './src/function/sortBy.js';
 import { default as stringCamelCase_module } from './src/function/stringCamelCase.js';
@@ -1785,26 +1799,26 @@ import { default as stringEscape_module } from './src/function/stringEscape.js';
 import { default as stringKebabCase_module } from './src/function/stringKebabCase.js';
 import { default as stringLowerCase_module } from './src/function/stringLowerCase.js';
 import { default as stringSnakeCase_module } from './src/function/stringSnakeCase.js';
+import { default as stringSubs_module } from './src/function/stringSubs.js';
 import { default as stringUnEscape_module } from './src/function/stringUnEscape.js';
 import { default as stringUpperCase_module } from './src/function/stringUpperCase.js';
 import { default as subtract_module } from './src/function/subtract.js';
-import { default as stringSubs_module } from './src/function/stringSubs.js';
-import { default as take_module } from './src/function/take.js';
 import { default as swap_module } from './src/function/swap.js';
+import { default as take_module } from './src/function/take.js';
+import { default as templateValue_module } from './src/function/templateValue.js';
 import { default as toArray_module } from './src/function/toArray.js';
 import { default as toBoolean_module } from './src/function/toBoolean.js';
 import { default as toDouble_module } from './src/function/toDouble.js';
 import { default as toInteger_module } from './src/function/toInteger.js';
-import { default as templateValue_module } from './src/function/templateValue.js';
 import { default as toString_module } from './src/function/toString.js';
 import { default as trim_module } from './src/function/trim.js';
 import { default as trimEnd_module } from './src/function/trimEnd.js';
 import { default as trimStart_module } from './src/function/trimStart.js';
 import { default as union_module } from './src/function/union.js';
-import { default as unique_module } from './src/function/unique.js';
 import { default as varExtend_module } from './src/function/varExtend.js';
 import { default as where_module } from './src/function/where.js';
 import { default as whereNot_module } from './src/function/whereNot.js';
 import { default as whereOnce_module } from './src/function/whereOnce.js';
 import { default as zip_module } from './src/function/zip.js';
+import { default as unique_module } from './src/function/unique.js';
 import { default as toPairs_module } from './src/function/toPairs.js';

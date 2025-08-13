@@ -183,8 +183,6 @@ function callbackParse (glb) {
 
     });
 
-    // Console.log(charList.join(""), groupData);
-
     const groupChart = [];
 
     each(charList.join("").split(","), function (value) {
@@ -236,7 +234,6 @@ function parseJson (value, config) {
 
     const defaultConfig = varExtend({"disableCorrection": false}, config);
 
-
     if (defaultConfig.disableCorrection) {
 
         const rawValue = cleanValue(value);
@@ -267,7 +264,7 @@ function parseJson (value, config) {
         return null;
 
     }
-    const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (revKey, revValue) {
+    const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
 
         return revValue;
 
