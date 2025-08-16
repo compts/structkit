@@ -5,6 +5,8 @@ const isEmpty = require('./isEmpty');
 const curryArg = require("../core/curryArg");
 const inc = require("./inc");
 const {schemaSplitData} = require("../core/baseGetData");
+const {two} = require("../core/defaultValue");
+
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -78,7 +80,7 @@ function getData (objectValue, split_str, isStrict) {
     }, [
         objectValue,
         split_str
-    ]);
+    ], two);
 
 }
 module.exports=getData;
