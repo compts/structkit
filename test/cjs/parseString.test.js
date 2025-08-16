@@ -9,7 +9,7 @@ describe('CJS: parseString method', function () {
         assert.strictEqual(parseString({"a": [
             "1",
             "2"
-        ]}), '{"a":["1","2"]}');
+        ]}), '{"a":[1,2]}');
 
     });
     it('check if repetion is correct single qoute', function () {

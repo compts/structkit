@@ -4,6 +4,7 @@ import assert from 'assert';
 const three =3;
 const two =2;
 const one =1;
+const zero =0;
 
 describe('ESM: getKey method', function () {
 
@@ -17,9 +18,9 @@ describe('ESM: getKey method', function () {
                 three
             ]),
             [
-                "0",
-                "1",
-                "2"
+                zero,
+                one,
+                two
 
             ]
         );

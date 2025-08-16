@@ -2,7 +2,7 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 const indexOfExist = require('./indexOfExist');
 const {one} = require("../core/defaultValue");
 
-
+const convertValue = require("../core/convertValue");
 const has = require('./has');
 
 /**
@@ -44,7 +44,7 @@ function each (objectValue, func) {
 
                 }
 
-                callbackEach(ins, objectValue, localGlobal, re_loop, func, true);
+                callbackEach(convertValue(ins), objectValue, localGlobal, re_loop, func, true);
 
             }
 
@@ -82,7 +82,7 @@ function each (objectValue, func) {
 
         objectValue.forEach(function (value, key) {
 
-            callbackEach(key, value, localGlobal, re_loop, func, false);
+            callbackEach(convertValue(key), value, localGlobal, re_loop, func, false);
 
 
         });
@@ -101,7 +101,7 @@ function each (objectValue, func) {
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} ins Array or json.
+ * @param {any} ins Index.
  * @param {any} objectValue Index of the objectValue.
  * @param {any} localGlobal Global variable to control the loop.
  * @param {any} re_loop Re loop array or json.

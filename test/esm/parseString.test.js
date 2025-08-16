@@ -10,7 +10,7 @@ describe('ESM: parseString method', function () {
         assert.strictEqual(parseString({"a": [
             "1",
             "2"
-        ]}), '{"a":["1","2"]}');
+        ]}), '{"a":[1,2]}');
 
     });
 

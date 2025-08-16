@@ -11,6 +11,7 @@ const indexOfNotExist = require('./indexOfNotExist');
 const getKey = require('./getKey');
 const toString = require('./toString');
 
+const convertValue = require("../core/convertValue");
 const {two, one, zero} = require("../core/defaultValue");
 const {validTypeJson} = require("../variable/types");
 
@@ -86,36 +87,38 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
         }
 
-        if (getTypeof(value) === "string") {
+        const parseValue = convertValue(value);
 
-            return '"'+escapeQuotesStr(value)+'"';
+        if (getTypeof(parseValue) === "string") {
+
+            return '"'+escapeQuotesStr(parseValue)+'"';
 
         }
-        if (getTypeof(value) === "undefined") {
+        if (getTypeof(parseValue) === "undefined") {
 
             return '"undefined"';
 
         }
-        if (getTypeof(value) === "date") {
+        if (getTypeof(parseValue) === "date") {
 
-            return '"'+toString(value)+'"';
+            return '"'+toString(parseValue)+'"';
 
         }
-        if (getTypeof(value) === "regexp") {
+        if (getTypeof(parseValue) === "regexp") {
 
             return '"new RegExp(' + value.source +','+ value.flags+')"';
 
         }
 
-        if (getTypeof(value) === "number") {
+        if (getTypeof(parseValue) === "number") {
 
-            if (isNaN(value)) {
+            if (isNaN(parseValue)) {
 
                 return '"NaN"';
 
             }
 
-            if (Infinity === value) {
+            if (Infinity === parseValue) {
 
                 return '"Infinity"';
 
@@ -131,7 +134,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
         }
 
-        if (getTypeof(value) === "function") {
+        if (getTypeof(parseValue) === "function") {
 
             if (refConfig.ignoreFunction) {
 
@@ -139,11 +142,11 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
             }
 
-            return '"'+value+'"';
+            return '"'+parseValue+'"';
 
         }
 
-        return value;
+        return parseValue;
 
     }, [
         rawCount,
