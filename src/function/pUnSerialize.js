@@ -1,13 +1,67 @@
 const curryArg = require("../core/curryArg");
 const {zero, one, two} = require("../core/defaultValue");
-
-/*
- * Const each = require('./each');
- * Const range = require('./range');
- */
-
+const each = require('./each');
+const range = require('./range');
+const getValue = require('./getValue');
+const toArray = require('./toArray');
 const first = require('./first');
+const arraySlice = require('./arraySlice');
 const convertValue = require("../core/convertValue");
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * parseTypeValObj ( 'a:1:{i:0;s:3:"22s";};')
+ * // => ["22s"]
+ */
+function getObjectValue (value) {
+
+    const splitOpen = value.split("{");
+    const splitClose = arraySlice(splitOpen, one).join("{")
+        .replace(/\}[;]{1,}$/g, "");
+
+    return splitClose;
+
+}
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * getObjectType ( 'a:1:{i:0;s:3:"22s";};')
+ * // => ["22s"]
+ */
+function getObjectType (value) {
+
+    const getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
+
+    if (getMatch !== null) {
+
+        return {
+            "is_valid": true,
+            "matches": getMatch
+        };
+
+    }
+
+
+    return {
+        "is_valid": false,
+        "matches": []
+    };
+
+}
 
 /**
  * Convert the value to its type in serialize
@@ -29,11 +83,11 @@ function parseTypeValObj (value) {
 
     }
 
-    const getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
+    const getMatch = getObjectType(value);
 
-    if (getMatch !== null) {
+    if (getMatch.is_valid) {
 
-        const splitValue = getMatch[zero].split(":");
+        const splitValue = getMatch.matches[zero].split(":");
 
         if (splitValue[zero] === "s") {
 
@@ -57,14 +111,33 @@ function parseTypeValObj (value) {
              *  Const splitClose = splitOpen[one].replace(/\};$/g, "");
              */
 
-            /*
-             *  Console.log(splitClose, ":+:", convertValue(splitValue[one]));
-             *  Const argVal = {};
-             */
+            let objValue = getObjectValue(value).split(";");
+            const argVal = {};
+            // This will help as check if the deep type was in array or json
+            let isArrayValue = true;
+            let counterArrayValue =zero;
 
-            //  Each(range(convertValue(splitValue[one]) - one, zero), function(eValue, eKey) {
+            each(range(convertValue(splitValue[one]) - one, zero), function () {
 
-            //   });
+                const refobjKey = parseTypeValObj(objValue[zero]+";");
+
+                if (isArrayValue && refobjKey !== counterArrayValue) {
+
+                    isArrayValue = false;
+
+                }
+                const refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+
+                argVal[refobjKey] = refobjVal;
+
+                objValue = arraySlice(objValue, two);
+                counterArrayValue += one;
+
+            });
+
+            return isArrayValue
+                ?toArray(getValue(argVal))
+                :argVal;
 
 
         }
@@ -82,7 +155,7 @@ function parseTypeValObj (value) {
  * @since 1.4.874
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
- * @returns {string} Returns number for subtracted value
+ * @returns {any} Returns number for subtracted value
  * @example
  *
  * pUnSerialize('s:6:"Violet";')

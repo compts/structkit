@@ -480,82 +480,6 @@ function getTypeofInternal (objectValue) {
 }
 
 /**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    const typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
-
-/**
  * Counting the lenght in array, json or string
  *
  * @since 1.0.1
@@ -1105,6 +1029,51 @@ function empty (value) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    const typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1593,6 +1562,69 @@ _stk.arraySlice=arraySlice;
 
 
 /**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                const values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
+
+
+/**
  * Addition logic in satisfying two argument
  *
  * @since 1.4.8
@@ -1707,69 +1739,6 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum;
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                const values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -2118,8 +2087,34 @@ function convert (a1, b1, pos) {
 
 _stk.calculate=calculate;
 
-_stk.count=count;
 
+/**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
 
 /**
  * Cloning the data either in JSON or array that be used as different property
@@ -2148,6 +2143,8 @@ function clone (objectValue) {
 }
 
 _stk.clone=clone;
+
+_stk.count=count;
 
 
 /**
@@ -2249,9 +2246,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
-
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -3324,9 +3321,9 @@ _stk.inc=inc;
 
 _stk.indexOf=indexOf;
 
-_stk.indexOfExist=indexOfExist;
-
 _stk.indexOfNotExist=indexOfNotExist;
+
+_stk.indexOfExist=indexOfExist;
 
 
 /**
@@ -3471,6 +3468,29 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -3530,29 +3550,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValue, objectValueWhere, func) {
-
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -3759,6 +3756,8 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
+_stk.mergeWithKey=mergeWithKey;
+
 
 /**
  * To check if the two arguments are less
@@ -3787,8 +3786,6 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
-
-_stk.mergeWithKey=mergeWithKey;
 
 _stk.multiply=multiply;
 
@@ -4206,6 +4203,169 @@ _stk.onWait=onWait;
  *
  * @since 1.4.874
  * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * parseTypeValObj ( 'a:1:{i:0;s:3:"22s";};')
+ * // => ["22s"]
+ */
+function getObjectValue (value) {
+
+    const splitOpen = value.split("{");
+    const splitClose = arraySlice(splitOpen, one).join("{")
+        .replace(/\}[;]{1,}$/g, "");
+
+    return splitClose;
+
+}
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * getObjectType ( 'a:1:{i:0;s:3:"22s";};')
+ * // => ["22s"]
+ */
+function getObjectType (value) {
+
+    const getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
+
+    if (getMatch !== null) {
+
+        return {
+            "is_valid": true,
+            "matches": getMatch
+        };
+
+    }
+
+    return {
+        "is_valid": false,
+        "matches": []
+    };
+
+}
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * parseTypeValObj ( 'a:1:{i:0;s:3:"22s";};')
+ * // => ["22s"]
+ */
+function parseTypeValObj (value) {
+
+    if (value === "N;") {
+
+        return null;
+
+    }
+
+    const getMatch = getObjectType(value);
+
+    if (getMatch.is_valid) {
+
+        const splitValue = getMatch.matches[zero].split(":");
+
+        if (splitValue[zero] === "s") {
+
+            const stringSplit = value.split(";");
+            const slitGetStr = first(stringSplit).split(":");
+
+            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
+
+        }
+
+        if (splitValue[zero] === "i") {
+
+            return convertValue(splitValue[one]);
+
+        }
+
+        if (splitValue[zero] === "a") {
+
+            /*
+             *  Const splitOpen = value.split("{");
+             *  Const splitClose = splitOpen[one].replace(/\};$/g, "");
+             */
+
+            let objValue = getObjectValue(value).split(";");
+            const argVal = {};
+            // This will help as check if the deep type was in array or json
+            let isArrayValue = true;
+            let counterArrayValue =zero;
+
+            each(range(convertValue(splitValue[one]) - one, zero), function () {
+
+                const refobjKey = parseTypeValObj(objValue[zero]+";");
+
+                if (isArrayValue && refobjKey !== counterArrayValue) {
+
+                    isArrayValue = false;
+
+                }
+                const refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+
+                argVal[refobjKey] = refobjVal;
+
+                objValue = arraySlice(objValue, two);
+                counterArrayValue += one;
+
+            });
+
+            return isArrayValue
+                ?toArray(getValue(argVal))
+                :argVal;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+/**
+ * Create a serialize data if you are coming to php
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * pUnSerialize('s:6:"Violet";')
+ * // => 'Violet'
+ */
+function pUnSerialize (value) {
+
+    return curryArg(function (rawValue) {
+
+        return parseTypeValObj(rawValue);
+
+    }, [value], one);
+
+}
+
+_stk.pUnSerialize=pUnSerialize;
+
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
  * @param {any} typeValue Arugment that you want to convert to serialize string
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
@@ -4292,101 +4452,6 @@ function pSerialize (value) {
 }
 
 _stk.pSerialize=pSerialize;
-
-
-/*
- * Const each = require('./each');
- * Const range = require('./range');
- */
-
-/**
- * Convert the value to its type in serialize
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value Arugment that you want to convert to serialize string
- * @returns {any} Returns number for subtracted value
- * @example
- *
- * parseTypeValObj ( 'a:1:{i:0;s:3:"22s";};')
- * // => ["22s"]
- */
-function parseTypeValObj (value) {
-
-    if (value === "N;") {
-
-        return null;
-
-    }
-
-    const getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
-
-    if (getMatch !== null) {
-
-        const splitValue = getMatch[zero].split(":");
-
-        if (splitValue[zero] === "s") {
-
-            const stringSplit = value.split(";");
-            const slitGetStr = first(stringSplit).split(":");
-
-            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
-
-        }
-
-        if (splitValue[zero] === "i") {
-
-            return convertValue(splitValue[one]);
-
-        }
-
-        if (splitValue[zero] === "a") {
-
-            /*
-             *  Const splitOpen = value.split("{");
-             *  Const splitClose = splitOpen[one].replace(/\};$/g, "");
-             */
-
-            /*
-             *  Console.log(splitClose, ":+:", convertValue(splitValue[one]));
-             *  Const argVal = {};
-             */
-
-            //  Each(range(convertValue(splitValue[one]) - one, zero), function(eValue, eKey) {
-
-            //   });
-
-        }
-
-    }
-
-    return null;
-
-}
-
-/**
- * Create a serialize data if you are coming to php
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value Arugment that you want to convert to serialize string
- * @returns {string} Returns number for subtracted value
- * @example
- *
- * pUnSerialize('s:6:"Violet";')
- * // => 'Violet'
- */
-function pUnSerialize (value) {
-
-    return curryArg(function (rawValue) {
-
-        return parseTypeValObj(rawValue);
-
-    }, [value], one);
-
-}
-
-_stk.pUnSerialize=pUnSerialize;
 
 
 /**
@@ -6095,6 +6160,10 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
+_stk.add=add;
+
+_stk.append=append;
+
 
 /**
  * To create single random value from array
@@ -6458,31 +6527,6 @@ _stk.shuffle=shuffle;
 
 
 /**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
-
-/**
  * Sort By
  *
  * @since 1.4.87
@@ -6632,6 +6676,31 @@ function sortBy (objectValue, func) {
 }
 
 _stk.sortBy=sortBy;
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid (...arg) {
+
+    return curryArg(function (...rawValue) {
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 /**
  * Split string for special cases
  *
@@ -7155,8 +7224,6 @@ _stk.templateValue=templateValue;
 
 _stk.toArray=toArray;
 
-_stk.add=add;
-
 
 /**
  * To extract string invalid boolean and convert to boolean
@@ -7559,7 +7626,46 @@ _stk.unique=unique;
 
 _stk.varExtend=varExtend;
 
-_stk.where=where;
+_stk.whereOnce=whereOnce;
+
+
+/**
+ * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {...any?} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * zip([1],[2],[3])
+ * // => [[1,2,3]]
+ */
+function zip (...arg) {
+
+    return curryArg(function (...rawValue) {
+
+        const varLimit = limit(rawValue, one);
+
+        return baseReduce([], first(rawValue), function (total, value, key) {
+
+            total.push(baseReduce([value], varLimit, function (totalSub, valueSub) {
+
+                totalSub.push(valueSub[key]);
+
+                return totalSub;
+
+            }));
+
+            return total;
+
+        });
+
+    }, arg);
+
+}
+
+_stk.zip=zip;
 
 
 /**
@@ -7947,46 +8053,7 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
-_stk.whereOnce=whereOnce;
-
-
-/**
- * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
- *
- * @since 1.4.86
- * @category Array
- * @param {...any?} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * zip([1],[2],[3])
- * // => [[1,2,3]]
- */
-function zip (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        const varLimit = limit(rawValue, one);
-
-        return baseReduce([], first(rawValue), function (total, value, key) {
-
-            total.push(baseReduce([value], varLimit, function (totalSub, valueSub) {
-
-                totalSub.push(valueSub[key]);
-
-                return totalSub;
-
-            }));
-
-            return total;
-
-        });
-
-    }, arg);
-
-}
-
-_stk.zip=zip;
+_stk.where=where;
 
 
  //end of file

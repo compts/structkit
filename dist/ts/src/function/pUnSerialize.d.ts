@@ -5,10 +5,10 @@ export default pUnSerialize;
  * @since 1.4.874
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
- * @returns {string} Returns number for subtracted value
+ * @returns {any} Returns number for subtracted value
  * @example
  *
  * pUnSerialize('s:6:"Violet";')
  * // => 'Violet'
  */
-declare function pUnSerialize(value: any): string;
+declare function pUnSerialize(value: any): any;

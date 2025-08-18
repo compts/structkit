@@ -31,22 +31,22 @@ import {default as add_module} from './src/function/add.js';
  */
 export const add = add_module;
 
-import {default as arrayConcat_module} from './src/function/arrayConcat.js';
+import {default as allValid_module} from './src/function/allValid.js';
 
 
 /**
- * Array Concat
+ * In array, you need to check all value is true
  *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
  * @example
  *
- * arrayConcat([1], 2)
- * // => [1,2]
+ * allValid(true, false)
+ * // => false
  */
-export const arrayConcat = arrayConcat_module;
+export const allValid = allValid_module;
 
 import {default as append_module} from './src/function/append.js';
 
@@ -67,22 +67,22 @@ import {default as append_module} from './src/function/append.js';
  */
 export const append = append_module;
 
-import {default as allValid_module} from './src/function/allValid.js';
+import {default as arrayConcat_module} from './src/function/arrayConcat.js';
 
 
 /**
- * In array, you need to check all value is true
+ * Array Concat
  *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
  * @example
  *
- * allValid(true, false)
- * // => false
+ * arrayConcat([1], 2)
+ * // => [1,2]
  */
-export const allValid = allValid_module;
+export const arrayConcat = arrayConcat_module;
 
 import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
 
@@ -101,6 +101,28 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
  *=>['s','s']
  */
 export const arrayRepeat = arrayRepeat_module;
+
+import {default as arraySlice_module} from './src/function/arraySlice.js';
+
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+export const arraySlice = arraySlice_module;
 
 import {default as arraySum_module} from './src/function/arraySum.js';
 
@@ -141,28 +163,6 @@ import {default as asyncReplace_module} from './src/function/asyncReplace.js';
  */
 export const asyncReplace = asyncReplace_module;
 
-import {default as arraySlice_module} from './src/function/arraySlice.js';
-
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-export const arraySlice = arraySlice_module;
-
 import {default as calculate_module} from './src/function/calculate.js';
 
 
@@ -200,6 +200,27 @@ import {default as clone_module} from './src/function/clone.js';
  */
 export const clone = clone_module;
 
+import {default as count_module} from './src/function/count.js';
+
+
+/**
+ * Counting the lenght in array, json or string
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {any=} objectValue Json or array that you want to cound
+ * @param {boolean=} json_is_empty_check If data is json, it will check its map data
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * count([1,2])
+ * // => 2
+ *
+ * count({"s" :1, "s2": 2}, true)// Counting the object inside, you must this to true
+ * // => 2
+ */
+export const count = count_module;
+
 import {default as curry_module} from './src/function/curry.js';
 
 
@@ -235,27 +256,6 @@ import {default as dec_module} from './src/function/dec.js';
  *=>0
  */
 export const dec = dec_module;
-
-import {default as count_module} from './src/function/count.js';
-
-
-/**
- * Counting the lenght in array, json or string
- *
- * @since 1.0.1
- * @category Math
- * @param {any=} objectValue Json or array that you want to cound
- * @param {boolean=} json_is_empty_check If data is json, it will check its map data
- * @returns {number} Returns the total.
- * @example
- *
- * count([1,2])
- * // => 2
- *
- * count({"s" :1, "s2": 2}, true)// Counting the object inside, you must this to true
- * // => 2
- */
-export const count = count_module;
 
 import {default as defaultTo_module} from './src/function/defaultTo.js';
 
@@ -328,24 +328,6 @@ import {default as empty_module} from './src/function/empty.js';
  */
 export const empty = empty_module;
 
-import {default as equal_module} from './src/function/equal.js';
-
-
-/**
- * To check if the two arguments are equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * equal('as', 'as')
- * // => true
- */
-export const equal = equal_module;
-
 import {default as filter_module} from './src/function/filter.js';
 
 
@@ -382,6 +364,24 @@ import {default as first_module} from './src/function/first.js';
  */
 export const first = first_module;
 
+import {default as equal_module} from './src/function/equal.js';
+
+
+/**
+ * To check if the two arguments are equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * equal('as', 'as')
+ * // => true
+ */
+export const equal = equal_module;
+
 import {default as flatten_module} from './src/function/flatten.js';
 
 
@@ -398,24 +398,6 @@ import {default as flatten_module} from './src/function/flatten.js';
  * // => [1,2,3,4,5,6,7]
  */
 export const flatten = flatten_module;
-
-import {default as fromPairs_module} from './src/function/fromPairs.js';
-
-
-/**
- * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} value First number
- * @param {number=} deepLimit First number
- * @returns {any} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-export const fromPairs = fromPairs_module;
 
 import {default as getData_module} from './src/function/getData.js';
 
@@ -439,39 +421,23 @@ import {default as getData_module} from './src/function/getData.js';
  */
 export const getData = getData_module;
 
-import {default as getKey_module} from './src/function/getKey.js';
+import {default as fromPairs_module} from './src/function/fromPairs.js';
 
 
 /**
- * Get key Array or JSON
+ * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
  *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array type
- * @returns {string} Returns it respective key or index
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} value First number
+ * @param {number=} deepLimit First number
+ * @returns {any} Returns array
  * @example
  *
- * getKey({"s":1})
- * => s
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
  */
-export const getKey = getKey_module;
-
-import {default as getUniq_module} from './src/function/getUniq.js';
-
-
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-export const getUniq = getUniq_module;
+export const fromPairs = fromPairs_module;
 
 import {default as getTypeof_module} from './src/function/getTypeof.js';
 
@@ -491,6 +457,23 @@ import {default as getTypeof_module} from './src/function/getTypeof.js';
  * => [array,json]
  */
 export const getTypeof = getTypeof_module;
+
+import {default as getUniq_module} from './src/function/getUniq.js';
+
+
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+export const getUniq = getUniq_module;
 
 import {default as getValue_module} from './src/function/getValue.js';
 
@@ -526,6 +509,23 @@ import {default as groupBy_module} from './src/function/groupBy.js';
  *=> {0:[2,4,6], 1:[1,3,5,7]}
  */
 export const groupBy = groupBy_module;
+
+import {default as getKey_module} from './src/function/getKey.js';
+
+
+/**
+ * Get key Array or JSON
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array type
+ * @returns {string} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+export const getKey = getKey_module;
 
 import {default as gt_module} from './src/function/gt.js';
 
@@ -563,6 +563,23 @@ import {default as gte_module} from './src/function/gte.js';
  */
 export const gte = gte_module;
 
+import {default as has_module} from './src/function/has.js';
+
+
+/**
+ * Check if object has value or null or undefined
+ *
+ * @since 1.0.1
+ * @category Predicate
+ * @param {...any?} args Either JSON or Array
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * has({'as':1}, 'as')
+ * // => true
+ */
+export const has = has_module;
+
 import {default as ifUndefined_module} from './src/function/ifUndefined.js';
 
 
@@ -581,23 +598,6 @@ import {default as ifUndefined_module} from './src/function/ifUndefined.js';
  * // => 1
  */
 export const ifUndefined = ifUndefined_module;
-
-import {default as has_module} from './src/function/has.js';
-
-
-/**
- * Check if object has value or null or undefined
- *
- * @since 1.0.1
- * @category Predicate
- * @param {...any?} args Either JSON or Array
- * @returns {boolean} Returns true or false.
- * @example
- *
- * has({'as':1}, 'as')
- * // => true
- */
-export const has = has_module;
 
 import {default as inc_module} from './src/function/inc.js';
 
@@ -671,6 +671,23 @@ import {default as indexOfNotExist_module} from './src/function/indexOfNotExist.
  */
 export const indexOfNotExist = indexOfNotExist_module;
 
+import {default as isEmpty_module} from './src/function/isEmpty.js';
+
+
+/**
+ * Check if data is empty, null and undefined are now considered as empty
+ *
+ * @since 1.0.1
+ * @category Predicate
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+export const isEmpty = isEmpty_module;
+
 import {default as insert_module} from './src/function/insert.js';
 
 
@@ -688,23 +705,6 @@ import {default as insert_module} from './src/function/insert.js';
  * // => {A: 1, as: 1}
  */
 export const insert = insert_module;
-
-import {default as isEmpty_module} from './src/function/isEmpty.js';
-
-
-/**
- * Check if data is empty, null and undefined are now considered as empty
- *
- * @since 1.0.1
- * @category Predicate
- * @param {any} value JSON , Array and String
- * @returns {boolean} Returns true or false
- * @example
- *
- * isEmpty('')
- * // => true
- */
-export const isEmpty = isEmpty_module;
 
 import {default as isExact_module} from './src/function/isExact.js';
 
@@ -817,6 +817,25 @@ import {default as lastIndexOf_module} from './src/function/lastIndexOf.js';
  */
 export const lastIndexOf = lastIndexOf_module;
 
+import {default as like_module} from './src/function/like.js';
+
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+export const like = like_module;
+
 import {default as limit_module} from './src/function/limit.js';
 
 
@@ -836,25 +855,6 @@ import {default as limit_module} from './src/function/limit.js';
  *=>{'1':2}
  */
 export const limit = limit_module;
-
-import {default as like_module} from './src/function/like.js';
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-export const like = like_module;
 
 import {default as lte_module} from './src/function/lte.js';
 
@@ -891,24 +891,6 @@ import {default as map_module} from './src/function/map.js';
  *=> [3, 4]
  */
 export const map = map_module;
-
-import {default as lt_module} from './src/function/lt.js';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
 
 import {default as mapGetData_module} from './src/function/mapGetData.js';
 
@@ -983,6 +965,24 @@ import {default as multiply_module} from './src/function/multiply.js';
  */
 export const multiply = multiply_module;
 
+import {default as lt_module} from './src/function/lt.js';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
+
 import {default as noteq_module} from './src/function/noteq.js';
 
 
@@ -1020,6 +1020,24 @@ import {default as onDelay_module} from './src/function/onDelay.js';
  */
 export const onDelay = onDelay_module;
 
+import {default as onWait_module} from './src/function/onWait.js';
+
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+export const onWait = onWait_module;
+
 import {default as onSequence_module} from './src/function/onSequence.js';
 
 
@@ -1038,24 +1056,6 @@ import {default as onSequence_module} from './src/function/onSequence.js';
  *=>'11'
  */
 export const onSequence = onSequence_module;
-
-import {default as onWait_module} from './src/function/onWait.js';
-
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-export const onWait = onWait_module;
 
 import {default as pSerialize_module} from './src/function/pSerialize.js';
 
@@ -1078,11 +1078,36 @@ export const pSerialize = pSerialize_module;
 import {default as pUnSerialize_module} from './src/function/pUnSerialize.js';
 
 
-/*
- * Const each = require('./each');
- * Const range = require('./range');
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * parseTypeValObj ( 'a:1:{i:0;s:3:"22s";};')
+ * // => ["22s"]
  */
 export const pUnSerialize = pUnSerialize_module;
+
+import {default as parseString_module} from './src/function/parseString.js';
+
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+export const parseString = parseString_module;
 
 import {default as parseJson_module} from './src/function/parseJson.js';
 
@@ -1136,23 +1161,6 @@ import {default as random_module} from './src/function/random.js';
  *=>'[20]'
  */
 export const random = random_module;
-
-import {default as parseString_module} from './src/function/parseString.js';
-
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-export const parseString = parseString_module;
 
 import {default as range_module} from './src/function/range.js';
 
@@ -1480,23 +1488,6 @@ import {default as stringKebabCase_module} from './src/function/stringKebabCase.
  */
 export const stringKebabCase = stringKebabCase_module;
 
-import {default as stringSnakeCase_module} from './src/function/stringSnakeCase.js';
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-export const stringSnakeCase = stringSnakeCase_module;
-
 import {default as stringLowerCase_module} from './src/function/stringLowerCase.js';
 
 
@@ -1513,6 +1504,23 @@ import {default as stringLowerCase_module} from './src/function/stringLowerCase.
  *=> 'the fish is goad   with goat-1ss
  */
 export const stringLowerCase = stringLowerCase_module;
+
+import {default as stringSnakeCase_module} from './src/function/stringSnakeCase.js';
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+export const stringSnakeCase = stringSnakeCase_module;
 
 import {default as stringSubs_module} from './src/function/stringSubs.js';
 
@@ -1727,6 +1735,23 @@ import {default as toPairs_module} from './src/function/toPairs.js';
  * // => [["s",1],["ss",["a",2]]]
  */
 export const toPairs = toPairs_module;
+
+import {default as toString_module} from './src/function/toString.js';
+
+
+/**
+ * To String
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
+ * @example
+ *
+ * toString(1)
+ *=> '1'
+ */
+export const toString = toString_module;
 
 import {default as trim_module} from './src/function/trim.js';
 
@@ -2237,23 +2262,6 @@ export const isString=isString_default;
 export const isUint16Array=isUint16Array_default;
 export const isUint8Array=isUint8Array_default;
 export const isUndefined=isUndefined_default;
-import {default as zip_module} from './src/function/zip.js';
-
-
-/**
- * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
- *
- * @since 1.4.86
- * @category Array
- * @param {...any?} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * zip([1],[2],[3])
- * // => [[1,2,3]]
- */
-export const zip = zip_module;
-
 import {default as whereOnce_module} from './src/function/whereOnce.js';
 
 
@@ -2275,20 +2283,20 @@ import {default as whereOnce_module} from './src/function/whereOnce.js';
  */
 export const whereOnce = whereOnce_module;
 
-import {default as toString_module} from './src/function/toString.js';
+import {default as zip_module} from './src/function/zip.js';
 
 
 /**
- * To String
+ * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
  *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
+ * @since 1.4.86
+ * @category Array
+ * @param {...any?} arg First number
+ * @returns {any} Returns true or false.
  * @example
  *
- * toString(1)
- *=> '1'
+ * zip([1],[2],[3])
+ * // => [[1,2,3]]
  */
-export const toString = toString_module;
+export const zip = zip_module;
 
