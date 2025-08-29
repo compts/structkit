@@ -42,6 +42,11 @@ function parseTypeVal (typeValue, value) {
         return "s:"+count(value)+":\""+value+"\";";
 
     }
+    if (typeValue === "function") {
+
+        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
+
+    }
     if (typeValue === "number") {
 
         return "i:"+value+";";
@@ -64,7 +69,7 @@ function parseTypeVal (typeValue, value) {
  * @example
  *
  * pSerialize(["22s"])
- * // => 'a:1:{i:0;s:3:"22s";};'
+ * // => 'a:1:{i:0;s:3:"22s";}'
  */
 function pSerialize (value) {
 
@@ -93,7 +98,7 @@ function pSerialize (value) {
 
             });
 
-            return "a:"+count(mapData)+":{"+mapData.join("")+"};";
+            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
 
         }
 

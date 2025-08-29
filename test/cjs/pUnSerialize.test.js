@@ -2,6 +2,9 @@ const {pUnSerialize} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const one =1;
+const two =2;
+const three =3;
+const four =4;
 
 describe('CJS: pUnSerialize method', function () {
 
@@ -9,6 +12,15 @@ describe('CJS: pUnSerialize method', function () {
     it('return value string', function () {
 
         assert.deepStrictEqual(pUnSerialize('s:6:"Violet";'), "Violet");
+
+    });
+
+    it('return value null', function () {
+
+        assert.deepStrictEqual(
+            pUnSerialize("N;"),
+            null
+        );
 
     });
 
@@ -25,6 +37,45 @@ describe('CJS: pUnSerialize method', function () {
         assert.deepStrictEqual(
             pUnSerialize("a:1:{i:0;s:3:\"22s\";};"),
             ["22s"]
+        );
+
+    });
+
+    it('return value for color `array`', function () {
+
+        assert.deepStrictEqual(
+            pUnSerialize('a:3:{i:0;s:3:"Red";i:1;s:5:"Green";i:2;s:4:"Blue";}'),
+            [
+                "Red",
+                "Green",
+                "Blue"
+            ]
+        );
+
+    });
+
+    it('return value for color `dict`', function () {
+
+        assert.deepStrictEqual(
+            pUnSerialize('a:2:{s:2:"s1";s:5:"test1";s:2:"s2";s:5:"test2";}'),
+            {"s1": "test1",
+                "s2": "test2"}
+        );
+
+    });
+
+    it('return value for color `dict` with array', function () {
+
+        assert.deepStrictEqual(
+            pUnSerialize('a:2:{s:2:"w1";s:5:"with1";s:5:"array";a:4:{i:0;i:1;i:1;i:2;i:2;i:3;i:3;i:4;}}'),
+            {"w1": "with1",
+                // eslint-disable-next-line sort-keys
+                "array": [
+                    one,
+                    two,
+                    three,
+                    four
+                ]}
         );
 
     });

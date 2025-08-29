@@ -105,6 +105,15 @@ function parseTypeValObj (value) {
 
         }
 
+        if (splitValue[zero] === "O") {
+
+            const stringSplit = value.split(";");
+            const slitGetStr = first(stringSplit).split(":");
+
+            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
+
+        }
+
         if (splitValue[zero] === "i") {
 
             return convertValue(splitValue[one]);
