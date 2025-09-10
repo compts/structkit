@@ -3,6 +3,20 @@ const __p = "@argument/place";
 
 const __=__p;
 
+/**
+ * Placeholder of argument
+ *
+ * @since 1.4.8
+ * @category String
+ * @example
+ *
+ * __
+ * // => @argument/place
+ */
+
+_stk.__=__;
+
+
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -493,82 +507,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    const typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
 
 /**
  * Counting the lenght in array, json or string
@@ -1120,6 +1058,51 @@ function empty (value) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    const typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1394,6 +1377,37 @@ _stk.allValid=allValid;
 
 
 /**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1591,14 +1605,20 @@ function range (maxValue, minValue, step) {
  */
 function arrayRepeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
+    return curryArg(function (rawValue, rawValueRepetion) {
 
-    return map(range(nm_rpt), function () {
+        const nm_rpt=rawValueRepetion||zero;
 
-        return value;
+        return map(range(nm_rpt), function () {
 
-    });
+            return rawValue;
+
+        });
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
 
 }
 
@@ -1696,69 +1716,6 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum;
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                const values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -2109,6 +2066,69 @@ _stk.calculate=calculate;
 
 
 /**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                const values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function (...arg) {
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
+
+
+/**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
@@ -2137,6 +2157,31 @@ function clone (objectValue) {
 _stk.clone=clone;
 
 _stk.count=count;
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.874
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    const argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 
 
 /**
@@ -2172,31 +2217,6 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.874
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    const argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 
 
 /**
@@ -2242,6 +2262,8 @@ _stk.divide=divide;
 
 _stk.each=each;
 
+_stk.empty=empty;
+
 
 /**
  * To check if the two arguments are equal
@@ -2276,20 +2298,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-
-/**
- * Placeholder of argument
- *
- * @since 1.4.8
- * @category String
- * @example
- *
- * __
- * // => @argument/place
- */
-
-_stk.__=__;
 
 
 /**
@@ -2336,8 +2344,6 @@ function filter (objectValue, func) {
 
 _stk.filter=filter;
 
-_stk.first=first;
-
 
 /**
  * Flatten an array to a single level.
@@ -2380,6 +2386,8 @@ function flatten (arg) {
 }
 
 _stk.flatten=flatten;
+
+_stk.first=first;
 
 
 /**
@@ -2923,7 +2931,15 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
  */
 function where (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+
+        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, true, 'where');
+
+    }, [
+        objectValue,
+        objectValueWhere,
+        func
+    ], two);
 
 }
 
@@ -3114,9 +3130,9 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getKey=getKey;
-
 _stk.getData=getData;
+
+_stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
 /**
@@ -3371,34 +3387,13 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isExact=isExact;
-
 _stk.isEmpty=isEmpty;
 
-_stk.isJson=isJson;
+_stk.isExact=isExact;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
 
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
+_stk.isJson=isJson;
 
 
 /**
@@ -3446,29 +3441,24 @@ _stk.jsonToArray=jsonToArray;
 
 
 /**
- * Get the last index Of array
+ * Get the last value of array or JSON
  *
  * @since 1.0.1
  * @category Relation
- * @param {any} objectValue Array
- * @param {any} value Value you are searching for
- * @returns {any} Return get the index or array
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
  * @example
  *
- * lastIndexOf([1,2], 1)
- * // => 0
+ * last([1,2] )
+ *=>2
  */
-function lastIndexOf (objectValue, value) {
+function last (objectValue) {
 
-    const start = 0;
-
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
-
-    return indexValue;
+    return getKeyVal(objectValue, "last_index").value;
 
 }
 
-_stk.lastIndexOf=lastIndexOf;
+_stk.last=last;
 
 
 /**
@@ -3492,6 +3482,32 @@ function like (objectValue, objectValueWhere, func) {
 }
 
 _stk.like=like;
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue Array
+ * @param {any} value Value you are searching for
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf([1,2], 1)
+ * // => 0
+ */
+function lastIndexOf (objectValue, value) {
+
+    const start = 0;
+
+    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+
+    return indexValue;
+
+}
+
+_stk.lastIndexOf=lastIndexOf;
 
 
 /**
@@ -4490,7 +4506,15 @@ _stk.pUnSerialize=pUnSerialize;
  */
 function whereOnce (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where_once');
+    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+
+        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, true, 'where_once');
+
+    }, [
+        objectValue,
+        objectValueWhere,
+        func
+    ], two);
 
 }
 
@@ -6220,6 +6244,33 @@ _stk.range=range;
 
 
 /**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category Function
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+function regexCountGroup (value) {
+
+    const one =1;
+
+    return new RegExp(toString(value) + '|').exec('').length - one;
+
+}
+
+_stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
+
+_stk.removeFromKey=removeFromKey;
+
+
+/**
  * Reduce function
  *
  * @since 1.4.8
@@ -6257,33 +6308,6 @@ _stk.reduce=reduce;
 
 
 /**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category Function
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-function regexCountGroup (value) {
-
-    const one =1;
-
-    return new RegExp(toString(value) + '|').exec('').length - one;
-
-}
-
-_stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
-
-_stk.removeFromKey=removeFromKey;
-
-
-/**
  * Repeat string value
  *
  * @since 1.0.1
@@ -6298,11 +6322,17 @@ _stk.removeFromKey=removeFromKey;
  */
 function repeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
+    return curryArg(function (rawValue, rawValueRepetion) {
 
-    return arrayRepeat(nm_str, nm_rpt).join("");
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
 
 }
 
@@ -6491,8 +6521,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-
-_stk.empty=empty;
 
 
 /**
@@ -7058,6 +7086,130 @@ function take (value, valueList) {
 
 _stk.take=take;
 
+_stk.toArray=toArray;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist([
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ], stringLowerCase(value));
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist([one], value);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
+
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} regexp The second number in an addition.
+ * @param {string|number} defaultVariable The second number in an addition.
+ * @param {string|number} nullReplacement The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * dataNumberFormat(/(\d)/g, 0,1)
+ *=> 1
+ */
+function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
+
+    const regp=regexp;
+    let intr=defaultVariable;
+
+    if (regp.test(nullReplacement.toString())) {
+
+        intr=nullReplacement;
+
+    }
+
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
+
+        intr=defaultVariable;
+
+    }
+    if (getTypeof(intr) === "string") {
+
+        intr = intr.replace(/[^\d.]/g, "");
+
+    }
+
+    return intr;
+
+}
+
+/**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value, config) {
+
+    const zero = 0.00;
+
+    const defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble;
+
 
 /**
  * Template value
@@ -7238,129 +7390,134 @@ function templateValueInternal (str_raw, reg) {
 
 _stk.templateValue=templateValue;
 
-_stk.toArray=toArray;
-
 
 /**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist([
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ], stringLowerCase(value));
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist([one], value);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
-
-
-/**
- * Logic in convert string or number to valid number
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} regexp The second number in an addition.
- * @param {string|number} defaultVariable The second number in an addition.
- * @param {string|number} nullReplacement The second number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * dataNumberFormat(/(\d)/g, 0,1)
- *=> 1
- */
-function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
-
-    const regp=regexp;
-    let intr=defaultVariable;
-
-    if (regp.test(nullReplacement.toString())) {
-
-        intr=nullReplacement;
-
-    }
-
-    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
-
-        intr=defaultVariable;
-
-    }
-    if (getTypeof(intr) === "string") {
-
-        intr = intr.replace(/[^\d.]/g, "");
-
-    }
-
-    return intr;
-
-}
-
-/**
- * To extract number in string and convert to double, it will also remove all none numeric
+ * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
  * @category Number
- * @param {any} value Value you to convert in double
- * @param {any=} config Option you want to set in this function.
- * @returns {number} Return in double.
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
  * @example
  *
- * toDouble("100.1d1")
- *=>100.11
+ * toInteger("11d")
+ *=>11
  */
-function toDouble (value, config) {
+function toInteger (value) {
 
-    const zero = 0.00;
+    const zero = 0;
 
-    const defaultConfig = varExtend({"decSeparator": "."}, config);
-
-    if (defaultConfig.decSeparator !== ".") {
-
-        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
-
-        value = value.replace(sepRegexp, ".");
-
-    }
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
         :value));
 
 }
 
-_stk.toDouble=toDouble;
+_stk.toInteger=toInteger;
+
+_stk.toString=toString;
+
+
+/**
+ * String trim  at the start only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in start of string
+ * @example
+ *
+ * trimStart(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss '
+ */
+function trimStart (value, remove_value) {
+
+    const rx = new RegExp('^[' + whitespace + ']*');
+
+    let rawValue = toString(value).replace(rx, "");
+
+    if (indexOfExist(["string"], getTypeof(remove_value))) {
+
+        const regData = new RegExp("^("+remove_value+")", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+/**
+ * String trim at the end only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in end of string
+ * @example
+ *
+ * trimEnd(' The fish is goad   with Goat-1ss ')
+ *=> ' The fish is goad   with Goat-1ss'
+ */
+function trimEnd (value, remove_value) {
+
+    const rx = new RegExp('[' + whitespace + ']*$');
+
+    let rawValue= toString(value).replace(rx, "");
+
+    if (indexOfExist(["string"], getTypeof(remove_value))) {
+
+        const regData = new RegExp("("+remove_value+")$", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+/**
+ * String trim in removing whitespace both start and end
+ *
+ * @since 1.4.8
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data
+ * @example
+ *
+ * trim(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss'
+ */
+function trim (value, remove_value) {
+
+    let rawValue = toString(value);
+
+    rawValue = trimStart(rawValue);
+    rawValue = trimEnd(rawValue);
+
+    rawValue = rawValue.trim();
+
+    if (indexOfExist([
+        "string",
+        "regexp"
+    ], getTypeof(remove_value))) {
+
+        rawValue = rawValue.replace(remove_value, "");
+
+    }
+
+    return rawValue;
+
+}
+
+_stk.trim=trim;
+
+_stk.trimEnd=trimEnd;
 
 
 /**
@@ -7427,136 +7584,6 @@ function setDepthValue (arryData, value) {
 
 _stk.toPairs=toPairs;
 
-
-/**
- * To extract number in string and convert to , it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger("11d")
- *=>11
- */
-function toInteger (value) {
-
-    const zero = 0;
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger;
-
-_stk.toString=toString;
-
-
-/**
- * String trim at the end only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in end of string
- * @example
- *
- * trimEnd(' The fish is goad   with Goat-1ss ')
- *=> ' The fish is goad   with Goat-1ss'
- */
-function trimEnd (value, remove_value) {
-
-    const rx = new RegExp('[' + whitespace + ']*$');
-
-    let rawValue= toString(value).replace(rx, "");
-
-    if (indexOfExist(["string"], getTypeof(remove_value))) {
-
-        const regData = new RegExp("("+remove_value+")$", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-_stk.trimEnd=trimEnd;
-
-
-/**
- * String trim  at the start only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in start of string
- * @example
- *
- * trimStart(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss '
- */
-function trimStart (value, remove_value) {
-
-    const rx = new RegExp('^[' + whitespace + ']*');
-
-    let rawValue = toString(value).replace(rx, "");
-
-    if (indexOfExist(["string"], getTypeof(remove_value))) {
-
-        const regData = new RegExp("^("+remove_value+")", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-/**
- * String trim in removing whitespace both start and end
- *
- * @since 1.4.8
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data
- * @example
- *
- * trim(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss'
- */
-function trim (value, remove_value) {
-
-    let rawValue = toString(value);
-
-    rawValue = trimStart(rawValue);
-    rawValue = trimEnd(rawValue);
-
-    rawValue = rawValue.trim();
-
-    if (indexOfExist([
-        "string",
-        "regexp"
-    ], getTypeof(remove_value))) {
-
-        rawValue = rawValue.replace(remove_value, "");
-
-    }
-
-    return rawValue;
-
-}
-
-_stk.trim=trim;
-
 _stk.trimStart=trimStart;
 
 
@@ -7602,8 +7629,6 @@ function union (...arg) {
 
 _stk.union=union;
 
-_stk.varExtend=varExtend;
-
 
 /**
  * Get only the unique data from array
@@ -7643,6 +7668,8 @@ function unique (value) {
 
 _stk.unique=unique;
 
+_stk.varExtend=varExtend;
+
 _stk.where=where;
 
 
@@ -7664,7 +7691,15 @@ _stk.where=where;
  */
 function whereNot (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+
+        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, false, 'where');
+
+    }, [
+        objectValue,
+        objectValueWhere,
+        func
+    ], two);
 
 }
 

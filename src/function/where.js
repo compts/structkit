@@ -1,4 +1,6 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
+const curryArg = require("../core/curryArg");
+const {two} = require("../core/defaultValue");
 
 /**
  * Get the value in array the value in json given the search value was in json
@@ -18,7 +20,15 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  */
 function where (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+
+        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, true, 'where');
+
+    }, [
+        objectValue,
+        objectValueWhere,
+        func
+    ], two);
 
 }
 module.exports=where;

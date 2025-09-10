@@ -1,5 +1,9 @@
 import arrayRepeat from './arrayRepeat.js';
 
+import curryArg from '../core/curryArg.js';
+
+import {zero, one} from '../core/defaultValue.js';
+
 /**
  * Repeat string value
  *
@@ -15,11 +19,17 @@ import arrayRepeat from './arrayRepeat.js';
  */
 function repeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
+    return curryArg(function (rawValue, rawValueRepetion) {
 
-    return arrayRepeat(nm_str, nm_rpt).join("");
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
 
 }
 export default repeat;

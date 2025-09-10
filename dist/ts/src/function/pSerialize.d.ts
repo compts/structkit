@@ -9,6 +9,6 @@ export default pSerialize;
  * @example
  *
  * pSerialize(["22s"])
- * // => 'a:1:{i:0;s:3:"22s";};'
+ * // => 'a:1:{i:0;s:3:"22s";}'
  */
 declare function pSerialize(value: any): string;

@@ -1,4 +1,6 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
+const curryArg = require("../core/curryArg");
+const {two} = require("../core/defaultValue");
 
 /**
  *  Get the value in array the value in json that should not in search value of json
@@ -18,7 +20,16 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  */
 function whereNot (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, false, 'where');
+
+    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+
+        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, false, 'where');
+
+    }, [
+        objectValue,
+        objectValueWhere,
+        func
+    ], two);
 
 }
 module.exports=whereNot;

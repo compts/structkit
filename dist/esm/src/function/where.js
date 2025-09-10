@@ -1,5 +1,9 @@
 import whereLoopExecution from '../core/whereLoopExecution.js';
 
+import curryArg from '../core/curryArg.js';
+
+import {zero, two} from '../core/defaultValue.js';
+
 /**
  * Get the value in array the value in json given the search value was in json
  *
@@ -18,7 +22,15 @@ import whereLoopExecution from '../core/whereLoopExecution.js';
  */
 function where (objectValue, objectValueWhere, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+
+        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, true, 'where');
+
+    }, [
+        objectValue,
+        objectValueWhere,
+        func
+    ], two);
 
 }
 export default where;

@@ -2,6 +2,10 @@ import map from './map.js';
 
 import range from './range.js';
 
+import curryArg from '../core/curryArg.js';
+
+import {zero, one} from '../core/defaultValue.js';
+
 /**
  * Repeat value in array
  *
@@ -17,14 +21,20 @@ import range from './range.js';
  */
 function arrayRepeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
+    return curryArg(function (rawValue, rawValueRepetion) {
 
-    return map(range(nm_rpt), function () {
+        const nm_rpt=rawValueRepetion||zero;
 
-        return value;
+        return map(range(nm_rpt), function () {
 
-    });
+            return rawValue;
+
+        });
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
 
 }
 export default arrayRepeat;

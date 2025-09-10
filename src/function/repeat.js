@@ -1,4 +1,7 @@
 const arrayRepeat = require('./arrayRepeat');
+const curryArg = require("../core/curryArg");
+const {zero} = require("../core/defaultValue");
+
 
 /**
  * Repeat string value
@@ -15,11 +18,18 @@ const arrayRepeat = require('./arrayRepeat');
  */
 function repeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
-    const nm_str=value||"";
 
-    return arrayRepeat(nm_str, nm_rpt).join("");
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
 
 }
 module.exports=repeat;
