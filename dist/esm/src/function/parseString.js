@@ -27,6 +27,43 @@ import {two, one, zero} from '../core/defaultValue.js';
 import {validTypeJson} from '../variable/types.js';
 
 /**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value, config) {
+
+    const defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "unscapeEntity": false}, config);
+
+    if (indexOfNotExist(getKey(validTypeJson), getTypeof(value))) {
+
+        throw new Error("Allow only " +getKey(validTypeJson).join(","));
+
+    }
+
+    let data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = stringUnEscape(data);
+
+    }
+
+    return data.toString();
+
+}
+
+/**
  * String escape qoutes
  *
  * @since 1.4.872
@@ -162,43 +199,6 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
         rawConfig,
         rawValue
     ], two);
-
-}
-
-/**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in json format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in json format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value, config) {
-
-    const defaultConfig = varExtend({"ignoreFunction": true,
-        "isJson": false,
-        "unscapeEntity": false}, config);
-
-    if (indexOfNotExist(getKey(validTypeJson), getTypeof(value))) {
-
-        throw new Error("Allow only " +getKey(validTypeJson).join(","));
-
-    }
-
-    let data = parseStringCore(zero, defaultConfig, value);
-
-    if (defaultConfig.unscapeEntity) {
-
-        data = stringUnEscape(data);
-
-    }
-
-    return data.toString();
 
 }
 

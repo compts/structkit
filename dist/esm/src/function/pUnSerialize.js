@@ -17,6 +17,28 @@ import arraySlice from './arraySlice.js';
 import convertValue from '../core/convertValue.js';
 
 /**
+ * Create a serialize data if you are coming to php
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * pUnSerialize('s:6:"Violet";')
+ * // => 'Violet'
+ */
+function pUnSerialize (value) {
+
+    return curryArg(function (rawValue) {
+
+        return parseTypeValObj(rawValue);
+
+    }, [value], one);
+
+}
+
+/**
  * Convert the value to its type in serialize
  *
  * @since 1.4.874
@@ -163,26 +185,5 @@ function parseTypeValObj (value) {
 
 }
 
-/**
- * Create a serialize data if you are coming to php
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value Arugment that you want to convert to serialize string
- * @returns {any} Returns number for subtracted value
- * @example
- *
- * pUnSerialize('s:6:"Violet";')
- * // => 'Violet'
- */
-function pUnSerialize (value) {
-
-    return curryArg(function (rawValue) {
-
-        return parseTypeValObj(rawValue);
-
-    }, [value], one);
-
-}
 export default pUnSerialize;
 

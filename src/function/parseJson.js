@@ -6,6 +6,64 @@ const indexOfExist = require('./indexOfExist');
 
 
 /**
+ * Parse from String to JSON object
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {string} value String you want to convert to json object
+ * @param {any=} config Option you want to set in this function.
+ * @returns {any} Returns the json object.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function parseJson (value, config) {
+
+    const defaultConfig = varExtend({"disableCorrection": false}, config);
+
+    if (defaultConfig.disableCorrection) {
+
+        const rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
+    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
+
+    const tagVal = getTagVal(stripValue);
+
+    if (tagVal.type === 'none') {
+
+        return null;
+
+    }
+
+    const obgM = callbackParse(tagVal);
+
+    if (obgM === "") {
+
+        return null;
+
+    }
+    const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
+
+        return revValue;
+
+    });
+
+    return dataObj;
+
+
+}
+
+/**
  * String escape qoutes
  *
  * @since 1.4.872
@@ -217,61 +275,4 @@ function callbackParse (glb) {
 
 }
 
-/**
- * Parse from String to JSON object
- *
- * @since 1.4.86
- * @category Collection
- * @param {string} value String you want to convert to json object
- * @param {any=} config Option you want to set in this function.
- * @returns {any} Returns the json object.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function parseJson (value, config) {
-
-    const defaultConfig = varExtend({"disableCorrection": false}, config);
-
-    if (defaultConfig.disableCorrection) {
-
-        const rawValue = cleanValue(value);
-
-        if (rawValue === "") {
-
-            return null;
-
-        }
-
-        return JSON.parse(rawValue);
-
-    }
-    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
-
-    const tagVal = getTagVal(stripValue);
-
-    if (tagVal.type === 'none') {
-
-        return null;
-
-    }
-
-    const obgM = callbackParse(tagVal);
-
-    if (obgM === "") {
-
-        return null;
-
-    }
-    const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
-
-        return revValue;
-
-    });
-
-    return dataObj;
-
-
-}
 module.exports=parseJson;

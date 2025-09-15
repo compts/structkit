@@ -2,7 +2,7 @@ import whereLoopExecution from '../core/whereLoopExecution.js';
 
 import curryArg from '../core/curryArg.js';
 
-import {zero, two} from '../core/defaultValue.js';
+import {two} from '../core/defaultValue.js';
 
 /**
  *  Get the value in array the value in json that should not in search value of json
