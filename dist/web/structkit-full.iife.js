@@ -1614,6 +1614,71 @@ _stk.arraySlice=arraySlice;
 
 
 /**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
+
+
+/**
  * Addition logic in satisfying two argument
  *
  * @since 1.4.8
@@ -1731,77 +1796,12 @@ _stk.arraySum=arraySum;
 
 
 /**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
-
-
-/**
  * Get key Array or JSON
  *
  * @since 1.0.1
  * @category String
  * @param {any} objectValue Either JSON or Array type
- * @returns {string} Returns it respective key or index
+ * @returns {any|any[]} Returns it respective key or index
  * @example
  *
  * getKey({"s":1})
@@ -2141,8 +2141,6 @@ function convert (a1, b1, pos) {
 
 _stk.calculate=calculate;
 
-_stk.count=count;
-
 
 /**
  * Cloning the data either in JSON or array that be used as different property
@@ -2171,6 +2169,8 @@ function clone (objectValue) {
 }
 
 _stk.clone=clone;
+
+_stk.count=count;
 
 
 /**
@@ -2272,9 +2272,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
-
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -2359,8 +2359,6 @@ function filter (objectValue, func) {
 _stk.filter=filter;
 
 _stk.first=first;
-
-_stk.add=add;
 
 
 /**
@@ -3195,7 +3193,7 @@ _stk.getUniq=getUniq;
  * @since 1.0.1
  * @category String
  * @param {any} objectValue Either JSON or Array
- * @returns {string} Returns it respective value
+ * @returns {any|any[]} Returns it respective value
  * @example
  *
  * getValue({"s":1})
@@ -3208,6 +3206,35 @@ function getValue (objectValue) {
 }
 
 _stk.getValue=getValue;
+
+
+/**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
 
 
 /**
@@ -3251,35 +3278,6 @@ function groupBy (objectValue, func) {
 }
 
 _stk.groupBy=groupBy;
-
-
-/**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
 
 
 /**
@@ -3359,8 +3357,6 @@ _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
-_stk.indexOfNotExist=indexOfNotExist;
-
 
 /**
  * Insert value in Json object or array
@@ -3403,57 +3399,15 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isEmpty=isEmpty;
+_stk.indexOfNotExist=indexOfNotExist;
 
-_stk.isExact=isExact;
+_stk.isEmpty=isEmpty;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
 
+_stk.isExact=isExact;
+
 _stk.isJson=isJson;
-
-
-/**
- * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Json
- * @param {string} value Search key or index.
- * @returns {any} Returns Array
- * @example
- *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
- * => [2, 3]
- */
-function jsonToArray (objectValue, value) {
-
-    var arry=[];
-
-    each(objectValue, function (_value) {
-
-        if (has(value)) {
-
-            var valueData = getData(_value, value);
-
-            if (isEmpty(valueData) === false) {
-
-                arry.push(valueData);
-
-            }
-
-        } else {
-
-            arry.push(_value);
-
-        }
-
-    });
-
-    return arry;
-
-}
-
-_stk.jsonToArray=jsonToArray;
 
 
 /**
@@ -3501,6 +3455,52 @@ function lastIndexOf (objectValue, value) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
+
+_stk.add=add;
+
+
+/**
+ * Convert Json To Array base on search value you provide,the search value  will only look for value in json.
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Json
+ * @param {string} value Search key or index.
+ * @returns {any} Returns Array
+ * @example
+ *
+ * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * => [2, 3]
+ */
+function jsonToArray (objectValue, value) {
+
+    var arry=[];
+
+    each(objectValue, function (_value) {
+
+        if (has(value)) {
+
+            var valueData = getData(_value, value);
+
+            if (isEmpty(valueData) === false) {
+
+                arry.push(valueData);
+
+            }
+
+        } else {
+
+            arry.push(_value);
+
+        }
+
+    });
+
+    return arry;
+
+}
+
+_stk.jsonToArray=jsonToArray;
 
 
 /**
@@ -3586,6 +3586,35 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -3792,38 +3821,7 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
 _stk.mergeWithKey=mergeWithKey;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -4049,6 +4047,8 @@ ClassDelay.prototype.cancel = function () {
 };
 
 _stk.onDelay=onDelay;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -6617,53 +6617,6 @@ function someValid () {
 }
 
 _stk.someValid=someValid;
-/**
- * Split string for special cases
- *
- * @since 1.4.8
- * @category Seq
- * @param {string} value String to split
- * @returns {string} Returns the total.
- * @example
- *
- * stringSplit("split-this-string")
- *=>"split this string"
- */
-function stringSplit (value) {
-
-    return value.trim()
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/([-_.\s]{1,})/g, ' ')
-        .toLowerCase();
-
-}
-
-/**
- * String Camel case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringCamelCase('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
- */
-function stringCamelCase (value) {
-
-    return stringSplit(toString(value))
-        .replace(/(\s[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        })
-        .split(" ")
-        .join("");
-
-}
-
-_stk.stringCamelCase=stringCamelCase;
 
 
 /**
@@ -6785,44 +6738,6 @@ _stk.sort=sort;
 
 
 /**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function stringCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.stringCapitalize=stringCapitalize;
-
-
-/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -6854,6 +6769,53 @@ function sortBy (objectValue, func) {
 }
 
 _stk.sortBy=sortBy;
+/**
+ * Split string for special cases
+ *
+ * @since 1.4.8
+ * @category Seq
+ * @param {string} value String to split
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * stringSplit("split-this-string")
+ *=>"split this string"
+ */
+function stringSplit (value) {
+
+    return value.trim()
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([-_.\s]{1,})/g, ' ')
+        .toLowerCase();
+
+}
+
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringCamelCase('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+function stringCamelCase (value) {
+
+    return stringSplit(toString(value))
+        .replace(/(\s[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        })
+        .split(" ")
+        .join("");
+
+}
+
+_stk.stringCamelCase=stringCamelCase;
 
 
 /**
@@ -6896,6 +6858,44 @@ function stringEscape (value, type) {
 }
 
 _stk.stringEscape=stringEscape;
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * stringCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * stringCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function stringCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.stringCapitalize=stringCapitalize;
 
 
 /**
@@ -7001,58 +7001,6 @@ _stk.subtract=subtract;
 
 
 /**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        var cloneRawListValueReturn = rawListValue;
-        var isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = cloneRawListValueReturn.join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
-
-
-/**
  * Get the value from index zero until the last value
  *
  * @since 1.4.86
@@ -7112,6 +7060,58 @@ _stk.take=take;
 
 
 /**
+ * Swapping the value either string or array in there specific position
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        var cloneRawListValueReturn = rawListValue;
+        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
+
+
+/**
  * Template value
  *
  * @since 1.0.1
@@ -7127,25 +7127,23 @@ _stk.take=take;
  */
 function templateValue (templateString, data, option) {
 
-    var oneDefaultValue=1;
-
-    templateString = templateValueInternal(toString(templateString), data);
-
-    var default_option=varExtend({
-        "escape": "<!-([\\s\\S]+?)!>",
-        "evaluate": "<![^=-]([\\s\\S]+?)!>",
-        "interpolate": "<!=([\\s\\S]+?)!>"
+    var default_option = varExtend({
+        "close_tag": "!>",
+        "open_tag": "<!",
+        "trowError": false
     }, option);
 
-    var valueType=[
-        "array",
-        "json"
-    ];
+    var temp = syntaxCleanup(templateString);
+
+    var tag_replace={
+        "comment": default_option.open_tag+"#([\\s\\S]*?)"+default_option.close_tag,
+        "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+        "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+    };
 
     var regexp = new RegExp([
-        default_option.evaluate,
-        default_option.interpolate,
-        default_option.escape
+        tag_replace.evaluate,
+        tag_replace.interpolate
     ].join("|")+"|$", "g");
 
     var source = "__p += '";
@@ -7168,9 +7166,10 @@ function templateValue (templateString, data, option) {
 
     };
 
-    templateString.replace(regexp, function (match, evaluate, interpolate, escape, offset) {
+    temp.replace(regexp, function (match, evaluate, interpolate, offset) {
 
-        source += templateString.slice(index, offset).replace(escaper, escapeChar);
+        source += temp.slice(index, offset).replace(escaper, escapeChar);
+
         index = offset+match.length;
 
         if (evaluate) {
@@ -7185,106 +7184,119 @@ function templateValue (templateString, data, option) {
 
         }
 
-        if (escape) {
-
-            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-        }
-
         return match;
+
+    });
+
+    var sourceData = reduce("", data, function (total, vv, kk) {
+
+        return total+"var "+toString(kk)+" = "+(isJson(vv)
+            ?parseString(vv)
+            :vv)+";\n";
 
     });
 
     source += "';\n";
 
-    source = "var __t,__p='',__j=[].join," +
-        "print=function(){__p += __j.call(arguments,'');};\n" +
-    source + " return __p;\n";
+    source = "var __t,__p='';" + sourceData+source + " return __p;\n";
 
     try {
 
-        var val_source = "";
-
-        if (getTypeof(data) === "json") {
-
-            for (var key in data) {
-
-                if (has(data, key)) {
-
-                    val_source += 'var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
-                        ?parseString(data[key])
-                        :'"'+data[key]+'"')+';';
-
-                }
-
-            }
-
-        }
-
-        var render = new Function('obj', '_', val_source+source);
+        var render = new Function('obj', source);
 
         return render.call(this, data, templateValue);
 
     } catch (error) {
 
-        console.log(error);
-        error.source = source;
-        throw error;
+        if (default_option.trowError) {
+
+            throw new Error(error);
+
+        }
+
+        return "";
 
     }
 
 }
 
 /**
- * Template Value Internal
+ * Syntax cleanup
  *
  * @since 1.0.1
- * @category Seq
- * @param {string} str_raw String from template you need interpolation
- * @param {string} reg Value you want to replace from template
- * @returns {string} Returns template from interpolation
+ * @category String
+ * @param {string} data Template string
+ * @returns {string} Returns the total.
  * @example
  *
- * templateValueInternal("","" )
- *=>'{}'
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
  */
-function templateValueInternal (str_raw, reg) {
+function syntaxCleanup (data) {
 
-    var str=str_raw;
-    var strs=str;
+    var str_split = data.split("");
 
-    try {
+    var commentCounter = 0;
 
-        try {
+    return reduce("", str_split, function (total, vv, kk) {
 
-            var regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
+        if (kk>one) {
 
-            strs=strs.replace(regs, function (word, mes1) {
+            if (str_split[kk-two]==="<" && str_split[kk-one] === "!") {
 
-                var strs_perd=mes1.replace(".", ":");
-                var gtdata=getData(reg, strs_perd);
+                if (commentCounter>zero) {
 
-                return getTypeof(gtdata) === "json"
-                    ?""
-                    :gtdata;
+                    commentCounter += one;
 
-            });
+                }
+                if (vv === "=") {
 
-        } catch (error) {
+                    if (commentCounter===zero) {
 
-            console.log(error);
+                        return total+vv+" ";
+
+                    }
+
+                }
+                if (vv === "#") {
+
+                    commentCounter += one;
+                    if (commentCounter>zero) {
+
+                        return total.replace(/<!$/g, "");
+
+                    }
+
+                }
+                if (vv !== " ") {
+
+                    if (commentCounter===zero) {
+
+                        return total+" "+vv;
+
+                    }
+
+                }
+
+            }
+
+            if (str_split[kk-two]==="!" && str_split[kk-one] === ">" && commentCounter>zero) {
+
+                commentCounter -= one;
+
+            }
+
+            if (commentCounter>zero) {
+
+                return total;
+
+            }
 
         }
 
-    } catch (error) {
+        return total+vv;
 
-        console.log(error);
-
-    }
-
-    var strs_finl=strs;
-
-    return strs_finl;
+    });
 
 }
 

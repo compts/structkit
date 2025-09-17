@@ -1,15 +1,14 @@
 const varExtend = require('./varExtend');
 
-const getTypeof = require('./getTypeof');
-
-const indexOf = require('./indexOf');
+const isJson = require('./isJson');
 
 const parseString = require('./parseString');
 
-const getData = require('./getData');
+const reduce = require('./reduce');
 
-const has = require('./has');
 const toString = require("./toString");
+const {one, two, zero} = require("../core/defaultValue");
+
 
 /**
  * Template value
@@ -27,25 +26,25 @@ const toString = require("./toString");
  */
 function templateValue (templateString, data, option) {
 
-    const oneDefaultValue=1;
 
-    templateString = templateValueInternal(toString(templateString), data);
-
-    const default_option=varExtend({
-        "escape": "<!-([\\s\\S]+?)!>",
-        "evaluate": "<![^=-]([\\s\\S]+?)!>",
-        "interpolate": "<!=([\\s\\S]+?)!>"
+    const default_option = varExtend({
+        "close_tag": "!>",
+        "open_tag": "<!",
+        "trowError": false
     }, option);
 
-    const valueType=[
-        "array",
-        "json"
-    ];
+    const temp = syntaxCleanup(templateString);
+
+
+    const tag_replace={
+        "comment": default_option.open_tag+"#([\\s\\S]*?)"+default_option.close_tag,
+        "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+        "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+    };
 
     const regexp = new RegExp([
-        default_option.evaluate,
-        default_option.interpolate,
-        default_option.escape
+        tag_replace.evaluate,
+        tag_replace.interpolate
     ].join("|")+"|$", "g");
 
     let source = "__p += '";
@@ -68,9 +67,11 @@ function templateValue (templateString, data, option) {
 
     };
 
-    templateString.replace(regexp, function (match, evaluate, interpolate, escape, offset) {
 
-        source += templateString.slice(index, offset).replace(escaper, escapeChar);
+    temp.replace(regexp, function (match, evaluate, interpolate, offset) {
+
+        source += temp.slice(index, offset).replace(escaper, escapeChar);
+
         index = offset+match.length;
 
         if (evaluate) {
@@ -85,108 +86,127 @@ function templateValue (templateString, data, option) {
 
         }
 
-        if (escape) {
-
-            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-        }
 
         return match;
 
     });
 
+    const sourceData = reduce("", data, function (total, vv, kk) {
+
+        return total+"var "+toString(kk)+" = "+(isJson(vv)
+            ?parseString(vv)
+            :vv)+";\n";
+
+    });
+
     source += "';\n";
 
-    source = "var __t,__p='',__j=[].join," +
-        "print=function(){__p += __j.call(arguments,'');};\n" +
-    source + " return __p;\n";
+
+    source = "var __t,__p='';" + sourceData+source + " return __p;\n";
+
 
     try {
 
-        let val_source = "";
-
-        if (getTypeof(data) === "json") {
-
-            for (const key in data) {
-
-                if (has(data, key)) {
-
-                    val_source += 'var '+key+' = '+(indexOf(valueType, getTypeof(data[key]))>-oneDefaultValue
-                        ?parseString(data[key])
-                        :'"'+data[key]+'"')+';';
-
-                }
-
-            }
-
-        }
-
-        const render = new Function('obj', '_', val_source+source);
+        const render = new Function('obj', source);
 
         return render.call(this, data, templateValue);
 
     } catch (error) {
 
-        console.log(error);
-        error.source = source;
-        throw error;
+        if (default_option.trowError) {
+
+            throw new Error(error);
+
+
+        }
+
+        return "";
 
     }
+
 
 }
 
 /**
- * Template Value Internal
+ * Syntax cleanup
  *
  * @since 1.0.1
- * @category Seq
- * @param {string} str_raw String from template you need interpolation
- * @param {string} reg Value you want to replace from template
- * @returns {string} Returns template from interpolation
+ * @category String
+ * @param {string} data Template string
+ * @returns {string} Returns the total.
  * @example
  *
- * templateValueInternal("","" )
- *=>'{}'
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
  */
-function templateValueInternal (str_raw, reg) {
+function syntaxCleanup (data) {
 
-    const str=str_raw;
-    let strs=str;
+    const str_split = data.split("");
 
-    try {
+    let commentCounter = 0;
 
-        try {
 
-            const regs=new RegExp("[\\r\\t\\n\\s]{0,}<![-]\\s{0,}(.*?)\\s{0,}!>[\\r\\t\\n\\s]{0,}", "g");
+    return reduce("", str_split, function (total, vv, kk) {
 
-            strs=strs.replace(regs, function (word, mes1) {
 
-                const strs_perd=mes1.replace(".", ":");
-                const gtdata=getData(reg, strs_perd);
+        if (kk>one) {
 
-                return getTypeof(gtdata) === "json"
-                    ?""
-                    :gtdata;
+            if (str_split[kk-two]==="<" && str_split[kk-one] === "!") {
 
-            });
+                if (commentCounter>zero) {
 
-        } catch (error) {
+                    commentCounter += one;
 
-            console.log(error);
+                }
+                if (vv === "=") {
+
+                    if (commentCounter===zero) {
+
+                        return total+vv+" ";
+
+                    }
+
+                }
+                if (vv === "#") {
+
+                    commentCounter += one;
+                    if (commentCounter>zero) {
+
+                        return total.replace(/<!$/g, "");
+
+                    }
+
+                }
+                if (vv !== " ") {
+
+
+                    if (commentCounter===zero) {
+
+                        return total+" "+vv;
+
+                    }
+
+                }
+
+            }
+
+            if (str_split[kk-two]==="!" && str_split[kk-one] === ">" && commentCounter>zero) {
+
+                commentCounter -= one;
+
+            }
+
+            if (commentCounter>zero) {
+
+                return total;
+
+            }
 
         }
 
-    } catch (error) {
+        return total+vv;
 
-        console.log(error);
-
-    }
-
-    const strs_finl=strs;
-
-    return strs_finl;
+    });
 
 }
-
 module.exports=templateValue;
-
