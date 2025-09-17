@@ -8,6 +8,8 @@ import reduce from './reduce.js';
 
 import toString from './toString.js';
 
+import curryArg from '../core/curryArg.js';
+
 import {one, two, zero} from '../core/defaultValue.js';
 
 /**
@@ -26,96 +28,104 @@ import {one, two, zero} from '../core/defaultValue.js';
  */
 function templateValue (templateString, data, option) {
 
-    const default_option = varExtend({
-        "close_tag": "!>",
-        "open_tag": "<!",
-        "trowError": false
-    }, option);
+    return curryArg(function (rawTemplateString, rawData, rawOption) {
 
-    const temp = syntaxCleanup(templateString);
+        const default_option = varExtend({
+            "close_tag": "!>",
+            "open_tag": "<!",
+            "trowError": false
+        }, rawOption);
 
-    const tag_replace={
-        "comment": default_option.open_tag+"#([\\s\\S]*?)"+default_option.close_tag,
-        "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
-        "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
-    };
+        const temp = syntaxCleanup(rawTemplateString);
 
-    const regexp = new RegExp([
-        tag_replace.evaluate,
-        tag_replace.interpolate
-    ].join("|")+"|$", "g");
+        const tag_replace={
+            "comment": default_option.open_tag+"#([\\s\\S]*?)"+default_option.close_tag,
+            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+        };
 
-    let source = "__p += '";
-    let index = 0;
+        const regexp = new RegExp([
+            tag_replace.evaluate,
+            tag_replace.interpolate
+        ].join("|")+"|$", "g");
 
-    const escapes = {
-        '\n': 'n',
-        '\r': 'r',
-        "'": "'",
-        '\\': '\\',
-        '\u2028': 'u2028',
-        '\u2029': 'u2029'
-    };
+        let source = "__p += '";
+        let index = 0;
 
-    const escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+        const escapes = {
+            '\n': 'n',
+            '\r': 'r',
+            "'": "'",
+            '\\': '\\',
+            '\u2028': 'u2028',
+            '\u2029': 'u2029'
+        };
 
-    const escapeChar = function (match) {
+        const escaper = /\\|'|\r|\n|\u2028|\u2029/g;
 
-        return '\\' + escapes[match];
+        const escapeChar = function (match) {
 
-    };
+            return '\\' + escapes[match];
 
-    temp.replace(regexp, function (match, evaluate, interpolate, offset) {
+        };
 
-        source += temp.slice(index, offset).replace(escaper, escapeChar);
+        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
 
-        index = offset+match.length;
+            source += temp.slice(index, offset).replace(escaper, escapeChar);
 
-        if (evaluate) {
+            index = offset+match.length;
 
-            source += "';\n"+evaluate+"\n__p += '";
+            if (evaluate) {
+
+                source += "';\n"+evaluate+"\n__p += '";
+
+            }
+
+            if (interpolate) {
+
+                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
+
+            }
+
+            return match;
+
+        });
+
+        const sourceData = reduce("", rawData, function (total, vv, kk) {
+
+            return total+"var "+toString(kk)+" = "+(isJson(vv)
+                ?parseString(vv)
+                :vv)+";\n";
+
+        });
+
+        source += "';\n";
+
+        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
+
+        try {
+
+            const render = new Function('obj', source);
+
+            return render.call(this, rawData, templateValue);
+
+        } catch (error) {
+
+            if (default_option.trowError) {
+
+                throw new Error(error);
+
+            }
+
+            return "";
 
         }
 
-        if (interpolate) {
-
-            source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-        }
-
-        return match;
-
-    });
-
-    const sourceData = reduce("", data, function (total, vv, kk) {
-
-        return total+"var "+toString(kk)+" = "+(isJson(vv)
-            ?parseString(vv)
-            :vv)+";\n";
-
-    });
-
-    source += "';\n";
-
-    source = "var __t,__p='';" + sourceData+source + " return __p;\n";
-
-    try {
-
-        const render = new Function('obj', source);
-
-        return render.call(this, data, templateValue);
-
-    } catch (error) {
-
-        if (default_option.trowError) {
-
-            throw new Error(error);
-
-        }
-
-        return "";
-
-    }
+    }, [
+        templateString,
+        data,
+        option
+    ], two);
 
 }
 
