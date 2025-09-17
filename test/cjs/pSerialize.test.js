@@ -79,6 +79,26 @@ describe('CJS: pSerialize method', function () {
         );
 
     });
+    it('return value for nested `dict` with array', function () {
+
+        assert.deepStrictEqual(
+            pSerialize({"w1": "with1",
+                // eslint-disable-next-line sort-keys
+                "array": [
+                    one,
+                    two,
+                    three,
+                    four
+                ],
+                "dict": {
+                    "a": "a1",
+                    "b": "b2"
+                }}),
+            'a:3:{s:2:"w1";s:5:"with1";s:5:"array";a:4:{i:0;i:1;i:1;i:2;i:2;i:3;i:3;i:4;}s:4:"dict";a:2:{s:1:"a";s:2:"a1";s:1:"b";s:2:"b2";}}'
+        );
+
+    });
+
 
 });
 

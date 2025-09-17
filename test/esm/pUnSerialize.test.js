@@ -79,6 +79,24 @@ describe('ESM: pUnSerialize method', function () {
 
     });
 
+    it('return value for empty string', function () {
+
+        assert.deepStrictEqual(
+            pUnSerialize('s:0:"";'),
+            ""
+        );
+
+    });
+
+    it('return value for empty array', function () {
+
+        assert.deepStrictEqual(
+            pUnSerialize('a:0:{}'),
+            []
+        );
+
+    });
+
 });
 
 
