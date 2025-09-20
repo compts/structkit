@@ -33,14 +33,22 @@ function parseString (value, config) {
 
     const defaultConfig = varExtend({"ignoreFunction": true,
         "isJson": false,
+        "trowError": false,
         "unscapeEntity": false}, config);
 
 
     if (indexOfNotExist(getKey(validTypeJson), getTypeof(value))) {
 
-        throw new Error("Allow only " +getKey(validTypeJson).join(","));
+        if (defaultConfig.trowError) {
+
+            throw new Error("Allow only " +getKey(validTypeJson).join(","));
+
+        }
+
+        return '';
 
     }
+
 
     let data = parseStringCore(zero, defaultConfig, value);
 

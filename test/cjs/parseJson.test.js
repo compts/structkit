@@ -1,3 +1,5 @@
+/* eslint-disable no-magic-numbers */
+/* eslint-disable no-undefined */
 const {parseJson} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
@@ -44,6 +46,21 @@ describe('CJS: parseJson method', function () {
     it('check if empty str argument', function () {
 
         assert.deepStrictEqual(parseJson(''), null);
+
+    });
+    it('check if null argument', function () {
+
+        assert.deepStrictEqual(parseJson(null), null);
+
+    });
+    it('check if undefined argument', function () {
+
+        assert.deepStrictEqual(parseJson(undefined), null);
+
+    });
+    it('check if number argument', function () {
+
+        assert.deepStrictEqual(parseJson(11), null);
 
     });
 

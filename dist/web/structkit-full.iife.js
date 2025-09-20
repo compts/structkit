@@ -16,8 +16,6 @@ __=__p
  */
 
 _stk.__=__;
-
-
 var negOne = -1;
 var zero = 0;
 var one = 1;
@@ -61,68 +59,6 @@ function _has (value, key) {
 }
 
 /**
- * Reviewing your curry arguments details
- *
- * @since 1.4.8
- * @category String
- * @param {any[]} args Any data you want to check its property
- * @returns {any} Get the property of variable
- * @example
- *
- * curryArgReview([])
- * => {}
- */
-function curryArgReview (args) {
-
-    var objs = {};
-    var placeList = [];
-    var validList = [];
-    var argIncter = 0;
-
-    for (var arg in args) {
-
-        if (_has(args, arg)) {
-
-            var value = args[arg];
-
-            if (__ === value) {
-
-                objs[argIncter] = {
-                    "index": placeList.length,
-                    "type": "place",
-                    "val": value
-                };
-                placeList.push(value);
-                argIncter +=one;
-
-            } else {
-
-                objs[argIncter] = {
-                    "index": validList.length,
-                    "type": "valid",
-                    "val": value
-                };
-
-                validList.push(value);
-                argIncter +=one;
-
-            }
-
-        }
-
-    }
-
-    return {
-        "argInc": argIncter,
-        "argss": objs,
-        "place": placeList,
-        "valid": validList
-
-    };
-
-}
-
-/**
  * Create your curry function
  *
  * @since 1.4.8
@@ -139,6 +75,7 @@ function curryArgReview (args) {
 function curryArg (fn, args, NoDefaultArgs) {
 
     var RefNoDefaultArgs = NoDefaultArgs || zero;
+    var placholderCounter = 0;
 
     if (RefNoDefaultArgs > args.length - argumentUndefinedCounter(args)) {
 
@@ -146,9 +83,16 @@ function curryArg (fn, args, NoDefaultArgs) {
 
             if (_has(args, kk)) {
 
+                if (args[kk] === __) {
+
+                    placholderCounter += one;
+
+                }
                 if (typeof args[kk] === "undefined") {
 
-                    args[kk] = __;
+                    // eslint-disable-next-line no-undefined
+                    args[kk] = undefined;
+                    placholderCounter += one;
 
                 }
 
@@ -157,58 +101,110 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         }
 
-    }
+    } else {
 
-    var checkValue = curryArgReview(args);
+        for (var arg in args) {
 
-    if (checkValue.place.length > zero) {
+            if (_has(args, arg)) {
 
-        return function () {
+                if (args[arg] === __) {
 
-    var argSub=arguments;
-
-            var clneCheckValue = [];
-
-            var reviewArgValue = curryArgReview(argSub);
-
-            if (reviewArgValue.place.length > zero) {
-
-                return curryArg(fn, args);
-
-            }
-            for (var ii=0; ii<checkValue.argInc;) {
-
-                if (_has(checkValue.argss, ii)) {
-
-                    var argValue = checkValue.argss[ii];
-
-                    if (argValue.type === "place") {
-
-                        if (_has(argSub, argValue.index)) {
-
-                            clneCheckValue.push(argSub[argValue.index]);
-
-                        }
-
-                    } else {
-
-                        clneCheckValue.push(argValue.val);
-
-                    }
+                    placholderCounter +=one;
 
                 }
 
-                ii += one;
-
             }
 
-            return fn.apply(this, clneCheckValue);
-
-        };
+        }
 
     }
 
-    return fn.apply(this, args);
+    if (placholderCounter === zero) {
+
+        return fn.apply(this, args);
+
+    }
+
+    return function fnCall () {
+
+    var argSub=arguments;
+
+        var funcReturnType = false;
+
+        if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub)) > args.length - argumentUndefinedCounter(argSub)) {
+
+            return fnCall;
+
+        }
+
+        var rawArgument = [];
+        var cc1 = zero;
+        var getFunIndex = {};
+
+        for (var arg in args) {
+
+            if (_has(args, arg)) {
+
+                if (args[arg] === __) {
+
+                    rawArgument.push(argSub[cc1]);
+                    cc1+=one;
+
+                } else if (typeof args[arg] === "function") {
+
+                    if (args[arg].name === fnCall.name) {
+
+                        rawArgument.push(argSub[cc1]);
+                        cc1+=one;
+
+                    }
+
+                    getFunIndex[arg] = rawArgument.length-one;
+
+                } else if (typeof args[arg] === "undefined") {
+
+                    rawArgument.push(argSub[cc1]);
+                    cc1+=one;
+
+                } else {
+
+                    rawArgument.push(args[arg]);
+
+                }
+
+            }
+
+        }
+
+        for (var arg in args) {
+
+            if (_has(args, arg)) {
+
+                if (typeof args[arg] === "function") {
+
+                    var getApply = args[arg].apply(this, rawArgument);
+
+                    if (funcReturnType === false) {
+
+                        funcReturnType = ["function"].indexOf(typeof getApply)>-one;
+
+                    }
+                    rawArgument[getFunIndex[arg]]= getApply;
+
+                }
+
+            }
+
+        }
+        if (funcReturnType) {
+
+            return fnCall;
+
+        }
+
+        return fn.apply(this, rawArgument);
+
+    };
 
 }
 
@@ -535,6 +531,7 @@ function count (objectValue, json_is_empty_check) {
     var incByOne=1;
     var defaultValueForFalse=0;
     var json_is_empty_check_default=json_is_empty_check||false;
+
     var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
@@ -1419,105 +1416,6 @@ _stk.append=append;
 
 
 /**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Array
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue, step) {
-
-    var emptyDefaultValue=0;
-    var tenDefaultValue=10;
-
-    var incrementDefaultValue=1;
-
-    var incrementValue=has(step)
-        ?step
-        :incrementDefaultValue;
-    var minValueRef=has(minValue)
-        ?minValue
-        :incrementDefaultValue;
-    var maxValueRef=has(maxValue)
-        ?maxValue
-        :tenDefaultValue;
-    var output=[];
-
-    for (var inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-
-        return map(range(nm_rpt), function () {
-
-            return rawValue;
-
-        });
-
-    }, [
-        value,
-        valueRepetion
-    ], one);
-
-}
-
-_stk.arrayRepeat=arrayRepeat;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1639,72 +1537,106 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
-_stk.arraySlice=arraySlice;
-
 
 /**
- * Async replace regexp argument
+ * Generate array of data from specific limit or where the index to start
  *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
+ * @since 1.0.1
+ * @category Array
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
  * @example
  *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
  */
-function asyncReplace (value, search, toReplace) {
+function range (maxValue, minValue, step) {
 
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+    var emptyDefaultValue=0;
+    var tenDefaultValue=10;
 
-        try {
+    var incrementDefaultValue=1;
 
-            if (getTypeof(rawToReplace) === "function") {
+    var incrementValue=has(step)
+        ?step
+        :incrementDefaultValue;
+    var minValueRef=has(minValue)
+        ?minValue
+        :incrementDefaultValue;
+    var maxValueRef=has(maxValue)
+        ?maxValue
+        :tenDefaultValue;
+    var output=[];
 
-                var values = [];
+    for (var inc=minValueRef; inc <= maxValueRef;) {
 
-                String.prototype.replace.call(rawValue, rawSearch, function () {
+        if (getTypeof(incrementValue) === "string") {
 
-    var arg=arguments;
+            output.push(inc);
 
-                    values.push(rawToReplace(...arg));
+            var render = new Function('inc', "return "+inc+incrementValue);
 
-                    return "";
+            inc = render.call(inc);
 
-                });
+        }
+        if (getTypeof(incrementValue) === "number") {
 
-                return Promise.all(values).then(function (resolvedValues) {
+            output.push(inc);
+            if (incrementValue<emptyDefaultValue) {
 
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+                inc -= incrementValue;
 
-                        return resolvedValues.shift();
+            } else {
 
-                    });
-
-                });
+                inc += incrementValue;
 
             }
 
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
         }
 
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
+    }
+
+    return output;
 
 }
 
-_stk.asyncReplace=asyncReplace;
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+
+        return map(range(nm_rpt), function () {
+
+            return rawValue;
+
+        });
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
+_stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -1796,6 +1728,71 @@ function arraySum (arrayObject, delimeter) {
 }
 
 _stk.arraySum=arraySum;
+
+
+/**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
 
 
 /**
@@ -2276,8 +2273,6 @@ function defaultTo (defaultValue, value2) {
 _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
-
-_stk.each=each;
 
 _stk.empty=empty;
 
@@ -3100,7 +3095,7 @@ function fromPairs (value, deepLimit) {
 
             if (subBalue.length > one) {
 
-                var depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit)));
+                var depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit || null)));
 
                 append(total, depthValue, subBalue[zero]);
 
@@ -3313,6 +3308,8 @@ _stk.gte=gte;
 
 _stk.has=has;
 
+_stk.inc=inc;
+
 
 /**
  * Check if data is undefined
@@ -3354,17 +3351,9 @@ function ifUndefined (objectValue, value1, value2) {
 
 _stk.ifUndefined=ifUndefined;
 
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
-
 _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
-
-_stk.isEmpty=isEmpty;
-
-_stk.isExact=isExact;
 
 
 /**
@@ -3407,6 +3396,12 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
+
+_stk.indexOf=indexOf;
+
+_stk.isEmpty=isEmpty;
+
+_stk.isExact=isExact;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
 
@@ -3505,6 +3500,29 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Json or Array
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1,"s2":1},{"s1":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValue, objectValueWhere, func) {
+
+    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+
+}
+
+_stk.like=like;
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -3567,26 +3585,32 @@ _stk.limit=limit;
 
 
 /**
- * Searching the data either in array or json object to get similar value of data
+ * To check if the two arguments are less
  *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Json or Array
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
+ * lt(1, 2)
+ * // => true
  */
-function like (objectValue, objectValueWhere, func) {
+function lt (value1, value2) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
 
 }
 
-_stk.like=like;
+_stk.lt=lt;
 
 
 /**
@@ -3644,35 +3668,6 @@ function mapGetData (objectValue, valueFormat) {
 }
 
 _stk.mapGetData=mapGetData;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -5691,8 +5686,20 @@ function stringUnEscape (value, type) {
  */
 function parseJson (value, config) {
 
-    var defaultConfig = varExtend({"disableCorrection": false}, config);
+    var defaultConfig = varExtend({"disableCorrection": false,
+        "trowError": false}, config);
 
+    if (getTypeof(value) !== "string") {
+
+        if (defaultConfig.trowError) {
+
+            throw new Error("Allow only string to parse to json");
+
+        }
+
+        return null;
+
+    }
     if (defaultConfig.disableCorrection) {
 
         var rawValue = cleanValue(value);
@@ -6017,11 +6024,18 @@ function parseString (value, config) {
 
     var defaultConfig = varExtend({"ignoreFunction": true,
         "isJson": false,
+        "trowError": false,
         "unscapeEntity": false}, config);
 
     if (indexOfNotExist(getKey(validTypeJson), getTypeof(value))) {
 
-        throw new Error("Allow only " +getKey(validTypeJson).join(","));
+        if (defaultConfig.trowError) {
+
+            throw new Error("Allow only " +getKey(validTypeJson).join(","));
+
+        }
+
+        return '';
 
     }
 
@@ -6361,44 +6375,6 @@ _stk.repeat=repeat;
 
 
 /**
- * Return reverse order of array
- *
- * @since 1.4.874
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
- * @example
- *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
- */
-function reverse (value) {
-
-    return curryArg(function (rawValue) {
-
-        var typeOf = getTypeof(rawValue);
-        var refRawList = typeOf=== "string"
-            ?rawValue.split("")
-            :rawValue;
-
-        var cloneMap = map(refRawList, function (__, key) {
-
-            return refRawList[count(refRawList) - one - key];
-
-        });
-
-        return typeOf === "string"
-            ?cloneMap.join("")
-            :cloneMap;
-
-    }, [value], one);
-
-}
-
-_stk.reverse=reverse;
-
-
-/**
  * Random Decimal
  *
  * @since 1.0.1
@@ -6439,6 +6415,44 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
+
+
+/**
+ * Return reverse order of array
+ *
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
+ * @example
+ *
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
+ */
+function reverse (value) {
+
+    return curryArg(function (rawValue) {
+
+        var typeOf = getTypeof(rawValue);
+        var refRawList = typeOf=== "string"
+            ?rawValue.split("")
+            :rawValue;
+
+        var cloneMap = map(refRawList, function (__, key) {
+
+            return refRawList[count(refRawList) - one - key];
+
+        });
+
+        return typeOf === "string"
+            ?cloneMap.join("")
+            :cloneMap;
+
+    }, [value], one);
+
+}
+
+_stk.reverse=reverse;
 
 _stk.selectInData=selectInData;
 
@@ -6545,35 +6559,6 @@ _stk.setData=setData;
 
 
 /**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
-
-/**
  * Shuffle data in array
  *
  * @since 1.0.1
@@ -6618,6 +6603,35 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 
 
 /**
@@ -6925,6 +6939,29 @@ _stk.stringLowerCase=stringLowerCase;
 
 
 /**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * stringSnakeCase('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function stringSnakeCase (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+_stk.stringSnakeCase=stringSnakeCase;
+
+
+/**
  * String Substr
  *
  * @since 1.4.5
@@ -6951,29 +6988,6 @@ function stringSubs (value, minValue, maxValue) {
 }
 
 _stk.stringSubs=stringSubs;
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * stringSnakeCase('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function stringSnakeCase (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-_stk.stringSnakeCase=stringSnakeCase;
 
 _stk.stringUnEscape=stringUnEscape;
 
@@ -8159,6 +8173,8 @@ function zip () {
 }
 
 _stk.zip=zip;
+
+_stk.each=each;
 
 
  })(typeof window !== "undefined" ? window : this);

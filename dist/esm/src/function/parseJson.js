@@ -8,6 +8,8 @@ import varExtend from './varExtend.js';
 
 import indexOfExist from './indexOfExist.js';
 
+import getTypeof from './getTypeof.js';
+
 /**
  * Parse from String to JSON object
  *
@@ -23,8 +25,20 @@ import indexOfExist from './indexOfExist.js';
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({"disableCorrection": false}, config);
+    const defaultConfig = varExtend({"disableCorrection": false,
+        "trowError": false}, config);
 
+    if (getTypeof(value) !== "string") {
+
+        if (defaultConfig.trowError) {
+
+            throw new Error("Allow only string to parse to json");
+
+        }
+
+        return null;
+
+    }
     if (defaultConfig.disableCorrection) {
 
         const rawValue = cleanValue(value);

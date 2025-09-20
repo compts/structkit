@@ -1,5 +1,3 @@
-import curryArgReview from './curryArgReview.js';
-
 import {zero, one} from './defaultValue.js';
 
 import _has from './_has.js';
@@ -23,6 +21,7 @@ import __ from './__.js';
 function curryArg (fn, args, NoDefaultArgs) {
 
     const RefNoDefaultArgs = NoDefaultArgs || zero;
+    let placholderCounter = 0;
 
     if (RefNoDefaultArgs > args.length - argumentUndefinedCounter(args)) {
 
@@ -30,9 +29,16 @@ function curryArg (fn, args, NoDefaultArgs) {
 
             if (_has(args, kk)) {
 
+                if (args[kk] === __) {
+
+                    placholderCounter += one;
+
+                }
                 if (typeof args[kk] === "undefined") {
 
-                    args[kk] = __;
+                    // eslint-disable-next-line no-undefined
+                    args[kk] = undefined;
+                    placholderCounter += one;
 
                 }
 
@@ -41,56 +47,108 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         }
 
-    }
+    } else {
 
-    const checkValue = curryArgReview(args);
+        for (const arg in args) {
 
-    if (checkValue.place.length > zero) {
+            if (_has(args, arg)) {
 
-        return function (...argSub) {
+                if (args[arg] === __) {
 
-            const clneCheckValue = [];
-
-            const reviewArgValue = curryArgReview(argSub);
-
-            if (reviewArgValue.place.length > zero) {
-
-                return curryArg(fn, args);
-
-            }
-            for (let ii=0; ii<checkValue.argInc;) {
-
-                if (_has(checkValue.argss, ii)) {
-
-                    const argValue = checkValue.argss[ii];
-
-                    if (argValue.type === "place") {
-
-                        if (_has(argSub, argValue.index)) {
-
-                            clneCheckValue.push(argSub[argValue.index]);
-
-                        }
-
-                    } else {
-
-                        clneCheckValue.push(argValue.val);
-
-                    }
+                    placholderCounter +=one;
 
                 }
 
-                ii += one;
-
             }
 
-            return fn.apply(this, clneCheckValue);
-
-        };
+        }
 
     }
 
-    return fn.apply(this, args);
+    if (placholderCounter === zero) {
+
+        return fn.apply(this, args);
+
+    }
+
+    return function fnCall (...argSub) {
+
+        let funcReturnType = false;
+
+        if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub)) > args.length - argumentUndefinedCounter(argSub)) {
+
+            return fnCall;
+
+        }
+
+        const rawArgument = [];
+        let cc1 = zero;
+        const getFunIndex = {};
+
+        for (const arg in args) {
+
+            if (_has(args, arg)) {
+
+                if (args[arg] === __) {
+
+                    rawArgument.push(argSub[cc1]);
+                    cc1+=one;
+
+                } else if (typeof args[arg] === "function") {
+
+                    if (args[arg].name === fnCall.name) {
+
+                        rawArgument.push(argSub[cc1]);
+                        cc1+=one;
+
+                    }
+
+                    getFunIndex[arg] = rawArgument.length-one;
+
+                } else if (typeof args[arg] === "undefined") {
+
+                    rawArgument.push(argSub[cc1]);
+                    cc1+=one;
+
+                } else {
+
+                    rawArgument.push(args[arg]);
+
+                }
+
+            }
+
+        }
+
+        for (const arg in args) {
+
+            if (_has(args, arg)) {
+
+                if (typeof args[arg] === "function") {
+
+                    const getApply = args[arg].apply(this, rawArgument);
+
+                    if (funcReturnType === false) {
+
+                        funcReturnType = ["function"].indexOf(typeof getApply)>-one;
+
+                    }
+                    rawArgument[getFunIndex[arg]]= getApply;
+
+                }
+
+            }
+
+        }
+        if (funcReturnType) {
+
+            return fnCall;
+
+        }
+
+        return fn.apply(this, rawArgument);
+
+    };
 
 }
 

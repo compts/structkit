@@ -43,7 +43,7 @@ function fromPairs (value, deepLimit) {
 
             if (subBalue.length > one) {
 
-                const depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit)));
+                const depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit || null)));
 
                 append(total, depthValue, subBalue[zero]);
 

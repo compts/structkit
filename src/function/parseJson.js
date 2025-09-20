@@ -3,7 +3,7 @@ const each = require('./each');
 const {one} = require("../core/defaultValue");
 const varExtend = require('./varExtend');
 const indexOfExist = require('./indexOfExist');
-
+const getTypeof = require('./getTypeof');
 
 /**
  * Parse from String to JSON object
@@ -20,8 +20,20 @@ const indexOfExist = require('./indexOfExist');
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({"disableCorrection": false}, config);
+    const defaultConfig = varExtend({"disableCorrection": false,
+        "trowError": false}, config);
 
+    if (getTypeof(value) !== "string") {
+
+        if (defaultConfig.trowError) {
+
+            throw new Error("Allow only string to parse to json");
+
+        }
+
+        return null;
+
+    }
     if (defaultConfig.disableCorrection) {
 
         const rawValue = cleanValue(value);
