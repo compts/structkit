@@ -1,7 +1,7 @@
 const has = require('./has');
 
 const {getTypeofInternal} = require('../core/getTypeOf');
-
+const {zero, one} = require("../core/defaultValue");
 const each = require('./each');
 
 /**
@@ -23,14 +23,12 @@ const each = require('./each');
 function count (objectValue, json_is_empty_check) {
 
     let cnt=0;
-    const incByOne=1;
-    const defaultValueForFalse=0;
     const json_is_empty_check_default=json_is_empty_check||false;
     const get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
 
-        return defaultValueForFalse;
+        return zero;
 
     }
 
@@ -44,7 +42,7 @@ function count (objectValue, json_is_empty_check) {
 
             if (!isNaN(inc)) {
 
-                cnt += incByOne;
+                cnt += one;
 
             }
 
@@ -62,7 +60,7 @@ function count (objectValue, json_is_empty_check) {
 
         each(rawObjectValue, function () {
 
-            cnt += incByOne;
+            cnt += one;
 
         });
 
@@ -75,7 +73,7 @@ function count (objectValue, json_is_empty_check) {
 
         each(jsn_parse, function () {
 
-            cnts += incByOne;
+            cnts += one;
 
         });
 

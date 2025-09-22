@@ -55,7 +55,7 @@ function calculate (formula, args) {
 
         });
 
-        return parseFloat(compute(strFormula));
+        return Number(compute(strFormula));
 
     }, [
         formula,
@@ -130,7 +130,7 @@ function compute (formula) {
 
     }
 
-    return parseFloat(result);
+    return Number(result);
 
 }
 
@@ -153,18 +153,18 @@ function process (a1, operator, b1) {
     switch (operator) {
 
     case '+':
-        return add(parseFloat(a1), parseFloat(b1));
+        return add(Number(a1), Number(b1));
     case '-':
-        return subtract(parseFloat(a1), parseFloat(b1));
+        return subtract(Number(a1), Number(b1));
     case 'x':
     case '*':
-        return multiply(parseFloat(a1), parseFloat(b1));
+        return multiply(Number(a1), Number(b1));
     case '/':
-        return divide(parseFloat(a1), parseFloat(b1));
+        return divide(Number(a1), Number(b1));
     case '%':
-        return parseInt(a1) % parseInt(b1);
+        return Number(a1) % Number(b1);
     case '^':
-        return parseFloat(a1) ** parseFloat(b1);
+        return Number(a1) ** Number(b1);
     default:
         break;
 
@@ -191,7 +191,7 @@ function convert (a1, b1, pos) {
 
     if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})$/).test(a1) && pos ==="left") {
 
-        return parseFloat(a1) * parseFloat(b1.replace(/%/g, "")/ oneHundred);
+        return Number(a1) * Number(b1.replace(/%/g, "")/ oneHundred);
 
     }
 
@@ -199,13 +199,13 @@ function convert (a1, b1, pos) {
 
         if (pos === "right") {
 
-            return parseFloat(a1.replace(/%/g, "")/ oneHundred);
+            return Number(a1.replace(/%/g, "")/ oneHundred);
 
         }
 
         if (pos === "left") {
 
-            return parseFloat(b1.replace(/%/g, "")/ oneHundred);
+            return Number(b1.replace(/%/g, "")/ oneHundred);
 
         }
 
@@ -217,13 +217,13 @@ function convert (a1, b1, pos) {
 
         if (pos === "right") {
 
-            value = parseInt(a1.replace(/!/g, ""));
+            value = Number(a1.replace(/!/g, ""));
 
         }
 
         if (pos === "left") {
 
-            value = parseInt(b1.replace(/!/g, ""));
+            value = Number(b1.replace(/!/g, ""));
 
         }
 

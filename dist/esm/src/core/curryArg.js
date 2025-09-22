@@ -36,8 +36,6 @@ function curryArg (fn, args, NoDefaultArgs) {
                 }
                 if (typeof args[kk] === "undefined") {
 
-                    // eslint-disable-next-line no-undefined
-                    args[kk] = undefined;
                     placholderCounter += one;
 
                 }
@@ -75,15 +73,14 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         let funcReturnType = false;
 
-        if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub)) > args.length - argumentUndefinedCounter(argSub)) {
+        if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub, false)) > args.length - argumentUndefinedCounter(argSub)) {
 
             return fnCall;
 
         }
 
         const rawArgument = [];
-        let cc1 = zero;
-        const getFunIndex = {};
+        let holderCounter = zero;
 
         for (const arg in args) {
 
@@ -91,24 +88,29 @@ function curryArg (fn, args, NoDefaultArgs) {
 
                 if (args[arg] === __) {
 
-                    rawArgument.push(argSub[cc1]);
-                    cc1+=one;
+                    rawArgument.push(argSub[holderCounter]);
+                    holderCounter+=one;
 
                 } else if (typeof args[arg] === "function") {
 
-                    if (args[arg].name === fnCall.name) {
+                    const getApply = args[arg].apply(this, argSub);
 
-                        rawArgument.push(argSub[cc1]);
-                        cc1+=one;
+                    rawArgument.push(getApply);
+
+                    if (getApply.name === fnCall.name && funcReturnType === false) {
+
+                        funcReturnType = true;
 
                     }
 
-                    getFunIndex[arg] = rawArgument.length-one;
-
                 } else if (typeof args[arg] === "undefined") {
 
-                    rawArgument.push(argSub[cc1]);
-                    cc1+=one;
+                    if (typeof argSub[holderCounter] !== "undefined") {
+
+                        rawArgument.push(argSub[holderCounter]);
+                        holderCounter+=one;
+
+                    }
 
                 } else {
 
@@ -120,26 +122,17 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         }
 
-        for (const arg in args) {
+        for (const arg in argSub) {
 
-            if (_has(args, arg)) {
+            if (_has(argSub, arg) && _has(argSub, holderCounter)) {
 
-                if (typeof args[arg] === "function") {
-
-                    const getApply = args[arg].apply(this, rawArgument);
-
-                    if (funcReturnType === false) {
-
-                        funcReturnType = ["function"].indexOf(typeof getApply)>-one;
-
-                    }
-                    rawArgument[getFunIndex[arg]]= getApply;
-
-                }
+                rawArgument.push(argSub[holderCounter]);
+                holderCounter+=one;
 
             }
 
         }
+
         if (funcReturnType) {
 
             return fnCall;
@@ -158,16 +151,17 @@ function curryArg (fn, args, NoDefaultArgs) {
  * @since 1.4.8
  * @category String
  * @param {any[]} args Any data you want to check its property
- * @param {number=} NoDefaultArgs Any data you want to check its property
+ * @param {boolean=} isPlaceHolder Any data you want to check its property
  * @returns {string} Get the property of variable
  * @example
  *
  * argumentUndefinedCounter([])
  * => 0
  */
-function argumentUndefinedCounter (args) {
+function argumentUndefinedCounter (args, isPlaceHolder) {
 
     let counter = 0;
+    const isAllowPlachoder = isPlaceHolder || true;
 
     for (const arg in args) {
 
@@ -178,6 +172,14 @@ function argumentUndefinedCounter (args) {
             if (typeof value === "undefined") {
 
                 counter += one;
+
+            } else {
+
+                if (value === __ && isAllowPlachoder) {
+
+                    counter += one;
+
+                }
 
             }
 

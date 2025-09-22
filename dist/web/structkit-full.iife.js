@@ -90,8 +90,6 @@ function curryArg (fn, args, NoDefaultArgs) {
                 }
                 if (typeof args[kk] === "undefined") {
 
-                    // eslint-disable-next-line no-undefined
-                    args[kk] = undefined;
                     placholderCounter += one;
 
                 }
@@ -131,15 +129,14 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         var funcReturnType = false;
 
-        if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub)) > args.length - argumentUndefinedCounter(argSub)) {
+        if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub, false)) > args.length - argumentUndefinedCounter(argSub)) {
 
             return fnCall;
 
         }
 
         var rawArgument = [];
-        var cc1 = zero;
-        var getFunIndex = {};
+        var holderCounter = zero;
 
         for (var arg in args) {
 
@@ -147,24 +144,29 @@ function curryArg (fn, args, NoDefaultArgs) {
 
                 if (args[arg] === __) {
 
-                    rawArgument.push(argSub[cc1]);
-                    cc1+=one;
+                    rawArgument.push(argSub[holderCounter]);
+                    holderCounter+=one;
 
                 } else if (typeof args[arg] === "function") {
 
-                    if (args[arg].name === fnCall.name) {
+                    var getApply = args[arg].apply(this, argSub);
 
-                        rawArgument.push(argSub[cc1]);
-                        cc1+=one;
+                    rawArgument.push(getApply);
+
+                    if (getApply.name === fnCall.name && funcReturnType === false) {
+
+                        funcReturnType = true;
 
                     }
 
-                    getFunIndex[arg] = rawArgument.length-one;
-
                 } else if (typeof args[arg] === "undefined") {
 
-                    rawArgument.push(argSub[cc1]);
-                    cc1+=one;
+                    if (typeof argSub[holderCounter] !== "undefined") {
+
+                        rawArgument.push(argSub[holderCounter]);
+                        holderCounter+=one;
+
+                    }
 
                 } else {
 
@@ -176,26 +178,17 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         }
 
-        for (var arg in args) {
+        for (var arg in argSub) {
 
-            if (_has(args, arg)) {
+            if (_has(argSub, arg) && _has(argSub, holderCounter)) {
 
-                if (typeof args[arg] === "function") {
-
-                    var getApply = args[arg].apply(this, rawArgument);
-
-                    if (funcReturnType === false) {
-
-                        funcReturnType = ["function"].indexOf(typeof getApply)>-one;
-
-                    }
-                    rawArgument[getFunIndex[arg]]= getApply;
-
-                }
+                rawArgument.push(argSub[holderCounter]);
+                holderCounter+=one;
 
             }
 
         }
+
         if (funcReturnType) {
 
             return fnCall;
@@ -214,16 +207,17 @@ function curryArg (fn, args, NoDefaultArgs) {
  * @since 1.4.8
  * @category String
  * @param {any[]} args Any data you want to check its property
- * @param {number=} NoDefaultArgs Any data you want to check its property
+ * @param {boolean=} isPlaceHolder Any data you want to check its property
  * @returns {string} Get the property of variable
  * @example
  *
  * argumentUndefinedCounter([])
  * => 0
  */
-function argumentUndefinedCounter (args) {
+function argumentUndefinedCounter (args, isPlaceHolder) {
 
     var counter = 0;
+    var isAllowPlachoder = isPlaceHolder || true;
 
     for (var arg in args) {
 
@@ -234,6 +228,14 @@ function argumentUndefinedCounter (args) {
             if (typeof value === "undefined") {
 
                 counter += one;
+
+            } else {
+
+                if (value === __ && isAllowPlachoder) {
+
+                    counter += one;
+
+                }
 
             }
 
@@ -262,7 +264,7 @@ function add (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa + bb;
+        return Number(aa) + Number(bb);
 
     }, [
         value1,
@@ -528,15 +530,12 @@ function getTypeofInternal (objectValue) {
 function count (objectValue, json_is_empty_check) {
 
     var cnt=0;
-    var incByOne=1;
-    var defaultValueForFalse=0;
     var json_is_empty_check_default=json_is_empty_check||false;
-
     var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
 
-        return defaultValueForFalse;
+        return zero;
 
     }
 
@@ -550,7 +549,7 @@ function count (objectValue, json_is_empty_check) {
 
             if (!isNaN(inc)) {
 
-                cnt += incByOne;
+                cnt += one;
 
             }
 
@@ -568,7 +567,7 @@ function count (objectValue, json_is_empty_check) {
 
         each(rawObjectValue, function () {
 
-            cnt += incByOne;
+            cnt += one;
 
         });
 
@@ -581,7 +580,7 @@ function count (objectValue, json_is_empty_check) {
 
         each(jsn_parse, function () {
 
-            cnts += incByOne;
+            cnts += one;
 
         });
 
@@ -1830,7 +1829,7 @@ function divide (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa / bb;
+        return Number(aa) / Number(bb);
 
     }, [
         value1,
@@ -1856,7 +1855,7 @@ function multiply (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa * bb;
+        return Number(aa) * Number(bb);
 
     }, [
         value1,
@@ -1882,7 +1881,7 @@ function subtract (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa - bb;
+        return Number(aa) - Number(bb);
 
     }, [
         value1,
@@ -1928,7 +1927,7 @@ function calculate (formula, args) {
 
         });
 
-        return parseFloat(compute(strFormula));
+        return Number(compute(strFormula));
 
     }, [
         formula,
@@ -2003,7 +2002,7 @@ function compute (formula) {
 
     }
 
-    return parseFloat(result);
+    return Number(result);
 
 }
 
@@ -2026,18 +2025,18 @@ function process (a1, operator, b1) {
     switch (operator) {
 
     case '+':
-        return add(parseFloat(a1), parseFloat(b1));
+        return add(Number(a1), Number(b1));
     case '-':
-        return subtract(parseFloat(a1), parseFloat(b1));
+        return subtract(Number(a1), Number(b1));
     case 'x':
     case '*':
-        return multiply(parseFloat(a1), parseFloat(b1));
+        return multiply(Number(a1), Number(b1));
     case '/':
-        return divide(parseFloat(a1), parseFloat(b1));
+        return divide(Number(a1), Number(b1));
     case '%':
-        return parseInt(a1) % parseInt(b1);
+        return Number(a1) % Number(b1);
     case '^':
-        return parseFloat(a1) ** parseFloat(b1);
+        return Number(a1) ** Number(b1);
     default:
         break;
 
@@ -2064,7 +2063,7 @@ function convert (a1, b1, pos) {
 
     if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})$/).test(a1) && pos ==="left") {
 
-        return parseFloat(a1) * parseFloat(b1.replace(/%/g, "")/ oneHundred);
+        return Number(a1) * Number(b1.replace(/%/g, "")/ oneHundred);
 
     }
 
@@ -2072,13 +2071,13 @@ function convert (a1, b1, pos) {
 
         if (pos === "right") {
 
-            return parseFloat(a1.replace(/%/g, "")/ oneHundred);
+            return Number(a1.replace(/%/g, "")/ oneHundred);
 
         }
 
         if (pos === "left") {
 
-            return parseFloat(b1.replace(/%/g, "")/ oneHundred);
+            return Number(b1.replace(/%/g, "")/ oneHundred);
 
         }
 
@@ -2090,13 +2089,13 @@ function convert (a1, b1, pos) {
 
         if (pos === "right") {
 
-            value = parseInt(a1.replace(/!/g, ""));
+            value = Number(a1.replace(/!/g, ""));
 
         }
 
         if (pos === "left") {
 
-            value = parseInt(b1.replace(/!/g, ""));
+            value = Number(b1.replace(/!/g, ""));
 
         }
 
@@ -2273,6 +2272,8 @@ function defaultTo (defaultValue, value2) {
 _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -3308,8 +3309,6 @@ _stk.gte=gte;
 
 _stk.has=has;
 
-_stk.inc=inc;
-
 
 /**
  * Check if data is undefined
@@ -3350,6 +3349,10 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
+
+_stk.inc=inc;
+
+_stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
@@ -3396,8 +3399,6 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
-
-_stk.indexOf=indexOf;
 
 _stk.isEmpty=isEmpty;
 
@@ -6375,6 +6376,44 @@ _stk.repeat=repeat;
 
 
 /**
+ * Return reverse order of array
+ *
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
+ * @example
+ *
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
+ */
+function reverse (value) {
+
+    return curryArg(function (rawValue) {
+
+        var typeOf = getTypeof(rawValue);
+        var refRawList = typeOf=== "string"
+            ?rawValue.split("")
+            :rawValue;
+
+        var cloneMap = map(refRawList, function (__, key) {
+
+            return refRawList[count(refRawList) - one - key];
+
+        });
+
+        return typeOf === "string"
+            ?cloneMap.join("")
+            :cloneMap;
+
+    }, [value], one);
+
+}
+
+_stk.reverse=reverse;
+
+
+/**
  * Random Decimal
  *
  * @since 1.0.1
@@ -6415,44 +6454,6 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
-
-
-/**
- * Return reverse order of array
- *
- * @since 1.4.874
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
- * @example
- *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
- */
-function reverse (value) {
-
-    return curryArg(function (rawValue) {
-
-        var typeOf = getTypeof(rawValue);
-        var refRawList = typeOf=== "string"
-            ?rawValue.split("")
-            :rawValue;
-
-        var cloneMap = map(refRawList, function (__, key) {
-
-            return refRawList[count(refRawList) - one - key];
-
-        });
-
-        return typeOf === "string"
-            ?cloneMap.join("")
-            :cloneMap;
-
-    }, [value], one);
-
-}
-
-_stk.reverse=reverse;
 
 _stk.selectInData=selectInData;
 
@@ -7329,52 +7330,6 @@ _stk.toArray=toArray;
 
 
 /**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist([
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ], stringLowerCase(value));
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist([one], value);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
-
-
-/**
  * Logic in convert string or number to valid number
  *
  * @since 1.0.1
@@ -7448,6 +7403,52 @@ function toDouble (value, config) {
 }
 
 _stk.toDouble=toDouble;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist([
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ], stringLowerCase(value));
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist([one], value);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
 
 
 /**
@@ -8173,8 +8174,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-
-_stk.each=each;
 
 
  })(typeof window !== "undefined" ? window : this);

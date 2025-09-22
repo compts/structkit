@@ -18,7 +18,7 @@ function multiply (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa * bb;
+        return Number(aa) * Number(bb);
 
     }, [
         value1,
