@@ -2,7 +2,7 @@ import whereLoopExecution from '../core/whereLoopExecution.js';
 
 import curryArg from '../core/curryArg.js';
 
-import {two} from '../core/defaultValue.js';
+import {two} from '../variable/defaultValue.js';
 
 /**
  * Get the value in array the value in json given the search value was in json

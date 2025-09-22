@@ -7,7 +7,7 @@ import count from './count.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {one} from '../core/defaultValue.js';
+import {one} from '../variable/defaultValue.js';
 
 /**
  * Get type of the variable

@@ -2,7 +2,7 @@ import has from './has.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {zero, one} from '../core/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import each from './each.js';
 

@@ -4,7 +4,7 @@ import toArray from '../function/toArray.js';
 
 import {getTypeofInternal} from './getTypeOf.js';
 
-import {zero, one} from './defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 /**
  * Counting the true in list of array

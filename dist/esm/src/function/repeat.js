@@ -2,7 +2,7 @@ import arrayRepeat from './arrayRepeat.js';
 
 import curryArg from '../core/curryArg.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 /**
  * Repeat string value

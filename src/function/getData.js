@@ -5,7 +5,7 @@ const isEmpty = require('./isEmpty');
 const curryArg = require("../core/curryArg");
 const inc = require("./inc");
 const {schemaSplitData} = require("../core/baseGetData");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 
 /**

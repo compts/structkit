@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 const getTypeof = require('./getTypeof');
 const map = require("./map");
 const count = require("./count");

@@ -14,7 +14,7 @@ import first from '../function/first.js';
 
 import isEmpty from '../function/isEmpty.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 import remove from '../function/remove.js';
 

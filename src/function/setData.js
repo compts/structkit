@@ -7,7 +7,7 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 const empty = require('./empty');
 const first = require('../function/first');
 const isEmpty = require('../function/isEmpty');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 const remove = require('../function/remove');
 
 

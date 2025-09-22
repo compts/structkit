@@ -1,4 +1,4 @@
-const {zero, one} = require("../core/defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 const getTypeof = require('./getTypeof');
 
 /**

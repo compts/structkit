@@ -1,6 +1,6 @@
 const curryArg = require("../core/curryArg");
 const baseReduce = require("../core/baseReduce");
-const {three} = require("../core/defaultValue");
+const {three} = require("../variable/defaultValue");
 
 
 /**

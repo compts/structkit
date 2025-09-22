@@ -1,6 +1,6 @@
 import curryArg from '../core/curryArg.js';
 
-import {one} from '../core/defaultValue.js';
+import {one} from '../variable/defaultValue.js';
 
 import getTypeof from './getTypeof.js';
 

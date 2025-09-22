@@ -2,7 +2,7 @@ import curryArg from '../core/curryArg.js';
 
 import baseAppend from '../core/baseAppend.js';
 
-import {two} from '../core/defaultValue.js';
+import {two} from '../variable/defaultValue.js';
 
 /**
  * Append data for json or array

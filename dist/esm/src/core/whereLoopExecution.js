@@ -16,7 +16,7 @@ import has from '../function/has.js';
 
 import append from '../function/append.js';
 
-import {zero} from './defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 /**
  * Where Loop Execution

@@ -1,6 +1,6 @@
 import indexOfExist from '../function/indexOfExist.js';
 
-import {zero, one} from '../core/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import each from '../function/each.js';
 

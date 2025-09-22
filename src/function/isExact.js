@@ -11,7 +11,7 @@ const isEmpty = require('./isEmpty');
 const getData = require('./getData');
 const indexOfExist = require('./indexOfExist');
 const indexOfNotExist = require('./indexOfNotExist');
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 const curryArg = require("../core/curryArg");
 
 

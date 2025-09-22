@@ -1,5 +1,5 @@
 const add = require('./add');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 const isEmpty = require('./isEmpty');
 
 
@@ -22,9 +22,8 @@ const baseReduce = require("../core/baseReduce");
  */
 function arraySum (arrayObject, delimeter) {
 
-    const defaultLimitDecimal = 0;
     const arrayObjects=arrayObject||[];
-    const delimeters=delimeter||defaultLimitDecimal;
+    const delimeters=delimeter||zero;
 
     const sum = baseReduce(zero, arrayObjects, add);
 

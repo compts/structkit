@@ -1,6 +1,6 @@
 const has = require('./has');
 const {objectCallType} = require("../variable/types");
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 
 /**

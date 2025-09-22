@@ -1,6 +1,6 @@
 const baseCountValidList = require("../core/baseCountValidList");
 const curryArg = require("../core/curryArg");
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 /**
  * In array, you need to check all value atleast one true

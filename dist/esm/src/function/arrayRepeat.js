@@ -4,7 +4,7 @@ import range from './range.js';
 
 import curryArg from '../core/curryArg.js';
 
-import {zero, one} from '../core/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 /**
  * Repeat value in array

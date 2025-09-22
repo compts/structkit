@@ -1,6 +1,6 @@
 const arrayRepeat = require('./arrayRepeat');
 const curryArg = require("../core/curryArg");
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 
 /**

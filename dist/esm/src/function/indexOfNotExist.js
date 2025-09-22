@@ -1,6 +1,6 @@
 import indexOf from './indexOf.js';
 
-import {negOne} from '../core/defaultValue.js';
+import {negOne} from '../variable/defaultValue.js';
 
 /**
  * Check index of array Not or exist

@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {one, zero} = require("../core/defaultValue");
+const {one, zero} = require("../variable/defaultValue");
 const toArray = require('./toArray');
 const count = require('./count');
 const getKey = require('./getKey');

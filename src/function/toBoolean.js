@@ -1,7 +1,7 @@
 const stringLowerCase = require("./stringLowerCase");
 const getTypeof = require("./getTypeof");
 const indexOfExist = require("./indexOfExist");
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 /**
  * To extract string invalid boolean and convert to boolean

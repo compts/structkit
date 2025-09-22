@@ -7,7 +7,7 @@ const isExact = require('../function/isExact');
 const isExactbyRegExp = require('../function/isExactbyRegExp');
 const has = require('../function/has');
 const append = require('../function/append');
-const {zero} = require("./defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 /**
  * Where Loop Execution

@@ -1,6 +1,6 @@
 import curryArg from '../core/curryArg.js';
 
-import {one, zero} from '../core/defaultValue.js';
+import {one, zero} from '../variable/defaultValue.js';
 
 import toArray from './toArray.js';
 

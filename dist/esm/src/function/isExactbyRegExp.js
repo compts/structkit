@@ -2,7 +2,7 @@ import getTypeof from './getTypeof.js';
 
 import has from './has.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 import each from './each.js';
 

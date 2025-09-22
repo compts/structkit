@@ -6,7 +6,7 @@ import getTypeof from './getTypeof.js';
 
 import toArray from './toArray.js';
 
-import {zero, one, two, three, four, oneHundred} from '../core/defaultValue.js';
+import {zero, one, two, three, four, oneHundred} from '../variable/defaultValue.js';
 
 import curryArg from '../core/curryArg.js';
 
@@ -22,7 +22,7 @@ import subtract from './subtract.js';
  * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
- * @category Logic
+ * @category Math
  * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args Object argument that to fill in variable define at algbraic expression
  * @returns {number|any} Returns the total.
@@ -68,12 +68,12 @@ function calculate (formula, args) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category Math
  * @param {string} formula The second number in an addition.
  * @returns {boolean|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * compute("1+1")
  *=> 1
  */
 function compute (formula) {
@@ -138,14 +138,14 @@ function compute (formula) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category Math
  * @param {number} a1 The second number in an addition.
  * @param {string} operator The second number in an addition.
  * @param {number} b1 The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * process(1,+, 1)
  *=> 1
  */
 function process (a1, operator, b1) {
@@ -177,14 +177,14 @@ function process (a1, operator, b1) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category math
  * @param {number} a1 The second number in an addition.
  * @param {string} b1 The second number in an addition.
  * @param {string} pos The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * convert(1,1,"right")
  *=> 1
  */
 function convert (a1, b1, pos) {

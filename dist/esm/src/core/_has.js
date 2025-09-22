@@ -1,5 +1,5 @@
 
-import {zero} from './defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 /**
  * Create a separate `has` inside core folder

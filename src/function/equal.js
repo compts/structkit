@@ -1,7 +1,7 @@
 const curryArg = require("../core/curryArg");
 const {getTypeofInternal} = require('../core/getTypeOf');
 
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 /**
  * To check if the two arguments are equal

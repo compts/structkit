@@ -1,6 +1,6 @@
 import curryArg from '../core/curryArg.js';
 
-import {two} from '../core/defaultValue.js';
+import {two} from '../variable/defaultValue.js';
 
 import _has from '../core/_has.js';
 

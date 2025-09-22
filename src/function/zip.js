@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 const limit = require('./limit');
 const first = require("./first");
 const baseReduce = require("../core/baseReduce");

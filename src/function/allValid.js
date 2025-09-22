@@ -3,7 +3,7 @@ const curryArg = require("../core/curryArg");
 const count = require('./count');
 const baseReduce = require("../core/baseReduce");
 const toArray = require("./toArray");
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 /**
  * In array, you need to check all value is true

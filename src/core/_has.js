@@ -1,5 +1,5 @@
 
-const {zero} = require("./defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 /**
  * Create a separate `has` inside core folder

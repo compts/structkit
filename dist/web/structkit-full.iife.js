@@ -1714,9 +1714,8 @@ function isEmpty (value) {
  */
 function arraySum (arrayObject, delimeter) {
 
-    var defaultLimitDecimal = 0;
     var arrayObjects=arrayObject||[];
-    var delimeters=delimeter||defaultLimitDecimal;
+    var delimeters=delimeter||zero;
 
     var sum = baseReduce(zero, arrayObjects, add);
 
@@ -1894,7 +1893,7 @@ function subtract (value1, value2) {
  * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
- * @category Logic
+ * @category Math
  * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args Object argument that to fill in variable define at algbraic expression
  * @returns {number|any} Returns the total.
@@ -1940,12 +1939,12 @@ function calculate (formula, args) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category Math
  * @param {string} formula The second number in an addition.
  * @returns {boolean|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * compute("1+1")
  *=> 1
  */
 function compute (formula) {
@@ -2010,14 +2009,14 @@ function compute (formula) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category Math
  * @param {number} a1 The second number in an addition.
  * @param {string} operator The second number in an addition.
  * @param {number} b1 The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * process(1,+, 1)
  *=> 1
  */
 function process (a1, operator, b1) {
@@ -2049,14 +2048,14 @@ function process (a1, operator, b1) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category math
  * @param {number} a1 The second number in an addition.
  * @param {string} b1 The second number in an addition.
  * @param {string} pos The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * convert(1,1,"right")
  *=> 1
  */
 function convert (a1, b1, pos) {
@@ -2271,8 +2270,6 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.divide=divide;
-
 _stk.each=each;
 
 _stk.empty=empty;
@@ -2311,6 +2308,8 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
+
+_stk.divide=divide;
 
 
 /**
@@ -2357,8 +2356,6 @@ function filter (objectValue, func) {
 
 _stk.filter=filter;
 
-_stk.first=first;
-
 
 /**
  * Flatten an array to a single level.
@@ -2401,6 +2398,8 @@ function flatten (arg) {
 }
 
 _stk.flatten=flatten;
+
+_stk.first=first;
 
 
 /**
@@ -3352,9 +3351,9 @@ _stk.ifUndefined=ifUndefined;
 
 _stk.inc=inc;
 
-_stk.indexOf=indexOf;
-
 _stk.indexOfExist=indexOfExist;
+
+_stk.indexOf=indexOf;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
@@ -3586,35 +3585,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3641,6 +3611,35 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.map=map;
 
@@ -7148,13 +7147,12 @@ function templateValue (templateString, data, option) {
         var default_option = varExtend({
             "close_tag": "!>",
             "open_tag": "<!",
-            "trowError": false
+            "throwError": false
         }, rawOption);
 
-        var temp = syntaxCleanup(rawTemplateString);
+        var temp = syntaxCleanup(rawTemplateString, default_option);
 
         var tag_replace={
-            "comment": default_option.open_tag+"#([\\s\\S]*?)"+default_option.close_tag,
             "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
             "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
         };
@@ -7226,7 +7224,7 @@ function templateValue (templateString, data, option) {
 
         } catch (error) {
 
-            if (default_option.trowError) {
+            if (default_option.throwError) {
 
                 throw new Error(error);
 
@@ -7250,23 +7248,51 @@ function templateValue (templateString, data, option) {
  * @since 1.0.1
  * @category String
  * @param {string} data Template string
+ * @param {any=} option The second number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
  *  templateValue("<!- test !>", {"test": 11})
  *=>'11'
  */
-function syntaxCleanup (data) {
+function syntaxCleanup (data, option) {
 
     var str_split = data.split("");
+    var openSplit = option.open_tag.split("");
+
+    var closeSplit = option.close_tag.split("");
 
     var commentCounter = 0;
+
+    var errorMessage = "";
+
+    if (option.open_tag.length <= one) {
+
+        errorMessage = "Open tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.close_tag.length <= one) {
+
+        errorMessage = "Close tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.throwError && errorMessage !=="") {
+
+        throw new Error(errorMessage);
+
+    }
 
     return reduce("", str_split, function (total, vv, kk) {
 
         if (kk>one) {
 
-            if (str_split[kk-two]==="<" && str_split[kk-one] === "!") {
+            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
 
                 if (commentCounter>zero) {
 
@@ -7287,7 +7313,7 @@ function syntaxCleanup (data) {
                     commentCounter += one;
                     if (commentCounter>zero) {
 
-                        return total.replace(/<!$/g, "");
+                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
 
                     }
 
@@ -7304,7 +7330,7 @@ function syntaxCleanup (data) {
 
             }
 
-            if (str_split[kk-two]==="!" && str_split[kk-one] === ">" && commentCounter>zero) {
+            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
 
                 commentCounter -= one;
 
@@ -7327,6 +7353,52 @@ function syntaxCleanup (data) {
 _stk.templateValue=templateValue;
 
 _stk.toArray=toArray;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist([
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ], stringLowerCase(value));
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist([one], value);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
 
 
 /**
@@ -7403,52 +7475,6 @@ function toDouble (value, config) {
 }
 
 _stk.toDouble=toDouble;
-
-
-/**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist([
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ], stringLowerCase(value));
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist([one], value);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
 
 
 /**
@@ -7733,8 +7759,6 @@ function unique (value) {
 _stk.unique=unique;
 
 _stk.varExtend=varExtend;
-
-_stk.where=where;
 
 
 /**
@@ -8130,6 +8154,8 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
+_stk.where=where;
+
 _stk.whereOnce=whereOnce;
 
 

@@ -2,7 +2,7 @@ import curryArg from '../core/curryArg.js';
 
 import baseReduce from '../core/baseReduce.js';
 
-import {three} from '../core/defaultValue.js';
+import {three} from '../variable/defaultValue.js';
 
 /**
  * Reduce function

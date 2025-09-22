@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 /**
  * Divide logic in satisfying two argument

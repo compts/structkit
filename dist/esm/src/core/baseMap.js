@@ -6,7 +6,7 @@ import empty from '../function/empty.js';
 
 import baseAppend from './baseAppend.js';
 
-import {zero, one} from './defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 /**
  * To map the value of json or array

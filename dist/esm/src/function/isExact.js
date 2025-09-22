@@ -14,7 +14,7 @@ import indexOfExist from './indexOfExist.js';
 
 import indexOfNotExist from './indexOfNotExist.js';
 
-import {two} from '../core/defaultValue.js';
+import {two} from '../variable/defaultValue.js';
 
 import curryArg from '../core/curryArg.js';
 

@@ -1,7 +1,7 @@
 const getTypeof = require('./getTypeof');
 
 const has = require('./has');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 const each = require('./each');
 
 /**

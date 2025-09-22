@@ -1,6 +1,6 @@
 const stringUnEscape = require('./stringUnEscape');
 const each = require('./each');
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 const varExtend = require('./varExtend');
 const indexOfExist = require('./indexOfExist');
 const getTypeof = require('./getTypeof');

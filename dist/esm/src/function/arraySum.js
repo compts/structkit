@@ -1,6 +1,6 @@
 import add from './add.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 import isEmpty from './isEmpty.js';
 
@@ -23,9 +23,8 @@ import baseReduce from '../core/baseReduce.js';
  */
 function arraySum (arrayObject, delimeter) {
 
-    const defaultLimitDecimal = 0;
     const arrayObjects=arrayObject||[];
-    const delimeters=delimeter||defaultLimitDecimal;
+    const delimeters=delimeter||zero;
 
     const sum = baseReduce(zero, arrayObjects, add);
 

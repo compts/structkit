@@ -1,6 +1,6 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
 const curryArg = require("../core/curryArg");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 /**
  *  Get the value in array the value in json that should not in search value of json

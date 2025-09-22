@@ -1,4 +1,4 @@
-const {zero, one} = require("./defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 
 const _has = require("./_has");
 const __ = require("./__");

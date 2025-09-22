@@ -1,6 +1,6 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
 const indexOfExist = require('./indexOfExist');
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 const convertValue = require("../core/convertValue");
 const has = require('./has');

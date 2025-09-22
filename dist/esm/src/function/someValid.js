@@ -2,7 +2,7 @@ import baseCountValidList from '../core/baseCountValidList.js';
 
 import curryArg from '../core/curryArg.js';
 
-import {one} from '../core/defaultValue.js';
+import {one} from '../variable/defaultValue.js';
 
 /**
  * In array, you need to check all value atleast one true

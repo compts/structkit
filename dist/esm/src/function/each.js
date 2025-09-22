@@ -2,7 +2,7 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
 
 import indexOfExist from './indexOfExist.js';
 
-import {one} from '../core/defaultValue.js';
+import {one} from '../variable/defaultValue.js';
 
 import convertValue from '../core/convertValue.js';
 

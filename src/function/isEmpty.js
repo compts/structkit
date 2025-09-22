@@ -1,5 +1,5 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 const count = require('./count');
 

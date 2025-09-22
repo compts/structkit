@@ -1,6 +1,6 @@
 const curryArg = require("../core/curryArg");
 const baseAppend = require("../core/baseAppend");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 
 /**

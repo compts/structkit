@@ -1,6 +1,6 @@
 import curryArg from '../core/curryArg.js';
 
-import {two} from '../core/defaultValue.js';
+import {two} from '../variable/defaultValue.js';
 
 /**
  *  To check if the two arguments are greater than to equal

@@ -12,7 +12,7 @@ const getKey = require('./getKey');
 const toString = require('./toString');
 
 const convertValue = require("../core/convertValue");
-const {two, one, zero} = require("../core/defaultValue");
+const {two, one, zero} = require("../variable/defaultValue");
 const {validTypeJson} = require("../variable/types");
 
 

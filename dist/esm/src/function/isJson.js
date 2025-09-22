@@ -2,7 +2,7 @@ import has from './has.js';
 
 import {objectCallType} from '../variable/types.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 /**
  * Is Json valid format

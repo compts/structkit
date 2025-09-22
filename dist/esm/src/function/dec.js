@@ -1,4 +1,4 @@
-import {zero, one} from '../core/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import getTypeof from './getTypeof.js';
 

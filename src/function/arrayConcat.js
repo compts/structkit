@@ -3,7 +3,7 @@ const toArray = require('./toArray');
 const arraySlice = require('./arraySlice');
 const first = require('./first');
 const curryArg = require("../core/curryArg");
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 
 /**

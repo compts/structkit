@@ -2,7 +2,7 @@ import stringUnEscape from './stringUnEscape.js';
 
 import each from './each.js';
 
-import {one} from '../core/defaultValue.js';
+import {one} from '../variable/defaultValue.js';
 
 import varExtend from './varExtend.js';
 

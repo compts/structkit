@@ -4,7 +4,7 @@ import getTypeof from './getTypeof.js';
 
 import indexOfExist from './indexOfExist.js';
 
-import {one} from '../core/defaultValue.js';
+import {one} from '../variable/defaultValue.js';
 
 /**
  * To extract string invalid boolean and convert to boolean

@@ -1,7 +1,7 @@
 const baseReduce = require('./baseReduce');
 const toArray = require('../function/toArray');
 const {getTypeofInternal} = require("./getTypeOf");
-const {zero, one} = require("./defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 
 
 /**

@@ -1,4 +1,4 @@
-import {zero, one} from './defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import _has from './_has.js';
 

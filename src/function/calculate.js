@@ -3,7 +3,7 @@ const getKey = require("./getKey");
 
 const getTypeof = require("./getTypeof");
 const toArray = require("./toArray");
-const {zero, one, two, three, four, oneHundred} = require("../core/defaultValue");
+const {zero, one, two, three, four, oneHundred} = require("../variable/defaultValue");
 const curryArg = require("../core/curryArg");
 const add = require("./add");
 const divide = require("./divide");
@@ -14,7 +14,7 @@ const subtract = require("./subtract");
  * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
- * @category Logic
+ * @category Math
  * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
  * @param {any=} args Object argument that to fill in variable define at algbraic expression
  * @returns {number|any} Returns the total.
@@ -60,12 +60,12 @@ function calculate (formula, args) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category Math
  * @param {string} formula The second number in an addition.
  * @returns {boolean|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * compute("1+1")
  *=> 1
  */
 function compute (formula) {
@@ -130,14 +130,14 @@ function compute (formula) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category Math
  * @param {number} a1 The second number in an addition.
  * @param {string} operator The second number in an addition.
  * @param {number} b1 The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * process(1,+, 1)
  *=> 1
  */
 function process (a1, operator, b1) {
@@ -169,14 +169,14 @@ function process (a1, operator, b1) {
  * Logic in convert string or number to valid number
  *
  * @since 1.4.8
- * @category Seq
+ * @category math
  * @param {number} a1 The second number in an addition.
  * @param {string} b1 The second number in an addition.
  * @param {string} pos The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * calculate(/(\d)/g, 0,1)
+ * convert(1,1,"right")
  *=> 1
  */
 function convert (a1, b1, pos) {

@@ -1,6 +1,6 @@
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 /**
  * Ge the empty value of specify argument type

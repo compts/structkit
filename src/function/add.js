@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 /**
  * Addition logic in satisfying two argument

@@ -1,6 +1,6 @@
 const baseReduce = require("../core/baseReduce");
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {zero, one, two} = require("../core/defaultValue");
+const {zero, one, two} = require("../variable/defaultValue");
 const append = require('./append');
 const remove = require('./remove');
 const defaultTo = require('./defaultTo');

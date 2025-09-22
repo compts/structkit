@@ -2,7 +2,7 @@ import baseReduce from '../core/baseReduce.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {zero, one, two} from '../core/defaultValue.js';
+import {zero, one, two} from '../variable/defaultValue.js';
 
 import append from './append.js';
 

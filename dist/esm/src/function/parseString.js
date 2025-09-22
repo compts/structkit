@@ -22,7 +22,7 @@ import toString from './toString.js';
 
 import convertValue from '../core/convertValue.js';
 
-import {two, one, zero} from '../core/defaultValue.js';
+import {two, one, zero} from '../variable/defaultValue.js';
 
 import {validTypeJson} from '../variable/types.js';
 

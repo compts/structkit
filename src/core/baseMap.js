@@ -2,7 +2,7 @@ const has = require('./_has');
 const each = require('../function/each');
 const empty = require('../function/empty');
 const baseAppend = require("./baseAppend");
-const {zero, one} = require("./defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 
 
 /**

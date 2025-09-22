@@ -2,7 +2,7 @@ import curryArg from '../core/curryArg.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {two} from '../core/defaultValue.js';
+import {two} from '../variable/defaultValue.js';
 
 /**
  * To check if the two arguments are equal

@@ -8,7 +8,7 @@ import baseReduce from '../core/baseReduce.js';
 
 import toArray from './toArray.js';
 
-import {zero} from '../core/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 /**
  * In array, you need to check all value is true

@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {zero, one, two} = require("../core/defaultValue");
+const {zero, one, two} = require("../variable/defaultValue");
 const each = require('./each');
 const range = require('./range');
 const getValue = require('./getValue');

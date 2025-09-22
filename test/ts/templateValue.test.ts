@@ -63,7 +63,7 @@ describe('TS: templateValue method', function () {
 
             templateValue(
                 "<! if (has(obj, 'a')) { !>A is: <!= obj.a !> <! } else { !>No A <! } !>", {"obj": {"b": 11}},
-                {"trowError": true}
+                {"throwError": true}
             );
 
         }, Error);

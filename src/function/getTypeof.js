@@ -3,7 +3,7 @@ const map = require("./map");
 const first = require("./first");
 const count = require("./count");
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 /**
  * Get type of the variable

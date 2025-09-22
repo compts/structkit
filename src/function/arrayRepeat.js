@@ -1,7 +1,7 @@
 const map = require('./map');
 const range = require('./range');
 const curryArg = require("../core/curryArg");
-const {zero, one} = require("../core/defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 
 /**
  * Repeat value in array

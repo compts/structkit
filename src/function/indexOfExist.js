@@ -1,5 +1,5 @@
 const indexOf = require('./indexOf');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 /**
  * Check index of array is Exist or not
