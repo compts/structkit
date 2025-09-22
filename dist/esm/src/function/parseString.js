@@ -114,7 +114,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
             const getTypeDetails = validTypeJson[getTypeof(value)];
 
-            let inc=0;
+            let inc=zero;
 
             each(value, function (ev, ek) {
 

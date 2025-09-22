@@ -5,7 +5,7 @@ const isEmpty = require('./isEmpty');
 const curryArg = require("../core/curryArg");
 const inc = require("./inc");
 const {schemaSplitData} = require("../core/baseGetData");
-const {two} = require("../variable/defaultValue");
+const {zero, two} = require("../variable/defaultValue");
 
 
 /**
@@ -40,7 +40,7 @@ function getData (objectValue, split_str, isStrict) {
         const spl= schemaSplitData(rawSplit_str);
 
         let jsn_total={};
-        let counter = 0;
+        let counter = zero;
 
 
         each(spl, function (value) {

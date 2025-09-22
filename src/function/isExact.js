@@ -11,7 +11,7 @@ const isEmpty = require('./isEmpty');
 const getData = require('./getData');
 const indexOfExist = require('./indexOfExist');
 const indexOfNotExist = require('./indexOfNotExist');
-const {two} = require("../variable/defaultValue");
+const {zero, one, two} = require("../variable/defaultValue");
 const curryArg = require("../core/curryArg");
 
 
@@ -51,8 +51,8 @@ function isExact (whereValue, objectValue1, isExist) {
         const key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
             ?rawObjectValue1
             :[rawObjectValue1];
-        let cnt=0;
-        const incrementDefaultValue=1;
+        let cnt=zero;
+        const incrementDefaultValue=one;
 
         each(key_s, function (kv, kk) {
 

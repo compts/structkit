@@ -22,7 +22,7 @@ const each = require('./each');
  */
 function count (objectValue, json_is_empty_check) {
 
-    let cnt=0;
+    let cnt=zero;
     const json_is_empty_check_default=json_is_empty_check||false;
     const get_json=getTypeofInternal(objectValue);
 
@@ -69,7 +69,7 @@ function count (objectValue, json_is_empty_check) {
     if (get_json === "json"&&json_is_empty_check_default === true) {
 
         const jsn_parse=objectValue;
-        let cnts=0;
+        let cnts=zero;
 
         each(jsn_parse, function () {
 

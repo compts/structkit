@@ -4,6 +4,8 @@ import each from '../function/each.js';
 
 import has from '../function/has.js';
 
+import {negOne, zero, one} from '../variable/defaultValue.js';
+
 import {getTypeofInternal} from './getTypeOf.js';
 
 /**
@@ -24,10 +26,7 @@ import {getTypeofInternal} from './getTypeOf.js';
  */
 function getIndexOf (objectValue, value, start, end, isGetLast) {
 
-    const indexOfDefaultValue=-1;
-    const incrementDefaultValue=1;
-
-    let referenceValue = -1;
+    let referenceValue = negOne;
 
     if (getTypeofInternal(objectValue) === "array") {
 
@@ -60,14 +59,14 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc += incrementDefaultValue;
+            inc += one;
 
         }
 
     }
 
     return isGetLast === false
-        ?indexOfDefaultValue
+        ?negOne
         :referenceValue;
 
 }
@@ -87,8 +86,7 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  */
 function searchValueInJson (objectValue, searchValue) {
 
-    let counter = 0;
-    const increment = 1;
+    let counter = zero;
 
     each(objectValue, function (value, key) {
 
@@ -96,7 +94,7 @@ function searchValueInJson (objectValue, searchValue) {
 
             if (searchValue[key] === value) {
 
-                counter += increment;
+                counter += one;
 
             }
 

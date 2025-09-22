@@ -1,5 +1,7 @@
 import toString from './toString.js';
 
+import {one} from '../variable/defaultValue.js';
+
 /**
  * Regex Count Group number
  *
@@ -13,8 +15,6 @@ import toString from './toString.js';
  *=>[1]
  */
 function regexCountGroup (value) {
-
-    const one =1;
 
     return new RegExp(toString(value) + '|').exec('').length - one;
 

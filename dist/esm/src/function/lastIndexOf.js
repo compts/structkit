@@ -3,6 +3,8 @@ import count from './count.js';
 
 import {getIndexOf} from '../core/getIndexOf.js';
 
+import {zero} from '../variable/defaultValue.js';
+
 /**
  * Get the last index Of array
  *
@@ -18,9 +20,7 @@ import {getIndexOf} from '../core/getIndexOf.js';
  */
 function lastIndexOf (objectValue, value) {
 
-    const start = 0;
-
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+    const indexValue = getIndexOf(objectValue, value, zero, count(objectValue), true);
 
     return indexValue;
 

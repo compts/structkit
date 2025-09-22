@@ -1,5 +1,7 @@
 import varExtend from './varExtend.js';
 
+import {zero, one} from '../variable/defaultValue.js';
+
 /**
  * On sequence
  *
@@ -16,14 +18,12 @@ import varExtend from './varExtend.js';
  */
 function onSequence (func, wait, option) {
 
-    const zero = 0;
-    const one = 1;
     const extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     const valueWaited = wait || zero;
-    let counter = 0;
+    let counter = zero;
 
     const interval = setInterval(function () {
 

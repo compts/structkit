@@ -2,7 +2,7 @@ import stringUnEscape from './stringUnEscape.js';
 
 import each from './each.js';
 
-import {one} from '../variable/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import varExtend from './varExtend.js';
 
@@ -206,7 +206,7 @@ function callbackParse (glb) {
 
     const charList = [];
     let isOpen = false;
-    let recCount = 0;
+    let recCount = zero;
     const groupData = {};
     const lType = {
         "[": "array",

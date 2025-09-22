@@ -2,6 +2,8 @@ const has = require('./has');
 
 const getTypeof = require('./getTypeof');
 
+const {zero, one, ten} = require("../variable/defaultValue");
+
 /**
  * Generate array of data from specific limit or where the index to start
  *
@@ -18,20 +20,15 @@ const getTypeof = require('./getTypeof');
  */
 function range (maxValue, minValue, step) {
 
-    const emptyDefaultValue=0;
-    const tenDefaultValue=10;
-
-    const incrementDefaultValue=1;
-
     const incrementValue=has(step)
         ?step
-        :incrementDefaultValue;
+        :one;
     const minValueRef=has(minValue)
         ?minValue
-        :incrementDefaultValue;
+        :one;
     const maxValueRef=has(maxValue)
         ?maxValue
-        :tenDefaultValue;
+        :ten;
     const output=[];
 
     for (let inc=minValueRef; inc <= maxValueRef;) {
@@ -48,7 +45,7 @@ function range (maxValue, minValue, step) {
         if (getTypeof(incrementValue) === "number") {
 
             output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
+            if (incrementValue<zero) {
 
                 inc -= incrementValue;
 

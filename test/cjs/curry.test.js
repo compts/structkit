@@ -55,4 +55,10 @@ describe('CJS: curry method', function () {
 
     });
 
+    it('check if curry with sub curry with one param return false', function () {
+
+        assert.strictEqual(typeof subCurry1(one), "boolean");
+
+    });
+
 });

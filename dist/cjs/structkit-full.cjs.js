@@ -21,6 +21,7 @@ const one = 1;
 const two = 2;
 const three = 3;
 const four = 4;
+const ten = 4;
 const oneHundred = 100;
 
 /**
@@ -524,7 +525,7 @@ function getTypeofInternal (objectValue) {
  */
 function count (objectValue, json_is_empty_check) {
 
-    let cnt=0;
+    let cnt=zero;
     const json_is_empty_check_default=json_is_empty_check||false;
     const get_json=getTypeofInternal(objectValue);
 
@@ -571,7 +572,7 @@ function count (objectValue, json_is_empty_check) {
     if (get_json === "json"&&json_is_empty_check_default === true) {
 
         const jsn_parse=objectValue;
-        let cnts=0;
+        let cnts=zero;
 
         each(jsn_parse, function () {
 
@@ -605,10 +606,7 @@ function count (objectValue, json_is_empty_check) {
  */
 function getIndexOf (objectValue, value, start, end, isGetLast) {
 
-    const indexOfDefaultValue=-1;
-    const incrementDefaultValue=1;
-
-    let referenceValue = -1;
+    let referenceValue = negOne;
 
     if (getTypeofInternal(objectValue) === "array") {
 
@@ -641,14 +639,14 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc += incrementDefaultValue;
+            inc += one;
 
         }
 
     }
 
     return isGetLast === false
-        ?indexOfDefaultValue
+        ?negOne
         :referenceValue;
 
 }
@@ -668,8 +666,7 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  */
 function searchValueInJson (objectValue, searchValue) {
 
-    let counter = 0;
-    const increment = 1;
+    let counter = zero;
 
     each(objectValue, function (value, key) {
 
@@ -677,7 +674,7 @@ function searchValueInJson (objectValue, searchValue) {
 
             if (searchValue[key] === value) {
 
-                counter += increment;
+                counter += one;
 
             }
 
@@ -817,7 +814,7 @@ function each (objectValue, func) {
 
     if (indexOfExist(["set"], typeofs)) {
 
-        let key = 0;
+        let key = zero;
 
         for (const ins of objectValue) {
 
@@ -1538,20 +1535,15 @@ _stk.arrayConcat=arrayConcat;
  */
 function range (maxValue, minValue, step) {
 
-    const emptyDefaultValue=0;
-    const tenDefaultValue=10;
-
-    const incrementDefaultValue=1;
-
     const incrementValue=has(step)
         ?step
-        :incrementDefaultValue;
+        :one;
     const minValueRef=has(minValue)
         ?minValue
-        :incrementDefaultValue;
+        :one;
     const maxValueRef=has(maxValue)
         ?maxValue
-        :tenDefaultValue;
+        :ten;
     const output=[];
 
     for (let inc=minValueRef; inc <= maxValueRef;) {
@@ -1568,7 +1560,7 @@ function range (maxValue, minValue, step) {
         if (getTypeof(incrementValue) === "number") {
 
             output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
+            if (incrementValue<zero) {
 
                 inc -= incrementValue;
 
@@ -2253,9 +2245,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
+_stk.divide=divide;
 
-_stk.empty=empty;
+_stk.each=each;
 
 
 /**
@@ -2291,8 +2283,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-_stk.divide=divide;
 
 
 /**
@@ -2339,6 +2329,10 @@ function filter (objectValue, func) {
 
 _stk.filter=filter;
 
+_stk.first=first;
+
+_stk.empty=empty;
+
 
 /**
  * Flatten an array to a single level.
@@ -2381,8 +2375,6 @@ function flatten (arg) {
 }
 
 _stk.flatten=flatten;
-
-_stk.first=first;
 
 
 /**
@@ -2532,7 +2524,7 @@ function getData (objectValue, split_str, isStrict) {
         const spl= schemaSplitData(rawSplit_str);
 
         let jsn_total={};
-        let counter = 0;
+        let counter = zero;
 
         each(spl, function (value) {
 
@@ -2575,6 +2567,9 @@ function getData (objectValue, split_str, isStrict) {
 
 }
 
+_stk.getData=getData;
+
+
 /**
  * Looking the data in JSON and Array base on object value
  *
@@ -2611,8 +2606,8 @@ function isExact (whereValue, objectValue1, isExist) {
         const key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
             ?rawObjectValue1
             :[rawObjectValue1];
-        let cnt=0;
-        const incrementDefaultValue=1;
+        let cnt=zero;
+        const incrementDefaultValue=one;
 
         each(key_s, function (kv, kk) {
 
@@ -2760,8 +2755,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
     const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
         ?objectValue1
         :[objectValue1];
-    let cnt=0;
-    const incrementDefaultValue=1;
+    let cnt=zero;
     let local_is_valid = null;
 
     each(key_s, function (kv, kk) {
@@ -2781,7 +2775,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
                 }
                 if (local_is_valid.test(kv)) {
 
-                    cnt += incrementDefaultValue;
+                    cnt += one;
 
                 }
 
@@ -2800,7 +2794,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
             }
             if (local_is_valid.test(kv)) {
 
-                cnt += incrementDefaultValue;
+                cnt += one;
 
             }
 
@@ -3125,8 +3119,6 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
@@ -3166,27 +3158,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
 
 
 /**
@@ -3230,6 +3201,27 @@ function groupBy (objectValue, func) {
 }
 
 _stk.groupBy=groupBy;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -3334,11 +3326,9 @@ _stk.ifUndefined=ifUndefined;
 
 _stk.inc=inc;
 
-_stk.indexOfExist=indexOfExist;
-
 _stk.indexOf=indexOf;
 
-_stk.indexOfNotExist=indexOfNotExist;
+_stk.indexOfExist=indexOfExist;
 
 
 /**
@@ -3381,6 +3371,8 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 _stk.isEmpty=isEmpty;
 
@@ -3471,9 +3463,7 @@ _stk.last=last;
  */
 function lastIndexOf (objectValue, value) {
 
-    const start = 0;
-
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+    const indexValue = getIndexOf(objectValue, value, zero, count(objectValue), true);
 
     return indexValue;
 
@@ -3525,14 +3515,12 @@ function limit (objectValue, minValue, maxValue, func) {
     let cnt=0;
     const glo_jsn={};
     let glo_indtfd = null;
-    const emptyDefaultValue=0;
     const minValueReserve=has(minValue)
         ?minValue
-        :emptyDefaultValue;
+        :zero;
     const maxValueReserve=has(maxValue)
         ?maxValue
         :count(objectValue);
-    const incrementDefaultValue=1;
 
     each(objectValue, function (meth, key) {
 
@@ -3556,7 +3544,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         }
 
-        cnt += incrementDefaultValue;
+        cnt += one;
 
     });
 
@@ -3565,35 +3553,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
 
 
 /**
@@ -3623,6 +3582,35 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
+
+
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
 
 _stk.map=map;
 
@@ -3981,9 +3969,8 @@ function replaceValue (objectValue, objectValueReplace) {
  */
 function onDelay (func, wait, option) {
 
-    const zero = 0;
     const extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     const valueWaited = wait || zero;
@@ -4046,14 +4033,12 @@ _stk.onDelay=onDelay;
  */
 function onSequence (func, wait, option) {
 
-    const zero = 0;
-    const one = 1;
     const extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     const valueWaited = wait || zero;
-    let counter = 0;
+    let counter = zero;
 
     const interval = setInterval(function () {
 
@@ -5850,7 +5835,7 @@ function callbackParse (glb) {
 
     const charList = [];
     let isOpen = false;
-    let recCount = 0;
+    let recCount = zero;
     const groupData = {};
     const lType = {
         "[": "array",
@@ -6078,7 +6063,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
             const getTypeDetails = validTypeJson[getTypeof(value)];
 
-            let inc=0;
+            let inc=zero;
 
             each(value, function (ev, ek) {
 
@@ -6233,16 +6218,15 @@ _stk.pipe=pipe;
  */
 function random (valueArray, minValue, maxValue) {
 
-    const emptyDefaultValue=0;
     const ran_min=has(minValue)
         ?minValue
-        :emptyDefaultValue;
+        :zero;
     const ran_max=has(maxValue)
         ?maxValue+ran_min
         :count(valueArray);
     const math_random = Math.round(Math.random()*ran_max);
 
-    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
+    if (math_random< count(valueArray) && math_random >=zero) {
 
         return toArray(valueArray[math_random]);
 
@@ -6307,8 +6291,6 @@ _stk.reduce=reduce;
  *=>[1]
  */
 function regexCountGroup (value) {
-
-    const one =1;
 
     return new RegExp(toString(value) + '|').exec('').length - one;
 
@@ -6406,22 +6388,18 @@ _stk.reverse=reverse;
  */
 function roundDecimal (value, maxValue) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const twoDefaultValue=2;
-    const tenDefaultValue=10;
-    const jsn=value||emptyDefaultValue;
+    const jsn=value||zero;
     const str_dec=jsn.toString().split(".");
     const s_dmin=0;
-    const s_dmax=maxValue||twoDefaultValue;
+    const s_dmax=maxValue||two;
 
-    if (count(str_dec) === twoDefaultValue) {
+    if (count(str_dec) === two) {
 
-        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        const p_cnts=count(str_dec[one].toString().split(""));
         const delmts=p_cnts <= s_dmin
             ?s_dmin
             :s_dmax;
-        const dec_s=tenDefaultValue**delmts;
+        const dec_s=ten**delmts;
 
         return Math.round(parseFloat(jsn*dec_s))/dec_s;
 
@@ -6552,8 +6530,6 @@ _stk.setData=setData;
  */
 function shuffle (objectValue) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
     const output=[];
     let rawObjectValue = clone(objectValue);
     const valueType=[
@@ -6561,17 +6537,17 @@ function shuffle (objectValue) {
         "json"
     ];
 
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+    if (indexOf(valueType, getTypeof(objectValue))>-one) {
 
-        const counts=count(objectValue)-onceDefaultValue;
+        const counts=count(objectValue)-one;
 
-        for (let currentIndex=counts; currentIndex>=emptyDefaultValue;) {
+        for (let currentIndex=counts; currentIndex>=zero;) {
 
             const rowValue = random(rawObjectValue);
 
             rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
             output.push(first(rowValue));
-            currentIndex -= onceDefaultValue;
+            currentIndex -= one;
 
         }
 
@@ -7466,8 +7442,6 @@ _stk.toDouble=toDouble;
  */
 function toInteger (value) {
 
-    const zero = 0;
-
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
         :value));
@@ -7730,6 +7704,8 @@ function unique (value) {
 _stk.unique=unique;
 
 _stk.varExtend=varExtend;
+
+_stk.where=where;
 
 
 /**
@@ -8125,8 +8101,6 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
-_stk.where=where;
-
 _stk.whereOnce=whereOnce;
 
 

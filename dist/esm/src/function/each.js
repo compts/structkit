@@ -2,7 +2,7 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
 
 import indexOfExist from './indexOfExist.js';
 
-import {one} from '../variable/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import convertValue from '../core/convertValue.js';
 
@@ -58,7 +58,7 @@ function each (objectValue, func) {
 
     if (indexOfExist(["set"], typeofs)) {
 
-        let key = 0;
+        let key = zero;
 
         for (const ins of objectValue) {
 

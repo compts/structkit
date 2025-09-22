@@ -1,6 +1,6 @@
 const stringUnEscape = require('./stringUnEscape');
 const each = require('./each');
-const {one} = require("../variable/defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 const varExtend = require('./varExtend');
 const indexOfExist = require('./indexOfExist');
 const getTypeof = require('./getTypeof');
@@ -203,7 +203,7 @@ function callbackParse (glb) {
 
     const charList = [];
     let isOpen = false;
-    let recCount = 0;
+    let recCount = zero;
     const groupData = {};
     const lType = {
         "[": "array",

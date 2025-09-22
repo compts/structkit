@@ -1,5 +1,7 @@
 const toString = require('./toString');
 
+const {one} = require("../variable/defaultValue");
+
 /**
  * Regex Count Group number
  *
@@ -13,8 +15,6 @@ const toString = require('./toString');
  *=>[1]
  */
 function regexCountGroup (value) {
-
-    const one =1;
 
     return new RegExp(toString(value) + '|').exec('').length - one;
 

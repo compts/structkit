@@ -1,4 +1,5 @@
 const dataNumberFormat = require('../core/dataTypeFormat');
+const {zero} = require("../variable/defaultValue");
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -13,8 +14,6 @@ const dataNumberFormat = require('../core/dataTypeFormat');
  *=>11
  */
 function toInteger (value) {
-
-    const zero = 0;
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero

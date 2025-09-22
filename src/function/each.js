@@ -1,6 +1,6 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
 const indexOfExist = require('./indexOfExist');
-const {one} = require("../variable/defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 
 const convertValue = require("../core/convertValue");
 const has = require('./has');
@@ -57,7 +57,7 @@ function each (objectValue, func) {
 
     if (indexOfExist(["set"], typeofs)) {
 
-        let key = 0;
+        let key = zero;
 
         for (const ins of objectValue) {
 

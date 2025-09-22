@@ -14,7 +14,7 @@ import indexOfExist from './indexOfExist.js';
 
 import indexOfNotExist from './indexOfNotExist.js';
 
-import {two} from '../variable/defaultValue.js';
+import {zero, one, two} from '../variable/defaultValue.js';
 
 import curryArg from '../core/curryArg.js';
 
@@ -54,8 +54,8 @@ function isExact (whereValue, objectValue1, isExist) {
         const key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
             ?rawObjectValue1
             :[rawObjectValue1];
-        let cnt=0;
-        const incrementDefaultValue=1;
+        let cnt=zero;
+        const incrementDefaultValue=one;
 
         each(key_s, function (kv, kk) {
 

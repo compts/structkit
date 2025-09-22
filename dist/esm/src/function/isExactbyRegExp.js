@@ -2,7 +2,7 @@ import getTypeof from './getTypeof.js';
 
 import has from './has.js';
 
-import {zero} from '../variable/defaultValue.js';
+import {zero, one} from '../variable/defaultValue.js';
 
 import each from './each.js';
 
@@ -36,8 +36,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
     const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
         ?objectValue1
         :[objectValue1];
-    let cnt=0;
-    const incrementDefaultValue=1;
+    let cnt=zero;
     let local_is_valid = null;
 
     each(key_s, function (kv, kk) {
@@ -57,7 +56,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
                 }
                 if (local_is_valid.test(kv)) {
 
-                    cnt += incrementDefaultValue;
+                    cnt += one;
 
                 }
 
@@ -76,7 +75,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
             }
             if (local_is_valid.test(kv)) {
 
-                cnt += incrementDefaultValue;
+                cnt += one;
 
             }
 

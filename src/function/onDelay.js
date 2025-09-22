@@ -1,5 +1,7 @@
 const varExtend = require('./varExtend');
 
+const {zero} = require("../variable/defaultValue");
+
 /**
  * On delay
  *
@@ -16,9 +18,8 @@ const varExtend = require('./varExtend');
  */
 function onDelay (func, wait, option) {
 
-    const zero = 0;
     const extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     const valueWaited = wait || zero;

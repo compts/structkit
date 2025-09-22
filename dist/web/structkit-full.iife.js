@@ -22,6 +22,7 @@ var one = 1;
 var two = 2;
 var three = 3;
 var four = 4;
+var ten = 4;
 var oneHundred = 100;
 
 /**
@@ -529,7 +530,7 @@ function getTypeofInternal (objectValue) {
  */
 function count (objectValue, json_is_empty_check) {
 
-    var cnt=0;
+    var cnt=zero;
     var json_is_empty_check_default=json_is_empty_check||false;
     var get_json=getTypeofInternal(objectValue);
 
@@ -576,7 +577,7 @@ function count (objectValue, json_is_empty_check) {
     if (get_json === "json"&&json_is_empty_check_default === true) {
 
         var jsn_parse=objectValue;
-        var cnts=0;
+        var cnts=zero;
 
         each(jsn_parse, function () {
 
@@ -610,10 +611,7 @@ function count (objectValue, json_is_empty_check) {
  */
 function getIndexOf (objectValue, value, start, end, isGetLast) {
 
-    var indexOfDefaultValue=-1;
-    var incrementDefaultValue=1;
-
-    var referenceValue = -1;
+    var referenceValue = negOne;
 
     if (getTypeofInternal(objectValue) === "array") {
 
@@ -646,14 +644,14 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc += incrementDefaultValue;
+            inc += one;
 
         }
 
     }
 
     return isGetLast === false
-        ?indexOfDefaultValue
+        ?negOne
         :referenceValue;
 
 }
@@ -673,8 +671,7 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  */
 function searchValueInJson (objectValue, searchValue) {
 
-    var counter = 0;
-    var increment = 1;
+    var counter = zero;
 
     each(objectValue, function (value, key) {
 
@@ -682,7 +679,7 @@ function searchValueInJson (objectValue, searchValue) {
 
             if (searchValue[key] === value) {
 
-                counter += increment;
+                counter += one;
 
             }
 
@@ -822,7 +819,7 @@ function each (objectValue, func) {
 
     if (indexOfExist(["set"], typeofs)) {
 
-        var key = 0;
+        var key = zero;
 
         for (var ins of objectValue) {
 
@@ -1553,20 +1550,15 @@ _stk.arrayConcat=arrayConcat;
  */
 function range (maxValue, minValue, step) {
 
-    var emptyDefaultValue=0;
-    var tenDefaultValue=10;
-
-    var incrementDefaultValue=1;
-
     var incrementValue=has(step)
         ?step
-        :incrementDefaultValue;
+        :one;
     var minValueRef=has(minValue)
         ?minValue
-        :incrementDefaultValue;
+        :one;
     var maxValueRef=has(maxValue)
         ?maxValue
-        :tenDefaultValue;
+        :ten;
     var output=[];
 
     for (var inc=minValueRef; inc <= maxValueRef;) {
@@ -1583,7 +1575,7 @@ function range (maxValue, minValue, step) {
         if (getTypeof(incrementValue) === "number") {
 
             output.push(inc);
-            if (incrementValue<emptyDefaultValue) {
+            if (incrementValue<zero) {
 
                 inc -= incrementValue;
 
@@ -2270,9 +2262,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
+_stk.divide=divide;
 
-_stk.empty=empty;
+_stk.each=each;
 
 
 /**
@@ -2308,8 +2300,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-_stk.divide=divide;
 
 
 /**
@@ -2356,6 +2346,10 @@ function filter (objectValue, func) {
 
 _stk.filter=filter;
 
+_stk.first=first;
+
+_stk.empty=empty;
+
 
 /**
  * Flatten an array to a single level.
@@ -2398,8 +2392,6 @@ function flatten (arg) {
 }
 
 _stk.flatten=flatten;
-
-_stk.first=first;
 
 
 /**
@@ -2549,7 +2541,7 @@ function getData (objectValue, split_str, isStrict) {
         var spl= schemaSplitData(rawSplit_str);
 
         var jsn_total={};
-        var counter = 0;
+        var counter = zero;
 
         each(spl, function (value) {
 
@@ -2592,6 +2584,9 @@ function getData (objectValue, split_str, isStrict) {
 
 }
 
+_stk.getData=getData;
+
+
 /**
  * Looking the data in JSON and Array base on object value
  *
@@ -2628,8 +2623,8 @@ function isExact (whereValue, objectValue1, isExist) {
         var key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
             ?rawObjectValue1
             :[rawObjectValue1];
-        var cnt=0;
-        var incrementDefaultValue=1;
+        var cnt=zero;
+        var incrementDefaultValue=one;
 
         each(key_s, function (kv, kk) {
 
@@ -2777,8 +2772,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
     var key_s=(/(json|array)/g).test(getTypeof(objectValue1))
         ?objectValue1
         :[objectValue1];
-    var cnt=0;
-    var incrementDefaultValue=1;
+    var cnt=zero;
     var local_is_valid = null;
 
     each(key_s, function (kv, kk) {
@@ -2798,7 +2792,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
                 }
                 if (local_is_valid.test(kv)) {
 
-                    cnt += incrementDefaultValue;
+                    cnt += one;
 
                 }
 
@@ -2817,7 +2811,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
             }
             if (local_is_valid.test(kv)) {
 
-                cnt += incrementDefaultValue;
+                cnt += one;
 
             }
 
@@ -3142,8 +3136,6 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
@@ -3183,27 +3175,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
 
 
 /**
@@ -3247,6 +3218,27 @@ function groupBy (objectValue, func) {
 }
 
 _stk.groupBy=groupBy;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -3351,11 +3343,9 @@ _stk.ifUndefined=ifUndefined;
 
 _stk.inc=inc;
 
-_stk.indexOfExist=indexOfExist;
-
 _stk.indexOf=indexOf;
 
-_stk.indexOfNotExist=indexOfNotExist;
+_stk.indexOfExist=indexOfExist;
 
 
 /**
@@ -3398,6 +3388,8 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 _stk.isEmpty=isEmpty;
 
@@ -3488,9 +3480,7 @@ _stk.last=last;
  */
 function lastIndexOf (objectValue, value) {
 
-    var start = 0;
-
-    var indexValue = getIndexOf(objectValue, value, start, count(objectValue), true);
+    var indexValue = getIndexOf(objectValue, value, zero, count(objectValue), true);
 
     return indexValue;
 
@@ -3542,14 +3532,12 @@ function limit (objectValue, minValue, maxValue, func) {
     var cnt=0;
     var glo_jsn={};
     var glo_indtfd = null;
-    var emptyDefaultValue=0;
     var minValueReserve=has(minValue)
         ?minValue
-        :emptyDefaultValue;
+        :zero;
     var maxValueReserve=has(maxValue)
         ?maxValue
         :count(objectValue);
-    var incrementDefaultValue=1;
 
     each(objectValue, function (meth, key) {
 
@@ -3573,7 +3561,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         }
 
-        cnt += incrementDefaultValue;
+        cnt += one;
 
     });
 
@@ -3582,35 +3570,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
 
 
 /**
@@ -3640,6 +3599,35 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
+
+
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
 
 _stk.map=map;
 
@@ -3998,9 +3986,8 @@ function replaceValue (objectValue, objectValueReplace) {
  */
 function onDelay (func, wait, option) {
 
-    var zero = 0;
     var extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     var valueWaited = wait || zero;
@@ -4063,14 +4050,12 @@ _stk.onDelay=onDelay;
  */
 function onSequence (func, wait, option) {
 
-    var zero = 0;
-    var one = 1;
     var extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     var valueWaited = wait || zero;
-    var counter = 0;
+    var counter = zero;
 
     var interval = setInterval(function () {
 
@@ -5867,7 +5852,7 @@ function callbackParse (glb) {
 
     var charList = [];
     var isOpen = false;
-    var recCount = 0;
+    var recCount = zero;
     var groupData = {};
     var lType = {
         "[": "array",
@@ -6095,7 +6080,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
             var getTypeDetails = validTypeJson[getTypeof(value)];
 
-            var inc=0;
+            var inc=zero;
 
             each(value, function (ev, ek) {
 
@@ -6254,16 +6239,15 @@ _stk.pipe=pipe;
  */
 function random (valueArray, minValue, maxValue) {
 
-    var emptyDefaultValue=0;
     var ran_min=has(minValue)
         ?minValue
-        :emptyDefaultValue;
+        :zero;
     var ran_max=has(maxValue)
         ?maxValue+ran_min
         :count(valueArray);
     var math_random = Math.round(Math.random()*ran_max);
 
-    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
+    if (math_random< count(valueArray) && math_random >=zero) {
 
         return toArray(valueArray[math_random]);
 
@@ -6328,8 +6312,6 @@ _stk.reduce=reduce;
  *=>[1]
  */
 function regexCountGroup (value) {
-
-    var one =1;
 
     return new RegExp(toString(value) + '|').exec('').length - one;
 
@@ -6427,22 +6409,18 @@ _stk.reverse=reverse;
  */
 function roundDecimal (value, maxValue) {
 
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
-    var twoDefaultValue=2;
-    var tenDefaultValue=10;
-    var jsn=value||emptyDefaultValue;
+    var jsn=value||zero;
     var str_dec=jsn.toString().split(".");
     var s_dmin=0;
-    var s_dmax=maxValue||twoDefaultValue;
+    var s_dmax=maxValue||two;
 
-    if (count(str_dec) === twoDefaultValue) {
+    if (count(str_dec) === two) {
 
-        var p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        var p_cnts=count(str_dec[one].toString().split(""));
         var delmts=p_cnts <= s_dmin
             ?s_dmin
             :s_dmax;
-        var dec_s=tenDefaultValue**delmts;
+        var dec_s=ten**delmts;
 
         return Math.round(parseFloat(jsn*dec_s))/dec_s;
 
@@ -6573,8 +6551,6 @@ _stk.setData=setData;
  */
 function shuffle (objectValue) {
 
-    var emptyDefaultValue=0;
-    var onceDefaultValue=1;
     var output=[];
     var rawObjectValue = clone(objectValue);
     var valueType=[
@@ -6582,17 +6558,17 @@ function shuffle (objectValue) {
         "json"
     ];
 
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+    if (indexOf(valueType, getTypeof(objectValue))>-one) {
 
-        var counts=count(objectValue)-onceDefaultValue;
+        var counts=count(objectValue)-one;
 
-        for (var currentIndex=counts; currentIndex>=emptyDefaultValue;) {
+        for (var currentIndex=counts; currentIndex>=zero;) {
 
             var rowValue = random(rawObjectValue);
 
             rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
             output.push(first(rowValue));
-            currentIndex -= onceDefaultValue;
+            currentIndex -= one;
 
         }
 
@@ -7491,8 +7467,6 @@ _stk.toDouble=toDouble;
  */
 function toInteger (value) {
 
-    var zero = 0;
-
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
         :value));
@@ -7759,6 +7733,8 @@ function unique (value) {
 _stk.unique=unique;
 
 _stk.varExtend=varExtend;
+
+_stk.where=where;
 
 
 /**
@@ -8154,8 +8130,6 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
-_stk.where=where;
-
 _stk.whereOnce=whereOnce;
 
 

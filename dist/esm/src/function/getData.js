@@ -12,7 +12,7 @@ import inc from './inc.js';
 
 import {schemaSplitData} from '../core/baseGetData.js';
 
-import {two} from '../variable/defaultValue.js';
+import {zero, two} from '../variable/defaultValue.js';
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -46,7 +46,7 @@ function getData (objectValue, split_str, isStrict) {
         const spl= schemaSplitData(rawSplit_str);
 
         let jsn_total={};
-        let counter = 0;
+        let counter = zero;
 
         each(spl, function (value) {
 

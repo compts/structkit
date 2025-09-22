@@ -1,5 +1,7 @@
 import varExtend from './varExtend.js';
 
+import {zero} from '../variable/defaultValue.js';
+
 /**
  * On delay
  *
@@ -16,9 +18,8 @@ import varExtend from './varExtend.js';
  */
 function onDelay (func, wait, option) {
 
-    const zero = 0;
     const extend = varExtend({
-        "limitCounterClear": 0
+        "limitCounterClear": zero
     }, option);
 
     const valueWaited = wait || zero;

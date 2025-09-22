@@ -2,6 +2,8 @@ import has from './has.js';
 
 import each from './each.js';
 
+import {zero, one} from '../variable/defaultValue.js';
+
 import count from './count.js';
 
 /**
@@ -24,14 +26,12 @@ function limit (objectValue, minValue, maxValue, func) {
     let cnt=0;
     const glo_jsn={};
     let glo_indtfd = null;
-    const emptyDefaultValue=0;
     const minValueReserve=has(minValue)
         ?minValue
-        :emptyDefaultValue;
+        :zero;
     const maxValueReserve=has(maxValue)
         ?maxValue
         :count(objectValue);
-    const incrementDefaultValue=1;
 
     each(objectValue, function (meth, key) {
 
@@ -55,7 +55,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
         }
 
-        cnt += incrementDefaultValue;
+        cnt += one;
 
     });
 

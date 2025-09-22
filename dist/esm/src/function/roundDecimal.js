@@ -1,5 +1,7 @@
 import count from './count.js';
 
+import {zero, one, two, ten} from '../variable/defaultValue.js';
+
 /**
  * Random Decimal
  *
@@ -15,22 +17,18 @@ import count from './count.js';
  */
 function roundDecimal (value, maxValue) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const twoDefaultValue=2;
-    const tenDefaultValue=10;
-    const jsn=value||emptyDefaultValue;
+    const jsn=value||zero;
     const str_dec=jsn.toString().split(".");
     const s_dmin=0;
-    const s_dmax=maxValue||twoDefaultValue;
+    const s_dmax=maxValue||two;
 
-    if (count(str_dec) === twoDefaultValue) {
+    if (count(str_dec) === two) {
 
-        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
+        const p_cnts=count(str_dec[one].toString().split(""));
         const delmts=p_cnts <= s_dmin
             ?s_dmin
             :s_dmax;
-        const dec_s=tenDefaultValue**delmts;
+        const dec_s=ten**delmts;
 
         return Math.round(parseFloat(jsn*dec_s))/dec_s;
 

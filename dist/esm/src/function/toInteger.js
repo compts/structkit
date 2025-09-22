@@ -1,5 +1,7 @@
 import dataNumberFormat from '../core/dataTypeFormat.js';
 
+import {zero} from '../variable/defaultValue.js';
+
 /**
  * To extract number in string and convert to , it will also remove all none numeric
  *
@@ -13,8 +15,6 @@ import dataNumberFormat from '../core/dataTypeFormat.js';
  *=>11
  */
 function toInteger (value) {
-
-    const zero = 0;
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero

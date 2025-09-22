@@ -2,6 +2,7 @@ const count = require("../function/count");
 const each = require("../function/each");
 const has = require("../function/has");
 
+const {negOne, zero, one} = require("../variable/defaultValue");
 const {getTypeofInternal} = require("./getTypeOf");
 
 /**
@@ -22,10 +23,7 @@ const {getTypeofInternal} = require("./getTypeOf");
  */
 function getIndexOf (objectValue, value, start, end, isGetLast) {
 
-    const indexOfDefaultValue=-1;
-    const incrementDefaultValue=1;
-
-    let referenceValue = -1;
+    let referenceValue = negOne;
 
     if (getTypeofInternal(objectValue) === "array") {
 
@@ -58,14 +56,14 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc += incrementDefaultValue;
+            inc += one;
 
         }
 
     }
 
     return isGetLast === false
-        ?indexOfDefaultValue
+        ?negOne
         :referenceValue;
 
 }
@@ -85,8 +83,7 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
  */
 function searchValueInJson (objectValue, searchValue) {
 
-    let counter = 0;
-    const increment = 1;
+    let counter = zero;
 
     each(objectValue, function (value, key) {
 
@@ -94,7 +91,7 @@ function searchValueInJson (objectValue, searchValue) {
 
             if (searchValue[key] === value) {
 
-                counter += increment;
+                counter += one;
 
             }
 
