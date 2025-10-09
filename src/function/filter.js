@@ -1,4 +1,5 @@
 const has = require('./has');
+const curryArg = require("../core/curryArg");
 
 const each = require('./each');
 
@@ -13,41 +14,49 @@ const append = require('./append');
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue The data either json or array
- * @param {Function=} func The second number in an addition.
+ * @param {Function=} func Callback function for filtering the data
+ * @param {any=} objectValue The data either json or array
  * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2,3,34],function(value, key){ return value%2 === 0 })
+ * filter(function(value, key){ return value%2 === 0 }, [1,2,3,34])
  *
  * => [2, 34]
  */
-function filter (objectValue, func) {
-
-    const jsn_var=empty(objectValue);
-    const jsn_type=getTypeof(objectValue);
-
-    if (!(/(json|array)/g).test(jsn_type)) {
-
-        return [];
-
-    }
-    each(objectValue, function (value, key) {
-
-        if (has(func)) {
+function filter (func, objectValue) {
 
 
-            if (func(value, key)) {
+    return curryArg(function (rawFunc, rawObjectValue) {
 
-                append(jsn_var, value, key);
+        const jsn_var=empty(rawObjectValue);
+        const jsn_type=getTypeof(rawObjectValue);
+
+        if (!(/(json|array)/g).test(jsn_type)) {
+
+            return [];
+
+        }
+        each(rawObjectValue, function (value, key) {
+
+            if (has(rawFunc)) {
+
+
+                if (rawFunc(value, key)) {
+
+                    append(jsn_var, value, key);
+
+                }
 
             }
 
-        }
+        });
 
-    });
+        return jsn_var;
 
-    return jsn_var;
+    }, [
+        func,
+        objectValue
+    ]);
 
 }
 module.exports=filter;

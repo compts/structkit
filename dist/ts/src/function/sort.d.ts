@@ -6,7 +6,7 @@ export default sort;
  * @category Array
  * @param {any[]} objectValue List of array you want to sort
  * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase]
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
  * @returns {any[]} Returns the total.
  * @example
  *

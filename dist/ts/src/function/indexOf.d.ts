@@ -4,12 +4,12 @@ export default indexOf;
  *
  * @since 1.0.1
  * @category Logic
- * @param {any} objectValue Array
- * @param {any} value Value in array
+ * @param {any=} value Value in array
+ * @param {any[]=} objectValue Array
  * @returns {number} Returns the index.
  * @example
  *
- * indexOf([1,2], 1)
+ * indexOf(1, [1,2])
  * // => 0
  */
-declare function indexOf(objectValue: any, value: any): number;
+declare function indexOf(value?: any | undefined, objectValue?: any[] | undefined): number;

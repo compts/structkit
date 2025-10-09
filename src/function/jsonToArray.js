@@ -11,15 +11,15 @@ const isEmpty = require('./isEmpty');
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue Json
  * @param {string} value Search key or index.
+ * @param {any} objectValue Json
  * @returns {any} Returns Array
  * @example
  *
  * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
  * => [2, 3]
  */
-function jsonToArray (objectValue, value) {
+function jsonToArray (value, objectValue) {
 
     const arry=[];
 
@@ -27,7 +27,7 @@ function jsonToArray (objectValue, value) {
 
         if (has(value)) {
 
-            const valueData = getData(_value, value);
+            const valueData = getData(value, _value);
 
             if (isEmpty(valueData) === false) {
 

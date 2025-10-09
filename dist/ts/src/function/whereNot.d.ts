@@ -4,8 +4,8 @@ export default whereNot;
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data that you exlude in search
+ * @param {any} objectValue Json to Array
  * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
@@ -15,4 +15,4 @@ export default whereNot;
  * whereNot([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":3}}]
  */
-declare function whereNot(objectValue: any, objectValueWhere: any, func?: Function | undefined): any;
+declare function whereNot(objectValueWhere: any, objectValue: any, func?: Function | undefined): any;

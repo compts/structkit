@@ -26,7 +26,7 @@ function toString (value) {
 
     const gettypeof = getTypeof(value);
 
-    if (has(value) && indexOfNotExist(notInList, gettypeof)) {
+    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
 
         return value.toString();
 

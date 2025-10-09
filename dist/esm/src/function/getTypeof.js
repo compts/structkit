@@ -25,11 +25,11 @@ import {one} from '../variable/defaultValue.js';
  */
 function getTypeof (...args) {
 
-    const getTypes = map(args, function (value) {
+    const getTypes = map(function (value) {
 
         return getTypeofInternal(value);
 
-    });
+    }, args);
 
     return count(getTypes) === one
         ?first(getTypes)

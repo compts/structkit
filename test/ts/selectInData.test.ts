@@ -6,7 +6,7 @@ describe('TS: selectInData method', function () {
 
     it('check if repetion is correct', function () {
 
-        assert.deepStrictEqual(selectInData({"s": 2}, {"ss": "s"}), {
+        assert.deepStrictEqual(selectInData({"ss": "s"}, {"s": 2}), {
             'ss': 2
         });
 

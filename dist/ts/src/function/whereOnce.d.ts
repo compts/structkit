@@ -4,8 +4,8 @@ export default whereOnce;
  *
  * @since 1.4.8.7
  * @category Collection
- * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} objectValue Json to Array
  * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
@@ -15,4 +15,4 @@ export default whereOnce;
  * whereOnce([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":2}}]
  */
-declare function whereOnce(objectValue: any, objectValueWhere: any, func?: Function | undefined): any;
+declare function whereOnce(objectValueWhere: any, objectValue: any, func?: Function | undefined): any;

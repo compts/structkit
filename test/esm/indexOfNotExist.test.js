@@ -18,7 +18,7 @@ describe('ESM: indexOfNotExist', function () {
 
     it('check if value exist', function () {
 
-        assert.deepStrictEqual(indexOfNotExist([
+        assert.deepStrictEqual(indexOfNotExist(one, [
             one,
             two,
             three,
@@ -29,10 +29,10 @@ describe('ESM: indexOfNotExist', function () {
             eight,
             nine,
             ten
-        ], one), false);
+        ]), false);
 
 
-        assert.deepStrictEqual(indexOfNotExist([
+        assert.deepStrictEqual(indexOfNotExist(seven, [
             one,
             two,
             three,
@@ -43,13 +43,13 @@ describe('ESM: indexOfNotExist', function () {
             eight,
             nine,
             ten
-        ], seven), false);
+        ]), false);
 
     });
 
     it('check if value not exist', function () {
 
-        assert.deepStrictEqual(indexOfNotExist([
+        assert.deepStrictEqual(indexOfNotExist(zero, [
             one,
             two,
             three,
@@ -60,7 +60,7 @@ describe('ESM: indexOfNotExist', function () {
             eight,
             nine,
             ten
-        ], zero), true);
+        ]), true);
 
 
     });

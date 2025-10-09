@@ -33,10 +33,10 @@ function getKeyVal (jsn, typ) {
         });
 
     });
-    if (indexOfExist([
+    if (indexOfExist(typ, [
         "key",
         "value"
-    ], typ)) {
+    ])) {
 
         const ars=typ === "key"
             ?ky

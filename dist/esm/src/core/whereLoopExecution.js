@@ -23,18 +23,18 @@ import {zero} from '../variable/defaultValue.js';
  *
  * @since 1.0.1
  * @category Seq
- * @param {object} jsn The second number in an addition.
- * @param {object} whr The second number in an addition.
+ * @param {object} whr Data for lookup
+ * @param {object} jsn Json or array that you want to dissect
  * @param {function} func The second number in an addition.
  * @param {boolean} isExist The second number in an addition.
  * @param {string} types The second number in an addition.
  * @returns {array|object} Returns the total.
  * @example
  *
- * whereLoopExecution({"s1":1,"s2":1},{"s1":1})
+ * whereLoopExecution({"s1":1},{"s1":1,"s2":1})
  *=>{"s1":1,"s2":1}
  */
-function whereLoopExecution (jsn, whr, func, isExist, types) {
+function whereLoopExecution (whr, jsn, func, isExist, types) {
 
     const json_convertion = getTypeof(jsn) === "array"
         ? jsn
@@ -66,7 +66,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
                 append(variable, jv, jk);
                 if (has(func)) {
 
-                    func(jv, jk);
+                    func(jv, jk, isContinueRef1);
 
                 }
 
@@ -86,7 +86,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
 
                 if (has(func)) {
 
-                    func(jv, jk);
+                    func(jv, jk, isContinueRef1);
 
                 }
 
@@ -100,7 +100,7 @@ function whereLoopExecution (jsn, whr, func, isExist, types) {
                 append(variable, jv, jk);
                 if (has(func)) {
 
-                    func(jv, jk);
+                    func(jv, jk, isContinueRef1);
 
                 }
 

@@ -21,11 +21,11 @@ const getTypeof = require('./getTypeof');
 function parseJson (value, config) {
 
     const defaultConfig = varExtend({"disableCorrection": false,
-        "trowError": false}, config);
+        "throwError": false}, config);
 
     if (getTypeof(value) !== "string") {
 
-        if (defaultConfig.trowError) {
+        if (defaultConfig.throwError) {
 
             throw new Error("Allow only string to parse to json");
 
@@ -216,10 +216,10 @@ function callbackParse (glb) {
         let clnValue = value;
 
 
-        if (indexOfExist([
+        if (indexOfExist(value, [
             "{",
             "["
-        ], value)) {
+        ])) {
 
             isOpen =true;
             recCount +=one;
@@ -242,10 +242,10 @@ function callbackParse (glb) {
 
         }
 
-        if (indexOfExist([
+        if (indexOfExist(value, [
             "}",
             "]"
-        ], value)) {
+        ])) {
 
             isOpen =false;
 

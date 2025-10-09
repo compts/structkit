@@ -29,12 +29,12 @@ function each (objectValue, func) {
 
     const localGlobal = new GlobalEach();
 
-    if (indexOfExist([
+    if (indexOfExist(typeofs, [
         "json",
         "array",
         "object",
         "arguments"
-    ], typeofs)) {
+    ])) {
 
         for (const ins in objectValue) {
 
@@ -56,7 +56,7 @@ function each (objectValue, func) {
 
     }
 
-    if (indexOfExist(["set"], typeofs)) {
+    if (indexOfExist(typeofs, ["set"])) {
 
         let key = zero;
 
@@ -79,7 +79,7 @@ function each (objectValue, func) {
         return re_loop;
 
     }
-    if (indexOfExist(["map"], typeofs)) {
+    if (indexOfExist(typeofs, ["map"])) {
 
         objectValue.forEach(function (value, key) {
 

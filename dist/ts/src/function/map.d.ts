@@ -4,12 +4,12 @@ export default map;
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue The data you want to map
  * @param {any=} func Callback function
+ * @param {any=} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *
- * map([1,2],function(value) { return value+2 } )
+ * map(function(value) { return value+2 } ,[1,2])
  *=> [3, 4]
  */
-declare function map(objectValue: any, func?: any | undefined): any;
+declare function map(func?: any | undefined, objectValue?: any | undefined): any;

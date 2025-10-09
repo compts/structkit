@@ -4,12 +4,12 @@ export default jsonToArray;
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue Json
  * @param {string} value Search key or index.
+ * @param {any} objectValue Json
  * @returns {any} Returns Array
  * @example
  *
  * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
  * => [2, 3]
  */
-declare function jsonToArray(objectValue: any, value: string): any;
+declare function jsonToArray(value: string, objectValue: any): any;

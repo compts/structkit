@@ -25,11 +25,11 @@ function arrayRepeat (value, valueRepetion) {
 
         const nm_rpt=rawValueRepetion||zero;
 
-        return map(range(nm_rpt), function () {
+        return map(function () {
 
             return rawValue;
 
-        });
+        }, range(nm_rpt));
 
     }, [
         value,

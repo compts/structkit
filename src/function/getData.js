@@ -6,36 +6,43 @@ const curryArg = require("../core/curryArg");
 const inc = require("./inc");
 const {schemaSplitData} = require("../core/baseGetData");
 const {zero, two} = require("../variable/defaultValue");
-
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
  *
  * @since 1.0.1
  * @category Collection
- * @param {any=} objectValue Either Json or Array data.
  * @param {any=} split_str Search key or index.
+ * @param {any=} objectValue Either Json or Array data.
  * @param {any=} isStrict to check if delimiter are match in counter, default value is false.
  * @returns {any} Returns the total.
  * @example
  *
- * getData({"s":1},"s")
+ * getData("s", {"s":1})
  *=> 1
  * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
+ * getData("a:a",{"a":{"a":2},"b":{"a":3}})
  *=> {a: 2}
  */
-function getData (objectValue, split_str, isStrict) {
+function getData (split_str, objectValue, isStrict) {
 
     const refIsStrict = isStrict || false;
 
-    if (!has(objectValue) || isEmpty(objectValue)) {
+    if (getTypeofInternal(split_str) === "undefined") {
 
-        return empty(objectValue);
+        return split_str;
 
     }
 
-    return curryArg(function (rawObjectValue, rawSplit_str) {
+
+    return curryArg(function (rawSplit_str, rawObjectValue) {
+
+        if (!has(rawObjectValue) || isEmpty(rawObjectValue)) {
+
+            return empty(rawObjectValue);
+
+        }
 
         const spl= schemaSplitData(rawSplit_str);
 
@@ -78,8 +85,8 @@ function getData (objectValue, split_str, isStrict) {
         return jsn_total;
 
     }, [
-        objectValue,
-        split_str
+        split_str,
+        objectValue
     ], two);
 
 }

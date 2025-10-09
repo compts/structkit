@@ -27,7 +27,7 @@ function union (...arg) {
 
                 each(value, function (valEach) {
 
-                    if (indexOfNotExist(total, valEach)) {
+                    if (indexOfNotExist(valEach, total)) {
 
                         total.push(valEach);
 

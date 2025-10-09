@@ -6,15 +6,15 @@ describe('ESM: groupBy method', function () {
 
     it('Group your data', function () {
 
-        assert.deepStrictEqual(groupBy([
-            {"s1": 1},
-            {"s1": 2},
-            {"s1": 1}
-        ], function (value) {
+        assert.deepStrictEqual(groupBy(function (value) {
 
             return value.s1;
 
-        }), {"1": [
+        }, [
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]), {"1": [
             {"s1": 1},
             {"s1": 1}
         ],

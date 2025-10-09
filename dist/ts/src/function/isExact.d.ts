@@ -13,7 +13,7 @@ export default isExact;
  * isExact({"test": 11,"test2": 11}, {"test2": 11})
  * // => true
  *
- * isExact({"s1":{"s2":2}},{"s1:s2":2})
+ * isExact({"s1:s2":2}, {"s1":{"s2":2}})
  * // => true
  */
 declare function isExact(whereValue: any, objectValue1: any, isExist?: boolean | undefined): boolean | any;

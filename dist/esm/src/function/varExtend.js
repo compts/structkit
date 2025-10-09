@@ -37,7 +37,7 @@ function varExtend (objectValue, objectValueReplace) {
             "object"
         ];
 
-        if (indexOfExist(listValid, getTypeof(rawObjectValue)) && indexOfExist(listValid, getTypeof(rawObjectValueReplace))) {
+        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
 
             const jsn_s={};
 
@@ -45,7 +45,7 @@ function varExtend (objectValue, objectValueReplace) {
 
                 if (has(rawObjectValue, key)) {
 
-                    if (indexOfExist(getKey(jsn_bool), stringLowerCase(rawObjectValue[key]))) {
+                    if (indexOfExist(stringLowerCase(rawObjectValue[key]), getKey(jsn_bool))) {
 
                         jsn_s[key]=jsn_bool[stringLowerCase(rawObjectValue[key])];
 

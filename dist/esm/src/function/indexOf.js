@@ -1,28 +1,39 @@
 
 import count from './count.js';
 
+import curryArg from '../core/curryArg.js';
+
 import {getIndexOf} from '../core/getIndexOf.js';
+
+import {two} from '../variable/defaultValue.js';
 
 /**
  * Index of array
  *
  * @since 1.0.1
  * @category Logic
- * @param {any} objectValue Array
- * @param {any} value Value in array
+ * @param {any=} value Value in array
+ * @param {any[]=} objectValue Array
  * @returns {number} Returns the index.
  * @example
  *
- * indexOf([1,2], 1)
+ * indexOf(1, [1,2])
  * // => 0
  */
-function indexOf (objectValue, value) {
+function indexOf (value, objectValue) {
 
-    const start = 0;
+    return curryArg(function (rawValue, rawObjectValue) {
 
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+        const start = 0;
 
-    return indexValue;
+        const indexValue = getIndexOf(rawObjectValue, rawValue, start, count(rawObjectValue), false);
+
+        return indexValue;
+
+    }, [
+        value,
+        objectValue
+    ], two);
 
 }
 export default indexOf;

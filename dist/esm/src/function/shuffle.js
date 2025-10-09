@@ -36,7 +36,7 @@ function shuffle (objectValue) {
         "json"
     ];
 
-    if (indexOf(valueType, getTypeof(objectValue))>-one) {
+    if (indexOf(getTypeof(objectValue), valueType)>-one) {
 
         const counts=count(objectValue)-one;
 
@@ -44,7 +44,7 @@ function shuffle (objectValue) {
 
             const rowValue = random(rawObjectValue);
 
-            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
+            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
             output.push(first(rowValue));
             currentIndex -= one;
 

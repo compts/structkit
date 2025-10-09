@@ -27,7 +27,7 @@ function stringEscape (value, type) {
 
     const typeVal = type || "entity";
 
-    if (indexOfNotExist(listType, typeVal)) {
+    if (indexOfNotExist(typeVal, listType)) {
 
         return "";
 
@@ -37,7 +37,7 @@ function stringEscape (value, type) {
 
         const search = {"html": str1};
 
-        const whr = whereOnce(entity, search);
+        const whr = whereOnce(search, entity);
 
         return isEmpty(whr)
             ? str1

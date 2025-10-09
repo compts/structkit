@@ -30,10 +30,10 @@ function trim (value, remove_value) {
 
     rawValue = rawValue.trim();
 
-    if (indexOfExist([
+    if (indexOfExist(getTypeof(remove_value), [
         "string",
         "regexp"
-    ], getTypeof(remove_value))) {
+    ])) {
 
         rawValue = rawValue.replace(remove_value, "");
 

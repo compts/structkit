@@ -4,8 +4,8 @@ export default where;
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} objectValue Json to Array
  * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
@@ -15,4 +15,4 @@ export default where;
  * where([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":2}}]
  */
-declare function where(objectValue: any, objectValueWhere: any, func?: Function | undefined): any;
+declare function where(objectValueWhere: any, objectValue: any, func?: Function | undefined): any;

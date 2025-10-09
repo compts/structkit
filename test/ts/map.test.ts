@@ -10,15 +10,15 @@ describe('TS: map method', function () {
 
     it('get array if map', function () {
 
-        assert.deepStrictEqual(map([
-            {"s1": 1},
-            {"s1": 2},
-            {"s1": 1}
-        ], function (value) {
+        assert.deepStrictEqual(map(function (value:any) {
 
             return value.s1;
 
-        }), [
+        }, [
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]), [
             one,
             two,
             one
@@ -28,14 +28,14 @@ describe('TS: map method', function () {
 
     it('check expected type', function () {
        
-        expectType<any>(map([
-            {"s1": 1},
-            {"s1": 2},
-            {"s1": 1}
-        ], function (value) {
+        expectType<any>(map(function (value:any) {
 
             return value.s1;
 
-        }));
+        }, [
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]));
     });
 });

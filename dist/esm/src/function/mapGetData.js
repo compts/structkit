@@ -7,21 +7,21 @@ import getData from './getData.js';
  *
  * @since 1.3.1
  * @category Collection
- * @param {any[]} objectValue Json in array format
  * @param {string} valueFormat Key look up format
+ * @param {any[]} objectValue Json in array format
  * @returns {any[]} Return array or object.
  * @example
  *
- * mapGetData([{"Asd":1}],"Asd")
+ * mapGetData("Asd", [{"Asd":1}])
  *=>[1]
  */
-function mapGetData (objectValue, valueFormat) {
+function mapGetData (valueFormat, objectValue) {
 
-    return map(objectValue, function (value) {
+    return map(function (value) {
 
-        return getData(value, valueFormat);
+        return getData(valueFormat, value);
 
-    });
+    }, objectValue);
 
 }
 export default mapGetData;

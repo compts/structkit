@@ -37,24 +37,24 @@ function isEmpty (value) {
 
     }
 
-    if (indexOfExist(invalidList, typeofvalue)) {
+    if (indexOfExist(typeofvalue, invalidList)) {
 
         return true;
 
     }
 
-    if (indexOfExist([
+    if (indexOfExist(typeofvalue, [
         "uint16Array",
         "uint8Array"
-    ], typeofvalue)) {
+    ])) {
 
         return value.length ===zero;
 
     }
-    if (indexOfExist([
+    if (indexOfExist(typeofvalue, [
         "set",
         "map"
-    ], typeofvalue)) {
+    ])) {
 
         return value.size ===zero;
 

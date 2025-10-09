@@ -14,23 +14,25 @@ import selectInData from './selectInData.js';
 
 import isEmpty from './isEmpty.js';
 
+import {three} from '../variable/defaultValue.js';
+
 /**
  * Merging two json/array object with the help of where clause
  *
  * @since 1.4.8.1
  * @category Collection
+ * @param {any} whereValue where clause for you to merge the two set of data, where clause at `$1`  for `objectValue` and `$2`  for `mergeValue`
  * @param {any} objectValue The data you want to map
  * @param {any} mergeValue data that you want to merge
- * @param {any} whereValue where clause for you to merge the two set of data, where clause at `$1`  for `objectValue` and `$2`  for `mergeValue`
  * @returns {any} Return map either JSON or Array
  * @example
  *
- * mergeInWhere([{"s":23,"id":1}],[{"id":1,"title":"test only"}],{"$1.id":"$2.id","$2.title":"test only"})
+ * mergeInWhere({"$1.id":"$2.id","$2.title":"test only"}, [{"s":23,"id":1}],[{"id":1,"title":"test only"}])
  *=> [{ "id":1, "s":23, "title":"test only"}]
  */
-function mergeInWhere (objectValue, mergeValue, whereValue) {
+function mergeInWhere (whereValue, objectValue, mergeValue) {
 
-    return curryArg(function (rawObjectValue, rawMergeValue, rawWhereValue) {
+    return curryArg(function (rawWhereValue, rawObjectValue, rawMergeValue) {
 
         const rawObjectType = getTypeofInternal(rawObjectValue);
 
@@ -40,7 +42,7 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
         }
 
-        return baseMap(rawObjectValue, function (value) {
+        return baseMap(function (value) {
 
             each(mergeValue, function (subValue) {
 
@@ -48,8 +50,8 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
                     "$1": value,
                     "$2": subValue
                 };
-                const selectData = selectInData(joinValue, rawWhereValue);
-                const whereData = where(subValue, selectData);
+                const selectData = selectInData(rawWhereValue, joinValue);
+                const whereData = where(selectData, subValue);
 
                 if (isEmpty(whereData) === false) {
 
@@ -61,13 +63,13 @@ function mergeInWhere (objectValue, mergeValue, whereValue) {
 
             return value;
 
-        });
+        }, rawObjectValue);
 
     }, [
+        whereValue,
         objectValue,
-        mergeValue,
-        whereValue
-    ]);
+        mergeValue
+    ], three);
 
 }
 export default mergeInWhere;

@@ -7,10 +7,10 @@
  * @returns {any} Returns the total.
  * @example
  *
- * getData({"s":1},"s")
- *=> 1
+ * schemaSplitData("s")
+ *=> ["s"]
  * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
- *=> {a: 2}
+ * schemaSplitData("a:a")
+ *=> ["a","a"]
  */
 export function schemaSplitData(data?: any | undefined): any;

@@ -29,11 +29,11 @@ function reverse (value) {
             ?rawValue.split("")
             :rawValue;
 
-        const cloneMap = map(refRawList, function (__, key) {
+        const cloneMap = map(function (__, key) {
 
             return refRawList[count(refRawList) - one - key];
 
-        });
+        }, refRawList);
 
         return typeOf === "string"
             ?cloneMap.join("")

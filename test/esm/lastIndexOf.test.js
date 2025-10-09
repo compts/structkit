@@ -17,7 +17,7 @@ describe('ESM: LastIndexOf', function () {
 
     it('check if value exist', function () {
 
-        assert.deepStrictEqual(lastIndexOf([
+        assert.deepStrictEqual(lastIndexOf(one, [
             one,
             one,
             one,
@@ -28,10 +28,10 @@ describe('ESM: LastIndexOf', function () {
             eight,
             nine,
             ten
-        ], one), two);
+        ]), two);
 
 
-        assert.deepStrictEqual(lastIndexOf([
+        assert.deepStrictEqual(lastIndexOf(two, [
             one,
             one,
             two,
@@ -42,17 +42,17 @@ describe('ESM: LastIndexOf', function () {
             eight,
             nine,
             ten
-        ], two), three);
+        ]), three);
 
     });
 
     it('check if value exist in JSON object', function () {
 
-        assert.deepStrictEqual(lastIndexOf([
+        assert.deepStrictEqual(lastIndexOf({"s1": "32"}, [
             {"s1": "sd"},
             {"s1": "32"},
             {"s1": "32"}
-        ], {"s1": "32"}), two);
+        ]), two);
 
     });
 

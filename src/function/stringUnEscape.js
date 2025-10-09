@@ -22,7 +22,7 @@ function stringUnEscape (value, type) {
 
     const typeVal = type || "entity";
 
-    if (indexOfNotExist(listType, typeVal)) {
+    if (indexOfNotExist(typeVal, listType)) {
 
         return "";
 
@@ -34,7 +34,7 @@ function stringUnEscape (value, type) {
 
         search[typeVal] =str1;
 
-        const whr = whereOnce(entity, search);
+        const whr = whereOnce(search, entity);
 
         return isEmpty(whr)
             ? str1

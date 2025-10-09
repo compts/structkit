@@ -4,13 +4,13 @@ export default filter;
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue The data either json or array
- * @param {Function=} func The second number in an addition.
+ * @param {Function=} func Callback function for filtering the data
+ * @param {any=} objectValue The data either json or array
  * @returns {any} Returns data either json or array.
  * @example
  *
- * filter([1,2,3,34],function(value, key){ return value%2 === 0 })
+ * filter(function(value, key){ return value%2 === 0 }, [1,2,3,34])
  *
  * => [2, 34]
  */
-declare function filter(objectValue: any, func?: Function | undefined): any;
+declare function filter(func?: Function | undefined, objectValue?: any | undefined): any;

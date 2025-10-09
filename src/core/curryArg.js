@@ -22,11 +22,11 @@ function curryArg (fn, args, NoDefaultArgs) {
 
 
     const RefNoDefaultArgs = NoDefaultArgs || zero;
-    let placholderCounter = 0;
+    let placholderCounter = zero;
 
     if (RefNoDefaultArgs > args.length - argumentUndefinedCounter(args)) {
 
-        for (let kk=0; kk<RefNoDefaultArgs;) {
+        for (let kk=zero; kk<RefNoDefaultArgs;) {
 
             if (_has(args, kk)) {
 
@@ -168,7 +168,7 @@ function curryArg (fn, args, NoDefaultArgs) {
  */
 function argumentUndefinedCounter (args, isPlaceHolder) {
 
-    let counter = 0;
+    let counter = zero;
     const isAllowPlachoder = isPlaceHolder || true;
 
     for (const arg in args) {

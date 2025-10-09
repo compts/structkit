@@ -1,22 +1,31 @@
 const indexOf = require('./indexOf');
 const {zero} = require("../variable/defaultValue");
+const curryArg = require("../core/curryArg");
+const {two} = require("../variable/defaultValue");
 
 /**
  * Check index of array is Exist or not
  *
  * @since 1.3.1
  * @category Predicate
- * @param {any[]} arrayObject Array
  * @param {any} value Value for array lookup
+ * @param {any[]} arrayObject Array
  * @returns {boolean} Return boolean.
  * @example
  *
- * indexOfExist([312], 32)
+ * indexOfExist(32, [312])
  * // => false
  */
-function indexOfExist (arrayObject, value) {
+function indexOfExist (value, arrayObject) {
 
-    return indexOf(arrayObject, value) >= zero;
+    return curryArg(function (rawValue, rawObjectValue) {
+
+        return indexOf(rawValue, rawObjectValue) >= zero;
+
+    }, [
+        value,
+        arrayObject
+    ], two);
 
 }
 module.exports=indexOfExist;

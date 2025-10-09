@@ -9,18 +9,18 @@ describe('ESM: where method', function () {
 
 
         assert.deepStrictEqual(
-            where({"s1": 1,
-                "s2": 1}, {"s1": 1}),
+            where({"s1": 1}, {"s1": 1,
+                "s2": 1}),
             {"s1": 1,
                 "s2": 1}
         );
 
-        assert.deepStrictEqual(where([
+        assert.deepStrictEqual(where({"s1": 1}, [
             {"s1": 1,
                 "s2": 1},
             {"s1": 2,
                 "s2": 2}
-        ], {"s1": 1}), [
+        ]), [
             {"s1": 1,
                 "s2": 1}
         ]);
@@ -31,11 +31,11 @@ describe('ESM: where method', function () {
     it('check if value is less', function () {
 
         assert.deepStrictEqual(where(
+            {"d": lt(one)},
             [
                 {"d": 1},
                 {"d": 2}
-            ],
-            {"d": lt(one)}
+            ]
         ), [
             {
                 "d": 2

@@ -3,6 +3,7 @@ const baseAppend = require("../core/baseAppend");
 const each = require("./each");
 const {getTypeofInternal} = require('../core/getTypeOf');
 const indexOfExist = require("./indexOfExist");
+const {two} = require("../variable/defaultValue");
 
 
 /**
@@ -22,15 +23,15 @@ function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
 
-        if (indexOfExist([
+        if (indexOfExist(getTypeofInternal(rawObjectValue), [
             "array",
             "string",
             "number"
-        ], getTypeofInternal(rawObjectValue))|| indexOfExist([
+        ])|| indexOfExist(getTypeofInternal(rawMergeValue), [
             "array",
             "string",
             "number"
-        ], getTypeofInternal(rawMergeValue))) {
+        ])) {
 
             throw new Error("Invalid , both value must be json");
 
@@ -48,7 +49,7 @@ function mergeWithKey (objectValue, mergeValue) {
     }, [
         objectValue,
         mergeValue
-    ]);
+    ], two);
 
 }
 module.exports=mergeWithKey;

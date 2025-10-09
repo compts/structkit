@@ -4,12 +4,12 @@ export default mapGetData;
  *
  * @since 1.3.1
  * @category Collection
- * @param {any[]} objectValue Json in array format
  * @param {string} valueFormat Key look up format
+ * @param {any[]} objectValue Json in array format
  * @returns {any[]} Return array or object.
  * @example
  *
- * mapGetData([{"Asd":1}],"Asd")
+ * mapGetData("Asd", [{"Asd":1}])
  *=>[1]
  */
-declare function mapGetData(objectValue: any[], valueFormat: string): any[];
+declare function mapGetData(valueFormat: string, objectValue: any[]): any[];

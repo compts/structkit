@@ -83,7 +83,7 @@ function remove (objectValue, value, value2) {
 
         each(objectValue, function () {
 
-            where(objectValue, value, function (jk) {
+            where(value, objectValue, function (jk) {
 
                 jsn_vw.push(jk);
 
@@ -103,7 +103,7 @@ function remove (objectValue, value, value2) {
 
             } else {
 
-                if (indexOfExist(jsn_vw, av) === false) {
+                if (indexOfExist(av, jsn_vw) === false) {
 
                     reslt[ak]=av;
 

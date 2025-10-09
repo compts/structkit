@@ -8,16 +8,16 @@ describe('TS: jsonToArray method', function () {
     it('check if value exist', function () {
 
         assert.deepStrictEqual(
-            jsonToArray({"a": 1,
-                "b": {"asd": {"aa": "bb"}}}, "b:asd"),
+            jsonToArray("b:asd", {"a": 1,
+                "b": {"asd": {"aa": "bb"}}}),
             [{"aa": 'bb'}]
         );
 
     });
     it('check expected type', function () {
        
-        expectType<any>(jsonToArray({"a": 1,
-        "b": {"asd": {"aa": "bb"}}}, "b:asd"));
+        expectType<any>(jsonToArray("b:asd", {"a": 1,
+        "b": {"asd": {"aa": "bb"}}}));
     });
 
 });

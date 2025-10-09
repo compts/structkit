@@ -7,8 +7,8 @@ const {two} = require("../variable/defaultValue");
  *
  * @since 1.4.8.7
  * @category Collection
- * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
+ * @param {any} objectValue Json to Array
  * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
@@ -18,16 +18,16 @@ const {two} = require("../variable/defaultValue");
  * whereOnce([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":2}}]
  */
-function whereOnce (objectValue, objectValueWhere, func) {
+function whereOnce (objectValueWhere, objectValue, func) {
 
 
-    return curryArg(function (rawObjectValue, rawObjectValueWhere, rawFunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFunc) {
 
-        return whereLoopExecution(rawObjectValue, rawObjectValueWhere, rawFunc, true, 'where_once');
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFunc, true, 'where_once');
 
     }, [
-        objectValue,
         objectValueWhere,
+        objectValue,
         func
     ], two);
 

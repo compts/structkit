@@ -1,5 +1,5 @@
 const getTypeof = require('./getTypeof');
-
+const curryArg = require("../core/curryArg");
 const has = require('./has');
 const {zero, one} = require("../variable/defaultValue");
 const each = require('./each');
@@ -14,43 +14,63 @@ const each = require('./each');
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
  * @example
  *
- * isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})
+ * isExactbyRegExp({"test2": /\d/g}, {"test": 11,"test2": 11})
  * // => false
  */
 function isExactbyRegExp (whereValue, objectValue1) {
 
+    return curryArg(function (rawWhereValue, rawObjectValue1) {
 
-    if (objectValue1 === null) {
+        if (rawObjectValue1 === null) {
 
-        return false;
+            return false;
 
-    }
+        }
 
-    if (getTypeof(whereValue) !== "json" && getTypeof(whereValue) !== "string" && getTypeof(whereValue) !== "regexp" && getTypeof(whereValue) !== "number") {
+        if (getTypeof(rawWhereValue) !== "json" && getTypeof(rawWhereValue) !== "string" && getTypeof(rawWhereValue) !== "regexp" && getTypeof(rawWhereValue) !== "number") {
 
-        return false;
+            return false;
 
-    }
+        }
 
-    const key_s=(/(json|array)/g).test(getTypeof(objectValue1))
-        ?objectValue1
-        :[objectValue1];
-    let cnt=zero;
-    let local_is_valid = null;
+        const key_s=(/(json|array)/g).test(getTypeof(rawObjectValue1))
+            ?rawObjectValue1
+            :[rawObjectValue1];
+        let cnt=zero;
+        let local_is_valid = null;
 
-    each(key_s, function (kv, kk) {
+        each(key_s, function (kv, kk) {
 
-        if (getTypeof(whereValue) === "json") {
+            if (getTypeof(rawWhereValue) === "json") {
 
-            if (has(whereValue[kk])) {
+                if (has(rawWhereValue[kk])) {
 
-                if (getTypeof(whereValue[kk]) === "regexp") {
+                    if (getTypeof(rawWhereValue[kk]) === "regexp") {
 
-                    local_is_valid = whereValue[kk];
+                        local_is_valid = rawWhereValue[kk];
+
+                    } else {
+
+                        local_is_valid = new RegExp(rawWhereValue[kk]);
+
+                    }
+                    if (local_is_valid.test(kv)) {
+
+                        cnt += one;
+
+                    }
+
+                }
+
+            } else {
+
+                if (getTypeof(rawWhereValue) === "regexp") {
+
+                    local_is_valid = rawWhereValue;
 
                 } else {
 
-                    local_is_valid = new RegExp(whereValue[kk]);
+                    local_is_valid = new RegExp(rawWhereValue);
 
                 }
                 if (local_is_valid.test(kv)) {
@@ -61,29 +81,15 @@ function isExactbyRegExp (whereValue, objectValue1) {
 
             }
 
-        } else {
+        });
 
-            if (getTypeof(whereValue) === "regexp") {
+        return cnt >zero;
 
-                local_is_valid = whereValue;
+    }, [
+        whereValue,
+        objectValue1
+    ]);
 
-            } else {
-
-                local_is_valid = new RegExp(whereValue);
-
-            }
-            if (local_is_valid.test(kv)) {
-
-                cnt += one;
-
-            }
-
-        }
-
-    });
-
-    return cnt >zero;
 
 }
 module.exports=isExactbyRegExp;
-

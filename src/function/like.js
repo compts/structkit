@@ -1,12 +1,14 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
+const curryArg = require("../core/curryArg");
+const {two} = require("../variable/defaultValue");
 
 /**
  * Searching the data either in array or json object to get similar value of data
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} objectValue Json or Array
  * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
  * @param {any=} func Function
  * @returns {any} Return either Json to Array.
  * @example
@@ -14,9 +16,17 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  * like({"s1":1,"s2":1},{"s1":1})
  *=>{s1: 1, s2: 1}
  */
-function like (objectValue, objectValueWhere, func) {
+function like (objectValueWhere, objectValue, func) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'like');
+    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');
+
+    }, [
+        objectValueWhere,
+        objectValue,
+        func
+    ], two);
 
 }
 module.exports=like;

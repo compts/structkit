@@ -4,12 +4,12 @@ export default sortBy;
  *
  * @since 1.4.87
  * @category Array
- * @param {any[]} objectValue List of array you want to sort
  * @param {Function} func Callback function or sort type
+ * @param {any[]} objectValue List of array you want to sort
  * @returns {any[]} Returns the total.
  * @example
  *
  * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
  *=>[1,2,3]
  */
-declare function sortBy(objectValue: any[], func: Function): any[];
+declare function sortBy(func: Function, objectValue: any[]): any[];

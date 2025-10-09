@@ -8,6 +8,8 @@ import {getTypeofInternal} from '../core/getTypeOf.js';
 
 import indexOfExist from './indexOfExist.js';
 
+import {two} from '../variable/defaultValue.js';
+
 /**
  * Merging two json object
  *
@@ -25,15 +27,15 @@ function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
 
-        if (indexOfExist([
+        if (indexOfExist(getTypeofInternal(rawObjectValue), [
             "array",
             "string",
             "number"
-        ], getTypeofInternal(rawObjectValue))|| indexOfExist([
+        ])|| indexOfExist(getTypeofInternal(rawMergeValue), [
             "array",
             "string",
             "number"
-        ], getTypeofInternal(rawMergeValue))) {
+        ])) {
 
             throw new Error("Invalid , both value must be json");
 
@@ -50,7 +52,7 @@ function mergeWithKey (objectValue, mergeValue) {
     }, [
         objectValue,
         mergeValue
-    ]);
+    ], two);
 
 }
 export default mergeWithKey;

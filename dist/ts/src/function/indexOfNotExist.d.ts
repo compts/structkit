@@ -4,12 +4,12 @@ export default indexOfNotExist;
  *
  * @since 1.4.1
  * @category Predicate
- * @param {any[]} arrayObject Array
- * @param {any} value Value for array lookup
+ * @param {any=} value Value for array lookup
+ * @param {any[]=} arrayObject Array
  * @returns {boolean} Return boolean.
  * @example
  *
- * indexOfNotExist([312], 32)
+ * indexOfNotExist(32, [312])
  * // => true
  */
-declare function indexOfNotExist(arrayObject: any[], value: any): boolean;
+declare function indexOfNotExist(value?: any | undefined, arrayObject?: any[] | undefined): boolean;

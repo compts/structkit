@@ -9,17 +9,17 @@ describe('CJS: like method', function () {
 
 
         assert.deepStrictEqual(
-            like({"s1": one,
-                "s2": "as"}, one),
+            like(one, {"s1": one,
+                "s2": "as"}),
             {"s1": one,
                 "s2": "as"}
         );
 
         assert.deepStrictEqual(
-            like([
+            like(one, [
                 {"s1": one,
                     "s2": "as"}
-            ], one),
+            ]),
             [
                 {"s1": one,
                     "s2": "as"}
@@ -27,20 +27,20 @@ describe('CJS: like method', function () {
         );
 
         assert.deepStrictEqual(
-            like([
+            like({"s2": /(as)/g}, [
                 {"s1": one,
                     "s2": "as"}
-            ], {"s2": /(as)/g}),
+            ]),
             [
                 {"s1": one,
                     "s2": "as"}
             ]
         );
         assert.deepStrictEqual(
-            like([
+            like({"s2": /(ass)/g}, [
                 {"s1": one,
                     "s2": "as"}
-            ], {"s2": /(ass)/g}),
+            ]),
             []
         );
 

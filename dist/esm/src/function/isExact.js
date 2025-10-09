@@ -32,7 +32,7 @@ import curryArg from '../core/curryArg.js';
  * isExact({"test": 11,"test2": 11}, {"test2": 11})
  * // => true
  *
- * isExact({"s1":{"s2":2}},{"s1:s2":2})
+ * isExact({"s1:s2":2}, {"s1":{"s2":2}})
  * // => true
  */
 function isExact (whereValue, objectValue1, isExist) {
@@ -59,10 +59,10 @@ function isExact (whereValue, objectValue1, isExist) {
 
         each(key_s, function (kv, kk) {
 
-            if (indexOfExist([
+            if (indexOfExist(getTypeofInternal(rawWhereValue), [
                 "json",
                 "object"
-            ], getTypeofInternal(rawWhereValue))) {
+            ])) {
 
                 if (has(val_s, kk)) {
 
@@ -81,8 +81,8 @@ function isExact (whereValue, objectValue1, isExist) {
             if (getTypeofInternal(rawWhereValue) === "array") {
 
                 const local_is_valid = local_is_exist
-                    ?indexOfExist(val_s, kv)
-                    :indexOfNotExist(val_s, kv);
+                    ?indexOfExist(kv, val_s)
+                    :indexOfNotExist(kv, val_s);
 
                 if (local_is_valid) {
 
@@ -98,12 +98,12 @@ function isExact (whereValue, objectValue1, isExist) {
 
             each(val_s, function (kv, kk) {
 
-                if (indexOfExist([
+                if (indexOfExist(getTypeofInternal(rawWhereValue), [
                     "json",
                     "object"
-                ], getTypeofInternal(rawWhereValue))) {
+                ])) {
 
-                    const gdata = getData(key_s, kk);
+                    const gdata = getData(kk, key_s);
 
                     if (!isEmpty(gdata)) {
 

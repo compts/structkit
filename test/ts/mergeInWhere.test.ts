@@ -7,7 +7,10 @@ describe('TS: mergeInWhere method', function () {
 
     it('check if repetion is correct', function () {
 
-        assert.deepStrictEqual(mergeInWhere([
+        assert.deepStrictEqual(mergeInWhere({
+            "$1.id": "$2.id",
+            "$2.title": "test only"
+        }, [
             {
                 "id": 1,
                 "s": 23
@@ -17,10 +20,7 @@ describe('TS: mergeInWhere method', function () {
                 "id": 1,
                 "title": "test only"
             }
-        ], {
-            "$1.id": "$2.id",
-            "$2.title": "test only"
-        }), [
+        ]), [
             {
                 "id": 1,
                 "s": 23,
@@ -32,7 +32,10 @@ describe('TS: mergeInWhere method', function () {
 
     it('check expected type', function () {
        
-        expectType<any>(mergeInWhere([
+        expectType<any>(mergeInWhere({
+            "$1.id": "$2.id",
+            "$2.title": "test only"
+        },[
             {
                 "id": 1,
                 "s": 23
@@ -42,10 +45,7 @@ describe('TS: mergeInWhere method', function () {
                 "id": 1,
                 "title": "test only"
             }
-        ], {
-            "$1.id": "$2.id",
-            "$2.title": "test only"
-        }));
+        ]));
     });
 
 });

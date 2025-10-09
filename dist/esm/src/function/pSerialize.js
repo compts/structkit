@@ -36,25 +36,25 @@ function pSerialize (value) {
 
         const dataType = getTypeof(rawValue);
 
-        if (indexOfExist([
+        if (indexOfExist(dataType, [
             "array",
             "json",
             "object",
             "set",
             "map"
-        ], dataType)) {
+        ])) {
 
             const getKeyVal = toArray(getKey(rawValue));
             const getValueVal = toArray(getValue(rawValue));
 
-            const mapData = map(range(count(rawValue) - one, zero), function (mValue, kValue) {
+            const mapData = map(function (mValue, kValue) {
 
                 const refMapKey = getKeyVal[kValue];
                 const refMapValue = getValueVal[kValue];
 
                 return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
 
-            });
+            }, range(count(rawValue) - one, zero));
 
             return "a:"+count(mapData)+":{"+mapData.join("")+"}";
 
@@ -81,13 +81,13 @@ function pSerialize (value) {
  */
 function parseTypeVal (typeValue, value) {
 
-    if (indexOfExist([
+    if (indexOfExist(typeValue, [
         "array",
         "json",
         "object",
         "set",
         "map"
-    ], typeValue)) {
+    ])) {
 
         return pSerialize(value);
 

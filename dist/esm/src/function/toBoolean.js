@@ -22,20 +22,20 @@ function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
-        return indexOfExist([
+        return indexOfExist(stringLowerCase(value), [
             'true',
             't',
             'yes',
             'y',
             'on',
             '1'
-        ], stringLowerCase(value));
+        ]);
 
     }
 
     if (getTypeof(value) === "number") {
 
-        return indexOfExist([one], value);
+        return indexOfExist(value, [one]);
 
     }
 

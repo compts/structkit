@@ -9,7 +9,7 @@ export default isExactbyRegExp;
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
  * @example
  *
- * isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})
+ * isExactbyRegExp({"test2": /\d/g}, {"test": 11,"test2": 11})
  * // => false
  */
 declare function isExactbyRegExp(whereValue: any, objectValue1: any): boolean;

@@ -22,7 +22,7 @@ function trimStart (value, remove_value) {
 
     let rawValue = toString(value).replace(rx, "");
 
-    if (indexOfExist(["string"], getTypeof(remove_value))) {
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
 
         const regData = new RegExp("^("+remove_value+")", "g");
 

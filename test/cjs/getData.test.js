@@ -1,23 +1,23 @@
-const {getData} = require("../../dist/cjs/structkit-full.cjs");
+const {getData, isFunction} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 describe('CJS: getData method', function () {
 
     it('check if repetion is correct', function () {
 
-        assert.strictEqual(getData({"a": "1"}, "a"), "1");
-        assert.strictEqual(getData({"a": {"b": "b1"}}, "a:b"), "b1");
+        assert.strictEqual(getData("a", {"a": "1"}), "1");
+        assert.strictEqual(getData("a:b", {"a": {"b": "b1"}}), "b1");
 
     });
     it('check if repetion is correct with array', function () {
 
-        assert.strictEqual(getData([{"a": "1"}], "0.a"), "1");
-        assert.strictEqual(getData([{"a": {"b": "b1"}}], "0:a:b"), "b1");
+        assert.strictEqual(getData("0.a", [{"a": "1"}]), "1");
+        assert.strictEqual(getData("0:a:b", [{"a": {"b": "b1"}}]), "b1");
 
     });
     it('check if repetion is correct with empty array', function () {
 
-        assert.deepStrictEqual(getData([], "a"), []);
+        assert.deepStrictEqual(getData("a", []), []);
 
     });
 
@@ -29,7 +29,7 @@ describe('CJS: getData method', function () {
     });
     it('check if arg is empty object', function () {
 
-        assert.deepStrictEqual(getData({}), {});
+        assert.deepStrictEqual(isFunction(getData({})), true);
 
     });
     it('check if arg is empty string', function () {

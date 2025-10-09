@@ -24,7 +24,7 @@ function unique (value) {
 
         each(value, function (val) {
 
-            if (indexOfNotExist(uniqArrData, val)) {
+            if (indexOfNotExist(val, uniqArrData)) {
 
                 uniqArrData.push(val);
 

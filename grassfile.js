@@ -124,17 +124,15 @@ exports.module=function (grassconf) {
 
             const getData = data.readData();
 
-
             if (data.path === 'src/function/whereNot.js') {
 
-
-                data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
+                data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
                     const name = 'is'+structkit.stringCapitalize(value);
 
                     return "export const "+name+"="+name+"_default;";
 
-                }).join("\n")+"\n");
+                }, objectCallTypeAll).join("\n")+"\n");
 
             }
 
@@ -164,13 +162,13 @@ exports.module=function (grassconf) {
                         "name": "webIIfe",
                         "transform": () => null,
                         "transformFirstFile": () => null,
-                        "transformLastFile": () => isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
+                        "transformLastFile": () => isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
                             const name = 'is'+structkit.stringCapitalize(value);
 
                             return "exports."+name+"="+name+"_default;";
 
-                        }).join("\n")+"\n"
+                        }, objectCallTypeAll).join("\n")+"\n"
 
                     },
                     cjsFileNameOnlyImportOnly({
@@ -204,13 +202,13 @@ exports.module=function (grassconf) {
 
                             if (config.currentPath === 'src/function/whereNot.js') {
 
-                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(objectCallTypeAll, function (value) {
+                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(function (value) {
 
                                     const name = 'is'+structkit.stringCapitalize(value);
 
                                     return "_stk."+name+"="+name+";";
 
-                                }).join("\n");
+                                }, objectCallTypeAll).join("\n");
 
                             }
 

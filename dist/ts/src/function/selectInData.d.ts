@@ -4,12 +4,12 @@ export default selectInData;
  *
  * @since 1.4.8.1
  * @category Collection
- * @param {any} objectValue The data you want to map
  * @param {any} whereValue where clause for you to merge the two set of data
+ * @param {any} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *
- * selectInData({"s":1},{"ss":"s"})
+ * selectInData({"ss":"s"}, {"s":1})
  *=> {"ss":1}
  */
-declare function selectInData(objectValue: any, whereValue: any): any;
+declare function selectInData(whereValue: any, objectValue: any): any;

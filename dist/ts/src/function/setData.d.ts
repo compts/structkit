@@ -4,13 +4,13 @@ export default setData;
  *
  * @since 1.4.87
  * @category Collection
- * @param {any=} objectValue Either Json or Array data.
  * @param {any=} split_str Search key or index.
+ * @param {any=} objectValue Either Json or Array data.
  * @param {any=} updateValue Value to update the data.
  * @returns {any} Returns the total.
  * @example
  *
- * setData({"s":1},"s",2)
+ * setData("s", {"s":1},2)
  *=> 2
  */
-declare function setData(objectValue?: any | undefined, split_str?: any | undefined, updateValue?: any | undefined): any;
+declare function setData(split_str?: any | undefined, objectValue?: any | undefined, updateValue?: any | undefined): any;
