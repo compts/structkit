@@ -13,7 +13,7 @@ const curryArg = require("../core/curryArg");
  * @returns {any[]} Returns the total.
  * @example
  *
- * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
+ * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
  *=>[1,2,3]
  */
 function sortBy (func, objectValue) {

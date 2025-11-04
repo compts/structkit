@@ -16,7 +16,7 @@ const {zero, two} = require("../variable/defaultValue");
  * @returns {any} Return get the index or array
  * @example
  *
- * lastIndexOf([1,2], 1)
+ * lastIndexOf(1, [1,2])
  * // => 0
  */
 function lastIndexOf (value, objectValue) {

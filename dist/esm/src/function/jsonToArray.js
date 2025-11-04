@@ -16,7 +16,7 @@ import isEmpty from './isEmpty.js';
  * @returns {any} Returns Array
  * @example
  *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * jsonToArray("a",{"a":{"a":2},"b":{"a":3}})
  * => [2, 3]
  */
 function jsonToArray (value, objectValue) {

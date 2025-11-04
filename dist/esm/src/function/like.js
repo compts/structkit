@@ -15,7 +15,7 @@ import {two} from '../variable/defaultValue.js';
  * @returns {any} Return either Json to Array.
  * @example
  *
- * like({"s1":1,"s2":1},{"s1":1})
+ * like({"s1":1}, {"s1":1,"s2":1})
  *=>{s1: 1, s2: 1}
  */
 function like (objectValueWhere, objectValue, func) {

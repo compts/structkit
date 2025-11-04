@@ -29,7 +29,7 @@ import curryArg from '../core/curryArg.js';
  * @returns {boolean|any} Returns the boolean if the has the value you are looking at.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
+ * isExact({"test2": 11},{"test": 11,"test2": 11})
  * // => true
  *
  * isExact({"s1:s2":2}, {"s1":{"s2":2}})

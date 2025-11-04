@@ -249,6 +249,35 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -482,82 +511,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
 
 /**
  * Counting the lenght in array, json or string
@@ -1117,6 +1070,51 @@ function empty (value) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1397,6 +1395,37 @@ _stk.allValid=allValid;
 
 
 /**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1614,32 +1643,6 @@ _stk.arrayRepeat=arrayRepeat;
 
 _stk.arraySlice=arraySlice;
 
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -2233,46 +2236,6 @@ function dec (value, default_value) {
 
 _stk.dec=dec;
 
-
-/**
- *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
- *
- * @since 1.4.87
- * @category Logic
- * @param {any} defaultValue Any first value type
- * @param {any=} value2 Any first value type
- * @returns {any} Returns true or false.
- * @example
- *
- * defaultTo(1,2)
- * // => 2
- */
-function defaultTo (defaultValue, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
-
-            return aa;
-
-        }
-        if (_has(bb) === false) {
-
-            return aa;
-
-        }
-
-        return bb;
-
-    }, [
-        defaultValue,
-        value2
-    ], two);
-
-}
-
-_stk.defaultTo=defaultTo;
-
 _stk.divide=divide;
 
 _stk.each=each;
@@ -2313,6 +2276,46 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
+
+
+/**
+ *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
+ *
+ * @since 1.4.87
+ * @category Logic
+ * @param {any} defaultValue Any first value type
+ * @param {any=} value2 Any first value type
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * defaultTo(1,2)
+ * // => 2
+ */
+function defaultTo (defaultValue, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
+
+            return aa;
+
+        }
+        if (_has(bb) === false) {
+
+            return aa;
+
+        }
+
+        return bb;
+
+    }, [
+        defaultValue,
+        value2
+    ], two);
+
+}
+
+_stk.defaultTo=defaultTo;
 
 
 /**
@@ -2366,6 +2369,8 @@ function filter (func, objectValue) {
 
 _stk.filter=filter;
 
+_stk.first=first;
+
 
 /**
  * Flatten an array to a single level.
@@ -2408,8 +2413,6 @@ function flatten (arg) {
 }
 
 _stk.flatten=flatten;
-
-_stk.first=first;
 
 
 /**
@@ -2626,7 +2629,7 @@ function getData (split_str, objectValue, isStrict) {
  * @returns {boolean|any} Returns the boolean if the has the value you are looking at.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
+ * isExact({"test2": 11},{"test": 11,"test2": 11})
  * // => true
  *
  * isExact({"s1:s2":2}, {"s1":{"s2":2}})
@@ -3171,9 +3174,9 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getKey=getKey;
-
 _stk.getData=getData;
+
+_stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
 /**
@@ -3454,7 +3457,7 @@ _stk.isJson=isJson;
  * @returns {any} Returns Array
  * @example
  *
- * jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
+ * jsonToArray("a",{"a":{"a":2},"b":{"a":3}})
  * => [2, 3]
  */
 function jsonToArray (value, objectValue) {
@@ -3519,7 +3522,7 @@ _stk.last=last;
  * @returns {any} Return get the index or array
  * @example
  *
- * lastIndexOf([1,2], 1)
+ * lastIndexOf(1, [1,2])
  * // => 0
  */
 function lastIndexOf (value, objectValue) {
@@ -3538,37 +3541,6 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1,"s2":1},{"s1":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValueWhere, objectValue, func) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');
-
-    }, [
-        objectValueWhere,
-        objectValue,
-        func
-    ], two);
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -3632,6 +3604,66 @@ _stk.limit=limit;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValueWhere, objectValue, func) {
+
+    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');
+
+    }, [
+        objectValueWhere,
+        objectValue,
+        func
+    ], two);
+
+}
+
+_stk.like=like;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3659,6 +3691,8 @@ function lte (value1, value2) {
 
 _stk.lte=lte;
 
+_stk.map=map;
+
 
 /**
  * A Function to map the data either an array or an object using getData function.
@@ -3684,8 +3718,6 @@ function mapGetData (valueFormat, objectValue) {
 }
 
 _stk.mapGetData=mapGetData;
-
-_stk.map=map;
 
 
 /**
@@ -3834,35 +3866,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -4272,8 +4275,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-
-_stk.add=add;
 
 
 /**
@@ -6380,9 +6381,9 @@ function regexCountGroup (value) {
 
 _stk.regexCountGroup=regexCountGroup;
 
-_stk.remove=remove;
-
 _stk.removeFromKey=removeFromKey;
+
+_stk.remove=remove;
 
 
 /**
@@ -6709,6 +6710,47 @@ function baseSort (objectValue, func) {
 }
 
 /**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {Function} func Callback function or sort type
+ * @param {any[]} objectValue List of array you want to sort
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
+ *=>[1,2,3]
+ */
+function sortBy (func, objectValue) {
+
+    return curryArg(function (rawFunc, rawObjectValue) {
+
+        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            if (has(func) && getTypeof(func) === 'function') {
+
+                return rawFunc(orderA, orderB);
+
+            }
+
+            return orderA - orderB;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        func,
+        objectValue
+    ]);
+
+}
+
+_stk.sortBy=sortBy;
+
+
+/**
  * Sort array
  *
  * @since 1.0.1
@@ -6795,47 +6837,6 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
-
-
-/**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {Function} func Callback function or sort type
- * @param {any[]} objectValue List of array you want to sort
- * @returns {any[]} Returns the total.
- * @example
- *
- * sortBy([2,3,1], (orderA, orderB) => orderA - orderB)
- *=>[1,2,3]
- */
-function sortBy (func, objectValue) {
-
-    return curryArg(function (rawFunc, rawObjectValue) {
-
-        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            if (has(func) && getTypeof(func) === 'function') {
-
-                return rawFunc(orderA, orderB);
-
-            }
-
-            return orderA - orderB;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        func,
-        objectValue
-    ]);
-
-}
-
-_stk.sortBy=sortBy;
 /**
  * Split string for special cases
  *
@@ -7012,31 +7013,6 @@ function stringSnakeCase (value) {
 
 _stk.stringSnakeCase=stringSnakeCase;
 
-_stk.stringUnEscape=stringUnEscape;
-
-
-/**
- * String Upper case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * stringUpperCase('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
- */
-function stringUpperCase (value) {
-
-    return toString(value).toUpperCase();
-
-}
-
-_stk.stringUpperCase=stringUpperCase;
-
-_stk.subtract=subtract;
-
 
 /**
  * String Substr
@@ -7065,6 +7041,31 @@ function stringSubs (value, minValue, maxValue) {
 }
 
 _stk.stringSubs=stringSubs;
+
+_stk.stringUnEscape=stringUnEscape;
+
+
+/**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * stringUpperCase('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+function stringUpperCase (value) {
+
+    return toString(value).toUpperCase();
+
+}
+
+_stk.stringUpperCase=stringUpperCase;
+
+_stk.subtract=subtract;
 
 
 /**
@@ -7620,37 +7621,6 @@ _stk.toString=toString;
 
 
 /**
- * String trim  at the start only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in start of string
- * @example
- *
- * trimStart(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss '
- */
-function trimStart (value, remove_value) {
-
-    var rx = new RegExp('^[' + whitespace + ']*');
-
-    var rawValue = toString(value).replace(rx, "");
-
-    if (indexOfExist(getTypeof(remove_value), ["string"])) {
-
-        var regData = new RegExp("^("+remove_value+")", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-/**
  * String trim at the end only
  *
  * @since 1.4.86
@@ -7672,6 +7642,40 @@ function trimEnd (value, remove_value) {
     if (indexOfExist(getTypeof(remove_value), ["string"])) {
 
         var regData = new RegExp("("+remove_value+")$", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+_stk.trimEnd=trimEnd;
+
+
+/**
+ * String trim  at the start only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in start of string
+ * @example
+ *
+ * trimStart(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss '
+ */
+function trimStart (value, remove_value) {
+
+    var rx = new RegExp('^[' + whitespace + ']*');
+
+    var rawValue = toString(value).replace(rx, "");
+
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
+
+        var regData = new RegExp("^("+remove_value+")", "g");
 
         rawValue = rawValue.replace(regData, "");
 
@@ -7717,8 +7721,6 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-
-_stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
 
@@ -7769,10 +7771,6 @@ function union () {
 
 _stk.union=union;
 
-_stk.varExtend=varExtend;
-
-_stk.where=where;
-
 
 /**
  * Get only the unique data from array
@@ -7811,6 +7809,10 @@ function unique (value) {
 }
 
 _stk.unique=unique;
+
+_stk.varExtend=varExtend;
+
+_stk.where=where;
 
 
 /**

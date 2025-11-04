@@ -1,6 +1,14 @@
 # Structkit
 Javascript framework is a utility tool, that helps you simplify in dealing data issue in your projects
 
+---
+# ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
+**Version 1.4.9 is a major rewrite with numerous breaking changes.**
+
+Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_GUIDE.md) carefully before proceeding. The changes are substantial and will likely affect existing implementations.
+
+---
+
 [![NPM version][npm-image]][npm-url] 
 [![NPM version][npm-ts-image]][npm-url-ts] 
 [![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
@@ -75,7 +83,7 @@ In the example you noticed that we can apply and arguments if we are unsure of p
 
 [npm-url]: https://www.npmjs.com/package/structkit
 [npm-url-ts]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit-1.4.874-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.9-brightgreen
 
 [npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.87-brightgreen
 
