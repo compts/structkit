@@ -1,8 +1,8 @@
 # Upgrade Guide
-In this upcoming release 1.4.9, we are changing the order arguments for the following fuction
+In this upcoming release 1.4.9, we are changing the order arguments for the following function
 
 - getData
-- jsonToArray
+- jsonNEWArray
 - mapGetData
 - setData
 - selectInData
@@ -18,104 +18,102 @@ In this upcoming release 1.4.9, we are changing the order arguments for the foll
 - map
 - like
 
-## The order of arguments in functions
-### getData
-From 
-``getData({"s":1},"s")``
-to 
-``getData("s", {"s":1})``
-as we are changeing the search value in list or object data
-### jsonToArray
-From
-``jsonToArray({"a":{"a":2},"b":{"a":3}},"a")
-``
-to 
-``jsonToArray("a",{"a":{"a":2},"b":{"a":3}})
-``
-as we are changeing the search value in list or object data
-### mapGetData
-From 
-``mapGetData([{"Asd":1}],"Asd")``
-to 
-``mapGetData("Asd",[{"Asd":1}])``
-as we are changeing the search value in list or object data
-### setData
-From 
-``setData({"s":1},"s",2)``
-to 
-``setData("s", {"s":1},2)``
-as we are changeing the search value in list or object data
-### selectInData
-From 
-``selectInData({"s":1},{"ss":"s"})``
-to 
-``selectInData({"ss":"s"}, {"s":1})``
-as we are changeing the search value in list or object data
+This decision was base in our attempt NEW focus utilizing our NEWols in curry function. as our existing implementation was initial release intended NEW partially.
 
+## The revise order of following arguments in functions
+### getData
+OLD 
+``getData({"s":1},"s")``
+NEW
+``getData("s", {"s":1})``
+
+### jsonNEWArray
+OLD
+``jsonNEWArray({"a":{"a":2},"b":{"a":3}},"a")
+``
+NEW 
+``jsonNEWArray("a",{"a":{"a":2},"b":{"a":3}})
+``
+
+### mapGetData
+OLD 
+``mapGetData([{"Asd":1}],"Asd")``
+NEW 
+``mapGetData("Asd",[{"Asd":1}])``
+### setData
+OLD 
+``setData({"s":1},"s",2)``
+NEW 
+``setData("s", {"s":1},2)``
+
+### selectInData
+OLD 
+``selectInData({"s":1},{"ss":"s"})``
+NEW 
+``selectInData({"ss":"s"}, {"s":1})``
 
 ### sortBy
-From 
+OLD 
 ``sortBy([2,3,1], (orderA, orderB) => orderA - orderB)``
-to 
+NEW 
 ``sortBy((orderA, orderB) => orderA - orderB, [2,3,1])``
-as we are changeing the search value in list or object data
+
 ### filter
-From 
+OLD 
 ``filter([1,2,3,34],function(value, key){ return value%2 === 0 })``
-to 
+NEW 
 ``filter(function(value, key){ return value%2 === 0 }, [1,2,3,34])``
-as we are changeing the search value in list or object data
+
 ### groupBy
-From 
+OLD 
 ``groupBy([1,2,3,4,5,6,7], function (value) { return value % 2})``
-to 
+NEW 
 ``groupBy(function (value) { return value % 2}, [1,2,3,4,5,6,7])``
-as we are changeing the search value in list or object data
+
 ### indexOf
-From 
+OLD 
 ``indexOf([1,2], 1)``
-to 
+NEW 
 ``indexOf(1, [1,2])``
-as we are changeing the search value in list or object data
+
 ### indexOfExist
-From 
+OLD 
 ``indexOindexOfExistf([1,2], 1)``
-to 
+NEW 
 ``indexOfExist(1, [1,2])``
-as we are changeing the search value in list or object data
+
 ### indexOfNotExist
-From 
+OLD 
 ``indexOfNotExist([1,2], 1)``
-to 
+NEW 
 ``indexOfNotExist(1, [1,2])``
-as we are changeing the search value in list or object data
+
 ### isExact
-From 
+OLD 
 ``isExact({"test": 11,"test2": 11}, {"test2": 11})``
-to 
+NEW 
 ``isExact({"test2": 11}, {"test": 11,"test2": 11})``
-as we are changeing the search value in list or object data
+
 ### isExactbyRegExp
-From 
+OLD 
 ``isExactbyRegExp({"test": 11,"test2": 11}, {"test2": /\d/g})``
-to 
+NEW 
 ``isExactbyRegExp({"test2": /\d/g}, {"test": 11,"test2": 11})``
-as we are changeing the search value in list or object data
+
 ### lastIndexOf
-From 
+OLD 
 ``lastIndexOf([1,2], 1)``
-to 
+NEW 
 ``lastIndexOf(1,[1,2])``
-as we are changeing the search value in list or object data
+
 ### map
-From 
+OLD 
 ``map([1,2],function(value) { return value+2 } )``
-to 
+NEW 
 ``map(function(value) { return value+2 } ,[1,2])``
-as we are changeing the search value in list or object data
+
 ### like
-From 
+OLD 
 ``like({"s1":1,"s2":1},{"s1":1})``
-to 
+NEW 
 ``like({"s1":1}, {"s1":1,"s2":1})``
-as we are changeing the search value in list or object data
