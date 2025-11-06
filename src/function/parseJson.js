@@ -1,4 +1,4 @@
-const stringUnEscape = require('./stringUnEscape');
+const strUnEscape = require('./strUnEscape');
 const each = require('./each');
 const {zero, one} = require("../variable/defaultValue");
 const varExtend = require('./varExtend');
@@ -47,7 +47,7 @@ function parseJson (value, config) {
         return JSON.parse(rawValue);
 
     }
-    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
+    const stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
 
     const tagVal = getTagVal(stripValue);
 

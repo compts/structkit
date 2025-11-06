@@ -1,4 +1,4 @@
-const stringLowerCase = require("./stringLowerCase");
+const strLower = require("./strLower");
 const getTypeof = require("./getTypeof");
 const indexOfExist = require("./indexOfExist");
 const {one} = require("../variable/defaultValue");
@@ -19,7 +19,7 @@ function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
-        return indexOfExist(stringLowerCase(value), [
+        return indexOfExist(strLower(value), [
             'true',
             't',
             'yes',

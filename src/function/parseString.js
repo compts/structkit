@@ -5,7 +5,7 @@ const has = require('./has');
 const each = require('./each');
 const count = require('./count');
 const varExtend = require('./varExtend');
-const stringUnEscape = require("./stringUnEscape");
+const strUnEscape = require("./strUnEscape");
 const removeFromKey = require("./removeFromKey");
 const indexOfNotExist = require('./indexOfNotExist');
 const getKey = require('./getKey');
@@ -54,7 +54,7 @@ function parseString (value, config) {
 
     if (defaultConfig.unscapeEntity) {
 
-        data = stringUnEscape(data);
+        data = strUnEscape(data);
 
     }
 

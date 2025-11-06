@@ -1,5 +1,7 @@
 # Upgrade Guide
-In this upcoming release 1.4.9, we are changing the order arguments for the following function
+In this upcoming release 1.4.9,
+
+## We are changing the order arguments for the following function
 
 - getData
 - jsonNEWArray
@@ -17,6 +19,18 @@ In this upcoming release 1.4.9, we are changing the order arguments for the foll
 - lastIndexOf
 - map
 - like
+
+## We are renaming the following function
+
+- stringCamelCase -> strCamel
+- stringCapitalize -> strCapitalize
+- stringEscape -> strEscape
+- stringKebabCase -> strKebab
+- stringLowerCase -> strLower
+- stringSnakeCase -> strSnake
+- stringSubs -> strSubs
+- stringUnEscape -> strUnEscape
+- stringUpperCase -> strUpper
 
 This decision was base in our attempt NEW focus utilizing our NEWols in curry function. as our existing implementation was initial release intended NEW partially.
 

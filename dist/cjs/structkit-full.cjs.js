@@ -2219,6 +2219,46 @@ function dec (value, default_value) {
 
 _stk.dec=dec;
 
+
+/**
+ *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
+ *
+ * @since 1.4.87
+ * @category Logic
+ * @param {any} defaultValue Any first value type
+ * @param {any=} value2 Any first value type
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * defaultTo(1,2)
+ * // => 2
+ */
+function defaultTo (defaultValue, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
+
+            return aa;
+
+        }
+        if (_has(bb) === false) {
+
+            return aa;
+
+        }
+
+        return bb;
+
+    }, [
+        defaultValue,
+        value2
+    ], two);
+
+}
+
+_stk.defaultTo=defaultTo;
+
 _stk.divide=divide;
 
 _stk.each=each;
@@ -2259,46 +2299,6 @@ function equal (value1, value2) {
 }
 
 _stk.equal=equal;
-
-
-/**
- *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
- *
- * @since 1.4.87
- * @category Logic
- * @param {any} defaultValue Any first value type
- * @param {any=} value2 Any first value type
- * @returns {any} Returns true or false.
- * @example
- *
- * defaultTo(1,2)
- * // => 2
- */
-function defaultTo (defaultValue, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
-
-            return aa;
-
-        }
-        if (_has(bb) === false) {
-
-            return aa;
-
-        }
-
-        return bb;
-
-    }, [
-        defaultValue,
-        value2
-    ], two);
-
-}
-
-_stk.defaultTo=defaultTo;
 
 
 /**
@@ -3162,42 +3162,6 @@ _stk.getData=getData;
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-function getUniq (option) {
-
-    const optionValue = option||"default";
-
-    if (optionValue === "default") {
-
-        const defaultRandomValue=2;
-        const defaultSubstrValue=36;
-        const str_rand1=Math
-            .random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue)+Math.random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue);
-
-        return str_rand1;
-
-    }
-
-    return "";
-
-}
-
-_stk.getUniq=getUniq;
 
 
 /**
@@ -3298,6 +3262,42 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+function getUniq (option) {
+
+    const optionValue = option||"default";
+
+    if (optionValue === "default") {
+
+        const defaultRandomValue=2;
+        const defaultSubstrValue=36;
+        const str_rand1=Math
+            .random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue)+Math.random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue);
+
+        return str_rand1;
+
+    }
+
+    return "";
+
+}
+
+_stk.getUniq=getUniq;
 
 
 /**
@@ -3527,6 +3527,37 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @param {any=} func Function
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValueWhere, objectValue, func) {
+
+    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');
+
+    }, [
+        objectValueWhere,
+        objectValue,
+        func
+    ], two);
+
+}
+
+_stk.like=like;
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -3584,37 +3615,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @param {any=} func Function
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1}, {"s1":1,"s2":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValueWhere, objectValue, func) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');
-
-    }, [
-        objectValueWhere,
-        objectValue,
-        func
-    ], two);
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -3893,10 +3893,10 @@ _stk.noteq=noteq;
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringLowerCase('The fish is goad   with Goat-1ss')
+ * strLower('The fish is goad   with Goat-1ss')
  *=> 'the fish is goad   with goat-1ss
  */
-function stringLowerCase (value) {
+function strLower (value) {
 
     return toString(value).toLowerCase();
 
@@ -3937,9 +3937,9 @@ function varExtend (objectValue, objectValueReplace) {
 
                 if (has(rawObjectValue, key)) {
 
-                    if (indexOfExist(stringLowerCase(rawObjectValue[key]), getKey(jsn_bool))) {
+                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
 
-                        jsn_s[key]=jsn_bool[stringLowerCase(rawObjectValue[key])];
+                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
 
                     } else {
 
@@ -5670,10 +5670,10 @@ const whitespace = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003' 
  * @returns {string} Returns unescape string
  * @example
  *
- * stringUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ * strUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
  *=>"yahii & adad ^ss"
  */
-function stringUnEscape (value, type) {
+function strUnEscape (value, type) {
 
     const typeVal = type || "entity";
 
@@ -5743,7 +5743,7 @@ function parseJson (value, config) {
         return JSON.parse(rawValue);
 
     }
-    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
+    const stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
 
     const tagVal = getTagVal(stripValue);
 
@@ -6073,7 +6073,7 @@ function parseString (value, config) {
 
     if (defaultConfig.unscapeEntity) {
 
-        data = stringUnEscape(data);
+        data = strUnEscape(data);
 
     }
 
@@ -6360,9 +6360,9 @@ function regexCountGroup (value) {
 
 _stk.regexCountGroup=regexCountGroup;
 
-_stk.removeFromKey=removeFromKey;
-
 _stk.remove=remove;
+
+_stk.removeFromKey=removeFromKey;
 
 
 /**
@@ -6685,47 +6685,6 @@ function baseSort (objectValue, func) {
 }
 
 /**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {Function} func Callback function or sort type
- * @param {any[]} objectValue List of array you want to sort
- * @returns {any[]} Returns the total.
- * @example
- *
- * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
- *=>[1,2,3]
- */
-function sortBy (func, objectValue) {
-
-    return curryArg(function (rawFunc, rawObjectValue) {
-
-        const finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            if (has(func) && getTypeof(func) === 'function') {
-
-                return rawFunc(orderA, orderB);
-
-            }
-
-            return orderA - orderB;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        func,
-        objectValue
-    ]);
-
-}
-
-_stk.sortBy=sortBy;
-
-
-/**
  * Sort array
  *
  * @since 1.0.1
@@ -6812,6 +6771,47 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {Function} func Callback function or sort type
+ * @param {any[]} objectValue List of array you want to sort
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
+ *=>[1,2,3]
+ */
+function sortBy (func, objectValue) {
+
+    return curryArg(function (rawFunc, rawObjectValue) {
+
+        const finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            if (has(func) && getTypeof(func) === 'function') {
+
+                return rawFunc(orderA, orderB);
+
+            }
+
+            return orderA - orderB;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        func,
+        objectValue
+    ]);
+
+}
+
+_stk.sortBy=sortBy;
 /**
  * Split string for special cases
  *
@@ -6842,10 +6842,10 @@ function stringSplit (value) {
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringCamelCase('the fish is goad   with goat-1ss')
+ * strCamel('the fish is goad   with goat-1ss')
  *=> 'theFishIsGoadWithGoat1ss'
  */
-function stringCamelCase (value) {
+function strCamel (value) {
 
     return stringSplit(toString(value))
         .replace(/(\s[a-z])/g, function (ss1) {
@@ -6858,7 +6858,7 @@ function stringCamelCase (value) {
 
 }
 
-_stk.stringCamelCase=stringCamelCase;
+_stk.strCamel=strCamel;
 
 
 /**
@@ -6871,16 +6871,16 @@ _stk.stringCamelCase=stringCamelCase;
  * @returns {string} Returns Capitalize sting data
  * @example
  *
- * stringCapitalize('the fish is goad   with goat-1ss','all')
+ * strCapitalize('the fish is goad   with goat-1ss','all')
  *=> 'The Fish Is Goad   With Goat-1ss'
- * stringCapitalize('the fish is goad   with goat-1ss')
+ * strCapitalize('the fish is goad   with goat-1ss')
  *=> 'The fish is goad   with goat-1ss'
  */
-function stringCapitalize (value, option) {
+function strCapitalize (value, option) {
 
     if (option === "all") {
 
-        return stringLowerCase(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
 
             return ss1.toUpperCase();
 
@@ -6888,7 +6888,7 @@ function stringCapitalize (value, option) {
 
     }
 
-    return stringLowerCase(value).replace(/([a-z]{1})/, function (ss1) {
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
 
         return ss1.toUpperCase();
 
@@ -6896,7 +6896,7 @@ function stringCapitalize (value, option) {
 
 }
 
-_stk.stringCapitalize=stringCapitalize;
+_stk.strCapitalize=strCapitalize;
 
 
 /**
@@ -6909,10 +6909,10 @@ _stk.stringCapitalize=stringCapitalize;
  * @returns {string} Returns escape string
  * @example
  *
- * stringEscape("yahii & adad ^ss")
+ * strEscape("yahii & adad ^ss")
  *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
  */
-function stringEscape (value, type) {
+function strEscape (value, type) {
 
     const typeVal = type || "entity";
 
@@ -6938,7 +6938,7 @@ function stringEscape (value, type) {
 
 }
 
-_stk.stringEscape=stringEscape;
+_stk.strEscape=strEscape;
 
 
 /**
@@ -6950,10 +6950,10 @@ _stk.stringEscape=stringEscape;
  * @returns {string} Returns Kebab sting data
  * @example
  *
- * stringKebabCase('the fish is goad   with goat-1ss')
+ * strKebab('the fish is goad   with goat-1ss')
  *=> 'the-fish-is-goad-with-goat-1ss'
  */
-function stringKebabCase (value) {
+function strKebab (value) {
 
     return stringSplit(toString(value))
         .split(" ")
@@ -6961,9 +6961,9 @@ function stringKebabCase (value) {
 
 }
 
-_stk.stringKebabCase=stringKebabCase;
+_stk.strKebab=strKebab;
 
-_stk.stringLowerCase=stringLowerCase;
+_stk.strLower=strLower;
 
 
 /**
@@ -6975,10 +6975,10 @@ _stk.stringLowerCase=stringLowerCase;
  * @returns {string} Returns Snake sting data
  * @example
  *
- * stringSnakeCase('the fish is goad   with goat-1ss')
+ * strSnake('the fish is goad   with goat-1ss')
  *=> 'the_fish_is_goad_with_goat_1ss'
  */
-function stringSnakeCase (value) {
+function strSnake (value) {
 
     return stringSplit(toString(value))
         .split(" ")
@@ -6986,7 +6986,7 @@ function stringSnakeCase (value) {
 
 }
 
-_stk.stringSnakeCase=stringSnakeCase;
+_stk.strSnake=strSnake;
 
 
 /**
@@ -7000,10 +7000,10 @@ _stk.stringSnakeCase=stringSnakeCase;
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringSubs('The fish is goad   with Goat-1ss')
+ * strSubs('The fish is goad   with Goat-1ss')
  *=> 'the fish is goad   with goat-1ss
  */
-function stringSubs (value, minValue, maxValue) {
+function strSubs (value, minValue, maxValue) {
 
     if (has(maxValue)) {
 
@@ -7015,9 +7015,9 @@ function stringSubs (value, minValue, maxValue) {
 
 }
 
-_stk.stringSubs=stringSubs;
+_stk.strSubs=strSubs;
 
-_stk.stringUnEscape=stringUnEscape;
+_stk.strUnEscape=strUnEscape;
 
 
 /**
@@ -7029,16 +7029,16 @@ _stk.stringUnEscape=stringUnEscape;
  * @returns {string} Returns camel sting data
  * @example
  *
- * stringUpperCase('The fish is goad   with Goat-1ss')
+ * strUpper('The fish is goad   with Goat-1ss')
  *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
  */
-function stringUpperCase (value) {
+function strUpper (value) {
 
     return toString(value).toUpperCase();
 
 }
 
-_stk.stringUpperCase=stringUpperCase;
+_stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
 
@@ -7399,7 +7399,7 @@ function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
-        return indexOfExist(stringLowerCase(value), [
+        return indexOfExist(strLower(value), [
             'true',
             't',
             'yes',
@@ -7596,40 +7596,6 @@ _stk.toString=toString;
 
 
 /**
- * String trim at the end only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in end of string
- * @example
- *
- * trimEnd(' The fish is goad   with Goat-1ss ')
- *=> ' The fish is goad   with Goat-1ss'
- */
-function trimEnd (value, remove_value) {
-
-    const rx = new RegExp('[' + whitespace + ']*$');
-
-    let rawValue= toString(value).replace(rx, "");
-
-    if (indexOfExist(getTypeof(remove_value), ["string"])) {
-
-        const regData = new RegExp("("+remove_value+")$", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-_stk.trimEnd=trimEnd;
-
-
-/**
  * String trim  at the start only
  *
  * @since 1.4.86
@@ -7651,6 +7617,37 @@ function trimStart (value, remove_value) {
     if (indexOfExist(getTypeof(remove_value), ["string"])) {
 
         const regData = new RegExp("^("+remove_value+")", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+/**
+ * String trim at the end only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in end of string
+ * @example
+ *
+ * trimEnd(' The fish is goad   with Goat-1ss ')
+ *=> ' The fish is goad   with Goat-1ss'
+ */
+function trimEnd (value, remove_value) {
+
+    const rx = new RegExp('[' + whitespace + ']*$');
+
+    let rawValue= toString(value).replace(rx, "");
+
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
+
+        const regData = new RegExp("("+remove_value+")$", "g");
 
         rawValue = rawValue.replace(regData, "");
 
@@ -7696,6 +7693,8 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
+
+_stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
 

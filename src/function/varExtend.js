@@ -3,7 +3,7 @@ const getTypeof = require('./getTypeof');
 const indexOfExist = require('./indexOfExist');
 const getKey = require('./getKey');
 const curryArg = require("../core/curryArg");
-const stringLowerCase = require("./stringLowerCase");
+const strLower = require("./strLower");
 
 /**
  * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
@@ -40,9 +40,9 @@ function varExtend (objectValue, objectValueReplace) {
 
                 if (has(rawObjectValue, key)) {
 
-                    if (indexOfExist(stringLowerCase(rawObjectValue[key]), getKey(jsn_bool))) {
+                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
 
-                        jsn_s[key]=jsn_bool[stringLowerCase(rawObjectValue[key])];
+                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
 
                     } else {
 

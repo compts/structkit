@@ -10,7 +10,7 @@ import count from './count.js';
 
 import varExtend from './varExtend.js';
 
-import stringUnEscape from './stringUnEscape.js';
+import strUnEscape from './strUnEscape.js';
 
 import removeFromKey from './removeFromKey.js';
 
@@ -62,7 +62,7 @@ function parseString (value, config) {
 
     if (defaultConfig.unscapeEntity) {
 
-        data = stringUnEscape(data);
+        data = strUnEscape(data);
 
     }
 

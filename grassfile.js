@@ -39,7 +39,7 @@ function isTypeFunction (objectCallTypeAll, suffix) {
 
     structkit.each(objectCallTypeAll, (value) => {
 
-        const name = 'is'+structkit.stringCapitalize(value);
+        const name = 'is'+structkit.strCapitalize(value);
 
         stringCnt += `
 /**
@@ -128,7 +128,7 @@ exports.module=function (grassconf) {
 
                 data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
-                    const name = 'is'+structkit.stringCapitalize(value);
+                    const name = 'is'+structkit.strCapitalize(value);
 
                     return "export const "+name+"="+name+"_default;";
 
@@ -164,7 +164,7 @@ exports.module=function (grassconf) {
                         "transformFirstFile": () => null,
                         "transformLastFile": () => isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
-                            const name = 'is'+structkit.stringCapitalize(value);
+                            const name = 'is'+structkit.strCapitalize(value);
 
                             return "exports."+name+"="+name+"_default;";
 
@@ -204,7 +204,7 @@ exports.module=function (grassconf) {
 
                                 return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(function (value) {
 
-                                    const name = 'is'+structkit.stringCapitalize(value);
+                                    const name = 'is'+structkit.strCapitalize(value);
 
                                     return "_stk."+name+"="+name+";";
 

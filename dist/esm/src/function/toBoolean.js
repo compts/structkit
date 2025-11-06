@@ -1,4 +1,4 @@
-import stringLowerCase from './stringLowerCase.js';
+import strLower from './strLower.js';
 
 import getTypeof from './getTypeof.js';
 
@@ -22,7 +22,7 @@ function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
-        return indexOfExist(stringLowerCase(value), [
+        return indexOfExist(strLower(value), [
             'true',
             't',
             'yes',
