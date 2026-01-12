@@ -1426,6 +1426,129 @@ _stk.append=append;
 
 
 /**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+function arraySlice (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            var raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            var raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (value, key) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var argsub=arguments;
+
+        if (argsub.length < one) {
+
+            return [];
+
+        }
+
+        var return_val=toArray(first(argsub));
+        var arrayValue = toArray(arraySlice(argsub, one));
+
+        each(arrayValue, function (value) {
+
+            return_val = return_val.concat(toArray(value));
+
+        });
+
+        return return_val;
+
+    }, arg);
+
+}
+
+_stk.arrayConcat=arrayConcat;
+
+
+/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -1518,131 +1641,7 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat;
 
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-function arraySlice (objectValue, min, max) {
-
-    var ran_var=[];
-    var defaultValueZero=0;
-    var defaultValueNegativeOne=-1;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
-
-    if (has(min)) {
-
-        if (defaultValueZero > min) {
-
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
-
-        }
-
-    }
-
-    if (has(max)) {
-
-        if (defaultValueZero > max) {
-
-            var raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            var raw_ran_max =count(objectValue) + max;
-
-            if (raw_ran_min < raw_ran_max) {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
-
-            } else {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
-
-            }
-
-        }
-
-    }
-
-    each(objectValue, function (value, key) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
 _stk.arraySlice=arraySlice;
-
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var argsub=arguments;
-
-        if (argsub.length < one) {
-
-            return [];
-
-        }
-
-        var return_val=toArray(first(argsub));
-        var arrayValue = toArray(arraySlice(argsub, one));
-
-        each(arrayValue, function (value) {
-
-            return_val = return_val.concat(toArray(value));
-
-        });
-
-        return return_val;
-
-    }, arg);
-
-}
-
-_stk.arrayConcat=arrayConcat;
 
 
 /**
@@ -1798,6 +1797,35 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    var variable=empty(objectValue);
+
+    each(objectValue, function (value, key) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone;
 
 
 /**
@@ -2172,35 +2200,6 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    var variable=empty(objectValue);
-
-    each(objectValue, function (value, key) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
-
-}
-
-_stk.clone=clone;
-
 _stk.count=count;
 
 
@@ -2311,6 +2310,41 @@ _stk.empty=empty;
 
 
 /**
+ * To check if the two arguments are equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * equal('as', 'as')
+ * // => true
+ */
+function equal (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
+
+            return false;
+
+        }
+
+        return aa === bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.equal=equal;
+
+
+/**
  * Filter the data in for loop
  *
  * @since 1.0.1
@@ -2360,41 +2394,6 @@ function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
-
-
-/**
- * To check if the two arguments are equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * equal('as', 'as')
- * // => true
- */
-function equal (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
-
-            return false;
-
-        }
-
-        return aa === bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.equal=equal;
 
 _stk.first=first;
 
@@ -3374,8 +3373,6 @@ _stk.gte=gte;
 
 _stk.has=has;
 
-_stk.inc=inc;
-
 
 /**
  * Check if data is undefined
@@ -3416,6 +3413,8 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
+
+_stk.inc=inc;
 
 _stk.indexOf=indexOf;
 
@@ -3662,6 +3661,35 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3864,35 +3892,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6553,8 +6552,6 @@ function roundDecimal (value, maxValue) {
 
 _stk.roundDecimal=roundDecimal;
 
-_stk.selectInData=selectInData;
-
 
 /**
  * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
@@ -7124,6 +7121,8 @@ function strUpper (value) {
 
 _stk.strUpper=strUpper;
 
+_stk.subtract=subtract;
+
 
 /**
  * Swapping the value either string or array in there specific position
@@ -7175,8 +7174,6 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -7468,6 +7465,52 @@ _stk.toArray=toArray;
 
 
 /**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist(strLower(value), [
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ]);
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist(value, [one]);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
+
+
+/**
  * Logic in convert string or number to valid number
  *
  * @since 1.0.1
@@ -7541,52 +7584,6 @@ function toDouble (value, config) {
 }
 
 _stk.toDouble=toDouble;
-
-
-/**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist(strLower(value), [
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ]);
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist(value, [one]);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
 
 
 /**
@@ -7784,6 +7781,45 @@ _stk.trimStart=trimStart;
 
 
 /**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        var uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
+
+
+/**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
@@ -7828,45 +7864,6 @@ function union () {
 }
 
 _stk.union=union;
-
-
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        var uniqArrData = [];
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
 
 _stk.varExtend=varExtend;
 
@@ -8310,6 +8307,8 @@ function zip () {
 }
 
 _stk.zip=zip;
+
+_stk.selectInData=selectInData;
 
 
  })(typeof window !== "undefined" ? window : this);

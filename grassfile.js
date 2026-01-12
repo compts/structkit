@@ -68,7 +68,8 @@ function isTypeFunction (objectCallTypeAll, suffix) {
 exports.module=function (grassconf) {
 
     const grass_concat = grassconf.require("grass_concat");
-    const {convertIifeFunction} = grassconf.require("pack-extract");
+    const {convertIifeFunction, scriptComment} = grassconf.require("pack-extract");
+
 
     const packpier = grassconf.require("packpier");
 
@@ -249,6 +250,25 @@ exports.module=function (grassconf) {
 
             }))
             .pipe(grass_concat("dist/web/structkit-full.iife.js", {
+                "istruncate": true
+            }))
+            .pipe(grassconf.streamPipe(function (data) {
+
+                const getComment = scriptComment(data.readData());
+                let writeData = data.readData();
+
+                structkit.each(getComment, function (val) {
+
+                    writeData = writeData.replace(val.content, "");
+
+                });
+                writeData = writeData.replace(/\n/, "");
+
+                data.writeData(writeData);
+                data.done();
+
+            }))
+            .pipe(grass_concat("dist/web/structkit-mini.iife.js", {
                 "istruncate": true
             }));
 
