@@ -22,7 +22,7 @@ function flatten (arg) {
 
     return curryArg(function (rawValue) {
 
-        return baseReduce([], rawValue, function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(value) === "array") {
 
@@ -40,7 +40,7 @@ function flatten (arg) {
 
             return total;
 
-        });
+        }, [], rawValue);
 
     }, [arg]);
 

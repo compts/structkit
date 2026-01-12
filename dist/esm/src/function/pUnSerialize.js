@@ -6,6 +6,8 @@ import each from './each.js';
 
 import range from './range.js';
 
+import reduce from './reduce.js';
+
 import getValue from './getValue.js';
 
 import toArray from './toArray.js';
@@ -15,6 +17,8 @@ import first from './first.js';
 import arraySlice from './arraySlice.js';
 
 import convertValue from '../core/convertValue.js';
+
+import indexOf from './indexOf.js';
 
 /**
  * Create a serialize data if you are coming to php
@@ -53,7 +57,22 @@ function pUnSerialize (value) {
 function getObjectValue (value) {
 
     const splitOpen = value.split("{");
-    const splitClose = arraySlice(splitOpen, one).join("{")
+    const splitClose = reduce(function (total, mVal) {
+
+        let rawVal = mVal;
+
+        if (rawVal.match(/;(\})[a-z]:\d:(.*)/)) {
+
+            const spltRawVal = rawVal.split("}");
+
+            rawVal = spltRawVal.join("};");
+
+        }
+        total.push(rawVal);
+
+        return total;
+
+    }, [], arraySlice(splitOpen, one)).join("{")
         .replace(/\}[;]{1,}$/g, "");
 
     return splitClose;
@@ -144,12 +163,8 @@ function parseTypeValObj (value) {
 
         if (splitValue[zero] === "a") {
 
-            /*
-             *  Const splitOpen = value.split("{");
-             *  Const splitClose = splitOpen[one].replace(/\};$/g, "");
-             */
-
             let objValue = getObjectValue(value).split(";");
+
             const argVal = {};
             // This will help as check if the deep type was in array or json
             let isArrayValue = true;
@@ -164,12 +179,34 @@ function parseTypeValObj (value) {
                     isArrayValue = false;
 
                 }
-                const refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+
+                let refobjVal = "";
+                let isValidObject = false;
+                let rawCount = one;
+
+                if (objValue[one].match(/[a-z]:[0-9]+:\{[a-z]:[0-9]/g)) {
+
+                    rawCount = indexOf("}", objValue);
+                    refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+                    isValidObject = true;
+
+                }
+
+                refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
 
                 argVal[refobjKey] = refobjVal;
 
-                objValue = arraySlice(objValue, two);
-                counterArrayValue += one;
+                if (isValidObject) {
+
+                    objValue = arraySlice(objValue, rawCount + one);
+                    counterArrayValue += rawCount;
+
+                } else {
+
+                    objValue = arraySlice(objValue, two);
+                    counterArrayValue += one;
+
+                }
 
             });
 

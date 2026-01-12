@@ -22,20 +22,20 @@ function zip (...arg) {
 
         const varLimit = limit(rawValue, one);
 
-        return baseReduce([], first(rawValue), function (total, value, key) {
+        return baseReduce(function (total, value, key) {
 
-            total.push(baseReduce([value], varLimit, function (totalSub, valueSub) {
+            total.push(baseReduce(function (totalSub, valueSub) {
 
 
                 totalSub.push(valueSub[key]);
 
                 return totalSub;
 
-            }));
+            }, [value], varLimit));
 
             return total;
 
-        });
+        }, [], first(rawValue));
 
 
     }, arg);

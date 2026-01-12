@@ -7,6 +7,7 @@ import {expectType} from 'tsd';
 const one =1;
 const two =2;
 const three = 3;
+const four = 4;
 
 
 describe('CJS: calculate method', function () {
@@ -32,6 +33,14 @@ describe('CJS: calculate method', function () {
             "s": one,
             "s2": one
         }), two);
+
+    });
+
+    it('check calculate formula basic algebraic expression', function () {
+
+        assert.deepStrictEqual(calculate("2s2", {
+            "s2": two
+        }), four);
 
     });
 

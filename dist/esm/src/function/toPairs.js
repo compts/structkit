@@ -26,7 +26,7 @@ function toPairs (value) {
 
     }
 
-    return baseReduce([], value, function (total, subValue, subKey) {
+    return baseReduce(function (total, subValue, subKey) {
 
         const subArray = [];
 
@@ -36,7 +36,7 @@ function toPairs (value) {
 
         return total;
 
-    });
+    }, [], value);
 
 }
 

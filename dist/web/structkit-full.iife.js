@@ -726,8 +726,8 @@ function indexOf (value, objectValue) {
  *
  * @since 1.3.1
  * @category Predicate
- * @param {any} value Value for array lookup
- * @param {any[]} arrayObject Array
+ * @param {any=} value Value for array lookup
+ * @param {any[]=} arrayObject Array
  * @returns {boolean} Return boolean.
  * @example
  *
@@ -981,16 +981,16 @@ GlobalEach.prototype.isContinue = function (value) {
  *
  * @since 1.4.8
  * @category Core
+ * @param {any} func The data you want to reduce in function
  * @param {any} defaultValue Array in number
  * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
  * @returns {any} Returns the aggregrated.
  * @example
  *
- * baseReduce(2,[1,2],(total,value)=>total+value)
+ * baseReduce((total,value)=>total+value, 2,[1,2])
  * // => 5
  */
-function baseReduce (defaultValue, listData, func) {
+function baseReduce (func, defaultValue, listData) {
 
     var that = this;
 
@@ -1335,11 +1335,11 @@ function toArray (value) {
  */
 function baseCountValidList (objectValue) {
 
-    return baseReduce(zero, objectValue, function (total, value) {
+    return baseReduce(function (total, value) {
 
         var values = toArray(value);
 
-        total +=baseReduce(zero, values, function (subtotal, subvalue) {
+        total +=baseReduce(function (subtotal, subvalue) {
 
             if (subvalue && getTypeofInternal(subvalue) === "boolean") {
 
@@ -1349,11 +1349,11 @@ function baseCountValidList (objectValue) {
 
             return subtotal;
 
-        });
+        }, zero, values);
 
         return total;
 
-    });
+    }, zero, objectValue);
 
 }
 
@@ -1373,13 +1373,13 @@ function allValid () {
 
     var arg=arguments;
 
-    var mapCount = baseReduce(zero, arg, function (total, value) {
+    var mapCount = baseReduce(function (total, value) {
 
         total+= count(toArray(value));
 
         return total;
 
-    });
+    }, zero, arg);
 
     return curryArg(function () {
 
@@ -1423,129 +1423,6 @@ function append (objectValue, val, key) {
 }
 
 _stk.append=append;
-
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-function arraySlice (objectValue, min, max) {
-
-    var ran_var=[];
-    var defaultValueZero=0;
-    var defaultValueNegativeOne=-1;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
-
-    if (has(min)) {
-
-        if (defaultValueZero > min) {
-
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
-
-        }
-
-    }
-
-    if (has(max)) {
-
-        if (defaultValueZero > max) {
-
-            var raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            var raw_ran_max =count(objectValue) + max;
-
-            if (raw_ran_min < raw_ran_max) {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
-
-            } else {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
-
-            }
-
-        }
-
-    }
-
-    each(objectValue, function (value, key) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var argsub=arguments;
-
-        if (argsub.length < one) {
-
-            return [];
-
-        }
-
-        var return_val=toArray(first(argsub));
-        var arrayValue = toArray(arraySlice(argsub, one));
-
-        each(arrayValue, function (value) {
-
-            return_val = return_val.concat(toArray(value));
-
-        });
-
-        return return_val;
-
-    }, arg);
-
-}
-
-_stk.arrayConcat=arrayConcat;
 
 
 /**
@@ -1641,7 +1518,131 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat;
 
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+function arraySlice (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            var raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            var raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (value, key) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
 _stk.arraySlice=arraySlice;
+
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var argsub=arguments;
+
+        if (argsub.length < one) {
+
+            return [];
+
+        }
+
+        var return_val=toArray(first(argsub));
+        var arrayValue = toArray(arraySlice(argsub, one));
+
+        each(arrayValue, function (value) {
+
+            return_val = return_val.concat(toArray(value));
+
+        });
+
+        return return_val;
+
+    }, arg);
+
+}
+
+_stk.arrayConcat=arrayConcat;
 
 
 /**
@@ -1723,7 +1724,7 @@ function arraySum (arrayObject, delimeter) {
     var arrayObjects=arrayObject||[];
     var delimeters=delimeter||zero;
 
-    var sum = baseReduce(zero, arrayObjects, add);
+    var sum = baseReduce(add, zero, arrayObjects);
 
     return isEmpty(delimeters)
         ? parseInt(sum)
@@ -1918,7 +1919,7 @@ function calculate (formula, args) {
 
             var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
-            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
+            rawFormula = algbraicExpr(rawFormula).replace(argsKey, function (mm, m1) {
 
                 return rawArgs[m1];
 
@@ -1926,7 +1927,7 @@ function calculate (formula, args) {
 
         }
 
-        var strFormula = rawFormula.replace(/\((.*?)\)/, function (mm, m1) {
+        var strFormula = algbraicExpr(rawFormula).replace(/\((.*?)\)/, function (mm, m1) {
 
             return compute(m1);
 
@@ -2143,6 +2144,32 @@ function convert (a1, b1, pos) {
 
 }
 
+/**
+ * Define the formula represented in algebra
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string} formula The second number in an addition.
+ * @returns {boolean|any} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 1
+ */
+function algbraicExpr (formula) {
+
+    var regNumberVariable = /^([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)$/g;
+
+    if (regNumberVariable.test(formula)) {
+
+        return formula.replace(regNumberVariable, "$1 * $2");
+
+    }
+
+    return formula;
+
+}
+
 _stk.calculate=calculate;
 
 
@@ -2284,41 +2311,6 @@ _stk.empty=empty;
 
 
 /**
- * To check if the two arguments are equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * equal('as', 'as')
- * // => true
- */
-function equal (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
-
-            return false;
-
-        }
-
-        return aa === bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.equal=equal;
-
-
-/**
  * Filter the data in for loop
  *
  * @since 1.0.1
@@ -2369,6 +2361,41 @@ function filter (func, objectValue) {
 
 _stk.filter=filter;
 
+
+/**
+ * To check if the two arguments are equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * equal('as', 'as')
+ * // => true
+ */
+function equal (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        if (getTypeofInternal(aa) !== getTypeofInternal(bb)) {
+
+            return false;
+
+        }
+
+        return aa === bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.equal=equal;
+
 _stk.first=first;
 
 
@@ -2388,7 +2415,7 @@ function flatten (arg) {
 
     return curryArg(function (rawValue) {
 
-        return baseReduce([], rawValue, function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(value) === "array") {
 
@@ -2406,7 +2433,7 @@ function flatten (arg) {
 
             return total;
 
-        });
+        }, [], rawValue);
 
     }, [arg]);
 
@@ -3121,7 +3148,7 @@ function fromPairs (value, deepLimit) {
 
     }
 
-    return baseReduce({}, value, function (total, subBalue) {
+    return baseReduce(function (total, subBalue) {
 
         if (getTypeofInternal(subBalue) === "array") {
 
@@ -3137,7 +3164,7 @@ function fromPairs (value, deepLimit) {
 
         return total;
 
-    });
+    }, {}, value);
 
 }
 
@@ -3179,6 +3206,42 @@ _stk.getData=getData;
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+function getUniq (option) {
+
+    var optionValue = option||"default";
+
+    if (optionValue === "default") {
+
+        var defaultRandomValue=2;
+        var defaultSubstrValue=36;
+        var str_rand1=Math
+            .random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue)+Math.random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue);
+
+        return str_rand1;
+
+    }
+
+    return "";
+
+}
+
+_stk.getUniq=getUniq;
 
 
 /**
@@ -3279,42 +3342,6 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-function getUniq (option) {
-
-    var optionValue = option||"default";
-
-    if (optionValue === "default") {
-
-        var defaultRandomValue=2;
-        var defaultSubstrValue=36;
-        var str_rand1=Math
-            .random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue)+Math.random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue);
-
-        return str_rand1;
-
-    }
-
-    return "";
-
-}
-
-_stk.getUniq=getUniq;
 
 
 /**
@@ -3346,6 +3373,8 @@ function gte (value1, value2) {
 _stk.gte=gte;
 
 _stk.has=has;
+
+_stk.inc=inc;
 
 
 /**
@@ -3387,8 +3416,6 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
-
-_stk.inc=inc;
 
 _stk.indexOf=indexOf;
 
@@ -3635,35 +3662,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3866,6 +3864,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -4376,6 +4403,40 @@ _stk.pSerialize=pSerialize;
 
 
 /**
+ * Reduce function
+ *
+ * @since 1.4.8
+ * @category Function
+ * @param {any} func Callback function for how to map the data
+ * @param {any} defaultValue Starting value that you want to use as reference
+ * @param {any[]} listData Array value that you want to map
+ * @returns {any} Return redue value
+ * @example
+ *
+ * reduce((total,value)=>total+value, 2,[1,2])
+ * // => 5
+ */
+function reduce (func, defaultValue, listData) {
+
+    var that = this;
+
+    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
+
+        return baseReduce.apply(that, [
+            rawFunc,
+            rawDefaultValue,
+            rawListData
+        ]);
+
+    }, [
+        func,
+        defaultValue,
+        listData
+    ], three);
+
+}
+
+/**
  * Create a serialize data if you are coming to php
  *
  * @since 1.4.874
@@ -4412,7 +4473,22 @@ function pUnSerialize (value) {
 function getObjectValue (value) {
 
     var splitOpen = value.split("{");
-    var splitClose = arraySlice(splitOpen, one).join("{")
+    var splitClose = reduce(function (total, mVal) {
+
+        var rawVal = mVal;
+
+        if (rawVal.match(/;(\})[a-z]:\d:(.*)/)) {
+
+            var spltRawVal = rawVal.split("}");
+
+            rawVal = spltRawVal.join("};");
+
+        }
+        total.push(rawVal);
+
+        return total;
+
+    }, [], arraySlice(splitOpen, one)).join("{")
         .replace(/\}[;]{1,}$/g, "");
 
     return splitClose;
@@ -4503,12 +4579,8 @@ function parseTypeValObj (value) {
 
         if (splitValue[zero] === "a") {
 
-            /*
-             *  Const splitOpen = value.split("{");
-             *  Const splitClose = splitOpen[one].replace(/\};$/g, "");
-             */
-
             var objValue = getObjectValue(value).split(";");
+
             var argVal = {};
             // This will help as check if the deep type was in array or json
             var isArrayValue = true;
@@ -4523,12 +4595,34 @@ function parseTypeValObj (value) {
                     isArrayValue = false;
 
                 }
-                var refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+
+                var refobjVal = "";
+                var isValidObject = false;
+                var rawCount = one;
+
+                if (objValue[one].match(/[a-z]:[0-9]+:\{[a-z]:[0-9]/g)) {
+
+                    rawCount = indexOf("}", objValue);
+                    refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+                    isValidObject = true;
+
+                }
+
+                refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
 
                 argVal[refobjKey] = refobjVal;
 
-                objValue = arraySlice(objValue, two);
-                counterArrayValue += one;
+                if (isValidObject) {
+
+                    objValue = arraySlice(objValue, rawCount + one);
+                    counterArrayValue += rawCount;
+
+                } else {
+
+                    objValue = arraySlice(objValue, two);
+                    counterArrayValue += one;
+
+                }
 
             });
 
@@ -6264,7 +6358,7 @@ function pipe () {
 
     var rawValue=arguments;
 
-        return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(value) === "function") {
 
@@ -6274,7 +6368,7 @@ function pipe () {
 
             return total;
 
-        });
+        }, pipeConst.apply(that, rawValue), varLimit);
 
     // eslint-disable-next-line padded-blocks
     // eslint-disable-next-line no-undefined
@@ -6322,41 +6416,6 @@ function random (valueArray, minValue, maxValue) {
 _stk.random=random;
 
 _stk.range=range;
-
-
-/**
- * Reduce function
- *
- * @since 1.4.8
- * @category Function
- * @param {any} defaultValue Starting value that you want to use as reference
- * @param {any[]} listData Array value that you want to map
- * @param {any} func Callback function for how to map the data
- * @returns {any} Return redue value
- * @example
- *
- * reduce(2,[1,2],(total,value)=>total+value)
- * // => 5
- */
-function reduce (defaultValue, listData, func) {
-
-    var that = this;
-
-    return curryArg(function (rawDefaultValue, rawListData, rawFunc) {
-
-        return baseReduce.apply(that, [
-            rawDefaultValue,
-            rawListData,
-            rawFunc
-        ]);
-
-    }, [
-        defaultValue,
-        listData,
-        func
-    ], three);
-
-}
 
 _stk.reduce=reduce;
 
@@ -6529,7 +6588,7 @@ function setData (split_str, objectValue, updateValue) {
 
         var spl= schemaSplitData(rawSplit_str);
 
-        return baseReduce(rawObjectValue, [spl], function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(total) === "json") {
 
@@ -6547,7 +6606,7 @@ function setData (split_str, objectValue, updateValue) {
 
             return total;
 
-        });
+        }, rawObjectValue, [spl]);
 
     }, [
         split_str,
@@ -7065,8 +7124,6 @@ function strUpper (value) {
 
 _stk.strUpper=strUpper;
 
-_stk.subtract=subtract;
-
 
 /**
  * Swapping the value either string or array in there specific position
@@ -7118,6 +7175,8 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+
+_stk.subtract=subtract;
 
 
 /**
@@ -7257,13 +7316,13 @@ function templateValue (templateString, data, option) {
 
         });
 
-        var sourceData = reduce("", rawData, function (total, vv, kk) {
+        var sourceData = reduce(function (total, vv, kk) {
 
             return total+"var "+toString(kk)+" = "+(isJson(vv)
                 ?parseString(vv)
                 :vv)+";\n";
 
-        });
+        }, "", rawData);
 
         source += "';\n";
 
@@ -7341,7 +7400,7 @@ function syntaxCleanup (data, option) {
 
     }
 
-    return reduce("", str_split, function (total, vv, kk) {
+    return reduce(function (total, vv, kk) {
 
         if (kk>one) {
 
@@ -7399,59 +7458,13 @@ function syntaxCleanup (data, option) {
 
         return total+vv;
 
-    });
+    }, "", str_split);
 
 }
 
 _stk.templateValue=templateValue;
 
 _stk.toArray=toArray;
-
-
-/**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist(strLower(value), [
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ]);
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist(value, [one]);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
 
 
 /**
@@ -7531,6 +7544,52 @@ _stk.toDouble=toDouble;
 
 
 /**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist(strLower(value), [
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ]);
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist(value, [one]);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
+
+
+/**
  * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
@@ -7573,7 +7632,7 @@ function toPairs (value) {
 
     }
 
-    return baseReduce([], value, function (total, subValue, subKey) {
+    return baseReduce(function (total, subValue, subKey) {
 
         var subArray = [];
 
@@ -7583,7 +7642,7 @@ function toPairs (value) {
 
         return total;
 
-    });
+    }, [], value);
 
 }
 
@@ -7744,7 +7803,7 @@ function union () {
 
     var rawValue=arguments;
 
-        return baseReduce([], rawValue, function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(value) === "array") {
 
@@ -7762,7 +7821,7 @@ function union () {
 
             return total;
 
-        });
+        }, [], rawValue);
 
     }, arg);
 
@@ -8232,19 +8291,19 @@ function zip () {
 
         var varLimit = limit(rawValue, one);
 
-        return baseReduce([], first(rawValue), function (total, value, key) {
+        return baseReduce(function (total, value, key) {
 
-            total.push(baseReduce([value], varLimit, function (totalSub, valueSub) {
+            total.push(baseReduce(function (totalSub, valueSub) {
 
                 totalSub.push(valueSub[key]);
 
                 return totalSub;
 
-            }));
+            }, [value], varLimit));
 
             return total;
 
-        });
+        }, [], first(rawValue));
 
     }, arg);
 

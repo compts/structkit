@@ -9,7 +9,7 @@ export default lastIndexOf;
  * @returns {any} Return get the index or array
  * @example
  *
- * lastIndexOf([1,2], 1)
+ * lastIndexOf(1, [1,2])
  * // => 0
  */
 declare function lastIndexOf(value: any, objectValue: any): any;

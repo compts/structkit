@@ -21,7 +21,7 @@ function union (...arg) {
     return curryArg(function (...rawValue) {
 
 
-        return baseReduce([], rawValue, function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(value) === "array") {
 
@@ -39,7 +39,7 @@ function union (...arg) {
 
             return total;
 
-        });
+        }, [], rawValue);
 
 
     }, arg);

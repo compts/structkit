@@ -4,12 +4,12 @@ export default indexOfExist;
  *
  * @since 1.3.1
  * @category Predicate
- * @param {any} value Value for array lookup
- * @param {any[]} arrayObject Array
+ * @param {any=} value Value for array lookup
+ * @param {any[]=} arrayObject Array
  * @returns {boolean} Return boolean.
  * @example
  *
  * indexOfExist(32, [312])
  * // => false
  */
-declare function indexOfExist(value: any, arrayObject: any[]): boolean;
+declare function indexOfExist(value?: any | undefined, arrayObject?: any[] | undefined): boolean;

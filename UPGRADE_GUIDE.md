@@ -6,6 +6,7 @@ In this upcoming release 1.4.9,
 - getData
 - jsonNEWArray
 - mapGetData
+- reduce
 - setData
 - selectInData
 - sortBy
@@ -54,6 +55,13 @@ OLD
 ``mapGetData([{"Asd":1}],"Asd")``
 NEW 
 ``mapGetData("Asd",[{"Asd":1}])``
+
+### reduce
+OLD 
+``reduce([],[1,2],function(value) { return value+2 } )``
+NEW 
+``reduce(function(value) { return value+2 } ,[],[1,2])``
+
 ### setData
 OLD 
 ``setData({"s":1},"s",2)``

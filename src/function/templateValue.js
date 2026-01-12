@@ -94,13 +94,13 @@ function templateValue (templateString, data, option) {
 
         });
 
-        const sourceData = reduce("", rawData, function (total, vv, kk) {
+        const sourceData = reduce(function (total, vv, kk) {
 
             return total+"var "+toString(kk)+" = "+(isJson(vv)
                 ?parseString(vv)
                 :vv)+";\n";
 
-        });
+        }, "", rawData);
 
         source += "';\n";
 
@@ -185,7 +185,7 @@ function syntaxCleanup (data, option) {
     }
 
 
-    return reduce("", str_split, function (total, vv, kk) {
+    return reduce(function (total, vv, kk) {
 
 
         if (kk>one) {
@@ -245,7 +245,7 @@ function syntaxCleanup (data, option) {
 
         return total+vv;
 
-    });
+    }, "", str_split);
 
 }
 module.exports=templateValue;

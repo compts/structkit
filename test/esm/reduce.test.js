@@ -12,14 +12,14 @@ describe('ESM: reduce method', function () {
 
     it('check reduce array sum', function () {
 
-        assert.deepStrictEqual(reduce(zero, [
-            one,
-            two
-        ], function (total, value) {
+        assert.deepStrictEqual(reduce(function (total, value) {
 
             return total+value;
 
-        }), three);
+        }, zero, [
+            one,
+            two
+        ]), three);
 
     });
 

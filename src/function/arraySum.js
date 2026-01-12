@@ -25,7 +25,7 @@ function arraySum (arrayObject, delimeter) {
     const arrayObjects=arrayObject||[];
     const delimeters=delimeter||zero;
 
-    const sum = baseReduce(zero, arrayObjects, add);
+    const sum = baseReduce(add, zero, arrayObjects);
 
     return isEmpty(delimeters)
         ? parseInt(sum)

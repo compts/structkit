@@ -19,13 +19,13 @@ const {zero} = require("../variable/defaultValue");
  */
 function allValid (...arg) {
 
-    const mapCount = baseReduce(zero, arg, function (total, value) {
+    const mapCount = baseReduce(function (total, value) {
 
         total+= count(toArray(value));
 
         return total;
 
-    });
+    }, zero, arg);
 
     return curryArg(function (...rawValue) {
 

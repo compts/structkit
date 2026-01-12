@@ -9,31 +9,31 @@ import {three} from '../variable/defaultValue.js';
  *
  * @since 1.4.8
  * @category Function
+ * @param {any} func Callback function for how to map the data
  * @param {any} defaultValue Starting value that you want to use as reference
  * @param {any[]} listData Array value that you want to map
- * @param {any} func Callback function for how to map the data
  * @returns {any} Return redue value
  * @example
  *
- * reduce(2,[1,2],(total,value)=>total+value)
+ * reduce((total,value)=>total+value, 2,[1,2])
  * // => 5
  */
-function reduce (defaultValue, listData, func) {
+function reduce (func, defaultValue, listData) {
 
     const that = this;
 
-    return curryArg(function (rawDefaultValue, rawListData, rawFunc) {
+    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
         return baseReduce.apply(that, [
+            rawFunc,
             rawDefaultValue,
-            rawListData,
-            rawFunc
+            rawListData
         ]);
 
     }, [
+        func,
         defaultValue,
-        listData,
-        func
+        listData
     ], three);
 
 }

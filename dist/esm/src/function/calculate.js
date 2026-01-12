@@ -41,7 +41,7 @@ function calculate (formula, args) {
 
             const argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
-            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
+            rawFormula = algbraicExpr(rawFormula).replace(argsKey, function (mm, m1) {
 
                 return rawArgs[m1];
 
@@ -49,7 +49,7 @@ function calculate (formula, args) {
 
         }
 
-        const strFormula = rawFormula.replace(/\((.*?)\)/, function (mm, m1) {
+        const strFormula = algbraicExpr(rawFormula).replace(/\((.*?)\)/, function (mm, m1) {
 
             return compute(m1);
 
@@ -263,6 +263,32 @@ function convert (a1, b1, pos) {
     }
 
     return b1;
+
+}
+
+/**
+ * Define the formula represented in algebra
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string} formula The second number in an addition.
+ * @returns {boolean|any} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 1
+ */
+function algbraicExpr (formula) {
+
+    const regNumberVariable = /^([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)$/g;
+
+    if (regNumberVariable.test(formula)) {
+
+        return formula.replace(regNumberVariable, "$1 * $2");
+
+    }
+
+    return formula;
 
 }
 export default calculate;

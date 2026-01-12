@@ -18,11 +18,11 @@ const {zero, one} = require("../variable/defaultValue");
  */
 function baseCountValidList (objectValue) {
 
-    return baseReduce(zero, objectValue, function (total, value) {
+    return baseReduce(function (total, value) {
 
         const values = toArray(value);
 
-        total +=baseReduce(zero, values, function (subtotal, subvalue) {
+        total +=baseReduce(function (subtotal, subvalue) {
 
 
             if (subvalue && getTypeofInternal(subvalue) === "boolean") {
@@ -33,11 +33,11 @@ function baseCountValidList (objectValue) {
 
             return subtotal;
 
-        });
+        }, zero, values);
 
         return total;
 
-    });
+    }, zero, objectValue);
 
 }
 module.exports = baseCountValidList;

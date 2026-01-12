@@ -26,7 +26,7 @@ function pipe (...arg) {
 
     return curryArg(function (...rawValue) {
 
-        return baseReduce(pipeConst.apply(that, rawValue), varLimit, function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(value) === "function") {
 
@@ -36,7 +36,7 @@ function pipe (...arg) {
 
             return total;
 
-        });
+        }, pipeConst.apply(that, rawValue), varLimit);
 
 
     // eslint-disable-next-line padded-blocks

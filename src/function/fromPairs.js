@@ -30,7 +30,7 @@ function fromPairs (value, deepLimit) {
 
     }
 
-    return baseReduce({}, value, function (total, subBalue) {
+    return baseReduce(function (total, subBalue) {
 
         if (getTypeofInternal(subBalue) === "array") {
 
@@ -46,7 +46,7 @@ function fromPairs (value, deepLimit) {
 
         return total;
 
-    });
+    }, {}, value);
 
 }
 

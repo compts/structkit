@@ -6,16 +6,16 @@ const each = require('../function/each');
  *
  * @since 1.4.8
  * @category Core
+ * @param {any} func The data you want to reduce in function
  * @param {any} defaultValue Array in number
  * @param {any[]} listData decimal point and default value is
- * @param {any} func The data you want to map
  * @returns {any} Returns the aggregrated.
  * @example
  *
- * baseReduce(2,[1,2],(total,value)=>total+value)
+ * baseReduce((total,value)=>total+value, 2,[1,2])
  * // => 5
  */
-function baseReduce (defaultValue, listData, func) {
+function baseReduce (func, defaultValue, listData) {
 
     const that = this;
 

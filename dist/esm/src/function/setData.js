@@ -50,7 +50,7 @@ function setData (split_str, objectValue, updateValue) {
 
         const spl= schemaSplitData(rawSplit_str);
 
-        return baseReduce(rawObjectValue, [spl], function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(total) === "json") {
 
@@ -68,7 +68,7 @@ function setData (split_str, objectValue, updateValue) {
 
             return total;
 
-        });
+        }, rawObjectValue, [spl]);
 
     }, [
         split_str,
