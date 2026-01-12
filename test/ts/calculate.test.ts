@@ -8,6 +8,7 @@ const one =1;
 const two =2;
 const three = 3;
 const four = 4;
+const seventyOne = 71;
 
 
 describe('CJS: calculate method', function () {
@@ -58,7 +59,14 @@ describe('CJS: calculate method', function () {
             "s2": two
         }), one);
     });
+    it('check calculate formula 2 algebraic expression', function () {
 
+        assert.deepStrictEqual(calculate("4x1+5y", {
+            "x1": 4,
+            "y": 11
+        }), seventyOne);
+
+    });
     it('check calculate formula text in factorial', function () {
 
         assert.deepStrictEqual(calculate("s2!+s!", {

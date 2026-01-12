@@ -16,6 +16,8 @@ __=__p
  */
 
 _stk.__=__;
+
+
 var negOne = -1;
 var zero = 0;
 var one = 1;
@@ -247,35 +249,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
 
 /**
  * Check if object has value or null or undefined
@@ -1645,6 +1618,32 @@ _stk.arraySlice=arraySlice;
 
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+/**
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
@@ -1955,7 +1954,7 @@ function calculate (formula, args) {
 
         }
 
-        var strFormula = algbraicExpr(rawFormula).replace(/\((.*?)\)/, function (mm, m1) {
+        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
 
             return compute(m1);
 
@@ -1998,6 +1997,7 @@ function compute (formula) {
         }
 
     }
+
     if (count(matches) === two) {
 
         if (matches[zero] === "-") {
@@ -2181,16 +2181,16 @@ function convert (a1, b1, pos) {
  * @returns {boolean|any} Returns the total.
  * @example
  *
- * compute("1+1")
+ * algbraicExpr("1+1")
  *=> 1
  */
 function algbraicExpr (formula) {
 
-    var regNumberVariable = /^([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)$/g;
+    var regNumberVariable = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)\b/g;
 
     if (regNumberVariable.test(formula)) {
 
-        return formula.replace(regNumberVariable, "$1 * $2");
+        return formula.replace(regNumberVariable, "($1 * $2)");
 
     }
 
@@ -2201,31 +2201,6 @@ function algbraicExpr (formula) {
 _stk.calculate=calculate;
 
 _stk.count=count;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.874
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 
 
 /**
@@ -2305,6 +2280,31 @@ _stk.defaultTo=defaultTo;
 _stk.divide=divide;
 
 _stk.each=each;
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.874
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 
 _stk.empty=empty;
 
@@ -3373,6 +3373,8 @@ _stk.gte=gte;
 
 _stk.has=has;
 
+_stk.add=add;
+
 
 /**
  * Check if data is undefined
@@ -3661,35 +3663,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3744,6 +3717,35 @@ function mapGetData (valueFormat, objectValue) {
 }
 
 _stk.mapGetData=mapGetData;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -4301,6 +4303,53 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+
+/**
+ * Check if data was executed once
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} key Either JSON or array
+ * @param {any=} defaultValue Check the key of value
+ * @param {any=} objectValue if value not exist, this value will be return
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * prop('as','as2',{'as':1})
+ * // => 1
+ */
+function once (key, defaultValue, objectValue) {
+
+    return curryArg(function (rawKey, rawDefaultValue, rawObjectValue) {
+
+        if (!has(value2)) {
+
+            if (has(objectValue)) {
+
+                return objectValue;
+
+            }
+
+            return value1;
+
+        }
+
+        if (has(objectValue, value1)) {
+
+            return objectValue[value1];
+
+        }
+
+        return value2;
+
+    }, [
+        key, defaultValue, objectValue
+    ]);
+
+}
+
+_stk.once=once;
 
 
 /**
@@ -6552,6 +6601,8 @@ function roundDecimal (value, maxValue) {
 
 _stk.roundDecimal=roundDecimal;
 
+_stk.selectInData=selectInData;
+
 
 /**
  * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
@@ -7781,45 +7832,6 @@ _stk.trimStart=trimStart;
 
 
 /**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        var uniqArrData = [];
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
-
-
-/**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
@@ -7864,6 +7876,45 @@ function union () {
 }
 
 _stk.union=union;
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        var uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
 
 _stk.varExtend=varExtend;
 
@@ -8307,8 +8358,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-
-_stk.selectInData=selectInData;
 
 
  })(typeof window !== "undefined" ? window : this);

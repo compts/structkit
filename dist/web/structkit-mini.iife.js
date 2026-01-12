@@ -6,7 +6,9 @@ __=__p
 
 
 _stk.__=__;
-var negOne = -1;var zero = 0;
+
+var negOne = -1;
+var zero = 0;
 var one = 1;
 var two = 2;
 var three = 3;
@@ -199,22 +201,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
-
-
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
 
 
 function has () {
@@ -1218,6 +1204,20 @@ _stk.arrayRepeat=arrayRepeat;
 _stk.arraySlice=arraySlice;
 
 
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
 function isEmpty (value) {
 
     var typeofvalue = getTypeofInternal(value);
@@ -1415,7 +1415,7 @@ function calculate (formula, args) {
 
         }
 
-        var strFormula = algbraicExpr(rawFormula).replace(/\((.*?)\)/, function (mm, m1) {
+        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
 
             return compute(m1);
 
@@ -1447,6 +1447,7 @@ function compute (formula) {
         }
 
     }
+
     if (count(matches) === two) {
 
         if (matches[zero] === "-") {
@@ -1611,11 +1612,11 @@ function convert (a1, b1, pos) {
 
 function algbraicExpr (formula) {
 
-    var regNumberVariable = /^([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)$/g;
+    var regNumberVariable = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)\b/g;
 
     if (regNumberVariable.test(formula)) {
 
-        return formula.replace(regNumberVariable, "$1 * $2");
+        return formula.replace(regNumberVariable, "($1 * $2)");
 
     }
 
@@ -1625,18 +1626,6 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 _stk.count=count;
-
-
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 
 
 function dec (value, default_value) {
@@ -1688,6 +1677,18 @@ function defaultTo (defaultValue, value2) {
 _stk.defaultTo=defaultTo;
 _stk.divide=divide;
 _stk.each=each;
+
+
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 _stk.empty=empty;
 
 
@@ -2471,6 +2472,7 @@ function gte (value1, value2) {
 
 _stk.gte=gte;
 _stk.has=has;
+_stk.add=add;
 
 
 function ifUndefined (objectValue, value1, value2) {
@@ -2657,22 +2659,6 @@ function limit (objectValue, minValue, maxValue, func) {
 _stk.limit=limit;
 
 
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2701,6 +2687,22 @@ function mapGetData (valueFormat, objectValue) {
 }
 
 _stk.mapGetData=mapGetData;
+
+
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 function mergeWithKey (objectValue, mergeValue) {
@@ -3085,6 +3087,39 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+
+function once (key, defaultValue, objectValue) {
+
+    return curryArg(function (rawKey, rawDefaultValue, rawObjectValue) {
+
+        if (!has(value2)) {
+
+            if (has(objectValue)) {
+
+                return objectValue;
+
+            }
+
+            return value1;
+
+        }
+
+        if (has(objectValue, value1)) {
+
+            return objectValue[value1];
+
+        }
+
+        return value2;
+
+    }, [
+        key, defaultValue, objectValue
+    ]);
+
+}
+
+_stk.once=once;
 
 
 function pSerialize (value) {
@@ -5029,6 +5064,7 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
+_stk.selectInData=selectInData;
 
 
 function setData (split_str, objectValue, updateValue) {
@@ -5879,33 +5915,6 @@ _stk.trimEnd=trimEnd;
 _stk.trimStart=trimStart;
 
 
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        var uniqArrData = [];
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
-
-
 function union () {
 
     var arg=arguments;
@@ -5939,6 +5948,33 @@ function union () {
 }
 
 _stk.union=union;
+
+
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        var uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
 _stk.varExtend=varExtend;
 _stk.where=where;
 
@@ -6153,7 +6189,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-_stk.selectInData=selectInData;
 
 
  })(typeof window !== "undefined" ? window : this);

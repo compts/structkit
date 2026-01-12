@@ -40,11 +40,12 @@ function calculate (formula, args) {
 
         }
 
-        const strFormula = algbraicExpr(rawFormula).replace(/\((.*?)\)/, function (mm, m1) {
+        const strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
 
             return compute(m1);
 
         });
+
 
         return Number(compute(strFormula));
 
@@ -83,6 +84,7 @@ function compute (formula) {
         }
 
     }
+
     if (count(matches) === two) {
 
         if (matches[zero] === "-") {
@@ -266,17 +268,16 @@ function convert (a1, b1, pos) {
  * @returns {boolean|any} Returns the total.
  * @example
  *
- * compute("1+1")
+ * algbraicExpr("1+1")
  *=> 1
  */
 function algbraicExpr (formula) {
 
-    const regNumberVariable = /^([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)$/g;
+    const regNumberVariable = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)\b/g;
 
     if (regNumberVariable.test(formula)) {
 
-
-        return formula.replace(regNumberVariable, "$1 * $2");
+        return formula.replace(regNumberVariable, "($1 * $2)");
 
     }
 
