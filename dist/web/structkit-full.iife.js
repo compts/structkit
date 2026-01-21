@@ -1,30 +1,11 @@
 (function(global){
 global._stk={};
-var __p = "@argument/place";
-
-__=__p
-
-/**
- * Placeholder of argument
- *
- * @since 1.4.8
- * @category String
- * @example
- *
- * __
- * // => @argument/place
- */
-
-_stk.__=__;
-
-
 var negOne = -1;
 var zero = 0;
 var one = 1;
 var two = 2;
 var three = 3;
-var four = 4;
-var ten = 4;
+var ten = 10;
 var oneHundred = 100;
 
 /**
@@ -60,6 +41,10 @@ function _has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
+
+var __p = "@argument/place";
+
+__=__p
 
 /**
  * Create your curry function
@@ -249,6 +234,35 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
 
 /**
  * Check if object has value or null or undefined
@@ -1618,32 +1632,6 @@ _stk.arraySlice=arraySlice;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-/**
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
@@ -1799,35 +1787,6 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    var variable=empty(objectValue);
-
-    each(objectValue, function (value, key) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
-
-}
-
-_stk.clone=clone;
-
-
-/**
  * Get key Array or JSON
  *
  * @since 1.0.1
@@ -1924,6 +1883,85 @@ function subtract (value1, value2) {
 }
 
 /**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    var variable=empty(objectValue);
+
+    each(objectValue, function (value, key) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+var operationType = [
+    ["^"],
+    [
+        "x",
+        "*",
+        "/"
+    ],
+    [
+        "+",
+        "-"
+    ]
+];
+
+/**
  * Logic in convert string to compute, similar on how the calculator works
  *
  * @since 1.4.8
@@ -1942,11 +1980,13 @@ function calculate (formula, args) {
 
     return curryArg(function (rawFormula, rawArgs) {
 
+        rawFormula = algbraicExpr(rawFormula);
+
         if (getTypeof(rawArgs) === "json") {
 
             var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
-            rawFormula = algbraicExpr(rawFormula).replace(argsKey, function (mm, m1) {
+            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
 
                 return rawArgs[m1];
 
@@ -1956,11 +1996,11 @@ function calculate (formula, args) {
 
         var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
 
-            return compute(m1);
+            return init_group(m1);
 
         });
 
-        return Number(compute(strFormula));
+        return Number(init_group(strFormula));
 
     }, [
         formula,
@@ -1970,41 +2010,51 @@ function calculate (formula, args) {
 }
 
 /**
- * Logic in convert string or number to valid number
+ * Before executing, need to make a grouping
  *
- * @since 1.4.8
+ * @since 1.4.9
  * @category Math
  * @param {string} formula The second number in an addition.
- * @returns {boolean|any} Returns the total.
+ * @returns {any} Returns the total.
  * @example
  *
- * compute("1+1")
- *=> 1
+ * init_group("1+1")
+ *=> 2
  */
-function compute (formula) {
+function init_group (formula) {
 
     var regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
     var matches = formula.match(regexpNumber);
 
-    if (count(matches) === one) {
+    if (matches[zero] === "-") {
 
-        matches = formula.match(/([\d]+|[%])/g);
+        matches.splice(zero, two, "-"+matches[one]);
 
-        if (count(matches) === one) {
+    }
 
-            return convert(matches[zero], zero, "right");
+    var flattenOps = flatten(operationType);
+
+    for (var ii = one; ii< matches.length; ii +=one) {
+
+        if (has(matches, ii+one)) {
+
+            if (indexOfExist(matches[ii], flattenOps)) {
+
+                if (matches[ii+one] === "-") {
+
+                    matches.splice(ii+one, two, "-"+matches[ii+two]);
+
+                }
+
+            }
 
         }
 
     }
 
-    if (count(matches) === two) {
+    if (count(matches) === one) {
 
-        if (matches[zero] === "-") {
-
-            return convert(matches.join(""), zero, "right");
-
-        }
+        return convert(matches[zero]);
 
     }
 
@@ -2014,29 +2064,65 @@ function compute (formula) {
 
     }
 
-    var counter = zero;
+    return compute(matches, zero);
+
+}
+
+/**
+ * Build computational format
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string[]} formula The second number in an addition.
+ * @param {number} priority The priority sequence
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 2
+ */
+function compute (formula, priority) {
+
+    var counter = one;
+    var counterOne = zero;
+
     var result = zero;
+    var execPriority = operationType[priority];
+    var formulaLen = Math.ceil(count(formula)/three);
+    var cloneFormula = clone(formula);
 
-    for (var ii = zero; ii<Math.ceil(count(matches)/three); ii +=one) {
+    for (var ii = zero; ii< formulaLen; ii +=one) {
 
-        if (ii === zero) {
+        if (has(cloneFormula, counter+one) ===false) {
 
-            result = process(convert(matches[zero], matches[two], "right"), matches[one], convert(matches[zero], matches[two], "left"));
+            throw new Error("Invalid formula");
+
+        }
+
+        if (indexOfExist(cloneFormula[counter], execPriority)) {
+
+            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
+
+            cloneFormula.splice(counterOne*two, three, result);
 
         } else {
 
-            if (count(matches) > counter + four) {
-
-                result = process(convert(result, matches[counter + four], "right"), matches[counter + three], convert(result, matches[counter + four], "left"));
-                counter += two;
-
-            }
+            counter += two;
+            counterOne +=one;
 
         }
 
     }
 
-    return Number(result);
+    if (cloneFormula.length === one) {
+
+        return cloneFormula[zero];
+
+    }
+
+    return operationType.length-one === priority
+        ? zero
+        : compute(cloneFormula, priority+one);
 
 }
 
@@ -2084,54 +2170,30 @@ function process (a1, operator, b1) {
  *
  * @since 1.4.8
  * @category math
- * @param {number} a1 The second number in an addition.
  * @param {string} b1 The second number in an addition.
- * @param {string} pos The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * convert(1,1,"right")
+ * convert(1)
  *=> 1
  */
-function convert (a1, b1, pos) {
+function convert (b1) {
 
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})$/).test(a1) && pos ==="left") {
+    if ((/^(-\d{1,})$/).test(b1)) {
 
-        return Number(a1) * Number(b1.replace(/%/g, "")/ oneHundred);
-
-    }
-
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(a1)) {
-
-        if (pos === "right") {
-
-            return Number(a1.replace(/%/g, "")/ oneHundred);
-
-        }
-
-        if (pos === "left") {
-
-            return Number(b1.replace(/%/g, "")/ oneHundred);
-
-        }
+        return Number(b1);
 
     }
 
-    if ((/^(\d{1,})!$/).test(b1) || (/^(\d{1,})!$/).test(a1)) {
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
 
-        var value = one;
+        return Number(b1.replace(/%/g, "")/ oneHundred);
 
-        if (pos === "right") {
+    }
 
-            value = Number(a1.replace(/!/g, ""));
+    if ((/^(\d{1,})!$/).test(b1)) {
 
-        }
-
-        if (pos === "left") {
-
-            value = Number(b1.replace(/!/g, ""));
-
-        }
+        var value = Number(b1.replace(/!/g, ""));
 
         var inc = one;
 
@@ -2146,25 +2208,9 @@ function convert (a1, b1, pos) {
 
     }
 
-    if ((/^|(\d{1,})|$/).test(b1) || (/^|(\d{1,})|$/).test(a1)) {
+    if ((/^|(\d{1,})|$/).test(b1)) {
 
-        if (pos === "right") {
-
-            return Math.abs(a1);
-
-        }
-
-        if (pos === "left") {
-
-            return Math.abs(b1);
-
-        }
-
-    }
-
-    if (pos === "right") {
-
-        return a1;
+        return Math.abs(b1);
 
     }
 
@@ -2186,11 +2232,19 @@ function convert (a1, b1, pos) {
  */
 function algbraicExpr (formula) {
 
-    var regNumberVariable = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)\b/g;
+    var regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
 
-    if (regNumberVariable.test(formula)) {
+    if (regNumberVariable1.test(formula)) {
 
-        return formula.replace(regNumberVariable, "($1 * $2)");
+        formula = formula.replace(regNumberVariable1, "($1 * $2)");
+
+    }
+
+    var regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
+
+    if (regNumberVariable2.test(formula)) {
+
+        formula = formula.replace(regNumberVariable2, ") * (");
 
     }
 
@@ -2200,7 +2254,34 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
+_stk.clone=clone;
+
 _stk.count=count;
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.874
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 
 
 /**
@@ -2280,31 +2361,6 @@ _stk.defaultTo=defaultTo;
 _stk.divide=divide;
 
 _stk.each=each;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.874
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 
 _stk.empty=empty;
 
@@ -2396,47 +2452,6 @@ function filter (func, objectValue) {
 _stk.filter=filter;
 
 _stk.first=first;
-
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
-
-}
 
 _stk.flatten=flatten;
 
@@ -3373,49 +3388,6 @@ _stk.gte=gte;
 
 _stk.has=has;
 
-_stk.add=add;
-
-
-/**
- * Check if data is undefined
- *
- * @since 1.0.1
- * @category Logic
- * @param {any} objectValue Either JSON or array
- * @param {any} value1 Check the key of value
- * @param {any=} value2 if value not exist, this value will be return
- * @returns {any} Returns filled value from its index
- * @example
- *
- * ifUndefined({'as':1}, 'as','as2')
- * // => 1
- */
-function ifUndefined (objectValue, value1, value2) {
-
-    if (!has(value2)) {
-
-        if (has(objectValue)) {
-
-            return objectValue;
-
-        }
-
-        return value1;
-
-    }
-
-    if (has(objectValue, value1)) {
-
-        return objectValue[value1];
-
-    }
-
-    return value2;
-
-}
-
-_stk.ifUndefined=ifUndefined;
-
 _stk.inc=inc;
 
 _stk.indexOf=indexOf;
@@ -3468,9 +3440,9 @@ _stk.insert=insert;
 
 _stk.isEmpty=isEmpty;
 
-_stk.isExact=isExact;
-
 _stk.isExactbyRegExp=isExactbyRegExp;
+
+_stk.isExact=isExact;
 
 _stk.isJson=isJson;
 
@@ -3720,35 +3692,6 @@ _stk.mapGetData=mapGetData;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * Merging two json object
  *
  * @since 1.4.8.1
@@ -3894,6 +3837,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -4199,6 +4171,20 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence;
 
+
+/**
+ * Placeholder of argument
+ *
+ * @since 1.4.8
+ * @category String
+ * @example
+ *
+ * __
+ * // => @argument/place
+ */
+
+_stk.__=__;
+
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -4316,7 +4302,7 @@ _stk.onWait=onWait;
  * @returns {any} Returns filled value from its index
  * @example
  *
- * prop('as','as2',{'as':1})
+ * once('as','as2',{'as':1})
  * // => 1
  */
 function once (key, defaultValue, objectValue) {
@@ -5861,285 +5847,6 @@ function strUnEscape (value, type) {
 }
 
 /**
- * Parse from String to JSON object
- *
- * @since 1.4.86
- * @category Collection
- * @param {string} value String you want to convert to json object
- * @param {any=} config Option you want to set in this function.
- * @returns {any} Returns the json object.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function parseJson (value, config) {
-
-    var defaultConfig = varExtend({"disableCorrection": false,
-        "throwError": false}, config);
-
-    if (getTypeof(value) !== "string") {
-
-        if (defaultConfig.throwError) {
-
-            throw new Error("Allow only string to parse to json");
-
-        }
-
-        return null;
-
-    }
-    if (defaultConfig.disableCorrection) {
-
-        var rawValue = cleanValue(value);
-
-        if (rawValue === "") {
-
-            return null;
-
-        }
-
-        return JSON.parse(rawValue);
-
-    }
-    var stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
-
-    var tagVal = getTagVal(stripValue);
-
-    if (tagVal.type === 'none') {
-
-        return null;
-
-    }
-
-    var obgM = callbackParse(tagVal);
-
-    if (obgM === "") {
-
-        return null;
-
-    }
-    var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
-
-        return revValue;
-
-    });
-
-    return dataObj;
-
-}
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-function escapeQuotesJson (str) {
-
-    return str.replace(/&quot;/g, "&bsol;&quot;");
-
-}
-
-/**
- * Cleanup unnecessary character
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function cleanValue (value) {
-
-    var refValue = value;
-
-    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
-    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
-    refValue = refValue.replace(/[,]$/g, "");
-
-    return refValue;
-
-}
-
-/**
- * Clean character that will throw error to parse json
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function cleanChar (value) {
-
-    if (value === "'") {
-
-        return '"';
-
-    }
-
-    return value;
-
-}
-
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * getTagVal('{}' )
- *=>{}
- */
-function getTagVal (value) {
-
-    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
-
-        return {
-
-            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
-            "tag_close": "}",
-            "tag_open": "{",
-            "type": "json"
-        };
-
-    }
-    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
-
-        return {
-            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
-            "tag_close": "]",
-            "tag_open": "[",
-            "type": "array"
-        };
-
-    }
-
-    return {
-        "ret_value": "",
-        "tag_close": "",
-        "tag_open": "",
-        "type": "none"
-    };
-
-}
-
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} glb String you want to convert to
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function callbackParse (glb) {
-
-    var charList = [];
-    var isOpen = false;
-    var recCount = zero;
-    var groupData = {};
-    var lType = {
-        "[": "array",
-        "{": "json"
-    };
-
-    each(glb.ret_value.split(""), function (value) {
-
-        var clnValue = value;
-
-        if (indexOfExist(value, [
-            "{",
-            "["
-        ])) {
-
-            isOpen =true;
-            recCount +=one;
-            charList.push("#$"+recCount+"$#");
-
-            groupData[recCount] = {"type": lType[value],
-                "value": clnValue};
-            clnValue = "";
-
-        }
-        if (isOpen===false) {
-
-            charList.push(cleanChar(value));
-
-        }
-        if (isOpen) {
-
-            groupData[recCount].value +=clnValue;
-
-        }
-
-        if (indexOfExist(value, [
-            "}",
-            "]"
-        ])) {
-
-            isOpen =false;
-
-        }
-
-    });
-
-    var groupChart = [];
-
-    each(charList.join("").split(","), function (value) {
-
-        groupChart.push(cleanValue(value));
-
-    });
-
-    var joinGroupChart = groupChart.join(",");
-
-    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
-
-        var indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
-
-        if (indexV1.type === "json") {
-
-            return cleanValue(indexV1.value);
-
-        }
-        if (indexV1.type === "array") {
-
-            return cleanValue(indexV1.value);
-
-        }
-
-        return null;
-
-    });
-
-    return joinGroupChart;
-
-}
-
-_stk.parseJson=parseJson;
-
-
-/**
  * Remove data in either JSON or Array using key or woth value, a revise logic
  *
  * @since 1.4.85
@@ -6425,6 +6132,285 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
+
+
+/**
+ * Parse from String to JSON object
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {string} value String you want to convert to json object
+ * @param {any=} config Option you want to set in this function.
+ * @returns {any} Returns the json object.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function parseJson (value, config) {
+
+    var defaultConfig = varExtend({"disableCorrection": false,
+        "throwError": false}, config);
+
+    if (getTypeof(value) !== "string") {
+
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only string to parse to json");
+
+        }
+
+        return null;
+
+    }
+    if (defaultConfig.disableCorrection) {
+
+        var rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
+    var stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
+
+    var tagVal = getTagVal(stripValue);
+
+    if (tagVal.type === 'none') {
+
+        return null;
+
+    }
+
+    var obgM = callbackParse(tagVal);
+
+    if (obgM === "") {
+
+        return null;
+
+    }
+    var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
+
+        return revValue;
+
+    });
+
+    return dataObj;
+
+}
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesJson (str) {
+
+    return str.replace(/&quot;/g, "&bsol;&quot;");
+
+}
+
+/**
+ * Cleanup unnecessary character
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {any} value The second number in an addition.
+ * @returns {any} Returns the json.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function cleanValue (value) {
+
+    var refValue = value;
+
+    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
+    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
+    refValue = refValue.replace(/[,]$/g, "");
+
+    return refValue;
+
+}
+
+/**
+ * Clean character that will throw error to parse json
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value The second number in an addition.
+ * @returns {any} Returns the json.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function cleanChar (value) {
+
+    if (value === "'") {
+
+        return '"';
+
+    }
+
+    return value;
+
+}
+
+/**
+ * Parse Json object
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {any} value The second number in an addition.
+ * @returns {any} Returns the json.
+ * @example
+ *
+ * getTagVal('{}' )
+ *=>{}
+ */
+function getTagVal (value) {
+
+    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
+
+        return {
+
+            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
+            "tag_close": "}",
+            "tag_open": "{",
+            "type": "json"
+        };
+
+    }
+    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
+
+        return {
+            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
+            "tag_close": "]",
+            "tag_open": "[",
+            "type": "array"
+        };
+
+    }
+
+    return {
+        "ret_value": "",
+        "tag_close": "",
+        "tag_open": "",
+        "type": "none"
+    };
+
+}
+
+/**
+ * Parse Json object
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {any} glb String you want to convert to
+ * @returns {any} Returns the json.
+ * @example
+ *
+ * parseJson('{}' )
+ *=>{}
+ */
+function callbackParse (glb) {
+
+    var charList = [];
+    var isOpen = false;
+    var recCount = zero;
+    var groupData = {};
+    var lType = {
+        "[": "array",
+        "{": "json"
+    };
+
+    each(glb.ret_value.split(""), function (value) {
+
+        var clnValue = value;
+
+        if (indexOfExist(value, [
+            "{",
+            "["
+        ])) {
+
+            isOpen =true;
+            recCount +=one;
+            charList.push("#$"+recCount+"$#");
+
+            groupData[recCount] = {"type": lType[value],
+                "value": clnValue};
+            clnValue = "";
+
+        }
+        if (isOpen===false) {
+
+            charList.push(cleanChar(value));
+
+        }
+        if (isOpen) {
+
+            groupData[recCount].value +=clnValue;
+
+        }
+
+        if (indexOfExist(value, [
+            "}",
+            "]"
+        ])) {
+
+            isOpen =false;
+
+        }
+
+    });
+
+    var groupChart = [];
+
+    each(charList.join("").split(","), function (value) {
+
+        groupChart.push(cleanValue(value));
+
+    });
+
+    var joinGroupChart = groupChart.join(",");
+
+    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
+
+        var indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
+
+        if (indexV1.type === "json") {
+
+            return cleanValue(indexV1.value);
+
+        }
+        if (indexV1.type === "array") {
+
+            return cleanValue(indexV1.value);
+
+        }
+
+        return null;
+
+    });
+
+    return joinGroupChart;
+
+}
+
+_stk.parseJson=parseJson;
 
 
 /**
@@ -6994,44 +6980,6 @@ _stk.strCamel=strCamel;
 
 
 /**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * strCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * strCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function strCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return toString(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.strCapitalize=strCapitalize;
-
-
-/**
  * String Escape
  *
  * @since 1.3.1
@@ -7074,6 +7022,44 @@ _stk.strEscape=strEscape;
 
 
 /**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * strCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * strCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function strCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.strCapitalize=strCapitalize;
+
+
+/**
  * String Kebab case
  *
  * @since 1.3.1
@@ -7096,29 +7082,6 @@ function strKebab (value) {
 _stk.strKebab=strKebab;
 
 _stk.strLower=strLower;
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * strSnake('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function strSnake (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-_stk.strSnake=strSnake;
 
 
 /**
@@ -7148,6 +7111,29 @@ function strSubs (value, minValue, maxValue) {
 }
 
 _stk.strSubs=strSubs;
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * strSnake('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function strSnake (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+_stk.strSnake=strSnake;
 
 _stk.strUnEscape=strUnEscape;
 
@@ -7963,7 +7949,7 @@ _stk.whereNot=whereNot;
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isArguments()
+ * isArguments(undefined)
  *=> true
  */
 function isArguments (value) {
@@ -8001,7 +7987,7 @@ function isArray (value) {
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isBigInt()
+ * isBigInt(undefined)
  *=> true
  */
 function isBigInt (value) {
@@ -8077,7 +8063,7 @@ function isError (value) {
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isFunction()
+ * isFunction(undefined)
  *=> true
  */
 function isFunction (value) {
@@ -8172,7 +8158,7 @@ function isObject (value) {
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isPromise()
+ * isPromise(undefined)
  *=> true
  */
 function isPromise (value) {
@@ -8248,7 +8234,7 @@ function isString (value) {
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isUint16Array()
+ * isUint16Array(undefined)
  *=> true
  */
 function isUint16Array (value) {
@@ -8267,7 +8253,7 @@ function isUint16Array (value) {
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isUint8Array()
+ * isUint8Array(undefined)
  *=> true
  */
 function isUint8Array (value) {

@@ -51,7 +51,7 @@ function isTypeFunction (objectCallTypeAll, suffix) {
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * ${name}(${structkit.ifUndefined(listOfType, value, '')})
+ * ${name}(${listOfType[value]})
  *=> true
  */
 `;
@@ -262,7 +262,8 @@ exports.module=function (grassconf) {
                     writeData = writeData.replace(val.content, "");
 
                 });
-                writeData = writeData.replace(/\n/, "");
+                writeData = writeData.replace(/\n+/, "");
+                writeData = writeData.replace(/;\n+/, ";");
 
                 data.writeData(writeData);
                 data.done();

@@ -13,7 +13,7 @@ import curryArg from '../core/curryArg.js';
  * @returns {any} Returns filled value from its index
  * @example
  *
- * prop('as','as2',{'as':1})
+ * once('as','as2',{'as':1})
  * // => 1
  */
 function once (key, defaultValue, objectValue) {

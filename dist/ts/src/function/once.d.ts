@@ -10,7 +10,7 @@ export default once;
  * @returns {any} Returns filled value from its index
  * @example
  *
- * prop('as','as2',{'as':1})
+ * once('as','as2',{'as':1})
  * // => 1
  */
 declare function once(key: any, defaultValue?: any | undefined, objectValue?: any | undefined): any;

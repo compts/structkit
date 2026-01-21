@@ -6,7 +6,7 @@ import getTypeof from './getTypeof.js';
 
 import toArray from './toArray.js';
 
-import {zero, one, two, three, four, oneHundred} from '../variable/defaultValue.js';
+import {zero, one, two, three, oneHundred} from '../variable/defaultValue.js';
 
 import curryArg from '../core/curryArg.js';
 
@@ -17,6 +17,27 @@ import divide from './divide.js';
 import multiply from './multiply.js';
 
 import subtract from './subtract.js';
+
+import indexOfExist from './indexOfExist.js';
+
+import has from './has.js';
+
+import clone from './clone.js';
+
+import flatten from './flatten.js';
+
+const operationType = [
+    ["^"],
+    [
+        "x",
+        "*",
+        "/"
+    ],
+    [
+        "+",
+        "-"
+    ]
+];
 
 /**
  * Logic in convert string to compute, similar on how the calculator works
@@ -37,11 +58,13 @@ function calculate (formula, args) {
 
     return curryArg(function (rawFormula, rawArgs) {
 
+        rawFormula = algbraicExpr(rawFormula);
+
         if (getTypeof(rawArgs) === "json") {
 
             const argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
 
-            rawFormula = algbraicExpr(rawFormula).replace(argsKey, function (mm, m1) {
+            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
 
                 return rawArgs[m1];
 
@@ -51,11 +74,11 @@ function calculate (formula, args) {
 
         const strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
 
-            return compute(m1);
+            return init_group(m1);
 
         });
 
-        return Number(compute(strFormula));
+        return Number(init_group(strFormula));
 
     }, [
         formula,
@@ -65,41 +88,51 @@ function calculate (formula, args) {
 }
 
 /**
- * Logic in convert string or number to valid number
+ * Before executing, need to make a grouping
  *
- * @since 1.4.8
+ * @since 1.4.9
  * @category Math
  * @param {string} formula The second number in an addition.
- * @returns {boolean|any} Returns the total.
+ * @returns {any} Returns the total.
  * @example
  *
- * compute("1+1")
- *=> 1
+ * init_group("1+1")
+ *=> 2
  */
-function compute (formula) {
+function init_group (formula) {
 
     const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
-    let matches = formula.match(regexpNumber);
+    const matches = formula.match(regexpNumber);
 
-    if (count(matches) === one) {
+    if (matches[zero] === "-") {
 
-        matches = formula.match(/([\d]+|[%])/g);
+        matches.splice(zero, two, "-"+matches[one]);
 
-        if (count(matches) === one) {
+    }
 
-            return convert(matches[zero], zero, "right");
+    const flattenOps = flatten(operationType);
+
+    for (let ii = one; ii< matches.length; ii +=one) {
+
+        if (has(matches, ii+one)) {
+
+            if (indexOfExist(matches[ii], flattenOps)) {
+
+                if (matches[ii+one] === "-") {
+
+                    matches.splice(ii+one, two, "-"+matches[ii+two]);
+
+                }
+
+            }
 
         }
 
     }
 
-    if (count(matches) === two) {
+    if (count(matches) === one) {
 
-        if (matches[zero] === "-") {
-
-            return convert(matches.join(""), zero, "right");
-
-        }
+        return convert(matches[zero]);
 
     }
 
@@ -109,29 +142,65 @@ function compute (formula) {
 
     }
 
-    let counter = zero;
+    return compute(matches, zero);
+
+}
+
+/**
+ * Build computational format
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string[]} formula The second number in an addition.
+ * @param {number} priority The priority sequence
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 2
+ */
+function compute (formula, priority) {
+
+    let counter = one;
+    let counterOne = zero;
+
     let result = zero;
+    const execPriority = operationType[priority];
+    const formulaLen = Math.ceil(count(formula)/three);
+    const cloneFormula = clone(formula);
 
-    for (let ii = zero; ii<Math.ceil(count(matches)/three); ii +=one) {
+    for (let ii = zero; ii< formulaLen; ii +=one) {
 
-        if (ii === zero) {
+        if (has(cloneFormula, counter+one) ===false) {
 
-            result = process(convert(matches[zero], matches[two], "right"), matches[one], convert(matches[zero], matches[two], "left"));
+            throw new Error("Invalid formula");
+
+        }
+
+        if (indexOfExist(cloneFormula[counter], execPriority)) {
+
+            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
+
+            cloneFormula.splice(counterOne*two, three, result);
 
         } else {
 
-            if (count(matches) > counter + four) {
-
-                result = process(convert(result, matches[counter + four], "right"), matches[counter + three], convert(result, matches[counter + four], "left"));
-                counter += two;
-
-            }
+            counter += two;
+            counterOne +=one;
 
         }
 
     }
 
-    return Number(result);
+    if (cloneFormula.length === one) {
+
+        return cloneFormula[zero];
+
+    }
+
+    return operationType.length-one === priority
+        ? zero
+        : compute(cloneFormula, priority+one);
 
 }
 
@@ -179,54 +248,30 @@ function process (a1, operator, b1) {
  *
  * @since 1.4.8
  * @category math
- * @param {number} a1 The second number in an addition.
  * @param {string} b1 The second number in an addition.
- * @param {string} pos The second number in an addition.
  * @returns {number|any} Returns the total.
  * @example
  *
- * convert(1,1,"right")
+ * convert(1)
  *=> 1
  */
-function convert (a1, b1, pos) {
+function convert (b1) {
 
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})$/).test(a1) && pos ==="left") {
+    if ((/^(-\d{1,})$/).test(b1)) {
 
-        return Number(a1) * Number(b1.replace(/%/g, "")/ oneHundred);
-
-    }
-
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1) && (/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(a1)) {
-
-        if (pos === "right") {
-
-            return Number(a1.replace(/%/g, "")/ oneHundred);
-
-        }
-
-        if (pos === "left") {
-
-            return Number(b1.replace(/%/g, "")/ oneHundred);
-
-        }
+        return Number(b1);
 
     }
 
-    if ((/^(\d{1,})!$/).test(b1) || (/^(\d{1,})!$/).test(a1)) {
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
 
-        let value = one;
+        return Number(b1.replace(/%/g, "")/ oneHundred);
 
-        if (pos === "right") {
+    }
 
-            value = Number(a1.replace(/!/g, ""));
+    if ((/^(\d{1,})!$/).test(b1)) {
 
-        }
-
-        if (pos === "left") {
-
-            value = Number(b1.replace(/!/g, ""));
-
-        }
+        const value = Number(b1.replace(/!/g, ""));
 
         let inc = one;
 
@@ -241,25 +286,9 @@ function convert (a1, b1, pos) {
 
     }
 
-    if ((/^|(\d{1,})|$/).test(b1) || (/^|(\d{1,})|$/).test(a1)) {
+    if ((/^|(\d{1,})|$/).test(b1)) {
 
-        if (pos === "right") {
-
-            return Math.abs(a1);
-
-        }
-
-        if (pos === "left") {
-
-            return Math.abs(b1);
-
-        }
-
-    }
-
-    if (pos === "right") {
-
-        return a1;
+        return Math.abs(b1);
 
     }
 
@@ -281,11 +310,19 @@ function convert (a1, b1, pos) {
  */
 function algbraicExpr (formula) {
 
-    const regNumberVariable = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z_0-9]+)\b/g;
+    const regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
 
-    if (regNumberVariable.test(formula)) {
+    if (regNumberVariable1.test(formula)) {
 
-        return formula.replace(regNumberVariable, "($1 * $2)");
+        formula = formula.replace(regNumberVariable1, "($1 * $2)");
+
+    }
+
+    const regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
+
+    if (regNumberVariable2.test(formula)) {
+
+        formula = formula.replace(regNumberVariable2, ") * (");
 
     }
 
