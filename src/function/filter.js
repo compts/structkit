@@ -36,12 +36,14 @@ function filter (func, objectValue) {
             return [];
 
         }
-        each(rawObjectValue, function (value, key) {
+        each(rawObjectValue, function (value, key, localGlobal) {
 
             if (has(rawFunc)) {
 
+                localGlobal.action = "filter";
+                localGlobal.pass_value = rawFunc(value, key, localGlobal);
 
-                if (rawFunc(value, key)) {
+                if (localGlobal.pass_value) {
 
                     append(jsn_var, value, key);
 

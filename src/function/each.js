@@ -174,6 +174,7 @@ function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) 
 
 }
 
+
 /**
  * GlobalEach
  * @category Seq
@@ -183,6 +184,8 @@ function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) 
 function GlobalEach () {
 
     this.continue = true;
+    this.action = null;
+    this.pass_value = null;
 
 }
 

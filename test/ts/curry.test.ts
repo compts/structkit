@@ -5,7 +5,7 @@ import assert from 'assert';
 import {expectType} from 'tsd';
 const one =1;
 const two = 2;
-
+const zero = 0;
 const three = 3;
 const four = 3;
 
@@ -44,6 +44,12 @@ describe('TS: curry method', function () {
 
         assert.strictEqual(callF(""), test1(""));
 
+    });
+
+    it('check if curry with two param type number return boolean', function () {
+    
+        assert.strictEqual(typeof equal(curry(subtract)(two, one))(zero), "boolean");
+    
     });
 
     it('check if curry with sub curry with no param type function', function () {

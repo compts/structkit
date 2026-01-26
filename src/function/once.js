@@ -1,47 +1,88 @@
 const has = require('./has');
 const curryArg = require("../core/curryArg");
+const {one, two} = require("../variable/defaultValue");
+const getTypeof = require('./getTypeof');
+const indexOfExist = require("./indexOfExist");
+
 
 /**
  * Check if data was executed once
  *
  * @since 1.4.9
  * @category Logic
- * @param {any} key Either JSON or array
- * @param {any=} defaultValue Check the key of value
- * @param {any=} objectValue if value not exist, this value will be return
+ * @param {any} func Either JSON or array
  * @returns {any} Returns filled value from its index
  * @example
  *
  * once('as','as2',{'as':1})
  * // => 1
  */
-function once (key, defaultValue, objectValue) {
+function once (func) {
 
-    return curryArg(function (rawKey, rawDefaultValue, rawObjectValue) {
+    let reserve = null;
+    let toProceed = false;
 
-        if (!has(value2)) {
+    return curryArg(function (rawFunc) {
 
-            if (has(objectValue)) {
+        return function (...arg) {
 
-                return objectValue;
+
+            if (getTypeof(rawFunc) !== "function") {
+
+                return rawFunc;
 
             }
 
-            return value1;
 
-        }
+            if (getTypeof(arg[arg.length-one]) === "json") {
 
-        if (has(objectValue, value1)) {
+                const argValue = arg[arg.length-one];
 
-            return objectValue[value1];
+                if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
 
-        }
+                    if (indexOfExist(argValue.action, [
+                        "filter",
+                        "lookup_execution"
+                    ])) {
 
-        return value2;
+                        reserve = rawFunc.apply(this, arg);
+                        if (argValue.pass_value) {
 
-    }, [
-        key, defaultValue, objectValue
-    ]);
+                            argValue.continue =false;
+                            rawFunc.__called__ = true;
+
+                            return reserve;
+
+                        }
+
+                    } else {
+
+                        toProceed = true;
+                        argValue.continue =false;
+
+                    }
+
+                }
+
+
+            } else {
+
+                toProceed = true;
+
+            }
+            if (has(rawFunc, '__called__') === false && toProceed) {
+
+                rawFunc.__called__ = true;
+
+                reserve = rawFunc.apply(this, arg);
+
+            }
+
+            return reserve;
+
+        };
+
+    }, [func], two);
 
 
 }

@@ -83,7 +83,9 @@ function remove (objectValue, value, value2) {
 
         each(objectValue, function () {
 
-            where(value, objectValue, function (jk) {
+            const whereData = where(value, objectValue);
+
+            each(whereData, function (jk) {
 
                 jsn_vw.push(jk);
 

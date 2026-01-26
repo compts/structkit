@@ -25,7 +25,7 @@ function baseMap (func, objectValue) {
 
     const that = this;
 
-    each(objectValue, function (value, key) {
+    each(objectValue, function (value, key, localGlobal) {
 
         if (has(func)) {
 
@@ -34,7 +34,8 @@ function baseMap (func, objectValue) {
                 [
                     value,
                     key,
-                    cnt
+                    cnt,
+                    localGlobal
                 ]
             );
 

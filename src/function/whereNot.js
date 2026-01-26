@@ -9,7 +9,6 @@ const {two} = require("../variable/defaultValue");
  * @category Collection
  * @param {any} objectValueWhere Data that you exlude in search
  * @param {any} objectValue Json to Array
- * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *
@@ -18,17 +17,16 @@ const {two} = require("../variable/defaultValue");
  * whereNot([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":3}}]
  */
-function whereNot (objectValueWhere, objectValue, func) {
+function whereNot (objectValueWhere, objectValue) {
 
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFunc, false, 'where');
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, false, 'where');
 
     }, [
         objectValueWhere,
-        objectValue,
-        func
+        objectValue
     ], two);
 
 }

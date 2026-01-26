@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 const {curry, isFunction, equal, subtract} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
+const {zero} = require("../../src/variable/defaultValue");
 
 const one =1;
 const two = 2;
@@ -41,6 +42,12 @@ describe('CJS: curry method', function () {
         const callF = curry(test1);
 
         assert.strictEqual(callF(""), test1(""));
+
+    });
+
+    it('check if curry with two param type number return boolean', function () {
+
+        assert.strictEqual(typeof equal(curry(subtract)(two, one))(zero), "boolean");
 
     });
 

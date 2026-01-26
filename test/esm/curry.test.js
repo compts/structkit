@@ -4,6 +4,7 @@
 import {curry, isFunction, equal, subtract} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
+const zero = 0;
 const one =1;
 const two = 2;
 const three = 3;
@@ -42,6 +43,12 @@ describe('CJS: curry method', function () {
         const callF = curry(test1);
 
         assert.strictEqual(callF(""), test1(""));
+
+    });
+
+    it('check if curry with two param type number return boolean', function () {
+
+        assert.strictEqual(typeof equal(curry(subtract)(two, one))(zero), "boolean");
 
     });
 

@@ -11,23 +11,21 @@ import {two} from '../variable/defaultValue.js';
  * @category Seq
  * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
  * @param {any} objectValue Json or Array
- * @param {any=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *
  * like({"s1":1}, {"s1":1,"s2":1})
  *=>{s1: 1, s2: 1}
  */
-function like (objectValueWhere, objectValue, func) {
+function like (objectValueWhere, objectValue) {
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
 
     }, [
         objectValueWhere,
-        objectValue,
-        func
+        objectValue
     ], two);
 
 }

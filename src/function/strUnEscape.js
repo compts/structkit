@@ -1,4 +1,5 @@
-const whereOnce = require('./whereOnce');
+const once = require('./once');
+const where = require('./where');
 const indexOfNotExist = require('./indexOfNotExist');
 const isEmpty = require("./isEmpty");
 const first = require("./first");
@@ -34,7 +35,7 @@ function strUnEscape (value, type) {
 
         search[typeVal] =str1;
 
-        const whr = whereOnce(search, entity);
+        const whr = where(once(search), entity);
 
         return isEmpty(whr)
             ? str1

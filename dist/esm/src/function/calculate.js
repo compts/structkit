@@ -27,7 +27,10 @@ import clone from './clone.js';
 import flatten from './flatten.js';
 
 const operationType = [
-    ["^"],
+    [
+        "^",
+        "**"
+    ],
     [
         "x",
         "*",
@@ -101,7 +104,7 @@ function calculate (formula, args) {
  */
 function init_group (formula) {
 
-    const regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
+    const regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
     const matches = formula.match(regexpNumber);
 
     if (matches[zero] === "-") {
@@ -234,6 +237,7 @@ function process (a1, operator, b1) {
     case '%':
         return Number(a1) % Number(b1);
     case '^':
+    case '**':
         return Number(a1) ** Number(b1);
     default:
         break;
@@ -309,6 +313,27 @@ function convert (b1) {
  *=> 1
  */
 function algbraicExpr (formula) {
+
+    const regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
+
+    if (regNumberSqrt.test(formula)) {
+
+        formula = formula.replace(regNumberSqrt, function (mm, m1, m2) {
+
+            let power = two;
+
+            if (m1 !== "") {
+
+                power = m1;
+
+            }
+
+            // eslint-disable-next-line no-mixed-operators, no-extra-parens
+            return "("+m2+"**"+(one/power)+")";
+
+        });
+
+    }
 
     const regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
 

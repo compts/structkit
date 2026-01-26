@@ -399,10 +399,56 @@ function getTypeofInternal (objectValue) {
 }
 
 
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 function count (objectValue, json_is_empty_check) {
 
-    var cnt=zero;
-    var json_is_empty_check_default=json_is_empty_check||false;
+    var cnt=zero;    var json_is_empty_check_default=json_is_empty_check||false;
     var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
@@ -731,6 +777,8 @@ function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) 
 function GlobalEach () {
 
     this.continue = true;
+    this.action = null;
+    this.pass_value = null;
 
 }
 
@@ -746,12 +794,13 @@ function baseReduce (func, defaultValue, listData) {
 
     var that = this;
 
-    each(listData, function (av, ak) {
+    each(listData, function (av, ak, localGlobal) {
 
         defaultValue = func.apply(that, [
             defaultValue,
             av,
-            ak
+            ak,
+            localGlobal
         ]);
 
     });
@@ -811,38 +860,6 @@ function empty (value) {
 }
 
 
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-
 function baseMap (func, objectValue) {
 
     var value_arry=empty(objectValue);
@@ -850,7 +867,7 @@ function baseMap (func, objectValue) {
 
     var that = this;
 
-    each(objectValue, function (value, key) {
+    each(objectValue, function (value, key, localGlobal) {
 
         if (has(func)) {
 
@@ -859,7 +876,8 @@ function baseMap (func, objectValue) {
                 [
                     value,
                     key,
-                    cnt
+                    cnt,
+                    localGlobal
                 ]
             );
 
@@ -1027,19 +1045,6 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1395,7 +1400,10 @@ function flatten (arg) {
 }
 
 var operationType = [
-    ["^"],
+    [
+        "^",
+        "**"
+    ],
     [
         "x",
         "*",
@@ -1444,7 +1452,7 @@ function calculate (formula, args) {
 
 function init_group (formula) {
 
-    var regexpNumber = /([\d]+!|[\d.%]+|[//*\-+\x^]|\|[\d]+\|)/g;
+    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
     var matches = formula.match(regexpNumber);
 
     if (matches[zero] === "-") {
@@ -1564,6 +1572,7 @@ function process (a1, operator, b1) {
     case '%':
         return Number(a1) % Number(b1);
     case '^':
+    case '**':
         return Number(a1) ** Number(b1);
     default:
         break;
@@ -1617,6 +1626,27 @@ function convert (b1) {
 
 
 function algbraicExpr (formula) {
+
+    var regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
+
+    if (regNumberSqrt.test(formula)) {
+
+        formula = formula.replace(regNumberSqrt, function (mm, m1, m2) {
+
+            var power = two;
+
+            if (m1 !== "") {
+
+                power = m1;
+
+            }
+
+            // eslint-disable-next-line no-mixed-operators, no-extra-parens
+            return "("+m2+"**"+(one/power)+")";
+
+        });
+
+    }
 
     var regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
 
@@ -1718,11 +1748,14 @@ function filter (func, objectValue) {
             return [];
 
         }
-        each(rawObjectValue, function (value, key) {
+        each(rawObjectValue, function (value, key, localGlobal) {
 
             if (has(rawFunc)) {
 
-                if (rawFunc(value, key)) {
+                localGlobal.action = "filter";
+                localGlobal.pass_value = rawFunc(value, key, localGlobal);
+
+                if (localGlobal.pass_value) {
 
                     append(jsn_var, value, key);
 
@@ -2079,7 +2112,7 @@ function isExactbyRegExp (whereValue, objectValue1) {
 }
 
 
-function whereLoopExecution (whr, jsn, func, isExist, types) {
+function whereLoopExecution (whr, jsn, isExist, types) {
 
     var json_convertion = getTypeof(jsn) === "array"
         ? jsn
@@ -2087,11 +2120,11 @@ function whereLoopExecution (whr, jsn, func, isExist, types) {
     var jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
-    var whr_s=whr||{};
+
     var variable=empty(jsn);
     var filterData = {};
 
-    each(jsn_s, function (jv, jk, isContinueRef1) {
+    each(jsn_s, function (jv, jk, localGlobal) {
 
         if (getTypeof(jsn) === "array") {
 
@@ -2104,50 +2137,54 @@ function whereLoopExecution (whr, jsn, func, isExist, types) {
 
         }
 
+        localGlobal.action = "lookup_execution";
+        var whr_s=getTypeof(whr) === "function"
+            ?whr(jv, jk, localGlobal)
+            :whr||{};
+
         if (types === "where") {
 
-            if (isExact(whr_s, filterData, isExist)) {
+            localGlobal.pass_value = isExact(whr_s, filterData, isExist);
+            if (localGlobal.pass_value) {
 
-                append(variable, jv, jk);
-                if (has(func)) {
+                if (getTypeof(whr) === "function") {
 
-                    func(jv, jk, isContinueRef1);
+                    if (isEmpty(variable)) {
 
-                }
+                        append(variable, jv, jk);
+                        localGlobal.isContinue(false);
 
-            }
+                    }
 
-        }
-        if (types === "where_once") {
-
-            if (isExact(whr_s, filterData, isExist)) {
-
-                if (isEmpty(variable)) {
+                } else {
 
                     append(variable, jv, jk);
-                    isContinueRef1.isContinue(false);
-
-                }
-
-                if (has(func)) {
-
-                    func(jv, jk, isContinueRef1);
 
                 }
 
             }
 
         }
+        // ? if (types === "where_once") {
+
+        // ?     if (isExact(whr_s, filterData, isExist)) {
+
+        // ?         if (isEmpty(variable)) {
+
+
+
+        // ?         }
+
+        // ?     }
+
+        // ? }
         if (types === "like") {
 
-            if (isExactbyRegExp(whr_s, filterData)) {
+            localGlobal.pass_value = isExactbyRegExp(whr_s, filterData, isExist);
+
+            if (localGlobal.pass_value) {
 
                 append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk, isContinueRef1);
-
-                }
 
             }
 
@@ -2160,16 +2197,15 @@ function whereLoopExecution (whr, jsn, func, isExist, types) {
 }
 
 
-function where (objectValueWhere, objectValue, func) {
+function where (objectValueWhere, objectValue) {
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFunc, true, 'where');
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'where');
 
     }, [
         objectValueWhere,
-        objectValue,
-        func
+        objectValue
     ], two);
 
 }
@@ -2234,7 +2270,9 @@ function remove (objectValue, value, value2) {
 
         each(objectValue, function () {
 
-            where(value, objectValue, function (jk) {
+            var whereData = where(value, objectValue);
+
+            each(whereData, function (jk) {
 
                 jsn_vw.push(jk);
 
@@ -2432,7 +2470,7 @@ _stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_s
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isExact=isExact;_stk.isJson=isJson;function jsonToArray (value, objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function jsonToArray (value, objectValue) {
 
     var arry=[];    each(objectValue, function (_value) {
 
@@ -2478,14 +2516,13 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-function like (objectValueWhere, objectValue, func) {
+function like (objectValueWhere, objectValue) {
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFuncfunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFuncfunc, true, 'like');    }, [
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
         objectValueWhere,
-        objectValue,
-        func
+        objectValue
     ], two);
 
 }
@@ -2545,11 +2582,76 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
-_stk.map=map;function mapGetData (valueFormat, objectValue) {
+_stk.map=map;function lt (value1, value2) {
 
-    return map(function (value) {
+    return curryArg(function (aa, bb) {
 
-        return getData(valueFormat, value);    }, objectValue);
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+function reduce (func, defaultValue, listData) {
+
+    var that = this;    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
+
+        return baseReduce.apply(that, [
+            rawFunc,
+            rawDefaultValue,
+            rawListData
+        ]);
+
+    }, [
+        func,
+        defaultValue,
+        listData
+    ], three);
+
+}
+
+
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;
+
+        var typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            var rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            var validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
+    ], two);
 
 }
 
@@ -2585,7 +2687,7 @@ function mergeWithKey (objectValue, mergeValue) {
 
 }
 
-
+_stk.mergeWithKey=mergeWithKey;
 function selectInData (whereValue, objectValue) {
 
     return curryArg(function (rawWhereValue, rawObjectValue) {
@@ -2594,9 +2696,7 @@ function selectInData (whereValue, objectValue) {
 
             var rawDataToArray = baseMap(function (value2) {
 
-                var rawData = getData(value, value2);
-
-                return isEmpty(rawData)
+                var rawData = getData(value, value2);                return isEmpty(rawData)
                     ?value
                     :rawData;
 
@@ -2660,19 +2760,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function noteq (value1, value2) {
+_stk.multiply=multiply;function noteq (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -2860,7 +2948,7 @@ ClassSequence.prototype.cancel = function () {
 };
 
 _stk.onSequence=onSequence;
-_stk.__=__;var getWindow = function () {
+var getWindow = function () {
 
     if (typeof window !== 'undefined') {
 
@@ -2930,31 +3018,70 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-function once (key, defaultValue, objectValue) {
+function once (func) {
 
-    return curryArg(function (rawKey, rawDefaultValue, rawObjectValue) {
+    var reserve = null;    var toProceed = false;
 
-        if (!has(value2)) {
+    return curryArg(function (rawFunc) {
 
-            if (has(objectValue)) {
+        return function () {
 
-                return objectValue;            }
+    var arg=arguments;
 
-            return value1;
+            if (getTypeof(rawFunc) !== "function") {
 
-        }
+                return rawFunc;
 
-        if (has(objectValue, value1)) {
+            }
 
-            return objectValue[value1];
+            if (getTypeof(arg[arg.length-one]) === "json") {
 
-        }
+                var argValue = arg[arg.length-one];
 
-        return value2;
+                if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
 
-    }, [
-        key, defaultValue, objectValue
-    ]);
+                    if (indexOfExist(argValue.action, [
+                        "filter",
+                        "lookup_execution"
+                    ])) {
+
+                        reserve = rawFunc.apply(this, arg);
+                        if (argValue.pass_value) {
+
+                            argValue.continue =false;
+                            rawFunc.__called__ = true;
+
+                            return reserve;
+
+                        }
+
+                    } else {
+
+                        toProceed = true;
+                        argValue.continue =false;
+
+                    }
+
+                }
+
+            } else {
+
+                toProceed = true;
+
+            }
+            if (has(rawFunc, '__called__') === false && toProceed) {
+
+                rawFunc.__called__ = true;
+
+                reserve = rawFunc.apply(this, arg);
+
+            }
+
+            return reserve;
+
+        };
+
+    }, [func], two);
 
 }
 
@@ -3029,32 +3156,11 @@ function parseTypeVal (typeValue, value) {
 }
 
 _stk.pSerialize=pSerialize;
-function reduce (func, defaultValue, listData) {
-
-    var that = this;    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
-
-        return baseReduce.apply(that, [
-            rawFunc,
-            rawDefaultValue,
-            rawListData
-        ]);
-
-    }, [
-        func,
-        defaultValue,
-        listData
-    ], three);
-
-}
-
-
 function pUnSerialize (value) {
 
     return curryArg(function (rawValue) {
 
-        return parseTypeValObj(rawValue);
-
-    }, [value], one);
+        return parseTypeValObj(rawValue);    }, [value], one);
 
 }
 
@@ -3206,19 +3312,6 @@ function parseTypeValObj (value) {
 }
 
 _stk.pUnSerialize=pUnSerialize;
-function whereOnce (objectValueWhere, objectValue, func) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFunc) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFunc, true, 'where_once');    }, [
-        objectValueWhere,
-        objectValue,
-        func
-    ], two);
-
-}
-
-
 var entity = [
     {
         "decimal": "&#160;",
@@ -4306,9 +4399,7 @@ var entity = [
         "hex": "&#x2666;"
     }
 
-];
-
-var listType = [
+];var listType = [
     'decimal',
     'entity',
     'hex'
@@ -4335,7 +4426,7 @@ function strUnEscape (value, type) {
 
         search[typeVal] =str1;
 
-        var whr = whereOnce(search, entity);
+        var whr = where(once(search), entity);
 
         return isEmpty(whr)
             ? str1
@@ -4348,10 +4439,218 @@ function strUnEscape (value, type) {
 }
 
 
+function parseJson (value, config) {
+
+    var defaultConfig = varExtend({"disableCorrection": false,
+        "throwError": false}, config);
+
+    if (getTypeof(value) !== "string") {
+
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only string to parse to json");
+
+        }
+
+        return null;
+
+    }
+    if (defaultConfig.disableCorrection) {
+
+        var rawValue = cleanValue(value);
+
+        if (rawValue === "") {
+
+            return null;
+
+        }
+
+        return JSON.parse(rawValue);
+
+    }
+    var stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
+
+    var tagVal = getTagVal(stripValue);
+
+    if (tagVal.type === 'none') {
+
+        return null;
+
+    }
+
+    var obgM = callbackParse(tagVal);
+
+    if (obgM === "") {
+
+        return null;
+
+    }
+    var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
+
+        return revValue;
+
+    });
+
+    return dataObj;
+
+}
+
+
+function escapeQuotesJson (str) {
+
+    return str.replace(/&quot;/g, "&bsol;&quot;");
+
+}
+
+
+function cleanValue (value) {
+
+    var refValue = value;
+
+    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
+    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
+    refValue = refValue.replace(/[,]$/g, "");
+
+    return refValue;
+
+}
+
+
+function cleanChar (value) {
+
+    if (value === "'") {
+
+        return '"';
+
+    }
+
+    return value;
+
+}
+
+
+function getTagVal (value) {
+
+    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
+
+        return {
+
+            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
+            "tag_close": "}",
+            "tag_open": "{",
+            "type": "json"
+        };
+
+    }
+    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
+
+        return {
+            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
+            "tag_close": "]",
+            "tag_open": "[",
+            "type": "array"
+        };
+
+    }
+
+    return {
+        "ret_value": "",
+        "tag_close": "",
+        "tag_open": "",
+        "type": "none"
+    };
+
+}
+
+
+function callbackParse (glb) {
+
+    var charList = [];
+    var isOpen = false;
+    var recCount = zero;
+    var groupData = {};
+    var lType = {
+        "[": "array",
+        "{": "json"
+    };
+
+    each(glb.ret_value.split(""), function (value) {
+
+        var clnValue = value;
+
+        if (indexOfExist(value, [
+            "{",
+            "["
+        ])) {
+
+            isOpen =true;
+            recCount +=one;
+            charList.push("#$"+recCount+"$#");
+
+            groupData[recCount] = {"type": lType[value],
+                "value": clnValue};
+            clnValue = "";
+
+        }
+        if (isOpen===false) {
+
+            charList.push(cleanChar(value));
+
+        }
+        if (isOpen) {
+
+            groupData[recCount].value +=clnValue;
+
+        }
+
+        if (indexOfExist(value, [
+            "}",
+            "]"
+        ])) {
+
+            isOpen =false;
+
+        }
+
+    });
+
+    var groupChart = [];
+
+    each(charList.join("").split(","), function (value) {
+
+        groupChart.push(cleanValue(value));
+
+    });
+
+    var joinGroupChart = groupChart.join(",");
+
+    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
+
+        var indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
+
+        if (indexV1.type === "json") {
+
+            return cleanValue(indexV1.value);
+
+        }
+        if (indexV1.type === "array") {
+
+            return cleanValue(indexV1.value);
+
+        }
+
+        return null;
+
+    });
+
+    return joinGroupChart;
+
+}
+
+_stk.parseJson=parseJson;
 function removeFromKey (objectValue, value) {
 
-    var type_js=getTypeof(objectValue);
-    var reslt =null;
+    var type_js=getTypeof(objectValue);    var reslt =null;
 
     if (type_js === "array") {
 
@@ -4569,214 +4868,7 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
-function parseJson (value, config) {
-
-    var defaultConfig = varExtend({"disableCorrection": false,
-        "throwError": false}, config);    if (getTypeof(value) !== "string") {
-
-        if (defaultConfig.throwError) {
-
-            throw new Error("Allow only string to parse to json");
-
-        }
-
-        return null;
-
-    }
-    if (defaultConfig.disableCorrection) {
-
-        var rawValue = cleanValue(value);
-
-        if (rawValue === "") {
-
-            return null;
-
-        }
-
-        return JSON.parse(rawValue);
-
-    }
-    var stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
-
-    var tagVal = getTagVal(stripValue);
-
-    if (tagVal.type === 'none') {
-
-        return null;
-
-    }
-
-    var obgM = callbackParse(tagVal);
-
-    if (obgM === "") {
-
-        return null;
-
-    }
-    var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
-
-        return revValue;
-
-    });
-
-    return dataObj;
-
-}
-
-
-function escapeQuotesJson (str) {
-
-    return str.replace(/&quot;/g, "&bsol;&quot;");
-
-}
-
-
-function cleanValue (value) {
-
-    var refValue = value;
-
-    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
-    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
-    refValue = refValue.replace(/[,]$/g, "");
-
-    return refValue;
-
-}
-
-
-function cleanChar (value) {
-
-    if (value === "'") {
-
-        return '"';
-
-    }
-
-    return value;
-
-}
-
-
-function getTagVal (value) {
-
-    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
-
-        return {
-
-            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
-            "tag_close": "}",
-            "tag_open": "{",
-            "type": "json"
-        };
-
-    }
-    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
-
-        return {
-            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
-            "tag_close": "]",
-            "tag_open": "[",
-            "type": "array"
-        };
-
-    }
-
-    return {
-        "ret_value": "",
-        "tag_close": "",
-        "tag_open": "",
-        "type": "none"
-    };
-
-}
-
-
-function callbackParse (glb) {
-
-    var charList = [];
-    var isOpen = false;
-    var recCount = zero;
-    var groupData = {};
-    var lType = {
-        "[": "array",
-        "{": "json"
-    };
-
-    each(glb.ret_value.split(""), function (value) {
-
-        var clnValue = value;
-
-        if (indexOfExist(value, [
-            "{",
-            "["
-        ])) {
-
-            isOpen =true;
-            recCount +=one;
-            charList.push("#$"+recCount+"$#");
-
-            groupData[recCount] = {"type": lType[value],
-                "value": clnValue};
-            clnValue = "";
-
-        }
-        if (isOpen===false) {
-
-            charList.push(cleanChar(value));
-
-        }
-        if (isOpen) {
-
-            groupData[recCount].value +=clnValue;
-
-        }
-
-        if (indexOfExist(value, [
-            "}",
-            "]"
-        ])) {
-
-            isOpen =false;
-
-        }
-
-    });
-
-    var groupChart = [];
-
-    each(charList.join("").split(","), function (value) {
-
-        groupChart.push(cleanValue(value));
-
-    });
-
-    var joinGroupChart = groupChart.join(",");
-
-    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
-
-        var indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
-
-        if (indexV1.type === "json") {
-
-            return cleanValue(indexV1.value);
-
-        }
-        if (indexV1.type === "array") {
-
-            return cleanValue(indexV1.value);
-
-        }
-
-        return null;
-
-    });
-
-    return joinGroupChart;
-
-}
-
-_stk.parseJson=parseJson;
-function random (valueArray, minValue, maxValue) {
+_stk.reduce=reduce;function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
         ?minValue
@@ -4796,12 +4888,12 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.range=range;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;_stk.removeFromKey=removeFromKey;function repeat (value, valueRepetion) {
+_stk.remove=remove;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -4817,7 +4909,7 @@ _stk.remove=remove;_stk.removeFromKey=removeFromKey;function repeat (value, valu
 }
 
 _stk.repeat=repeat;
-function reverse (value) {
+_stk.removeFromKey=removeFromKey;function reverse (value) {
 
     return curryArg(function (rawValue) {
 
@@ -4863,7 +4955,7 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
-_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
+_stk.selectInData=selectInData;_stk.__=__;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5114,31 +5206,6 @@ function strCamel (value) {
 }
 
 _stk.strCamel=strCamel;
-function strEscape (value, type) {
-
-    var typeVal = type || "entity";    if (indexOfNotExist(typeVal, listType)) {
-
-        return "";
-
-    }
-
-    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
-
-        var search = {"html": str1};
-
-        var whr = whereOnce(search, entity);
-
-        return isEmpty(whr)
-            ? str1
-            : first(whr)[typeVal];
-
-    });
-
-    return regexReplace;
-
-}
-
-_stk.strEscape=strEscape;
 function strCapitalize (value, option) {
 
     if (option === "all") {
@@ -5158,6 +5225,31 @@ function strCapitalize (value, option) {
 }
 
 _stk.strCapitalize=strCapitalize;
+function strEscape (value, type) {
+
+    var typeVal = type || "entity";    if (indexOfNotExist(typeVal, listType)) {
+
+        return "";
+
+    }
+
+    var regexReplace = toString(value).replace(/([\s<>"'^&{}])/g, function (str1) {
+
+        var search = {"html": str1};
+
+        var whr = where(once(search), entity);
+
+        return isEmpty(whr)
+            ? str1
+            : first(whr)[typeVal];
+
+    });
+
+    return regexReplace;
+
+}
+
+_stk.strEscape=strEscape;
 function strKebab (value) {
 
     return stringSplit(toString(value))
@@ -5683,14 +5775,13 @@ function unique (value) {
 }
 
 _stk.unique=unique;
-_stk.varExtend=varExtend;_stk.where=where;function whereNot (objectValueWhere, objectValue, func) {
+_stk.varExtend=varExtend;_stk.where=where;function whereNot (objectValueWhere, objectValue) {
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFunc, false, 'where');    }, [
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, false, 'where');    }, [
         objectValueWhere,
-        objectValue,
-        func
+        objectValue
     ], two);
 
 }
@@ -5859,7 +5950,7 @@ _stk.isSet=isSet;
 _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
-_stk.isUndefined=isUndefined;_stk.whereOnce=whereOnce;function zip () {
+_stk.isUndefined=isUndefined;function zip () {
 
     var arg=arguments;    return curryArg(function () {
 

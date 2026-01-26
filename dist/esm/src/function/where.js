@@ -11,7 +11,6 @@ import {two} from '../variable/defaultValue.js';
  * @category Collection
  * @param {any} objectValueWhere Data you want to search in key
  * @param {any} objectValue Json to Array
- * @param {Function=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *
@@ -20,16 +19,15 @@ import {two} from '../variable/defaultValue.js';
  * where([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":2}}]
  */
-function where (objectValueWhere, objectValue, func) {
+function where (objectValueWhere, objectValue) {
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue, rawFunc) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, rawFunc, true, 'where');
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'where');
 
     }, [
         objectValueWhere,
-        objectValue,
-        func
+        objectValue
     ], two);
 
 }

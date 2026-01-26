@@ -2,10 +2,9 @@ const count = require('../function/count');
 const getTypeof = require('../function/getTypeof');
 const each = require('../function/each');
 const empty = require('../function/empty');
-const isEmpty = require('../function/isEmpty');
 const isExact = require('../function/isExact');
+const isEmpty = require("../function/isEmpty");
 const isExactbyRegExp = require('../function/isExactbyRegExp');
-const has = require('../function/has');
 const append = require('../function/append');
 const {zero} = require("../variable/defaultValue");
 
@@ -16,7 +15,6 @@ const {zero} = require("../variable/defaultValue");
  * @category Seq
  * @param {object} whr Data for lookup
  * @param {object} jsn Json or array that you want to dissect
- * @param {function} func The second number in an addition.
  * @param {boolean} isExist The second number in an addition.
  * @param {string} types The second number in an addition.
  * @returns {array|object} Returns the total.
@@ -25,7 +23,7 @@ const {zero} = require("../variable/defaultValue");
  * whereLoopExecution({"s1":1},{"s1":1,"s2":1})
  *=>{"s1":1,"s2":1}
  */
-function whereLoopExecution (whr, jsn, func, isExist, types) {
+function whereLoopExecution (whr, jsn, isExist, types) {
 
 
     const json_convertion = getTypeof(jsn) === "array"
@@ -34,11 +32,11 @@ function whereLoopExecution (whr, jsn, func, isExist, types) {
     const jsn_s= count(jsn, true) === zero
         ? json_convertion
         : jsn;
-    const whr_s=whr||{};
+
     const variable=empty(jsn);
     let filterData = {};
 
-    each(jsn_s, function (jv, jk, isContinueRef1) {
+    each(jsn_s, function (jv, jk, localGlobal) {
 
         if (getTypeof(jsn) === "array") {
 
@@ -51,35 +49,28 @@ function whereLoopExecution (whr, jsn, func, isExist, types) {
 
         }
 
+        localGlobal.action = "lookup_execution";
+        const whr_s=getTypeof(whr) === "function"
+            ?whr(jv, jk, localGlobal)
+            :whr||{};
+
         if (types === "where") {
 
-            if (isExact(whr_s, filterData, isExist)) {
+            localGlobal.pass_value = isExact(whr_s, filterData, isExist);
+            if (localGlobal.pass_value) {
 
-                append(variable, jv, jk);
-                if (has(func)) {
+                if (getTypeof(whr) === "function") {
 
-                    func(jv, jk, isContinueRef1);
+                    if (isEmpty(variable)) {
 
-                }
+                        append(variable, jv, jk);
+                        localGlobal.isContinue(false);
 
-            }
+                    }
 
-        }
-        if (types === "where_once") {
-
-            if (isExact(whr_s, filterData, isExist)) {
-
-                if (isEmpty(variable)) {
+                } else {
 
                     append(variable, jv, jk);
-                    isContinueRef1.isContinue(false);
-
-
-                }
-
-                if (has(func)) {
-
-                    func(jv, jk, isContinueRef1);
 
                 }
 
@@ -87,16 +78,14 @@ function whereLoopExecution (whr, jsn, func, isExist, types) {
             }
 
         }
+
         if (types === "like") {
 
-            if (isExactbyRegExp(whr_s, filterData)) {
+            localGlobal.pass_value = isExactbyRegExp(whr_s, filterData, isExist);
+
+            if (localGlobal.pass_value) {
 
                 append(variable, jv, jk);
-                if (has(func)) {
-
-                    func(jv, jk, isContinueRef1);
-
-                }
 
             }
 

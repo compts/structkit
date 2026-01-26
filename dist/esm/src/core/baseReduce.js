@@ -18,12 +18,13 @@ function baseReduce (func, defaultValue, listData) {
 
     const that = this;
 
-    each(listData, function (av, ak) {
+    each(listData, function (av, ak, localGlobal) {
 
         defaultValue = func.apply(that, [
             defaultValue,
             av,
-            ak
+            ak,
+            localGlobal
         ]);
 
     });

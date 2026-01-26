@@ -3,11 +3,14 @@ import {calculate} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
-const zero = 0
+const zero = 0;
+const twoPercent = 0.02;
 const one =1;
 const two =2;
 const three = 3;
 const four = 4;
+const six = 6;
+const eight = 8;
 const seventyOne = 71;
 const twentOne = 21;
 const k38 = 38416;
@@ -69,6 +72,56 @@ describe('CJS: calculate method', function () {
         }), seventyOne);
 
     });
+
+    it('check calculate formula text in power', function () {
+
+        assert.deepStrictEqual(calculate("s2^s", {
+            "s": two,
+            "s2": two
+        }), four);
+
+    });
+
+    it('check calculate formula text in root', function () {
+
+        assert.deepStrictEqual(calculate("√s2", {
+            "s2": four
+        }), two);
+
+    }); 
+
+    it('check calculate formula text in root 3', function () {
+
+        assert.deepStrictEqual(calculate("3√s2", {
+            "s2": eight
+        }), two);
+
+    });
+
+    it('check calculate formula text in percent', function () {
+
+        assert.deepStrictEqual(calculate("s2%", {
+            "s2": two
+        }), twoPercent);
+
+    });
+
+    it('check calculate formula text in factorial 3!', function () {
+
+        assert.deepStrictEqual(calculate("s2!", {
+            "s2": three
+        }), six);
+
+    });
+
+    it('it check calculate formula text in factorial 1!', function () {
+
+        assert.deepStrictEqual(calculate("s!", {
+            "s": one
+        }), one);
+
+    });
+
     it('check calculate formula text in factorial', function () {
 
         assert.deepStrictEqual(calculate("s2!+s!", {
@@ -84,6 +137,13 @@ describe('CJS: calculate method', function () {
 
     });
 
+    it('check calculate formula if first arg negative in passing value w/ space', function () {
+
+        assert.deepStrictEqual(calculate("-s+ s", {
+            "s": one
+        }), zero);
+
+    });
     it('check calculate formula if first arg negative in passing value', function () {
 
         assert.deepStrictEqual(calculate("-s2+s", {
