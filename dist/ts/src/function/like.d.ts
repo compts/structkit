@@ -6,11 +6,10 @@ export default like;
  * @category Seq
  * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
  * @param {any} objectValue Json or Array
- * @param {any=} func Function
  * @returns {any} Return either Json to Array.
  * @example
  *
  * like({"s1":1}, {"s1":1,"s2":1})
  *=>{s1: 1, s2: 1}
  */
-declare function like(objectValueWhere: any, objectValue: any, func?: any | undefined): any;
+declare function like(objectValueWhere: any, objectValue: any): any;

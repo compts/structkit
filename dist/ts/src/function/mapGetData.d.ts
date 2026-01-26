@@ -6,10 +6,11 @@ export default mapGetData;
  * @category Collection
  * @param {string} valueFormat Key look up format
  * @param {any[]} objectValue Json in array format
+ * @param {any=} isStrict to check if delimiter are match in counter, default value is true.
  * @returns {any[]} Return array or object.
  * @example
  *
  * mapGetData("Asd", [{"Asd":1}])
  *=>[1]
  */
-declare function mapGetData(valueFormat: string, objectValue: any[]): any[];
+declare function mapGetData(valueFormat: string, objectValue: any[], isStrict?: any | undefined): any[];
