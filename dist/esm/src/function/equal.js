@@ -2,7 +2,13 @@ import curryArg from '../core/curryArg.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {two} from '../variable/defaultValue.js';
+import count from './count.js';
+
+import each from './each.js';
+
+import has from './has.js';
+
+import {two, zero, one} from '../variable/defaultValue.js';
 
 /**
  * To check if the two arguments are equal
@@ -27,12 +33,53 @@ function equal (value1, value2) {
 
         }
 
+        if (getTypeofInternal(aa) === "json" && getTypeofInternal(bb) === "json") {
+
+            return searchValueInJson(aa, bb);
+
+        }
+
         return aa === bb;
 
     }, [
         value1,
         value2
     ], two);
+
+}
+
+/**
+ * Index Of array
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} objectValue Array
+ * @param {number} searchValue key of array
+ * @returns {boolean} Returns the total.
+ * @example
+ *
+ * searchValueInJson([1,2], 1)
+ * // => 0
+ */
+function searchValueInJson (objectValue, searchValue) {
+
+    let counter = zero;
+
+    each(objectValue, function (value, key) {
+
+        if (has(searchValue, key)) {
+
+            if (searchValue[key] === value) {
+
+                counter += one;
+
+            }
+
+        }
+
+    });
+
+    return count(objectValue) === counter;
 
 }
 export default equal;

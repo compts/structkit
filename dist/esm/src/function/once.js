@@ -23,7 +23,6 @@ import indexOfExist from './indexOfExist.js';
 function once (func) {
 
     let reserve = null;
-    let toProceed = false;
 
     return curryArg(function (rawFunc) {
 
@@ -31,46 +30,15 @@ function once (func) {
 
             if (getTypeof(rawFunc) !== "function") {
 
+                reserve = validateCallbackEach(arg, rawFunc, reserve);
+
                 return rawFunc;
 
             }
 
-            if (getTypeof(arg[arg.length-one]) === "json") {
+            reserve = validateCallbackEach(arg, rawFunc, reserve);
 
-                const argValue = arg[arg.length-one];
-
-                if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
-
-                    if (indexOfExist(argValue.action, [
-                        "filter",
-                        "lookup_execution"
-                    ])) {
-
-                        reserve = rawFunc.apply(this, arg);
-                        if (argValue.pass_value) {
-
-                            argValue.continue =false;
-                            rawFunc.__called__ = true;
-
-                            return reserve;
-
-                        }
-
-                    } else {
-
-                        toProceed = true;
-                        argValue.continue =false;
-
-                    }
-
-                }
-
-            } else {
-
-                toProceed = true;
-
-            }
-            if (has(rawFunc, '__called__') === false && toProceed) {
+            if (has(rawFunc, '__called__') === false) {
 
                 rawFunc.__called__ = true;
 
@@ -83,6 +51,61 @@ function once (func) {
         };
 
     }, [func], two);
+
+}
+
+/**
+ * Check if data was executed once
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} arg Either JSON or array
+ * @param {any} rawFunc Either JSON or array
+ * @param {any} reserve Either JSON or array
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * once('as','as2',{'as':1})
+ * // => 1
+ */
+function validateCallbackEach (arg, rawFunc, reserve) {
+
+    const argValue = arg[arg.length-one];
+
+    if (getTypeof(argValue) === "json") {
+
+        if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
+
+            argValue.external_execution_from ='once';
+            if (indexOfExist(argValue.action, ["lookup_execution"])) {
+
+                if (argValue.pass_value) {
+
+                    argValue.continue =false;
+
+                }
+
+            } else if (indexOfExist(argValue.action, ["filter"])) {
+
+                reserve = rawFunc.apply(this, arg);
+                if (argValue.pass_value) {
+
+                    argValue.continue =false;
+                    rawFunc.__called__ = true;
+
+                }
+
+            } else {
+
+                argValue.continue =false;
+
+            }
+
+        }
+
+    }
+
+    return reserve;
 
 }
 export default once;

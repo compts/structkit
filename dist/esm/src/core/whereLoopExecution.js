@@ -45,6 +45,7 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
     each(jsn_s, function (jv, jk, localGlobal) {
 
+        localGlobal.action = "lookup_execution";
         if (getTypeof(jsn) === "array") {
 
             filterData = jv;
@@ -56,59 +57,37 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
         }
 
-        localGlobal.action = "lookup_execution";
         const whr_s=getTypeof(whr) === "function"
             ?whr(jv, jk, localGlobal)
             :whr||{};
 
+        let validReturn = false;
+
         if (types === "where") {
 
-            localGlobal.pass_value = isExact(whr_s, filterData, isExist);
-            if (localGlobal.pass_value) {
-
-                if (getTypeof(whr) === "function") {
-
-                    if (isEmpty(variable)) {
-
-                        append(variable, jv, jk);
-                        localGlobal.isContinue(false);
-
-                    }
-
-                } else {
-
-                    append(variable, jv, jk);
-
-                }
-
-            }
+            validReturn = isExact(whr_s, filterData, isExist);
 
         }
-        // ? if (types === "where_once") {
 
-        // ?     if (isExact(whr_s, filterData, isExist)) {
-
-        // ?         if (isEmpty(variable)) {
-
-        /*
-         * ?             append(variable, jv, jk);
-         * ?             isContinueRef1.isContinue(false);
-         */
-
-        // ?         }
-
-        // ?     }
-
-        // ? }
         if (types === "like") {
 
-            localGlobal.pass_value = isExactbyRegExp(whr_s, filterData, isExist);
+            validReturn = isExactbyRegExp(whr_s, filterData, isExist);
 
-            if (localGlobal.pass_value) {
+        }
 
-                append(variable, jv, jk);
+        if (getTypeof(whr) === "function") {
 
-            }
+            localGlobal.pass_value = validReturn && isEmpty(variable);
+
+        } else {
+
+            localGlobal.pass_value = validReturn;
+
+        }
+
+        if (localGlobal.pass_value) {
+
+            append(variable, jv, jk);
 
         }
 

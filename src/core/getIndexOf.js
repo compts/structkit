@@ -1,8 +1,6 @@
-const count = require("../function/count");
-const each = require("../function/each");
-const has = require("../function/has");
+const equal = require("../function/equal");
 
-const {negOne, zero, one} = require("../variable/defaultValue");
+const {negOne, one} = require("../variable/defaultValue");
 const {getTypeofInternal} = require("./getTypeOf");
 
 /**
@@ -11,7 +9,7 @@ const {getTypeofInternal} = require("./getTypeOf");
  * @since 1.0.1
  * @category Seq
  * @param {array|object} objectValue Array
- * @param {number} value key of array
+ * @param {any} value key of array
  * @param {number} start The first index in array
  * @param {number} end The last index in array
  * @param {boolean} isGetLast If True first index if False last index
@@ -33,7 +31,11 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             if (getTypeofInternal(value) === "json") {
 
-                isValidMatch = searchValueInJson(objectValue[inc], value);
+                isValidMatch = equal(objectValue[inc], value);
+
+            } else if (getTypeofInternal(value) === "function") {
+
+                isValidMatch = value(objectValue[inc]);
 
             } else {
 
@@ -68,39 +70,5 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
 }
 
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} objectValue Array
- * @param {number} searchValue key of array
- * @returns {boolean} Returns the total.
- * @example
- *
- * searchValueInJson([1,2], 1)
- * // => 0
- */
-function searchValueInJson (objectValue, searchValue) {
-
-    let counter = zero;
-
-    each(objectValue, function (value, key) {
-
-        if (has(searchValue, key)) {
-
-            if (searchValue[key] === value) {
-
-                counter += one;
-
-            }
-
-        }
-
-    });
-
-    return count(objectValue) === counter;
-
-}
 exports.getIndexOf=getIndexOf;
 

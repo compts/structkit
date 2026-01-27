@@ -179,6 +179,7 @@ function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) 
  */
 function GlobalEach () {
 
+    this.external_execution_from = null;
     this.continue = true;
     this.action = null;
     this.pass_value = null;
