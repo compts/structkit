@@ -34,6 +34,10 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
                 isValidMatch = equal(objectValue[inc], value);
 
+            } else if (getTypeofInternal(value) === "array") {
+
+                isValidMatch = equal(objectValue[inc], value);
+
             } else if (getTypeofInternal(value) === "function") {
 
                 isValidMatch = value(objectValue[inc]);

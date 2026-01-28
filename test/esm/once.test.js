@@ -1,11 +1,12 @@
-const {once, filter, map, where} = require("../../dist/cjs/structkit-full.cjs");
-const assert = require("assert");
+import {once, filter, map, where} from "../../dist/esm/node.esm";
+import assert from 'assert';
+
 
 const one =1;
 const zero = 0;
 const two =2;
 
-describe('CJS: once method', function () {
+describe('ESM: once method', function () {
 
     it('check if once passing value is not function', function () {
 

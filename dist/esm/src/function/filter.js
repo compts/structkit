@@ -10,6 +10,8 @@ import getTypeof from './getTypeof.js';
 
 import append from './append.js';
 
+import {two} from '../variable/defaultValue.js';
+
 /**
  * Filter the data in for loop
  *
@@ -58,7 +60,7 @@ function filter (func, objectValue) {
     }, [
         func,
         objectValue
-    ]);
+    ], two);
 
 }
 export default filter;

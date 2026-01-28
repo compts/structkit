@@ -26,6 +26,13 @@ function once (func) {
         return function (...arg) {
 
 
+            if (getTypeof(arg[arg.length-one]) === "array") {
+
+
+                return rawFunc;
+
+            }
+
             if (getTypeof(rawFunc) !== "function") {
 
                 reserve = validateCallbackEach(arg, rawFunc, reserve);
@@ -33,8 +40,8 @@ function once (func) {
                 return rawFunc;
 
             }
-
             reserve = validateCallbackEach(arg, rawFunc, reserve);
+
 
             if (has(rawFunc, '__called__') === false) {
 
@@ -87,17 +94,28 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 
             } else if (indexOfExist(argValue.action, ["filter"])) {
 
-                reserve = rawFunc.apply(this, arg);
-                if (argValue.pass_value) {
+                const reserveRef = rawFunc.apply(this, arg);
+
+                if (reserveRef) {
 
                     argValue.continue =false;
+                    reserve = reserveRef;
                     rawFunc.__called__ = true;
 
                 }
 
-            } else {
+            } else if (indexOfExist(argValue.action, ["map"])) {
+
 
                 argValue.continue =false;
+
+
+            } else {
+
+                rawFunc.__called__ = true;
+
+                argValue.continue =false;
+
 
             }
 
@@ -105,6 +123,7 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 
 
     }
+
 
     return reserve;
 

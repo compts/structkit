@@ -19,9 +19,26 @@ import each from '../function/each.js';
  */
 function schemaSplitData (data) {
 
-    const split_strReplace= toString(data).replace(/([.]{1,})/g, ":");
+    const splitSign = "($^&^$)";
+    const split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {
 
-    const spl_len= split_strReplace.split(":");
+        if ((/^(\\\.)$/g).test(mm1)) {
+
+            return ".";
+
+        }
+
+        if ((/^(\\:)$/g).test(mm1)) {
+
+            return ":";
+
+        }
+
+        return splitSign;
+
+    });
+
+    const spl_len= split_strReplace.split(splitSign);
     const spl=[];
 
     each(spl_len, function (value) {

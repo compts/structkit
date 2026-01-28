@@ -1,5 +1,6 @@
 const curryArg = require("../core/curryArg");
 const baseMap = require("../core/baseMap");
+const {two} = require("../variable/defaultValue");
 
 /**
  * To map the value of json or array
@@ -23,7 +24,7 @@ function map (func, objectValue) {
     }, [
         func,
         objectValue
-    ]);
+    ], two);
 
 }
 module.exports=map;

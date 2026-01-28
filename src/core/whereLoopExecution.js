@@ -64,7 +64,7 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
         if (types === "like") {
 
-            validReturn = isExactbyRegExp(whr_s, filterData, isExist);
+            validReturn = isExactbyRegExp(whr_s, filterData);
 
         }
 

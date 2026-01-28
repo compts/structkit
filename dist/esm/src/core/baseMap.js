@@ -30,6 +30,8 @@ function baseMap (func, objectValue) {
 
     each(objectValue, function (value, key, localGlobal) {
 
+        localGlobal.action = "map";
+
         if (has(func)) {
 
             const dataFunc = func.apply(

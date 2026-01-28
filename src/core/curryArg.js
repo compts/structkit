@@ -20,7 +20,6 @@ const __ = require("./__");
  */
 function curryArg (fn, args, NoDefaultArgs) {
 
-
     const RefNoDefaultArgs = NoDefaultArgs || zero;
     let placholderCounter = zero;
 

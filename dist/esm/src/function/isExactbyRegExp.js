@@ -14,7 +14,7 @@ import each from './each.js';
  * @since 1.0.1
  * @category Predicate
  * @param {any} whereValue Either Json or array
- * @param {any} objectValue1 use as lookup data in data
+ * @param {any=} objectValue1 use as lookup data in data
  * @returns {boolean} Returns the boolean if the has the value with the help regexp you are looking at.
  * @example
  *

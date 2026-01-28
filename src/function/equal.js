@@ -38,6 +38,12 @@ function equal (value1, value2) {
 
         }
 
+        if (getTypeofInternal(aa) === "array" && getTypeofInternal(bb) === "array") {
+
+            return searchValueInJson(aa, bb);
+
+        }
+
         return aa === bb;
 
     }, [
@@ -69,11 +75,25 @@ function searchValueInJson (objectValue, searchValue) {
 
         if (has(searchValue, key)) {
 
-            if (searchValue[key] === value) {
 
-                counter += one;
+            if (getTypeofInternal(searchValue[key]) === "json" || getTypeofInternal(searchValue[key]) === "array") {
+
+                if (searchValueInJson(searchValue[key], value)) {
+
+                    counter += one;
+
+                }
+
+            } else {
+
+                if (searchValue[key] === value) {
+
+                    counter += one;
+
+                }
 
             }
+
 
         }
 

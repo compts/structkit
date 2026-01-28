@@ -1,11 +1,18 @@
-const {once, filter, map, where} = require("../../dist/cjs/structkit-full.cjs");
-const assert = require("assert");
+import {once, filter, map, where} from "../../dist/esm/node.esm";
+import assert from 'assert';
+import {expectType} from 'tsd';
 
 const one =1;
 const zero = 0;
 const two =2;
 
-describe('CJS: once method', function () {
+describe('TS: once method', function () {
+
+    it('check expected type', function () {
+           
+        expectType<any>(once(one)(one));
+      
+    });
 
     it('check if once passing value is not function', function () {
 
@@ -15,7 +22,7 @@ describe('CJS: once method', function () {
 
     it('check if once passing value in callback function', function () {
 
-        const callback1 = once(function (val) {
+        const callback1 = once(function (val:any) {
 
             return val+ one;
 
@@ -28,7 +35,7 @@ describe('CJS: once method', function () {
 
     it('check if once passing value in map function', function () {
 
-        const callback1 = map(once(function (value) {
+        const callback1 = map(once(function (value:any) {
 
             return value.s1;
 

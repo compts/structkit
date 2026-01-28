@@ -8,6 +8,8 @@ const empty = require('./empty');
 const getTypeof = require('./getTypeof');
 
 const append = require('./append');
+const {two} = require("../variable/defaultValue");
+
 
 /**
  * Filter the data in for loop
@@ -58,7 +60,7 @@ function filter (func, objectValue) {
     }, [
         func,
         objectValue
-    ]);
+    ], two);
 
 }
 module.exports=filter;

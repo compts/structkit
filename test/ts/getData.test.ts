@@ -16,6 +16,12 @@ describe('TS: getData method', function () {
         assert.strictEqual(getData("0:a:b", [{"a": {"b": "b1"}}]), "b1");
 
     });
+    it('check if repetion is correct in disable using comment the separator', function () {
+
+        assert.strictEqual(getData("0.a\\.b", [{"a.b": "b1"}]), "b1");
+        assert.strictEqual(getData("0:a\\:b", [{"a:b": "b1"}]), "b1");
+
+    });
     it('check if repetion is correct with empty array', function () {
 
         assert.deepStrictEqual(getData("a", []), []);

@@ -2,6 +2,8 @@ import curryArg from '../core/curryArg.js';
 
 import baseMap from '../core/baseMap.js';
 
+import {two} from '../variable/defaultValue.js';
+
 /**
  * To map the value of json or array
  *
@@ -24,7 +26,7 @@ function map (func, objectValue) {
     }, [
         func,
         objectValue
-    ]);
+    ], two);
 
 }
 export default map;

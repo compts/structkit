@@ -49,6 +49,7 @@ describe('CJS: curry method', function () {
     it('check if curry with two param type number return boolean', function () {
 
         assert.strictEqual(typeof equal(curry(subtract)(two, one))(zero), "boolean");
+        assert.strictEqual(typeof equal(curry(subtract)(two)(one))(zero), "boolean");
 
     });
 
