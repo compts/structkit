@@ -82,8 +82,11 @@ function each (objectValue, func) {
 
         objectValue.forEach(function (value, key) {
 
-            callbackEach(convertValue(key), value, localGlobal, re_loop, func, false);
+            if (localGlobal.continue) {
 
+                callbackEach(convertValue(key), value, localGlobal, re_loop, func, false);
+
+            }
 
         });
 
