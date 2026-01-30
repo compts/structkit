@@ -1,7 +1,7 @@
 const _stk = exports;
 const __p = "@argument/place";
 
-__=__p
+const __=__p;
 
 /**
  * Placeholder of argument
@@ -1462,100 +1462,6 @@ _stk.append=append;
 
 
 /**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Array
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue, step) {
-
-    const incrementValue=has(step)
-        ?step
-        :one;
-    const minValueRef=has(minValue)
-        ?minValue
-        :one;
-    const maxValueRef=has(maxValue)
-        ?maxValue
-        :ten;
-    const output=[];
-
-    for (let inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            const render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<zero) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-
-        return map(function () {
-
-            return rawValue;
-
-        }, range(nm_rpt));
-
-    }, [
-        value,
-        valueRepetion
-    ], one);
-
-}
-
-_stk.arrayRepeat=arrayRepeat;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1672,6 +1578,100 @@ function arrayConcat (...arg) {
 }
 
 _stk.arrayConcat=arrayConcat;
+
+
+/**
+ * Generate array of data from specific limit or where the index to start
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue, step) {
+
+    const incrementValue=has(step)
+        ?step
+        :one;
+    const minValueRef=has(minValue)
+        ?minValue
+        :one;
+    const maxValueRef=has(maxValue)
+        ?maxValue
+        :ten;
+    const output=[];
+
+    for (let inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "string") {
+
+            output.push(inc);
+
+            const render = new Function('inc', "return "+inc+incrementValue);
+
+            inc = render.call(inc);
+
+        }
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<zero) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+
+        return map(function () {
+
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
+_stk.arrayRepeat=arrayRepeat;
 
 _stk.arraySlice=arraySlice;
 
@@ -1794,7 +1794,7 @@ function arraySum (arrayObject, precision) {
  *
  * @since 1.4.9
  * @category Math
- * @param {number[]} num Array of number
+ * @param {number} num Array of number
  * @param {number=} precision decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example
@@ -1874,6 +1874,35 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    const variable=empty(objectValue);
+
+    each(objectValue, function (value, key) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone;
 
 
 /**
@@ -1969,32 +1998,6 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
-
-}
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    const variable=empty(objectValue);
-
-    each(objectValue, function (value, key) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
 
 }
 
@@ -2368,8 +2371,6 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-
-_stk.clone=clone;
 
 _stk.count=count;
 
@@ -3302,9 +3303,9 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
+
+_stk.getData=getData;
 
 _stk.getTypeof=getTypeof;
 /**
@@ -3367,6 +3368,35 @@ _stk.getValue=getValue;
 
 
 /**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+
+
+/**
  * To group the value of json or array
  *
  * @since 1.4.8
@@ -3415,34 +3445,7 @@ function groupBy (func, objectValue) {
 
 _stk.groupBy=groupBy;
 
-
-/**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
+_stk.has=has;
 
 
 /**
@@ -3472,8 +3475,6 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-
-_stk.has=has;
 
 _stk.inc=inc;
 
@@ -3525,13 +3526,11 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isEmpty=isEmpty;
-
 _stk.isExact=isExact;
 
-_stk.isJson=isJson;
+_stk.isEmpty=isEmpty;
 
-_stk.isExactbyRegExp=isExactbyRegExp;
+_stk.isJson=isJson;
 
 
 /**
@@ -3748,6 +3747,35 @@ function lte (value1, value2) {
 _stk.lte=lte;
 
 _stk.map=map;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -3990,38 +4018,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
 _stk.mergeWithKey=mergeWithKey;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -4323,111 +4320,6 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence;
 
-const getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    const browserWindow = getWindow();
-    let timerId = null;
-
-    let useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
-
 
 /**
  * Check if data was executed once
@@ -4545,6 +4437,111 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 
 _stk.once=once;
 
+const getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    const browserWindow = getWindow();
+    let timerId = null;
+
+    let useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame(pendingFunc);
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+_stk.onWait=onWait;
+
 
 /**
  * Create a serialize data if you are coming to php
@@ -4642,6 +4639,10 @@ function parseTypeVal (typeValue, value) {
 }
 
 _stk.pSerialize=pSerialize;
+
+_stk.add=add;
+
+_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -6593,8 +6594,6 @@ _stk.range=range;
 
 _stk.reduce=reduce;
 
-_stk.add=add;
-
 
 /**
  * Regex Count Group number
@@ -6616,9 +6615,39 @@ function regexCountGroup (value) {
 
 _stk.regexCountGroup=regexCountGroup;
 
-_stk.remove=remove;
-
 _stk.removeFromKey=removeFromKey;
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
 
 
 /**
@@ -6658,6 +6687,8 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
+_stk.remove=remove;
+
 
 /**
  * Random Decimal
@@ -6696,38 +6727,6 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-        const nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
 
 _stk.selectInData=selectInData;
 
@@ -7221,28 +7220,7 @@ _stk.strKebab=strKebab;
 
 _stk.strLower=strLower;
 
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * strSnake('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function strSnake (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-_stk.strSnake=strSnake;
+_stk.multiply=multiply;
 
 
 /**
@@ -7408,233 +7386,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-
-/**
- * Template value
- *
- * @since 1.0.1
- * @category String
- * @param {string} templateString Template string
- * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  templateValue("<!- test !>", {"test": 11})
- *=>'11'
- */
-function templateValue (templateString, data, option) {
-
-    return curryArg(function (rawTemplateString, rawData, rawOption) {
-
-        const default_option = varExtend({
-            "close_tag": "!>",
-            "open_tag": "<!",
-            "throwError": false
-        }, rawOption);
-
-        const temp = syntaxCleanup(rawTemplateString, default_option);
-
-        const tag_replace={
-            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
-            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
-        };
-
-        const regexp = new RegExp([
-            tag_replace.evaluate,
-            tag_replace.interpolate
-        ].join("|")+"|$", "g");
-
-        let source = "__p += '";
-        let index = 0;
-
-        const escapes = {
-            '\n': 'n',
-            '\r': 'r',
-            "'": "'",
-            '\\': '\\',
-            '\u2028': 'u2028',
-            '\u2029': 'u2029'
-        };
-
-        const escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-
-        const escapeChar = function (match) {
-
-            return '\\' + escapes[match];
-
-        };
-
-        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
-
-            source += temp.slice(index, offset).replace(escaper, escapeChar);
-
-            index = offset+match.length;
-
-            if (evaluate) {
-
-                source += "';\n"+evaluate+"\n__p += '";
-
-            }
-
-            if (interpolate) {
-
-                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-            }
-
-            return match;
-
-        });
-
-        const sourceData = reduce(function (total, vv, kk) {
-
-            return total+"var "+toString(kk)+" = "+(isJson(vv)
-                ?parseString(vv)
-                :vv)+";\n";
-
-        }, "", rawData);
-
-        source += "';\n";
-
-        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
-
-        try {
-
-            const render = new Function('obj', source);
-
-            return render.call(this, rawData, templateValue);
-
-        } catch (error) {
-
-            if (default_option.throwError) {
-
-                throw new Error(error);
-
-            }
-
-            return "";
-
-        }
-
-    }, [
-        templateString,
-        data,
-        option
-    ], two);
-
-}
-
-/**
- * Syntax cleanup
- *
- * @since 1.0.1
- * @category String
- * @param {string} data Template string
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  templateValue("<!- test !>", {"test": 11})
- *=>'11'
- */
-function syntaxCleanup (data, option) {
-
-    const str_split = data.split("");
-    const openSplit = option.open_tag.split("");
-
-    const closeSplit = option.close_tag.split("");
-
-    let commentCounter = 0;
-
-    let errorMessage = "";
-
-    if (option.open_tag.length <= one) {
-
-        errorMessage = "Open tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.close_tag.length <= one) {
-
-        errorMessage = "Close tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.throwError && errorMessage !=="") {
-
-        throw new Error(errorMessage);
-
-    }
-
-    return reduce(function (total, vv, kk) {
-
-        if (kk>one) {
-
-            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
-
-                if (commentCounter>zero) {
-
-                    commentCounter += one;
-
-                }
-                if (vv === "=") {
-
-                    if (commentCounter===zero) {
-
-                        return total+vv+" ";
-
-                    }
-
-                }
-                if (vv === "#") {
-
-                    commentCounter += one;
-                    if (commentCounter>zero) {
-
-                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
-
-                    }
-
-                }
-                if (vv !== " ") {
-
-                    if (commentCounter===zero) {
-
-                        return total+" "+vv;
-
-                    }
-
-                }
-
-            }
-
-            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
-
-                commentCounter -= one;
-
-            }
-
-            if (commentCounter>zero) {
-
-                return total;
-
-            }
-
-        }
-
-        return total+vv;
-
-    }, "", str_split);
-
-}
-
-_stk.templateValue=templateValue;
 
 _stk.toArray=toArray;
 
@@ -7956,6 +7707,45 @@ _stk.trimStart=trimStart;
 
 
 /**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        const uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
+
+
+/**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
@@ -7997,46 +7787,234 @@ function union (...arg) {
 
 _stk.union=union;
 
+_stk.varExtend=varExtend;
+
 
 /**
- * Get only the unique data from array
+ * Template value
  *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
+ * @since 1.0.1
+ * @category String
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
  * @example
  *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
  */
-function unique (value) {
+function templateValue (templateString, data, option) {
 
-    if (getTypeof(value) === "array") {
+    return curryArg(function (rawTemplateString, rawData, rawOption) {
 
-        const uniqArrData = [];
+        const default_option = varExtend({
+            "close_tag": "!>",
+            "open_tag": "<!",
+            "throwError": false
+        }, rawOption);
 
-        each(value, function (val) {
+        const temp = syntaxCleanup(rawTemplateString, default_option);
 
-            if (indexOfNotExist(val, uniqArrData)) {
+        const tag_replace={
+            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+        };
 
-                uniqArrData.push(val);
+        const regexp = new RegExp([
+            tag_replace.evaluate,
+            tag_replace.interpolate
+        ].join("|")+"|$", "g");
+
+        let source = "__p += '";
+        let index = 0;
+
+        const escapes = {
+            '\n': 'n',
+            '\r': 'r',
+            "'": "'",
+            '\\': '\\',
+            '\u2028': 'u2028',
+            '\u2029': 'u2029'
+        };
+
+        const escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+        const escapeChar = function (match) {
+
+            return '\\' + escapes[match];
+
+        };
+
+        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
+
+            source += temp.slice(index, offset).replace(escaper, escapeChar);
+
+            index = offset+match.length;
+
+            if (evaluate) {
+
+                source += "';\n"+evaluate+"\n__p += '";
 
             }
 
+            if (interpolate) {
+
+                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
+
+            }
+
+            return match;
+
         });
 
-        return uniqArrData;
+        const sourceData = reduce(function (total, vv, kk) {
 
-    }
+            return total+"var "+toString(kk)+" = "+(isJson(vv)
+                ?parseString(vv)
+                :vv)+";\n";
 
-    return [];
+        }, "", rawData);
+
+        source += "';\n";
+
+        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
+
+        try {
+
+            const render = new Function('obj', source);
+
+            return render.call(this, rawData, templateValue);
+
+        } catch (error) {
+
+            if (default_option.throwError) {
+
+                throw new Error(error);
+
+            }
+
+            return "";
+
+        }
+
+    }, [
+        templateString,
+        data,
+        option
+    ], two);
 
 }
 
-_stk.unique=unique;
+/**
+ * Syntax cleanup
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string} data Template string
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  templateValue("<!- test !>", {"test": 11})
+ *=>'11'
+ */
+function syntaxCleanup (data, option) {
 
-_stk.varExtend=varExtend;
+    const str_split = data.split("");
+    const openSplit = option.open_tag.split("");
+
+    const closeSplit = option.close_tag.split("");
+
+    let commentCounter = 0;
+
+    let errorMessage = "";
+
+    if (option.open_tag.length <= one) {
+
+        errorMessage = "Open tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.close_tag.length <= one) {
+
+        errorMessage = "Close tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.throwError && errorMessage !=="") {
+
+        throw new Error(errorMessage);
+
+    }
+
+    return reduce(function (total, vv, kk) {
+
+        if (kk>one) {
+
+            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
+
+                if (commentCounter>zero) {
+
+                    commentCounter += one;
+
+                }
+                if (vv === "=") {
+
+                    if (commentCounter===zero) {
+
+                        return total+vv+" ";
+
+                    }
+
+                }
+                if (vv === "#") {
+
+                    commentCounter += one;
+                    if (commentCounter>zero) {
+
+                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
+
+                    }
+
+                }
+                if (vv !== " ") {
+
+                    if (commentCounter===zero) {
+
+                        return total+" "+vv;
+
+                    }
+
+                }
+
+            }
+
+            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
+
+                commentCounter -= one;
+
+            }
+
+            if (commentCounter>zero) {
+
+                return total;
+
+            }
+
+        }
+
+        return total+vv;
+
+    }, "", str_split);
+
+}
+
+_stk.templateValue=templateValue;
 
 _stk.where=where;
 
@@ -8432,6 +8410,29 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * strSnake('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function strSnake (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+_stk.strSnake=strSnake;
+
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists

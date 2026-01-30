@@ -1473,100 +1473,6 @@ _stk.append=append;
 
 
 /**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Array
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue, step) {
-
-    var incrementValue=has(step)
-        ?step
-        :one;
-    var minValueRef=has(minValue)
-        ?minValue
-        :one;
-    var maxValueRef=has(maxValue)
-        ?maxValue
-        :ten;
-    var output=[];
-
-    for (var inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<zero) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-
-        return map(function () {
-
-            return rawValue;
-
-        }, range(nm_rpt));
-
-    }, [
-        value,
-        valueRepetion
-    ], one);
-
-}
-
-_stk.arrayRepeat=arrayRepeat;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1687,6 +1593,100 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
+
+
+/**
+ * Generate array of data from specific limit or where the index to start
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue, step) {
+
+    var incrementValue=has(step)
+        ?step
+        :one;
+    var minValueRef=has(minValue)
+        ?minValue
+        :one;
+    var maxValueRef=has(maxValue)
+        ?maxValue
+        :ten;
+    var output=[];
+
+    for (var inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "string") {
+
+            output.push(inc);
+
+            var render = new Function('inc', "return "+inc+incrementValue);
+
+            inc = render.call(inc);
+
+        }
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<zero) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+
+        return map(function () {
+
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
+_stk.arrayRepeat=arrayRepeat;
 
 _stk.arraySlice=arraySlice;
 
@@ -1809,7 +1809,7 @@ function arraySum (arrayObject, precision) {
  *
  * @since 1.4.9
  * @category Math
- * @param {number[]} num Array of number
+ * @param {number} num Array of number
  * @param {number=} precision decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example
@@ -1891,6 +1891,35 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    var variable=empty(objectValue);
+
+    each(objectValue, function (value, key) {
+
+        append(variable, value, key);
+
+    });
+
+    return variable;
+
+}
+
+_stk.clone=clone;
 
 
 /**
@@ -1986,32 +2015,6 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
-
-}
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    var variable=empty(objectValue);
-
-    each(objectValue, function (value, key) {
-
-        append(variable, value, key);
-
-    });
-
-    return variable;
 
 }
 
@@ -2385,8 +2388,6 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-
-_stk.clone=clone;
 
 _stk.count=count;
 
@@ -3319,9 +3320,9 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
+
+_stk.getData=getData;
 
 _stk.getTypeof=getTypeof;
 /**
@@ -3384,6 +3385,35 @@ _stk.getValue=getValue;
 
 
 /**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+
+
+/**
  * To group the value of json or array
  *
  * @since 1.4.8
@@ -3432,34 +3462,7 @@ function groupBy (func, objectValue) {
 
 _stk.groupBy=groupBy;
 
-
-/**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
+_stk.has=has;
 
 
 /**
@@ -3489,8 +3492,6 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-
-_stk.has=has;
 
 _stk.inc=inc;
 
@@ -3542,13 +3543,11 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isEmpty=isEmpty;
-
 _stk.isExact=isExact;
 
-_stk.isJson=isJson;
+_stk.isEmpty=isEmpty;
 
-_stk.isExactbyRegExp=isExactbyRegExp;
+_stk.isJson=isJson;
 
 
 /**
@@ -3768,96 +3767,32 @@ _stk.map=map;
 
 
 /**
- * Reduce function
+ * To check if the two arguments are less
  *
  * @since 1.4.8
- * @category Function
- * @param {any} func Callback function for how to map the data
- * @param {any} defaultValue Starting value that you want to use as reference
- * @param {any[]} listData Array value that you want to map
- * @returns {any} Return redue value
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * reduce((total,value)=>total+value, 2,[1,2])
- * // => 5
+ * lt(1, 2)
+ * // => true
  */
-function reduce (func, defaultValue, listData) {
+function lt (value1, value2) {
 
-    var that = this;
+    return curryArg(function (aa, bb) {
 
-    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
-
-        return baseReduce.apply(that, [
-            rawFunc,
-            rawDefaultValue,
-            rawListData
-        ]);
+        return aa < bb;
 
     }, [
-        func,
-        defaultValue,
-        listData
-    ], three);
-
-}
-
-/**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any[]} objectValue Json in array format
- * @param {any=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any[]} Return array or object.
- * @example
- *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
- */
-function mapGetData (valueFormat, objectValue, isStrict) {
-
-    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
-
-        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
-            ? true
-            :rawIsStrict;
-
-        var typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            var rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            var validData = getData(rawValueFormat, typeObjectValue === "json"
-                ?rawbj
-                :value, refIsStrict);
-
-            if (isEmpty(validData) === false) {
-
-                total = append(total, validData);
-
-            }
-
-            return total;
-
-        }, [], objectValue);
-
-    }, [
-        valueFormat,
-        objectValue,
-        isStrict
+        value1,
+        value2
     ], two);
 
 }
 
-_stk.mapGetData=mapGetData;
+_stk.lt=lt;
 
 
 /**
@@ -4009,34 +3944,96 @@ _stk.mergeInWhere=mergeInWhere;
 
 
 /**
- * To check if the two arguments are less
+ * Reduce function
  *
  * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
+ * @category Function
+ * @param {any} func Callback function for how to map the data
+ * @param {any} defaultValue Starting value that you want to use as reference
+ * @param {any[]} listData Array value that you want to map
+ * @returns {any} Return redue value
  * @example
  *
- * lt(1, 2)
- * // => true
+ * reduce((total,value)=>total+value, 2,[1,2])
+ * // => 5
  */
-function lt (value1, value2) {
+function reduce (func, defaultValue, listData) {
 
-    return curryArg(function (aa, bb) {
+    var that = this;
 
-        return aa < bb;
+    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
+
+        return baseReduce.apply(that, [
+            rawFunc,
+            rawDefaultValue,
+            rawListData
+        ]);
 
     }, [
-        value1,
-        value2
+        func,
+        defaultValue,
+        listData
+    ], three);
+
+}
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any[]} objectValue Json in array format
+ * @param {any=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any[]} Return array or object.
+ * @example
+ *
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;
+
+        var typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            var rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            var validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
     ], two);
 
 }
 
-_stk.lt=lt;
-
-_stk.mergeWithKey=mergeWithKey;
+_stk.mapGetData=mapGetData;
 
 _stk.multiply=multiply;
 
@@ -4340,111 +4337,6 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence;
 
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
-
 
 /**
  * Check if data was executed once
@@ -4564,6 +4456,111 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 
 _stk.once=once;
 
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    var browserWindow = getWindow();
+    var timerId = null;
+
+    var useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame(pendingFunc);
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+_stk.onWait=onWait;
+
 
 /**
  * Create a serialize data if you are coming to php
@@ -4661,6 +4658,10 @@ function parseTypeVal (typeValue, value) {
 }
 
 _stk.pSerialize=pSerialize;
+
+_stk.add=add;
+
+_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -4866,6 +4867,409 @@ function parseTypeValObj (value) {
 }
 
 _stk.pUnSerialize=pUnSerialize;
+
+_stk.mergeWithKey=mergeWithKey;
+
+
+/**
+ * Remove data in either JSON or Array using key or woth value, a revise logic
+ *
+ * @since 1.4.85
+ * @category Collection
+ * @param {any} objectValue Json or array
+ * @param {any} value if objectValue, json is must be object or array index you want to remove
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * removeFromKey([1,2,3],0 )
+ *=>[2, 3]
+ */
+function removeFromKey (objectValue, value) {
+
+    var type_js=getTypeof(objectValue);
+    var reslt =null;
+
+    if (type_js === "array") {
+
+        reslt=[];
+        each(objectValue, function (av, ak) {
+
+            if (parseInt(ak) !== value) {
+
+                reslt.push(av);
+
+            }
+
+        });
+
+        return reslt;
+
+    }
+
+    if (type_js === "json") {
+
+        reslt={};
+
+        each(objectValue, function (av, ak) {
+
+            if (ak !== value) {
+
+                reslt[ak]=av;
+
+            }
+
+        });
+
+        return reslt;
+
+    }
+
+    return [];
+
+}
+
+/**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value, config) {
+
+    var defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "throwError": false,
+        "unscapeEntity": false}, config);
+
+    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
+
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only " +getKey(validTypeJson).join(","));
+
+        }
+
+        return '';
+
+    }
+
+    var data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = strUnEscape(data);
+
+    }
+
+    return data.toString();
+
+}
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesStr (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} rawCount This will define deep was nested
+ * @param {any} rawConfig The config by user
+ * @param {any} rawValue The data that you want to covert to a string from json/array
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        var prepStr = "";
+
+        if (has(rawCount === zero
+            ?validTypeJson
+            :removeFromKey(validTypeJson, "object"), getTypeof(value))) {
+
+            var getTypeDetails = validTypeJson[getTypeof(value)];
+
+            var inc=zero;
+
+            each(value, function (ev, ek) {
+
+                var delimeter=inc<count(value)-one
+                    ?","
+                    :"";
+
+                if (getTypeDetails.isKey) {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
+
+                } else {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
+
+                }
+
+                inc += one;
+
+            });
+
+            return getTypeDetails.start+prepStr+getTypeDetails.end;
+
+        }
+
+        var parseValue = convertValue(value);
+
+        if (getTypeof(parseValue) === "string") {
+
+            return '"'+escapeQuotesStr(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "undefined") {
+
+            return '"undefined"';
+
+        }
+        if (getTypeof(parseValue) === "date") {
+
+            return '"'+toString(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "regexp") {
+
+            return '"new RegExp(' + value.source +','+ value.flags+')"';
+
+        }
+
+        if (getTypeof(parseValue) === "number") {
+
+            if (isNaN(parseValue)) {
+
+                return '"NaN"';
+
+            }
+
+            if (Infinity === parseValue) {
+
+                return '"Infinity"';
+
+            }
+
+            return value;
+
+        }
+
+        if (getTypeof(value) === "object") {
+
+            return '"'+value+'"';
+
+        }
+
+        if (getTypeof(parseValue) === "function") {
+
+            if (refConfig.ignoreFunction) {
+
+                return null;
+
+            }
+
+            return '"'+parseValue+'"';
+
+        }
+
+        return parseValue;
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+_stk.parseString=parseString;
+
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+function pipe () {
+
+    var arg=arguments;
+
+    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
+_stk.range=range;
+
+_stk.reduce=reduce;
+
+_stk.removeFromKey=removeFromKey;
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+        var nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+
+
+/**
+ * Return reverse order of array
+ *
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
+ * @example
+ *
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
+ */
+function reverse (value) {
+
+    return curryArg(function (rawValue) {
+
+        var typeOf = getTypeof(rawValue);
+        var refRawList = typeOf=== "string"
+            ?rawValue.split("")
+            :rawValue;
+
+        var cloneMap = map(function (__, key) {
+
+            return refRawList[count(refRawList) - one - key];
+
+        }, refRawList);
+
+        return typeOf === "string"
+            ?cloneMap.join("")
+            :cloneMap;
+
+    }, [value], one);
+
+}
+
+_stk.reverse=reverse;
 
 
 /* eslint-disable sort-keys */
@@ -6289,400 +6693,6 @@ _stk.parseJson=parseJson;
 
 
 /**
- * Remove data in either JSON or Array using key or woth value, a revise logic
- *
- * @since 1.4.85
- * @category Collection
- * @param {any} objectValue Json or array
- * @param {any} value if objectValue, json is must be object or array index you want to remove
- * @returns {any[]} Returns the total.
- * @example
- *
- * removeFromKey([1,2,3],0 )
- *=>[2, 3]
- */
-function removeFromKey (objectValue, value) {
-
-    var type_js=getTypeof(objectValue);
-    var reslt =null;
-
-    if (type_js === "array") {
-
-        reslt=[];
-        each(objectValue, function (av, ak) {
-
-            if (parseInt(ak) !== value) {
-
-                reslt.push(av);
-
-            }
-
-        });
-
-        return reslt;
-
-    }
-
-    if (type_js === "json") {
-
-        reslt={};
-
-        each(objectValue, function (av, ak) {
-
-            if (ak !== value) {
-
-                reslt[ak]=av;
-
-            }
-
-        });
-
-        return reslt;
-
-    }
-
-    return [];
-
-}
-
-/**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in json format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in json format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value, config) {
-
-    var defaultConfig = varExtend({"ignoreFunction": true,
-        "isJson": false,
-        "throwError": false,
-        "unscapeEntity": false}, config);
-
-    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
-
-        if (defaultConfig.throwError) {
-
-            throw new Error("Allow only " +getKey(validTypeJson).join(","));
-
-        }
-
-        return '';
-
-    }
-
-    var data = parseStringCore(zero, defaultConfig, value);
-
-    if (defaultConfig.unscapeEntity) {
-
-        data = strUnEscape(data);
-
-    }
-
-    return data.toString();
-
-}
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-function escapeQuotesStr (str) {
-
-    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
-
-}
-
-/**
- * Parse String
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} rawCount This will define deep was nested
- * @param {any} rawConfig The config by user
- * @param {any} rawValue The data that you want to covert to a string from json/array
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        var prepStr = "";
-
-        if (has(rawCount === zero
-            ?validTypeJson
-            :removeFromKey(validTypeJson, "object"), getTypeof(value))) {
-
-            var getTypeDetails = validTypeJson[getTypeof(value)];
-
-            var inc=zero;
-
-            each(value, function (ev, ek) {
-
-                var delimeter=inc<count(value)-one
-                    ?","
-                    :"";
-
-                if (getTypeDetails.isKey) {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
-
-                } else {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
-
-                }
-
-                inc += one;
-
-            });
-
-            return getTypeDetails.start+prepStr+getTypeDetails.end;
-
-        }
-
-        var parseValue = convertValue(value);
-
-        if (getTypeof(parseValue) === "string") {
-
-            return '"'+escapeQuotesStr(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "undefined") {
-
-            return '"undefined"';
-
-        }
-        if (getTypeof(parseValue) === "date") {
-
-            return '"'+toString(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "regexp") {
-
-            return '"new RegExp(' + value.source +','+ value.flags+')"';
-
-        }
-
-        if (getTypeof(parseValue) === "number") {
-
-            if (isNaN(parseValue)) {
-
-                return '"NaN"';
-
-            }
-
-            if (Infinity === parseValue) {
-
-                return '"Infinity"';
-
-            }
-
-            return value;
-
-        }
-
-        if (getTypeof(value) === "object") {
-
-            return '"'+value+'"';
-
-        }
-
-        if (getTypeof(parseValue) === "function") {
-
-            if (refConfig.ignoreFunction) {
-
-                return null;
-
-            }
-
-            return '"'+parseValue+'"';
-
-        }
-
-        return parseValue;
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
-
-}
-
-_stk.parseString=parseString;
-
-
-/**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-function pipe () {
-
-    var arg=arguments;
-
-    var pipeConst = first(arg);
-    var varLimit = limit(arg, one);
-    var that = this;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-
-
-/**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-_stk.range=range;
-
-_stk.reduce=reduce;
-
-_stk.add=add;
-
-
-/**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category Function
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-function regexCountGroup (value) {
-
-    return new RegExp(toString(value) + '|').exec('').length - one;
-
-}
-
-_stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
-
-_stk.removeFromKey=removeFromKey;
-
-
-/**
- * Return reverse order of array
- *
- * @since 1.4.874
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
- * @example
- *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
- */
-function reverse (value) {
-
-    return curryArg(function (rawValue) {
-
-        var typeOf = getTypeof(rawValue);
-        var refRawList = typeOf=== "string"
-            ?rawValue.split("")
-            :rawValue;
-
-        var cloneMap = map(function (__, key) {
-
-            return refRawList[count(refRawList) - one - key];
-
-        }, refRawList);
-
-        return typeOf === "string"
-            ?cloneMap.join("")
-            :cloneMap;
-
-    }, [value], one);
-
-}
-
-_stk.reverse=reverse;
-
-
-/**
  * Random Decimal
  *
  * @since 1.0.1
@@ -6719,38 +6729,6 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-        var nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
 
 _stk.selectInData=selectInData;
 
@@ -6899,6 +6877,27 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category Function
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+function regexCountGroup (value) {
+
+    return new RegExp(toString(value) + '|').exec('').length - one;
+
+}
+
+_stk.regexCountGroup=regexCountGroup;
 
 
 /**
@@ -7246,8 +7245,6 @@ function strKebab (value) {
 
 _stk.strKebab=strKebab;
 
-_stk.strLower=strLower;
-
 
 /**
  * String Snake case
@@ -7435,6 +7432,8 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
+
+_stk.remove=remove;
 
 
 /**
@@ -7877,109 +7876,50 @@ _stk.toPairs=toPairs;
 
 _stk.toString=toString;
 
-
-/**
- * String trim  at the start only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in start of string
- * @example
- *
- * trimStart(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss '
- */
-function trimStart (value, remove_value) {
-
-    var rx = new RegExp('^[' + whitespace + ']*');
-
-    var rawValue = toString(value).replace(rx, "");
-
-    if (indexOfExist(getTypeof(remove_value), ["string"])) {
-
-        var regData = new RegExp("^("+remove_value+")", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-/**
- * String trim at the end only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in end of string
- * @example
- *
- * trimEnd(' The fish is goad   with Goat-1ss ')
- *=> ' The fish is goad   with Goat-1ss'
- */
-function trimEnd (value, remove_value) {
-
-    var rx = new RegExp('[' + whitespace + ']*$');
-
-    var rawValue= toString(value).replace(rx, "");
-
-    if (indexOfExist(getTypeof(remove_value), ["string"])) {
-
-        var regData = new RegExp("("+remove_value+")$", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-/**
- * String trim in removing whitespace both start and end
- *
- * @since 1.4.8
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data
- * @example
- *
- * trim(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss'
- */
-function trim (value, remove_value) {
-
-    var rawValue = toString(value);
-
-    rawValue = trimStart(rawValue);
-    rawValue = trimEnd(rawValue);
-
-    rawValue = rawValue.trim();
-
-    if (indexOfExist(getTypeof(remove_value), [
-        "string",
-        "regexp"
-    ])) {
-
-        rawValue = rawValue.replace(remove_value, "");
-
-    }
-
-    return rawValue;
-
-}
-
-_stk.trim=trim;
+_stk.strLower=strLower;
 
 _stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        var uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
 
 
 /**
@@ -8027,45 +7967,6 @@ function union () {
 }
 
 _stk.union=union;
-
-
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        var uniqArrData = [];
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
 
 _stk.varExtend=varExtend;
 
@@ -8463,6 +8364,106 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
+
+/**
+ * String trim  at the start only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in start of string
+ * @example
+ *
+ * trimStart(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss '
+ */
+function trimStart (value, remove_value) {
+
+    var rx = new RegExp('^[' + whitespace + ']*');
+
+    var rawValue = toString(value).replace(rx, "");
+
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
+
+        var regData = new RegExp("^("+remove_value+")", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+/**
+ * String trim at the end only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in end of string
+ * @example
+ *
+ * trimEnd(' The fish is goad   with Goat-1ss ')
+ *=> ' The fish is goad   with Goat-1ss'
+ */
+function trimEnd (value, remove_value) {
+
+    var rx = new RegExp('[' + whitespace + ']*$');
+
+    var rawValue= toString(value).replace(rx, "");
+
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
+
+        var regData = new RegExp("("+remove_value+")$", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+/**
+ * String trim in removing whitespace both start and end
+ *
+ * @since 1.4.8
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data
+ * @example
+ *
+ * trim(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss'
+ */
+function trim (value, remove_value) {
+
+    var rawValue = toString(value);
+
+    rawValue = trimStart(rawValue);
+    rawValue = trimEnd(rawValue);
+
+    rawValue = rawValue.trim();
+
+    if (indexOfExist(getTypeof(remove_value), [
+        "string",
+        "regexp"
+    ])) {
+
+        rawValue = rawValue.replace(remove_value, "");
+
+    }
+
+    return rawValue;
+
+}
+
+_stk.trim=trim;
+
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists

@@ -38,7 +38,7 @@ function arraySum (arrayObject, precision) {
  *
  * @since 1.4.9
  * @category Math
- * @param {number[]} num Array of number
+ * @param {number} num Array of number
  * @param {number=} precision decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example

@@ -13,6 +13,41 @@ import {default as ___module} from './src/function/__.js';
  */
 export const __ = ___module;
 
+import {default as add_module} from './src/function/add.js';
+
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+export const add = add_module;
+
+import {default as allValid_module} from './src/function/allValid.js';
+
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+export const allValid = allValid_module;
+
 import {default as append_module} from './src/function/append.js';
 
 
@@ -49,41 +84,6 @@ import {default as arrayConcat_module} from './src/function/arrayConcat.js';
  */
 export const arrayConcat = arrayConcat_module;
 
-import {default as add_module} from './src/function/add.js';
-
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-export const add = add_module;
-
-import {default as allValid_module} from './src/function/allValid.js';
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-export const allValid = allValid_module;
-
 import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
 
 
@@ -101,26 +101,6 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
  *=>['s','s']
  */
 export const arrayRepeat = arrayRepeat_module;
-
-import {default as arraySum_module} from './src/function/arraySum.js';
-
-
-/**
- * Array sum of value
- *
- * @since 1.0.1
- * @category Math
- * @param {number[]} arrayObject Array of number
- * @param {number=} precision decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- * arraySum([1,2])
- * // => 3
- */
-export const arraySum = arraySum_module;
 
 import {default as arraySlice_module} from './src/function/arraySlice.js';
 
@@ -144,25 +124,25 @@ import {default as arraySlice_module} from './src/function/arraySlice.js';
  */
 export const arraySlice = arraySlice_module;
 
-import {default as calculate_module} from './src/function/calculate.js';
+import {default as arraySum_module} from './src/function/arraySum.js';
 
 
 /**
- * Logic in convert string to compute, similar on how the calculator works
+ * Array sum of value
  *
- * @since 1.4.8
+ * @since 1.0.1
  * @category Math
- * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
- * @param {any=} args Object argument that to fill in variable define at algbraic expression
- * @returns {number|any} Returns the total.
+ * @param {number[]} arrayObject Array of number
+ * @param {number=} precision decimal point and default value is 0
+ * @returns {number} Returns the total.
  * @example
  *
- * calculate('1+1')
- *=> 2
- * calculate('1+as',{as:1})
- *=> 2
+ * arraySum([1,2], 2)
+ * // => 3.00
+ * arraySum([1,2])
+ * // => 3
  */
-export const calculate = calculate_module;
+export const arraySum = arraySum_module;
 
 import {default as asyncReplace_module} from './src/function/asyncReplace.js';
 
@@ -256,6 +236,26 @@ import {default as dec_module} from './src/function/dec.js';
  *=>0
  */
 export const dec = dec_module;
+
+import {default as calculate_module} from './src/function/calculate.js';
+
+
+/**
+ * Logic in convert string to compute, similar on how the calculator works
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
+ * @param {any=} args Object argument that to fill in variable define at algbraic expression
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * calculate('1+1')
+ *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
+ */
+export const calculate = calculate_module;
 
 import {default as defaultTo_module} from './src/function/defaultTo.js';
 
@@ -365,23 +365,6 @@ import {default as filter_module} from './src/function/filter.js';
  */
 export const filter = filter_module;
 
-import {default as flatten_module} from './src/function/flatten.js';
-
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-export const flatten = flatten_module;
-
 import {default as first_module} from './src/function/first.js';
 
 
@@ -417,22 +400,22 @@ import {default as fromPairs_module} from './src/function/fromPairs.js';
  */
 export const fromPairs = fromPairs_module;
 
-import {default as getKey_module} from './src/function/getKey.js';
+import {default as flatten_module} from './src/function/flatten.js';
 
 
 /**
- * Get key Array or JSON
+ * Flatten an array to a single level.
  *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array type
- * @returns {any|any[]} Returns it respective key or index
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
  * @example
  *
- * getKey({"s":1})
- * => s
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
  */
-export const getKey = getKey_module;
+export const flatten = flatten_module;
 
 import {default as getData_module} from './src/function/getData.js';
 
@@ -456,6 +439,23 @@ import {default as getData_module} from './src/function/getData.js';
  */
 export const getData = getData_module;
 
+import {default as getKey_module} from './src/function/getKey.js';
+
+
+/**
+ * Get key Array or JSON
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array type
+ * @returns {any|any[]} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+export const getKey = getKey_module;
+
 import {default as getTypeof_module} from './src/function/getTypeof.js';
 
 
@@ -475,23 +475,6 @@ import {default as getTypeof_module} from './src/function/getTypeof.js';
  */
 export const getTypeof = getTypeof_module;
 
-import {default as getValue_module} from './src/function/getValue.js';
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-export const getValue = getValue_module;
-
 import {default as getUniq_module} from './src/function/getUniq.js';
 
 
@@ -508,6 +491,23 @@ import {default as getUniq_module} from './src/function/getUniq.js';
  * => dur82ht126uqgszn62j04a
  */
 export const getUniq = getUniq_module;
+
+import {default as getValue_module} from './src/function/getValue.js';
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+export const getValue = getValue_module;
 
 import {default as groupBy_module} from './src/function/groupBy.js';
 
@@ -545,6 +545,23 @@ import {default as gt_module} from './src/function/gt.js';
  */
 export const gt = gt_module;
 
+import {default as has_module} from './src/function/has.js';
+
+
+/**
+ * Check if object has value or null or undefined
+ *
+ * @since 1.0.1
+ * @category Predicate
+ * @param {...any?} args Either JSON or Array
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * has({'as':1}, 'as')
+ * // => true
+ */
+export const has = has_module;
+
 import {default as gte_module} from './src/function/gte.js';
 
 
@@ -563,22 +580,23 @@ import {default as gte_module} from './src/function/gte.js';
  */
 export const gte = gte_module;
 
-import {default as has_module} from './src/function/has.js';
+import {default as inc_module} from './src/function/inc.js';
 
 
 /**
- * Check if object has value or null or undefined
+ * To Increment value
  *
- * @since 1.0.1
- * @category Predicate
- * @param {...any?} args Either JSON or Array
- * @returns {boolean} Returns true or false.
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
  * @example
  *
- * has({'as':1}, 'as')
- * // => true
+ * inc(1)
+ *=>2
  */
-export const has = has_module;
+export const inc = inc_module;
 
 import {default as indexOf_module} from './src/function/indexOf.js';
 
@@ -615,24 +633,6 @@ import {default as indexOfExist_module} from './src/function/indexOfExist.js';
  * // => false
  */
 export const indexOfExist = indexOfExist_module;
-
-import {default as inc_module} from './src/function/inc.js';
-
-
-/**
- * To Increment value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * inc(1)
- *=>2
- */
-export const inc = inc_module;
 
 import {default as indexOfNotExist_module} from './src/function/indexOfNotExist.js';
 
@@ -763,23 +763,6 @@ import {default as jsonToArray_module} from './src/function/jsonToArray.js';
  */
 export const jsonToArray = jsonToArray_module;
 
-import {default as last_module} from './src/function/last.js';
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-export const last = last_module;
-
 import {default as lastIndexOf_module} from './src/function/lastIndexOf.js';
 
 
@@ -816,6 +799,23 @@ import {default as like_module} from './src/function/like.js';
  */
 export const like = like_module;
 
+import {default as last_module} from './src/function/last.js';
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+export const last = last_module;
+
 import {default as limit_module} from './src/function/limit.js';
 
 
@@ -835,6 +835,24 @@ import {default as limit_module} from './src/function/limit.js';
  *=>{'1':2}
  */
 export const limit = limit_module;
+
+import {default as lt_module} from './src/function/lt.js';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as lte_module} from './src/function/lte.js';
 
@@ -891,24 +909,6 @@ import {default as mapGetData_module} from './src/function/mapGetData.js';
  */
 export const mapGetData = mapGetData_module;
 
-import {default as lt_module} from './src/function/lt.js';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
-
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.js';
 
 
@@ -963,6 +963,24 @@ import {default as mergeWithKey_module} from './src/function/mergeWithKey.js';
  *=> {"s":1,"ss":1}
  */
 export const mergeWithKey = mergeWithKey_module;
+
+import {default as noteq_module} from './src/function/noteq.js';
+
+
+/**
+ * To check if its not equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any value type
+ * @param {any} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * noteq('as', 'as')
+ * // => false
+ */
+export const noteq = noteq_module;
 
 import {default as onDelay_module} from './src/function/onDelay.js';
 
@@ -1053,24 +1071,6 @@ import {default as pSerialize_module} from './src/function/pSerialize.js';
  * // => 'a:1:{i:0;s:3:"22s";}'
  */
 export const pSerialize = pSerialize_module;
-
-import {default as noteq_module} from './src/function/noteq.js';
-
-
-/**
- * To check if its not equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any value type
- * @param {any} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * noteq('as', 'as')
- * // => false
- */
-export const noteq = noteq_module;
 
 import {default as pUnSerialize_module} from './src/function/pUnSerialize.js';
 
@@ -1271,23 +1271,6 @@ import {default as repeat_module} from './src/function/repeat.js';
  */
 export const repeat = repeat_module;
 
-import {default as reverse_module} from './src/function/reverse.js';
-
-
-/**
- * Return reverse order of array
- *
- * @since 1.4.874
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
- * @example
- *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
- */
-export const reverse = reverse_module;
-
 import {default as roundDecimal_module} from './src/function/roundDecimal.js';
 
 
@@ -1305,6 +1288,23 @@ import {default as roundDecimal_module} from './src/function/roundDecimal.js';
  *=>11.11
  */
 export const roundDecimal = roundDecimal_module;
+
+import {default as reverse_module} from './src/function/reverse.js';
+
+
+/**
+ * Return reverse order of array
+ *
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
+ * @example
+ *
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
+ */
+export const reverse = reverse_module;
 
 import {default as selectInData_module} from './src/function/selectInData.js';
 
@@ -1504,6 +1504,23 @@ import {default as strLower_module} from './src/function/strLower.js';
  */
 export const strLower = strLower_module;
 
+import {default as strSnake_module} from './src/function/strSnake.js';
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * strSnake('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+export const strSnake = strSnake_module;
+
 import {default as strSubs_module} from './src/function/strSubs.js';
 
 
@@ -1522,23 +1539,6 @@ import {default as strSubs_module} from './src/function/strSubs.js';
  *=> 'the fish is goad   with goat-1ss
  */
 export const strSubs = strSubs_module;
-
-import {default as strSnake_module} from './src/function/strSnake.js';
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * strSnake('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-export const strSnake = strSnake_module;
 
 import {default as strUnEscape_module} from './src/function/strUnEscape.js';
 
@@ -1575,6 +1575,24 @@ import {default as strUpper_module} from './src/function/strUpper.js';
  */
 export const strUpper = strUpper_module;
 
+import {default as subtract_module} from './src/function/subtract.js';
+
+
+/**
+ * Subtract logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for subtracted value
+ * @example
+ *
+ * subtract(1, 1)
+ * // => 0
+ */
+export const subtract = subtract_module;
+
 import {default as swap_module} from './src/function/swap.js';
 
 
@@ -1594,24 +1612,6 @@ import {default as swap_module} from './src/function/swap.js';
  */
 export const swap = swap_module;
 
-import {default as subtract_module} from './src/function/subtract.js';
-
-
-/**
- * Subtract logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for subtracted value
- * @example
- *
- * subtract(1, 1)
- * // => 0
- */
-export const subtract = subtract_module;
-
 import {default as take_module} from './src/function/take.js';
 
 
@@ -1629,23 +1629,6 @@ import {default as take_module} from './src/function/take.js';
  * // => 1
  */
 export const take = take_module;
-
-import {default as toArray_module} from './src/function/toArray.js';
-
-
-/**
- * To convert any data type(except the data has been already been an array) into array type
- *
- * @since 1.0.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-export const toArray = toArray_module;
 
 import {default as templateValue_module} from './src/function/templateValue.js';
 
@@ -1666,6 +1649,23 @@ import {default as templateValue_module} from './src/function/templateValue.js';
  */
 export const templateValue = templateValue_module;
 
+import {default as toArray_module} from './src/function/toArray.js';
+
+
+/**
+ * To convert any data type(except the data has been already been an array) into array type
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+export const toArray = toArray_module;
+
 import {default as toBoolean_module} from './src/function/toBoolean.js';
 
 
@@ -1682,6 +1682,24 @@ import {default as toBoolean_module} from './src/function/toBoolean.js';
  *=>true
  */
 export const toBoolean = toBoolean_module;
+
+import {default as toDouble_module} from './src/function/toDouble.js';
+
+
+/**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+export const toDouble = toDouble_module;
 
 import {default as toInteger_module} from './src/function/toInteger.js';
 
@@ -1717,23 +1735,22 @@ import {default as toPairs_module} from './src/function/toPairs.js';
  */
 export const toPairs = toPairs_module;
 
-import {default as toDouble_module} from './src/function/toDouble.js';
+import {default as toString_module} from './src/function/toString.js';
 
 
 /**
- * To extract number in string and convert to double, it will also remove all none numeric
+ * To String
  *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @param {any=} config Option you want to set in this function.
- * @returns {number} Return in double.
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
  * @example
  *
- * toDouble("100.1d1")
- *=>100.11
+ * toString(1)
+ *=> '1'
  */
-export const toDouble = toDouble_module;
+export const toString = toString_module;
 
 import {default as trim_module} from './src/function/trim.js';
 
@@ -1753,22 +1770,23 @@ import {default as trim_module} from './src/function/trim.js';
  */
 export const trim = trim_module;
 
-import {default as toString_module} from './src/function/toString.js';
+import {default as trimStart_module} from './src/function/trimStart.js';
 
 
 /**
- * To String
+ * String trim  at the start only
  *
- * @since 1.4.5
+ * @since 1.4.86
  * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in start of string
  * @example
  *
- * toString(1)
- *=> '1'
+ * trimStart(' The fish is goad   with Goat-1ss ')
+ *=> 'The fish is goad   with Goat-1ss '
  */
-export const toString = toString_module;
+export const trimStart = trimStart_module;
 
 import {default as trimEnd_module} from './src/function/trimEnd.js';
 
@@ -1788,23 +1806,22 @@ import {default as trimEnd_module} from './src/function/trimEnd.js';
  */
 export const trimEnd = trimEnd_module;
 
-import {default as trimStart_module} from './src/function/trimStart.js';
+import {default as union_module} from './src/function/union.js';
 
 
 /**
- * String trim  at the start only
+ * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in start of string
+ * @since 1.4.7
+ * @category Collection
+ * @param {...any?} arg First number
+ * @returns {any[]} Returns true or false.
  * @example
  *
- * trimStart(' The fish is goad   with Goat-1ss ')
- *=> 'The fish is goad   with Goat-1ss '
+ * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
+ * // => [1, 2, 3, 4, 7, 5, 6, 8]
  */
-export const trimStart = trimStart_module;
+export const union = union_module;
 
 import {default as unique_module} from './src/function/unique.js';
 
@@ -2258,21 +2275,4 @@ import {default as zip_module} from './src/function/zip.js';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
-
-import {default as union_module} from './src/function/union.js';
-
-
-/**
- * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
- *
- * @since 1.4.7
- * @category Collection
- * @param {...any?} arg First number
- * @returns {any[]} Returns true or false.
- * @example
- *
- * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
- * // => [1, 2, 3, 4, 7, 5, 6, 8]
- */
-export const union = union_module;
 
