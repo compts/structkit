@@ -5,7 +5,7 @@ export default arraySum;
  * @since 1.0.1
  * @category Math
  * @param {number[]} arrayObject Array of number
- * @param {number=} delimeter decimal point and default value is 0
+ * @param {number=} precision decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example
  *
@@ -14,4 +14,4 @@ export default arraySum;
  * arraySum([1,2])
  * // => 3
  */
-declare function arraySum(arrayObject: number[], delimeter?: number | undefined): number;
+declare function arraySum(arrayObject: number[], precision?: number | undefined): number;

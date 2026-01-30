@@ -3,7 +3,7 @@ const assert = require("assert");
 
 const one =1,
     three=3,
-    three_dec="3.00",
+    three_dec=3.00,
     two =2;
 
 
