@@ -19,6 +19,7 @@ const objectCallTypeAll = {"[object Arguments]": "arguments",
     "[object Set]": "set",
     "[object String]": "string",
     "[object Uint16Array]": "uint16Array",
+    "[object Uint32Array]": "uint32Array",
     "[object Uint8Array]": "uint8Array",
     "[object Undefined]": "undefined"};
 

@@ -1,6 +1,10 @@
 import empty from './empty.js';
 
+import {getTypeofInternal} from '../core/getTypeOf.js';
+
 import each from './each.js';
+
+import indexOfExist from './indexOfExist.js';
 
 import append from './append.js';
 
@@ -18,15 +22,37 @@ import append from './append.js';
  */
 function clone (objectValue) {
 
-    const variable=empty(objectValue);
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
 
-    each(objectValue, function (value, key) {
+        let variable=empty(objectValue);
 
-        append(variable, value, key);
+        each(objectValue, function (value, key) {
 
-    });
+            variable = append(variable, value, key);
 
-    return variable;
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
 
 }
 export default clone;

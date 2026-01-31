@@ -18,7 +18,6 @@ const {zero, one} = require("../variable/defaultValue");
  */
 function arrayRepeat (value, valueRepetion) {
 
-
     return curryArg(function (rawValue, rawValueRepetion) {
 
         const nm_rpt=rawValueRepetion||zero;

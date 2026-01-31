@@ -50,7 +50,6 @@ function truncateToDecimalPlaces (num, precision) {
 
     const multiplier = ten**precision;
 
-
     return Math.trunc(num * multiplier) / multiplier;
 
 }
