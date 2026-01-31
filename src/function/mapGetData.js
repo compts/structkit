@@ -13,9 +13,9 @@ const {two} = require("../variable/defaultValue");
  * @since 1.3.1
  * @category Collection
  * @param {string} valueFormat Key look up format
- * @param {any[]} objectValue Json in array format
- * @param {any=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any[]} Return array or object.
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
  * @example
  *
  * mapGetData("Asd", [{"Asd":1}])

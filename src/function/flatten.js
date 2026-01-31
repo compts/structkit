@@ -7,7 +7,7 @@ const each = require('./each');
  * Flatten an array to a single level.
  *
  * @since 1.4.87
- * @category Condition
+ * @category Array
  * @param {any} arg First number
  * @returns {any} Returns true or false.
  * @example

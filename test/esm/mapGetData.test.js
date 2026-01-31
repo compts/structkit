@@ -14,4 +14,14 @@ describe('CJS: mapGetData method', function () {
 
     });
 
+    it('check if value exist', function () {
+
+        assert.deepStrictEqual(
+            mapGetData("b:asd", {"a": 1,
+                "b": {"asd": {"aa": "bb"}}}),
+            [{"aa": 'bb'}]
+        );
+
+    });
+
 });

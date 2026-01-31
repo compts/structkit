@@ -5,7 +5,7 @@ import {expectType} from 'tsd';
 // TS
 
 
-describe('shuffle', function () {
+describe('TS: shuffle method', function () {
 
     it('should return an array of the same length', function () {
 
