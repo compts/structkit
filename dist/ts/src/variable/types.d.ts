@@ -20,6 +20,7 @@ export const objectCallTypeAll: {
     "[object Set]": string;
     "[object String]": string;
     "[object Uint16Array]": string;
+    "[object Uint32Array]": string;
     "[object Uint8Array]": string;
     "[object Undefined]": string;
 };

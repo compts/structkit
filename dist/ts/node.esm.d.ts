@@ -52,6 +52,19 @@ export const allValid: typeof allValid_module;
  */
 export const append: typeof append_module;
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+export const arrayConcat: typeof arrayConcat_module;
+/**
  * Repeat value in array
  *
  * @since 1.4.7
@@ -100,19 +113,6 @@ export const arraySlice: typeof arraySlice_module;
  */
 export const arraySum: typeof arraySum_module;
 /**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-export const arrayConcat: typeof arrayConcat_module;
-/**
  * Async replace regexp argument
  *
  * @since 1.3.1
@@ -127,6 +127,22 @@ export const arrayConcat: typeof arrayConcat_module;
  * // => Promise{<fulfilled>: 'a@d'}
  */
 export const asyncReplace: typeof asyncReplace_module;
+/**
+ * Logic in convert string to compute, similar on how the calculator works
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
+ * @param {any=} args Object argument that to fill in variable define at algbraic expression
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * calculate('1+1')
+ *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
+ */
+export const calculate: typeof calculate_module;
 /**
  * Cloning the data either in JSON or array that be used as different property
  *
@@ -158,20 +174,6 @@ export const clone: typeof clone_module;
  */
 export const count: typeof count_module;
 /**
- * Create your own curry for your onw function
- *
- * @since 1.4.874
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-export const curry: typeof curry_module;
-/**
  * Decrement value
  *
  * @since 1.4.8
@@ -200,6 +202,20 @@ export const dec: typeof dec_module;
  */
 export const defaultTo: typeof defaultTo_module;
 /**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.874
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+export const curry: typeof curry_module;
+/**
  * Divide logic in satisfying two argument
  *
  * @since 1.4.8
@@ -213,22 +229,6 @@ export const defaultTo: typeof defaultTo_module;
  * // => 1
  */
 export const divide: typeof divide_module;
-/**
- * Logic in convert string to compute, similar on how the calculator works
- *
- * @since 1.4.8
- * @category Math
- * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
- * @param {any=} args Object argument that to fill in variable define at algbraic expression
- * @returns {number|any} Returns the total.
- * @example
- *
- * calculate('1+1')
- *=> 2
- * calculate('1+as',{as:1})
- *=> 2
- */
-export const calculate: typeof calculate_module;
 /**
  * Each or for loop function you are familiar with
  *
@@ -385,20 +385,6 @@ export const getTypeof: typeof getTypeof_module;
  */
 export const getUniq: typeof getUniq_module;
 /**
- * To group the value of json or array
- *
- * @since 1.4.8
- * @category Collection
- * @param {any=} func Callback function
- * @param {any} objectValue The data you want to map
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * groupBy(function (value) { return value % 2}, [1,2,3,4,5,6,7])
- *=> {0:[2,4,6], 1:[1,3,5,7]}
- */
-export const groupBy: typeof groupBy_module;
-/**
  * Get value of json or array
  *
  * @since 1.0.1
@@ -412,19 +398,19 @@ export const groupBy: typeof groupBy_module;
  */
 export const getValue: typeof getValue_module;
 /**
- *  To check if the two arguments are greater than to equal
+ * To group the value of json or array
  *
  * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
+ * @category Collection
+ * @param {any=} func Callback function
+ * @param {any} objectValue The data you want to map
+ * @returns {any} Return map either JSON or Array
  * @example
  *
- * gte(1, 2)
- * // => false
+ * groupBy(function (value) { return value % 2}, [1,2,3,4,5,6,7])
+ *=> {0:[2,4,6], 1:[1,3,5,7]}
  */
-export const gte: typeof gte_module;
+export const groupBy: typeof groupBy_module;
 /**
  *  To check if the two arguments are greater
  *
@@ -440,6 +426,20 @@ export const gte: typeof gte_module;
  */
 export const gt: typeof gt_module;
 /**
+ *  To check if the two arguments are greater than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gte(1, 2)
+ * // => false
+ */
+export const gte: typeof gte_module;
+/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -453,19 +453,20 @@ export const gt: typeof gt_module;
  */
 export const has: typeof has_module;
 /**
- * Index of array
+ * If else condition logic, using curry callback, you now use this statement is function or objectt will if condition are met
  *
- * @since 1.0.1
+ * @since 1.4.9
  * @category Logic
- * @param {any=} value Value in array
- * @param {any[]=} objectValue Array
- * @returns {number} Returns the index.
+ * @param {any} cond Condition validation
+ * @param {any} ifFunc if valid this function or arg will return
+ * @param {any=} elseFunc else this function or arg will return
+ * @returns {any} Returns the either ifFunc or elseFunc.
  * @example
  *
- * indexOf(1, [1,2])
- * // => 0
+ * ifElse(__,(params,ss) => ss,(params,ss,s2) => {return s2)(true,1,2)
+ * // => 1
  */
-export const indexOf: typeof indexOf_module;
+export const ifElse: typeof ifElse_module;
 /**
  * To Increment value
  *
@@ -480,6 +481,20 @@ export const indexOf: typeof indexOf_module;
  *=>2
  */
 export const inc: typeof inc_module;
+/**
+ * Index of array
+ *
+ * @since 1.0.1
+ * @category Logic
+ * @param {any=} value Value in array
+ * @param {any[]=} objectValue Array
+ * @returns {number} Returns the index.
+ * @example
+ *
+ * indexOf(1, [1,2])
+ * // => 0
+ */
+export const indexOf: typeof indexOf_module;
 /**
  * Check index of array is Exist or not
  *
@@ -508,19 +523,6 @@ export const indexOfExist: typeof indexOfExist_module;
  * // => true
  */
 export const indexOfNotExist: typeof indexOfNotExist_module;
-/**
- * Check if data is empty, null and undefined are now considered as empty
- *
- * @since 1.0.1
- * @category Predicate
- * @param {any} value JSON , Array and String
- * @returns {boolean} Returns true or false
- * @example
- *
- * isEmpty('')
- * // => true
- */
-export const isEmpty: typeof isEmpty_module;
 /**
  * Insert value in Json object or array
  *
@@ -554,6 +556,19 @@ export const insert: typeof insert_module;
  */
 export const isExact: typeof isExact_module;
 /**
+ * Check if data is empty, null and undefined are now considered as empty
+ *
+ * @since 1.0.1
+ * @category Predicate
+ * @param {any} value JSON , Array and String
+ * @returns {boolean} Returns true or false
+ * @example
+ *
+ * isEmpty('')
+ * // => true
+ */
+export const isEmpty: typeof isEmpty_module;
+/**
  * Looking the data in JSON and Array base on object value with the help regexp
  *
  * @since 1.0.1
@@ -567,19 +582,6 @@ export const isExact: typeof isExact_module;
  * // => false
  */
 export const isExactbyRegExp: typeof isExactbyRegExp_module;
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-export const last: typeof last_module;
 /**
  * Is Json valid format
  *
@@ -595,19 +597,18 @@ export const last: typeof last_module;
  */
 export const isJson: typeof isJson_module;
 /**
- * Get the last index Of array
+ * Get the last value of array or JSON
  *
  * @since 1.0.1
  * @category Relation
- * @param {any} value Value you are searching for
- * @param {any} objectValue Array
- * @returns {any} Return get the index or array
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
  * @example
  *
- * lastIndexOf(1, [1,2])
- * // => 0
+ * last([1,2] )
+ *=>2
  */
-export const lastIndexOf: typeof lastIndexOf_module;
+export const last: typeof last_module;
 /**
  * Searching the data either in array or json object to get similar value of data
  *
@@ -622,6 +623,20 @@ export const lastIndexOf: typeof lastIndexOf_module;
  *=>{s1: 1, s2: 1}
  */
 export const like: typeof like_module;
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} value Value you are searching for
+ * @param {any} objectValue Array
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf(1, [1,2])
+ * // => 0
+ */
+export const lastIndexOf: typeof lastIndexOf_module;
 /**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
@@ -639,7 +654,7 @@ export const like: typeof like_module;
  */
 export const limit: typeof limit_module;
 /**
- * To check if the two arguments are less than to equal
+ * To check if the two arguments are less
  *
  * @since 1.4.8
  * @category Predicate
@@ -648,10 +663,10 @@ export const limit: typeof limit_module;
  * @returns {boolean|any} Returns true or false.
  * @example
  *
- * lte(1, 2)
+ * lt(1, 2)
  * // => true
  */
-export const lte: typeof lte_module;
+export const lt: typeof lt_module;
 /**
  * To map the value of json or array
  *
@@ -666,6 +681,20 @@ export const lte: typeof lte_module;
  *=> [3, 4]
  */
 export const map: typeof map_module;
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+export const lte: typeof lte_module;
 /**
  * A Function to map the data either an array or an object using getData function.
  *
@@ -682,34 +711,6 @@ export const map: typeof map_module;
  */
 export const mapGetData: typeof mapGetData_module;
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt: typeof lt_module;
-/**
- * Merging two json object
- *
- * @since 1.4.8.1
- * @category Collection
- * @param {any} objectValue The data you want to map
- * @param {any} mergeValue data that you want to merge or replace from `objectValue`
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * mergeWithKey({"s":1},{"ss":1})
- *=> {"s":1,"ss":1}
- */
-export const mergeWithKey: typeof mergeWithKey_module;
-/**
  * Merging two json/array object with the help of where clause
  *
  * @since 1.4.8.1
@@ -725,19 +726,19 @@ export const mergeWithKey: typeof mergeWithKey_module;
  */
 export const mergeInWhere: typeof mergeInWhere_module;
 /**
- * Multiply logic in satisfying two argument
+ * Merging two json object
  *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for mutiplied value
+ * @since 1.4.8.1
+ * @category Collection
+ * @param {any} objectValue The data you want to map
+ * @param {any} mergeValue data that you want to merge or replace from `objectValue`
+ * @returns {any} Return map either JSON or Array
  * @example
  *
- * multiply(1, 1)
- * // => 1
+ * mergeWithKey({"s":1},{"ss":1})
+ *=> {"s":1,"ss":1}
  */
-export const multiply: typeof multiply_module;
+export const mergeWithKey: typeof mergeWithKey_module;
 /**
  * To check if its not equal
  *
@@ -752,6 +753,20 @@ export const multiply: typeof multiply_module;
  * // => false
  */
 export const noteq: typeof noteq_module;
+/**
+ * Multiply logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for mutiplied value
+ * @example
+ *
+ * multiply(1, 1)
+ * // => 1
+ */
+export const multiply: typeof multiply_module;
 /**
  * On delay
  *
@@ -815,33 +830,6 @@ export const once: typeof once_module;
  * @since 1.4.874
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
- * @returns {string} Returns number for subtracted value
- * @example
- *
- * pSerialize(["22s"])
- * // => 'a:1:{i:0;s:3:"22s";}'
- */
-export const pSerialize: typeof pSerialize_module;
-/**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in json format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in json format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-export const parseString: typeof parseString_module;
-/**
- * Create a serialize data if you are coming to php
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
  * @example
  *
@@ -850,18 +838,18 @@ export const parseString: typeof parseString_module;
  */
 export const pUnSerialize: typeof pUnSerialize_module;
 /**
- * Perform left to right function composition. first arguemnt will be default value
+ * Create a serialize data if you are coming to php
  *
- * @since 1.4.86
- * @category Function
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {string} Returns number for subtracted value
  * @example
  *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
+ * pSerialize(["22s"])
+ * // => 'a:1:{i:0;s:3:"22s";}'
  */
-export const pipe: typeof pipe_module;
+export const pSerialize: typeof pSerialize_module;
 /**
  * Parse from String to JSON object
  *
@@ -876,6 +864,33 @@ export const pipe: typeof pipe_module;
  *=>{}
  */
 export const parseJson: typeof parseJson_module;
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+export const pipe: typeof pipe_module;
+/**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+export const parseString: typeof parseString_module;
 /**
  * To create single random value from array
  *
@@ -941,20 +956,6 @@ export const regexCountGroup: typeof regexCountGroup_module;
  * @category Collection
  * @param {any} objectValue Json or array
  * @param {any} value if objectValue, json is must be object or array index you want to remove
- * @returns {any[]} Returns the total.
- * @example
- *
- * removeFromKey([1,2,3],0 )
- *=>[2, 3]
- */
-export const removeFromKey: typeof removeFromKey_module;
-/**
- * Remove data in either JSON or Array using key or woth value, a revise logic
- *
- * @since 1.4.85
- * @category Collection
- * @param {any} objectValue Json or array
- * @param {any} value if objectValue, json is must be object or array index you want to remove
  * @param {number=} value2 Last row in index
  * @returns {any[]} Returns the total.
  * @example
@@ -964,18 +965,19 @@ export const removeFromKey: typeof removeFromKey_module;
  */
 export const remove: typeof remove_module;
 /**
- * Return reverse order of array
+ * Remove data in either JSON or Array using key or woth value, a revise logic
  *
- * @since 1.4.874
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
+ * @since 1.4.85
+ * @category Collection
+ * @param {any} objectValue Json or array
+ * @param {any} value if objectValue, json is must be object or array index you want to remove
+ * @returns {any[]} Returns the total.
  * @example
  *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
+ * removeFromKey([1,2,3],0 )
+ *=>[2, 3]
  */
-export const reverse: typeof reverse_module;
+export const removeFromKey: typeof removeFromKey_module;
 /**
  * Repeat string value
  *
@@ -1005,6 +1007,19 @@ export const repeat: typeof repeat_module;
  */
 export const roundDecimal: typeof roundDecimal_module;
 /**
+ * Return reverse order of array
+ *
+ * @since 1.4.874
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
+ * @example
+ *
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
+ */
+export const reverse: typeof reverse_module;
+/**
  * Selecting multiple search data using `getData` logic in the loop
  *
  * @since 1.4.8.1
@@ -1019,6 +1034,21 @@ export const roundDecimal: typeof roundDecimal_module;
  */
 export const selectInData: typeof selectInData_module;
 /**
+ * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any=} split_str Search key or index.
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} updateValue Value to update the data.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * setData("s", {"s":1},2)
+ *=> 2
+ */
+export const setData: typeof setData_module;
+/**
  * In array, you need to check all value atleast one true
  *
  * @since 1.4.8
@@ -1031,6 +1061,20 @@ export const selectInData: typeof selectInData_module;
  * // => true
  */
 export const someValid: typeof someValid_module;
+/**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @update 1.4.86
+ * @category Array
+ * @param {any[]} objectValue Array argmuments that you want to shuffle
+ * @returns {any[]} Shuffle return value in array
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+export const shuffle: typeof shuffle_module;
 /**
  * Sort array
  *
@@ -1074,20 +1118,21 @@ export const sortBy: typeof sortBy_module;
  */
 export const strCamel: typeof strCamel_module;
 /**
- * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
+ * String Capitalize
  *
- * @since 1.4.87
- * @category Collection
- * @param {any=} split_str Search key or index.
- * @param {any=} objectValue Either Json or Array data.
- * @param {any=} updateValue Value to update the data.
- * @returns {any} Returns the total.
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
  * @example
  *
- * setData("s", {"s":1},2)
- *=> 2
+ * strCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * strCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
  */
-export const setData: typeof setData_module;
+export const strCapitalize: typeof strCapitalize_module;
 /**
  * String Escape
  *
@@ -1103,19 +1148,18 @@ export const setData: typeof setData_module;
  */
 export const strEscape: typeof strEscape_module;
 /**
- * Shuffle data in array
+ * String Kebab case
  *
- * @since 1.0.1
- * @update 1.4.86
- * @category Array
- * @param {any[]} objectValue Array argmuments that you want to shuffle
- * @returns {any[]} Shuffle return value in array
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
  * @example
  *
- * shuffle([1,2,3])
- *=>[2,3,1]
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
  */
-export const shuffle: typeof shuffle_module;
+export const strKebab: typeof strKebab_module;
 /**
  * String Lower case case
  *
@@ -1129,19 +1173,6 @@ export const shuffle: typeof shuffle_module;
  *=> 'the fish is goad   with goat-1ss
  */
 export const strLower: typeof strLower_module;
-/**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-export const strKebab: typeof strKebab_module;
 /**
  * String Snake case
  *
@@ -1185,19 +1216,6 @@ export const strSubs: typeof strSubs_module;
  */
 export const strUnEscape: typeof strUnEscape_module;
 /**
- * String Upper case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * strUpper('The fish is goad   with Goat-1ss')
- *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
- */
-export const strUpper: typeof strUpper_module;
-/**
  * Subtract logic in satisfying two argument
  *
  * @since 1.4.8
@@ -1211,6 +1229,19 @@ export const strUpper: typeof strUpper_module;
  * // => 0
  */
 export const subtract: typeof subtract_module;
+/**
+ * String Upper case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * strUpper('The fish is goad   with Goat-1ss')
+ *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
+ */
+export const strUpper: typeof strUpper_module;
 /**
  * Swapping the value either string or array in there specific position
  *
@@ -1227,20 +1258,6 @@ export const subtract: typeof subtract_module;
  */
 export const swap: typeof swap_module;
 /**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Array
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns choice index value in list.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-export const take: typeof take_module;
-/**
  * Template value
  *
  * @since 1.0.1
@@ -1255,6 +1272,20 @@ export const take: typeof take_module;
  *=>'11'
  */
 export const templateValue: typeof templateValue_module;
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+export const take: typeof take_module;
 /**
  * To convert any data type(except the data has been already been an array) into array type
  *
@@ -1309,21 +1340,18 @@ export const toDouble: typeof toDouble_module;
  */
 export const toInteger: typeof toInteger_module;
 /**
- * String Capitalize
+ * To String
  *
- * @since 1.3.1
+ * @since 1.4.5
  * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
  * @example
  *
- * strCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * strCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
+ * toString(1)
+ *=> '1'
  */
-export const strCapitalize: typeof strCapitalize_module;
+export const toString: typeof toString_module;
 /**
  *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
@@ -1337,19 +1365,6 @@ export const strCapitalize: typeof strCapitalize_module;
  * // => [["s",1],["ss",["a",2]]]
  */
 export const toPairs: typeof toPairs_module;
-/**
- * To String
- *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
- * @example
- *
- * toString(1)
- *=> '1'
- */
-export const toString: typeof toString_module;
 /**
  * String trim in removing whitespace both start and end
  *
@@ -1673,6 +1688,19 @@ export function isString(value: any): boolean;
  */
 export function isUint16Array(value: any): boolean;
 /**
+ *  Get the type if uint32Array
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isUint32Array(undefined)
+ *=> true
+ */
+export function isUint32Array(value: any): boolean;
+/**
  *  Get the type if uint8Array
  *
  * @since 1.4.7
@@ -1714,18 +1742,18 @@ export const zip: typeof zip_module;
 import { default as add_module } from './src/function/add.js';
 import { default as allValid_module } from './src/function/allValid.js';
 import { default as append_module } from './src/function/append.js';
+import { default as arrayConcat_module } from './src/function/arrayConcat.js';
 import { default as arrayRepeat_module } from './src/function/arrayRepeat.js';
 import { default as arraySlice_module } from './src/function/arraySlice.js';
 import { default as arraySum_module } from './src/function/arraySum.js';
-import { default as arrayConcat_module } from './src/function/arrayConcat.js';
 import { default as asyncReplace_module } from './src/function/asyncReplace.js';
+import { default as calculate_module } from './src/function/calculate.js';
 import { default as clone_module } from './src/function/clone.js';
 import { default as count_module } from './src/function/count.js';
-import { default as curry_module } from './src/function/curry.js';
 import { default as dec_module } from './src/function/dec.js';
 import { default as defaultTo_module } from './src/function/defaultTo.js';
+import { default as curry_module } from './src/function/curry.js';
 import { default as divide_module } from './src/function/divide.js';
-import { default as calculate_module } from './src/function/calculate.js';
 import { default as each_module } from './src/function/each.js';
 import { default as empty_module } from './src/function/empty.js';
 import { default as equal_module } from './src/function/equal.js';
@@ -1737,75 +1765,76 @@ import { default as getData_module } from './src/function/getData.js';
 import { default as getKey_module } from './src/function/getKey.js';
 import { default as getTypeof_module } from './src/function/getTypeof.js';
 import { default as getUniq_module } from './src/function/getUniq.js';
-import { default as groupBy_module } from './src/function/groupBy.js';
 import { default as getValue_module } from './src/function/getValue.js';
-import { default as gte_module } from './src/function/gte.js';
+import { default as groupBy_module } from './src/function/groupBy.js';
 import { default as gt_module } from './src/function/gt.js';
+import { default as gte_module } from './src/function/gte.js';
 import { default as has_module } from './src/function/has.js';
-import { default as indexOf_module } from './src/function/indexOf.js';
+import { default as ifElse_module } from './src/function/ifElse.js';
 import { default as inc_module } from './src/function/inc.js';
+import { default as indexOf_module } from './src/function/indexOf.js';
 import { default as indexOfExist_module } from './src/function/indexOfExist.js';
 import { default as indexOfNotExist_module } from './src/function/indexOfNotExist.js';
-import { default as isEmpty_module } from './src/function/isEmpty.js';
 import { default as insert_module } from './src/function/insert.js';
 import { default as isExact_module } from './src/function/isExact.js';
+import { default as isEmpty_module } from './src/function/isEmpty.js';
 import { default as isExactbyRegExp_module } from './src/function/isExactbyRegExp.js';
-import { default as last_module } from './src/function/last.js';
 import { default as isJson_module } from './src/function/isJson.js';
-import { default as lastIndexOf_module } from './src/function/lastIndexOf.js';
+import { default as last_module } from './src/function/last.js';
 import { default as like_module } from './src/function/like.js';
+import { default as lastIndexOf_module } from './src/function/lastIndexOf.js';
 import { default as limit_module } from './src/function/limit.js';
-import { default as lte_module } from './src/function/lte.js';
-import { default as map_module } from './src/function/map.js';
-import { default as mapGetData_module } from './src/function/mapGetData.js';
 import { default as lt_module } from './src/function/lt.js';
-import { default as mergeWithKey_module } from './src/function/mergeWithKey.js';
+import { default as map_module } from './src/function/map.js';
+import { default as lte_module } from './src/function/lte.js';
+import { default as mapGetData_module } from './src/function/mapGetData.js';
 import { default as mergeInWhere_module } from './src/function/mergeInWhere.js';
-import { default as multiply_module } from './src/function/multiply.js';
+import { default as mergeWithKey_module } from './src/function/mergeWithKey.js';
 import { default as noteq_module } from './src/function/noteq.js';
+import { default as multiply_module } from './src/function/multiply.js';
 import { default as onDelay_module } from './src/function/onDelay.js';
 import { default as onSequence_module } from './src/function/onSequence.js';
 import { default as onWait_module } from './src/function/onWait.js';
 import { default as once_module } from './src/function/once.js';
-import { default as pSerialize_module } from './src/function/pSerialize.js';
-import { default as parseString_module } from './src/function/parseString.js';
 import { default as pUnSerialize_module } from './src/function/pUnSerialize.js';
-import { default as pipe_module } from './src/function/pipe.js';
+import { default as pSerialize_module } from './src/function/pSerialize.js';
 import { default as parseJson_module } from './src/function/parseJson.js';
+import { default as pipe_module } from './src/function/pipe.js';
+import { default as parseString_module } from './src/function/parseString.js';
 import { default as random_module } from './src/function/random.js';
 import { default as range_module } from './src/function/range.js';
 import { default as reduce_module } from './src/function/reduce.js';
 import { default as regexCountGroup_module } from './src/function/regexCountGroup.js';
-import { default as removeFromKey_module } from './src/function/removeFromKey.js';
 import { default as remove_module } from './src/function/remove.js';
-import { default as reverse_module } from './src/function/reverse.js';
+import { default as removeFromKey_module } from './src/function/removeFromKey.js';
 import { default as repeat_module } from './src/function/repeat.js';
 import { default as roundDecimal_module } from './src/function/roundDecimal.js';
+import { default as reverse_module } from './src/function/reverse.js';
 import { default as selectInData_module } from './src/function/selectInData.js';
+import { default as setData_module } from './src/function/setData.js';
 import { default as someValid_module } from './src/function/someValid.js';
+import { default as shuffle_module } from './src/function/shuffle.js';
 import { default as sort_module } from './src/function/sort.js';
 import { default as sortBy_module } from './src/function/sortBy.js';
 import { default as strCamel_module } from './src/function/strCamel.js';
-import { default as setData_module } from './src/function/setData.js';
+import { default as strCapitalize_module } from './src/function/strCapitalize.js';
 import { default as strEscape_module } from './src/function/strEscape.js';
-import { default as shuffle_module } from './src/function/shuffle.js';
-import { default as strLower_module } from './src/function/strLower.js';
 import { default as strKebab_module } from './src/function/strKebab.js';
+import { default as strLower_module } from './src/function/strLower.js';
 import { default as strSnake_module } from './src/function/strSnake.js';
 import { default as strSubs_module } from './src/function/strSubs.js';
 import { default as strUnEscape_module } from './src/function/strUnEscape.js';
-import { default as strUpper_module } from './src/function/strUpper.js';
 import { default as subtract_module } from './src/function/subtract.js';
+import { default as strUpper_module } from './src/function/strUpper.js';
 import { default as swap_module } from './src/function/swap.js';
-import { default as take_module } from './src/function/take.js';
 import { default as templateValue_module } from './src/function/templateValue.js';
+import { default as take_module } from './src/function/take.js';
 import { default as toArray_module } from './src/function/toArray.js';
 import { default as toBoolean_module } from './src/function/toBoolean.js';
 import { default as toDouble_module } from './src/function/toDouble.js';
 import { default as toInteger_module } from './src/function/toInteger.js';
-import { default as strCapitalize_module } from './src/function/strCapitalize.js';
-import { default as toPairs_module } from './src/function/toPairs.js';
 import { default as toString_module } from './src/function/toString.js';
+import { default as toPairs_module } from './src/function/toPairs.js';
 import { default as trim_module } from './src/function/trim.js';
 import { default as trimEnd_module } from './src/function/trimEnd.js';
 import { default as trimStart_module } from './src/function/trimStart.js';
