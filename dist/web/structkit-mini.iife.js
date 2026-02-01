@@ -1391,6 +1391,41 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
+function clone (objectValue) {
+
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
+
+        var variable=empty(objectValue);        each(objectValue, function (value, key) {
+
+            variable = append(variable, value, key);
+
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
+
+}
+
+_stk.clone=clone;
 function getKey (objectValue) {
 
     return getKeyVal(objectValue, "key");}
@@ -1434,43 +1469,6 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
-
-}
-
-
-function clone (objectValue) {
-
-    if (indexOfExist(getTypeofInternal(objectValue), [
-        "json",
-        "array",
-        "object",
-        "arguments",
-        "set",
-        "map"
-    ])) {
-
-        var variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
-
-            variable = append(variable, value, key);
-
-        });
-
-        return variable;
-
-    }
-
-    switch (getTypeofInternal(objectValue)) {
-
-    case 'date':
-        return new Date(objectValue.valueOf());
-    case 'uint16Array':
-    case 'uint8Array':
-        return objectValue.slice();
-    default: return objectValue;
-
-    }
 
 }
 
@@ -1773,7 +1771,7 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -1823,7 +1821,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.count=count;_stk.divide=divide;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2446,7 +2444,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
+_stk.getData=getData;_stk.getTypeof=getTypeof;_stk.getKey=getKey;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2627,7 +2625,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.inc=inc;_stk.each=each;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2652,12 +2650,7 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNot
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;}
-
-_stk.last=last;
-function lastIndexOf (value, objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function lastIndexOf (value, objectValue) {
 
     return curryArg(function (rawValue, rawObjectValue) {
 
@@ -2683,6 +2676,11 @@ function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;}
+
+_stk.last=last;
 function limit (objectValue, minValue, maxValue, func) {
 
     var cnt=0;    var glo_jsn={};
@@ -2884,18 +2882,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 _stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function noteq (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -5051,7 +5037,19 @@ _stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;_stk.removeFromKey=removeFromKey;function repeat (value, valueRepetion) {
+_stk.remove=remove;_stk.removeFromKey=removeFromKey;function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 

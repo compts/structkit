@@ -1701,7 +1701,7 @@ function range (maxValue, minValue, step) {
  * @since 1.4.7
  * @category Array
  * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
+ * @param {number=} valueRepetion how many times you want to repeate
  * @returns {any[]} Return in string or number.
  * @example
  *
@@ -1909,6 +1909,57 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
+
+        var variable=empty(objectValue);
+
+        each(objectValue, function (value, key) {
+
+            variable = append(variable, value, key);
+
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
+
+}
+
+_stk.clone=clone;
+
+
+/**
  * Get key Array or JSON
  *
  * @since 1.0.1
@@ -2001,54 +2052,6 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
-
-}
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    if (indexOfExist(getTypeofInternal(objectValue), [
-        "json",
-        "array",
-        "object",
-        "arguments",
-        "set",
-        "map"
-    ])) {
-
-        var variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
-
-            variable = append(variable, value, key);
-
-        });
-
-        return variable;
-
-    }
-
-    switch (getTypeofInternal(objectValue)) {
-
-    case 'date':
-        return new Date(objectValue.valueOf());
-    case 'uint16Array':
-    case 'uint8Array':
-        return objectValue.slice();
-    default: return objectValue;
-
-    }
 
 }
 
@@ -2423,10 +2426,6 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
-_stk.clone=clone;
-
-_stk.count=count;
-
 
 /**
  * Create your own curry for your onw function
@@ -2527,9 +2526,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.divide=divide;
+_stk.count=count;
 
-_stk.each=each;
+_stk.divide=divide;
 
 _stk.empty=empty;
 
@@ -3358,9 +3357,9 @@ _stk.fromPairs=fromPairs;
 
 _stk.getData=getData;
 
-_stk.getKey=getKey;
-
 _stk.getTypeof=getTypeof;
+
+_stk.getKey=getKey;
 /**
  * Generate unique value id
  *
@@ -3659,6 +3658,8 @@ _stk.ifElse=ifElse;
 
 _stk.inc=inc;
 
+_stk.each=each;
+
 _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
@@ -3714,27 +3715,6 @@ _stk.isExact=isExact;
 _stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
 
 
 /**
@@ -3795,6 +3775,27 @@ function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last;
 
 
 /**
@@ -4093,35 +4094,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6727,6 +6699,35 @@ _stk.regexCountGroup=regexCountGroup;
 _stk.remove=remove;
 
 _stk.removeFromKey=removeFromKey;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
