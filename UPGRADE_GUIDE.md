@@ -20,6 +20,7 @@ In this upcoming release 1.4.9,
 - lastIndexOf
 - map
 - like
+- reduce
 
 ## We are renaming the following function
 
@@ -139,3 +140,9 @@ OLD
 ``like({"s1":1,"s2":1},{"s1":1})``
 NEW 
 ``like({"s1":1}, {"s1":1,"s2":1})``
+
+### reduce
+OLD 
+``reduce([],[1,2],function(value) { return value+2 } )``
+NEW 
+``reduce(function(value) { return value+2 } ,[],[1,2])``

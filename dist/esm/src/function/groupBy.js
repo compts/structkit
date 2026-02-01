@@ -16,7 +16,7 @@ import append from './append.js';
  * @since 1.4.8
  * @category Collection
  * @param {any=} func Callback function
- * @param {any} objectValue The data you want to map
+ * @param {any=} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *

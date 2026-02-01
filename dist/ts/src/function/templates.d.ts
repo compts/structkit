@@ -1,4 +1,4 @@
-export default templateValue;
+export default templates;
 /**
  * Template value
  *
@@ -10,7 +10,7 @@ export default templateValue;
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  template("<!= test !>", {"test": 11})
  *=>'11'
  */
-declare function templateValue(templateString: string, data: any, option?: any | undefined): string;
+declare function templates(templateString: string, data: any, option?: any | undefined): string;

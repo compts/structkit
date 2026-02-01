@@ -23,10 +23,10 @@ import {one, two, zero} from '../variable/defaultValue.js';
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  template("<!= test !>", {"test": 11})
  *=>'11'
  */
-function templateValue (templateString, data, option) {
+function template (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
 
@@ -106,7 +106,7 @@ function templateValue (templateString, data, option) {
 
             const render = new Function('obj', source);
 
-            return render.call(this, rawData, templateValue);
+            return render.call(this, rawData, template);
 
         } catch (error) {
 
@@ -138,7 +138,7 @@ function templateValue (templateString, data, option) {
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  syntaxCleanup("<!- test !>", {"test": 11})
  *=>'11'
  */
 function syntaxCleanup (data, option) {
@@ -235,5 +235,5 @@ function syntaxCleanup (data, option) {
     }, "", str_split);
 
 }
-export default templateValue;
+export default template;
 

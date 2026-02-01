@@ -1514,129 +1514,6 @@ _stk.append=append;
 
 
 /**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-function arraySlice (objectValue, min, max) {
-
-    var ran_var=[];
-    var defaultValueZero=0;
-    var defaultValueNegativeOne=-1;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
-
-    if (has(min)) {
-
-        if (defaultValueZero > min) {
-
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
-
-        }
-
-    }
-
-    if (has(max)) {
-
-        if (defaultValueZero > max) {
-
-            var raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            var raw_ran_max =count(objectValue) + max;
-
-            if (raw_ran_min < raw_ran_max) {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
-
-            } else {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
-
-            }
-
-        }
-
-    }
-
-    each(objectValue, function (value, key) {
-
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
-
-            ran_var.push(value);
-
-        }
-
-    });
-
-    return ran_var;
-
-}
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-function arrayConcat () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var argsub=arguments;
-
-        if (argsub.length < one) {
-
-            return [];
-
-        }
-
-        var return_val=toArray(first(argsub));
-        var arrayValue = toArray(arraySlice(argsub, one));
-
-        each(arrayValue, function (value) {
-
-            return_val = return_val.concat(toArray(value));
-
-        });
-
-        return return_val;
-
-    }, arg);
-
-}
-
-_stk.arrayConcat=arrayConcat;
-
-
-/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -1728,6 +1605,86 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
+
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+function arraySlice (objectValue, min, max) {
+
+    var ran_var=[];
+    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            var raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            var raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (value, key) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
 
 _stk.arraySlice=arraySlice;
 
@@ -1844,6 +1801,50 @@ _stk.arraySum=arraySum;
 
 
 /**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+function arrayConcat () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var argsub=arguments;
+
+        if (argsub.length < one) {
+
+            return [];
+
+        }
+
+        var return_val=toArray(first(argsub));
+        var arrayValue = toArray(arraySlice(argsub, one));
+
+        each(arrayValue, function (value) {
+
+            return_val = return_val.concat(toArray(value));
+
+        });
+
+        return return_val;
+
+    }, arg);
+
+}
+
+_stk.arrayConcat=arrayConcat;
+
+
+/**
  * Async replace regexp argument
  *
  * @since 1.3.1
@@ -1906,57 +1907,6 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    if (indexOfExist(getTypeofInternal(objectValue), [
-        "json",
-        "array",
-        "object",
-        "arguments",
-        "set",
-        "map"
-    ])) {
-
-        var variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
-
-            variable = append(variable, value, key);
-
-        });
-
-        return variable;
-
-    }
-
-    switch (getTypeofInternal(objectValue)) {
-
-    case 'date':
-        return new Date(objectValue.valueOf());
-    case 'uint16Array':
-    case 'uint8Array':
-        return objectValue.slice();
-    default: return objectValue;
-
-    }
-
-}
-
-_stk.clone=clone;
 
 
 /**
@@ -2052,6 +2002,54 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
+
+}
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
+
+        var variable=empty(objectValue);
+
+        each(objectValue, function (value, key) {
+
+            variable = append(variable, value, key);
+
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
 
 }
 
@@ -2426,6 +2424,10 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
+_stk.clone=clone;
+
+_stk.count=count;
+
 
 /**
  * Create your own curry for your onw function
@@ -2526,9 +2528,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.count=count;
-
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -3355,11 +3357,11 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
+_stk.getKey=getKey;
+
 _stk.getData=getData;
 
 _stk.getTypeof=getTypeof;
-
-_stk.getKey=getKey;
 /**
  * Generate unique value id
  *
@@ -3425,7 +3427,7 @@ _stk.getValue=getValue;
  * @since 1.4.8
  * @category Collection
  * @param {any=} func Callback function
- * @param {any} objectValue The data you want to map
+ * @param {any=} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *
@@ -3658,8 +3660,6 @@ _stk.ifElse=ifElse;
 
 _stk.inc=inc;
 
-_stk.each=each;
-
 _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
@@ -3715,6 +3715,27 @@ _stk.isExact=isExact;
 _stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last;
 
 
 /**
@@ -3778,27 +3799,6 @@ _stk.like=like;
 
 
 /**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
-
-
-/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -3856,6 +3856,35 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -4630,104 +4659,6 @@ _stk.once=once;
  * @since 1.4.874
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
- * @returns {string} Returns number for subtracted value
- * @example
- *
- * pSerialize(["22s"])
- * // => 'a:1:{i:0;s:3:"22s";}'
- */
-function pSerialize (value) {
-
-    return curryArg(function (rawValue) {
-
-        var dataType = getTypeof(rawValue);
-
-        if (indexOfExist(dataType, [
-            "array",
-            "json",
-            "object",
-            "set",
-            "map"
-        ])) {
-
-            var getKeyVal = toArray(getKey(rawValue));
-            var getValueVal = toArray(getValue(rawValue));
-
-            var mapData = map(function (mValue, kValue) {
-
-                var refMapKey = getKeyVal[kValue];
-                var refMapValue = getValueVal[kValue];
-
-                return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
-
-            }, range(count(rawValue) - one, zero));
-
-            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
-
-        }
-
-        return parseTypeVal(dataType, value);
-
-    }, [value], one);
-
-}
-
-/**
- * Convert the value to its type in serialize
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} typeValue Arugment that you want to convert to serialize string
- * @param {any} value Arugment that you want to convert to serialize string
- * @returns {any} Returns number for subtracted value
- * @example
- *
- * parseTypeVal ("string", "value")
- * // => 0
- */
-function parseTypeVal (typeValue, value) {
-
-    if (indexOfExist(typeValue, [
-        "array",
-        "json",
-        "object",
-        "set",
-        "map"
-    ])) {
-
-        return pSerialize(value);
-
-    }
-
-    if (typeValue === "string") {
-
-        return "s:"+count(value)+":\""+value+"\";";
-
-    }
-    if (typeValue === "function") {
-
-        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
-
-    }
-    if (typeValue === "number") {
-
-        return "i:"+value+";";
-
-    }
-
-    return "N;";
-
-}
-
-_stk.pSerialize=pSerialize;
-
-
-/**
- * Create a serialize data if you are coming to php
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
  * @example
  *
@@ -4925,6 +4856,104 @@ function parseTypeValObj (value) {
 }
 
 _stk.pUnSerialize=pUnSerialize;
+
+
+/**
+ * Create a serialize data if you are coming to php
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {string} Returns number for subtracted value
+ * @example
+ *
+ * pSerialize(["22s"])
+ * // => 'a:1:{i:0;s:3:"22s";}'
+ */
+function pSerialize (value) {
+
+    return curryArg(function (rawValue) {
+
+        var dataType = getTypeof(rawValue);
+
+        if (indexOfExist(dataType, [
+            "array",
+            "json",
+            "object",
+            "set",
+            "map"
+        ])) {
+
+            var getKeyVal = toArray(getKey(rawValue));
+            var getValueVal = toArray(getValue(rawValue));
+
+            var mapData = map(function (mValue, kValue) {
+
+                var refMapKey = getKeyVal[kValue];
+                var refMapValue = getValueVal[kValue];
+
+                return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
+
+            }, range(count(rawValue) - one, zero));
+
+            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
+
+        }
+
+        return parseTypeVal(dataType, value);
+
+    }, [value], one);
+
+}
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} typeValue Arugment that you want to convert to serialize string
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * parseTypeVal ("string", "value")
+ * // => 0
+ */
+function parseTypeVal (typeValue, value) {
+
+    if (indexOfExist(typeValue, [
+        "array",
+        "json",
+        "object",
+        "set",
+        "map"
+    ])) {
+
+        return pSerialize(value);
+
+    }
+
+    if (typeValue === "string") {
+
+        return "s:"+count(value)+":\""+value+"\";";
+
+    }
+    if (typeValue === "function") {
+
+        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
+
+    }
+    if (typeValue === "number") {
+
+        return "i:"+value+";";
+
+    }
+
+    return "N;";
+
+}
+
+_stk.pSerialize=pSerialize;
 
 
 /* eslint-disable sort-keys */
@@ -6702,35 +6731,6 @@ _stk.removeFromKey=removeFromKey;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * Repeat string value
  *
  * @since 1.0.1
@@ -7534,12 +7534,20 @@ _stk.take=take;
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  template("<!= test !>", {"test": 11})
  *=>'11'
  */
-function templateValue (templateString, data, option) {
+function templates (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
+
+        var mapRawData = map(function (val) {
+
+            return getTypeof(val) === "string"
+                ?'"'+val+'"'
+                :val;
+
+        }, rawData);
 
         var default_option = varExtend({
             "close_tag": "!>",
@@ -7607,7 +7615,7 @@ function templateValue (templateString, data, option) {
                 ?parseString(vv)
                 :vv)+";\n";
 
-        }, "", rawData);
+        }, "", mapRawData);
 
         source += "';\n";
 
@@ -7617,7 +7625,7 @@ function templateValue (templateString, data, option) {
 
             var render = new Function('obj', source);
 
-            return render.call(this, rawData, templateValue);
+            return render.call(this, mapRawData, templates);
 
         } catch (error) {
 
@@ -7649,7 +7657,7 @@ function templateValue (templateString, data, option) {
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  syntaxCleanup("<!- test !>", {"test": 11})
  *=>'11'
  */
 function syntaxCleanup (data, option) {
@@ -7747,7 +7755,7 @@ function syntaxCleanup (data, option) {
 
 }
 
-_stk.templateValue=templateValue;
+_stk.templates=templates;
 
 _stk.toArray=toArray;
 

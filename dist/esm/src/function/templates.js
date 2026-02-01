@@ -1,16 +1,20 @@
-const varExtend = require('./varExtend');
+import varExtend from './varExtend.js';
 
-const isJson = require('./isJson');
+import isJson from './isJson.js';
 
-const parseString = require('./parseString');
+import parseString from './parseString.js';
 
-const reduce = require('./reduce');
+import reduce from './reduce.js';
 
-const toString = require("./toString");
-const curryArg = require("../core/curryArg");
+import map from './map.js';
 
-const {one, two, zero} = require("../variable/defaultValue");
+import toString from './toString.js';
 
+import getTypeof from './getTypeof.js';
+
+import curryArg from '../core/curryArg.js';
+
+import {one, two, zero} from '../variable/defaultValue.js';
 
 /**
  * Template value
@@ -23,13 +27,20 @@ const {one, two, zero} = require("../variable/defaultValue");
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  template("<!= test !>", {"test": 11})
  *=>'11'
  */
-function templateValue (templateString, data, option) {
-
+function templates (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
+
+        const mapRawData = map(function (val) {
+
+            return getTypeof(val) === "string"
+                ?'"'+val+'"'
+                :val;
+
+        }, rawData);
 
         const default_option = varExtend({
             "close_tag": "!>",
@@ -38,7 +49,6 @@ function templateValue (templateString, data, option) {
         }, rawOption);
 
         const temp = syntaxCleanup(rawTemplateString, default_option);
-
 
         const tag_replace={
             "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
@@ -70,7 +80,6 @@ function templateValue (templateString, data, option) {
 
         };
 
-
         temp.replace(regexp, function (match, evaluate, interpolate, offset) {
 
             source += temp.slice(index, offset).replace(escaper, escapeChar);
@@ -89,7 +98,6 @@ function templateValue (templateString, data, option) {
 
             }
 
-
             return match;
 
         });
@@ -100,19 +108,17 @@ function templateValue (templateString, data, option) {
                 ?parseString(vv)
                 :vv)+";\n";
 
-        }, "", rawData);
+        }, "", mapRawData);
 
         source += "';\n";
 
-
         source = "var __t,__p='';" + sourceData+source + " return __p;\n";
-
 
         try {
 
             const render = new Function('obj', source);
 
-            return render.call(this, rawData, templateValue);
+            return render.call(this, mapRawData, templates);
 
         } catch (error) {
 
@@ -120,13 +126,11 @@ function templateValue (templateString, data, option) {
 
                 throw new Error(error);
 
-
             }
 
             return "";
 
         }
-
 
     }, [
         templateString,
@@ -146,7 +150,7 @@ function templateValue (templateString, data, option) {
  * @returns {string} Returns the total.
  * @example
  *
- *  templateValue("<!- test !>", {"test": 11})
+ *  syntaxCleanup("<!- test !>", {"test": 11})
  *=>'11'
  */
 function syntaxCleanup (data, option) {
@@ -159,7 +163,6 @@ function syntaxCleanup (data, option) {
     let commentCounter = 0;
 
     let errorMessage = "";
-
 
     if (option.open_tag.length <= one) {
 
@@ -175,7 +178,6 @@ function syntaxCleanup (data, option) {
 
         return data;
 
-
     }
 
     if (option.throwError && errorMessage !=="") {
@@ -184,9 +186,7 @@ function syntaxCleanup (data, option) {
 
     }
 
-
     return reduce(function (total, vv, kk) {
-
 
         if (kk>one) {
 
@@ -218,7 +218,6 @@ function syntaxCleanup (data, option) {
                 }
                 if (vv !== " ") {
 
-
                     if (commentCounter===zero) {
 
                         return total+" "+vv;
@@ -248,4 +247,5 @@ function syntaxCleanup (data, option) {
     }, "", str_split);
 
 }
-module.exports=templateValue;
+export default templates;
+
