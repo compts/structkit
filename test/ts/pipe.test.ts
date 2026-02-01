@@ -7,7 +7,7 @@ const two = 2;
 const eleven = 11;
 const total = 122;
 
-describe('ESM: pipe method', function () {
+describe('TS: pipe method', function () {
 
     it('check if pipe function', function () {
 

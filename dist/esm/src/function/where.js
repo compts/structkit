@@ -10,7 +10,7 @@ import {two} from '../variable/defaultValue.js';
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValueWhere Data you want to search in key
- * @param {any} objectValue Json to Array
+ * @param {any=} objectValue Json to Array
  * @returns {any} Return either Json to Array.
  * @example
  *

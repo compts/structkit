@@ -16,7 +16,7 @@ const twentOne = 21;
 const k38 = 38416;
 
 
-describe('CJS: calculate method', function () {
+describe('TS: calculate method', function () {
 
     it('check calculate formula text', function () {
 

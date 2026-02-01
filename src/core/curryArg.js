@@ -96,14 +96,21 @@ function curryArg (fn, args, NoDefaultArgs) {
 
                 } else if (typeof args[arg] === "function") {
 
-                    const getApply = args[arg].apply(this, argSub);
+                    if (rawArgument.length === zero) {
 
-                    rawArgument.push(getApply);
+                        rawArgument.push(args[arg]);
 
+                    } else {
 
-                    if (getApply.name === fnCall.name && funcReturnType === false) {
+                        const getApply = args[arg].apply(this, argSub);
 
-                        funcReturnType = true;
+                        rawArgument.push(getApply);
+
+                        if (getApply.name === fnCall.name && funcReturnType === false) {
+
+                            funcReturnType = true;
+
+                        }
 
                     }
 
@@ -131,6 +138,11 @@ function curryArg (fn, args, NoDefaultArgs) {
 
             if (_has(argSub, arg) && _has(argSub, holderCounter)) {
 
+                if (argSub[holderCounter] === __) {
+
+                    funcReturnType = true;
+
+                }
                 rawArgument.push(argSub[holderCounter]);
                 holderCounter+=one;
 
@@ -198,4 +210,4 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 
 }
 
-module.exports=curryArg;
+module.exports = curryArg;

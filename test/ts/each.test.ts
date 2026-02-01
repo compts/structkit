@@ -57,7 +57,7 @@ function createMockFn (impl: (...args: any[]) => any = () => {}) {
 }
 
 // eslint-disable-next-line max-lines-per-function, space-before-blocks
-describe('CJS: each function', function (){
+describe('TS: each function', function (){
 
     // ==================== JSON/Object Tests ====================
     describe('JSON/Object iteration', () => {

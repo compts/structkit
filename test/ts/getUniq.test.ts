@@ -4,7 +4,7 @@ import assert from 'assert';
 // JavaScript
 
 
-describe('getUniq', function () {
+describe('TS:getUniq', function () {
 
     it('should return a string', function () {
 

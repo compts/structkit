@@ -4,7 +4,7 @@ import {expectType} from 'tsd';
 
 const one =1;
 
-describe('ESM: multiply method', function () {
+describe('TS: multiply method', function () {
 
     it('check if multiply result', function () {
 

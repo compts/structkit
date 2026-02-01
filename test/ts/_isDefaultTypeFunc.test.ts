@@ -1,7 +1,7 @@
 import {isArray, isBoolean, isDate, isError, isFunction, isNumber,isBigInt, isSet, isMap, isObject, isNull} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('ESM: _isDefaultTypeFunc method', function () {
+describe('TS: _isDefaultTypeFunc method', function () {
 
     it('check if isArray is true', function () {
 

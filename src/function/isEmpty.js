@@ -1,8 +1,6 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
 const {zero} = require("../variable/defaultValue");
-
 const count = require('./count');
-
 const indexOfExist = require('./indexOfExist');
 
 /**

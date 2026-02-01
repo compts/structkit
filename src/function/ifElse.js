@@ -1,9 +1,10 @@
 const curryArg = require("../core/curryArg");
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {four, one, zero, two} = require("../variable/defaultValue");
+const {one, zero, two, three} = require("../variable/defaultValue");
 const toArray = require('./toArray');
 const arraySlice = require('./arraySlice');
-
+const __ = require('../core/__');
+const reduce = require('./reduce');
 
 /**
  * If else condition logic, using curry callback, you now use this statement is function or objectt will if condition are met
@@ -20,6 +21,36 @@ const arraySlice = require('./arraySlice');
  * // => 1
  */
 function ifElse (cond, ifFunc, elseFunc) {
+
+    let argumentCounter = 0;
+
+    const reduceFunc = reduce(function (total, value) {
+
+        if (value === __) {
+
+            total +=one;
+
+        }
+
+        if (getTypeofInternal(value) === "function") {
+
+            if (total < value.length) {
+
+                total +=value.length - total;
+
+            }
+
+        }
+
+        return total;
+
+    }, zero, [
+        cond,
+        ifFunc,
+        elseFunc
+    ]);
+
+    argumentCounter = reduceFunc;
 
     return curryArg(function (...rawArgs) {
 
@@ -62,7 +93,7 @@ function ifElse (cond, ifFunc, elseFunc) {
         cond,
         ifFunc,
         elseFunc
-    ], four);
+    ], three+argumentCounter);
 
 }
 module.exports=ifElse;

@@ -2,11 +2,15 @@ import curryArg from '../core/curryArg.js';
 
 import {getTypeofInternal} from '../core/getTypeOf.js';
 
-import {four, one, zero, two} from '../variable/defaultValue.js';
+import {one, zero, two, three} from '../variable/defaultValue.js';
 
 import toArray from './toArray.js';
 
 import arraySlice from './arraySlice.js';
+
+import __ from '../core/__.js';
+
+import reduce from './reduce.js';
 
 /**
  * If else condition logic, using curry callback, you now use this statement is function or objectt will if condition are met
@@ -23,6 +27,36 @@ import arraySlice from './arraySlice.js';
  * // => 1
  */
 function ifElse (cond, ifFunc, elseFunc) {
+
+    let argumentCounter = 0;
+
+    const reduceFunc = reduce(function (total, value) {
+
+        if (value === __) {
+
+            total +=one;
+
+        }
+
+        if (getTypeofInternal(value) === "function") {
+
+            if (total < value.length) {
+
+                total +=value.length - total;
+
+            }
+
+        }
+
+        return total;
+
+    }, zero, [
+        cond,
+        ifFunc,
+        elseFunc
+    ]);
+
+    argumentCounter = reduceFunc;
 
     return curryArg(function (...rawArgs) {
 
@@ -65,7 +99,7 @@ function ifElse (cond, ifFunc, elseFunc) {
         cond,
         ifFunc,
         elseFunc
-    ], four);
+    ], three+argumentCounter);
 
 }
 export default ifElse;

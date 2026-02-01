@@ -19,11 +19,10 @@ const {three} = require("../variable/defaultValue");
  */
 function reduce (func, defaultValue, listData) {
 
-    const that = this;
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
-        return baseReduce.apply(that, [
+        return baseReduce.apply(this, [
             rawFunc,
             rawDefaultValue,
             rawListData

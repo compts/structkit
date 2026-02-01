@@ -1,7 +1,5 @@
 const curryArg = require("../core/curryArg");
 const {getTypeofInternal} = require('../core/getTypeOf');
-
-
 const count = require("./count");
 const each = require("./each");
 const has = require("./has");

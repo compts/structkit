@@ -3,7 +3,7 @@ import {parseJson} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
-describe('ESM: parseString method', function () {
+describe('TS: parseString method', function () {
 
     it('check if repetion is correct', function () {
 

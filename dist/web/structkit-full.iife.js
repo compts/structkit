@@ -21,7 +21,6 @@ var zero = 0;
 var one = 1;
 var two = 2;
 var three = 3;
-var four = 4;
 var ten = 10;
 var oneHundred = 100;
 
@@ -150,13 +149,21 @@ function curryArg (fn, args, NoDefaultArgs) {
 
                 } else if (typeof args[arg] === "function") {
 
-                    var getApply = args[arg].apply(this, argSub);
+                    if (rawArgument.length === zero) {
 
-                    rawArgument.push(getApply);
+                        rawArgument.push(args[arg]);
 
-                    if (getApply.name === fnCall.name && funcReturnType === false) {
+                    } else {
 
-                        funcReturnType = true;
+                        var getApply = args[arg].apply(this, argSub);
+
+                        rawArgument.push(getApply);
+
+                        if (getApply.name === fnCall.name && funcReturnType === false) {
+
+                            funcReturnType = true;
+
+                        }
 
                     }
 
@@ -183,6 +190,11 @@ function curryArg (fn, args, NoDefaultArgs) {
 
             if (_has(argSub, arg) && _has(argSub, holderCounter)) {
 
+                if (argSub[holderCounter] === __) {
+
+                    funcReturnType = true;
+
+                }
                 rawArgument.push(argSub[holderCounter]);
                 holderCounter+=one;
 
@@ -2580,6 +2592,8 @@ _stk.filter=filter;
 
 _stk.first=first;
 
+_stk.flatten=flatten;
+
 
 /**
  * To Increment value
@@ -3131,7 +3145,7 @@ function whereLoopExecution (whr, jsn, isExist, types) {
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValueWhere Data you want to search in key
- * @param {any} objectValue Json to Array
+ * @param {any=} objectValue Json to Array
  * @returns {any} Return either Json to Array.
  * @example
  *
@@ -3342,11 +3356,11 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.flatten=flatten;
-
 _stk.getData=getData;
 
 _stk.getKey=getKey;
+
+_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -3383,8 +3397,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-_stk.getTypeof=getTypeof;
 
 
 /**
@@ -3519,6 +3531,38 @@ _stk.has=has;
 
 
 /**
+ * Reduce function
+ *
+ * @since 1.4.8
+ * @category Function
+ * @param {any} func Callback function for how to map the data
+ * @param {any} defaultValue Starting value that you want to use as reference
+ * @param {any[]} listData Array value that you want to map
+ * @returns {any} Return redue value
+ * @example
+ *
+ * reduce((total,value)=>total+value, 2,[1,2])
+ * // => 5
+ */
+function reduce (func, defaultValue, listData) {
+
+    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
+
+        return baseReduce.apply(this, [
+            rawFunc,
+            rawDefaultValue,
+            rawListData
+        ]);
+
+    }, [
+        func,
+        defaultValue,
+        listData
+    ], three);
+
+}
+
+/**
  * If else condition logic, using curry callback, you now use this statement is function or objectt will if condition are met
  *
  * @since 1.4.9
@@ -3533,6 +3577,36 @@ _stk.has=has;
  * // => 1
  */
 function ifElse (cond, ifFunc, elseFunc) {
+
+    var argumentCounter = 0;
+
+    var reduceFunc = reduce(function (total, value) {
+
+        if (value === __) {
+
+            total +=one;
+
+        }
+
+        if (getTypeofInternal(value) === "function") {
+
+            if (total < value.length) {
+
+                total +=value.length - total;
+
+            }
+
+        }
+
+        return total;
+
+    }, zero, [
+        cond,
+        ifFunc,
+        elseFunc
+    ]);
+
+    argumentCounter = reduceFunc;
 
     return curryArg(function () {
 
@@ -3577,7 +3651,7 @@ function ifElse (cond, ifFunc, elseFunc) {
         cond,
         ifFunc,
         elseFunc
-    ], four);
+    ], three+argumentCounter);
 
 }
 
@@ -3813,40 +3887,6 @@ _stk.lte=lte;
 
 _stk.map=map;
 
-
-/**
- * Reduce function
- *
- * @since 1.4.8
- * @category Function
- * @param {any} func Callback function for how to map the data
- * @param {any} defaultValue Starting value that you want to use as reference
- * @param {any[]} listData Array value that you want to map
- * @returns {any} Return redue value
- * @example
- *
- * reduce((total,value)=>total+value, 2,[1,2])
- * // => 5
- */
-function reduce (func, defaultValue, listData) {
-
-    var that = this;
-
-    return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
-
-        return baseReduce.apply(that, [
-            rawFunc,
-            rawDefaultValue,
-            rawListData
-        ]);
-
-    }, [
-        func,
-        defaultValue,
-        listData
-    ], three);
-
-}
 
 /**
  * A Function to map the data either an array or an object using getData function.
@@ -4089,6 +4129,35 @@ _stk.multiply=multiply;
 
 
 /**
+ * To check if its not equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any value type
+ * @param {any} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * noteq('as', 'as')
+ * // => false
+ */
+function noteq (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa !== bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.noteq=noteq;
+
+
+/**
  * String Lower case case
  *
  * @since 1.4.5
@@ -4284,35 +4353,6 @@ _stk.onDelay=onDelay;
 
 
 /**
- * To check if its not equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any value type
- * @param {any} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * noteq('as', 'as')
- * // => false
- */
-function noteq (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa !== bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.noteq=noteq;
-
-
-/**
  * On sequence
  *
  * @since 1.4.1
@@ -4386,6 +4426,111 @@ ClassSequence.prototype.cancel = function () {
 };
 
 _stk.onSequence=onSequence;
+
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function onWait (func, wait) {
+
+    var browserWindow = getWindow();
+    var timerId = null;
+
+    var useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
+
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame(pendingFunc);
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+_stk.onWait=onWait;
 
 
 /**
@@ -6472,148 +6617,6 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
 _stk.parseString=parseString;
 
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
-
-
-/**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
 
 /**
  * Perform left to right function composition. first arguemnt will be default value
@@ -6658,6 +6661,43 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
+
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 
 _stk.range=range;
 
@@ -6798,6 +6838,107 @@ function roundDecimal (value, maxValue) {
 _stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
+
+
+/**
+ * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any=} split_str Search key or index.
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} updateValue Value to update the data.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * setData("s", {"s":1},2)
+ *=> 2
+ */
+function setData (split_str, objectValue, updateValue) {
+
+    if (!has(objectValue)) {
+
+        return {};
+
+    }
+
+    return curryArg(function (rawSplit_str, rawObjectValue, rawUpdateValue) {
+
+        if (isEmpty(rawSplit_str)) {
+
+            return empty(rawObjectValue);
+
+        }
+
+        var spl= schemaSplitData(rawSplit_str);
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(total) === "json") {
+
+                valueToUpdate(total, value, rawUpdateValue);
+
+            }
+            if (getTypeofInternal(total) === "array") {
+
+                var rawTotal = first(total);
+
+                valueToUpdate(rawTotal, value, rawUpdateValue);
+                total = [rawTotal];
+
+            }
+
+            return total;
+
+        }, rawObjectValue, [spl]);
+
+    }, [
+        split_str,
+        objectValue,
+        updateValue
+    ]);
+
+}
+
+/**
+ * Given a value to update the data in array or json
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} objectValue Either Json or Array data.
+ * @param {any[]} whereStr Either Json or Array data.
+ * @param {any} updateValue Search key or index.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * getData({"s":1},"s")
+ *=> 1
+ * @example
+ * getData({"a":{"a":2},"b":{"a":3}},"a:a")
+ *=> {a: 2}
+ */
+function valueToUpdate (objectValue, whereStr, updateValue) {
+
+    var getRmoveValue = remove(whereStr, zero);
+
+    if (isEmpty(getRmoveValue)) {
+
+        objectValue[first(whereStr)] = updateValue;
+
+    } else {
+
+        if (has(objectValue, first(whereStr)) === false) {
+
+            objectValue[first(whereStr)] = {};
+
+        }
+        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
+
+    }
+
+}
+
+_stk.setData=setData;
 
 
 /**
@@ -7001,107 +7142,6 @@ _stk.sort=sort;
 
 
 /**
- * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any=} split_str Search key or index.
- * @param {any=} objectValue Either Json or Array data.
- * @param {any=} updateValue Value to update the data.
- * @returns {any} Returns the total.
- * @example
- *
- * setData("s", {"s":1},2)
- *=> 2
- */
-function setData (split_str, objectValue, updateValue) {
-
-    if (!has(objectValue)) {
-
-        return {};
-
-    }
-
-    return curryArg(function (rawSplit_str, rawObjectValue, rawUpdateValue) {
-
-        if (isEmpty(rawSplit_str)) {
-
-            return empty(rawObjectValue);
-
-        }
-
-        var spl= schemaSplitData(rawSplit_str);
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(total) === "json") {
-
-                valueToUpdate(total, value, rawUpdateValue);
-
-            }
-            if (getTypeofInternal(total) === "array") {
-
-                var rawTotal = first(total);
-
-                valueToUpdate(rawTotal, value, rawUpdateValue);
-                total = [rawTotal];
-
-            }
-
-            return total;
-
-        }, rawObjectValue, [spl]);
-
-    }, [
-        split_str,
-        objectValue,
-        updateValue
-    ]);
-
-}
-
-/**
- * Given a value to update the data in array or json
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} objectValue Either Json or Array data.
- * @param {any[]} whereStr Either Json or Array data.
- * @param {any} updateValue Search key or index.
- * @returns {any} Returns the total.
- * @example
- *
- * getData({"s":1},"s")
- *=> 1
- * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
- *=> {a: 2}
- */
-function valueToUpdate (objectValue, whereStr, updateValue) {
-
-    var getRmoveValue = remove(whereStr, zero);
-
-    if (isEmpty(getRmoveValue)) {
-
-        objectValue[first(whereStr)] = updateValue;
-
-    } else {
-
-        if (has(objectValue, first(whereStr)) === false) {
-
-            objectValue[first(whereStr)] = {};
-
-        }
-        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
-
-    }
-
-}
-
-_stk.setData=setData;
-
-
-/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -7190,6 +7230,44 @@ _stk.strCamel=strCamel;
 
 
 /**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * strCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * strCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function strCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.strCapitalize=strCapitalize;
+
+
+/**
  * String Escape
  *
  * @since 1.3.1
@@ -7232,41 +7310,28 @@ _stk.strEscape=strEscape;
 
 
 /**
- * String Capitalize
+ * String Kebab case
  *
  * @since 1.3.1
  * @category String
  * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
+ * @returns {string} Returns Kebab sting data
  * @example
  *
- * strCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * strCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
  */
-function strCapitalize (value, option) {
+function strKebab (value) {
 
-    if (option === "all") {
-
-        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return toString(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
 
 }
 
-_stk.strCapitalize=strCapitalize;
+_stk.strKebab=strKebab;
+
+_stk.strLower=strLower;
 
 
 /**
@@ -7290,31 +7355,6 @@ function strSnake (value) {
 }
 
 _stk.strSnake=strSnake;
-
-_stk.strLower=strLower;
-
-
-/**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.strKebab=strKebab;
 
 
 /**
@@ -7345,6 +7385,8 @@ function strSubs (value, minValue, maxValue) {
 
 _stk.strSubs=strSubs;
 
+_stk.strUnEscape=strUnEscape;
+
 
 /**
  * String Upper case case
@@ -7366,7 +7408,7 @@ function strUpper (value) {
 
 _stk.strUpper=strUpper;
 
-_stk.strUnEscape=strUnEscape;
+_stk.subtract=subtract;
 
 
 /**
@@ -7419,8 +7461,6 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -7798,6 +7838,42 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 }
 
 /**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value, config) {
+
+    var zero = 0.00;
+
+    var defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toDouble=toDouble;
+
+
+/**
  * To extract number in string and convert to , it will also remove all none numeric
  *
  * @since 1.0.1
@@ -8087,7 +8163,7 @@ _stk.where=where;
  * @since 1.0.1
  * @category Collection
  * @param {any} objectValueWhere Data that you exlude in search
- * @param {any} objectValue Json to Array
+ * @param {any=} objectValue Json to Array
  * @returns {any} Return either Json to Array.
  * @example
  *
@@ -8534,42 +8610,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-
-
-/**
- * To extract number in string and convert to double, it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @param {any=} config Option you want to set in this function.
- * @returns {number} Return in double.
- * @example
- *
- * toDouble("100.1d1")
- *=>100.11
- */
-function toDouble (value, config) {
-
-    var zero = 0.00;
-
-    var defaultConfig = varExtend({"decSeparator": "."}, config);
-
-    if (defaultConfig.decSeparator !== ".") {
-
-        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
-
-        value = value.replace(sepRegexp, ".");
-
-    }
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble;
 
 
  })(typeof window !== "undefined" ? window : this);
