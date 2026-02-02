@@ -1,5 +1,5 @@
 # Structkit
-Javascript framework is a utility tool, that helps you simplify in dealing data issue in your projects
+JS/TS functional tool to simplify JS Developer
 
 ---
 # ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
@@ -20,7 +20,7 @@ Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_G
 [Docs](https://structkit.codehyouka.xyz/api) |
 
 ## Why Structkit
-A Javascript library that make easier in working with arrays, number,object, String and etc.
+A Javascript functional that make easier in working with arrays, number,object, String and etc.
 
 ## Download
 
