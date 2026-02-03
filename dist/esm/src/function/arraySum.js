@@ -1,8 +1,10 @@
 import add from './add.js';
 
-import {zero, ten} from '../variable/defaultValue.js';
+import {zero} from '../variable/defaultValue.js';
 
 import isEmpty from './isEmpty.js';
+
+import roundDecimal from './roundDecimal.js';
 
 import baseReduce from '../core/baseReduce.js';
 
@@ -30,29 +32,9 @@ function arraySum (arrayObject, precision) {
 
     return isEmpty(precisions)
         ? parseInt(sum)
-        :truncateToDecimalPlaces(sum, precisions);
+        :roundDecimal(sum, precisions);
 
 }
 
-/**
- * Move decimal point to fixed position
- *
- * @since 1.4.9
- * @category Math
- * @param {number} num Array of number
- * @param {number=} precision decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * truncateToDecimalPlaces(3.123, 2)
- * // => 3.12
- */
-function truncateToDecimalPlaces (num, precision) {
-
-    const multiplier = ten**precision;
-
-    return Math.trunc(num * multiplier) / multiplier;
-
-}
 export default arraySum;
 

@@ -1777,6 +1777,309 @@ function isEmpty (value) {
 }
 
 /**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} regexp The second number in an addition.
+ * @param {string|number} defaultVariable The second number in an addition.
+ * @param {string|number} nullReplacement The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * dataNumberFormat(/(\d)/g, 0,1)
+ *=> 1
+ */
+function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
+
+    const regp=regexp;
+    let intr=defaultVariable;
+
+    if (regp.test(nullReplacement.toString())) {
+
+        intr=nullReplacement;
+
+    }
+
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
+
+        intr=defaultVariable;
+
+    }
+    if (getTypeof(intr) === "string") {
+
+        intr = intr.replace(/[^\d.]/g, "");
+
+    }
+
+    return intr;
+
+}
+
+/**
+ * Get key Array or JSON
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array type
+ * @returns {any|any[]} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");
+
+}
+
+/**
+ * Check index of array Not or exist
+ *
+ * @since 1.4.1
+ * @category Predicate
+ * @param {any=} value Value for array lookup
+ * @param {any[]=} arrayObject Array
+ * @returns {boolean} Return boolean.
+ * @example
+ *
+ * indexOfNotExist(32, [312])
+ * // => true
+ */
+function indexOfNotExist (value, arrayObject) {
+
+    return curryArg(function (rawValue, rawObjectValue) {
+
+        return indexOf(rawValue, rawObjectValue) === negOne;
+
+    }, [
+        value,
+        arrayObject
+    ], two);
+
+}
+
+/**
+ * To String
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
+ * @example
+ *
+ * toString(1)
+ *=> '1'
+ */
+function toString (value) {
+
+    const notInList = [
+        "object",
+        "json",
+        "promise"
+    ];
+
+    const gettypeof = getTypeof(value);
+
+    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
+
+        return value.toString();
+
+    }
+
+    return '';
+
+}
+
+/**
+ * String Lower case case
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * strLower('The fish is goad   with Goat-1ss')
+ *=> 'the fish is goad   with goat-1ss
+ */
+function strLower (value) {
+
+    return toString(value).toLowerCase();
+
+}
+
+/**
+ * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
+ * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
+ * @returns {any} Return Json or Array or Object.
+ * @example
+ *
+ * varExtend({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+function varExtend (objectValue, objectValueReplace) {
+
+    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
+
+        const jsn_bool={
+            "false": false,
+            "true": true
+        };
+
+        const listValid = [
+            "json",
+            "object"
+        ];
+
+        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
+
+            const jsn_s={};
+
+            for (const key in rawObjectValue) {
+
+                if (has(rawObjectValue, key)) {
+
+                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
+
+                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValue[key];
+
+                    }
+
+                }
+
+            }
+
+            for (const key in rawObjectValueReplace) {
+
+                if (has(jsn_s, key)) {
+
+                    if (getTypeof(jsn_s[key]) === "json") {
+
+                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValueReplace[key];
+
+                    }
+
+                }
+
+            }
+
+            return jsn_s;
+
+        }
+
+        return objectValue;
+
+    }, [
+        objectValue,
+        objectValueReplace
+    ]);
+
+}
+
+/**
+ * Replace Value
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {object} objectValue Json or Array
+ * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
+ * @returns {array} Return Json or Array.
+ * @example
+ *
+ * replaceValue({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+function replaceValue (objectValue, objectValueReplace) {
+
+    for (const key in objectValueReplace) {
+
+        if (getTypeof(objectValue[key]) === "json") {
+
+            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
+
+        } else {
+
+            objectValue[key] = objectValueReplace[key];
+
+        }
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * To extract number in string and convert to double, it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
+ * @returns {number} Return in double.
+ * @example
+ *
+ * toDouble("100.1d1")
+ *=>100.11
+ */
+function toDouble (value, config) {
+
+    const zero = 0.00;
+
+    const defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+/**
+ * Random Decimal
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number} value Int or Double value type
+ * @param {number=} precision limit decimal
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * roundDecimal(11.1111111,3 )
+ *=>11.111
+ */
+function roundDecimal (value, precision) {
+
+    const jsn=toDouble(value);
+
+    const multiplier = ten**precision;
+
+    return Math.trunc(jsn * multiplier) / multiplier;
+
+}
+
+/**
  * Array sum of value
  *
  * @since 1.0.1
@@ -1800,28 +2103,7 @@ function arraySum (arrayObject, precision) {
 
     return isEmpty(precisions)
         ? parseInt(sum)
-        :truncateToDecimalPlaces(sum, precisions);
-
-}
-
-/**
- * Move decimal point to fixed position
- *
- * @since 1.4.9
- * @category Math
- * @param {number} num Array of number
- * @param {number=} precision decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * truncateToDecimalPlaces(3.123, 2)
- * // => 3.12
- */
-function truncateToDecimalPlaces (num, precision) {
-
-    const multiplier = ten**precision;
-
-    return Math.trunc(num * multiplier) / multiplier;
+        :roundDecimal(sum, precisions);
 
 }
 
@@ -1890,24 +2172,6 @@ function asyncReplace (value, search, toReplace) {
 
 _stk.asyncReplace=asyncReplace;
 
-
-/**
- * Get key Array or JSON
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array type
- * @returns {any|any[]} Returns it respective key or index
- * @example
- *
- * getKey({"s":1})
- * => s
- */
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
 
 /**
  * Divide logic in satisfying two argument
@@ -2510,9 +2774,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.divide=divide;
-
 _stk.each=each;
+
+_stk.divide=divide;
 
 _stk.empty=empty;
 
@@ -2607,64 +2871,6 @@ function inc (value, default_value) {
     }
 
     return zero;
-
-}
-
-/**
- * Check index of array Not or exist
- *
- * @since 1.4.1
- * @category Predicate
- * @param {any=} value Value for array lookup
- * @param {any[]=} arrayObject Array
- * @returns {boolean} Return boolean.
- * @example
- *
- * indexOfNotExist(32, [312])
- * // => true
- */
-function indexOfNotExist (value, arrayObject) {
-
-    return curryArg(function (rawValue, rawObjectValue) {
-
-        return indexOf(rawValue, rawObjectValue) === negOne;
-
-    }, [
-        value,
-        arrayObject
-    ], two);
-
-}
-
-/**
- * To String
- *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
- * @example
- *
- * toString(1)
- *=> '1'
- */
-function toString (value) {
-
-    const notInList = [
-        "object",
-        "json",
-        "promise"
-    ];
-
-    const gettypeof = getTypeof(value);
-
-    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
-
-        return value.toString();
-
-    }
-
-    return '';
 
 }
 
@@ -3339,9 +3545,9 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
+
+_stk.getData=getData;
 
 _stk.getTypeof=getTypeof;
 /**
@@ -4075,8 +4281,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.mergeWithKey=mergeWithKey;
-
 
 /**
  * To check if the two arguments are less
@@ -4106,7 +4310,7 @@ function lt (value1, value2) {
 
 _stk.lt=lt;
 
-_stk.multiply=multiply;
+_stk.mergeWithKey=mergeWithKey;
 
 
 /**
@@ -4137,137 +4341,8 @@ function noteq (value1, value2) {
 
 _stk.noteq=noteq;
 
+_stk.multiply=multiply;
 
-/**
- * String Lower case case
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @returns {string} Returns camel sting data
- * @example
- *
- * strLower('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
- */
-function strLower (value) {
-
-    return toString(value).toLowerCase();
-
-}
-
-/**
- * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
- *
- * @since 1.0.1
- * @category Collection
- * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
- * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
- * @returns {any} Return Json or Array or Object.
- * @example
- *
- * varExtend({"s1":1},{"s1":2})
- *=>{"s1":2}
- */
-function varExtend (objectValue, objectValueReplace) {
-
-    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
-
-        const jsn_bool={
-            "false": false,
-            "true": true
-        };
-
-        const listValid = [
-            "json",
-            "object"
-        ];
-
-        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
-
-            const jsn_s={};
-
-            for (const key in rawObjectValue) {
-
-                if (has(rawObjectValue, key)) {
-
-                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
-
-                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
-
-                    } else {
-
-                        jsn_s[key]=rawObjectValue[key];
-
-                    }
-
-                }
-
-            }
-
-            for (const key in rawObjectValueReplace) {
-
-                if (has(jsn_s, key)) {
-
-                    if (getTypeof(jsn_s[key]) === "json") {
-
-                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
-
-                    } else {
-
-                        jsn_s[key]=rawObjectValueReplace[key];
-
-                    }
-
-                }
-
-            }
-
-            return jsn_s;
-
-        }
-
-        return objectValue;
-
-    }, [
-        objectValue,
-        objectValueReplace
-    ]);
-
-}
-
-/**
- * Replace Value
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} objectValue Json or Array
- * @param {object} objectValueReplace Json or Array that you want to assign to `objectValue`
- * @returns {array} Return Json or Array.
- * @example
- *
- * replaceValue({"s1":1},{"s1":2})
- *=>{"s1":2}
- */
-function replaceValue (objectValue, objectValueReplace) {
-
-    for (const key in objectValueReplace) {
-
-        if (getTypeof(objectValue[key]) === "json") {
-
-            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
-
-        } else {
-
-            objectValue[key] = objectValueReplace[key];
-
-        }
-
-    }
-
-    return objectValue;
-
-}
 
 /**
  * On delay
@@ -6598,43 +6673,6 @@ _stk.parseString=parseString;
 
 
 /**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const ran_min=has(minValue)
-        ?minValue
-        :zero;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-
-/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
@@ -6674,6 +6712,43 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const ran_min=has(minValue)
+        ?minValue
+        :zero;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
 _stk.range=range;
 
 _stk.reduce=reduce;
@@ -6698,6 +6773,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
 
 _stk.removeFromKey=removeFromKey;
 
@@ -6739,48 +6816,41 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
-_stk.remove=remove;
-
-
-/**
- * Random Decimal
- *
- * @since 1.0.1
- * @category Math
- * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
- * @returns {number} Returns the total.
- * @example
- *
- * roundDecimal(11.1111111,3 )
- *=>11.11
- */
-function roundDecimal (value, maxValue) {
-
-    const jsn=value||zero;
-    const str_dec=jsn.toString().split(".");
-    const s_dmin=0;
-    const s_dmax=maxValue||two;
-
-    if (count(str_dec) === two) {
-
-        const p_cnts=count(str_dec[one].toString().split(""));
-        const delmts=p_cnts <= s_dmin
-            ?s_dmin
-            :s_dmax;
-        const dec_s=ten**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
-
-}
-
 _stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
 
 
 /**
@@ -6882,38 +6952,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-        const nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
 
 
 /**
@@ -7279,8 +7317,6 @@ function strEscape (value, type) {
 
 _stk.strEscape=strEscape;
 
-_stk.strLower=strLower;
-
 
 /**
  * String Kebab case
@@ -7303,6 +7339,8 @@ function strKebab (value) {
 }
 
 _stk.strKebab=strKebab;
+
+_stk.strLower=strLower;
 
 
 /**
@@ -7491,130 +7529,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-_stk.toArray=toArray;
-
-
-/**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist(strLower(value), [
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ]);
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist(value, [one]);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-_stk.toBoolean=toBoolean;
-
-
-/**
- * Logic in convert string or number to valid number
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} regexp The second number in an addition.
- * @param {string|number} defaultVariable The second number in an addition.
- * @param {string|number} nullReplacement The second number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * dataNumberFormat(/(\d)/g, 0,1)
- *=> 1
- */
-function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
-
-    const regp=regexp;
-    let intr=defaultVariable;
-
-    if (regp.test(nullReplacement.toString())) {
-
-        intr=nullReplacement;
-
-    }
-
-    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
-
-        intr=defaultVariable;
-
-    }
-    if (getTypeof(intr) === "string") {
-
-        intr = intr.replace(/[^\d.]/g, "");
-
-    }
-
-    return intr;
-
-}
-
-/**
- * To extract number in string and convert to double, it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in double
- * @param {any=} config Option you want to set in this function.
- * @returns {number} Return in double.
- * @example
- *
- * toDouble("100.1d1")
- *=>100.11
- */
-function toDouble (value, config) {
-
-    const zero = 0.00;
-
-    const defaultConfig = varExtend({"decSeparator": "."}, config);
-
-    if (defaultConfig.decSeparator !== ".") {
-
-        const sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
-
-        value = value.replace(sepRegexp, ".");
-
-    }
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toDouble=toDouble;
 
 
 /**
@@ -7846,6 +7760,54 @@ function syntaxCleanup (data, option) {
 
 _stk.templates=templates;
 
+_stk.toArray=toArray;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist(strLower(value), [
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ]);
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist(value, [one]);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
+
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -7935,6 +7897,8 @@ function setDepthValue (arryData, value) {
 _stk.toPairs=toPairs;
 
 _stk.toString=toString;
+
+_stk.toDouble=toDouble;
 
 
 /**

@@ -1,5 +1,7 @@
 import count from './count.js';
 
+import toDouble from './toDouble.js';
+
 import {zero, one, two, ten} from '../variable/defaultValue.js';
 
 /**
@@ -8,33 +10,20 @@ import {zero, one, two, ten} from '../variable/defaultValue.js';
  * @since 1.0.1
  * @category Math
  * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
+ * @param {number=} precision limit decimal
  * @returns {number} Returns the total.
  * @example
  *
  * roundDecimal(11.1111111,3 )
- *=>11.11
+ *=>11.111
  */
-function roundDecimal (value, maxValue) {
+function roundDecimal (value, precision) {
 
-    const jsn=value||zero;
-    const str_dec=jsn.toString().split(".");
-    const s_dmin=0;
-    const s_dmax=maxValue||two;
+    const jsn=toDouble(value);
 
-    if (count(str_dec) === two) {
+    const multiplier = ten**precision;
 
-        const p_cnts=count(str_dec[one].toString().split(""));
-        const delmts=p_cnts <= s_dmin
-            ?s_dmin
-            :s_dmax;
-        const dec_s=ten**delmts;
-
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
-
-    }
-
-    return jsn;
+    return Math.trunc(jsn * multiplier) / multiplier;
 
 }
 export default roundDecimal;

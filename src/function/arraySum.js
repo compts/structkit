@@ -1,7 +1,7 @@
 const add = require('./add');
-const {zero, ten} = require("../variable/defaultValue");
+const {zero} = require("../variable/defaultValue");
 const isEmpty = require('./isEmpty');
-
+const roundDecimal = require("./roundDecimal");
 
 const baseReduce = require("../core/baseReduce");
 
@@ -29,29 +29,9 @@ function arraySum (arrayObject, precision) {
 
     return isEmpty(precisions)
         ? parseInt(sum)
-        :truncateToDecimalPlaces(sum, precisions);
+        :roundDecimal(sum, precisions);
 
 }
 
-/**
- * Move decimal point to fixed position
- *
- * @since 1.4.9
- * @category Math
- * @param {number} num Array of number
- * @param {number=} precision decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * truncateToDecimalPlaces(3.123, 2)
- * // => 3.12
- */
-function truncateToDecimalPlaces (num, precision) {
-
-    const multiplier = ten**precision;
-
-    return Math.trunc(num * multiplier) / multiplier;
-
-}
 module.exports=arraySum;
 

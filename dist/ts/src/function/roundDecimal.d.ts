@@ -5,11 +5,11 @@ export default roundDecimal;
  * @since 1.0.1
  * @category Math
  * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
+ * @param {number=} precision limit decimal
  * @returns {number} Returns the total.
  * @example
  *
  * roundDecimal(11.1111111,3 )
- *=>11.11
+ *=>11.111
  */
-declare function roundDecimal(value: number, maxValue?: number | undefined): number;
+declare function roundDecimal(value: number, precision?: number | undefined): number;
