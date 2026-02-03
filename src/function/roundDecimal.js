@@ -1,6 +1,5 @@
-const count = require('./count');
 const toDouble = require('./toDouble');
-const {zero, one, two, ten} = require("../variable/defaultValue");
+const {ten} = require("../variable/defaultValue");
 
 /**
  * Random Decimal

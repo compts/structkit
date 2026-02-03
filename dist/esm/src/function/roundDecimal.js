@@ -1,8 +1,6 @@
-import count from './count.js';
-
 import toDouble from './toDouble.js';
 
-import {zero, one, two, ten} from '../variable/defaultValue.js';
+import {ten} from '../variable/defaultValue.js';
 
 /**
  * Random Decimal

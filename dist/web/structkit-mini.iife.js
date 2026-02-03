@@ -2004,7 +2004,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.each=each;_stk.divide=divide;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2592,7 +2592,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getKey=getKey;_stk.getData=getData;_stk.getTypeof=getTypeof;function getUniq (option) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2871,6 +2871,18 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3030,19 +3042,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-_stk.mergeWithKey=mergeWithKey;function noteq (value1, value2) {
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function noteq (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -3054,7 +3054,7 @@ _stk.mergeWithKey=mergeWithKey;function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
-_stk.multiply=multiply;function onDelay (func, wait, option) {
+function onDelay (func, wait, option) {
 
     var extend = varExtend({
         "limitCounterClear": zero
@@ -5101,7 +5101,23 @@ _stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;_stk.removeFromKey=removeFromKey;function reverse (value) {
+_stk.remove=remove;_stk.removeFromKey=removeFromKey;function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;        var nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+function reverse (value) {
 
     return curryArg(function (rawValue) {
 
@@ -5124,23 +5140,7 @@ _stk.remove=remove;_stk.removeFromKey=removeFromKey;function reverse (value) {
 }
 
 _stk.reverse=reverse;
-_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;        var nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
-function setData (split_str, objectValue, updateValue) {
+_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5759,7 +5759,7 @@ _stk.toArray=toArray;function toBoolean (value) {
 }
 
 _stk.toBoolean=toBoolean;
-function toInteger (value) {
+_stk.toDouble=toDouble;function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
@@ -5803,7 +5803,7 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
-_stk.toString=toString;_stk.toDouble=toDouble;function trimStart (value, remove_value) {
+function trimStart (value, remove_value) {
 
     var rx = new RegExp('^[' + whitespace + ']*');    var rawValue = toString(value).replace(rx, "");
 
@@ -5862,7 +5862,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.toString=toString;_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
 
     var arg=arguments;    return curryArg(function () {
 

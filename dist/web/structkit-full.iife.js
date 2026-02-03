@@ -2791,9 +2791,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
-
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -3562,9 +3562,9 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getKey=getKey;
-
 _stk.getData=getData;
+
+_stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
 /**
@@ -4064,6 +4064,35 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -4300,36 +4329,9 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
 _stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -4359,8 +4361,6 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -6805,6 +6805,38 @@ _stk.removeFromKey=removeFromKey;
 
 
 /**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+        var nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+
+
+/**
  * Return reverse order of array
  *
  * @since 1.4.874
@@ -6844,38 +6876,6 @@ _stk.reverse=reverse;
 _stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-        var nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
 
 
 /**
@@ -7837,6 +7837,8 @@ function toBoolean (value) {
 
 _stk.toBoolean=toBoolean;
 
+_stk.toDouble=toDouble;
+
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -7924,10 +7926,6 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
-
-_stk.toString=toString;
-
-_stk.toDouble=toDouble;
 
 
 /**
@@ -8028,6 +8026,8 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
+
+_stk.toString=toString;
 
 _stk.trimEnd=trimEnd;
 
