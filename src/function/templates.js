@@ -6,8 +6,6 @@ const parseString = require('./parseString');
 
 const reduce = require('./reduce');
 
-const map = require('./map');
-
 const toString = require("./toString");
 const getTypeof = require('./getTypeof');
 
@@ -34,14 +32,6 @@ function templates (templateString, data, option) {
 
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
-
-        const mapRawData = map(function (val) {
-
-            return getTypeof(val) === "string"
-                ?'"'+val+'"'
-                :val;
-
-        }, rawData);
 
         const default_option = varExtend({
             "close_tag": "!>",
@@ -108,11 +98,14 @@ function templates (templateString, data, option) {
 
         const sourceData = reduce(function (total, vv, kk) {
 
+            // eslint-disable-next-line no-nested-ternary
             return total+"var "+toString(kk)+" = "+(isJson(vv)
                 ?parseString(vv)
-                :vv)+";\n";
+                :getTypeof(vv) === "string"
+                    ?'"'+vv+'"'
+                    :vv)+";\n";
 
-        }, "", mapRawData);
+        }, "", rawData);
 
         source += "';\n";
 
@@ -122,7 +115,7 @@ function templates (templateString, data, option) {
 
             const render = new Function('obj', source);
 
-            return render.call(this, mapRawData, templates);
+            return render.call(this, rawData, templates);
 
         } catch (error) {
 
