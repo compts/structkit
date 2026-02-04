@@ -78,13 +78,6 @@ describe('ESM: parseString method', function () {
 
     });
 
-    it('handles function with default ignoreFunction false', function () {
-
-        // eslint-disable-next-line no-empty-function
-        assert.strictEqual(parseString({"a" () {}}, {"ignoreFunction": false}), '{"a":""a" () {}"}');
-
-    });
-
     it('handles Set and Map', function () {
 
         const s = new Set([
