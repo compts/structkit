@@ -1532,53 +1532,6 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 function divide (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -1954,7 +1907,54 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
+_stk.count=count;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -2004,7 +2004,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.clone=clone;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2676,7 +2676,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-_stk.has=has;function reduce (func, defaultValue, listData) {
+_stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2773,7 +2773,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2871,18 +2871,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3042,6 +3030,18 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 _stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function noteq (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3134,76 +3134,6 @@ ClassSequence.prototype.cancel = function () {
 };
 
 _stk.onSequence=onSequence;
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;    }
-
-    return {};
-
-};
-
-
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
 function once (func) {
 
     var reserve = null;    return curryArg(function (rawFunc) {
@@ -3294,76 +3224,76 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 }
 
 _stk.once=once;
-function pSerialize (value) {
+var getWindow = function () {
 
-    return curryArg(function (rawValue) {
+    if (typeof window !== 'undefined') {
 
-        var dataType = getTypeof(rawValue);        if (indexOfExist(dataType, [
-            "array",
-            "json",
-            "object",
-            "set",
-            "map"
-        ])) {
+        return window;    }
 
-            var getKeyVal = toArray(getKey(rawValue));
-            var getValueVal = toArray(getValue(rawValue));
+    return {};
 
-            var mapData = map(function (mValue, kValue) {
+};
 
-                var refMapKey = getKeyVal[kValue];
-                var refMapValue = getValueVal[kValue];
 
-                return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
+function onWait (func, wait) {
 
-            }, range(count(rawValue) - one, zero));
+    var browserWindow = getWindow();
+    var timerId = null;
 
-            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
+    var useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
+
+
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame(pendingFunc);
 
         }
 
-        return parseTypeVal(dataType, value);
+        return onDelay(pendingFunc, waiting);
 
-    }, [value], one);
+    }
+
+
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
 
 }
 
-
-function parseTypeVal (typeValue, value) {
-
-    if (indexOfExist(typeValue, [
-        "array",
-        "json",
-        "object",
-        "set",
-        "map"
-    ])) {
-
-        return pSerialize(value);
-
-    }
-
-    if (typeValue === "string") {
-
-        return "s:"+count(value)+":\""+value+"\";";
-
-    }
-    if (typeValue === "function") {
-
-        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
-
-    }
-    if (typeValue === "number") {
-
-        return "i:"+value+";";
-
-    }
-
-    return "N;";
-
-}
-
-_stk.pSerialize=pSerialize;
+_stk.onWait=onWait;
 function pUnSerialize (value) {
 
     return curryArg(function (rawValue) {
@@ -4650,6 +4580,7 @@ function strUnEscape (value, type) {
 function parseJson (value, config) {
 
     var defaultConfig = varExtend({"disableCorrection": false,
+        "invalidDefaultValue": null,
         "throwError": false}, config);
 
     if (getTypeof(value) !== "string") {
@@ -4660,7 +4591,7 @@ function parseJson (value, config) {
 
         }
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
     if (defaultConfig.disableCorrection) {
@@ -4669,7 +4600,7 @@ function parseJson (value, config) {
 
         if (rawValue === "") {
 
-            return null;
+            return defaultConfig.invalidDefaultValue;
 
         }
 
@@ -4682,7 +4613,7 @@ function parseJson (value, config) {
 
     if (tagVal.type === 'none') {
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
 
@@ -4690,7 +4621,7 @@ function parseJson (value, config) {
 
     if (obgM === "") {
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
     var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
@@ -4856,6 +4787,76 @@ function callbackParse (glb) {
 }
 
 _stk.parseJson=parseJson;
+function pSerialize (value) {
+
+    return curryArg(function (rawValue) {
+
+        var dataType = getTypeof(rawValue);        if (indexOfExist(dataType, [
+            "array",
+            "json",
+            "object",
+            "set",
+            "map"
+        ])) {
+
+            var getKeyVal = toArray(getKey(rawValue));
+            var getValueVal = toArray(getValue(rawValue));
+
+            var mapData = map(function (mValue, kValue) {
+
+                var refMapKey = getKeyVal[kValue];
+                var refMapValue = getValueVal[kValue];
+
+                return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
+
+            }, range(count(rawValue) - one, zero));
+
+            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
+
+        }
+
+        return parseTypeVal(dataType, value);
+
+    }, [value], one);
+
+}
+
+
+function parseTypeVal (typeValue, value) {
+
+    if (indexOfExist(typeValue, [
+        "array",
+        "json",
+        "object",
+        "set",
+        "map"
+    ])) {
+
+        return pSerialize(value);
+
+    }
+
+    if (typeValue === "string") {
+
+        return "s:"+count(value)+":\""+value+"\";";
+
+    }
+    if (typeValue === "function") {
+
+        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
+
+    }
+    if (typeValue === "number") {
+
+        return "i:"+value+";";
+
+    }
+
+    return "N;";
+
+}
+
+_stk.pSerialize=pSerialize;
 function removeFromKey (objectValue, value) {
 
     var type_js=getTypeof(objectValue);    var reslt =null;
@@ -5207,6 +5208,19 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
+function someValid () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 function shuffle (objectValue) {
 
     var output=[];    var rawObjectValue = clone(objectValue);
@@ -5236,19 +5250,6 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
-function someValid () {
-
-    var arg=arguments;    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
 function baseSort (objectValue, func) {
 
     var jsonn=objectValue;    var js_m=getTypeofInternal(jsonn) === "json"
@@ -5435,21 +5436,7 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
-function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");}
-
-_stk.strKebab=strKebab;
-_stk.strLower=strLower;function strSnake (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");}
-
-_stk.strSnake=strSnake;
-function strSubs (value, minValue, maxValue) {
+_stk.strLower=strLower;function strSubs (value, minValue, maxValue) {
 
     if (has(maxValue)) {
 
@@ -5460,12 +5447,26 @@ function strSubs (value, minValue, maxValue) {
 }
 
 _stk.strSubs=strSubs;
+function strKebab (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");}
+
+_stk.strKebab=strKebab;
 _stk.strUnEscape=strUnEscape;function strUpper (value) {
 
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
+_stk.subtract=subtract;function strSnake (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");}
+
+_stk.strSnake=strSnake;
+function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
@@ -5862,7 +5863,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.toString=toString;_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;_stk.toString=toString;function union () {
 
     var arg=arguments;    return curryArg(function () {
 

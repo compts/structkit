@@ -2126,71 +2126,6 @@ _stk.arraySum=arraySum;
 
 
 /**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];
-
-                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
-
-
-/**
  * Divide logic in satisfying two argument
  *
  * @since 1.4.8
@@ -2687,7 +2622,70 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
-_stk.clone=clone;
+
+/**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];
+
+                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
 
 _stk.count=count;
 
@@ -2794,6 +2792,8 @@ _stk.defaultTo=defaultTo;
 _stk.divide=divide;
 
 _stk.each=each;
+
+_stk.clone=clone;
 
 _stk.empty=empty;
 
@@ -3735,6 +3735,12 @@ _stk.gte=gte;
 
 _stk.has=has;
 
+_stk.inc=inc;
+
+_stk.indexOf=indexOf;
+
+_stk.indexOfExist=indexOfExist;
+
 
 /**
  * Reduce function
@@ -3862,12 +3868,6 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
-
-_stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
@@ -4061,35 +4061,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -4329,6 +4300,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
 _stk.mergeWithKey=mergeWithKey;
 
 _stk.multiply=multiply;
@@ -4502,111 +4502,6 @@ ClassSequence.prototype.cancel = function () {
 
 _stk.onSequence=onSequence;
 
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;
-
-    }
-
-    return {};
-
-};
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-    /**
-     * On wait
-     *
-     * @since 1.4.1
-     * @category Seq
-     * @param {any} pendingFunc The second number in an addition.
-     * @param {object} waiting The second number in an addition.
-     * @returns {string} Returns the total.
-     * @example
-     *
-     *  onWait(()=>{})
-     *=>'11'
-     */
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-    /**
-     * On wait
-     * @returns {any} Returns the total.
-     *
-     */
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
-
 
 /**
  * Check if data was executed once
@@ -4726,103 +4621,110 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 
 _stk.once=once;
 
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;
+
+    }
+
+    return {};
+
+};
 
 /**
- * Create a serialize data if you are coming to php
+ * On wait
  *
- * @since 1.4.874
- * @category Collection
- * @param {any} value Arugment that you want to convert to serialize string
- * @returns {string} Returns number for subtracted value
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
  * @example
  *
- * pSerialize(["22s"])
- * // => 'a:1:{i:0;s:3:"22s";}'
+ *  onWait(()=>{})
+ *=>'11'
  */
-function pSerialize (value) {
+function onWait (func, wait) {
 
-    return curryArg(function (rawValue) {
+    var browserWindow = getWindow();
+    var timerId = null;
 
-        var dataType = getTypeof(rawValue);
+    var useReqeustAdnimation = null;
 
-        if (indexOfExist(dataType, [
-            "array",
-            "json",
-            "object",
-            "set",
-            "map"
-        ])) {
+    if (browserWindow) {
 
-            var getKeyVal = toArray(getKey(rawValue));
-            var getValueVal = toArray(getValue(rawValue));
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
 
-            var mapData = map(function (mValue, kValue) {
+    }
 
-                var refMapKey = getKeyVal[kValue];
-                var refMapValue = getValueVal[kValue];
+    /**
+     * On wait
+     *
+     * @since 1.4.1
+     * @category Seq
+     * @param {any} pendingFunc The second number in an addition.
+     * @param {object} waiting The second number in an addition.
+     * @returns {string} Returns the total.
+     * @example
+     *
+     *  onWait(()=>{})
+     *=>'11'
+     */
+    function startTimer (pendingFunc, waiting) {
 
-                return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
+        if (useReqeustAdnimation) {
 
-            }, range(count(rawValue) - one, zero));
+            clearTimer();
 
-            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
+            return browserWindow.requestAnimationFrame(pendingFunc);
 
         }
 
-        return parseTypeVal(dataType, value);
+        return onDelay(pendingFunc, waiting);
 
-    }, [value], one);
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+    /**
+     * On wait
+     * @returns {any} Returns the total.
+     *
+     */
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
 
 }
 
-/**
- * Convert the value to its type in serialize
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} typeValue Arugment that you want to convert to serialize string
- * @param {any} value Arugment that you want to convert to serialize string
- * @returns {any} Returns number for subtracted value
- * @example
- *
- * parseTypeVal ("string", "value")
- * // => 0
- */
-function parseTypeVal (typeValue, value) {
-
-    if (indexOfExist(typeValue, [
-        "array",
-        "json",
-        "object",
-        "set",
-        "map"
-    ])) {
-
-        return pSerialize(value);
-
-    }
-
-    if (typeValue === "string") {
-
-        return "s:"+count(value)+":\""+value+"\";";
-
-    }
-    if (typeValue === "function") {
-
-        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
-
-    }
-    if (typeValue === "number") {
-
-        return "i:"+value+";";
-
-    }
-
-    return "N;";
-
-}
-
-_stk.pSerialize=pSerialize;
+_stk.onWait=onWait;
 
 
 /**
@@ -6187,6 +6089,7 @@ function strUnEscape (value, type) {
 function parseJson (value, config) {
 
     var defaultConfig = varExtend({"disableCorrection": false,
+        "invalidDefaultValue": null,
         "throwError": false}, config);
 
     if (getTypeof(value) !== "string") {
@@ -6197,7 +6100,7 @@ function parseJson (value, config) {
 
         }
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
     if (defaultConfig.disableCorrection) {
@@ -6206,7 +6109,7 @@ function parseJson (value, config) {
 
         if (rawValue === "") {
 
-            return null;
+            return defaultConfig.invalidDefaultValue;
 
         }
 
@@ -6219,7 +6122,7 @@ function parseJson (value, config) {
 
     if (tagVal.type === 'none') {
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
 
@@ -6227,7 +6130,7 @@ function parseJson (value, config) {
 
     if (obgM === "") {
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
     var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
@@ -6448,6 +6351,104 @@ function callbackParse (glb) {
 }
 
 _stk.parseJson=parseJson;
+
+
+/**
+ * Create a serialize data if you are coming to php
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {string} Returns number for subtracted value
+ * @example
+ *
+ * pSerialize(["22s"])
+ * // => 'a:1:{i:0;s:3:"22s";}'
+ */
+function pSerialize (value) {
+
+    return curryArg(function (rawValue) {
+
+        var dataType = getTypeof(rawValue);
+
+        if (indexOfExist(dataType, [
+            "array",
+            "json",
+            "object",
+            "set",
+            "map"
+        ])) {
+
+            var getKeyVal = toArray(getKey(rawValue));
+            var getValueVal = toArray(getValue(rawValue));
+
+            var mapData = map(function (mValue, kValue) {
+
+                var refMapKey = getKeyVal[kValue];
+                var refMapValue = getValueVal[kValue];
+
+                return parseTypeVal(getTypeof(refMapKey), refMapKey) +""+parseTypeVal(getTypeof(refMapValue), refMapValue);
+
+            }, range(count(rawValue) - one, zero));
+
+            return "a:"+count(mapData)+":{"+mapData.join("")+"}";
+
+        }
+
+        return parseTypeVal(dataType, value);
+
+    }, [value], one);
+
+}
+
+/**
+ * Convert the value to its type in serialize
+ *
+ * @since 1.4.874
+ * @category Collection
+ * @param {any} typeValue Arugment that you want to convert to serialize string
+ * @param {any} value Arugment that you want to convert to serialize string
+ * @returns {any} Returns number for subtracted value
+ * @example
+ *
+ * parseTypeVal ("string", "value")
+ * // => 0
+ */
+function parseTypeVal (typeValue, value) {
+
+    if (indexOfExist(typeValue, [
+        "array",
+        "json",
+        "object",
+        "set",
+        "map"
+    ])) {
+
+        return pSerialize(value);
+
+    }
+
+    if (typeValue === "string") {
+
+        return "s:"+count(value)+":\""+value+"\";";
+
+    }
+    if (typeValue === "function") {
+
+        return "O:"+count(value.name)+":\""+value.name+"\":0:{};";
+
+    }
+    if (typeValue === "number") {
+
+        return "i:"+value+";";
+
+    }
+
+    return "N;";
+
+}
+
+_stk.pSerialize=pSerialize;
 
 
 /**
@@ -6980,6 +6981,35 @@ _stk.setData=setData;
 
 
 /**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
+
+
+/**
  * Shuffle data in array
  *
  * @since 1.0.1
@@ -7022,35 +7052,6 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
-
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
 
 
 /**
@@ -7346,53 +7347,7 @@ function strEscape (value, type) {
 
 _stk.strEscape=strEscape;
 
-
-/**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.strKebab=strKebab;
-
 _stk.strLower=strLower;
-
-
-/**
- * String Snake case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
- * @example
- *
- * strSnake('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
- */
-function strSnake (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");
-
-}
-
-_stk.strSnake=strSnake;
 
 
 /**
@@ -7423,6 +7378,29 @@ function strSubs (value, minValue, maxValue) {
 
 _stk.strSubs=strSubs;
 
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function strKebab (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.strKebab=strKebab;
+
 _stk.strUnEscape=strUnEscape;
 
 
@@ -7447,6 +7425,29 @@ function strUpper (value) {
 _stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * strSnake('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+function strSnake (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");
+
+}
+
+_stk.strSnake=strSnake;
 
 
 /**
@@ -8027,11 +8028,11 @@ function trim (value, remove_value) {
 
 _stk.trim=trim;
 
-_stk.toString=toString;
-
 _stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
+
+_stk.toString=toString;
 
 
 /**

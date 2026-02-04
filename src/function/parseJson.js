@@ -21,6 +21,7 @@ const getTypeof = require('./getTypeof');
 function parseJson (value, config) {
 
     const defaultConfig = varExtend({"disableCorrection": false,
+        "invalidDefaultValue": null,
         "throwError": false}, config);
 
     if (getTypeof(value) !== "string") {
@@ -31,7 +32,7 @@ function parseJson (value, config) {
 
         }
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
     if (defaultConfig.disableCorrection) {
@@ -40,7 +41,7 @@ function parseJson (value, config) {
 
         if (rawValue === "") {
 
-            return null;
+            return defaultConfig.invalidDefaultValue;
 
         }
 
@@ -53,7 +54,7 @@ function parseJson (value, config) {
 
     if (tagVal.type === 'none') {
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
 
@@ -61,7 +62,7 @@ function parseJson (value, config) {
 
     if (obgM === "") {
 
-        return null;
+        return defaultConfig.invalidDefaultValue;
 
     }
     const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
