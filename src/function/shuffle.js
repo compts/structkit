@@ -6,7 +6,7 @@ const first = require('./first');
 const {zero, one} = require("../variable/defaultValue");
 const indexOf = require('./indexOf');
 const random = require('./random');
-const removeFromKey = require('./removeFromKey');
+const remove = require('./remove');
 
 /**
  * Shuffle data in array
@@ -38,7 +38,7 @@ function shuffle (objectValue) {
 
             const rowValue = random(rawObjectValue);
 
-            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
             output.push(first(rowValue));
             currentIndex -= one;
 

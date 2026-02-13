@@ -12,7 +12,7 @@ import varExtend from './varExtend.js';
 
 import strUnEscape from './strUnEscape.js';
 
-import removeFromKey from './removeFromKey.js';
+import remove from './remove.js';
 
 import indexOfNotExist from './indexOfNotExist.js';
 
@@ -110,7 +110,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
         if (has(rawCount === zero
             ?validTypeJson
-            :removeFromKey(validTypeJson, "object"), getTypeof(value))) {
+            :remove(validTypeJson, "object"), getTypeof(value))) {
 
             const getTypeDetails = validTypeJson[getTypeof(value)];
 

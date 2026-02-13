@@ -6,7 +6,7 @@ const each = require('./each');
 const count = require('./count');
 const varExtend = require('./varExtend');
 const strUnEscape = require("./strUnEscape");
-const removeFromKey = require("./removeFromKey");
+const remove = require("./remove");
 const indexOfNotExist = require('./indexOfNotExist');
 const getKey = require('./getKey');
 const toString = require('./toString');
@@ -103,7 +103,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
         if (has(rawCount === zero
             ?validTypeJson
-            :removeFromKey(validTypeJson, "object"), getTypeof(value))) {
+            :remove(validTypeJson, "object"), getTypeof(value))) {
 
             const getTypeDetails = validTypeJson[getTypeof(value)];
 

@@ -12,7 +12,7 @@ import indexOf from './indexOf.js';
 
 import random from './random.js';
 
-import removeFromKey from './removeFromKey.js';
+import remove from './remove.js';
 
 /**
  * Shuffle data in array
@@ -44,7 +44,7 @@ function shuffle (objectValue) {
 
             const rowValue = random(rawObjectValue);
 
-            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
             output.push(first(rowValue));
             currentIndex -= one;
 
