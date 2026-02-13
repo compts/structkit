@@ -1,7 +1,7 @@
 const _stk = exports;
 const __p = "@argument/place";
 
-__=__p
+const __=__p;
 
 /**
  * Placeholder of argument
