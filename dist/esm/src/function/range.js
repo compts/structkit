@@ -21,13 +21,13 @@ import {zero, one, ten} from '../variable/defaultValue.js';
 function range (maxValue, minValue, step) {
 
     const incrementValue=has(step)
-        ?step
+        ?Number(step)
         :one;
     const minValueRef=has(minValue)
-        ?minValue
+        ?Number(minValue)
         :one;
     const maxValueRef=has(maxValue)
-        ?maxValue
+        ?Number(maxValue)
         :ten;
     const output=[];
 
