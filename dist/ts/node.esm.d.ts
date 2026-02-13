@@ -964,20 +964,7 @@ export const regexCountGroup: typeof regexCountGroup_module;
  *=>[2, 3]
  */
 export const remove: typeof remove_module;
-/**
- * Remove data in either JSON or Array using key or woth value, a revise logic
- *
- * @since 1.4.85
- * @category Collection
- * @param {any} objectValue Json or array
- * @param {any} value if objectValue, json is must be object or array index you want to remove
- * @returns {any[]} Returns the total.
- * @example
- *
- * removeFromKey([1,2,3],0 )
- *=>[2, 3]
- */
-export const removeFromKey: typeof removeFromKey_module;
+
 /**
  * Repeat string value
  *
@@ -1806,7 +1793,6 @@ import { default as range_module } from './src/function/range.js';
 import { default as reduce_module } from './src/function/reduce.js';
 import { default as regexCountGroup_module } from './src/function/regexCountGroup.js';
 import { default as remove_module } from './src/function/remove.js';
-import { default as removeFromKey_module } from './src/function/removeFromKey.js';
 import { default as repeat_module } from './src/function/repeat.js';
 import { default as reverse_module } from './src/function/reverse.js';
 import { default as selectInData_module } from './src/function/selectInData.js';
