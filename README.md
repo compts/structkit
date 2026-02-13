@@ -32,9 +32,10 @@ Using npm to install in your project folder:
 $ npm i structkit
 ```
 
-Due to conflict in Typescript and ES, it was decided to separate in separate package for typescript(Still working in progess)
+If you want to try to Deno
 ```shell
-$ npm i structkit-ts
+$ deno add jsr:@compts/structkit
+
 ```
 
 
