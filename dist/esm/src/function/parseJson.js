@@ -94,7 +94,9 @@ function parseJson (value, config) {
  */
 function escapeQuotesJson (str) {
 
-    return str.replace(/&quot;/g, "&bsol;&quot;");
+    str = str.replace(/&quot;/g, "&bsol;&quot;");
+
+    return str.replace(/&apos;/g, "&bsol;&quot;");
 
 }
 
