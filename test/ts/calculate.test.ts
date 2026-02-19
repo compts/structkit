@@ -14,7 +14,7 @@ const eight = 8;
 const seventyOne = 71;
 const twentOne = 21;
 const k38 = 38416;
-
+const ninety = 90;
 
 describe('TS: calculate method', function () {
 
@@ -198,4 +198,10 @@ describe('TS: calculate method', function () {
 
     });
 
+
+    it('check calculate formula percentage', function () {
+
+        assert.deepStrictEqual(calculate("100-10%"), ninety);
+
+    });
 });

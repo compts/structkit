@@ -102,10 +102,13 @@ function curryArg (fn, args, NoDefaultArgs) {
                         const getApply = args[arg].apply(this, argSub);
 
                         rawArgument.push(getApply);
+                        if (typeof getApply === "function") {
 
-                        if (getApply.name === fnCall.name && funcReturnType === false) {
+                            if (getApply.name === fnCall.name && funcReturnType === false) {
 
-                            funcReturnType = true;
+                                funcReturnType = true;
+
+                            }
 
                         }
 

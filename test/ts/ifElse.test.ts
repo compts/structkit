@@ -1,4 +1,4 @@
-import {ifElse, __} from "../../dist/esm/node.esm";
+import {ifElse, __, has} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
@@ -17,6 +17,16 @@ const func1 = ifElse(__, function (params:boolean, ss:number) {
 });
 
 
+const func2 = ifElse(__, function (params:any, ss:any, s2:any) {
+
+    return ss[s2];
+
+}, function (params:any, ss:any, s2:any) {
+
+    return s2;
+
+});
+
 describe('TS: ifElse method', function () {
 
     it('check placeholder condition in true', function () {
@@ -28,6 +38,18 @@ describe('TS: ifElse method', function () {
     it('check placeholder condition in false', function () {
 
         assert.deepStrictEqual(func1(false, one, two), two);
+
+    });
+
+    it('check placeholder condition in has is true', function () {
+
+        assert.deepStrictEqual(func2(has, {"2": one}, "2"), one);
+
+    });
+
+    it('check placeholder condition in has is false', function () {
+
+        assert.deepStrictEqual(func2(has, {"23": one}, "2"), "2");
 
     });
 

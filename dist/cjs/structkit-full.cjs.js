@@ -155,10 +155,13 @@ function curryArg (fn, args, NoDefaultArgs) {
                         const getApply = args[arg].apply(this, argSub);
 
                         rawArgument.push(getApply);
+                        if (typeof getApply === "function") {
 
-                        if (getApply.name === fnCall.name && funcReturnType === false) {
+                            if (getApply.name === fnCall.name && funcReturnType === false) {
 
-                            funcReturnType = true;
+                                funcReturnType = true;
+
+                            }
 
                         }
 
@@ -2627,6 +2630,7 @@ function convert (b1) {
  */
 function algbraicExpr (formula) {
 
+    // Handle formula like this 3√s2
     const regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
 
     if (regNumberSqrt.test(formula)) {
@@ -2648,6 +2652,7 @@ function algbraicExpr (formula) {
 
     }
 
+    // Handle formula like this 3x
     const regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
 
     if (regNumberVariable1.test(formula)) {
@@ -2656,11 +2661,21 @@ function algbraicExpr (formula) {
 
     }
 
+    // Handle formula like this (1)(2)
     const regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
 
     if (regNumberVariable2.test(formula)) {
 
         formula = formula.replace(regNumberVariable2, ") * (");
+
+    }
+
+    // Handle formula like this 100-10%
+    const regNumberVariable4 = /([a-zA-Z0-9]+)\s{0,}([\\*\-+x])\s{0,}([a-zA-Z0-9]+)%/g;
+
+    if (regNumberVariable4.test(formula)) {
+
+        formula = formula.replace(regNumberVariable4, "($1$2($1*($3/$1)))");
 
     }
 
@@ -3816,25 +3831,25 @@ function ifElse (cond, ifFunc, elseFunc) {
     return curryArg(function (...rawArgs) {
 
         let varCond = false;
-        const arrayValue = toArray(arraySlice(rawArgs, two));
+        const arrayValue = toArray(arraySlice(rawArgs, three));
         const rawCond = rawArgs[zero];
         const rawIfFunc = rawArgs[one];
         const rawElseFunc = rawArgs[two];
 
-        if (getTypeofInternal(rawCond) === "boolean") {
+        if (getTypeofInternal(rawCond) === "function" && arrayValue.length>zero) {
 
-            varCond = rawCond;
+            varCond = rawCond(...arrayValue);
 
         } else {
 
-            varCond = rawCond(...rawArgs);
+            varCond = rawCond;
 
         }
         if (varCond) {
 
-            if (getTypeofInternal(rawIfFunc) === "function") {
+            if (getTypeofInternal(rawIfFunc) === "function" && arrayValue.length>zero) {
 
-                return rawIfFunc(...rawArgs);
+                return rawIfFunc(...arrayValue);
 
             }
 
@@ -3842,7 +3857,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 
         }
 
-        if (getTypeofInternal(rawElseFunc) === "function") {
+        if (getTypeofInternal(rawElseFunc) === "function" && arrayValue.length>zero) {
 
             return rawElseFunc(...arrayValue);
 
@@ -3865,6 +3880,8 @@ _stk.inc=inc;
 _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -3908,8 +3925,6 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.indexOfNotExist=indexOfNotExist;
-
 _stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
@@ -3938,6 +3953,35 @@ function last (objectValue) {
 }
 
 _stk.last=last;
+
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValueWhere, objectValue) {
+
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
+
+    }, [
+        objectValueWhere,
+        objectValue
+    ], two);
+
+}
+
+_stk.like=like;
 
 
 /**
@@ -4032,32 +4076,32 @@ _stk.limit=limit;
 
 
 /**
- * Searching the data either in array or json object to get similar value of data
+ * To check if the two arguments are less
  *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @returns {any} Return either Json to Array.
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * like({"s1":1}, {"s1":1,"s2":1})
- *=>{s1: 1, s2: 1}
+ * lt(1, 2)
+ * // => true
  */
-function like (objectValueWhere, objectValue) {
+function lt (value1, value2) {
 
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
+    return curryArg(function (aa, bb) {
 
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
+        return aa < bb;
 
     }, [
-        objectValueWhere,
-        objectValue
+        value1,
+        value2
     ], two);
 
 }
 
-_stk.like=like;
+_stk.lt=lt;
 
 
 /**
@@ -4087,8 +4131,6 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
-
-_stk.map=map;
 
 
 /**
@@ -4148,6 +4190,8 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
+
+_stk.map=map;
 
 
 /**
@@ -4298,35 +4342,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 _stk.mergeInWhere=mergeInWhere;
 
 _stk.mergeWithKey=mergeWithKey;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.multiply=multiply;
 
@@ -6635,43 +6650,6 @@ _stk.parseString=parseString;
 
 
 /**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const ran_min=has(minValue)
-        ?minValue
-        :zero;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-
-/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
@@ -6711,11 +6689,46 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
-_stk.range=range;
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const ran_min=has(minValue)
+        ?minValue
+        :zero;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 
 _stk.reduce=reduce;
 
-_stk.remove=remove;
+_stk.range=range;
 
 
 /**
@@ -6737,6 +6750,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
 
 
 /**
@@ -6960,31 +6975,6 @@ _stk.shuffle=shuffle;
 
 
 /**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
-
-/**
  * Sort By
  *
  * @since 1.4.87
@@ -7020,6 +7010,47 @@ function baseSort (objectValue, func) {
     return finalResponse;
 
 }
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {Function} func Callback function or sort type
+ * @param {any[]} objectValue List of array you want to sort
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
+ *=>[1,2,3]
+ */
+function sortBy (func, objectValue) {
+
+    return curryArg(function (rawFunc, rawObjectValue) {
+
+        const finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            if (has(func) && getTypeof(func) === 'function') {
+
+                return rawFunc(orderA, orderB);
+
+            }
+
+            return orderA - orderB;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        func,
+        objectValue
+    ]);
+
+}
+
+_stk.sortBy=sortBy;
+
 
 /**
  * Sort array
@@ -7108,47 +7139,6 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
-
-
-/**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {Function} func Callback function or sort type
- * @param {any[]} objectValue List of array you want to sort
- * @returns {any[]} Returns the total.
- * @example
- *
- * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
- *=>[1,2,3]
- */
-function sortBy (func, objectValue) {
-
-    return curryArg(function (rawFunc, rawObjectValue) {
-
-        const finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            if (has(func) && getTypeof(func) === 'function') {
-
-                return rawFunc(orderA, orderB);
-
-            }
-
-            return orderA - orderB;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        func,
-        objectValue
-    ]);
-
-}
-
-_stk.sortBy=sortBy;
 /**
  * Split string for special cases
  *
@@ -7237,29 +7227,6 @@ _stk.strCapitalize=strCapitalize;
 
 
 /**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.strKebab=strKebab;
-
-
-/**
  * String Escape
  *
  * @since 1.3.1
@@ -7299,6 +7266,54 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
+
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function strKebab (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.strKebab=strKebab;
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid (...arg) {
+
+    return curryArg(function (...rawValue) {
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 
 _stk.strLower=strLower;
 
@@ -7354,6 +7369,8 @@ function strSubs (value, minValue, maxValue) {
 
 _stk.strSubs=strSubs;
 
+_stk.strUnEscape=strUnEscape;
+
 
 /**
  * String Upper case case
@@ -7374,8 +7391,6 @@ function strUpper (value) {
 }
 
 _stk.strUpper=strUpper;
-
-_stk.strUnEscape=strUnEscape;
 
 _stk.subtract=subtract;
 
@@ -7489,8 +7504,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-_stk.toArray=toArray;
 
 
 /**
@@ -7722,6 +7735,8 @@ function syntaxCleanup (data, option) {
 
 _stk.templates=templates;
 
+_stk.toArray=toArray;
+
 
 /**
  * To extract string invalid boolean and convert to boolean
@@ -7862,6 +7877,40 @@ _stk.toString=toString;
 
 
 /**
+ * String trim at the end only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in end of string
+ * @example
+ *
+ * trimEnd(' The fish is goad   with Goat-1ss ')
+ *=> ' The fish is goad   with Goat-1ss'
+ */
+function trimEnd (value, remove_value) {
+
+    const rx = new RegExp('[' + whitespace + ']*$');
+
+    let rawValue= toString(value).replace(rx, "");
+
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
+
+        const regData = new RegExp("("+remove_value+")$", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
+
+_stk.trimEnd=trimEnd;
+
+
+/**
  * String trim  at the start only
  *
  * @since 1.4.86
@@ -7892,36 +7941,8 @@ function trimStart (value, remove_value) {
 
 }
 
-/**
- * String trim at the end only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in end of string
- * @example
- *
- * trimEnd(' The fish is goad   with Goat-1ss ')
- *=> ' The fish is goad   with Goat-1ss'
- */
-function trimEnd (value, remove_value) {
+_stk.trimStart=trimStart;
 
-    const rx = new RegExp('[' + whitespace + ']*$');
-
-    let rawValue= toString(value).replace(rx, "");
-
-    if (indexOfExist(getTypeof(remove_value), ["string"])) {
-
-        const regData = new RegExp("("+remove_value+")$", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
 
 /**
  * String trim in removing whitespace both start and end
@@ -7959,8 +7980,6 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-
-_stk.trimEnd=trimEnd;
 
 
 /**
@@ -8004,8 +8023,6 @@ function union (...arg) {
 }
 
 _stk.union=union;
-
-_stk.trimStart=trimStart;
 
 
 /**

@@ -12,6 +12,7 @@ const eight = 8;
 const seventyOne = 71;
 const twentOne = 21;
 const k38 = 38416;
+const ninety = 90;
 
 describe('ESM: calculate method', function () {
 
@@ -181,6 +182,12 @@ describe('ESM: calculate method', function () {
     it('check calculate formula open/close parenthesis', function () {
 
         assert.deepStrictEqual(calculate("(2)(2)"), four);
+
+    });
+
+    it('check calculate formula percentage', function () {
+
+        assert.deepStrictEqual(calculate("100-10%"), ninety);
 
     });
 

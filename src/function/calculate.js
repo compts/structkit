@@ -317,6 +317,8 @@ function convert (b1) {
  */
 function algbraicExpr (formula) {
 
+
+    // Handle formula like this 3√s2
     const regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
 
     if (regNumberSqrt.test(formula)) {
@@ -340,6 +342,7 @@ function algbraicExpr (formula) {
 
     }
 
+    // Handle formula like this 3x
     const regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
 
     if (regNumberVariable1.test(formula)) {
@@ -349,11 +352,23 @@ function algbraicExpr (formula) {
     }
 
 
+    // Handle formula like this (1)(2)
     const regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
 
     if (regNumberVariable2.test(formula)) {
 
         formula = formula.replace(regNumberVariable2, ") * (");
+
+    }
+
+    // Handle formula like this 100-10%
+    const regNumberVariable4 = /([a-zA-Z0-9]+)\s{0,}([\\*\-+x])\s{0,}([a-zA-Z0-9]+)%/g;
+
+    if (regNumberVariable4.test(formula)) {
+
+
+        formula = formula.replace(regNumberVariable4, "($1$2($1*($3/$1)))");
+
 
     }
 

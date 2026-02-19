@@ -1,4 +1,4 @@
-const {ifElse, __} = require("../../dist/cjs/structkit-full.cjs");
+const {ifElse, __, has} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 
@@ -16,6 +16,16 @@ const func1 = ifElse(__, function (params, ss) {
 });
 
 
+const func2 = ifElse(__, function (params, ss, s2) {
+
+    return ss[s2];
+
+}, function (params, ss, s2) {
+
+    return s2;
+
+});
+
 describe('CJS: ifElse method', function () {
 
     it('check placeholder condition in true', function () {
@@ -27,6 +37,18 @@ describe('CJS: ifElse method', function () {
     it('check placeholder condition in false', function () {
 
         assert.deepStrictEqual(func1(false, one, two), two);
+
+    });
+
+    it('check placeholder condition in has is true', function () {
+
+        assert.deepStrictEqual(func2(has, {"2": one}, "2"), one);
+
+    });
+
+    it('check placeholder condition in has is false', function () {
+
+        assert.deepStrictEqual(func2(has, {"23": one}, "2"), "2");
 
     });
 

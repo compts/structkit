@@ -61,25 +61,25 @@ function ifElse (cond, ifFunc, elseFunc) {
     return curryArg(function (...rawArgs) {
 
         let varCond = false;
-        const arrayValue = toArray(arraySlice(rawArgs, two));
+        const arrayValue = toArray(arraySlice(rawArgs, three));
         const rawCond = rawArgs[zero];
         const rawIfFunc = rawArgs[one];
         const rawElseFunc = rawArgs[two];
 
-        if (getTypeofInternal(rawCond) === "boolean") {
+        if (getTypeofInternal(rawCond) === "function" && arrayValue.length>zero) {
 
-            varCond = rawCond;
+            varCond = rawCond(...arrayValue);
 
         } else {
 
-            varCond = rawCond(...rawArgs);
+            varCond = rawCond;
 
         }
         if (varCond) {
 
-            if (getTypeofInternal(rawIfFunc) === "function") {
+            if (getTypeofInternal(rawIfFunc) === "function" && arrayValue.length>zero) {
 
-                return rawIfFunc(...rawArgs);
+                return rawIfFunc(...arrayValue);
 
             }
 
@@ -87,7 +87,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 
         }
 
-        if (getTypeofInternal(rawElseFunc) === "function") {
+        if (getTypeofInternal(rawElseFunc) === "function" && arrayValue.length>zero) {
 
             return rawElseFunc(...arrayValue);
 
