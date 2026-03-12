@@ -1042,6 +1042,7 @@ function GlobalEach () {
     this.continue = true;
     this.action = null;
     this.pass_value = null;
+    this.is_true = true;
 
 }
 
@@ -1486,37 +1487,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1637,6 +1607,37 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
+
+
+/**
+ * Append data for json or array
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 
 
 /**
@@ -2704,8 +2705,6 @@ _stk.calculate=calculate;
 
 _stk.clone=clone;
 
-_stk.count=count;
-
 
 /**
  * Create your own curry for your onw function
@@ -2730,6 +2729,8 @@ function curry (fun, num) {
 }
 
 _stk.curry=curry;
+
+_stk.count=count;
 
 
 /**
@@ -2846,7 +2847,7 @@ function filter (func, objectValue) {
             if (has(rawFunc)) {
 
                 localGlobal.action = "filter";
-                localGlobal.pass_value = rawFunc(value, key, localGlobal);
+                localGlobal.pass_value = rawFunc(value, key, localGlobal) === localGlobal.is_true;
 
                 if (localGlobal.pass_value) {
 
@@ -3348,7 +3349,7 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
         }
 
-        if (localGlobal.pass_value) {
+        if (localGlobal.pass_value === localGlobal.is_true) {
 
             append(variable, jv, jk);
 
@@ -3594,10 +3595,6 @@ function getDepthValue (value) {
 _stk.fromPairs=fromPairs;
 
 _stk.getData=getData;
-
-_stk.getKey=getKey;
-
-_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -3634,6 +3631,10 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+
+_stk.getKey=getKey;
+
+_stk.getTypeof=getTypeof;
 
 
 /**
@@ -3902,6 +3903,8 @@ _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
+_stk.isEmpty=isEmpty;
+
 
 /**
  * Insert value in Json object or array
@@ -3944,13 +3947,9 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isEmpty=isEmpty;
-
 _stk.isExact=isExact;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
-
-_stk.isJson=isJson;
 
 
 /**
@@ -3972,35 +3971,6 @@ function last (objectValue) {
 }
 
 _stk.last=last;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1}, {"s1":1,"s2":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
-
-    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -4032,6 +4002,35 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
+
+
+/**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValueWhere, objectValue) {
+
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
+
+    }, [
+        objectValueWhere,
+        objectValue
+    ], two);
+
+}
+
+_stk.like=like;
 
 
 /**
@@ -4093,34 +4092,7 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit;
 
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
+_stk.isJson=isJson;
 
 
 /**
@@ -4211,6 +4183,35 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 _stk.mapGetData=mapGetData;
 
 _stk.map=map;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -4361,6 +4362,118 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 _stk.mergeInWhere=mergeInWhere;
 
 _stk.mergeWithKey=mergeWithKey;
+
+
+/**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist(strLower(value), [
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ]);
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist(value, [one]);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+/**
+ * Check if data was not valid
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} func Either JSON or array
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * not(false)
+ * // => true
+ */
+function not (func) {
+
+    var reserve = null;
+
+    if (indexOfNotExist(getTypeof(func), [
+        "json",
+        "function",
+        "object"
+    ])) {
+
+        return toBoolean(func) === false;
+
+    }
+
+    return curryArg(function (rawFunc) {
+
+        return function () {
+
+    var arg=arguments;
+
+            var argValue = arg[arg.length-one];
+
+            if (getTypeof(argValue) === "json") {
+
+                if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
+
+                    argValue.external_execution_from ='not';
+                    if (argValue.action === "lookup_execution") {
+
+                        argValue.is_true= false;
+
+                        return rawFunc;
+
+                    }
+
+                    if (argValue.action === "filter") {
+
+                        argValue.is_true= false;
+                        reserve = rawFunc.apply(this, arg);
+
+                    }
+
+                }
+
+            }
+
+            return reserve;
+
+        };
+
+    }, [func], two);
+
+}
+
+_stk.not=not;
 
 _stk.multiply=multiply;
 
@@ -6751,9 +6864,9 @@ function random (valueArray, minValue, maxValue) {
 
 _stk.random=random;
 
-_stk.reduce=reduce;
-
 _stk.range=range;
+
+_stk.reduce=reduce;
 
 
 /**
@@ -6848,9 +6961,9 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
-_stk.roundDecimal=roundDecimal;
-
 _stk.selectInData=selectInData;
+
+_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -7000,6 +7113,35 @@ _stk.shuffle=shuffle;
 
 
 /**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
+
+
+/**
  * Sort By
  *
  * @since 1.4.87
@@ -7035,47 +7177,6 @@ function baseSort (objectValue, func) {
     return finalResponse;
 
 }
-
-/**
- * Sort By function is used to sort an array of values.
- *
- * @since 1.4.87
- * @category Array
- * @param {Function} func Callback function or sort type
- * @param {any[]} objectValue List of array you want to sort
- * @returns {any[]} Returns the total.
- * @example
- *
- * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
- *=>[1,2,3]
- */
-function sortBy (func, objectValue) {
-
-    return curryArg(function (rawFunc, rawObjectValue) {
-
-        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            if (has(func) && getTypeof(func) === 'function') {
-
-                return rawFunc(orderA, orderB);
-
-            }
-
-            return orderA - orderB;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        func,
-        objectValue
-    ]);
-
-}
-
-_stk.sortBy=sortBy;
-
 
 /**
  * Sort array
@@ -7164,6 +7265,47 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+
+
+/**
+ * Sort By function is used to sort an array of values.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {Function} func Callback function or sort type
+ * @param {any[]} objectValue List of array you want to sort
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sortBy((orderA, orderB) => orderA - orderB ,[2,3,1])
+ *=>[1,2,3]
+ */
+function sortBy (func, objectValue) {
+
+    return curryArg(function (rawFunc, rawObjectValue) {
+
+        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            if (has(func) && getTypeof(func) === 'function') {
+
+                return rawFunc(orderA, orderB);
+
+            }
+
+            return orderA - orderB;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        func,
+        objectValue
+    ]);
+
+}
+
+_stk.sortBy=sortBy;
 /**
  * Split string for special cases
  *
@@ -7314,35 +7456,6 @@ function strKebab (value) {
 }
 
 _stk.strKebab=strKebab;
-
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
 
 _stk.strLower=strLower;
 
@@ -7766,76 +7879,9 @@ _stk.templates=templates;
 
 _stk.toArray=toArray;
 
-
-/**
- * To extract string invalid boolean and convert to boolean
- *
- * @since 1.4.872
- * @category Boolean
- * @param {any} value Value you to convert in boolean
- * @returns {boolean} Return in boolean.
- * @example
- *
- * toBoolean("true")
- *=>true
- */
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist(strLower(value), [
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ]);
-
-    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist(value, [one]);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
 _stk.toBoolean=toBoolean;
 
 _stk.toDouble=toDouble;
-
-
-/**
- * To extract number in string and convert to , it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger("11d")
- *=>11
- */
-function toInteger (value) {
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger;
 
 
 /**
@@ -7906,40 +7952,6 @@ _stk.toString=toString;
 
 
 /**
- * String trim at the end only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in end of string
- * @example
- *
- * trimEnd(' The fish is goad   with Goat-1ss ')
- *=> ' The fish is goad   with Goat-1ss'
- */
-function trimEnd (value, remove_value) {
-
-    var rx = new RegExp('[' + whitespace + ']*$');
-
-    var rawValue= toString(value).replace(rx, "");
-
-    if (indexOfExist(getTypeof(remove_value), ["string"])) {
-
-        var regData = new RegExp("("+remove_value+")$", "g");
-
-        rawValue = rawValue.replace(regData, "");
-
-    }
-
-    return rawValue;
-
-}
-
-_stk.trimEnd=trimEnd;
-
-
-/**
  * String trim  at the start only
  *
  * @since 1.4.86
@@ -7970,8 +7982,36 @@ function trimStart (value, remove_value) {
 
 }
 
-_stk.trimStart=trimStart;
+/**
+ * String trim at the end only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in end of string
+ * @example
+ *
+ * trimEnd(' The fish is goad   with Goat-1ss ')
+ *=> ' The fish is goad   with Goat-1ss'
+ */
+function trimEnd (value, remove_value) {
 
+    var rx = new RegExp('[' + whitespace + ']*$');
+
+    var rawValue= toString(value).replace(rx, "");
+
+    if (indexOfExist(getTypeof(remove_value), ["string"])) {
+
+        var regData = new RegExp("("+remove_value+")$", "g");
+
+        rawValue = rawValue.replace(regData, "");
+
+    }
+
+    return rawValue;
+
+}
 
 /**
  * String trim in removing whitespace both start and end
@@ -8009,6 +8049,33 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
+
+
+/**
+ * To extract number in string and convert to , it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger("11d")
+ *=>11
+ */
+function toInteger (value) {
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger;
+
+_stk.trimEnd=trimEnd;
+
+_stk.trimStart=trimStart;
 
 
 /**

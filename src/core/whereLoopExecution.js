@@ -78,7 +78,7 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
         }
 
-        if (localGlobal.pass_value) {
+        if (localGlobal.pass_value === localGlobal.is_true) {
 
             append(variable, jv, jk);
 

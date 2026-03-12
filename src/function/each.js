@@ -190,6 +190,7 @@ function GlobalEach () {
     this.continue = true;
     this.action = null;
     this.pass_value = null;
+    this.is_true = true;
 
 }
 

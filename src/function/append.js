@@ -4,7 +4,7 @@ const {two} = require("../variable/defaultValue");
 
 
 /**
- * Append data for json or array
+ * Append data for json, array, set and map type
  *
  * @since 1.0.1
  * @category Collection

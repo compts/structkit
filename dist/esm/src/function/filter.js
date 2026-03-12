@@ -43,7 +43,7 @@ function filter (func, objectValue) {
             if (has(rawFunc)) {
 
                 localGlobal.action = "filter";
-                localGlobal.pass_value = rawFunc(value, key, localGlobal);
+                localGlobal.pass_value = rawFunc(value, key, localGlobal) === localGlobal.is_true;
 
                 if (localGlobal.pass_value) {
 
