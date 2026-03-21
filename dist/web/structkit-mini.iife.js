@@ -5,7 +5,8 @@ __=__p
 
 
 _stk.__=__;
-var negOne = -1;var zero = 0;var one = 1;
+var negOne = -1;var zero = 0;
+var one = 1;
 var two = 2;
 var three = 3;
 var ten = 10;
@@ -214,23 +215,11 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
 function has () {
 
-    var args=arguments;    return curryArg(function (aa, bb) {
+    var args=arguments;
+
+    return curryArg(function (aa, bb) {
 
         return _has(aa, bb);
 
@@ -1122,6 +1111,18 @@ function append (objectValue, val, key) {
 }
 
 _stk.append=append;
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1214,7 +1215,7 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
-function range (maxValue, minValue, step) {
+_stk.arraySlice=arraySlice;function range (maxValue, minValue, step) {
 
     var incrementValue=has(step)
         ?Number(step)
@@ -1279,7 +1280,7 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-_stk.arraySlice=arraySlice;function isEmpty (value) {
+function isEmpty (value) {
 
     var typeofvalue = getTypeofInternal(value);    var invalidList = [
         'null',
@@ -2079,6 +2080,12 @@ _stk.first=first;_stk.flatten=flatten;function inc (value, default_value) {
 
 function schemaSplitData (data) {
 
+    if (getTypeofInternal(data) === "array") {
+
+        return data;
+
+    }
+
     var splitSign = "($^&^$)";
     var split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {
 
@@ -2727,7 +2734,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-_stk.has=has;function reduce (func, defaultValue, listData) {
+_stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2824,7 +2831,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2849,12 +2856,12 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNot
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
 _stk.last=last;
-_stk.isExact=isExact;function lastIndexOf (value, objectValue) {
+function lastIndexOf (value, objectValue) {
 
     return curryArg(function (rawValue, rawObjectValue) {
 
@@ -3081,7 +3088,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-_stk.mergeWithKey=mergeWithKey;function lt (value1, value2) {
+function lt (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -3093,7 +3100,7 @@ _stk.mergeWithKey=mergeWithKey;function lt (value1, value2) {
 }
 
 _stk.lt=lt;
-_stk.multiply=multiply;function toBoolean (value) {
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -5236,36 +5243,7 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
-_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function shuffle (objectValue) {
-
-    var output=[];    var rawObjectValue = clone(objectValue);
-    var valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(getTypeof(objectValue), valueType)>-one) {
-
-        var counts=count(objectValue)-one;
-
-        for (var currentIndex=counts; currentIndex>=zero;) {
-
-            var rowValue = random(rawObjectValue);
-
-            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
-            output.push(first(rowValue));
-            currentIndex -= one;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle;
-function setData (split_str, objectValue, updateValue) {
+_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5332,19 +5310,35 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-function someValid () {
+function shuffle (objectValue) {
 
-    var arg=arguments;    return curryArg(function () {
+    var output=[];    var rawObjectValue = clone(objectValue);
+    var valueType=[
+        "array",
+        "json"
+    ];
 
-    var rawValue=arguments;
+    if (indexOf(getTypeof(objectValue), valueType)>-one) {
 
-        return baseCountValidList(rawValue);
+        var counts=count(objectValue)-one;
 
-    }, arg) >= one;
+        for (var currentIndex=counts; currentIndex>=zero;) {
+
+            var rowValue = random(rawObjectValue);
+
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
+            output.push(first(rowValue));
+            currentIndex -= one;
+
+        }
+
+    }
+
+    return output;
 
 }
 
-_stk.someValid=someValid;
+_stk.shuffle=shuffle;
 function baseSort (objectValue, func) {
 
     var jsonn=objectValue;    var js_m=getTypeofInternal(jsonn) === "json"
@@ -5487,6 +5481,19 @@ function strCamel (value) {
 }
 
 _stk.strCamel=strCamel;
+function someValid () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 function strCapitalize (value, option) {
 
     if (option === "all") {
@@ -5538,14 +5545,14 @@ function strKebab (value) {
         .join("-");}
 
 _stk.strKebab=strKebab;
-_stk.strLower=strLower;function strSnake (value) {
+function strSnake (value) {
 
     return stringSplit(toString(value))
         .split(" ")
         .join("_");}
 
 _stk.strSnake=strSnake;
-function strSubs (value, minValue, maxValue) {
+_stk.strLower=strLower;function strSubs (value, minValue, maxValue) {
 
     if (has(maxValue)) {
 
@@ -5982,7 +5989,7 @@ function unique (value) {
 }
 
 _stk.unique=unique;
-_stk.varExtend=varExtend;_stk.where=where;function isArguments (value) {
+_stk.where=where;function isArguments (value) {
 
     return getTypeof(value) === "arguments";
 
@@ -6178,6 +6185,4 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
-
-
- })(typeof window !== "undefined" ? window : this);
+_stk.varExtend=varExtend; })(typeof window !== "undefined" ? window : this);

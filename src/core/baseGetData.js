@@ -1,5 +1,6 @@
 const toString = require("../function/toString");
 const each = require('../function/each');
+const {getTypeofInternal} = require('./getTypeOf');
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -17,6 +18,12 @@ const each = require('../function/each');
  *=> ["a","a"]
  */
 function schemaSplitData (data) {
+
+    if (getTypeofInternal(data) === "array") {
+
+        return data;
+
+    }
 
     const splitSign = "($^&^$)";
     const split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {

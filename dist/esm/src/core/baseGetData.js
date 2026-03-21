@@ -2,6 +2,8 @@ import toString from '../function/toString.js';
 
 import each from '../function/each.js';
 
+import {getTypeofInternal} from './getTypeOf.js';
+
 /**
  * Get Data in array or json using string to search the data either by its key or index
  *
@@ -18,6 +20,12 @@ import each from '../function/each.js';
  *=> ["a","a"]
  */
 function schemaSplitData (data) {
+
+    if (getTypeofInternal(data) === "array") {
+
+        return data;
+
+    }
 
     const splitSign = "($^&^$)";
     const split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {

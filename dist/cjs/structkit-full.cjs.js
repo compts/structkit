@@ -15,6 +15,8 @@ const __=__p;
  */
 
 _stk.__=__;
+
+
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -259,35 +261,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
 
 /**
  * Check if object has value or null or undefined
@@ -1507,6 +1480,35 @@ _stk.append=append;
 
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1624,6 +1626,8 @@ function arrayConcat (...arg) {
 
 _stk.arrayConcat=arrayConcat;
 
+_stk.arraySlice=arraySlice;
+
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -1717,8 +1721,6 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-
-_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2907,6 +2909,12 @@ function inc (value, default_value) {
  */
 function schemaSplitData (data) {
 
+    if (getTypeofInternal(data) === "array") {
+
+        return data;
+
+    }
+
     const splitSign = "($^&^$)";
     const split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {
 
@@ -3769,6 +3777,12 @@ _stk.gte=gte;
 
 _stk.has=has;
 
+_stk.inc=inc;
+
+_stk.indexOf=indexOf;
+
+_stk.indexOfExist=indexOfExist;
+
 
 /**
  * Reduce function
@@ -3895,12 +3909,6 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
-
-_stk.indexOfExist=indexOfExist;
-
 _stk.indexOfNotExist=indexOfNotExist;
 
 
@@ -3947,6 +3955,8 @@ _stk.insert=insert;
 
 _stk.isEmpty=isEmpty;
 
+_stk.isExact=isExact;
+
 _stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
@@ -3971,8 +3981,6 @@ function last (objectValue) {
 }
 
 _stk.last=last;
-
-_stk.isExact=isExact;
 
 
 /**
@@ -4236,7 +4244,7 @@ function mergeWithKey (objectValue, mergeValue) {
  *
  * @since 1.4.8.1
  * @category Collection
- * @param {any} whereValue where clause for you to merge the two set of data
+ * @param {any} whereValue Collection or json where `key` as suggested name of the key then `value` your target data, take a note on `value` it also supported nested key structure
  * @param {any} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
@@ -4332,8 +4340,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.mergeWithKey=mergeWithKey;
-
 
 /**
  * To check if the two arguments are less
@@ -4362,6 +4368,8 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
+
+_stk.mergeWithKey=mergeWithKey;
 
 _stk.multiply=multiply;
 
@@ -4414,7 +4422,7 @@ function toBoolean (value) {
  *
  * @since 1.4.9
  * @category Logic
- * @param {any} func Any type
+ * @param {any} func Any type , take a note that it also supported curry, then please check it properly use in our doc
  * @returns {any} Returns filled value from its index
  * @example
  *
@@ -4754,7 +4762,7 @@ _stk.onWait=onWait;
  *
  * @since 1.4.9
  * @category Logic
- * @param {any} func Either JSON or array
+ * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
  * @returns {any} Returns filled value from its index
  * @example
  *
@@ -6951,51 +6959,6 @@ _stk.selectInData=selectInData;
 
 
 /**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @update 1.4.86
- * @category Array
- * @param {any[]} objectValue Array argmuments that you want to shuffle
- * @returns {any[]} Shuffle return value in array
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-function shuffle (objectValue) {
-
-    const output=[];
-    let rawObjectValue = clone(objectValue);
-    const valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(getTypeof(objectValue), valueType)>-one) {
-
-        const counts=count(objectValue)-one;
-
-        for (let currentIndex=counts; currentIndex>=zero;) {
-
-            const rowValue = random(rawObjectValue);
-
-            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
-            output.push(first(rowValue));
-            currentIndex -= one;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle;
-
-
-/**
  * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
  *
  * @since 1.4.87
@@ -7097,28 +7060,48 @@ _stk.setData=setData;
 
 
 /**
- * In array, you need to check all value atleast one true
+ * Shuffle data in array
  *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
+ * @since 1.0.1
+ * @update 1.4.86
+ * @category Array
+ * @param {any[]} objectValue Array argmuments that you want to shuffle
+ * @returns {any[]} Shuffle return value in array
  * @example
  *
- * someValid(true, false)
- * // => true
+ * shuffle([1,2,3])
+ *=>[2,3,1]
  */
-function someValid (...arg) {
+function shuffle (objectValue) {
 
-    return curryArg(function (...rawValue) {
+    const output=[];
+    let rawObjectValue = clone(objectValue);
+    const valueType=[
+        "array",
+        "json"
+    ];
 
-        return baseCountValidList(rawValue);
+    if (indexOf(getTypeof(objectValue), valueType)>-one) {
 
-    }, arg) >= one;
+        const counts=count(objectValue)-one;
+
+        for (let currentIndex=counts; currentIndex>=zero;) {
+
+            const rowValue = random(rawObjectValue);
+
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
+            output.push(first(rowValue));
+            currentIndex -= one;
+
+        }
+
+    }
+
+    return output;
 
 }
 
-_stk.someValid=someValid;
+_stk.shuffle=shuffle;
 
 
 /**
@@ -7336,6 +7319,31 @@ _stk.strCamel=strCamel;
 
 
 /**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid (...arg) {
+
+    return curryArg(function (...rawValue) {
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
+
+
+/**
  * String Capitalize
  *
  * @since 1.3.1
@@ -7437,8 +7445,6 @@ function strKebab (value) {
 
 _stk.strKebab=strKebab;
 
-_stk.strLower=strLower;
-
 
 /**
  * String Snake case
@@ -7461,6 +7467,8 @@ function strSnake (value) {
 }
 
 _stk.strSnake=strSnake;
+
+_stk.strLower=strLower;
 
 
 /**
@@ -8139,8 +8147,6 @@ function unique (value) {
 
 _stk.unique=unique;
 
-_stk.varExtend=varExtend;
-
 _stk.where=where;
 
 
@@ -8562,6 +8568,8 @@ function zip (...arg) {
 }
 
 _stk.zip=zip;
+
+_stk.varExtend=varExtend;
 
 
  //end of file
