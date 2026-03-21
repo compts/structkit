@@ -116,33 +116,28 @@ function cleanValue (value) {
     refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
     refValue = refValue.replace(/[,]$/g, "");
 
+    if ((/'(.*)'[\s\n]{0,}:/g).test(refValue)) {
+
+        refValue = refValue.replace(/'(.*)'[\s\n]{0,}/g, '"$1"');
+
+    }
+
+    if ((/^[^\\"](.*)[\s\n]{0,}:/g).test(refValue)) {
+
+        refValue = refValue.replace(/{(.*)[\s\n]{0,}:[\s\n]{0,}/g, function (ss, ss1) {
+
+
+            return '{"'+ss1.replace(/^"/, "").replace(/"$/, "")
+                .trim()+'":';
+
+        });
+
+    }
+
     return refValue;
 
 }
 
-/**
- * Clean character that will throw error to parse json
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function cleanChar (value) {
-
-    if (value === "'") {
-
-        return '"';
-
-    }
-
-    return value;
-
-}
 
 /**
  * Parse Json object
@@ -235,7 +230,7 @@ function callbackParse (glb) {
         }
         if (isOpen===false) {
 
-            charList.push(cleanChar(value));
+            charList.push(value);
 
         }
         if (isOpen) {

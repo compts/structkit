@@ -125,7 +125,7 @@ exports.module=function (grassconf) {
 
             const getData = data.readData();
 
-            if (data.path === 'src/function/whereNot.js') {
+            if (data.path === 'src/function/where.js') {
 
                 data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
@@ -201,7 +201,7 @@ exports.module=function (grassconf) {
                         "name": "webIIfes",
                         "transform": (config) => {
 
-                            if (config.currentPath === 'src/function/whereNot.js') {
+                            if (config.currentPath === 'src/function/where.js') {
 
                                 return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(function (value) {
 

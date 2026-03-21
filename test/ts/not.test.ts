@@ -1,21 +1,21 @@
 
-import {whereNot} from "../../dist/esm/node.esm";
+import {where, not} from "../../dist/esm/node.esm";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
-describe('TS: whereNot method', function () {
+describe('TS: not method', function () {
 
     it('check if value exist', function () {
 
 
         assert.deepStrictEqual(
-            whereNot({"s1": 2}, {"s1": 1,
+            where(not({"s1": 2}), {"s1": 1,
                 "s2": 1}),
             {"s1": 1,
                 "s2": 1}
         );
 
-        assert.deepStrictEqual(whereNot({"s1": 2}, [
+        assert.deepStrictEqual(where(not({"s1": 2}), [
             {"s1": 1,
                 "s2": 1},
             {"s1": 2,
@@ -28,7 +28,7 @@ describe('TS: whereNot method', function () {
     });
     it('check expected type', async function () {
        
-        expectType<any>(whereNot({"s1": 1}, [
+        expectType<any>(where(not({"s1": 1}), [
             {"s1": 1,
                 "s2": 1},
             {"s1": 2,

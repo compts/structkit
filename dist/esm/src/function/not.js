@@ -11,11 +11,11 @@ import toBoolean from './toBoolean.js';
 import indexOfNotExist from './indexOfNotExist.js';
 
 /**
- * Check if data was not valid
+ * Check if data was not equal to true and 1
  *
  * @since 1.4.9
  * @category Logic
- * @param {any} func Either JSON or array
+ * @param {any} func Any type
  * @returns {any} Returns filled value from its index
  * @example
  *
@@ -47,9 +47,9 @@ function not (func) {
                 if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
 
                     argValue.external_execution_from ='not';
-                    if (argValue.action === "lookup_execution") {
+                    argValue.is_true= false;
 
-                        argValue.is_true= false;
+                    if (argValue.action === "lookup_execution") {
 
                         return rawFunc;
 
@@ -57,7 +57,6 @@ function not (func) {
 
                     if (argValue.action === "filter") {
 
-                        argValue.is_true= false;
                         reserve = rawFunc.apply(this, arg);
 
                     }

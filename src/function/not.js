@@ -43,9 +43,9 @@ function not (func) {
                 if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
 
                     argValue.external_execution_from ='not';
-                    if (argValue.action === "lookup_execution") {
+                    argValue.is_true= false;
 
-                        argValue.is_true= false;
+                    if (argValue.action === "lookup_execution") {
 
                         return rawFunc;
 
@@ -53,7 +53,6 @@ function not (func) {
 
                     if (argValue.action === "filter") {
 
-                        argValue.is_true= false;
                         reserve = rawFunc.apply(this, arg);
 
                     }

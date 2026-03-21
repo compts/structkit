@@ -1476,6 +1476,37 @@ _stk.allValid=allValid;
 
 
 /**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1592,37 +1623,6 @@ function arrayConcat (...arg) {
 }
 
 _stk.arrayConcat=arrayConcat;
-
-
-/**
- * Append data for json or array
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 
 
 /**
@@ -2688,6 +2688,8 @@ _stk.calculate=calculate;
 
 _stk.clone=clone;
 
+_stk.count=count;
+
 
 /**
  * Create your own curry for your onw function
@@ -2712,8 +2714,6 @@ function curry (fun, num) {
 }
 
 _stk.curry=curry;
-
-_stk.count=count;
 
 
 /**
@@ -3312,7 +3312,13 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
         if (types === "where") {
 
-            validReturn = isExact(whr_s, filterData, isExist);
+            validReturn = isExact(whr_s, filterData);
+
+            if (localGlobal.external_execution_from === 'not') {
+
+                validReturn = isExact(whr_s, filterData) === localGlobal.is_true;
+
+            }
 
         }
 
@@ -3320,19 +3326,32 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
             validReturn = isExactbyRegExp(whr_s, filterData);
 
+            if (localGlobal.external_execution_from === 'not') {
+
+                validReturn = isExactbyRegExp(whr_s, filterData) === localGlobal.is_true;
+
+            }
+
         }
 
         if (getTypeof(whr) === "function") {
 
-            localGlobal.pass_value = validReturn && isEmpty(variable);
+            if (localGlobal.external_execution_from === '') {
+
+                localGlobal.pass_value = validReturn && isEmpty(variable);
+
+            } else {
+
+                localGlobal.pass_value = validReturn;
+
+            }
 
         } else {
 
             localGlobal.pass_value = validReturn;
 
         }
-
-        if (localGlobal.pass_value === localGlobal.is_true) {
+        if (localGlobal.pass_value) {
 
             append(variable, jv, jk);
 
@@ -3578,6 +3597,10 @@ function getDepthValue (value) {
 _stk.fromPairs=fromPairs;
 
 _stk.getData=getData;
+
+_stk.getKey=getKey;
+
+_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -3614,10 +3637,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-_stk.getKey=getKey;
-
-_stk.getTypeof=getTypeof;
 
 
 /**
@@ -3884,8 +3903,6 @@ _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
-_stk.isEmpty=isEmpty;
-
 
 /**
  * Insert value in Json object or array
@@ -3928,9 +3945,11 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isExact=isExact;
+_stk.isEmpty=isEmpty;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
+
+_stk.isJson=isJson;
 
 
 /**
@@ -3952,6 +3971,8 @@ function last (objectValue) {
 }
 
 _stk.last=last;
+
+_stk.isExact=isExact;
 
 
 /**
@@ -4073,8 +4094,6 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit;
 
-_stk.isJson=isJson;
-
 
 /**
  * To check if the two arguments are less than to equal
@@ -4103,6 +4122,8 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
+
+_stk.map=map;
 
 
 /**
@@ -4162,37 +4183,6 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
-
-_stk.map=map;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -4346,6 +4336,37 @@ _stk.mergeWithKey=mergeWithKey;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+_stk.multiply=multiply;
+
+
+/**
  * To extract string invalid boolean and convert to boolean
  *
  * @since 1.4.872
@@ -4389,11 +4410,11 @@ function toBoolean (value) {
 }
 
 /**
- * Check if data was not valid
+ * Check if data was not equal to true and 1
  *
  * @since 1.4.9
  * @category Logic
- * @param {any} func Either JSON or array
+ * @param {any} func Any type
  * @returns {any} Returns filled value from its index
  * @example
  *
@@ -4425,9 +4446,9 @@ function not (func) {
                 if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
 
                     argValue.external_execution_from ='not';
-                    if (argValue.action === "lookup_execution") {
+                    argValue.is_true= false;
 
-                        argValue.is_true= false;
+                    if (argValue.action === "lookup_execution") {
 
                         return rawFunc;
 
@@ -4435,7 +4456,6 @@ function not (func) {
 
                     if (argValue.action === "filter") {
 
-                        argValue.is_true= false;
                         reserve = rawFunc.apply(this, arg);
 
                     }
@@ -4453,8 +4473,6 @@ function not (func) {
 }
 
 _stk.not=not;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -6402,31 +6420,24 @@ function cleanValue (value) {
     refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
     refValue = refValue.replace(/[,]$/g, "");
 
-    return refValue;
+    if ((/'(.*)'[\s\n]{0,}:/g).test(refValue)) {
 
-}
-
-/**
- * Clean character that will throw error to parse json
- *
- * @since 1.4.874
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function cleanChar (value) {
-
-    if (value === "'") {
-
-        return '"';
+        refValue = refValue.replace(/'(.*)'[\s\n]{0,}/g, '"$1"');
 
     }
 
-    return value;
+    if ((/^[^\\"](.*)[\s\n]{0,}:/g).test(refValue)) {
+
+        refValue = refValue.replace(/{(.*)[\s\n]{0,}:[\s\n]{0,}/g, function (ss, ss1) {
+
+            return '{"'+ss1.replace(/^"/, "").replace(/"$/, "")
+                .trim()+'":';
+
+        });
+
+    }
+
+    return refValue;
 
 }
 
@@ -6518,7 +6529,7 @@ function callbackParse (glb) {
         }
         if (isOpen===false) {
 
-            charList.push(cleanChar(value));
+            charList.push(value);
 
         }
         if (isOpen) {
@@ -6934,9 +6945,54 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
+_stk.roundDecimal=roundDecimal;
+
 _stk.selectInData=selectInData;
 
-_stk.roundDecimal=roundDecimal;
+
+/**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @update 1.4.86
+ * @category Array
+ * @param {any[]} objectValue Array argmuments that you want to shuffle
+ * @returns {any[]} Shuffle return value in array
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+function shuffle (objectValue) {
+
+    const output=[];
+    let rawObjectValue = clone(objectValue);
+    const valueType=[
+        "array",
+        "json"
+    ];
+
+    if (indexOf(getTypeof(objectValue), valueType)>-one) {
+
+        const counts=count(objectValue)-one;
+
+        for (let currentIndex=counts; currentIndex>=zero;) {
+
+            const rowValue = random(rawObjectValue);
+
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
+            output.push(first(rowValue));
+            currentIndex -= one;
+
+        }
+
+    }
+
+    return output;
+
+}
+
+_stk.shuffle=shuffle;
 
 
 /**
@@ -7038,51 +7094,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-
-
-/**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @update 1.4.86
- * @category Array
- * @param {any[]} objectValue Array argmuments that you want to shuffle
- * @returns {any[]} Shuffle return value in array
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-function shuffle (objectValue) {
-
-    const output=[];
-    let rawObjectValue = clone(objectValue);
-    const valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(getTypeof(objectValue), valueType)>-one) {
-
-        const counts=count(objectValue)-one;
-
-        for (let currentIndex=counts; currentIndex>=zero;) {
-
-            const rowValue = random(rawObjectValue);
-
-            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
-            output.push(first(rowValue));
-            currentIndex -= one;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle;
 
 
 /**
@@ -7854,6 +7865,29 @@ _stk.toDouble=toDouble;
 
 
 /**
+ * To extract number in string and convert to , it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger("11d")
+ *=>11
+ */
+function toInteger (value) {
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger;
+
+
+/**
  *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
  * @since 1.4.87
@@ -8019,29 +8053,6 @@ function trim (value, remove_value) {
 
 _stk.trim=trim;
 
-
-/**
- * To extract number in string and convert to , it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger("11d")
- *=>11
- */
-function toInteger (value) {
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger;
-
 _stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
@@ -8131,37 +8142,6 @@ _stk.unique=unique;
 _stk.varExtend=varExtend;
 
 _stk.where=where;
-
-
-/**
- *  Get the value in array the value in json that should not in search value of json
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValueWhere Data that you exlude in search
- * @param {any=} objectValue Json to Array
- * @returns {any} Return either Json to Array.
- * @example
- *
- * whereNot([{"s1":1,"s2":1},{"s1":2,"s2":2}],{"s1":1})
- *=>[{"s1":2,"s2":2}]
- * whereNot([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
- *=>[{"s1":{"s2":3}}]
- */
-function whereNot (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, false, 'where');
-
-    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.whereNot=whereNot;
 
 
 /**

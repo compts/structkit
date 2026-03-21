@@ -65,7 +65,13 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
         if (types === "where") {
 
-            validReturn = isExact(whr_s, filterData, isExist);
+            validReturn = isExact(whr_s, filterData);
+
+            if (localGlobal.external_execution_from === 'not') {
+
+                validReturn = isExact(whr_s, filterData) === localGlobal.is_true;
+
+            }
 
         }
 
@@ -73,19 +79,32 @@ function whereLoopExecution (whr, jsn, isExist, types) {
 
             validReturn = isExactbyRegExp(whr_s, filterData);
 
+            if (localGlobal.external_execution_from === 'not') {
+
+                validReturn = isExactbyRegExp(whr_s, filterData) === localGlobal.is_true;
+
+            }
+
         }
 
         if (getTypeof(whr) === "function") {
 
-            localGlobal.pass_value = validReturn && isEmpty(variable);
+            if (localGlobal.external_execution_from === '') {
+
+                localGlobal.pass_value = validReturn && isEmpty(variable);
+
+            } else {
+
+                localGlobal.pass_value = validReturn;
+
+            }
 
         } else {
 
             localGlobal.pass_value = validReturn;
 
         }
-
-        if (localGlobal.pass_value === localGlobal.is_true) {
+        if (localGlobal.pass_value) {
 
             append(variable, jv, jk);
 

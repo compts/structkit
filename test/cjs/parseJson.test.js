@@ -15,6 +15,18 @@ describe('CJS: parseJson method', function () {
 
     });
 
+
+    it('check if key has no qoute', function () {
+
+
+        assert.deepStrictEqual(parseJson("[{ss:1},{a: 1}]"), [
+            {"ss": 1},
+            {"a": 1}
+        ]);
+
+
+    });
+
     it('check if repetion is correct with dict and array', function () {
 
         assert.deepStrictEqual(parseJson('{"a": ["1","2" ]}'), {"a": [

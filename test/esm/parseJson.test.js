@@ -2,7 +2,7 @@
 import {parseJson} from "../../dist/esm/node.esm";
 import assert from 'assert';
 
-describe('ESM: parseString method', function () {
+describe('ESM: parseJson method', function () {
 
     it('check if repetion is correct', function () {
 
@@ -10,6 +10,18 @@ describe('ESM: parseString method', function () {
         assert.deepStrictEqual(parseJson("{'a': 1}"), {
             "a": 1
         });
+
+
+    });
+
+
+    it('check if key has no qoute', function () {
+
+
+        assert.deepStrictEqual(parseJson("[{ss:1},{a: 1}]"), [
+            {"ss": 1},
+            {"a": 1}
+        ]);
 
 
     });

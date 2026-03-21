@@ -1,19 +1,19 @@
-const {whereNot} = require("../../dist/cjs/structkit-full.cjs");
+const {not, where} = require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
-describe('CJS: whereNot method', function () {
+describe('CJS: not method', function () {
 
-    it('check if value exist', function () {
+    it('check if value exist in where', function () {
 
 
         assert.deepStrictEqual(
-            whereNot({"s1": 2}, {"s1": 1,
+            where(not({"s1": 2}), {"s1": 1,
                 "s2": 1}),
             {"s1": 1,
                 "s2": 1}
         );
 
-        assert.deepStrictEqual(whereNot({"s1": 2}, [
+        assert.deepStrictEqual(where(not({"s1": 2}), [
             {"s1": 1,
                 "s2": 1},
             {"s1": 2,

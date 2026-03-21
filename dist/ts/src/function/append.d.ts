@@ -1,6 +1,6 @@
 export default append;
 /**
- * Append data for json or array
+ * Append data for json, array, set and map type
  *
  * @since 1.0.1
  * @category Collection
