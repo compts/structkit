@@ -2,7 +2,7 @@ export default pUnSerialize;
 /**
  * Create a serialize data if you are coming to php
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value

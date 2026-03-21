@@ -16,8 +16,6 @@ __=__p
  */
 
 _stk.__=__;
-
-
 var negOne = -1;
 var zero = 0;
 var one = 1;
@@ -264,6 +262,35 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
 
 /**
  * Check if object has value or null or undefined
@@ -803,7 +830,7 @@ function indexOfExist (value, arrayObject) {
 /**
  * Convert date to its preferred value
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Function
  * @param {string} value String to split
  * @returns {string} Returns the total.
@@ -1491,35 +1518,6 @@ _stk.append=append;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1641,8 +1639,6 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
-_stk.arraySlice=arraySlice;
-
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -1736,6 +1732,8 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2713,7 +2711,7 @@ _stk.count=count;
 /**
  * Create your own curry for your onw function
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Function
  * @param {any=} fun Callback function
  * @param {number=} num Number of default arguments
@@ -3794,12 +3792,6 @@ _stk.gte=gte;
 
 _stk.has=has;
 
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
-
-_stk.indexOfExist=indexOfExist;
-
 
 /**
  * Reduce function
@@ -3928,7 +3920,11 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.indexOfNotExist=indexOfNotExist;
+_stk.inc=inc;
+
+_stk.indexOf=indexOf;
+
+_stk.indexOfExist=indexOfExist;
 
 
 /**
@@ -3972,11 +3968,13 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
+_stk.indexOfNotExist=indexOfNotExist;
+
 _stk.isEmpty=isEmpty;
 
-_stk.isExact=isExact;
-
 _stk.isExactbyRegExp=isExactbyRegExp;
+
+_stk.isExact=isExact;
 
 _stk.isJson=isJson;
 
@@ -4120,6 +4118,35 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -4358,35 +4385,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -4900,7 +4898,7 @@ _stk.once=once;
 /**
  * Create a serialize data if you are coming to php
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {string} Returns number for subtracted value
@@ -4948,7 +4946,7 @@ function pSerialize (value) {
 /**
  * Convert the value to its type in serialize
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} typeValue Arugment that you want to convert to serialize string
  * @param {any} value Arugment that you want to convert to serialize string
@@ -4998,7 +4996,7 @@ _stk.pSerialize=pSerialize;
 /**
  * Create a serialize data if you are coming to php
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
@@ -5020,7 +5018,7 @@ function pUnSerialize (value) {
 /**
  * Convert the value to its type in serialize
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
@@ -5057,7 +5055,7 @@ function getObjectValue (value) {
 /**
  * Convert the value to its type in serialize
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
@@ -5089,7 +5087,7 @@ function getObjectType (value) {
 /**
  * Convert the value to its type in serialize
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {any} Returns number for subtracted value
@@ -6946,7 +6944,7 @@ _stk.repeat=repeat;
 /**
  * Return reverse order of array
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Array
  * @param {any[]|string} value First number, our first index will start at zero
  * @returns {any} Returns it reverse order.
@@ -7129,6 +7127,35 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 
 
 /**
@@ -7346,35 +7373,6 @@ _stk.strCamel=strCamel;
 
 
 /**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
-
-/**
  * String Capitalize
  *
  * @since 1.3.1
@@ -7476,6 +7474,8 @@ function strKebab (value) {
 
 _stk.strKebab=strKebab;
 
+_stk.strLower=strLower;
+
 
 /**
  * String Snake case
@@ -7498,8 +7498,6 @@ function strSnake (value) {
 }
 
 _stk.strSnake=strSnake;
-
-_stk.strLower=strLower;
 
 
 /**
@@ -7529,8 +7527,6 @@ function strSubs (value, minValue, maxValue) {
 }
 
 _stk.strSubs=strSubs;
-
-_stk.strUnEscape=strUnEscape;
 
 
 /**
@@ -7606,6 +7602,8 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+
+_stk.strUnEscape=strUnEscape;
 
 
 /**
@@ -8182,6 +8180,8 @@ function unique (value) {
 
 _stk.unique=unique;
 
+_stk.varExtend=varExtend;
+
 _stk.where=where;
 
 
@@ -8607,8 +8607,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-
-_stk.varExtend=varExtend;
 
 
  })(typeof window !== "undefined" ? window : this);

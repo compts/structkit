@@ -11,7 +11,7 @@ import count from './count.js';
 /**
  * Return reverse order of array
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Array
  * @param {any[]|string} value First number, our first index will start at zero
  * @returns {any} Returns it reverse order.

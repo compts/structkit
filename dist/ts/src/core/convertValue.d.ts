@@ -2,7 +2,7 @@ export default convertValue;
 /**
  * Convert date to its preferred value
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Function
  * @param {string} value String to split
  * @returns {string} Returns the total.

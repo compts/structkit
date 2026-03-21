@@ -13,7 +13,7 @@ const range = require('./range');
 /**
  * Create a serialize data if you are coming to php
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} value Arugment that you want to convert to serialize string
  * @returns {string} Returns number for subtracted value
@@ -62,7 +62,7 @@ function pSerialize (value) {
 /**
  * Convert the value to its type in serialize
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Collection
  * @param {any} typeValue Arugment that you want to convert to serialize string
  * @param {any} value Arugment that you want to convert to serialize string

@@ -7,7 +7,7 @@ import count from './count.js';
 /**
  * Create your own curry for your onw function
  *
- * @since 1.4.874
+ * @since 1.4.9
  * @category Function
  * @param {any=} fun Callback function
  * @param {number=} num Number of default arguments
