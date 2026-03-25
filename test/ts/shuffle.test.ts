@@ -55,7 +55,7 @@ describe('TS: shuffle method', function () {
 
     it('should return an empty array when input is empty', function () {
 
-        const arr = [];
+        const arr: number[] = [];
         const result = shuffle(arr);
 
         assert.deepStrictEqual(result, []);
