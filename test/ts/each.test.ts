@@ -202,7 +202,7 @@ describe('TS: each function', function (){
 
         it('should handle empty array', () => {
 
-            const arr = [];
+            const arr: any[] = [];
             const callback = createMockFn();
 
             const result = each(arr, callback);
