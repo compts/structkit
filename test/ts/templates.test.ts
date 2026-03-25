@@ -65,14 +65,14 @@ describe('TS: templates method', function () {
     it('check if Template functionality with if else', function () {
 
         assert.strictEqual(templates("<! if (has(obj, 'a')) { !>A is: <!= obj.a !> <! } else { !>No A <! } !>", {"obj": {"a": 11},
-            "has": (obj, key) => Object.prototype.hasOwnProperty.call(obj, key)}), "A is: 11 ");
+            "has": (obj: Record<string, any>, key: string) => Object.prototype.hasOwnProperty.call(obj, key)}), "A is: 11 ");
 
     });
 
     it('check if Template functionality with if else no a', function () {
 
         assert.strictEqual(templates("<! if (has(obj, 'a')) { !>A is: <!= obj.a !> <! } else { !>No A <! } !>", {"obj": {"b": 11},
-            "has": (obj, key) => Object.prototype.hasOwnProperty.call(obj, key)}), "No A ");
+            "has": (obj: Record<string, any>, key: string) => Object.prototype.hasOwnProperty.call(obj, key)}), "No A ");
 
     });
     it('check if Template functionality with error', function () {
