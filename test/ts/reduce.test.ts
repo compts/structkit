@@ -13,7 +13,7 @@ describe('TS: reduce method', function () {
 
     it('check reduce array sum', function () {
 
-        assert.deepStrictEqual(reduce(function (total, value) {
+        assert.deepStrictEqual(reduce(function (total: number, value: number) {
 
             return total+value;
 
@@ -25,7 +25,7 @@ describe('TS: reduce method', function () {
     });
     it('check expected type', function () {
        
-        expectType<number>(reduce(function (total, value) {
+        expectType<number>(reduce(function (total: number, value: number) {
 
             return total-value;
 
