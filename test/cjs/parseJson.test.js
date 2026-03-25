@@ -12,6 +12,13 @@ describe('CJS: parseJson method', function () {
             "a": 1
         });
 
+        assert.deepStrictEqual(parseJson("{`a`: 1}"), {
+            "a": 1
+        });
+
+        assert.deepStrictEqual(parseJson("{`a`: `1`}"), {
+            "a": 1
+        });
 
     });
 
@@ -27,6 +34,16 @@ describe('CJS: parseJson method', function () {
 
     });
 
+    it('check if key has qoute inside', function () {
+
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s"sas"}'),
+            {"a": 's"sas'}
+        );
+
+
+    });
     it('check if repetion is correct with dict and array', function () {
 
         assert.deepStrictEqual(parseJson('{"a": ["1","2" ]}'), {"a": [

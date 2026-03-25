@@ -15,6 +15,8 @@ const __=__p;
  */
 
 _stk.__=__;
+
+
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -259,35 +261,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
 
 /**
  * Check if object has value or null or undefined
@@ -1476,37 +1449,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1626,6 +1568,37 @@ _stk.arrayConcat=arrayConcat;
 
 
 /**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * Generate array of data from specific limit or where the index to start
  *
  * @since 1.0.1
@@ -1720,6 +1693,32 @@ _stk.arrayRepeat=arrayRepeat;
 
 _stk.arraySlice=arraySlice;
 
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -2794,9 +2793,11 @@ _stk.divide=divide;
 
 _stk.each=each;
 
+_stk.equal=equal;
+
 _stk.empty=empty;
 
-_stk.equal=equal;
+_stk.first=first;
 
 
 /**
@@ -2852,8 +2853,6 @@ function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
-
-_stk.first=first;
 
 _stk.flatten=flatten;
 
@@ -3901,11 +3900,13 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.inc=inc;
-
 _stk.indexOf=indexOf;
 
+_stk.inc=inc;
+
 _stk.indexOfExist=indexOfExist;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -3949,13 +3950,13 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.indexOfNotExist=indexOfNotExist;
-
 _stk.isEmpty=isEmpty;
+
+_stk.isExact=isExact;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
 
-_stk.isExact=isExact;
+_stk.add=add;
 
 _stk.isJson=isJson;
 
@@ -4099,35 +4100,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -4366,6 +4338,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6426,20 +6427,69 @@ function cleanValue (value) {
     refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
     refValue = refValue.replace(/[,]$/g, "");
 
-    if ((/'(.*)'[\s\n]{0,}:/g).test(refValue)) {
+    if ((/['`](.*)['`][\s\n\t]{0,}:/g).test(refValue) || (/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}\}/g).test(refValue)) {
 
-        refValue = refValue.replace(/'(.*)'[\s\n]{0,}/g, '"$1"');
+        refValue = refValue.replace(/[\s\n]{0,}['`]+(.*)['`]+[\s\n]{0,}:/g, function (ss, ss1) {
 
-    }
-
-    if ((/^[^\\"](.*)[\s\n]{0,}:/g).test(refValue)) {
-
-        refValue = refValue.replace(/{(.*)[\s\n]{0,}:[\s\n]{0,}/g, function (ss, ss1) {
-
-            return '{"'+ss1.replace(/^"/, "").replace(/"$/, "")
+            return '"'+ss1.replace(/^['`]/g, "").replace(/['`]$/g, "")
                 .trim()+'":';
 
         });
+
+        refValue = refValue.replace(/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}/g, function (ss, ss1) {
+
+            const repVal = ss1.replace(/^['`]/g, "").replace(/['`]$/g, "");
+
+            if ((/(^[0-9]+$)/g).test(repVal)) {
+
+                return ':'+repVal
+                    .trim();
+
+            }
+
+            return ':"'+repVal
+                .trim()+'"';
+
+        });
+
+    }
+
+    if ((/^[^\\"](.*)[\s\n\t]{0,}:/g).test(refValue)) {
+
+        refValue = refValue.replace(/{(.*)[\s\n\t]{0,}:[\s\n\t]{0,}/g, function (ss, ss1) {
+
+            return '{"'+ss1.replace(/^"/g, "").replace(/"$/g, "")
+                .trim()+'":';
+
+        });
+
+    }
+
+    if ((/^\{/gmi).test(refValue) === false && (/\}$/).test(refValue) === false && ((/^\[/gmi).test(refValue)=== false && (/\]$/).test(refValue)=== false)) {
+
+        if (refValue.split(":").length> one) {
+
+            const valSplit = refValue.split(":");
+
+            refValue = valSplit[zero]+':'+valSplit[one].replace(/"(.*)"/g, function (ss, s1) {
+
+                if ((/\\"/g).test(s1)) {
+
+                    return '"'+s1+'"';
+
+                }
+
+                if ((/^\{/gmi).test(s1) && (/\}$/).test(s1)) {
+
+                    return s1;
+
+                }
+
+                return '"'+s1.replace(/"/g, '\\"')+'"';
+
+            });
+
+        }
 
     }
 
@@ -6883,38 +6933,6 @@ _stk.remove=remove;
 
 
 /**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-        const nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
-
-
-/**
  * Return reverse order of array
  *
  * @since 1.4.9
@@ -6951,9 +6969,39 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
-_stk.roundDecimal=roundDecimal;
 
-_stk.selectInData=selectInData;
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+
+_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -7292,6 +7340,8 @@ function sortBy (func, objectValue) {
 }
 
 _stk.sortBy=sortBy;
+
+_stk.selectInData=selectInData;
 /**
  * Split string for special cases
  *
@@ -7497,6 +7547,8 @@ function strSubs (value, minValue, maxValue) {
 
 _stk.strSubs=strSubs;
 
+_stk.strUnEscape=strUnEscape;
+
 
 /**
  * String Upper case case
@@ -7519,60 +7571,6 @@ function strUpper (value) {
 _stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
-
-
-/**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        let cloneRawListValueReturn = rawListValue;
-        let isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        const cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = cloneRawListValueReturn.join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
-
-_stk.strUnEscape=strUnEscape;
 
 
 /**
@@ -7632,6 +7630,58 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
+
+
+/**
+ * Swapping the value either string or array in there specific position
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        let cloneRawListValueReturn = rawListValue;
+        let isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        const cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 
 /**
@@ -7867,8 +7917,6 @@ _stk.toArray=toArray;
 
 _stk.toBoolean=toBoolean;
 
-_stk.toDouble=toDouble;
-
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -7891,6 +7939,8 @@ function toInteger (value) {
 }
 
 _stk.toInteger=toInteger;
+
+_stk.toDouble=toDouble;
 
 
 /**

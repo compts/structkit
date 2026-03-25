@@ -116,21 +116,73 @@ function cleanValue (value) {
     refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
     refValue = refValue.replace(/[,]$/g, "");
 
-    if ((/'(.*)'[\s\n]{0,}:/g).test(refValue)) {
+    if ((/['`](.*)['`][\s\n\t]{0,}:/g).test(refValue) || (/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}\}/g).test(refValue)) {
 
-        refValue = refValue.replace(/'(.*)'[\s\n]{0,}/g, '"$1"');
+        refValue = refValue.replace(/[\s\n]{0,}['`]+(.*)['`]+[\s\n]{0,}:/g, function (ss, ss1) {
 
-    }
-
-    if ((/^[^\\"](.*)[\s\n]{0,}:/g).test(refValue)) {
-
-        refValue = refValue.replace(/{(.*)[\s\n]{0,}:[\s\n]{0,}/g, function (ss, ss1) {
-
-
-            return '{"'+ss1.replace(/^"/, "").replace(/"$/, "")
+            return '"'+ss1.replace(/^['`]/g, "").replace(/['`]$/g, "")
                 .trim()+'":';
 
         });
+
+        refValue = refValue.replace(/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}/g, function (ss, ss1) {
+
+            const repVal = ss1.replace(/^['`]/g, "").replace(/['`]$/g, "");
+
+            if ((/(^[0-9]+$)/g).test(repVal)) {
+
+                return ':'+repVal
+                    .trim();
+
+            }
+
+            return ':"'+repVal
+                .trim()+'"';
+
+        });
+
+    }
+
+    if ((/^[^\\"](.*)[\s\n\t]{0,}:/g).test(refValue)) {
+
+        refValue = refValue.replace(/{(.*)[\s\n\t]{0,}:[\s\n\t]{0,}/g, function (ss, ss1) {
+
+
+            return '{"'+ss1.replace(/^"/g, "").replace(/"$/g, "")
+                .trim()+'":';
+
+        });
+
+    }
+
+
+    if ((/^\{/gmi).test(refValue) === false && (/\}$/).test(refValue) === false && ((/^\[/gmi).test(refValue)=== false && (/\]$/).test(refValue)=== false)) {
+
+        if (refValue.split(":").length> one) {
+
+            const valSplit = refValue.split(":");
+
+
+            refValue = valSplit[zero]+':'+valSplit[one].replace(/"(.*)"/g, function (ss, s1) {
+
+                if ((/\\"/g).test(s1)) {
+
+                    return '"'+s1+'"';
+
+                }
+
+                if ((/^\{/gmi).test(s1) && (/\}$/).test(s1)) {
+
+                    return s1;
+
+                }
+
+                return '"'+s1.replace(/"/g, '\\"')+'"';
+
+            });
+
+
+        }
 
     }
 

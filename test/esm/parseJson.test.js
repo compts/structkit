@@ -11,6 +11,13 @@ describe('ESM: parseJson method', function () {
             "a": 1
         });
 
+        assert.deepStrictEqual(parseJson("{`a`: 1}"), {
+            "a": 1
+        });
+
+        assert.deepStrictEqual(parseJson("{`a`: `1`}"), {
+            "a": 1
+        });
 
     });
 
@@ -22,6 +29,17 @@ describe('ESM: parseJson method', function () {
             {"ss": 1},
             {"a": 1}
         ]);
+
+
+    });
+
+    it('check if key has qoute inside', function () {
+
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s"sas"}'),
+            {"a": 's"sas'}
+        );
 
 
     });
