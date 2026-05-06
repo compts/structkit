@@ -15,3 +15,4 @@ export default arraySum;
  * // => 3
  */
 declare function arraySum(arrayObject: number[], precision?: number | undefined): number;
+//# sourceMappingURL=arraySum.d.ts.map

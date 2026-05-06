@@ -14,3 +14,4 @@ export default range;
  *=>[1,2,3,4,5,6,7,8,9,10]
  */
 declare function range(maxValue: number, minValue?: number | undefined, step?: (string | number) | undefined): any[];
+//# sourceMappingURL=range.d.ts.map

@@ -10,7 +10,8 @@ export default strSubs;
  * @returns {string} Returns camel sting data
  * @example
  *
- * strSubs('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
+ * strSubs('The fish is goad   with Goat-1ss',4)
+ *=> fish is goad   with Goat-1ss
  */
 declare function strSubs(value: string, minValue: number, maxValue?: number | undefined): string;
+//# sourceMappingURL=strSubs.d.ts.map

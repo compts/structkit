@@ -11,3 +11,4 @@
  * => array
  */
 export function getTypeofInternal(objectValue: any): string;
+//# sourceMappingURL=getTypeOf.d.ts.map

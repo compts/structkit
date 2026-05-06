@@ -14,3 +14,4 @@ export default setData;
  *=> 2
  */
 declare function setData(split_str?: any | undefined, objectValue?: any | undefined, updateValue?: any | undefined): any;
+//# sourceMappingURL=setData.d.ts.map

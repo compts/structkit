@@ -13,3 +13,4 @@ export default groupBy;
  *=> {0:[2,4,6], 1:[1,3,5,7]}
  */
 declare function groupBy(func?: any | undefined, objectValue?: any | undefined): any;
+//# sourceMappingURL=groupBy.d.ts.map

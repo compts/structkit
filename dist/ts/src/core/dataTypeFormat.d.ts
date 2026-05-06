@@ -14,3 +14,4 @@ export default dataNumberFormat;
  *=> 1
  */
 declare function dataNumberFormat(regexp: any, defaultVariable: string | number, nullReplacement: string | number): any;
+//# sourceMappingURL=dataTypeFormat.d.ts.map

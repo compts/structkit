@@ -12,3 +12,4 @@ export default strLower;
  *=> 'the fish is goad   with goat-1ss
  */
 declare function strLower(value: string): string;
+//# sourceMappingURL=strLower.d.ts.map

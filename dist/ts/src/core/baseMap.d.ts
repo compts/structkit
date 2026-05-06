@@ -13,3 +13,4 @@ export default baseMap;
  *=> [3, 4]
  */
 declare function baseMap(func?: any | undefined, objectValue: any): any;
+//# sourceMappingURL=baseMap.d.ts.map

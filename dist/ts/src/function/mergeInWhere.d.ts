@@ -14,3 +14,4 @@ export default mergeInWhere;
  *=> [{ "id":1, "s":23, "title":"test only"}]
  */
 declare function mergeInWhere(whereValue: any, objectValue: any, mergeValue: any): any;
+//# sourceMappingURL=mergeInWhere.d.ts.map

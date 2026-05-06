@@ -17,3 +17,4 @@ export default getData;
  *=> {a: 2}
  */
 declare function getData(split_str?: any | undefined, objectValue?: any | undefined, isStrict?: any | undefined): any;
+//# sourceMappingURL=getData.d.ts.map

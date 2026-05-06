@@ -6,6 +6,8 @@ import clone from './clone.js';
 
 import toString from './toString.js';
 
+import toArray from './toArray.js';
+
 /**
  * Swapping the value either string or array in there specific position
  *
@@ -41,7 +43,7 @@ function swap (firstValue, secondValue, listValue) {
 
         if (isSplit) {
 
-            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
 
         }
 

@@ -13,3 +13,4 @@ export default strEscape;
  *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
  */
 declare function strEscape(value: string, type?: string | undefined): string;
+//# sourceMappingURL=strEscape.d.ts.map

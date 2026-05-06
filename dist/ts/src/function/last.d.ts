@@ -12,3 +12,4 @@ export default last;
  *=>2
  */
 declare function last(objectValue: any): any;
+//# sourceMappingURL=last.d.ts.map

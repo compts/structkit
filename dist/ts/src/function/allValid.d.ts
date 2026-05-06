@@ -12,3 +12,4 @@ export default allValid;
  * // => false
  */
 declare function allValid(...arg: (any | null)[]): boolean;
+//# sourceMappingURL=allValid.d.ts.map

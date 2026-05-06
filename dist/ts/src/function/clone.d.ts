@@ -12,3 +12,4 @@ export default clone;
  * // => [1,2]
  */
 declare function clone(objectValue: any): any;
+//# sourceMappingURL=clone.d.ts.map

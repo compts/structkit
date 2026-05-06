@@ -1,5 +1,6 @@
 const {getTypeofInternal} = require('./getTypeOf');
 const limit = require("../function/limit");
+const toArray = require("../function/toArray");
 const getValue = require("../function/getValue");
 
 
@@ -29,7 +30,7 @@ function baseTake (rawList, startIndex, lastIndex) {
     const rawGetValue = getValue(varLimit);
 
     return getTypeofInternal(rawList) === "string"
-        ?rawGetValue.join("")
+        ?toArray(rawGetValue).join("")
         :rawGetValue;
 
 

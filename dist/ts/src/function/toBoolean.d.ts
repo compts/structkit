@@ -12,3 +12,4 @@ export default toBoolean;
  *=>true
  */
 declare function toBoolean(value: any): boolean;
+//# sourceMappingURL=toBoolean.d.ts.map

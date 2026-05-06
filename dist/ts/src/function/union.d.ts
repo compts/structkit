@@ -12,3 +12,4 @@ export default union;
  * // => [1, 2, 3, 4, 7, 5, 6, 8]
  */
 declare function union(...arg: (any | null)[]): any[];
+//# sourceMappingURL=union.d.ts.map

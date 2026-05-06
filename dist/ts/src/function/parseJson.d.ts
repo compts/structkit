@@ -13,3 +13,4 @@ export default parseJson;
  *=>{}
  */
 declare function parseJson(value: string, config?: any | undefined): any;
+//# sourceMappingURL=parseJson.d.ts.map

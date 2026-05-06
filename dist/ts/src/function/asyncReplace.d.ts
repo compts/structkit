@@ -14,3 +14,4 @@ export default asyncReplace;
  * // => Promise{<fulfilled>: 'a@d'}
  */
 declare function asyncReplace(value: any, search: any, toReplace?: (Function | string) | undefined): Promise<string>;
+//# sourceMappingURL=asyncReplace.d.ts.map

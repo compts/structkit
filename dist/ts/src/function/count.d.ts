@@ -16,3 +16,4 @@ export default count;
  * // => 2
  */
 declare function count(objectValue?: any | undefined, json_is_empty_check?: boolean | undefined): number;
+//# sourceMappingURL=count.d.ts.map

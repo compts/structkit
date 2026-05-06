@@ -15,3 +15,4 @@ export default where;
  *=>[{"s1":{"s2":2}}]
  */
 declare function where(objectValueWhere: any, objectValue?: any | undefined): any;
+//# sourceMappingURL=where.d.ts.map

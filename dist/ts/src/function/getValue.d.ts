@@ -12,3 +12,4 @@ export default getValue;
  * => 1
  */
 declare function getValue(objectValue: any): any | any[];
+//# sourceMappingURL=getValue.d.ts.map

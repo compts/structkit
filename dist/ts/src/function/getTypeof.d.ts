@@ -14,3 +14,4 @@ export default getTypeof;
  * => [array,json]
  */
 declare function getTypeof(...args: any[]): string | string[];
+//# sourceMappingURL=getTypeof.d.ts.map

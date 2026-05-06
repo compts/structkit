@@ -12,3 +12,4 @@ export default first;
  *=> 1
  */
 declare function first(objectValue: any): any;
+//# sourceMappingURL=first.d.ts.map

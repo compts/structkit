@@ -13,3 +13,4 @@ export default lastIndexOf;
  * // => 0
  */
 declare function lastIndexOf(value: any, objectValue: any): any;
+//# sourceMappingURL=lastIndexOf.d.ts.map

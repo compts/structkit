@@ -1,7 +1,7 @@
 const getTypeof = require('./getTypeof');
 const curryArg = require("../core/curryArg");
 const has = require('./has');
-
+const toArray = require("./toArray");
 const each = require('./each');
 const count = require('./count');
 const varExtend = require('./varExtend');
@@ -41,7 +41,7 @@ function parseString (value, config) {
 
         if (defaultConfig.throwError) {
 
-            throw new Error("Allow only " +getKey(validTypeJson).join(","));
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
 
         }
 

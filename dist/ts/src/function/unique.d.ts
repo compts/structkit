@@ -12,3 +12,4 @@ export default unique;
  *=>[1,2,3]
  */
 declare function unique(value: any): any[];
+//# sourceMappingURL=unique.d.ts.map

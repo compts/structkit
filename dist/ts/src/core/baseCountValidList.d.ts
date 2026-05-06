@@ -12,3 +12,4 @@ export default baseCountValidList;
  * // => 2
  */
 declare function baseCountValidList(objectValue: any[]): any;
+//# sourceMappingURL=baseCountValidList.d.ts.map

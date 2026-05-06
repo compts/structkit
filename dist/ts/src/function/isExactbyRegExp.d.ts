@@ -13,3 +13,4 @@ export default isExactbyRegExp;
  * // => false
  */
 declare function isExactbyRegExp(whereValue: any, objectValue1?: any | undefined): boolean;
+//# sourceMappingURL=isExactbyRegExp.d.ts.map

@@ -12,3 +12,4 @@ export default empty;
  * => []
  */
 declare function empty(value: any): any;
+//# sourceMappingURL=empty.d.ts.map

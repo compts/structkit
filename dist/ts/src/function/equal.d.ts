@@ -13,3 +13,4 @@ export default equal;
  * // => true
  */
 declare function equal(value1: any, value2?: any | undefined): boolean | any;
+//# sourceMappingURL=equal.d.ts.map

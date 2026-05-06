@@ -17,3 +17,4 @@ export default isExact;
  * // => true
  */
 declare function isExact(whereValue: any, objectValue1?: any | undefined, isExist?: boolean | undefined): boolean | any;
+//# sourceMappingURL=isExact.d.ts.map

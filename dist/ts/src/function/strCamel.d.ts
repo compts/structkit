@@ -12,3 +12,4 @@ export default strCamel;
  *=> 'theFishIsGoadWithGoat1ss'
  */
 declare function strCamel(value: string): string;
+//# sourceMappingURL=strCamel.d.ts.map

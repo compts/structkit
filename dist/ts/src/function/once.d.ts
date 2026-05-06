@@ -12,3 +12,4 @@ export default once;
  * // => 1
  */
 declare function once(func: any): any;
+//# sourceMappingURL=once.d.ts.map

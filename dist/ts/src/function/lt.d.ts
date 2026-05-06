@@ -13,3 +13,4 @@ export default lt;
  * // => true
  */
 declare function lt(value1: any, value2?: any | undefined): boolean | any;
+//# sourceMappingURL=lt.d.ts.map

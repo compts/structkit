@@ -12,3 +12,4 @@ export default isEmpty;
  * // => true
  */
 declare function isEmpty(value: any): boolean;
+//# sourceMappingURL=isEmpty.d.ts.map

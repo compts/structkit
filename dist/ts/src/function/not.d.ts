@@ -12,3 +12,4 @@ export default not;
  * // => true
  */
 declare function not(func: any): any;
+//# sourceMappingURL=not.d.ts.map

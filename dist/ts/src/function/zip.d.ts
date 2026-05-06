@@ -12,3 +12,4 @@ export default zip;
  * // => [[1,2,3]]
  */
 declare function zip(...arg: (any | null)[]): any;
+//# sourceMappingURL=zip.d.ts.map

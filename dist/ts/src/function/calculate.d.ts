@@ -15,3 +15,4 @@ export default calculate;
  *=> 2
  */
 declare function calculate(formula: string, args?: any | undefined): number | any;
+//# sourceMappingURL=calculate.d.ts.map

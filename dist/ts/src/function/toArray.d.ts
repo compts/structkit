@@ -12,3 +12,4 @@ export default toArray;
  *=>[1]
  */
 declare function toArray(value: any): any[];
+//# sourceMappingURL=toArray.d.ts.map

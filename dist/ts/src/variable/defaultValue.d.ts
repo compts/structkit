@@ -5,3 +5,4 @@ export const two: 2;
 export const three: 3;
 export const ten: 10;
 export const oneHundred: 100;
+//# sourceMappingURL=defaultValue.d.ts.map

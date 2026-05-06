@@ -14,3 +14,4 @@ export default remove;
  *=>[2, 3]
  */
 declare function remove(objectValue: any, value: any, value2?: number | undefined): any[];
+//# sourceMappingURL=remove.d.ts.map

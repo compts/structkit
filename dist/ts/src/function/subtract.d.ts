@@ -13,3 +13,4 @@ export default subtract;
  * // => 0
  */
 declare function subtract(value1: number, value2?: number | undefined): number | any;
+//# sourceMappingURL=subtract.d.ts.map

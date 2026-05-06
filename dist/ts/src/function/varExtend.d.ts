@@ -13,3 +13,4 @@ export default varExtend;
  *=>{"s1":2}
  */
 declare function varExtend(objectValue: object, objectValueReplace: object): any;
+//# sourceMappingURL=varExtend.d.ts.map

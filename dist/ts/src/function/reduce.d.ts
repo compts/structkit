@@ -14,3 +14,4 @@ export default reduce;
  * // => 5
  */
 declare function reduce(func: any, defaultValue: any, listData: any[]): any;
+//# sourceMappingURL=reduce.d.ts.map

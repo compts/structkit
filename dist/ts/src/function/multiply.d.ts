@@ -13,3 +13,4 @@ export default multiply;
  * // => 1
  */
 declare function multiply(value1: number, value2?: number | undefined): number | any;
+//# sourceMappingURL=multiply.d.ts.map

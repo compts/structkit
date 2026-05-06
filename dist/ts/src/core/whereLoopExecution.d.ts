@@ -14,4 +14,5 @@ export default whereLoopExecution;
  * whereLoopExecution({"s1":1},{"s1":1,"s2":1})
  *=>{"s1":1,"s2":1}
  */
-declare function whereLoopExecution(whr: object, jsn: object, isExist: boolean, types: string): any[] | object;
+declare function whereLoopExecution(whr: object, jsn: object, isExist: boolean, types: string): array | object;
+//# sourceMappingURL=whereLoopExecution.d.ts.map

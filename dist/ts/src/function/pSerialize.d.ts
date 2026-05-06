@@ -12,3 +12,4 @@ export default pSerialize;
  * // => 'a:1:{i:0;s:3:"22s";}'
  */
 declare function pSerialize(value: any): string;
+//# sourceMappingURL=pSerialize.d.ts.map

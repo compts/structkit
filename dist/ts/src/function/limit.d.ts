@@ -15,3 +15,4 @@ export default limit;
  *=>{'1':2}
  */
 declare function limit(objectValue: any, minValue: number, maxValue?: number | undefined, func?: Function | undefined): any;
+//# sourceMappingURL=limit.d.ts.map

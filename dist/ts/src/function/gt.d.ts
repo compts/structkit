@@ -13,3 +13,4 @@ export default gt;
  * // => false
  */
 declare function gt(value1: any, value2?: any | undefined): boolean;
+//# sourceMappingURL=gt.d.ts.map

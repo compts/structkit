@@ -1449,6 +1449,37 @@ _stk.allValid=allValid;
 
 
 /**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1565,37 +1596,6 @@ function arrayConcat (...arg) {
 }
 
 _stk.arrayConcat=arrayConcat;
-
-
-/**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 
 
 /**
@@ -2111,6 +2111,8 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
+
+_stk.add=add;
 
 
 /**
@@ -2793,11 +2795,9 @@ _stk.divide=divide;
 
 _stk.each=each;
 
-_stk.equal=equal;
-
 _stk.empty=empty;
 
-_stk.first=first;
+_stk.equal=equal;
 
 
 /**
@@ -2853,6 +2853,8 @@ function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
+
+_stk.first=first;
 
 _stk.flatten=flatten;
 
@@ -3024,6 +3026,9 @@ function getData (split_str, objectValue, isStrict) {
     ], two);
 
 }
+
+_stk.getData=getData;
+
 
 /**
  * Looking the data in JSON and Array base on object value
@@ -3601,8 +3606,6 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
@@ -3642,27 +3645,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
 
 
 /**
@@ -3713,6 +3695,27 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -3900,9 +3903,9 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.indexOf=indexOf;
-
 _stk.inc=inc;
+
+_stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
@@ -3955,8 +3958,6 @@ _stk.isEmpty=isEmpty;
 _stk.isExact=isExact;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
-
-_stk.add=add;
 
 _stk.isJson=isJson;
 
@@ -4129,6 +4130,35 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.map=map;
 
@@ -4338,35 +4368,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6665,7 +6666,7 @@ function parseString (value, config) {
 
         if (defaultConfig.throwError) {
 
-            throw new Error("Allow only " +getKey(validTypeJson).join(","));
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
 
         }
 
@@ -6933,6 +6934,38 @@ _stk.remove=remove;
 
 
 /**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+
+
+/**
  * Return reverse order of array
  *
  * @since 1.4.9
@@ -6969,39 +7002,9 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-        const nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
-
 _stk.roundDecimal=roundDecimal;
+
+_stk.selectInData=selectInData;
 
 
 /**
@@ -7340,8 +7343,6 @@ function sortBy (func, objectValue) {
 }
 
 _stk.sortBy=sortBy;
-
-_stk.selectInData=selectInData;
 /**
  * Split string for special cases
  *
@@ -7530,8 +7531,8 @@ _stk.strSnake=strSnake;
  * @returns {string} Returns camel sting data
  * @example
  *
- * strSubs('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
+ * strSubs('The fish is goad   with Goat-1ss',4)
+ *=> fish is goad   with Goat-1ss
  */
 function strSubs (value, minValue, maxValue) {
 
@@ -7574,65 +7575,6 @@ _stk.subtract=subtract;
 
 
 /**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {any[]|string} rawList List data
- * @param {number} startIndex Start index number
- * @param {number} lastIndex Last index number
- * @returns {any} Returns array
- * @example
- *
- * baseTake(1, 1)
- * // => 1
- */
-function baseTake (rawList, startIndex, lastIndex) {
-
-    const refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;
-
-    const varLimit = limit(refRawList, startIndex, lastIndex);
-
-    const rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?rawGetValue.join("")
-        :rawGetValue;
-
-}
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Array
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns choice index value in list.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
-
-
-/**
  * Swapping the value either string or array in there specific position
  *
  * @since 1.4.86
@@ -7667,7 +7609,7 @@ function swap (firstValue, secondValue, listValue) {
 
         if (isSplit) {
 
-            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
 
         }
 
@@ -7682,6 +7624,65 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {any[]|string} rawList List data
+ * @param {number} startIndex Start index number
+ * @param {number} lastIndex Last index number
+ * @returns {any} Returns array
+ * @example
+ *
+ * baseTake(1, 1)
+ * // => 1
+ */
+function baseTake (rawList, startIndex, lastIndex) {
+
+    const refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;
+
+    const varLimit = limit(refRawList, startIndex, lastIndex);
+
+    const rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
+
+}
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 
 
 /**
@@ -7917,6 +7918,8 @@ _stk.toArray=toArray;
 
 _stk.toBoolean=toBoolean;
 
+_stk.toDouble=toDouble;
+
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -7939,8 +7942,6 @@ function toInteger (value) {
 }
 
 _stk.toInteger=toInteger;
-
-_stk.toDouble=toDouble;
 
 
 /**

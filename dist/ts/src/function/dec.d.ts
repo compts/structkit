@@ -13,3 +13,4 @@ export default dec;
  *=>0
  */
 declare function dec(value: any, default_value?: any | undefined): number;
+//# sourceMappingURL=dec.d.ts.map

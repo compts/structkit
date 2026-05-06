@@ -13,3 +13,4 @@ export default repeat;
  *=>'ss'
  */
 declare function repeat(value?: string | undefined, valueRepetion?: number | undefined): string;
+//# sourceMappingURL=repeat.d.ts.map

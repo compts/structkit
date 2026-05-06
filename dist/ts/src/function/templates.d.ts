@@ -14,3 +14,4 @@ export default templates;
  *=>'11'
  */
 declare function templates(templateString: string, data: any, option?: any | undefined): string;
+//# sourceMappingURL=templates.d.ts.map

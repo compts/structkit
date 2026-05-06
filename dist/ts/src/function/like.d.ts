@@ -13,3 +13,4 @@ export default like;
  *=>{s1: 1, s2: 1}
  */
 declare function like(objectValueWhere: any, objectValue: any): any;
+//# sourceMappingURL=like.d.ts.map

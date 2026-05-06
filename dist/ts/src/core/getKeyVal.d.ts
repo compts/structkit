@@ -12,4 +12,5 @@ export default getKeyVal;
  * getKeyVal([1,2],"first_index")
  *=>{"key":1,"value":1}
  */
-declare function getKeyVal(jsn: object, typ: boolean): any[] | object;
+declare function getKeyVal(jsn: object, typ: boolean): array | object;
+//# sourceMappingURL=getKeyVal.d.ts.map

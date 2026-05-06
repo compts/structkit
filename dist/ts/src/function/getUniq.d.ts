@@ -12,3 +12,4 @@ export default getUniq;
  * => dur82ht126uqgszn62j04a
  */
 declare function getUniq(option?: any | undefined): string;
+//# sourceMappingURL=getUniq.d.ts.map

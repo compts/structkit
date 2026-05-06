@@ -14,3 +14,4 @@ export default onDelay;
  *=>'11'
  */
 declare function onDelay(func: any, wait?: number | undefined, option?: object | undefined): object;
+//# sourceMappingURL=onDelay.d.ts.map

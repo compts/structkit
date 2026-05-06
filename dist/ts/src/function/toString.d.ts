@@ -12,3 +12,4 @@ export default toString;
  *=> '1'
  */
 declare function toString(value?: any | undefined): string;
+//# sourceMappingURL=toString.d.ts.map

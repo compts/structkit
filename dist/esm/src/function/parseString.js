@@ -4,6 +4,8 @@ import curryArg from '../core/curryArg.js';
 
 import has from './has.js';
 
+import toArray from './toArray.js';
+
 import each from './each.js';
 
 import count from './count.js';
@@ -50,7 +52,7 @@ function parseString (value, config) {
 
         if (defaultConfig.throwError) {
 
-            throw new Error("Allow only " +getKey(validTypeJson).join(","));
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
 
         }
 

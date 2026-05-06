@@ -2,6 +2,8 @@ import {getTypeofInternal} from './getTypeOf.js';
 
 import limit from '../function/limit.js';
 
+import toArray from '../function/toArray.js';
+
 import getValue from '../function/getValue.js';
 
 /**
@@ -29,7 +31,7 @@ function baseTake (rawList, startIndex, lastIndex) {
     const rawGetValue = getValue(varLimit);
 
     return getTypeofInternal(rawList) === "string"
-        ?rawGetValue.join("")
+        ?toArray(rawGetValue).join("")
         :rawGetValue;
 
 }

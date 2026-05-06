@@ -12,3 +12,4 @@ export default getKey;
  * => s
  */
 declare function getKey(objectValue: any): any | any[];
+//# sourceMappingURL=getKey.d.ts.map

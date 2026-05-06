@@ -12,3 +12,4 @@ export default convertValue;
  *=>"split this string"
  */
 declare function convertValue(value: string): string;
+//# sourceMappingURL=convertValue.d.ts.map

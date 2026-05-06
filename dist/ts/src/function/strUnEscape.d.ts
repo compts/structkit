@@ -13,3 +13,4 @@ export default strUnEscape;
  *=>"yahii & adad ^ss"
  */
 declare function strUnEscape(value: string, type?: string | undefined): string;
+//# sourceMappingURL=strUnEscape.d.ts.map

@@ -13,3 +13,4 @@ export default inc;
  *=>2
  */
 declare function inc(value: any, default_value?: any | undefined): number;
+//# sourceMappingURL=inc.d.ts.map

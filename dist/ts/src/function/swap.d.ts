@@ -14,3 +14,4 @@ export default swap;
  *=> off
  */
 declare function swap(firstValue: number, secondValue: number, listValue: any[] | string): any;
+//# sourceMappingURL=swap.d.ts.map

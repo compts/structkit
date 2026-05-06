@@ -12,8 +12,8 @@ const has = require("./has");
  * @returns {string} Returns camel sting data
  * @example
  *
- * strSubs('The fish is goad   with Goat-1ss')
- *=> 'the fish is goad   with goat-1ss
+ * strSubs('The fish is goad   with Goat-1ss',4)
+ *=> fish is goad   with Goat-1ss
  */
 function strSubs (value, minValue, maxValue) {
 

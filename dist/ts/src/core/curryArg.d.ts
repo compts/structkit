@@ -14,3 +14,4 @@ export default curryArg;
  * => array
  */
 declare function curryArg(fn: any, args: any[], NoDefaultArgs?: number | undefined): any;
+//# sourceMappingURL=curryArg.d.ts.map

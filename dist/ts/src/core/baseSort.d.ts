@@ -13,3 +13,4 @@ export default baseSort;
  *=>[1,2,3]
  */
 declare function baseSort(objectValue: any[], func?: any | undefined): any[];
+//# sourceMappingURL=baseSort.d.ts.map

@@ -12,3 +12,4 @@ export default toInteger;
  *=>11
  */
 declare function toInteger(value: any): number;
+//# sourceMappingURL=toInteger.d.ts.map
