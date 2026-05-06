@@ -13,4 +13,3 @@ export default roundDecimal;
  *=>11.111
  */
 declare function roundDecimal(value: number, precision?: number | undefined): number;
-//# sourceMappingURL=roundDecimal.d.ts.map

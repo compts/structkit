@@ -13,4 +13,3 @@ export default indexOfExist;
  * // => false
  */
 declare function indexOfExist(value?: any | undefined, arrayObject?: any[] | undefined): boolean;
-//# sourceMappingURL=indexOfExist.d.ts.map

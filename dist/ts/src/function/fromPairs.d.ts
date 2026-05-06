@@ -13,4 +13,3 @@ export default fromPairs;
  * // => {5:6,7:2}
  */
 declare function fromPairs(value: any, deepLimit?: number | undefined): any;
-//# sourceMappingURL=fromPairs.d.ts.map

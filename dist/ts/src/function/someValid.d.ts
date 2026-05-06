@@ -12,4 +12,3 @@ export default someValid;
  * // => true
  */
 declare function someValid(...arg: (any | null)[]): boolean;
-//# sourceMappingURL=someValid.d.ts.map

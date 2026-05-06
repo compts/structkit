@@ -13,4 +13,3 @@ export default take;
  * // => 1
  */
 declare function take(value: number, valueList: any[] | string): any;
-//# sourceMappingURL=take.d.ts.map

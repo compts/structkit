@@ -14,4 +14,3 @@ export default mapGetData;
  *=>[1]
  */
 declare function mapGetData(valueFormat: string, objectValue: any | any[], isStrict?: boolean | undefined): any | any[];
-//# sourceMappingURL=mapGetData.d.ts.map

@@ -13,4 +13,3 @@ export default getKeyVal;
  *=>{"key":1,"value":1}
  */
 declare function getKeyVal(jsn: object, typ: boolean): array | object;
-//# sourceMappingURL=getKeyVal.d.ts.map

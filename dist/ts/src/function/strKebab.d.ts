@@ -12,4 +12,3 @@ export default strKebab;
  *=> 'the-fish-is-goad-with-goat-1ss'
  */
 declare function strKebab(value: string): string;
-//# sourceMappingURL=strKebab.d.ts.map

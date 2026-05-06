@@ -14,4 +14,3 @@ export default random;
  *=>'[20]'
  */
 declare function random(valueArray: any, minValue: number, maxValue: number): string | number;
-//# sourceMappingURL=random.d.ts.map

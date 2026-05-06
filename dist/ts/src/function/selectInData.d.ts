@@ -13,4 +13,3 @@ export default selectInData;
  *=> {"ss":1}
  */
 declare function selectInData(whereValue: any, objectValue: any): any;
-//# sourceMappingURL=selectInData.d.ts.map

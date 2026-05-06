@@ -12,4 +12,3 @@ export default strSnake;
  *=> 'the_fish_is_goad_with_goat_1ss'
  */
 declare function strSnake(value: string): string;
-//# sourceMappingURL=strSnake.d.ts.map

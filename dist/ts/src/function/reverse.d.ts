@@ -12,4 +12,3 @@ export default reverse;
  * // => [4,3,2,1]
  */
 declare function reverse(value: any[] | string): any;
-//# sourceMappingURL=reverse.d.ts.map

@@ -13,4 +13,3 @@ export default insert;
  * // => {A: 1, as: 1}
  */
 declare function insert(objectValue: any, value: any): null;
-//# sourceMappingURL=insert.d.ts.map

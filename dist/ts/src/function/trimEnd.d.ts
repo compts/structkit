@@ -13,4 +13,3 @@ export default trimEnd;
  *=> ' The fish is goad   with Goat-1ss'
  */
 declare function trimEnd(value: string, remove_value?: any | undefined): string;
-//# sourceMappingURL=trimEnd.d.ts.map

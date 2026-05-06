@@ -13,4 +13,3 @@ export default curry;
  * // => (test) =>{}
  */
 declare function curry(fun?: any | undefined, num?: number | undefined): any;
-//# sourceMappingURL=curry.d.ts.map

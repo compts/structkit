@@ -12,4 +12,3 @@ export default toPairs;
  * // => [["s",1],["ss",["a",2]]]
  */
 declare function toPairs(value: any): any[];
-//# sourceMappingURL=toPairs.d.ts.map

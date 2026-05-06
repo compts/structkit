@@ -13,4 +13,3 @@ export default arrayRepeat;
  *=>['s','s']
  */
 declare function arrayRepeat(value: any, valueRepetion?: number | undefined): any[];
-//# sourceMappingURL=arrayRepeat.d.ts.map

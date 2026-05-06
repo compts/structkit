@@ -14,4 +14,3 @@ export default baseAppend;
  * // => {'as':2}
  */
 declare function baseAppend(objectValue: any, val: any, key?: any | undefined): any;
-//# sourceMappingURL=baseAppend.d.ts.map

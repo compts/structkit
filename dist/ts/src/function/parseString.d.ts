@@ -13,4 +13,3 @@ export default parseString;
  *=>'{}'
  */
 declare function parseString(value: any, config?: any | undefined): string;
-//# sourceMappingURL=parseString.d.ts.map

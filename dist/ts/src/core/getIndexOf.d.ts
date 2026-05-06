@@ -15,4 +15,3 @@
  * // => 0
  */
 export function getIndexOf(objectValue: array | object, value: any, start: number, end: number, isGetLast: boolean): number | object | string;
-//# sourceMappingURL=getIndexOf.d.ts.map

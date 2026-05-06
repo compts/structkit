@@ -12,4 +12,3 @@ export default strUpper;
  *=> 'THE FISH IS GOAD   WITH GOAT-1SS'
  */
 declare function strUpper(value: string): string;
-//# sourceMappingURL=strUpper.d.ts.map

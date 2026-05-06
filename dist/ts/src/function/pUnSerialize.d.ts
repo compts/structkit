@@ -12,4 +12,3 @@ export default pUnSerialize;
  * // => 'Violet'
  */
 declare function pUnSerialize(value: any): any;
-//# sourceMappingURL=pUnSerialize.d.ts.map

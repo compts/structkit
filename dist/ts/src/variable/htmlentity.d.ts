@@ -13,4 +13,3 @@ export const entity: ({
 })[];
 export const listType: string[];
 export const whitespace: string;
-//# sourceMappingURL=htmlentity.d.ts.map

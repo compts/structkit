@@ -12,4 +12,3 @@ export default stringSplit;
  *=>"split this string"
  */
 declare function stringSplit(value: string): string;
-//# sourceMappingURL=stringSplit.d.ts.map

@@ -14,4 +14,3 @@ export default strSubs;
  *=> fish is goad   with Goat-1ss
  */
 declare function strSubs(value: string, minValue: number, maxValue?: number | undefined): string;
-//# sourceMappingURL=strSubs.d.ts.map

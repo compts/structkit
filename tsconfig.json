@@ -12,6 +12,8 @@
       // This compiler run should
       // only output d.ts files
       "emitDeclarationOnly": true,
+      // Don't generate declaration source maps
+      "declarationMap": false,
       // Types should go into this directory.
       // Removing this would place the .d.ts files
       // next to the .js files
@@ -20,10 +22,7 @@
        "module": "commonjs",
       "outDir": "dist/ts",
       "rootDir": "dist/esm",
-      "esModuleInterop": true,
-      // go to js file when using IDE functions like
-      // "Go to Definition" in VSCode
-      "declarationMap": true,
+      "esModuleInterop": true
     },
     "ts-node": {
       "files": true

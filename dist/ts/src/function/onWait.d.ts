@@ -13,4 +13,3 @@ export default onWait;
  *=>'11'
  */
 declare function onWait(func: any, wait?: number | undefined): object;
-//# sourceMappingURL=onWait.d.ts.map

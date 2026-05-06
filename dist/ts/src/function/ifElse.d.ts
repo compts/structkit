@@ -14,4 +14,3 @@ export default ifElse;
  * // => 1
  */
 declare function ifElse(cond: any, ifFunc: any, elseFunc?: any | undefined): any;
-//# sourceMappingURL=ifElse.d.ts.map

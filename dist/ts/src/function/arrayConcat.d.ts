@@ -12,4 +12,3 @@ export default arrayConcat;
  * // => [1,2]
  */
 declare function arrayConcat(...arg: (any | null)[]): any[];
-//# sourceMappingURL=arrayConcat.d.ts.map

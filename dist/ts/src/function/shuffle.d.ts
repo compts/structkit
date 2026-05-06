@@ -13,4 +13,3 @@ export default shuffle;
  *=>[2,3,1]
  */
 declare function shuffle(objectValue: any[]): any[];
-//# sourceMappingURL=shuffle.d.ts.map

@@ -12,4 +12,3 @@ export default flatten;
  * // => [1,2,3,4,5,6,7]
  */
 declare function flatten(arg: any): any;
-//# sourceMappingURL=flatten.d.ts.map

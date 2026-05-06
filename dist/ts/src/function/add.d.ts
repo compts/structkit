@@ -13,4 +13,3 @@ export default add;
  * // => 2
  */
 declare function add(value1: number, value2?: number | undefined): number | any;
-//# sourceMappingURL=add.d.ts.map

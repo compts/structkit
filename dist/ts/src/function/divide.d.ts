@@ -13,4 +13,3 @@ export default divide;
  * // => 1
  */
 declare function divide(value1: number, value2?: number | undefined): number | any;
-//# sourceMappingURL=divide.d.ts.map

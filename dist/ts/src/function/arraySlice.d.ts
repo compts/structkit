@@ -17,4 +17,3 @@ export default arraySlice;
  * // => [3, 4]
  */
 declare function arraySlice(objectValue: any, min?: number | undefined, max?: number | undefined): any[];
-//# sourceMappingURL=arraySlice.d.ts.map

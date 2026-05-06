@@ -13,4 +13,3 @@ export default sortBy;
  *=>[1,2,3]
  */
 declare function sortBy(func: Function, objectValue: any[]): any[];
-//# sourceMappingURL=sortBy.d.ts.map

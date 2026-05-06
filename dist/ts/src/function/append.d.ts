@@ -14,4 +14,3 @@ export default append;
  * // => {'as':2}
  */
 declare function append(objectValue: any, val: any, key?: any | undefined): any;
-//# sourceMappingURL=append.d.ts.map

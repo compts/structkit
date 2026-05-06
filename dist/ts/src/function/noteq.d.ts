@@ -13,4 +13,3 @@ export default noteq;
  * // => false
  */
 declare function noteq(value1: any, value2: any): boolean;
-//# sourceMappingURL=noteq.d.ts.map

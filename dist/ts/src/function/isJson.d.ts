@@ -13,4 +13,3 @@ export default isJson;
  *=> true
  */
 declare function isJson(value: any, valueType?: string | undefined): any;
-//# sourceMappingURL=isJson.d.ts.map

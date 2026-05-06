@@ -14,4 +14,3 @@
  *=> ["a","a"]
  */
 export function schemaSplitData(data?: any | undefined): any;
-//# sourceMappingURL=baseGetData.d.ts.map

@@ -13,4 +13,3 @@ export default defaultTo;
  * // => 2
  */
 declare function defaultTo(defaultValue: any, value2?: any | undefined): any;
-//# sourceMappingURL=defaultTo.d.ts.map

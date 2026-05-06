@@ -14,4 +14,3 @@ export default baseReduce;
  * // => 5
  */
 declare function baseReduce(func: any, defaultValue: any, listData: any[]): any;
-//# sourceMappingURL=baseReduce.d.ts.map

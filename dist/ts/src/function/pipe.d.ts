@@ -12,4 +12,3 @@ export default pipe;
  * // => 122
  */
 declare function pipe(...arg: (any | null)[]): any;
-//# sourceMappingURL=pipe.d.ts.map

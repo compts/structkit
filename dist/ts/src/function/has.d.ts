@@ -12,4 +12,3 @@ export default has;
  * // => true
  */
 declare function has(...args: (any | null)[]): boolean;
-//# sourceMappingURL=has.d.ts.map

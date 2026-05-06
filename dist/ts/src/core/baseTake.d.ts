@@ -14,4 +14,3 @@ export default baseTake;
  * // => 1
  */
 declare function baseTake(rawList: any[] | string, startIndex: number, lastIndex: number): any;
-//# sourceMappingURL=baseTake.d.ts.map

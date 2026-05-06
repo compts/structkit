@@ -14,4 +14,3 @@ export default sort;
  *=>[1,2,3]
  */
 declare function sort(objectValue: any[], order?: boolean | undefined, type?: string | undefined): any[];
-//# sourceMappingURL=sort.d.ts.map

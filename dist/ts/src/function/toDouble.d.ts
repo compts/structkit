@@ -13,4 +13,3 @@ export default toDouble;
  *=>100.11
  */
 declare function toDouble(value: any, config?: any | undefined): number;
-//# sourceMappingURL=toDouble.d.ts.map

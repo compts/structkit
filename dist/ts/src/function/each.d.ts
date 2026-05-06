@@ -13,4 +13,3 @@ export default each;
  *
  */
 declare function each(objectValue: any, func?: Function | undefined): any;
-//# sourceMappingURL=each.d.ts.map

@@ -14,4 +14,3 @@ export default onSequence;
  *=>'11'
  */
 declare function onSequence(func: any, wait?: number | undefined, option?: object | undefined): object;
-//# sourceMappingURL=onSequence.d.ts.map

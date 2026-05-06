@@ -12,4 +12,3 @@ export default regexCountGroup;
  *=>[1]
  */
 declare function regexCountGroup(value: any): number;
-//# sourceMappingURL=regexCountGroup.d.ts.map

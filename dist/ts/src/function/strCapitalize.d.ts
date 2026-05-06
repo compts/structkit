@@ -15,4 +15,3 @@ export default strCapitalize;
  *=> 'The fish is goad   with goat-1ss'
  */
 declare function strCapitalize(value: string, option?: string | undefined): string;
-//# sourceMappingURL=strCapitalize.d.ts.map

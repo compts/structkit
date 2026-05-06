@@ -14,4 +14,3 @@ export default filter;
  * => [2, 34]
  */
 declare function filter(func?: Function | undefined, objectValue?: any | undefined): any;
-//# sourceMappingURL=filter.d.ts.map

@@ -13,4 +13,3 @@ export default gte;
  * // => false
  */
 declare function gte(value1: any, value2?: any | undefined): boolean;
-//# sourceMappingURL=gte.d.ts.map

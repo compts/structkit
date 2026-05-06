@@ -13,4 +13,3 @@ export default lte;
  * // => true
  */
 declare function lte(value1: any, value2?: any | undefined): boolean | any;
-//# sourceMappingURL=lte.d.ts.map
