@@ -14,6 +14,7 @@ function stringSplit (value) {
 
     return value.trim()
         .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/([A-Z])([a-z])/g, '$1 $2')
         .replace(/([-_.\s]{1,})/g, ' ')
         .toLowerCase();
 

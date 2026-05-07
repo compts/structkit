@@ -70,13 +70,13 @@ const whereLoopExecution = require('./core/whereLoopExecution.js');
 
 exports.whereLoopExecution = whereLoopExecution;
 
-const __ = require('./function/__.js');
-
-exports.__ = __;
-
 const add = require('./function/add.js');
 
 exports.add = add;
+
+const __ = require('./function/__.js');
+
+exports.__ = __;
 
 const allValid = require('./function/allValid.js');
 
@@ -118,13 +118,13 @@ const count = require('./function/count.js');
 
 exports.count = count;
 
-const curry = require('./function/curry.js');
-
-exports.curry = curry;
-
 const dec = require('./function/dec.js');
 
 exports.dec = dec;
+
+const curry = require('./function/curry.js');
+
+exports.curry = curry;
 
 const defaultTo = require('./function/defaultTo.js');
 
@@ -150,13 +150,13 @@ const filter = require('./function/filter.js');
 
 exports.filter = filter;
 
-const first = require('./function/first.js');
-
-exports.first = first;
-
 const flatten = require('./function/flatten.js');
 
 exports.flatten = flatten;
+
+const first = require('./function/first.js');
+
+exports.first = first;
 
 const fromPairs = require('./function/fromPairs.js');
 
@@ -169,10 +169,6 @@ exports.getData = getData;
 const getKey = require('./function/getKey.js');
 
 exports.getKey = getKey;
-
-const getTypeof = require('./function/getTypeof.js');
-
-exports.getTypeof = getTypeof;
 
 const getUniq = require('./function/getUniq.js');
 
@@ -218,13 +214,17 @@ const indexOfNotExist = require('./function/indexOfNotExist.js');
 
 exports.indexOfNotExist = indexOfNotExist;
 
+const insert = require('./function/insert.js');
+
+exports.insert = insert;
+
 const isEmpty = require('./function/isEmpty.js');
 
 exports.isEmpty = isEmpty;
 
-const insert = require('./function/insert.js');
+const isJson = require('./function/isJson.js');
 
-exports.insert = insert;
+exports.isJson = isJson;
 
 const isExact = require('./function/isExact.js');
 
@@ -233,10 +233,6 @@ exports.isExact = isExact;
 const isExactbyRegExp = require('./function/isExactbyRegExp.js');
 
 exports.isExactbyRegExp = isExactbyRegExp;
-
-const isJson = require('./function/isJson.js');
-
-exports.isJson = isJson;
 
 const last = require('./function/last.js');
 
@@ -358,10 +354,6 @@ const roundDecimal = require('./function/roundDecimal.js');
 
 exports.roundDecimal = roundDecimal;
 
-const selectInData = require('./function/selectInData.js');
-
-exports.selectInData = selectInData;
-
 const setData = require('./function/setData.js');
 
 exports.setData = setData;
@@ -370,13 +362,17 @@ const shuffle = require('./function/shuffle.js');
 
 exports.shuffle = shuffle;
 
-const someValid = require('./function/someValid.js');
+const selectInData = require('./function/selectInData.js');
 
-exports.someValid = someValid;
+exports.selectInData = selectInData;
 
 const sort = require('./function/sort.js');
 
 exports.sort = sort;
+
+const someValid = require('./function/someValid.js');
+
+exports.someValid = someValid;
 
 const sortBy = require('./function/sortBy.js');
 
@@ -402,25 +398,25 @@ const strLower = require('./function/strLower.js');
 
 exports.strLower = strLower;
 
-const strSnake = require('./function/strSnake.js');
-
-exports.strSnake = strSnake;
-
 const strSubs = require('./function/strSubs.js');
 
 exports.strSubs = strSubs;
+
+const getTypeof = require('./function/getTypeof.js');
+
+exports.getTypeof = getTypeof;
 
 const strUnEscape = require('./function/strUnEscape.js');
 
 exports.strUnEscape = strUnEscape;
 
-const strUpper = require('./function/strUpper.js');
-
-exports.strUpper = strUpper;
-
 const subtract = require('./function/subtract.js');
 
 exports.subtract = subtract;
+
+const strSnake = require('./function/strSnake.js');
+
+exports.strSnake = strSnake;
 
 const swap = require('./function/swap.js');
 
@@ -430,6 +426,10 @@ const take = require('./function/take.js');
 
 exports.take = take;
 
+const strUpper = require('./function/strUpper.js');
+
+exports.strUpper = strUpper;
+
 const templates = require('./function/templates.js');
 
 exports.templates = templates;
@@ -438,13 +438,13 @@ const toArray = require('./function/toArray.js');
 
 exports.toArray = toArray;
 
-const toBoolean = require('./function/toBoolean.js');
-
-exports.toBoolean = toBoolean;
-
 const toDouble = require('./function/toDouble.js');
 
 exports.toDouble = toDouble;
+
+const toBoolean = require('./function/toBoolean.js');
+
+exports.toBoolean = toBoolean;
 
 const toInteger = require('./function/toInteger.js');
 
@@ -462,6 +462,10 @@ const trim = require('./function/trim.js');
 
 exports.trim = trim;
 
+const trimEnd = require('./function/trimEnd.js');
+
+exports.trimEnd = trimEnd;
+
 const trimStart = require('./function/trimStart.js');
 
 exports.trimStart = trimStart;
@@ -474,6 +478,10 @@ const unique = require('./function/unique.js');
 
 exports.unique = unique;
 
+const varExtend = require('./function/varExtend.js');
+
+exports.varExtend = varExtend;
+
 const where = require('./function/where.js');
 
 exports.where = where;
@@ -482,17 +490,13 @@ const zip = require('./function/zip.js');
 
 exports.zip = zip;
 
+const objectCallType = require('./variable/types.js');
+
+exports.objectCallType = objectCallType;
+
 const negOne = require('./variable/defaultValue.js');
 
 exports.negOne = negOne;
-
-const entity = require('./variable/htmlentity.js');
-
-exports.entity = entity;
-
-const varExtend = require('./function/varExtend.js');
-
-exports.varExtend = varExtend;
 
 
 /**
@@ -875,7 +879,3 @@ exports.isUint16Array=isUint16Array_default;
 exports.isUint32Array=isUint32Array_default;
 exports.isUint8Array=isUint8Array_default;
 exports.isUndefined=isUndefined_default;
-const trimEnd = require('./function/trimEnd.js');
-
-exports.trimEnd = trimEnd;
-
