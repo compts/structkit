@@ -264,35 +264,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
-
-/**
  * Check if object has value or null or undefined
  *
  * @since 1.0.1
@@ -527,6 +498,82 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
 
 /**
  * Counting the lenght in array, json or string
@@ -1159,51 +1206,6 @@ function empty (value) {
 }
 
 /**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1706,6 +1708,32 @@ _stk.arraySlice=arraySlice;
 
 
 /**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+/**
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
@@ -2096,37 +2124,6 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-
-
-/**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 
 
 /**
@@ -2703,9 +2700,34 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
+_stk.clone=clone;
+
 _stk.count=count;
 
-_stk.clone=clone;
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 
 
 /**
@@ -2741,6 +2763,8 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
+
+_stk.divide=divide;
 
 
 /**
@@ -2782,34 +2806,7 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.divide=divide;
-
 _stk.each=each;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 
 _stk.empty=empty;
 
@@ -2869,6 +2866,8 @@ function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
+
+_stk.first=first;
 
 _stk.flatten=flatten;
 
@@ -3790,10 +3789,6 @@ _stk.gte=gte;
 
 _stk.has=has;
 
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
-
 
 /**
  * Reduce function
@@ -3922,9 +3917,11 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.indexOfExist=indexOfExist;
+_stk.inc=inc;
 
-_stk.first=first;
+_stk.indexOf=indexOf;
+
+_stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
@@ -4118,35 +4115,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -4386,6 +4354,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
 _stk.mergeWithKey=mergeWithKey;
 
 _stk.multiply=multiply;
@@ -4529,6 +4526,8 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
+
+_stk.add=add;
 
 
 /**
@@ -6409,7 +6408,7 @@ function strSubs (value, minValue, maxValue) {
  * @since 1.4.86
  * @category Collection
  * @param {any} value Any type you want to convert to json object
- * @param {any=} config Option you want to set in this function.
+ * @param {any=} config Option for parse json, it has disableCorrection to disable the correction and validation of json string, invalidDefaultValue to set default value if the string is invalid or not string and throwError to determine if it will throw error or just return default value if the string is invalid or not string
  * @returns {any} Returns the json object.
  * @example
  *
@@ -6505,9 +6504,9 @@ function escapeQuotesJson (str) {
  *
  * @since 1.4.9
  * @category Collection
- * @param {boolean} validValidation Object you want to convert to JSON string
- * @param {str} firstFindAction Object you want to convert to JSON string
- * @param {str} last_str Object you want to convert to JSON string
+ * @param {boolean} validValidation Value that determine if the last str is valid and need to be added with qoutes or not
+ * @param {str} firstFindAction first action that is being found in the string, either qoute, char_obj, number or none
+ * @param {str} last_str last string that is being validated
  * @returns {string} Return JSON string
  * @example
  *
@@ -6548,14 +6547,14 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
  *
  * @since 1.4.9
  * @category Collection
- * @param {any} last_str Object you want to convert to JSON string
- * @param {any} firstFindAction Object you want to convert to JSON string
- * @param {any} lastAction Object you want to convert to JSON string
- * @param {any} currentAction Object you want to convert to JSON string
- * @param {any} ob_str Object you want to convert to JSON string
- * @param {any} count Object you want to convert to JSON string
- * @param {any} ob_type Object you want to convert to JSON string
- * @param {any} valChar Object you want to convert to JSON string
+ * @param {any} last_str Last string that is being validated
+ * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} ob_str String that contain the struct you want to get
+ * @param {any} count Count of the current position in the string
+ * @param {any} ob_type Define the type of struct you want to get, either json or array
+ * @param {any} valChar Character that is being validated
  * @returns {string} Return JSON string
  * @example
  *
@@ -6628,8 +6627,8 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
  *
  * @since 1.4.9
  * @category Collection
- * @param {any} ob_str Object you want to convert to JSON string
- * @param {any} ob_type Object you want to convert to JSON string
+ * @param {any} ob_str String that contain the struct you want to get
+ * @param {any} ob_type Define the type of struct you want to get, either json or array
  * @returns {string} Return JSON string
  * @example
  *
@@ -7238,8 +7237,6 @@ function random (valueArray, minValue, maxValue) {
 
 _stk.random=random;
 
-_stk.range=range;
-
 _stk.reduce=reduce;
 
 
@@ -7264,6 +7261,8 @@ function regexCountGroup (value) {
 _stk.regexCountGroup=regexCountGroup;
 
 _stk.remove=remove;
+
+_stk.range=range;
 
 
 /**
@@ -7808,6 +7807,29 @@ function strEscape (value, type) {
 
 _stk.strEscape=strEscape;
 
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function strKebab (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.strKebab=strKebab;
+
 _stk.strLower=strLower;
 
 
@@ -7832,29 +7854,6 @@ function strSnake (value) {
 }
 
 _stk.strSnake=strSnake;
-
-
-/**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.strKebab=strKebab;
 
 _stk.strSubs=strSubs;
 
@@ -8426,6 +8425,53 @@ _stk.trimStart=trimStart;
 
 
 /**
+ * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {...any?} arg First number
+ * @returns {any[]} Returns true or false.
+ * @example
+ *
+ * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
+ * // => [1, 2, 3, 4, 7, 5, 6, 8]
+ */
+function union () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    if (indexOfNotExist(valEach, total)) {
+
+                        total.push(valEach);
+
+                    }
+
+                });
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, arg);
+
+}
+
+_stk.union=union;
+
+
+/**
  * Get only the unique data from array
  *
  * @since 1.4.1
@@ -8890,53 +8936,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-
-
-/**
- * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
- *
- * @since 1.4.7
- * @category Collection
- * @param {...any?} arg First number
- * @returns {any[]} Returns true or false.
- * @example
- *
- * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
- * // => [1, 2, 3, 4, 7, 5, 6, 8]
- */
-function union () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    if (indexOfNotExist(valEach, total)) {
-
-                        total.push(valEach);
-
-                    }
-
-                });
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, arg);
-
-}
-
-_stk.union=union;
 
 
  })(typeof window !== "undefined" ? window : this);

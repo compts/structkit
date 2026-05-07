@@ -214,23 +214,11 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
 function has () {
 
-    var args=arguments;    return curryArg(function (aa, bb) {
+    var args=arguments;
+
+    return curryArg(function (aa, bb) {
 
         return _has(aa, bb);
 
@@ -417,10 +405,56 @@ function getTypeofInternal (objectValue) {
 }
 
 
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 function count (objectValue, json_is_empty_check) {
 
-    var cnt=zero;
-    var json_is_empty_check_default=json_is_empty_check||false;
+    var cnt=zero;    var json_is_empty_check_default=json_is_empty_check||false;
     var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
@@ -890,38 +924,6 @@ function empty (value) {
 }
 
 
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-
 function baseMap (func, objectValue) {
 
     var value_arry=empty(objectValue);
@@ -1266,9 +1268,23 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-_stk.arraySlice=arraySlice;function isEmpty (value) {
+_stk.arraySlice=arraySlice;function add (value1, value2) {
 
-    var typeofvalue = getTypeofInternal(value);    var invalidList = [
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
+function isEmpty (value) {
+
+    var typeofvalue = getTypeofInternal(value);
+
+    var invalidList = [
         'null',
         'undefined'
     ];
@@ -1523,19 +1539,6 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function asyncReplace (value, search, toReplace) {
 
     return curryArg(function (rawValue, rawSearch, rawToReplace) {
@@ -1970,7 +1973,15 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.count=count;_stk.clone=clone;function dec (value, default_value) {
+_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
+function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -1989,7 +2000,7 @@ _stk.count=count;_stk.clone=clone;function dec (value, default_value) {
 }
 
 _stk.dec=dec;
-function defaultTo (defaultValue, value2) {
+_stk.divide=divide;function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -2012,15 +2023,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
-_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2058,7 +2061,7 @@ _stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
-_stk.flatten=flatten;function inc (value, default_value) {
+_stk.first=first;_stk.flatten=flatten;function inc (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2733,7 +2736,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-_stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;function reduce (func, defaultValue, listData) {
+_stk.has=has;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2830,7 +2833,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.indexOfExist=indexOfExist;_stk.first=first;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2928,18 +2931,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3099,6 +3090,18 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 _stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
@@ -3195,7 +3198,7 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
-function onDelay (func, wait, option) {
+_stk.add=add;function onDelay (func, wait, option) {
 
     var extend = varExtend({
         "autoStart": true
@@ -5507,12 +5510,12 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;function repeat (value, valueRepetion) {
+_stk.remove=remove;_stk.range=range;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5846,13 +5849,6 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
-_stk.strLower=strLower;function strSnake (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("_");}
-
-_stk.strSnake=strSnake;
 function strKebab (value) {
 
     return stringSplit(toString(value))
@@ -5860,6 +5856,13 @@ function strKebab (value) {
         .join("-");}
 
 _stk.strKebab=strKebab;
+_stk.strLower=strLower;function strSnake (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("_");}
+
+_stk.strSnake=strSnake;
 _stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
 
     return toString(value).toUpperCase();}
@@ -6232,7 +6235,38 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function unique (value) {
+_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    if (indexOfNotExist(valEach, total)) {
+
+                        total.push(valEach);
+
+                    }
+
+                });
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, arg);
+
+}
+
+_stk.union=union;
+function unique (value) {
 
     if (getTypeof(value) === "array") {
 
@@ -6451,37 +6485,6 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
-function union () {
-
-    var arg=arguments;    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    if (indexOfNotExist(valEach, total)) {
-
-                        total.push(valEach);
-
-                    }
-
-                });
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, arg);
-
-}
-
-_stk.union=union;
 
 
  })(typeof window !== "undefined" ? window : this);

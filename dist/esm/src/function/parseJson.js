@@ -18,7 +18,7 @@ import each from './each.js';
  * @since 1.4.86
  * @category Collection
  * @param {any} value Any type you want to convert to json object
- * @param {any=} config Option you want to set in this function.
+ * @param {any=} config Option for parse json, it has disableCorrection to disable the correction and validation of json string, invalidDefaultValue to set default value if the string is invalid or not string and throwError to determine if it will throw error or just return default value if the string is invalid or not string
  * @returns {any} Returns the json object.
  * @example
  *
@@ -114,9 +114,9 @@ function escapeQuotesJson (str) {
  *
  * @since 1.4.9
  * @category Collection
- * @param {boolean} validValidation Object you want to convert to JSON string
- * @param {str} firstFindAction Object you want to convert to JSON string
- * @param {str} last_str Object you want to convert to JSON string
+ * @param {boolean} validValidation Value that determine if the last str is valid and need to be added with qoutes or not
+ * @param {str} firstFindAction first action that is being found in the string, either qoute, char_obj, number or none
+ * @param {str} last_str last string that is being validated
  * @returns {string} Return JSON string
  * @example
  *
@@ -157,14 +157,14 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
  *
  * @since 1.4.9
  * @category Collection
- * @param {any} last_str Object you want to convert to JSON string
- * @param {any} firstFindAction Object you want to convert to JSON string
- * @param {any} lastAction Object you want to convert to JSON string
- * @param {any} currentAction Object you want to convert to JSON string
- * @param {any} ob_str Object you want to convert to JSON string
- * @param {any} count Object you want to convert to JSON string
- * @param {any} ob_type Object you want to convert to JSON string
- * @param {any} valChar Object you want to convert to JSON string
+ * @param {any} last_str Last string that is being validated
+ * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} ob_str String that contain the struct you want to get
+ * @param {any} count Count of the current position in the string
+ * @param {any} ob_type Define the type of struct you want to get, either json or array
+ * @param {any} valChar Character that is being validated
  * @returns {string} Return JSON string
  * @example
  *
@@ -237,8 +237,8 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
  *
  * @since 1.4.9
  * @category Collection
- * @param {any} ob_str Object you want to convert to JSON string
- * @param {any} ob_type Object you want to convert to JSON string
+ * @param {any} ob_str String that contain the struct you want to get
+ * @param {any} ob_type Define the type of struct you want to get, either json or array
  * @returns {string} Return JSON string
  * @example
  *
