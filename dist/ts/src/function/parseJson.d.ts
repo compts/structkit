@@ -1,6 +1,6 @@
 export default parseJson;
 /**
- * Parse from String to JSON object
+ * Parse string to JSON object with type conversion and correction
  *
  * @since 1.4.86
  * @category Collection

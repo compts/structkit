@@ -1487,37 +1487,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
-
-/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -2130,6 +2099,37 @@ _stk.arraySum=arraySum;
 
 
 /**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * Async replace regexp argument
  *
  * @since 1.3.1
@@ -2377,7 +2377,7 @@ var operationType = [
 ];
 
 /**
- * Logic in convert string to compute, similar on how the calculator works
+ * Logic in convert string to compute, similar on how the calculator works, using pemdas concept and also support for factorial, percentage, absolute value and square root or any algebraic expression that can be represented in string. It also support for variable in formula, you just need to fill the variable with value in the second argument as json.
  *
  * @since 1.4.8
  * @category Math
@@ -2703,34 +2703,9 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
-_stk.clone=clone;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
-
 _stk.count=count;
+
+_stk.clone=clone;
 
 
 /**
@@ -2811,6 +2786,31 @@ _stk.divide=divide;
 
 _stk.each=each;
 
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
+
 _stk.empty=empty;
 
 _stk.equal=equal;
@@ -2869,8 +2869,6 @@ function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
-
-_stk.first=first;
 
 _stk.flatten=flatten;
 
@@ -3790,6 +3788,12 @@ function gte (value1, value2) {
 
 _stk.gte=gte;
 
+_stk.has=has;
+
+_stk.inc=inc;
+
+_stk.indexOf=indexOf;
+
 
 /**
  * Reduce function
@@ -3918,13 +3922,9 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.has=has;
-
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
-
 _stk.indexOfExist=indexOfExist;
+
+_stk.first=first;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
@@ -4032,6 +4032,35 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
+ * Searching the data either in array or json object to get similar value of data
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @returns {any} Return either Json to Array.
+ * @example
+ *
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
+ */
+function like (objectValueWhere, objectValue) {
+
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
+
+    }, [
+        objectValueWhere,
+        objectValue
+    ], two);
+
+}
+
+_stk.like=like;
+
+
+/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -4092,35 +4121,6 @@ _stk.limit=limit;
 
 
 /**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1}, {"s1":1,"s2":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
-
-    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
-
-
-/**
  * To check if the two arguments are less
  *
  * @since 1.4.8
@@ -4178,6 +4178,65 @@ function lte (value1, value2) {
 _stk.lte=lte;
 
 _stk.map=map;
+
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
+ * @example
+ *
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;
+
+        var typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            var rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            var validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
+    ], two);
+
+}
+
+_stk.mapGetData=mapGetData;
 
 
 /**
@@ -4326,65 +4385,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-
-/**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
- * @example
- *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
- */
-function mapGetData (valueFormat, objectValue, isStrict) {
-
-    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
-
-        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
-            ? true
-            :rawIsStrict;
-
-        var typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            var rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            var validData = getData(rawValueFormat, typeObjectValue === "json"
-                ?rawbj
-                :value, refIsStrict);
-
-            if (isEmpty(validData) === false) {
-
-                total = append(total, validData);
-
-            }
-
-            return total;
-
-        }, [], objectValue);
-
-    }, [
-        valueFormat,
-        objectValue,
-        isStrict
-    ], two);
-
-}
-
-_stk.mapGetData=mapGetData;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -4548,47 +4548,66 @@ _stk.noteq=noteq;
 function onDelay (func, wait, option) {
 
     var extend = varExtend({
-        "limitCounterClear": zero
+        "autoStart": true
     }, option);
 
-    var valueWaited = wait || zero;
+    var sequence = new ClassDelay(extend, wait, func);
 
-    var timeout = setTimeout(function () {
+    if (extend.autoStart) {
 
-        func();
+        sequence.start();
 
-    }, valueWaited);
-
-    var sequence = new ClassDelay(timeout, extend);
+    }
 
     return sequence;
 
 }
 
 /**
- * On wait
+ * On delay class
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} timeout timer for delay
+ *
  * @param {object} extend option for delay
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
  * @returns {object} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onDelay(()=>{})
  *=>'11'
  */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
+function ClassDelay (extend, wait, func) {
 
     this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.timeout = null;
 
 }
 
 ClassDelay.prototype.cancel = function () {
 
     clearTimeout(this.timeout);
+
+};
+
+ClassDelay.prototype.start = function () {
+
+    var valueWaited = this.wait || zero;
+
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    this.timeout = setTimeout(function () {
+
+        main.func();
+
+    }, valueWaited);
 
 };
 
@@ -4612,20 +4631,70 @@ _stk.onDelay=onDelay;
 function onSequence (func, wait, option) {
 
     var extend = varExtend({
+
+        "autoStart": true,
         "limitCounterClear": zero
     }, option);
 
-    var valueWaited = wait || zero;
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+/**
+ * On sequence class
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} extend The second number in an addition.
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    var valueWaited = this.wait || zero;
     var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
 
-    var interval = setInterval(function () {
+    main.interval = setInterval(function () {
 
-        func();
-        if (extend.limitCounterClear >zero) {
+        main.func();
+        if (main.extend.limitCounterClear >zero) {
 
-            if (counter === extend.limitCounterClear) {
+            if (counter >= main.extend.limitCounterClear) {
 
-                clearInterval(interval);
+                clearInterval(main.interval);
 
             }
 
@@ -4634,37 +4703,6 @@ function onSequence (func, wait, option) {
         counter += one;
 
     }, valueWaited);
-
-    var sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
 
 };
 
@@ -6366,7 +6404,7 @@ function strSubs (value, minValue, maxValue) {
 }
 
 /**
- * Parse from String to JSON object
+ * Parse string to JSON object with type conversion and correction
  *
  * @since 1.4.86
  * @category Collection
@@ -6434,7 +6472,7 @@ function parseJson (value, config) {
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotesStr("'" )
+ * escapeQuotesJson("'" )
  *=>"\\'"
  */
 function escapeQuotesJson (str) {
@@ -6463,7 +6501,7 @@ function escapeQuotesJson (str) {
 }
 
 /**
- * String escape qoutes
+ * Validate last str and add qoutes if needed
  *
  * @since 1.4.9
  * @category Collection
@@ -6473,7 +6511,7 @@ function escapeQuotesJson (str) {
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotesStr("'" )
+ * validationLastStr("'" )
  *=>"\\'"
  */
 function validationLastStr (validValidation, firstFindAction, last_str) {
@@ -6506,7 +6544,7 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 }
 
 /**
- * String escape qoutes
+ * Validate last str and add slash if pass for delimiter or closing object
  *
  * @since 1.4.9
  * @category Collection
@@ -6586,7 +6624,7 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
 }
 
 /**
- * String escape qoutes
+ * Get struct value and count of how many char it has
  *
  * @since 1.4.9
  * @category Collection
@@ -6766,7 +6804,7 @@ function getStructVal (ob_str, ob_type) {
 }
 
 /**
- * String escape qoutes
+ * Construct JSON string with type correction and validation
  *
  * @since 1.4.872
  * @category Collection
@@ -6867,7 +6905,7 @@ function constrJson (ob_str) {
 }
 
 /**
- * String escape qoutes
+ * Get struct value and count of how many char it has
  *
  * @since 1.4.9
  * @category Collection
@@ -7204,8 +7242,6 @@ _stk.range=range;
 
 _stk.reduce=reduce;
 
-_stk.remove=remove;
-
 
 /**
  * Regex Count Group number
@@ -7226,6 +7262,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
 
 
 /**
@@ -7642,6 +7680,44 @@ function sortBy (func, objectValue) {
 }
 
 _stk.sortBy=sortBy;
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * strCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * strCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function strCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.strCapitalize=strCapitalize;
 /**
  * Split string for special cases
  *
@@ -7692,44 +7768,6 @@ _stk.strCamel=strCamel;
 
 
 /**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * strCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * strCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function strCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return toString(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.strCapitalize=strCapitalize;
-
-
-/**
  * String Escape
  *
  * @since 1.3.1
@@ -7770,29 +7808,6 @@ function strEscape (value, type) {
 
 _stk.strEscape=strEscape;
 
-
-/**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");
-
-}
-
-_stk.strKebab=strKebab;
-
 _stk.strLower=strLower;
 
 
@@ -7818,6 +7833,31 @@ function strSnake (value) {
 
 _stk.strSnake=strSnake;
 
+
+/**
+ * String Kebab case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Kebab sting data
+ * @example
+ *
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
+ */
+function strKebab (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");
+
+}
+
+_stk.strKebab=strKebab;
+
+_stk.strSubs=strSubs;
+
 _stk.strUnEscape=strUnEscape;
 
 
@@ -7842,60 +7882,6 @@ function strUpper (value) {
 _stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
-
-_stk.strSubs=strSubs;
-
-
-/**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        var cloneRawListValueReturn = rawListValue;
-        var isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
 
 
 /**
@@ -7955,6 +7941,58 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
+
+
+/**
+ * Swapping the value either string or array in there specific position
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        var cloneRawListValueReturn = rawListValue;
+        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 
 /**
@@ -8280,6 +8318,8 @@ function setDepthValue (arryData, value) {
 
 _stk.toPairs=toPairs;
 
+_stk.toString=toString;
+
 
 /**
  * String trim  at the start only
@@ -8380,58 +8420,9 @@ function trim (value, remove_value) {
 
 _stk.trim=trim;
 
-_stk.toString=toString;
-
 _stk.trimEnd=trimEnd;
 
 _stk.trimStart=trimStart;
-
-
-/**
- * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
- *
- * @since 1.4.7
- * @category Collection
- * @param {...any?} arg First number
- * @returns {any[]} Returns true or false.
- * @example
- *
- * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
- * // => [1, 2, 3, 4, 7, 5, 6, 8]
- */
-function union () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    if (indexOfNotExist(valEach, total)) {
-
-                        total.push(valEach);
-
-                    }
-
-                });
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, arg);
-
-}
-
-_stk.union=union;
 
 
 /**
@@ -8899,6 +8890,53 @@ function zip () {
 }
 
 _stk.zip=zip;
+
+
+/**
+ * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {...any?} arg First number
+ * @returns {any[]} Returns true or false.
+ * @example
+ *
+ * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
+ * // => [1, 2, 3, 4, 7, 5, 6, 8]
+ */
+function union () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    if (indexOfNotExist(valEach, total)) {
+
+                        total.push(valEach);
+
+                    }
+
+                });
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, arg);
+
+}
+
+_stk.union=union;
 
 
  })(typeof window !== "undefined" ? window : this);

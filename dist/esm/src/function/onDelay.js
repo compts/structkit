@@ -19,47 +19,66 @@ import {zero} from '../variable/defaultValue.js';
 function onDelay (func, wait, option) {
 
     const extend = varExtend({
-        "limitCounterClear": zero
+        "autoStart": true
     }, option);
 
-    const valueWaited = wait || zero;
+    const sequence = new ClassDelay(extend, wait, func);
 
-    const timeout = setTimeout(function () {
+    if (extend.autoStart) {
 
-        func();
+        sequence.start();
 
-    }, valueWaited);
-
-    const sequence = new ClassDelay(timeout, extend);
+    }
 
     return sequence;
 
 }
 
 /**
- * On wait
+ * On delay class
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} timeout timer for delay
+ *
  * @param {object} extend option for delay
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
  * @returns {object} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onDelay(()=>{})
  *=>'11'
  */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
+function ClassDelay (extend, wait, func) {
 
     this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.timeout = null;
 
 }
 
 ClassDelay.prototype.cancel = function () {
 
     clearTimeout(this.timeout);
+
+};
+
+ClassDelay.prototype.start = function () {
+
+    const valueWaited = this.wait || zero;
+
+    // eslint-disable-next-line consistent-this
+    const main = this;
+
+    this.timeout = setTimeout(function () {
+
+        main.func();
+
+    }, valueWaited);
 
 };
 

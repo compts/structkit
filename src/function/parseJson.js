@@ -8,7 +8,7 @@ const each = require('./each');
 
 
 /**
- * Parse from String to JSON object
+ * Parse string to JSON object with type conversion and correction
  *
  * @since 1.4.86
  * @category Collection
@@ -78,7 +78,7 @@ function parseJson (value, config) {
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotesStr("'" )
+ * escapeQuotesJson("'" )
  *=>"\\'"
  */
 function escapeQuotesJson (str) {
@@ -108,7 +108,7 @@ function escapeQuotesJson (str) {
 
 
 /**
- * String escape qoutes
+ * Validate last str and add qoutes if needed
  *
  * @since 1.4.9
  * @category Collection
@@ -118,7 +118,7 @@ function escapeQuotesJson (str) {
  * @returns {string} Return JSON string
  * @example
  *
- * escapeQuotesStr("'" )
+ * validationLastStr("'" )
  *=>"\\'"
  */
 function validationLastStr (validValidation, firstFindAction, last_str) {
@@ -155,7 +155,7 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 
 
 /**
- * String escape qoutes
+ * Validate last str and add slash if pass for delimiter or closing object
  *
  * @since 1.4.9
  * @category Collection
@@ -239,7 +239,7 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
 
 
 /**
- * String escape qoutes
+ * Get struct value and count of how many char it has
  *
  * @since 1.4.9
  * @category Collection
@@ -430,7 +430,7 @@ function getStructVal (ob_str, ob_type) {
 
 
 /**
- * String escape qoutes
+ * Construct JSON string with type correction and validation
  *
  * @since 1.4.872
  * @category Collection
@@ -539,7 +539,7 @@ function constrJson (ob_str) {
 
 
 /**
- * String escape qoutes
+ * Get struct value and count of how many char it has
  *
  * @since 1.4.9
  * @category Collection

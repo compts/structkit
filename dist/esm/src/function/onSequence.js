@@ -19,53 +19,46 @@ import {zero, one} from '../variable/defaultValue.js';
 function onSequence (func, wait, option) {
 
     const extend = varExtend({
+
+        "autoStart": true,
         "limitCounterClear": zero
     }, option);
 
-    const valueWaited = wait || zero;
-    let counter = zero;
+    const sequence = new ClassSequence(extend, wait, func);
 
-    const interval = setInterval(function () {
+    if (extend.autoStart) {
 
-        func();
-        if (extend.limitCounterClear >zero) {
+        sequence.start();
 
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    const sequence = new ClassSequence(interval, extend);
+    }
 
     return sequence;
 
 }
 
 /**
- * On wait
+ * On sequence class
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
+ * @param {any} extend The second number in an addition.
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
  * @returns {any} Returns the object.
  * @example
  *
  *  onWait(()=>{})
  *=>'11'
  */
-function ClassSequence (interval, extend) {
+function ClassSequence (extend, wait, func) {
 
-    this.interval = interval;
+    this.interval = null;
 
     this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
 
 }
 
@@ -75,5 +68,30 @@ ClassSequence.prototype.cancel = function () {
 
 };
 
+ClassSequence.prototype.start = function () {
+
+    const valueWaited = this.wait || zero;
+    let counter = zero;
+    // eslint-disable-next-line consistent-this
+    const main = this;
+
+    main.interval = setInterval(function () {
+
+        main.func();
+        if (main.extend.limitCounterClear >zero) {
+
+            if (counter >= main.extend.limitCounterClear) {
+
+                clearInterval(main.interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+};
 export default onSequence;
 

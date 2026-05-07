@@ -43,7 +43,7 @@ const operationType = [
 ];
 
 /**
- * Logic in convert string to compute, similar on how the calculator works
+ * Logic in convert string to compute, similar on how the calculator works, using pemdas concept and also support for factorial, percentage, absolute value and square root or any algebraic expression that can be represented in string. It also support for variable in formula, you just need to fill the variable with value in the second argument as json.
  *
  * @since 1.4.8
  * @category Math
