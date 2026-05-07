@@ -4,7 +4,7 @@ export default parseJson;
  *
  * @since 1.4.86
  * @category Collection
- * @param {string} value String you want to convert to json object
+ * @param {any} value Any type you want to convert to json object
  * @param {any=} config Option you want to set in this function.
  * @returns {any} Returns the json object.
  * @example
@@ -12,4 +12,4 @@ export default parseJson;
  * parseJson('{}' )
  *=>{}
  */
-declare function parseJson(value: string, config?: any | undefined): any;
+declare function parseJson(value: any, config?: any | undefined): any;

@@ -5,7 +5,7 @@ const assert = require("assert");
 
 describe('CJS: parseJson method', function () {
 
-    it('check if repetion is correct', function () {
+    it('check if key and value has type conversion', function () {
 
 
         assert.deepStrictEqual(parseJson("{'a': 1}"), {
@@ -17,7 +17,11 @@ describe('CJS: parseJson method', function () {
         });
 
         assert.deepStrictEqual(parseJson("{`a`: `1`}"), {
-            "a": 1
+            "a": "1"
+        });
+
+        assert.deepStrictEqual(parseJson("{a: `1`}"), {
+            "a": "1"
         });
 
     });
@@ -31,6 +35,24 @@ describe('CJS: parseJson method', function () {
             {"a": 1}
         ]);
 
+        assert.deepStrictEqual(
+            parseJson("[asd,asd ]"),
+            [
+                "asd",
+                "asd"
+            ]
+        );
+
+        assert.deepStrictEqual(
+            parseJson("[1,2,3,4]"),
+            [
+                1,
+                2,
+                3,
+                4
+            ]
+        );
+
 
     });
 
@@ -42,6 +64,16 @@ describe('CJS: parseJson method', function () {
             {"a": 's"sas'}
         );
 
+        assert.deepStrictEqual(
+            parseJson('{a:"s\\"sas"}'),
+            {"a": 's"sas'}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s\\\\sas"}'),
+            {"a": 'ssas'}
+        );
+
 
     });
     it('check if repetion is correct with dict and array', function () {
@@ -51,11 +83,40 @@ describe('CJS: parseJson method', function () {
             "2"
         ]});
 
+        assert.deepStrictEqual(parseJson("[1,2,3{'asd':1},[asdm,s]]"), [
+            1,
+            2,
+            3,
+            {'asd': 1},
+            [
+                "asdm",
+                "s"
+            ]
+        ]);
+
+        assert.deepStrictEqual(parseJson("[1,2,3,{'asd':1}]"), [
+            1,
+            2,
+            3,
+            {"asd": 1}
+        ]);
+
+        assert.deepStrictEqual(parseJson("[1,2,3,{'asd':1},[asdm,s]]"), [
+            1,
+            2,
+            3,
+            {"asd": 1},
+            [
+                "asdm",
+                "s"
+            ]
+        ]);
+
     });
 
     it('check if repetion is correct with html entity', function () {
 
-        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeat(&quot;s&quot;,2 )=>['s','s']/","comment":"Repeat value in array","return":"Return in string or number.","arguments":[{"comment":"String you want to duplicate","name":"value","type":"any"},{"comment":"how many times you want to repeate","name":"valueRepetion","type":"number"}]}`), {
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeat(&quot;s&quot;\\,2 )=>['s'\\,'s']","comment":"Repeat value in array","return":"Return in string or number.","arguments":[{"comment":"String you want to duplicate","name":"value","type":"any"},{"comment":"how many times you want to repeate","name":"valueRepetion","type":"number"}]}`), {
             "arguments": [
                 {"comment": "String you want to duplicate",
                     "name": "value",
@@ -65,10 +126,13 @@ describe('CJS: parseJson method', function () {
                     "type": "number"}
             ],
             "comment": "Repeat value in array",
-            "example": "arrayRepeat(\"s\",2 )=>['s','s']/",
+            "example": "arrayRepeat(\"s\",2 )=>['s','s']",
             "name": "arrayRepeat",
             "return": "Return in string or number."
         });
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeatss(\\"s\\"\\,2)=>\\[sa,s\\]\\}"}`), {"example": 'arrayRepeatss("s",2)=>[sa,s]}',
+            "name": 'arrayRepeat'});
 
     });
 
@@ -90,6 +154,12 @@ describe('CJS: parseJson method', function () {
     it('check if number argument', function () {
 
         assert.deepStrictEqual(parseJson(11), null);
+
+    });
+
+    it('check if string argument', function () {
+
+        assert.deepStrictEqual(parseJson("11"), null);
 
     });
 

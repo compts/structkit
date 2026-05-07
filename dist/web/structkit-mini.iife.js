@@ -5,8 +5,7 @@ __=__p
 
 
 _stk.__=__;
-var negOne = -1;var zero = 0;
-var one = 1;
+var negOne = -1;var zero = 0;var one = 1;
 var two = 2;
 var three = 3;
 var ten = 10;
@@ -215,11 +214,23 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 
-function has () {
-
-    var args=arguments;
+function add (value1, value2) {
 
     return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+function has () {
+
+    var args=arguments;    return curryArg(function (aa, bb) {
 
         return _has(aa, bb);
 
@@ -1268,23 +1279,9 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-_stk.arraySlice=arraySlice;function add (value1, value2) {
+_stk.arraySlice=arraySlice;function isEmpty (value) {
 
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-
-function isEmpty (value) {
-
-    var typeofvalue = getTypeofInternal(value);
-
-    var invalidList = [
+    var typeofvalue = getTypeofInternal(value);    var invalidList = [
         'null',
         'undefined'
     ];
@@ -1539,7 +1536,7 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-_stk.add=add;function asyncReplace (value, search, toReplace) {
+function asyncReplace (value, search, toReplace) {
 
     return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
@@ -1973,7 +1970,7 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+_stk.clone=clone;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -1981,7 +1978,7 @@ _stk.clone=clone;_stk.count=count;function curry (fun, num) {
 }
 
 _stk.curry=curry;
-function dec (value, default_value) {
+_stk.count=count;function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2185,14 +2182,16 @@ function getData (split_str, objectValue, isStrict) {
 
 }
 
-_stk.getData=getData;
+
 function isExact (whereValue, objectValue1, isExist) {
 
     return curryArg(function (rawWhereValue, rawObjectValue1, rawIsExist) {
 
         if (rawObjectValue1 === null) {
 
-            return false;        }
+            return false;
+
+        }
 
         var local_is_exist=has(rawIsExist)&&getTypeofInternal(rawIsExist) === "boolean"
             ?rawIsExist
@@ -2650,7 +2649,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2672,6 +2671,11 @@ _stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");}
+
+_stk.getValue=getValue;
 function groupBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -2705,11 +2709,6 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");}
-
-_stk.getValue=getValue;
 function gt (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2734,7 +2733,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-_stk.has=has;function reduce (func, defaultValue, listData) {
+function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2831,7 +2830,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2875,18 +2874,6 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
 function limit (objectValue, minValue, maxValue, func) {
 
     var cnt=0;    var glo_jsn={};
@@ -2929,18 +2916,18 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-function lte (value1, value2) {
+function like (objectValueWhere, objectValue) {
 
-    return curryArg(function (aa, bb) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return aa <= bb;    }, [
-        value1,
-        value2
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
+        objectValueWhere,
+        objectValue
     ], two);
 
 }
 
-_stk.lte=lte;
+_stk.like=like;
 function lt (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2953,48 +2940,19 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
-_stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
+function lte (value1, value2) {
 
-    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+    return curryArg(function (aa, bb) {
 
-        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
-            ? true
-            :rawIsStrict;        var typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            var rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            var validData = getData(rawValueFormat, typeObjectValue === "json"
-                ?rawbj
-                :value, refIsStrict);
-
-            if (isEmpty(validData) === false) {
-
-                total = append(total, validData);
-
-            }
-
-            return total;
-
-        }, [], objectValue);
-
-    }, [
-        valueFormat,
-        objectValue,
-        isStrict
+        return aa <= bb;    }, [
+        value1,
+        value2
     ], two);
 
 }
 
-_stk.mapGetData=mapGetData;
-function mergeWithKey (objectValue, mergeValue) {
+_stk.lte=lte;
+_stk.map=map;function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
 
@@ -3100,6 +3058,47 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;        var typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            var rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            var validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
+    ], two);
+
+}
+
+_stk.mapGetData=mapGetData;
 _stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
@@ -4789,6 +4788,19 @@ function strUnEscape (value, type) {
 }
 
 
+function strSubs (value, minValue, maxValue) {
+
+    if (has(maxValue)) {
+
+        return toString(value).substring(minValue, maxValue);
+
+    }
+
+    return toString(value).substring(minValue);
+
+}
+
+
 function parseJson (value, config) {
 
     var defaultConfig = varExtend({"disableCorrection": false,
@@ -4808,41 +4820,31 @@ function parseJson (value, config) {
     }
     if (defaultConfig.disableCorrection) {
 
-        var rawValue = cleanValue(value);
+        return JSON.parse(value);
 
-        if (rawValue === "") {
+    }
 
-            return defaultConfig.invalidDefaultValue;
+    try {
+
+        var stripValue = constrJson(strUnEscape(value));
+
+        return JSON.parse(stripValue, function (__, revValue) {
+
+            return revValue;
+
+        });
+
+    } catch (err) {
+
+        if (defaultConfig.throwError) {
+
+            throw err;
 
         }
 
-        return JSON.parse(rawValue);
-
-    }
-    var stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
-
-    var tagVal = getTagVal(stripValue);
-
-    if (tagVal.type === 'none') {
-
         return defaultConfig.invalidDefaultValue;
 
     }
-
-    var obgM = callbackParse(tagVal);
-
-    if (obgM === "") {
-
-        return defaultConfig.invalidDefaultValue;
-
-    }
-    var dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
-
-        return revValue;
-
-    });
-
-    return dataObj;
 
 }
 
@@ -4851,205 +4853,427 @@ function escapeQuotesJson (str) {
 
     str = str.replace(/&quot;/g, "&bsol;&quot;");
 
-    return str.replace(/&apos;/g, "&bsol;&quot;");
+    str= str.replace(/&apos;/g, "&bsol;&quot;");
+    var str_split = str.trim().split("");
+
+    each(str_split, function (value, key) {
+
+        if (key>zero && key<str_split.length-one) {
+
+            if (str_split[key] === '"' && (/^\\/g).test(strSubs(str_split.join(""), key-one)) === false) {
+
+                str_split[key] = '\\"';
+
+            }
+
+        }
+
+    });
+
+    return str_split.join("");
 
 }
 
 
-function cleanValue (value) {
+function validationLastStr (validValidation, firstFindAction, last_str) {
 
-    var refValue = value;
+    if (validValidation) {
 
-    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
-    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
-    refValue = refValue.replace(/[,]$/g, "");
+        last_str = last_str.replace(/\\/g, "");
+        if (firstFindAction === "char_obj") {
 
-    if ((/['`](.*)['`][\s\n\t]{0,}:/g).test(refValue) || (/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}\}/g).test(refValue)) {
+            last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
 
-        refValue = refValue.replace(/[\s\n]{0,}['`]+(.*)['`]+[\s\n]{0,}:/g, function (ss, ss1) {
+        } else if (firstFindAction === "qoute") {
 
-            return '"'+ss1.replace(/^['`]/g, "").replace(/['`]$/g, "")
-                .trim()+'":';
+            last_str = escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
 
-        });
+        } else if (firstFindAction === "number") {
 
-        refValue = refValue.replace(/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}/g, function (ss, ss1) {
+            last_str = last_str.trim();
 
-            var repVal = ss1.replace(/^['`]/g, "").replace(/['`]$/g, "");
+        } else {
 
-            if ((/(^[0-9]+$)/g).test(repVal)) {
-
-                return ':'+repVal
-                    .trim();
-
-            }
-
-            return ':"'+repVal
-                .trim()+'"';
-
-        });
-
-    }
-
-    if ((/^[^\\"](.*)[\s\n\t]{0,}:/g).test(refValue)) {
-
-        refValue = refValue.replace(/{(.*)[\s\n\t]{0,}:[\s\n\t]{0,}/g, function (ss, ss1) {
-
-            return '{"'+ss1.replace(/^"/g, "").replace(/"$/g, "")
-                .trim()+'":';
-
-        });
-
-    }
-
-    if ((/^\{/gmi).test(refValue) === false && (/\}$/).test(refValue) === false && ((/^\[/gmi).test(refValue)=== false && (/\]$/).test(refValue)=== false)) {
-
-        if (refValue.split(":").length> one) {
-
-            var valSplit = refValue.split(":");
-
-            refValue = valSplit[zero]+':'+valSplit[one].replace(/"(.*)"/g, function (ss, s1) {
-
-                if ((/\\"/g).test(s1)) {
-
-                    return '"'+s1+'"';
-
-                }
-
-                if ((/^\{/gmi).test(s1) && (/\}$/).test(s1)) {
-
-                    return s1;
-
-                }
-
-                return '"'+s1.replace(/"/g, '\\"')+'"';
-
-            });
+            last_str = escapeQuotesJson(last_str.trim());
 
         }
 
     }
 
-    return refValue;
+    return last_str;
 
 }
 
 
-function getTagVal (value) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar) {
 
-    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
+    var slashValue = (/[^\\]$/g).test(last_str.trim());
 
-        return {
+    if (slashValue && firstFindAction === "qoute") {
 
-            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
-            "tag_close": "}",
-            "tag_open": "{",
-            "type": "json"
-        };
+        slashValue = false;
+
+        if (firstFindAction === lastAction) {
+
+            slashValue = true;
+
+        }
+        if (slashValue) {
+
+            if ([
+                "separator",
+                "close_obj"
+            ].indexOf(currentAction) >= zero) {
+
+                var check_next_str = strSubs(ob_str, count+one);
+
+                slashValue = (/[\s\r\n]{0,}[\\]["'`]{1}/g).test(check_next_str.trim());
+                if (slashValue === false && check_next_str.trim().split("").length === zero) {
+
+                    slashValue = true;
+
+                } else {
+
+                    var isValidCloseNonQoute = (/^[\s\r\n]{0,}["'`]{0}/g).test(check_next_str.trim());
+
+                    if (currentAction ==="close_obj" && ob_type==="json" && valChar ==="}" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
+
+                        slashValue = true;
+
+                    }
+
+                    if (currentAction ==="close_obj" && ob_type==="array" && valChar ==="]" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
+
+                        slashValue = true;
+
+                    }
+
+                    if (slashValue === false && currentAction ==="separator" && (/[\\]{0}$/g).test(last_str.trim())) {
+
+                        slashValue = true;
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
-    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
 
-        return {
-            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
-            "tag_close": "]",
-            "tag_open": "[",
-            "type": "array"
-        };
+    return slashValue;
+
+}
+
+
+function getStructVal (ob_str, ob_type) {
+
+    var ass = ob_str.split("");
+    var appen_str = "";
+    var last_str = "";
+    var firstFindAction = "none";
+    var lastAction = "none";
+    var keyValType = ob_type==="json"
+        ? "key"
+        :"value";
+    var isOpen = false;
+    var count = 0;
+    var rawCount = 0;
+    var continue_vali = true;
+
+    while (count< ass.length) {
+
+        var valChar = ass[count];
+        var currentAction = charType(valChar);
+
+        if (isOpen) {
+
+            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar);
+
+            var str_append_last = "";
+
+            if (currentAction !== firstFindAction && slashValue) {
+
+                if (firstFindAction==="number" && currentAction==="char_obj" && valChar !==",") {
+
+                    firstFindAction = "char_obj";
+
+                }
+
+            }
+
+            if (currentAction !=="none") {
+
+                lastAction = currentAction;
+
+            }
+
+            if (currentAction === "open_obj" && slashValue) {
+
+                continue_vali = true;
+                count = ass.length+one;
+
+            }
+            var validValidation = false;
+
+            if (keyValType === "key" && continue_vali === false) {
+
+                if (valChar===":" && slashValue) {
+
+                    last_str = last_str.replace(/\\/g, "");
+                    if (firstFindAction === "qoute") {
+
+                        last_str = last_str.trim().replace(/['`]$/g, '"')+'';
+
+                    } else {
+
+                        last_str = '"'+last_str.trim().replace(/['`]$/g, '')+'"';
+
+                    }
+                    rawCount +=one;
+
+                    str_append_last=":";
+                    continue_vali = true;
+                    keyValType = "value";
+                    validValidation = false;
+
+                }
+
+            }
+            if (keyValType === "value" && continue_vali === false) {
+
+                if (currentAction === "close_obj" && slashValue) {
+
+                    keyValType = ob_type==="json"
+                        ? "key"
+                        :"value";
+                    validValidation = true;
+                    continue_vali = true;
+                    isOpen = true;
+
+                }
+                if (currentAction === "separator" && slashValue) {
+
+                    rawCount +=one;
+                    str_append_last=",";
+                    continue_vali = true;
+                    validValidation = true;
+                    keyValType = ob_type==="json"
+                        ? "key"
+                        :"value";
+
+                }
+
+            }
+            last_str = validationLastStr(validValidation, firstFindAction, last_str);
+
+            if (continue_vali) {
+
+                isOpen = false;
+                appen_str+=last_str+str_append_last;
+                last_str = "";
+
+            } else {
+
+                last_str+=valChar;
+                rawCount +=one;
+
+            }
+
+        } else {
+
+            if ([
+                "open_obj",
+                "close_obj"
+            ].indexOf(currentAction) >=zero) {
+
+                count = ass.length+one;
+                firstFindAction = currentAction;
+
+            } else if (currentAction === "qoute") {
+
+                continue_vali = false;
+                rawCount +=one;
+                isOpen = true;
+                last_str = '"';
+                firstFindAction = currentAction;
+                lastAction = "none";
+
+            } else {
+
+                rawCount +=one;
+                if (currentAction !== "none") {
+
+                    isOpen = true;
+                    last_str = valChar;
+                    continue_vali = false;
+                    firstFindAction = currentAction;
+                    lastAction = "none";
+
+                }
+
+            }
+
+        }
+
+        count+=one;
+
+    }
+
+    if ((/[,]{1,}[\s\t\n]{0,}$/g).test(appen_str)) {
+
+        rawCount -=one;
 
     }
 
     return {
-        "ret_value": "",
-        "tag_close": "",
-        "tag_open": "",
-        "type": "none"
+        "count": rawCount-one,
+        "word": appen_str.replace(/[,]{1,}[\s\t\n]{0,}$/g, "")
     };
 
 }
 
 
-function callbackParse (glb) {
+function constrJson (ob_str) {
 
-    var charList = [];
-    var isOpen = false;
-    var recCount = zero;
-    var groupData = {};
-    var lType = {
-        "[": "array",
-        "{": "json"
-    };
+    var ass = ob_str.replace(/\//g, "").split("");
+    var count = 0;
+    var rawCounter = 1;
+    var op_c = 0;
+    var structCount = 0;
+    var type_c = "";
 
-    each(glb.ret_value.split(""), function (value) {
+    var append_str = "";
 
-        var clnValue = value;
+    while (count< ass.length) {
 
-        if (indexOfExist(value, [
-            "{",
-            "["
+        var vales = ass[count];
+
+        if (op_c >zero) {
+
+            if (type_c !== "") {
+
+                var cntntStr = strSubs(ob_str, count);
+                var valStruct = getStructVal(cntntStr, type_c);
+
+                append_str += valStruct.word;
+                rawCounter += valStruct.count;
+                structCount = rawCounter;
+
+                if (rawCounter<=zero) {
+
+                    structCount = zero;
+                    rawCounter =one;
+
+                }
+
+                type_c = "";
+
+            }
+
+        }
+
+        if (indexOfExist(vales, [
+            "[",
+            "{"
         ])) {
 
-            isOpen =true;
-            recCount +=one;
-            charList.push("#$"+recCount+"$#");
+            type_c = {
+                "[": "array",
+                "{": "json"
+            }[vales];
 
-            groupData[recCount] = {"type": lType[value],
-                "value": clnValue};
-            clnValue = "";
+            if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
 
-        }
-        if (isOpen===false) {
+                append_str += ",";
 
-            charList.push(value);
-
-        }
-        if (isOpen) {
-
-            groupData[recCount].value +=clnValue;
+            }
+            op_c +=one;
+            append_str += vales;
 
         }
 
-        if (indexOfExist(value, [
-            "}",
-            "]"
+        if (indexOfExist(vales, [
+            "]",
+            "}"
         ])) {
 
-            isOpen =false;
+            op_c -=one;
+
+            if (op_c >=zero) {
+
+                append_str += vales;
+
+            }
 
         }
 
-    });
+        count +=rawCounter;
+        rawCounter = one;
 
-    var groupChart = [];
+    }
 
-    each(charList.join("").split(","), function (value) {
+    if (op_c >zero) {
 
-        groupChart.push(cleanValue(value));
+        throw new Error("Invalid JSON string");
 
-    });
+    }
 
-    var joinGroupChart = groupChart.join(",");
+    return append_str;
 
-    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
+}
 
-        var indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
 
-        if (indexV1.type === "json") {
+function charType (valChar) {
 
-            return cleanValue(indexV1.value);
+    var currentAction = "none";
 
-        }
-        if (indexV1.type === "array") {
+    if ([
+        "[",
+        '{'
+    ].indexOf(valChar) >=zero) {
 
-            return cleanValue(indexV1.value);
+        currentAction = "open_obj";
 
-        }
+    } else if ([
+        "]",
+        '}'
+    ].indexOf(valChar) >=zero) {
 
-        return null;
+        currentAction = "close_obj";
 
-    });
+    } else if ([","].indexOf(valChar) >=zero) {
 
-    return joinGroupChart;
+        currentAction = "separator";
+
+    } else if ([
+        "'",
+        '"',
+        '`'
+    ].indexOf(valChar) >=zero) {
+
+        currentAction = "qoute";
+
+    } else if ((/[0-9]/g).test(valChar)) {
+
+        currentAction = "number";
+
+    } else if ([
+        "'",
+        '"',
+        '`'
+    ].indexOf(valChar) === negOne && (/[\s\t\t]/g).test(valChar) ===false) {
+
+        currentAction = "char_obj";
+
+    } else {
+
+        currentAction = "none";
+
+    }
+
+    return currentAction;
 
 }
 
@@ -5248,12 +5472,12 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.range=range;_stk.reduce=reduce;_stk.remove=remove;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;function repeat (value, valueRepetion) {
+function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5601,23 +5825,12 @@ _stk.strLower=strLower;function strSnake (value) {
         .join("_");}
 
 _stk.strSnake=strSnake;
-function strSubs (value, minValue, maxValue) {
-
-    if (has(maxValue)) {
-
-        return toString(value).substring(minValue, maxValue);    }
-
-    return toString(value).substring(minValue);
-
-}
-
-_stk.strSubs=strSubs;
 _stk.strUnEscape=strUnEscape;function strUpper (value) {
 
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
+_stk.subtract=subtract;_stk.strSubs=strSubs;function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
@@ -5925,7 +6138,7 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
-_stk.toString=toString;function trimStart (value, remove_value) {
+function trimStart (value, remove_value) {
 
     var rx = new RegExp('^[' + whitespace + ']*');    var rawValue = toString(value).replace(rx, "");
 
@@ -5984,7 +6197,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.toString=toString;_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
 
     var arg=arguments;    return curryArg(function () {
 

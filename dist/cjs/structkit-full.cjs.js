@@ -15,8 +15,6 @@ const __=__p;
  */
 
 _stk.__=__;
-
-
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -261,6 +259,35 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
 
 /**
  * Check if object has value or null or undefined
@@ -1695,32 +1722,6 @@ _stk.arraySlice=arraySlice;
 
 
 /**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-/**
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
@@ -2111,8 +2112,6 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-
-_stk.add=add;
 
 
 /**
@@ -2689,8 +2688,6 @@ _stk.calculate=calculate;
 
 _stk.clone=clone;
 
-_stk.count=count;
-
 
 /**
  * Create your own curry for your onw function
@@ -2715,6 +2712,8 @@ function curry (fun, num) {
 }
 
 _stk.curry=curry;
+
+_stk.count=count;
 
 
 /**
@@ -3026,9 +3025,6 @@ function getData (split_str, objectValue, isStrict) {
     ], two);
 
 }
-
-_stk.getData=getData;
-
 
 /**
  * Looking the data in JSON and Array base on object value
@@ -3606,6 +3602,8 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
+_stk.getData=getData;
+
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
@@ -3645,6 +3643,27 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -3695,27 +3714,6 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
 
 
 /**
@@ -3774,8 +3772,6 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-
-_stk.has=has;
 
 
 /**
@@ -3903,6 +3899,8 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
+_stk.has=has;
+
 _stk.inc=inc;
 
 _stk.indexOf=indexOf;
@@ -4015,35 +4013,6 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1}, {"s1":1,"s2":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
-
-    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
-
-
-/**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
  *
  * @since 1.0.1
@@ -4104,32 +4073,32 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less than to equal
+ * Searching the data either in array or json object to get similar value of data
  *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @returns {any} Return either Json to Array.
  * @example
  *
- * lte(1, 2)
- * // => true
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
  */
-function lte (value1, value2) {
+function like (objectValueWhere, objectValue) {
 
-    return curryArg(function (aa, bb) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return aa <= bb;
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
 
     }, [
-        value1,
-        value2
+        objectValueWhere,
+        objectValue
     ], two);
 
 }
 
-_stk.lte=lte;
+_stk.like=like;
 
 
 /**
@@ -4160,66 +4129,36 @@ function lt (value1, value2) {
 
 _stk.lt=lt;
 
-_stk.map=map;
-
 
 /**
- * A Function to map the data either an array or an object using getData function.
+ * To check if the two arguments are less than to equal
  *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
+ * lte(1, 2)
+ * // => true
  */
-function mapGetData (valueFormat, objectValue, isStrict) {
+function lte (value1, value2) {
 
-    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+    return curryArg(function (aa, bb) {
 
-        const refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
-            ? true
-            :rawIsStrict;
-
-        const typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            const rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            const validData = getData(rawValueFormat, typeObjectValue === "json"
-                ?rawbj
-                :value, refIsStrict);
-
-            if (isEmpty(validData) === false) {
-
-                total = append(total, validData);
-
-            }
-
-            return total;
-
-        }, [], objectValue);
+        return aa <= bb;
 
     }, [
-        valueFormat,
-        objectValue,
-        isStrict
+        value1,
+        value2
     ], two);
 
 }
 
-_stk.mapGetData=mapGetData;
+_stk.lte=lte;
+
+_stk.map=map;
 
 
 /**
@@ -4368,6 +4307,65 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
+ * @example
+ *
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        const refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;
+
+        const typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            const rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            const validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
+    ], two);
+
+}
+
+_stk.mapGetData=mapGetData;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6319,11 +6317,37 @@ function strUnEscape (value, type) {
 }
 
 /**
+ * String Substr
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {string} value String data
+ * @param {number} minValue minimum value
+ * @param {number=} maxValue maximum value
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * strSubs('The fish is goad   with Goat-1ss',4)
+ *=> fish is goad   with Goat-1ss
+ */
+function strSubs (value, minValue, maxValue) {
+
+    if (has(maxValue)) {
+
+        return toString(value).substring(minValue, maxValue);
+
+    }
+
+    return toString(value).substring(minValue);
+
+}
+
+/**
  * Parse from String to JSON object
  *
  * @since 1.4.86
  * @category Collection
- * @param {string} value String you want to convert to json object
+ * @param {any} value Any type you want to convert to json object
  * @param {any=} config Option you want to set in this function.
  * @returns {any} Returns the json object.
  * @example
@@ -6350,48 +6374,38 @@ function parseJson (value, config) {
     }
     if (defaultConfig.disableCorrection) {
 
-        const rawValue = cleanValue(value);
+        return JSON.parse(value);
 
-        if (rawValue === "") {
+    }
 
-            return defaultConfig.invalidDefaultValue;
+    try {
+
+        const stripValue = constrJson(strUnEscape(value));
+
+        return JSON.parse(stripValue, function (__, revValue) {
+
+            return revValue;
+
+        });
+
+    } catch (err) {
+
+        if (defaultConfig.throwError) {
+
+            throw err;
 
         }
 
-        return JSON.parse(rawValue);
-
-    }
-    const stripValue=cleanValue(strUnEscape(escapeQuotesJson(value)));
-
-    const tagVal = getTagVal(stripValue);
-
-    if (tagVal.type === 'none') {
-
         return defaultConfig.invalidDefaultValue;
 
     }
-
-    const obgM = callbackParse(tagVal);
-
-    if (obgM === "") {
-
-        return defaultConfig.invalidDefaultValue;
-
-    }
-    const dataObj = JSON.parse(tagVal.tag_open+obgM+tagVal.tag_close, function (__, revValue) {
-
-        return revValue;
-
-    });
-
-    return dataObj;
 
 }
 
 /**
  * String escape qoutes
  *
- * @since 1.4.872
+ * @since 1.4.9
  * @category Collection
  * @param {any} str Object you want to convert to JSON string
  * @returns {string} Return JSON string
@@ -6404,238 +6418,492 @@ function escapeQuotesJson (str) {
 
     str = str.replace(/&quot;/g, "&bsol;&quot;");
 
-    return str.replace(/&apos;/g, "&bsol;&quot;");
+    str= str.replace(/&apos;/g, "&bsol;&quot;");
+    const str_split = str.trim().split("");
+
+    each(str_split, function (value, key) {
+
+        if (key>zero && key<str_split.length-one) {
+
+            if (str_split[key] === '"' && (/^\\/g).test(strSubs(str_split.join(""), key-one)) === false) {
+
+                str_split[key] = '\\"';
+
+            }
+
+        }
+
+    });
+
+    return str_split.join("");
 
 }
 
 /**
- * Cleanup unnecessary character
+ * String escape qoutes
  *
- * @since 1.4.86
+ * @since 1.4.9
  * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
+ * @param {boolean} validValidation Object you want to convert to JSON string
+ * @param {str} firstFindAction Object you want to convert to JSON string
+ * @param {str} last_str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
  * @example
  *
- * parseJson('{}' )
- *=>{}
+ * escapeQuotesStr("'" )
+ *=>"\\'"
  */
-function cleanValue (value) {
+function validationLastStr (validValidation, firstFindAction, last_str) {
 
-    let refValue = value;
+    if (validValidation) {
 
-    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
-    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
-    refValue = refValue.replace(/[,]$/g, "");
+        last_str = last_str.replace(/\\/g, "");
+        if (firstFindAction === "char_obj") {
 
-    if ((/['`](.*)['`][\s\n\t]{0,}:/g).test(refValue) || (/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}\}/g).test(refValue)) {
+            last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
 
-        refValue = refValue.replace(/[\s\n]{0,}['`]+(.*)['`]+[\s\n]{0,}:/g, function (ss, ss1) {
+        } else if (firstFindAction === "qoute") {
 
-            return '"'+ss1.replace(/^['`]/g, "").replace(/['`]$/g, "")
-                .trim()+'":';
+            last_str = escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
 
-        });
+        } else if (firstFindAction === "number") {
 
-        refValue = refValue.replace(/:[\s\n\t]{0,}['`](.*)['`][\s\n\t]{0,}/g, function (ss, ss1) {
+            last_str = last_str.trim();
 
-            const repVal = ss1.replace(/^['`]/g, "").replace(/['`]$/g, "");
+        } else {
 
-            if ((/(^[0-9]+$)/g).test(repVal)) {
-
-                return ':'+repVal
-                    .trim();
-
-            }
-
-            return ':"'+repVal
-                .trim()+'"';
-
-        });
-
-    }
-
-    if ((/^[^\\"](.*)[\s\n\t]{0,}:/g).test(refValue)) {
-
-        refValue = refValue.replace(/{(.*)[\s\n\t]{0,}:[\s\n\t]{0,}/g, function (ss, ss1) {
-
-            return '{"'+ss1.replace(/^"/g, "").replace(/"$/g, "")
-                .trim()+'":';
-
-        });
-
-    }
-
-    if ((/^\{/gmi).test(refValue) === false && (/\}$/).test(refValue) === false && ((/^\[/gmi).test(refValue)=== false && (/\]$/).test(refValue)=== false)) {
-
-        if (refValue.split(":").length> one) {
-
-            const valSplit = refValue.split(":");
-
-            refValue = valSplit[zero]+':'+valSplit[one].replace(/"(.*)"/g, function (ss, s1) {
-
-                if ((/\\"/g).test(s1)) {
-
-                    return '"'+s1+'"';
-
-                }
-
-                if ((/^\{/gmi).test(s1) && (/\}$/).test(s1)) {
-
-                    return s1;
-
-                }
-
-                return '"'+s1.replace(/"/g, '\\"')+'"';
-
-            });
+            last_str = escapeQuotesJson(last_str.trim());
 
         }
 
     }
 
-    return refValue;
+    return last_str;
 
 }
 
 /**
- * Parse Json object
+ * String escape qoutes
  *
- * @since 1.4.86
+ * @since 1.4.9
  * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
+ * @param {any} last_str Object you want to convert to JSON string
+ * @param {any} firstFindAction Object you want to convert to JSON string
+ * @param {any} lastAction Object you want to convert to JSON string
+ * @param {any} currentAction Object you want to convert to JSON string
+ * @param {any} ob_str Object you want to convert to JSON string
+ * @param {any} count Object you want to convert to JSON string
+ * @param {any} ob_type Object you want to convert to JSON string
+ * @param {any} valChar Object you want to convert to JSON string
+ * @returns {string} Return JSON string
  * @example
  *
- * getTagVal('{}' )
- *=>{}
+ * validateBacklastHasChar("'" )
+ *=>"\\'"
  */
-function getTagVal (value) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar) {
 
-    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
+    let slashValue = (/[^\\]$/g).test(last_str.trim());
 
-        return {
+    if (slashValue && firstFindAction === "qoute") {
 
-            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
-            "tag_close": "}",
-            "tag_open": "{",
-            "type": "json"
-        };
+        slashValue = false;
+
+        if (firstFindAction === lastAction) {
+
+            slashValue = true;
+
+        }
+        if (slashValue) {
+
+            if ([
+                "separator",
+                "close_obj"
+            ].indexOf(currentAction) >= zero) {
+
+                const check_next_str = strSubs(ob_str, count+one);
+
+                slashValue = (/[\s\r\n]{0,}[\\]["'`]{1}/g).test(check_next_str.trim());
+                if (slashValue === false && check_next_str.trim().split("").length === zero) {
+
+                    slashValue = true;
+
+                } else {
+
+                    const isValidCloseNonQoute = (/^[\s\r\n]{0,}["'`]{0}/g).test(check_next_str.trim());
+
+                    if (currentAction ==="close_obj" && ob_type==="json" && valChar ==="}" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
+
+                        slashValue = true;
+
+                    }
+
+                    if (currentAction ==="close_obj" && ob_type==="array" && valChar ==="]" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
+
+                        slashValue = true;
+
+                    }
+
+                    if (slashValue === false && currentAction ==="separator" && (/[\\]{0}$/g).test(last_str.trim())) {
+
+                        slashValue = true;
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
-    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
 
-        return {
-            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
-            "tag_close": "]",
-            "tag_open": "[",
-            "type": "array"
-        };
+    return slashValue;
+
+}
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} ob_str Object you want to convert to JSON string
+ * @param {any} ob_type Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function getStructVal (ob_str, ob_type) {
+
+    const ass = ob_str.split("");
+    let appen_str = "";
+    let last_str = "";
+    let firstFindAction = "none";
+    let lastAction = "none";
+    let keyValType = ob_type==="json"
+        ? "key"
+        :"value";
+    let isOpen = false;
+    let count = 0;
+    let rawCount = 0;
+    let continue_vali = true;
+
+    while (count< ass.length) {
+
+        const valChar = ass[count];
+        const currentAction = charType(valChar);
+
+        if (isOpen) {
+
+            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar);
+
+            let str_append_last = "";
+
+            if (currentAction !== firstFindAction && slashValue) {
+
+                if (firstFindAction==="number" && currentAction==="char_obj" && valChar !==",") {
+
+                    firstFindAction = "char_obj";
+
+                }
+
+            }
+
+            if (currentAction !=="none") {
+
+                lastAction = currentAction;
+
+            }
+
+            if (currentAction === "open_obj" && slashValue) {
+
+                continue_vali = true;
+                count = ass.length+one;
+
+            }
+            let validValidation = false;
+
+            if (keyValType === "key" && continue_vali === false) {
+
+                if (valChar===":" && slashValue) {
+
+                    last_str = last_str.replace(/\\/g, "");
+                    if (firstFindAction === "qoute") {
+
+                        last_str = last_str.trim().replace(/['`]$/g, '"')+'';
+
+                    } else {
+
+                        last_str = '"'+last_str.trim().replace(/['`]$/g, '')+'"';
+
+                    }
+                    rawCount +=one;
+
+                    str_append_last=":";
+                    continue_vali = true;
+                    keyValType = "value";
+                    validValidation = false;
+
+                }
+
+            }
+            if (keyValType === "value" && continue_vali === false) {
+
+                if (currentAction === "close_obj" && slashValue) {
+
+                    keyValType = ob_type==="json"
+                        ? "key"
+                        :"value";
+                    validValidation = true;
+                    continue_vali = true;
+                    isOpen = true;
+
+                }
+                if (currentAction === "separator" && slashValue) {
+
+                    rawCount +=one;
+                    str_append_last=",";
+                    continue_vali = true;
+                    validValidation = true;
+                    keyValType = ob_type==="json"
+                        ? "key"
+                        :"value";
+
+                }
+
+            }
+            last_str = validationLastStr(validValidation, firstFindAction, last_str);
+
+            if (continue_vali) {
+
+                isOpen = false;
+                appen_str+=last_str+str_append_last;
+                last_str = "";
+
+            } else {
+
+                last_str+=valChar;
+                rawCount +=one;
+
+            }
+
+        } else {
+
+            if ([
+                "open_obj",
+                "close_obj"
+            ].indexOf(currentAction) >=zero) {
+
+                count = ass.length+one;
+                firstFindAction = currentAction;
+
+            } else if (currentAction === "qoute") {
+
+                continue_vali = false;
+                rawCount +=one;
+                isOpen = true;
+                last_str = '"';
+                firstFindAction = currentAction;
+                lastAction = "none";
+
+            } else {
+
+                rawCount +=one;
+                if (currentAction !== "none") {
+
+                    isOpen = true;
+                    last_str = valChar;
+                    continue_vali = false;
+                    firstFindAction = currentAction;
+                    lastAction = "none";
+
+                }
+
+            }
+
+        }
+
+        count+=one;
+
+    }
+
+    if ((/[,]{1,}[\s\t\n]{0,}$/g).test(appen_str)) {
+
+        rawCount -=one;
 
     }
 
     return {
-        "ret_value": "",
-        "tag_close": "",
-        "tag_open": "",
-        "type": "none"
+        "count": rawCount-one,
+        "word": appen_str.replace(/[,]{1,}[\s\t\n]{0,}$/g, "")
     };
 
 }
 
 /**
- * Parse Json object
+ * String escape qoutes
  *
- * @since 1.4.86
+ * @since 1.4.872
  * @category Collection
- * @param {any} glb String you want to convert to
- * @returns {any} Returns the json.
+ * @param {any} ob_str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
  * @example
  *
- * parseJson('{}' )
- *=>{}
+ * constrJson("'" )
+ *=>"\\'"
  */
-function callbackParse (glb) {
+function constrJson (ob_str) {
 
-    const charList = [];
-    let isOpen = false;
-    let recCount = zero;
-    const groupData = {};
-    const lType = {
-        "[": "array",
-        "{": "json"
-    };
+    const ass = ob_str.replace(/\//g, "").split("");
+    let count = 0;
+    let rawCounter = 1;
+    let op_c = 0;
+    let structCount = 0;
+    let type_c = "";
 
-    each(glb.ret_value.split(""), function (value) {
+    let append_str = "";
 
-        let clnValue = value;
+    while (count< ass.length) {
 
-        if (indexOfExist(value, [
-            "{",
-            "["
+        const vales = ass[count];
+
+        if (op_c >zero) {
+
+            if (type_c !== "") {
+
+                const cntntStr = strSubs(ob_str, count);
+                const valStruct = getStructVal(cntntStr, type_c);
+
+                append_str += valStruct.word;
+                rawCounter += valStruct.count;
+                structCount = rawCounter;
+
+                if (rawCounter<=zero) {
+
+                    structCount = zero;
+                    rawCounter =one;
+
+                }
+
+                type_c = "";
+
+            }
+
+        }
+
+        if (indexOfExist(vales, [
+            "[",
+            "{"
         ])) {
 
-            isOpen =true;
-            recCount +=one;
-            charList.push("#$"+recCount+"$#");
+            type_c = {
+                "[": "array",
+                "{": "json"
+            }[vales];
 
-            groupData[recCount] = {"type": lType[value],
-                "value": clnValue};
-            clnValue = "";
+            if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
 
-        }
-        if (isOpen===false) {
+                append_str += ",";
 
-            charList.push(value);
-
-        }
-        if (isOpen) {
-
-            groupData[recCount].value +=clnValue;
+            }
+            op_c +=one;
+            append_str += vales;
 
         }
 
-        if (indexOfExist(value, [
-            "}",
-            "]"
+        if (indexOfExist(vales, [
+            "]",
+            "}"
         ])) {
 
-            isOpen =false;
+            op_c -=one;
+
+            if (op_c >=zero) {
+
+                append_str += vales;
+
+            }
 
         }
 
-    });
+        count +=rawCounter;
+        rawCounter = one;
 
-    const groupChart = [];
+    }
 
-    each(charList.join("").split(","), function (value) {
+    if (op_c >zero) {
 
-        groupChart.push(cleanValue(value));
+        throw new Error("Invalid JSON string");
 
-    });
+    }
 
-    let joinGroupChart = groupChart.join(",");
+    return append_str;
 
-    joinGroupChart = joinGroupChart.replace(/#\$([0-9]+)\$#/g, function (wh, v1) {
+}
 
-        const indexV1 = groupData[parseInt(v1.replace(/#\$([0-9]+)\$#/g, "$1"))];
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} valChar Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * charType("'" )
+ *=>"\\'"
+ */
+function charType (valChar) {
 
-        if (indexV1.type === "json") {
+    let currentAction = "none";
 
-            return cleanValue(indexV1.value);
+    if ([
+        "[",
+        '{'
+    ].indexOf(valChar) >=zero) {
 
-        }
-        if (indexV1.type === "array") {
+        currentAction = "open_obj";
 
-            return cleanValue(indexV1.value);
+    } else if ([
+        "]",
+        '}'
+    ].indexOf(valChar) >=zero) {
 
-        }
+        currentAction = "close_obj";
 
-        return null;
+    } else if ([","].indexOf(valChar) >=zero) {
 
-    });
+        currentAction = "separator";
 
-    return joinGroupChart;
+    } else if ([
+        "'",
+        '"',
+        '`'
+    ].indexOf(valChar) >=zero) {
+
+        currentAction = "qoute";
+
+    } else if ((/[0-9]/g).test(valChar)) {
+
+        currentAction = "number";
+
+    } else if ([
+        "'",
+        '"',
+        '`'
+    ].indexOf(valChar) === negOne && (/[\s\t\t]/g).test(valChar) ===false) {
+
+        currentAction = "char_obj";
+
+    } else {
+
+        currentAction = "none";
+
+    }
+
+    return currentAction;
 
 }
 
@@ -6909,6 +7177,8 @@ _stk.range=range;
 
 _stk.reduce=reduce;
 
+_stk.remove=remove;
+
 
 /**
  * Regex Count Group number
@@ -6929,8 +7199,6 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
 
 
 /**
@@ -7519,35 +7787,6 @@ function strSnake (value) {
 
 _stk.strSnake=strSnake;
 
-
-/**
- * String Substr
- *
- * @since 1.4.5
- * @category String
- * @param {string} value String data
- * @param {number} minValue minimum value
- * @param {number=} maxValue maximum value
- * @returns {string} Returns camel sting data
- * @example
- *
- * strSubs('The fish is goad   with Goat-1ss',4)
- *=> fish is goad   with Goat-1ss
- */
-function strSubs (value, minValue, maxValue) {
-
-    if (has(maxValue)) {
-
-        return toString(value).substring(minValue, maxValue);
-
-    }
-
-    return toString(value).substring(minValue);
-
-}
-
-_stk.strSubs=strSubs;
-
 _stk.strUnEscape=strUnEscape;
 
 
@@ -7572,6 +7811,8 @@ function strUpper (value) {
 _stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
+
+_stk.strSubs=strSubs;
 
 
 /**
@@ -8008,8 +8249,6 @@ function setDepthValue (arryData, value) {
 
 _stk.toPairs=toPairs;
 
-_stk.toString=toString;
-
 
 /**
  * String trim  at the start only
@@ -8109,6 +8348,8 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
+
+_stk.toString=toString;
 
 _stk.trimEnd=trimEnd;
 
