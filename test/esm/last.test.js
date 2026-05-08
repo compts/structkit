@@ -1,5 +1,5 @@
 
-import {last} from "../../dist/esm/node.esm";
+import {last} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const eight=8,

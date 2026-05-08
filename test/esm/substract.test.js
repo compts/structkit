@@ -1,4 +1,4 @@
-import {subtract} from "../../dist/esm/node.esm";
+import {subtract} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const one =1;

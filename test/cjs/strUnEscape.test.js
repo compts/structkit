@@ -15,5 +15,10 @@ describe('CJS: strUnEscape method', function () {
         assert.strictEqual(strUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'), "yahii & adad ^ss");
 
     });
+    it('check Value if converter default html decimal code', function () {
+
+        assert.strictEqual(strUnEscape('yahii&#160;&#38;&#160;adad&#160;&#710;ss', "decimal"), "yahii & adad ^ss");
+
+    });
 
 });

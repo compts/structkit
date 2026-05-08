@@ -1,4 +1,4 @@
-import {toString} from "../../dist/esm/node.esm";
+import {toString} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const ten=10;

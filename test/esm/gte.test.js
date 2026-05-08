@@ -1,4 +1,4 @@
-import {gte} from "../../dist/esm/node.esm";
+import {gte} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const one =1;

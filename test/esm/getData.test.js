@@ -1,4 +1,4 @@
-import {getData, isFunction} from "../../dist/esm/node.esm";
+import {getData, isFunction} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: getData method', function () {

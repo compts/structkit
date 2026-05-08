@@ -1,5 +1,5 @@
 
-import {indexOfExist} from "../../dist/esm/node.esm";
+import {indexOfExist} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const eight=8,

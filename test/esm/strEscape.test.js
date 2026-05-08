@@ -1,5 +1,5 @@
 
-import {strEscape} from "../../dist/esm/node.esm";
+import {strEscape} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: strEscape method', function () {

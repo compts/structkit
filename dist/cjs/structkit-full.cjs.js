@@ -2794,9 +2794,9 @@ _stk.divide=divide;
 
 _stk.each=each;
 
-_stk.empty=empty;
-
 _stk.equal=equal;
+
+_stk.empty=empty;
 
 
 /**
@@ -3907,6 +3907,8 @@ _stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
+_stk.indexOfNotExist=indexOfNotExist;
+
 
 /**
  * Insert value in Json object or array
@@ -3949,8 +3951,6 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.indexOfNotExist=indexOfNotExist;
-
 _stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
@@ -3958,27 +3958,6 @@ _stk.isExact=isExact;
 _stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
 
 
 /**
@@ -4013,6 +3992,27 @@ _stk.lastIndexOf=lastIndexOf;
 
 
 /**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last;
+
+
+/**
  * Searching the data either in array or json object to get similar value of data
  *
  * @since 1.0.1
@@ -4039,6 +4039,96 @@ function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
+
+
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
+
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
+ * @example
+ *
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        const refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;
+
+        const typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            const rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            const validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
+    ], two);
+
+}
+
+_stk.mapGetData=mapGetData;
+
+_stk.map=map;
 
 
 /**
@@ -4099,96 +4189,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
-
-_stk.map=map;
-
-
-/**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
- * @example
- *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
- */
-function mapGetData (valueFormat, objectValue, isStrict) {
-
-    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
-
-        const refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
-            ? true
-            :rawIsStrict;
-
-        const typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            const rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            const validData = getData(rawValueFormat, typeObjectValue === "json"
-                ?rawbj
-                :value, refIsStrict);
-
-            if (isEmpty(validData) === false) {
-
-                total = append(total, validData);
-
-            }
-
-            return total;
-
-        }, [], objectValue);
-
-    }, [
-        valueFormat,
-        objectValue,
-        isStrict
-    ], two);
-
-}
-
-_stk.mapGetData=mapGetData;
 
 
 /**
@@ -4510,15 +4510,26 @@ function noteq (value1, value2) {
 _stk.noteq=noteq;
 
 
+const defaultOptionDelay = {
+
+    "autoStart": true
+};
+
 /**
- * On delay
+ * @typedef {Object} DelayResult
+ * @property {function(): void} cancel - Cancels the delay
+ * @property {function(): void} start - Starts the delay
+ */
+
+/**
+ * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
  *
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
  * @param {number=} wait timer for delay
  * @param {object=} option option for delay
- * @returns {object} Returns object.
+ * @returns {DelayResult} Returns object.
  * @example
  *
  *  onDelay(()=>{})
@@ -4526,9 +4537,7 @@ _stk.noteq=noteq;
  */
 function onDelay (func, wait, option) {
 
-    const extend = varExtend({
-        "autoStart": true
-    }, option);
+    const extend = varExtend(defaultOptionDelay, option);
 
     const sequence = new ClassDelay(extend, wait, func);
 
@@ -4567,6 +4576,8 @@ function ClassDelay (extend, wait, func) {
 
     this.timeout = null;
 
+    this.returned = null;
+
 }
 
 ClassDelay.prototype.cancel = function () {
@@ -4577,6 +4588,7 @@ ClassDelay.prototype.cancel = function () {
 
 ClassDelay.prototype.start = function () {
 
+    this.extend = varExtend(defaultOptionDelay, this.extend);
     const valueWaited = this.wait || zero;
 
     // eslint-disable-next-line consistent-this
@@ -4584,7 +4596,7 @@ ClassDelay.prototype.start = function () {
 
     this.timeout = setTimeout(function () {
 
-        main.func();
+        main.returned = main.func();
 
     }, valueWaited);
 
@@ -4593,15 +4605,27 @@ ClassDelay.prototype.start = function () {
 _stk.onDelay=onDelay;
 
 
+const defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};
+
 /**
- * On sequence
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+
+/**
+ * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
  *
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
  * @param {number=} wait timer for delay
  * @param {object=} option option for delay
- * @returns {object} Returns object.
+ * @returns {SequenceResult} Returns object.
  * @example
  *
  *  onSequence(()=>{})
@@ -4609,11 +4633,7 @@ _stk.onDelay=onDelay;
  */
 function onSequence (func, wait, option) {
 
-    const extend = varExtend({
-
-        "autoStart": true,
-        "limitCounterClear": zero
-    }, option);
+    const extend = varExtend(defaultOption, option);
 
     const sequence = new ClassSequence(extend, wait, func);
 
@@ -4651,6 +4671,8 @@ function ClassSequence (extend, wait, func) {
 
     this.func = func;
 
+    this.returned = null;
+
 }
 
 ClassSequence.prototype.cancel = function () {
@@ -4661,6 +4683,7 @@ ClassSequence.prototype.cancel = function () {
 
 ClassSequence.prototype.start = function () {
 
+    this.extend = varExtend(defaultOption, this.extend);
     const valueWaited = this.wait || zero;
     let counter = zero;
     // eslint-disable-next-line consistent-this
@@ -4668,18 +4691,14 @@ ClassSequence.prototype.start = function () {
 
     main.interval = setInterval(function () {
 
-        main.func();
-        if (main.extend.limitCounterClear >zero) {
-
-            if (counter >= main.extend.limitCounterClear) {
-
-                clearInterval(main.interval);
-
-            }
-
-        }
+        main.returned = main.func();
 
         counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
 
     }, valueWaited);
 
@@ -6380,6 +6399,17 @@ function strSubs (value, minValue, maxValue) {
 
 }
 
+const ObjOpen = {
+    "[": {
+        "close": "]",
+        "type": "array"
+    },
+    "{": {
+        "close": "}",
+        "type": "json"
+    }
+};
+
 /**
  * Parse string to JSON object with type conversion and correction
  *
@@ -6802,6 +6832,7 @@ function constrJson (ob_str) {
     let type_c = "";
 
     let append_str = "";
+    let firstExpectedClose = "";
 
     while (count< ass.length) {
 
@@ -6836,10 +6867,12 @@ function constrJson (ob_str) {
             "{"
         ])) {
 
-            type_c = {
-                "[": "array",
-                "{": "json"
-            }[vales];
+            type_c = ObjOpen[vales].type;
+            if (op_c ===zero) {
+
+                firstExpectedClose = ObjOpen[vales].close;
+
+            }
 
             if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
 
@@ -6868,6 +6901,13 @@ function constrJson (ob_str) {
 
         count +=rawCounter;
         rawCounter = one;
+
+    }
+
+    if (op_c ===one && firstExpectedClose !== "") {
+
+        op_c -=one;
+        append_str+=firstExpectedClose;
 
     }
 
@@ -6946,6 +6986,47 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
+
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+function pipe (...arg) {
+
+    const pipeConst = first(arg);
+    const varLimit = limit(arg, one);
+    const that = this;
+
+    return curryArg(function (...rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
 
 
 /**
@@ -7135,47 +7216,6 @@ _stk.parseString=parseString;
 
 
 /**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-function pipe (...arg) {
-
-    const pipeConst = first(arg);
-    const varLimit = limit(arg, one);
-    const that = this;
-
-    return curryArg(function (...rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-
-
-/**
  * To create single random value from array
  *
  * @since 1.0.1
@@ -7240,38 +7280,6 @@ _stk.remove=remove;
 
 
 /**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-        const nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
-
-
-/**
  * Return reverse order of array
  *
  * @since 1.4.9
@@ -7307,6 +7315,38 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
 
 _stk.roundDecimal=roundDecimal;
 
@@ -7826,6 +7866,8 @@ function strSnake (value) {
 
 _stk.strSnake=strSnake;
 
+_stk.strSubs=strSubs;
+
 _stk.strUnEscape=strUnEscape;
 
 
@@ -7848,8 +7890,6 @@ function strUpper (value) {
 }
 
 _stk.strUpper=strUpper;
-
-_stk.strSubs=strSubs;
 
 _stk.subtract=subtract;
 
@@ -8202,29 +8242,6 @@ _stk.toDouble=toDouble;
 
 
 /**
- * To extract number in string and convert to , it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger("11d")
- *=>11
- */
-function toInteger (value) {
-
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-_stk.toInteger=toInteger;
-
-
-/**
  *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
  * @since 1.4.87
@@ -8287,6 +8304,29 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
+
+
+/**
+ * To extract number in string and convert to , it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger("11d")
+ *=>11
+ */
+function toInteger (value) {
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+_stk.toInteger=toInteger;
 
 _stk.toString=toString;
 
@@ -8392,6 +8432,8 @@ _stk.trim=trim;
 
 _stk.trimEnd=trimEnd;
 
+_stk.trimStart=trimStart;
+
 
 /**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
@@ -8434,8 +8476,6 @@ function union (...arg) {
 }
 
 _stk.union=union;
-
-_stk.trimStart=trimStart;
 
 
 /**

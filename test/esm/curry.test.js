@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 
-import {curry, isFunction, equal, subtract} from "../../dist/esm/node.esm";
+import {curry, isFunction, equal, subtract} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const zero = 0;

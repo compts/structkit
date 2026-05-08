@@ -1,5 +1,5 @@
 
-import {mergeInWhere} from "../../dist/esm/node.esm";
+import {mergeInWhere} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: mergeInWhere method', function () {

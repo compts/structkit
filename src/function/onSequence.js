@@ -2,15 +2,27 @@ const varExtend = require('./varExtend');
 
 const {zero, one} = require("../variable/defaultValue");
 
+const defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};
+
 /**
- * On sequence
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+
+/**
+ * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
  *
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
  * @param {number=} wait timer for delay
  * @param {object=} option option for delay
- * @returns {object} Returns object.
+ * @returns {SequenceResult} Returns object.
  * @example
  *
  *  onSequence(()=>{})
@@ -18,11 +30,7 @@ const {zero, one} = require("../variable/defaultValue");
  */
 function onSequence (func, wait, option) {
 
-    const extend = varExtend({
-
-        "autoStart": true,
-        "limitCounterClear": zero
-    }, option);
+    const extend = varExtend(defaultOption, option);
 
 
     const sequence = new ClassSequence(extend, wait, func);
@@ -61,6 +69,8 @@ function ClassSequence (extend, wait, func) {
 
     this.func = func;
 
+    this.returned = null;
+
 }
 
 ClassSequence.prototype.cancel = function () {
@@ -72,6 +82,7 @@ ClassSequence.prototype.cancel = function () {
 
 ClassSequence.prototype.start = function () {
 
+    this.extend = varExtend(defaultOption, this.extend);
     const valueWaited = this.wait || zero;
     let counter = zero;
     // eslint-disable-next-line consistent-this
@@ -79,18 +90,17 @@ ClassSequence.prototype.start = function () {
 
     main.interval = setInterval(function () {
 
-        main.func();
-        if (main.extend.limitCounterClear >zero) {
+        main.returned = main.func();
 
-            if (counter >= main.extend.limitCounterClear) {
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
 
-                clearInterval(main.interval);
 
-            }
+            clearInterval(main.interval);
+
 
         }
 
-        counter += one;
 
     }, valueWaited);
 

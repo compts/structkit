@@ -1,4 +1,4 @@
-import {someValid} from "../../dist/esm/node.esm";
+import {someValid} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: someValid method', function () {

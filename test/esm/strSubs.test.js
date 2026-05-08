@@ -1,4 +1,4 @@
-import {strSubs} from "../../dist/esm/node.esm";
+import {strSubs} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const two=2;

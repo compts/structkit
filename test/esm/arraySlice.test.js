@@ -1,4 +1,4 @@
-import {arraySlice} from "../../dist/esm/node.esm";
+import {arraySlice} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const three =3;

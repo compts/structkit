@@ -1,4 +1,4 @@
-import {ifElse, __, has} from "../../dist/esm/node.esm";
+import {ifElse, __, has} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 

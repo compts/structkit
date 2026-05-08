@@ -1,5 +1,5 @@
 
-import {map} from "../../dist/esm/node.esm";
+import {map} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: map method', function () {

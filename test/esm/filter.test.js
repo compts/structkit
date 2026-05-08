@@ -1,4 +1,4 @@
-import {filter} from "../../dist/esm/node.esm";
+import {filter} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: filter method', function () {

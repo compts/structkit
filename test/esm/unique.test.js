@@ -1,5 +1,5 @@
-import {unique} from "../../dist/esm/node.esm";
-const assert = require("assert");
+import {unique} from "../../dist/esm/node.esm.js";
+import assert from 'assert';
 
 const one =1;
 const ten=10;

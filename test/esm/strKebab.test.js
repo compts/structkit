@@ -1,4 +1,4 @@
-import {strKebab} from "../../dist/esm/node.esm";
+import {strKebab} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: strKebab method', function () {

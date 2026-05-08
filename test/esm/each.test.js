@@ -5,7 +5,7 @@
 /* eslint-disable sort-keys */
 /* eslint-disable no-undef */
 /* eslint-disable no-magic-numbers */
-import {each} from "../../dist/esm/node.esm";
+import {each} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 // Helper function to create a mock function that tracks calls

@@ -1,5 +1,5 @@
 
-import {not, where} from "../../dist/esm/node.esm";
+import {not, where} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: not method', function () {

@@ -1,5 +1,5 @@
 /* eslint-disable no-undefined */
-import {arrayRepeat} from "../../dist/esm/node.esm";
+import {arrayRepeat} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const two=2;

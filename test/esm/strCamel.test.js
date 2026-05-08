@@ -1,4 +1,4 @@
-import {strCamel} from "../../dist/esm/node.esm";
+import {strCamel} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: strCamel method', function () {

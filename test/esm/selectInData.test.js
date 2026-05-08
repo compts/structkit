@@ -1,4 +1,4 @@
-import {selectInData} from "../../dist/esm/node.esm";
+import {selectInData} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: selectInData method', function () {

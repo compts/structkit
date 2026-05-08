@@ -1,4 +1,4 @@
-import {pSerialize} from "../../dist/esm/node.esm";
+import {pSerialize} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const one =1;

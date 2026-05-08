@@ -1,20 +1,17 @@
-import {default as add_module} from './src/function/add.js';
+import {default as ___module} from './src/function/__.js';
 
 
 /**
- * Addition logic in satisfying two argument
+ * Placeholder of argument
  *
  * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
+ * @category String
  * @example
  *
- * add(1, 1)
- * // => 2
+ * __
+ * // => @argument/place
  */
-export const add = add_module;
+export const __ = ___module;
 
 import {default as allValid_module} from './src/function/allValid.js';
 
@@ -32,6 +29,24 @@ import {default as allValid_module} from './src/function/allValid.js';
  * // => false
  */
 export const allValid = allValid_module;
+
+import {default as add_module} from './src/function/add.js';
+
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+export const add = add_module;
 
 import {default as append_module} from './src/function/append.js';
 
@@ -87,47 +102,6 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.js';
  */
 export const arrayRepeat = arrayRepeat_module;
 
-import {default as asyncReplace_module} from './src/function/asyncReplace.js';
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-export const asyncReplace = asyncReplace_module;
-
-import {default as arraySlice_module} from './src/function/arraySlice.js';
-
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-export const arraySlice = arraySlice_module;
-
 import {default as arraySum_module} from './src/function/arraySum.js';
 
 
@@ -148,22 +122,24 @@ import {default as arraySum_module} from './src/function/arraySum.js';
  */
 export const arraySum = arraySum_module;
 
-import {default as clone_module} from './src/function/clone.js';
+import {default as asyncReplace_module} from './src/function/asyncReplace.js';
 
 
 /**
- * Cloning the data either in JSON or array that be used as different property
+ * Async replace regexp argument
  *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
  * @example
  *
- * clone([1,2])
- * // => [1,2]
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
  */
-export const clone = clone_module;
+export const asyncReplace = asyncReplace_module;
 
 import {default as calculate_module} from './src/function/calculate.js';
 
@@ -184,6 +160,23 @@ import {default as calculate_module} from './src/function/calculate.js';
  *=> 2
  */
 export const calculate = calculate_module;
+
+import {default as clone_module} from './src/function/clone.js';
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+export const clone = clone_module;
 
 import {default as count_module} from './src/function/count.js';
 
@@ -242,24 +235,6 @@ import {default as dec_module} from './src/function/dec.js';
  */
 export const dec = dec_module;
 
-import {default as defaultTo_module} from './src/function/defaultTo.js';
-
-
-/**
- *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
- *
- * @since 1.4.87
- * @category Logic
- * @param {any} defaultValue Any first value type
- * @param {any=} value2 Any first value type
- * @returns {any} Returns true or false.
- * @example
- *
- * defaultTo(1,2)
- * // => 2
- */
-export const defaultTo = defaultTo_module;
-
 import {default as divide_module} from './src/function/divide.js';
 
 
@@ -295,6 +270,28 @@ import {default as each_module} from './src/function/each.js';
  *
  */
 export const each = each_module;
+
+import {default as arraySlice_module} from './src/function/arraySlice.js';
+
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+export const arraySlice = arraySlice_module;
 
 import {default as empty_module} from './src/function/empty.js';
 
@@ -441,23 +438,6 @@ import {default as getKey_module} from './src/function/getKey.js';
  */
 export const getKey = getKey_module;
 
-import {default as getUniq_module} from './src/function/getUniq.js';
-
-
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-export const getUniq = getUniq_module;
-
 import {default as getTypeof_module} from './src/function/getTypeof.js';
 
 
@@ -476,6 +456,23 @@ import {default as getTypeof_module} from './src/function/getTypeof.js';
  * => [array,json]
  */
 export const getTypeof = getTypeof_module;
+
+import {default as getUniq_module} from './src/function/getUniq.js';
+
+
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+export const getUniq = getUniq_module;
 
 import {default as getValue_module} from './src/function/getValue.js';
 
@@ -802,21 +799,6 @@ import {default as like_module} from './src/function/like.js';
  */
 export const like = like_module;
 
-import {default as ___module} from './src/function/__.js';
-
-
-/**
- * Placeholder of argument
- *
- * @since 1.4.8
- * @category String
- * @example
- *
- * __
- * // => @argument/place
- */
-export const __ = ___module;
-
 import {default as limit_module} from './src/function/limit.js';
 
 
@@ -837,11 +819,11 @@ import {default as limit_module} from './src/function/limit.js';
  */
 export const limit = limit_module;
 
-import {default as lte_module} from './src/function/lte.js';
+import {default as lt_module} from './src/function/lt.js';
 
 
 /**
- * To check if the two arguments are less than to equal
+ * To check if the two arguments are less
  *
  * @since 1.4.8
  * @category Predicate
@@ -850,10 +832,10 @@ import {default as lte_module} from './src/function/lte.js';
  * @returns {boolean|any} Returns true or false.
  * @example
  *
- * lte(1, 2)
+ * lt(1, 2)
  * // => true
  */
-export const lte = lte_module;
+export const lt = lt_module;
 
 import {default as map_module} from './src/function/map.js';
 
@@ -891,24 +873,6 @@ import {default as mapGetData_module} from './src/function/mapGetData.js';
  *=>[1]
  */
 export const mapGetData = mapGetData_module;
-
-import {default as lt_module} from './src/function/lt.js';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.js';
 
@@ -1004,74 +968,11 @@ import {default as onDelay_module} from './src/function/onDelay.js';
 
 
 /**
- * On delay
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
+ * @typedef {Object} DelayResult
+ * @property {function(): void} cancel - Cancels the delay
+ * @property {function(): void} start - Starts the delay
  */
 export const onDelay = onDelay_module;
-
-import {default as onSequence_module} from './src/function/onSequence.js';
-
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-export const onSequence = onSequence_module;
-
-import {default as onWait_module} from './src/function/onWait.js';
-
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-export const onWait = onWait_module;
-
-import {default as once_module} from './src/function/once.js';
-
-
-/**
- * Check if data was executed once
- *
- * @since 1.4.9
- * @category Logic
- * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
- * @returns {any} Returns filled value from its index
- * @example
- *
- * once('as','as2',{'as':1})
- * // => 1
- */
-export const once = once_module;
 
 import {default as pSerialize_module} from './src/function/pSerialize.js';
 
@@ -1089,6 +990,23 @@ import {default as pSerialize_module} from './src/function/pSerialize.js';
  * // => 'a:1:{i:0;s:3:"22s";}'
  */
 export const pSerialize = pSerialize_module;
+
+import {default as once_module} from './src/function/once.js';
+
+
+/**
+ * Check if data was executed once
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * once('as','as2',{'as':1})
+ * // => 1
+ */
+export const once = once_module;
 
 import {default as pUnSerialize_module} from './src/function/pUnSerialize.js';
 
@@ -1125,6 +1043,23 @@ import {default as parseString_module} from './src/function/parseString.js';
  */
 export const parseString = parseString_module;
 
+import {default as pipe_module} from './src/function/pipe.js';
+
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+export const pipe = pipe_module;
+
 import {default as parseJson_module} from './src/function/parseJson.js';
 
 
@@ -1142,23 +1077,6 @@ import {default as parseJson_module} from './src/function/parseJson.js';
  *=>{}
  */
 export const parseJson = parseJson_module;
-
-import {default as pipe_module} from './src/function/pipe.js';
-
-
-/**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-export const pipe = pipe_module;
 
 import {default as random_module} from './src/function/random.js';
 
@@ -1198,6 +1116,34 @@ import {default as range_module} from './src/function/range.js';
  */
 export const range = range_module;
 
+import {default as onWait_module} from './src/function/onWait.js';
+
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+export const onWait = onWait_module;
+
+import {default as onSequence_module} from './src/function/onSequence.js';
+
+
+/**
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+export const onSequence = onSequence_module;
+
 import {default as reduce_module} from './src/function/reduce.js';
 
 
@@ -1233,25 +1179,6 @@ import {default as regexCountGroup_module} from './src/function/regexCountGroup.
  *=>[1]
  */
 export const regexCountGroup = regexCountGroup_module;
-
-import {default as remove_module} from './src/function/remove.js';
-
-
-/**
- * Remove data in either JSON or Array using key or woth value, a revise logic
- *
- * @since 1.4.85
- * @category Collection
- * @param {any} objectValue Json or array
- * @param {any} value if objectValue, json is must be object or array index you want to remove
- * @param {number=} value2 Last row in index
- * @returns {any[]} Returns the total.
- * @example
- *
- * remove([1,2,3],0 )
- *=>[2, 3]
- */
-export const remove = remove_module;
 
 import {default as repeat_module} from './src/function/repeat.js';
 
@@ -1452,6 +1379,24 @@ import {default as strCapitalize_module} from './src/function/strCapitalize.js';
  */
 export const strCapitalize = strCapitalize_module;
 
+import {default as strEscape_module} from './src/function/strEscape.js';
+
+
+/**
+ * String Escape
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns escape string
+ * @example
+ *
+ * strEscape("yahii & adad ^ss")
+ *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
+ */
+export const strEscape = strEscape_module;
+
 import {default as strKebab_module} from './src/function/strKebab.js';
 
 
@@ -1485,6 +1430,23 @@ import {default as strLower_module} from './src/function/strLower.js';
  *=> 'the fish is goad   with goat-1ss
  */
 export const strLower = strLower_module;
+
+import {default as strSnake_module} from './src/function/strSnake.js';
+
+
+/**
+ * String Snake case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns Snake sting data
+ * @example
+ *
+ * strSnake('the fish is goad   with goat-1ss')
+ *=> 'the_fish_is_goad_with_goat_1ss'
+ */
+export const strSnake = strSnake_module;
 
 import {default as strSubs_module} from './src/function/strSubs.js';
 
@@ -1523,23 +1485,24 @@ import {default as strUnEscape_module} from './src/function/strUnEscape.js';
  */
 export const strUnEscape = strUnEscape_module;
 
-import {default as subtract_module} from './src/function/subtract.js';
+import {default as remove_module} from './src/function/remove.js';
 
 
 /**
- * Subtract logic in satisfying two argument
+ * Remove data in either JSON or Array using key or woth value, a revise logic
  *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for subtracted value
+ * @since 1.4.85
+ * @category Collection
+ * @param {any} objectValue Json or array
+ * @param {any} value if objectValue, json is must be object or array index you want to remove
+ * @param {number=} value2 Last row in index
+ * @returns {any[]} Returns the total.
  * @example
  *
- * subtract(1, 1)
- * // => 0
+ * remove([1,2,3],0 )
+ *=>[2, 3]
  */
-export const subtract = subtract_module;
+export const remove = remove_module;
 
 import {default as strUpper_module} from './src/function/strUpper.js';
 
@@ -1558,22 +1521,23 @@ import {default as strUpper_module} from './src/function/strUpper.js';
  */
 export const strUpper = strUpper_module;
 
-import {default as strSnake_module} from './src/function/strSnake.js';
+import {default as subtract_module} from './src/function/subtract.js';
 
 
 /**
- * String Snake case
+ * Subtract logic in satisfying two argument
  *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Snake sting data
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for subtracted value
  * @example
  *
- * strSnake('the fish is goad   with goat-1ss')
- *=> 'the_fish_is_goad_with_goat_1ss'
+ * subtract(1, 1)
+ * // => 0
  */
-export const strSnake = strSnake_module;
+export const subtract = subtract_module;
 
 import {default as swap_module} from './src/function/swap.js';
 
@@ -1594,6 +1558,24 @@ import {default as swap_module} from './src/function/swap.js';
  */
 export const swap = swap_module;
 
+import {default as take_module} from './src/function/take.js';
+
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+export const take = take_module;
+
 import {default as templates_module} from './src/function/templates.js';
 
 
@@ -1612,24 +1594,6 @@ import {default as templates_module} from './src/function/templates.js';
  *=>'11'
  */
 export const templates = templates_module;
-
-import {default as take_module} from './src/function/take.js';
-
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Array
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns choice index value in list.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-export const take = take_module;
 
 import {default as toArray_module} from './src/function/toArray.js';
 
@@ -2258,21 +2222,39 @@ import {default as zip_module} from './src/function/zip.js';
  */
 export const zip = zip_module;
 
-import {default as strEscape_module} from './src/function/strEscape.js';
+import {default as lte_module} from './src/function/lte.js';
 
 
 /**
- * String Escape
+ * To check if the two arguments are less than to equal
  *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns escape string
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * strEscape("yahii & adad ^ss")
- *=> 'yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss'
+ * lte(1, 2)
+ * // => true
  */
-export const strEscape = strEscape_module;
+export const lte = lte_module;
+
+import {default as defaultTo_module} from './src/function/defaultTo.js';
+
+
+/**
+ *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
+ *
+ * @since 1.4.87
+ * @category Logic
+ * @param {any} defaultValue Any first value type
+ * @param {any=} value2 Any first value type
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * defaultTo(1,2)
+ * // => 2
+ */
+export const defaultTo = defaultTo_module;
 

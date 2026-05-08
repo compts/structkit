@@ -1,5 +1,5 @@
 
-import {inc} from "../../dist/esm/node.esm";
+import {inc} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const three =3;

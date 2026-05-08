@@ -1,4 +1,4 @@
-import {count} from "../../dist/esm/node.esm";
+import {count} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const seven = 7;

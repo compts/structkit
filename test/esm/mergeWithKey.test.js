@@ -1,4 +1,4 @@
-import {mergeWithKey} from "../../dist/esm/node.esm";
+import {mergeWithKey} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: mergeWithKey method', function () {

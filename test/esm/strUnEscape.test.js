@@ -1,5 +1,5 @@
 
-import {strUnEscape} from "../../dist/esm/node.esm";
+import {strUnEscape} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: strUnEscape method', function () {

@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 
-import {isJson} from "../../dist/esm/node.esm";
+import {isJson} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: isJson method', function () {

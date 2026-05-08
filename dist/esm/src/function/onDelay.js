@@ -2,15 +2,26 @@ import varExtend from './varExtend.js';
 
 import {zero} from '../variable/defaultValue.js';
 
+const defaultOptionDelay = {
+
+    "autoStart": true
+};
+
 /**
- * On delay
+ * @typedef {Object} DelayResult
+ * @property {function(): void} cancel - Cancels the delay
+ * @property {function(): void} start - Starts the delay
+ */
+
+/**
+ * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
  *
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
  * @param {number=} wait timer for delay
  * @param {object=} option option for delay
- * @returns {object} Returns object.
+ * @returns {DelayResult} Returns object.
  * @example
  *
  *  onDelay(()=>{})
@@ -18,9 +29,7 @@ import {zero} from '../variable/defaultValue.js';
  */
 function onDelay (func, wait, option) {
 
-    const extend = varExtend({
-        "autoStart": true
-    }, option);
+    const extend = varExtend(defaultOptionDelay, option);
 
     const sequence = new ClassDelay(extend, wait, func);
 
@@ -59,6 +68,8 @@ function ClassDelay (extend, wait, func) {
 
     this.timeout = null;
 
+    this.returned = null;
+
 }
 
 ClassDelay.prototype.cancel = function () {
@@ -69,6 +80,7 @@ ClassDelay.prototype.cancel = function () {
 
 ClassDelay.prototype.start = function () {
 
+    this.extend = varExtend(defaultOptionDelay, this.extend);
     const valueWaited = this.wait || zero;
 
     // eslint-disable-next-line consistent-this
@@ -76,7 +88,7 @@ ClassDelay.prototype.start = function () {
 
     this.timeout = setTimeout(function () {
 
-        main.func();
+        main.returned = main.func();
 
     }, valueWaited);
 

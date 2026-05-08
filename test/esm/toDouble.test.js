@@ -1,5 +1,5 @@
 
-import {toDouble} from "../../dist/esm/node.esm";
+import {toDouble} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const ten=10;

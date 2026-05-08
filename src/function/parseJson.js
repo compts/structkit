@@ -6,6 +6,17 @@ const indexOfExist = require('./indexOfExist');
 const getTypeof = require('./getTypeof');
 const each = require('./each');
 
+const ObjOpen = {
+    "[": {
+        "close": "]",
+        "type": "array"
+    },
+    "{": {
+        "close": "}",
+        "type": "json"
+    }
+};
+
 
 /**
  * Parse string to JSON object with type conversion and correction
@@ -451,6 +462,7 @@ function constrJson (ob_str) {
     let type_c = "";
 
     let append_str = "";
+    let firstExpectedClose = "";
 
     while (count< ass.length) {
 
@@ -488,10 +500,12 @@ function constrJson (ob_str) {
         ])) {
 
 
-            type_c = {
-                "[": "array",
-                "{": "json"
-            }[vales];
+            type_c = ObjOpen[vales].type;
+            if (op_c ===zero) {
+
+                firstExpectedClose = ObjOpen[vales].close;
+
+            }
 
             if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
 
@@ -522,6 +536,13 @@ function constrJson (ob_str) {
 
         count +=rawCounter;
         rawCounter = one;
+
+    }
+
+    if (op_c ===one && firstExpectedClose !== "") {
+
+        op_c -=one;
+        append_str+=firstExpectedClose;
 
     }
 

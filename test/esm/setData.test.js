@@ -1,4 +1,4 @@
-import {setData} from "../../dist/esm/node.esm";
+import {setData} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 describe('ESM: setData method', function () {

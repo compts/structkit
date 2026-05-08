@@ -1,4 +1,4 @@
-import {getUniq, getTypeof} from "../../dist/esm/node.esm";
+import {getUniq, getTypeof} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 // JavaScript

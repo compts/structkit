@@ -1,6 +1,5 @@
-import {remove} from "../../dist/esm/node.esm";
-const assert = require("assert");
-
+import {remove} from "../../dist/esm/node.esm.js";
+import assert from 'assert';
 const three =3;
 const two =2;
 const one =1;

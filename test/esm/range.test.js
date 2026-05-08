@@ -1,5 +1,5 @@
 
-import {range} from "../../dist/esm/node.esm";
+import {range} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 const eight=8,

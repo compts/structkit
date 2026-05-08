@@ -1,5 +1,5 @@
 
-import {mapGetData} from "../../dist/esm/node.esm";
+import {mapGetData} from "../../dist/esm/node.esm.js";
 import assert from 'assert';
 
 
