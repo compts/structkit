@@ -21,6 +21,5 @@ jobs:
     - run: npm run es_linter
     - run: npm run test_esm
     - run: npm run test_cjs
-    - run: npm install -g tsx
-    - run: npx tsx mocha test/ts/*.test.ts
+    - run: npx tsx ./node_modules/mocha/bin/mocha test/ts/*.test.ts
     - run: npm run test:conv
