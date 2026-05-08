@@ -1,4 +1,4 @@
-import {reverse} from "../../dist/esm/node.esm.js";
+import {reverse} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 const zero = 0;

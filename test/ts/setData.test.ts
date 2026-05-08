@@ -1,4 +1,4 @@
-import {setData} from "../../dist/esm/node.esm";
+import {setData} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 

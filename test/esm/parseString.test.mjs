@@ -3,7 +3,7 @@
 /* eslint-disable no-undefined */
 /* eslint-disable sort-keys */
 
-import {parseString} from "../../dist/esm/node.esm.js";
+import {parseString} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: parseString method', function () {

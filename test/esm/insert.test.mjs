@@ -1,4 +1,4 @@
-import {insert} from "../../dist/esm/node.esm.js";
+import {insert} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 // JavaScript

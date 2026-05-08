@@ -1,4 +1,4 @@
-import {divide} from "../../dist/esm/node.esm.js";
+import {divide} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 const one =1;

@@ -1,4 +1,4 @@
-import {defaultTo} from "../../dist/esm/node.esm.js";
+import {defaultTo} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: defaultTo method', function () {

@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-undefined */
-import {toBoolean} from "../../dist/esm/node.esm.js";
+import {toBoolean} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: toBoolean method', function () {

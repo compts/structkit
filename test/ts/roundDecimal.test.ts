@@ -1,4 +1,4 @@
-import {roundDecimal} from "../../dist/esm/node.esm";
+import {roundDecimal} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 

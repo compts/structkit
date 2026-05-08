@@ -1,4 +1,4 @@
-import {remove} from "../../dist/esm/node.esm.js";
+import {remove} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 const three =3;
 const two =2;

@@ -1,4 +1,4 @@
-import {pipe, add} from "../../dist/esm/node.esm.js";
+import {pipe, add} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 const one =1;
 const two = 2;

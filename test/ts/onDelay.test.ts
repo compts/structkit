@@ -5,7 +5,7 @@
 /* eslint-disable sort-keys */
 /* eslint-disable no-undef */
 /* eslint-disable no-magic-numbers */
-import {onDelay} from "../../dist/esm/node.esm";
+import {onDelay} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 interface DelayResult {

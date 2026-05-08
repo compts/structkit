@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 
-import {parseJson} from "../../dist/esm/node.esm.js";
+import {parseJson} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: parseJson method', function () {

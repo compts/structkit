@@ -1,4 +1,4 @@
-import {asyncReplace} from "../../dist/esm/node.esm.js";
+import {asyncReplace} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: asyncReplace method', function () {

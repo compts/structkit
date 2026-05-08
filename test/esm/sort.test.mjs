@@ -1,5 +1,5 @@
 
-import {sort} from "../../dist/esm/node.esm.js";
+import {sort} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 const one =1;

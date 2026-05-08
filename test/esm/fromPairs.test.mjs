@@ -1,4 +1,4 @@
-import {fromPairs} from "../../dist/esm/node.esm.js";
+import {fromPairs} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 // FromPairs test
 const five = 5;

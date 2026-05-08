@@ -1,5 +1,5 @@
 
-import {strLower} from "../../dist/esm/node.esm.js";
+import {strLower} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: strLower method', function () {

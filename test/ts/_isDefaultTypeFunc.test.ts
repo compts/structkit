@@ -1,4 +1,4 @@
-import {isArray, isBoolean, isDate, isError, isFunction, isNumber,isBigInt, isSet, isMap, isObject, isNull} from "../../dist/esm/node.esm";
+import {isArray, isBoolean, isDate, isError, isFunction, isNumber,isBigInt, isSet, isMap, isObject, isNull} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('TS: _isDefaultTypeFunc method', function () {

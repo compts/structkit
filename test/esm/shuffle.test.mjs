@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import {shuffle} from "../../dist/esm/node.esm.js";
+import {shuffle} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 const one = 1;

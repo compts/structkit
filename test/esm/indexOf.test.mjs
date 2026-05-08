@@ -1,5 +1,5 @@
 
-import {indexOf, isExact} from "../../dist/esm/node.esm.js";
+import {indexOf, isExact} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 const eight=8,

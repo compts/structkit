@@ -3,12 +3,12 @@
   "version": "1.4.9",
   "description": "JS/TS functional tool to simplify JS Developer",
   "main": "./dist/cjs/structkit-full.cjs.js",
-  "module": "./dist/esm/node.esm.js",
+  "module": "./dist/esm/node.esm.mjs",
   "types": "./dist/ts/node.esm.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/esm/node.esm.js",
+      "import": "./dist/esm/node.esm.mjs",
       "require": "./dist/cjs/structkit-full.cjs.js",
       "types": {
         "require": "./dist/ts/node.esm.d.ts",

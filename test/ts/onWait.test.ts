@@ -5,7 +5,7 @@
 /* eslint-disable sort-keys */
 /* eslint-disable no-undef */
 /* eslint-disable no-magic-numbers */
-import {onWait} from "../../dist/esm/node.esm";
+import {onWait} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('TS: onWait function', function () {

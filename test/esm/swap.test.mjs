@@ -1,4 +1,4 @@
-import {swap} from "../../dist/esm/node.esm.js";
+import {swap} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 const zero = 0;
 const two =2;

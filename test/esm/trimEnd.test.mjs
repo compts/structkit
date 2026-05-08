@@ -1,4 +1,4 @@
-import {trimEnd} from "../../dist/esm/node.esm.js";
+import {trimEnd} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 

@@ -1,5 +1,5 @@
 
-import {clone} from "../../dist/esm/node.esm.js";
+import {clone} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 

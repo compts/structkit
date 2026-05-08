@@ -1,5 +1,5 @@
 
-import {arraySum} from "../../dist/esm/node.esm.js";
+import {arraySum} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 

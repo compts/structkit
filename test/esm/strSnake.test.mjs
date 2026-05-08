@@ -1,4 +1,4 @@
-import {strSnake} from "../../dist/esm/node.esm.js";
+import {strSnake} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 describe('ESM: strSnake method', function () {

@@ -93,7 +93,9 @@ exports.module=function (grassconf) {
             }
         )
             .pipe(grassconf.dest("dist/esm", {
-                "lsFileType": "path"
+                "lsFileType": "path",
+                "savePathReplace": {"from": ".js",
+                    "to": ".mjs"}
             }));
 
     });
@@ -125,6 +127,7 @@ exports.module=function (grassconf) {
 
             const getData = data.readData();
 
+
             if (data.path === 'src/function/where.js') {
 
                 data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
@@ -140,7 +143,21 @@ exports.module=function (grassconf) {
             data.done();
 
         }))
-            .pipe(grass_concat("dist/esm/node.esm.js", {
+            .pipe(grassconf.streamPipe(function (data) {
+
+                let getData = data.readData();
+
+                getData = getData.replace(/(.js)/g, ".mjs");
+            
+                data.writeData(getData);
+
+                        
+
+                data.done();
+
+            }))
+
+            .pipe(grass_concat("dist/esm/node.esm.mjs", {
                 "istruncate": true
             }));
 

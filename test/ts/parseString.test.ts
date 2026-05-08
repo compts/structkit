@@ -1,5 +1,5 @@
 
-import {parseString} from "../../dist/esm/node.esm";
+import {parseString} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 

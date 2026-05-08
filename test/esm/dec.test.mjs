@@ -1,4 +1,4 @@
-import {dec} from "../../dist/esm/node.esm.js";
+import {dec} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 const two =2;
 const one =1;

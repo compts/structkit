@@ -1,4 +1,4 @@
-import {zip} from "../../dist/esm/node.esm.js";
+import {zip} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 
 const one =1;

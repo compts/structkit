@@ -1,6 +1,11 @@
-(function(global){global._stk={};var negOne = -1;
-var zero = 0;
-var one = 1;
+(function(global){global._stk={};var __p = "@argument/place";
+
+__=__p
+
+
+
+_stk.__=__;
+var negOne = -1;var zero = 0;var one = 1;
 var two = 2;
 var three = 3;
 var ten = 10;
@@ -27,10 +32,6 @@ function _has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-
-var __p = "@argument/place";
-
-__=__p
 
 
 function curryArg (fn, args, NoDefaultArgs) {
@@ -1108,19 +1109,6 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1213,6 +1201,19 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 function range (maxValue, minValue, step) {
 
     var incrementValue=has(step)
@@ -1278,7 +1279,7 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-_stk.__=__;_stk.arraySlice=arraySlice;function isEmpty (value) {
+_stk.arraySlice=arraySlice;function isEmpty (value) {
 
     var typeofvalue = getTypeofInternal(value);    var invalidList = [
         'null',
@@ -1535,53 +1536,6 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-function asyncReplace (value, search, toReplace) {
-
-    return curryArg(function (rawValue, rawSearch, rawToReplace) {
-
-        try {
-
-            if (getTypeof(rawToReplace) === "function") {
-
-                var values = [];                String.prototype.replace.call(rawValue, rawSearch, function () {
-
-    var arg=arguments;
-
-                    values.push(rawToReplace(...arg));
-
-                    return "";
-
-                });
-
-                return Promise.all(values).then(function (resolvedValues) {
-
-                    return String.prototype.replace.call(rawValue, rawSearch, function () {
-
-                        return resolvedValues.shift();
-
-                    });
-
-                });
-
-            }
-
-            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
-
-        } catch (error) {
-
-            return Promise.reject(error);
-
-        }
-
-    }, [
-        value,
-        search,
-        toReplace
-    ]);
-
-}
-
-_stk.asyncReplace=asyncReplace;
 function divide (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -1969,7 +1923,54 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;function dec (value, default_value) {
+_stk.clone=clone;function asyncReplace (value, search, toReplace) {
+
+    return curryArg(function (rawValue, rawSearch, rawToReplace) {
+
+        try {
+
+            if (getTypeof(rawToReplace) === "function") {
+
+                var values = [];                String.prototype.replace.call(rawValue, rawSearch, function () {
+
+    var arg=arguments;
+
+                    values.push(rawToReplace(...arg));
+
+                    return "";
+
+                });
+
+                return Promise.all(values).then(function (resolvedValues) {
+
+                    return String.prototype.replace.call(rawValue, rawSearch, function () {
+
+                        return resolvedValues.shift();
+
+                    });
+
+                });
+
+            }
+
+            return Promise.resolve(String.prototype.replace.call(rawValue, rawSearch, rawToReplace));
+
+        } catch (error) {
+
+            return Promise.reject(error);
+
+        }
+
+    }, [
+        value,
+        search,
+        toReplace
+    ]);
+
+}
+
+_stk.asyncReplace=asyncReplace;
+_stk.count=count;function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -1988,7 +1989,7 @@ _stk.clone=clone;function dec (value, default_value) {
 }
 
 _stk.dec=dec;
-_stk.divide=divide;function defaultTo (defaultValue, value2) {
+function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -2011,15 +2012,7 @@ _stk.divide=divide;function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
-_stk.each=each;_stk.empty=empty;_stk.count=count;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2057,7 +2050,15 @@ _stk.each=each;_stk.empty=empty;_stk.count=count;function filter (func, objectVa
 }
 
 _stk.filter=filter;
-_stk.equal=equal;_stk.first=first;function inc (value, default_value) {
+_stk.first=first;_stk.flatten=flatten;function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
+function inc (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2648,7 +2649,12 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.flatten=flatten;_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");}
+
+_stk.getValue=getValue;
+function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2670,11 +2676,6 @@ _stk.flatten=flatten;_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getT
 }
 
 _stk.getUniq=getUniq;
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");}
-
-_stk.getValue=getValue;
 function groupBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -2708,19 +2709,7 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
-_stk.has=has;function gte (value1, value2) {
+function gte (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -2732,7 +2721,7 @@ _stk.has=has;function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-function reduce (func, defaultValue, listData) {
+_stk.has=has;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2829,7 +2818,19 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;_stk.indexOfExist=indexOfExist;function insert (objectValue, value) {
+_stk.inc=inc;function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2854,7 +2855,7 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;_stk.inde
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
+_stk.indexOfNotExist=indexOfNotExist;_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -3086,18 +3087,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function noteq (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa !== bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.noteq=noteq;
 function lt (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3110,6 +3099,102 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist(strLower(value), [
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ]);    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist(value, [one]);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+
+function not (func) {
+
+    var reserve = null;
+
+    if (indexOfNotExist(getTypeof(func), [
+        "json",
+        "function",
+        "object"
+    ])) {
+
+        return toBoolean(func) === false;
+
+    }
+
+    return curryArg(function (rawFunc) {
+
+        return function () {
+
+    var arg=arguments;
+
+            var argValue = arg[arg.length-one];
+
+            if (getTypeof(argValue) === "json") {
+
+                if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
+
+                    argValue.external_execution_from ='not';
+                    argValue.is_true= false;
+
+                    if (argValue.action === "lookup_execution") {
+
+                        return rawFunc;
+
+                    }
+
+                    if (argValue.action === "filter") {
+
+                        reserve = rawFunc.apply(this, arg);
+
+                    }
+
+                }
+
+            }
+
+            return reserve;
+
+        };
+
+    }, [func], two);
+
+}
+
+_stk.not=not;
+function noteq (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa !== bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.noteq=noteq;
 var defaultOptionDelay = {
 
     "autoStart": true
@@ -3232,160 +3317,6 @@ ClassSequence.prototype.start = function () {
 };
 
 _stk.onSequence=onSequence;
-var getWindow = function () {
-
-    if (typeof window !== 'undefined') {
-
-        return window;    }
-
-    return {};
-
-};
-
-
-function onWait (func, wait) {
-
-    var browserWindow = getWindow();
-    var timerId = null;
-
-    var useReqeustAdnimation = null;
-
-    if (browserWindow) {
-
-        // Check if requestAnimationFrame is available
-        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
-
-    }
-
-
-    function startTimer (pendingFunc, waiting) {
-
-        if (useReqeustAdnimation) {
-
-            clearTimer();
-
-            return browserWindow.requestAnimationFrame(pendingFunc);
-
-        }
-
-        return onDelay(pendingFunc, waiting);
-
-    }
-
-
-    function clearTimer () {
-
-        if (useReqeustAdnimation) {
-
-            browserWindow.cancelAnimationFrame(timerId);
-
-        }
-        if (timerId !== null && typeof timerId.cancel === "function") {
-
-            timerId.cancel();
-
-        }
-
-    }
-
-
-    function bootLoader () {
-
-        timerId = startTimer(func, wait);
-
-        return {};
-
-    }
-
-    return bootLoader();
-
-}
-
-_stk.onWait=onWait;
-function toBoolean (value) {
-
-    if (getTypeof(value) === "string") {
-
-        return indexOfExist(strLower(value), [
-            'true',
-            't',
-            'yes',
-            'y',
-            'on',
-            '1'
-        ]);    }
-
-    if (getTypeof(value) === "number") {
-
-        return indexOfExist(value, [one]);
-
-    }
-
-    if (getTypeof(value) === "boolean") {
-
-        return value;
-
-    }
-
-    return false;
-
-}
-
-
-function not (func) {
-
-    var reserve = null;
-
-    if (indexOfNotExist(getTypeof(func), [
-        "json",
-        "function",
-        "object"
-    ])) {
-
-        return toBoolean(func) === false;
-
-    }
-
-    return curryArg(function (rawFunc) {
-
-        return function () {
-
-    var arg=arguments;
-
-            var argValue = arg[arg.length-one];
-
-            if (getTypeof(argValue) === "json") {
-
-                if (has(argValue, 'continue') && has(argValue, 'pass_value') && has(argValue, 'action')) {
-
-                    argValue.external_execution_from ='not';
-                    argValue.is_true= false;
-
-                    if (argValue.action === "lookup_execution") {
-
-                        return rawFunc;
-
-                    }
-
-                    if (argValue.action === "filter") {
-
-                        reserve = rawFunc.apply(this, arg);
-
-                    }
-
-                }
-
-            }
-
-            return reserve;
-
-        };
-
-    }, [func], two);
-
-}
-
-_stk.not=not;
 function once (func) {
 
     var reserve = null;    return curryArg(function (rawFunc) {
@@ -3546,6 +3477,162 @@ function parseTypeVal (typeValue, value) {
 }
 
 _stk.pSerialize=pSerialize;
+function pUnSerialize (value) {
+
+    return curryArg(function (rawValue) {
+
+        return parseTypeValObj(rawValue);    }, [value], one);
+
+}
+
+
+function getObjectValue (value) {
+
+    var splitOpen = value.split("{");
+    var splitClose = reduce(function (total, mVal) {
+
+        var rawVal = mVal;
+
+        if (rawVal.match(/;(\})[a-z]:\d:(.*)/)) {
+
+            var spltRawVal = rawVal.split("}");
+
+            rawVal = spltRawVal.join("};");
+
+        }
+        total.push(rawVal);
+
+        return total;
+
+    }, [], arraySlice(splitOpen, one)).join("{")
+        .replace(/\}[;]{1,}$/g, "");
+
+    return splitClose;
+
+}
+
+
+function getObjectType (value) {
+
+    var getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
+
+    if (getMatch !== null) {
+
+        return {
+            "is_valid": true,
+            "matches": getMatch
+        };
+
+    }
+
+    return {
+        "is_valid": false,
+        "matches": []
+    };
+
+}
+
+
+function parseTypeValObj (value) {
+
+    if (value === "N;") {
+
+        return null;
+
+    }
+
+    var getMatch = getObjectType(value);
+
+    if (getMatch.is_valid) {
+
+        var splitValue = getMatch.matches[zero].split(":");
+
+        if (splitValue[zero] === "s") {
+
+            var stringSplit = value.split(";");
+            var slitGetStr = first(stringSplit).split(":");
+
+            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
+
+        }
+
+        if (splitValue[zero] === "O") {
+
+            var stringSplit = value.split(";");
+            var slitGetStr = first(stringSplit).split(":");
+
+            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
+
+        }
+
+        if (splitValue[zero] === "i") {
+
+            return convertValue(splitValue[one]);
+
+        }
+
+        if (splitValue[zero] === "a") {
+
+            var objValue = getObjectValue(value).split(";");
+
+            var argVal = {};
+            // This will help as check if the deep type was in array or json
+            var isArrayValue = true;
+            var counterArrayValue =zero;
+
+            each(range(convertValue(splitValue[one]) - one, zero), function () {
+
+                var refobjKey = parseTypeValObj(objValue[zero]+";");
+
+                if (isArrayValue && refobjKey !== counterArrayValue) {
+
+                    isArrayValue = false;
+
+                }
+
+                var refobjVal = "";
+                var isValidObject = false;
+                var rawCount = one;
+
+                if (objValue[one].match(/[a-z]:[0-9]+:\{[a-z]:[0-9]/g)) {
+
+                    rawCount = indexOf("}", objValue);
+                    refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+                    isValidObject = true;
+
+                }
+
+                refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+
+                argVal[refobjKey] = refobjVal;
+
+                if (isValidObject) {
+
+                    objValue = arraySlice(objValue, rawCount + one);
+                    counterArrayValue += rawCount;
+
+                } else {
+
+                    objValue = arraySlice(objValue, two);
+                    counterArrayValue += one;
+
+                }
+
+            });
+
+            return isArrayValue
+                ?toArray(getValue(argVal))
+                :argVal;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+_stk.pUnSerialize=pUnSerialize;
 var entity = [
     {
         "decimal": "&#160;",
@@ -5184,162 +5271,35 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
-function pUnSerialize (value) {
+function pipe () {
 
-    return curryArg(function (rawValue) {
+    var arg=arguments;    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
 
-        return parseTypeValObj(rawValue);    }, [value], one);
+    return curryArg(function () {
 
-}
+    var rawValue=arguments;
 
+        return baseReduce(function (total, value) {
 
-function getObjectValue (value) {
+            if (getTypeofInternal(value) === "function") {
 
-    var splitOpen = value.split("{");
-    var splitClose = reduce(function (total, mVal) {
+                total = value.call(that, total);
 
-        var rawVal = mVal;
+            }
 
-        if (rawVal.match(/;(\})[a-z]:\d:(.*)/)) {
+            return total;
 
-            var spltRawVal = rawVal.split("}");
+        }, pipeConst.apply(that, rawValue), varLimit);
 
-            rawVal = spltRawVal.join("};");
-
-        }
-        total.push(rawVal);
-
-        return total;
-
-    }, [], arraySlice(splitOpen, one)).join("{")
-        .replace(/\}[;]{1,}$/g, "");
-
-    return splitClose;
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
 
 }
 
-
-function getObjectType (value) {
-
-    var getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
-
-    if (getMatch !== null) {
-
-        return {
-            "is_valid": true,
-            "matches": getMatch
-        };
-
-    }
-
-    return {
-        "is_valid": false,
-        "matches": []
-    };
-
-}
-
-
-function parseTypeValObj (value) {
-
-    if (value === "N;") {
-
-        return null;
-
-    }
-
-    var getMatch = getObjectType(value);
-
-    if (getMatch.is_valid) {
-
-        var splitValue = getMatch.matches[zero].split(":");
-
-        if (splitValue[zero] === "s") {
-
-            var stringSplit = value.split(";");
-            var slitGetStr = first(stringSplit).split(":");
-
-            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
-
-        }
-
-        if (splitValue[zero] === "O") {
-
-            var stringSplit = value.split(";");
-            var slitGetStr = first(stringSplit).split(":");
-
-            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
-
-        }
-
-        if (splitValue[zero] === "i") {
-
-            return convertValue(splitValue[one]);
-
-        }
-
-        if (splitValue[zero] === "a") {
-
-            var objValue = getObjectValue(value).split(";");
-
-            var argVal = {};
-            // This will help as check if the deep type was in array or json
-            var isArrayValue = true;
-            var counterArrayValue =zero;
-
-            each(range(convertValue(splitValue[one]) - one, zero), function () {
-
-                var refobjKey = parseTypeValObj(objValue[zero]+";");
-
-                if (isArrayValue && refobjKey !== counterArrayValue) {
-
-                    isArrayValue = false;
-
-                }
-
-                var refobjVal = "";
-                var isValidObject = false;
-                var rawCount = one;
-
-                if (objValue[one].match(/[a-z]:[0-9]+:\{[a-z]:[0-9]/g)) {
-
-                    rawCount = indexOf("}", objValue);
-                    refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
-                    isValidObject = true;
-
-                }
-
-                refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
-
-                argVal[refobjKey] = refobjVal;
-
-                if (isValidObject) {
-
-                    objValue = arraySlice(objValue, rawCount + one);
-                    counterArrayValue += rawCount;
-
-                } else {
-
-                    objValue = arraySlice(objValue, two);
-                    counterArrayValue += one;
-
-                }
-
-            });
-
-            return isArrayValue
-                ?toArray(getValue(argVal))
-                :argVal;
-
-        }
-
-    }
-
-    return null;
-
-}
-
-_stk.pUnSerialize=pUnSerialize;
+_stk.pipe=pipe;
 function parseString (value, config) {
 
     var defaultConfig = varExtend({"ignoreFunction": true,
@@ -5485,36 +5445,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 }
 
 _stk.parseString=parseString;
-function pipe () {
-
-    var arg=arguments;    var pipeConst = first(arg);
-    var varLimit = limit(arg, one);
-    var that = this;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-_stk.range=range;_stk.reduce=reduce;function random (valueArray, minValue, maxValue) {
+function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
         ?minValue
@@ -5534,12 +5465,23 @@ _stk.range=range;_stk.reduce=reduce;function random (valueArray, minValue, maxVa
 }
 
 _stk.random=random;
-function regexCountGroup (value) {
+_stk.range=range;_stk.reduce=reduce;_stk.remove=remove;function repeat (value, valueRepetion) {
 
-    return new RegExp(toString(value) + '|').exec('').length - one;}
+    return curryArg(function (rawValue, rawValueRepetion) {
 
-_stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;function reverse (value) {
+        var nm_rpt=rawValueRepetion||zero;        var nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+function reverse (value) {
 
     return curryArg(function (rawValue) {
 
@@ -5562,65 +5504,7 @@ _stk.remove=remove;function reverse (value) {
 }
 
 _stk.reverse=reverse;
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;        var nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
-_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function someValid () {
-
-    var arg=arguments;    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-function shuffle (objectValue) {
-
-    var output=[];    var rawObjectValue = clone(objectValue);
-    var valueType=[
-        "array",
-        "json"
-    ];
-
-    if (indexOf(getTypeof(objectValue), valueType)>-one) {
-
-        var counts=count(objectValue)-one;
-
-        for (var currentIndex=counts; currentIndex>=zero;) {
-
-            var rowValue = random(rawObjectValue);
-
-            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
-            output.push(first(rowValue));
-            currentIndex -= one;
-
-        }
-
-    }
-
-    return output;
-
-}
-
-_stk.shuffle=shuffle;
-function setData (split_str, objectValue, updateValue) {
+_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5687,6 +5571,48 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
+function shuffle (objectValue) {
+
+    var output=[];    var rawObjectValue = clone(objectValue);
+    var valueType=[
+        "array",
+        "json"
+    ];
+
+    if (indexOf(getTypeof(objectValue), valueType)>-one) {
+
+        var counts=count(objectValue)-one;
+
+        for (var currentIndex=counts; currentIndex>=zero;) {
+
+            var rowValue = random(rawObjectValue);
+
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
+            output.push(first(rowValue));
+            currentIndex -= one;
+
+        }
+
+    }
+
+    return output;
+
+}
+
+_stk.shuffle=shuffle;
+function someValid () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 function baseSort (objectValue, func) {
 
     var jsonn=objectValue;    var js_m=getTypeofInternal(jsonn) === "json"
@@ -5874,6 +5800,83 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
+function strKebab (value) {
+
+    return stringSplit(toString(value))
+        .split(" ")
+        .join("-");}
+
+_stk.strKebab=strKebab;
+var getWindow = function () {
+
+    if (typeof window !== 'undefined') {
+
+        return window;    }
+
+    return {};
+
+};
+
+
+function onWait (func, wait) {
+
+    var browserWindow = getWindow();
+    var timerId = null;
+
+    var useReqeustAdnimation = null;
+
+    if (browserWindow) {
+
+        // Check if requestAnimationFrame is available
+        useReqeustAdnimation = typeof browserWindow.requestAnimationFrame === "function";
+
+    }
+
+
+    function startTimer (pendingFunc, waiting) {
+
+        if (useReqeustAdnimation) {
+
+            clearTimer();
+
+            return browserWindow.requestAnimationFrame(pendingFunc);
+
+        }
+
+        return onDelay(pendingFunc, waiting);
+
+    }
+
+
+    function clearTimer () {
+
+        if (useReqeustAdnimation) {
+
+            browserWindow.cancelAnimationFrame(timerId);
+
+        }
+        if (timerId !== null && typeof timerId.cancel === "function") {
+
+            timerId.cancel();
+
+        }
+
+    }
+
+
+    function bootLoader () {
+
+        timerId = startTimer(func, wait);
+
+        return {};
+
+    }
+
+    return bootLoader();
+
+}
+
+_stk.onWait=onWait;
 _stk.strLower=strLower;function strSnake (value) {
 
     return stringSplit(toString(value))
@@ -5881,53 +5884,40 @@ _stk.strLower=strLower;function strSnake (value) {
         .join("_");}
 
 _stk.strSnake=strSnake;
-_stk.strSubs=strSubs;function strKebab (value) {
-
-    return stringSplit(toString(value))
-        .split(" ")
-        .join("-");}
-
-_stk.strKebab=strKebab;
-_stk.strUnEscape=strUnEscape;function strUpper (value) {
+_stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
 
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
+function baseTake (rawList, startIndex, lastIndex) {
 
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
 
-        var cloneRawListValueReturn = rawListValue;        var isSplit = false;
+    var rawGetValue = getValue(varLimit);
 
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
 
 }
 
-_stk.swap=swap;
+
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 function templates (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
@@ -6135,35 +6125,6 @@ _stk.toArray=toArray;_stk.toBoolean=toBoolean;_stk.toDouble=toDouble;function to
         :value));}
 
 _stk.toInteger=toInteger;
-function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?toArray(rawGetValue).join("")
-        :rawGetValue;
-
-}
-
-
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
 function toPairs (value) {
 
     if (getTypeofInternal(value) !== "json") {
@@ -6510,6 +6471,45 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
+_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        var cloneRawListValueReturn = rawListValue;        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 
- })(typeof window !== "undefined" ? window : this);
+ })(typeof window !== "undefined" ? window : this);function regexCountGroup (value) {
+
+    return new RegExp(toString(value) + '|').exec('').length - one;}
+
+_stk.regexCountGroup=regexCountGroup;
