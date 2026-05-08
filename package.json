@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
-    "test_esm": "mocha -r esm test/esm/*.test.js",
+    "test_esm": "mocha esm test/esm/*.test.js",
     "test_cjs": "mocha test/cjs/*.test.js",
     "test_ts": "mocha --require ts-node/register test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
@@ -78,7 +78,7 @@
     "esm": "^3.2.25",
     "jest": "^27.5.1",
     "jsr": "0.13.4",
-    "mocha": "^5.2.0",
+    "mocha": "^11.7.5",
     "ts-node": "^10.9.1",
     "tsd": "^0.31.1"
   },
