@@ -34,7 +34,7 @@
     "es_linter": "eslint test/*/*.js src/function/*.js src/core/*.js *.js --fix",
     "test_esm": "mocha test/esm/*.test.mjs",
     "test_cjs": "mocha test/cjs/*.test.js",
-    "test_ts": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"es2022\"}' node --loader ts-node/esm ./node_modules/.bin/mocha test/ts/*.test.ts",
+    "test_ts": "npx tsx ./node_modules/mocha/bin/mocha test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
     "test:conv": "jest --coverage --no-cache",
     "test:watch": "jest --watch"
@@ -84,6 +84,13 @@
     "tsd": "^0.31.1"
   },
   "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest",
+      "^.+\\.mjs$": "babel-jest"
+    },
+    "extensionsToTreatAsEsm": [".ts", ".tsx"],
+    "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "mjs", "json", "node"],
     "collectCoverage": true,
     "coverageReporters": [
       "json",
