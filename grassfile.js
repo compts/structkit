@@ -148,10 +148,9 @@ exports.module=function (grassconf) {
                 let getData = data.readData();
 
                 getData = getData.replace(/(.js)/g, ".mjs");
-            
+
                 data.writeData(getData);
 
-                        
 
                 data.done();
 

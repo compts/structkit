@@ -437,7 +437,10 @@ function getStructVal (ob_str, ob_type) {
  */
 function constrJson (ob_str) {
 
-    const ass = ob_str.replace(/\//g, "").split("");
+    const ass = ob_str
+        .replace(/([^//]:)\//gmi)
+        .replace(/\//g, "")
+        .split("");
     let count = 0;
     let rawCounter = 1;
     let op_c = 0;

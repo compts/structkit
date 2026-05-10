@@ -114,6 +114,16 @@ describe('ESM: parseJson method', function () {
 
     });
 
+    it('check if semicolon is present in url format inside qoute', function () {
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"https://sdfsf.com","fddd":"https://sdfsf.com"}`), {
+            "example": 'https://sdfsf.com',
+            "fddd": 'https://sdfsf.com',
+            "name": 'arrayRepeat'
+        });
+
+    });
+
     it('check if repetion is correct with html entity', function () {
 
         assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeat(&quot;s&quot;\\,2 )=>['s'\\,'s']","comment":"Repeat value in array","return":"Return in string or number.","arguments":[{"comment":"String you want to duplicate","name":"value","type":"any"},{"comment":"how many times you want to repeate","name":"valueRepetion","type":"number"}]}`), {

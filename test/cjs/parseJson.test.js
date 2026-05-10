@@ -136,6 +136,16 @@ describe('CJS: parseJson method', function () {
 
     });
 
+    it('check if semicolon is present in url format inside qoute', function () {
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"https://sdfsf.com","fddd":"https://sdfsf.com"}`), {
+            "example": 'https://sdfsf.com',
+            "fddd": 'https://sdfsf.com',
+            "name": 'arrayRepeat'
+        });
+
+    });
+
     it('check if empty str argument', function () {
 
         assert.deepStrictEqual(parseJson(''), null);
