@@ -439,7 +439,6 @@ function constrJson (ob_str) {
 
     const ass = ob_str
         .replace(/([^//]:)\//gmi)
-        .replace(/\//g, "")
         .split("");
     let count = 0;
     let rawCounter = 1;
