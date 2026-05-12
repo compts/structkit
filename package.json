@@ -4,15 +4,15 @@
   "description": "JS/TS functional tool to simplify JS Developer",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.mjs",
-  "types": "./dist/ts/node.esm.d.ts",
+  "types": "./dist/ts/node.esm.d.mts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/esm/node.esm.mjs",
       "require": "./dist/cjs/structkit-full.cjs.js",
       "types": {
-        "require": "./dist/ts/node.esm.d.ts",
-        "default": "./dist/ts/node.esm.d.ts"
+        "require": "./dist/ts/node.esm.d.mts",
+        "default": "./dist/ts/node.esm.d.mts"
       },
       "browser": {
         "require": "./dist/cjs/structkit-full.cjs.js",
@@ -37,7 +37,8 @@
     "test_ts": "npx tsx ./node_modules/mocha/bin/mocha test/ts/*.test.ts",
     "validate": "npm run style && npm run test",
     "test:conv": "jest --coverage --no-cache",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "scan:func": "node ./review/scan_func.mjs"
   },
   "repository": {
     "type": "git",
@@ -90,7 +91,7 @@
       "^.+\\.mjs$": "babel-jest"
     },
     "extensionsToTreatAsEsm": [".ts", ".tsx"],
-    "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "mjs", "json", "node"],
+    "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "mjs", "json", "node","mts"],
     "collectCoverage": true,
     "coverageReporters": [
       "json",
