@@ -1,6 +1,11 @@
-(function(global){global._stk={};var negOne = -1;
-var zero = 0;
-var one = 1;
+(function(global){global._stk={};var __p = "@argument/place";
+
+__=__p
+
+
+
+_stk.__=__;
+var negOne = -1;var zero = 0;var one = 1;
 var two = 2;
 var three = 3;
 var ten = 10;
@@ -27,10 +32,6 @@ function _has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-
-var __p = "@argument/place";
-
-__=__p
 
 
 function curryArg (fn, args, NoDefaultArgs) {
@@ -227,7 +228,7 @@ function add (value1, value2) {
 }
 
 _stk.add=add;
-_stk.__=__;function has () {
+function has () {
 
     var args=arguments;    return curryArg(function (aa, bb) {
 
@@ -416,56 +417,10 @@ function getTypeofInternal (objectValue) {
 }
 
 
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function count (objectValue, json_is_empty_check) {
 
-    var cnt=zero;    var json_is_empty_check_default=json_is_empty_check||false;
+    var cnt=zero;
+    var json_is_empty_check_default=json_is_empty_check||false;
     var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
@@ -935,6 +890,38 @@ function empty (value) {
 }
 
 
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+
 function baseMap (func, objectValue) {
 
     var value_arry=empty(objectValue);
@@ -1122,6 +1109,19 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1970,15 +1970,7 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
-function dec (value, default_value) {
+_stk.clone=clone;_stk.count=count;function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -1997,6 +1989,14 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2020,7 +2020,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.equal=equal;_stk.empty=empty;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2182,16 +2182,14 @@ function getData (split_str, objectValue, isStrict) {
 
 }
 
-
+_stk.getData=getData;
 function isExact (whereValue, objectValue1, isExist) {
 
     return curryArg(function (rawWhereValue, rawObjectValue1, rawIsExist) {
 
         if (rawObjectValue1 === null) {
 
-            return false;
-
-        }
+            return false;        }
 
         var local_is_exist=has(rawIsExist)&&getTypeofInternal(rawIsExist) === "boolean"
             ?rawIsExist
@@ -2649,12 +2647,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");}
-
-_stk.getValue=getValue;
-function getUniq (option) {
+_stk.getKey=getKey;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2676,6 +2669,11 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+_stk.getTypeof=getTypeof;function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");}
+
+_stk.getValue=getValue;
 function groupBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -2733,7 +2731,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-function reduce (func, defaultValue, listData) {
+_stk.has=has;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2830,7 +2828,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;_stk.indexOfExist=indexOfExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2855,12 +2853,12 @@ _stk.has=has;_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_s
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;function last (objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isJson=isJson;_stk.isExactbyRegExp=isExactbyRegExp;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
 _stk.last=last;
-_stk.isJson=isJson;function lastIndexOf (value, objectValue) {
+function lastIndexOf (value, objectValue) {
 
     return curryArg(function (rawValue, rawObjectValue) {
 
@@ -3099,7 +3097,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-_stk.multiply=multiply;_stk.mergeWithKey=mergeWithKey;function toBoolean (value) {
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -5488,26 +5486,6 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 }
 
 _stk.parseString=parseString;
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
 function pipe () {
 
     var arg=arguments;    var pipeConst = first(arg);
@@ -5537,12 +5515,32 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 _stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-function repeat (value, valueRepetion) {
+_stk.remove=remove;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5558,7 +5556,7 @@ function repeat (value, valueRepetion) {
 }
 
 _stk.repeat=repeat;
-_stk.remove=remove;function reverse (value) {
+function reverse (value) {
 
     return curryArg(function (rawValue) {
 
@@ -5877,14 +5875,14 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
-function strKebab (value) {
+_stk.strLower=strLower;function strKebab (value) {
 
     return stringSplit(toString(value))
         .split(" ")
         .join("-");}
 
 _stk.strKebab=strKebab;
-_stk.strLower=strLower;function strSnake (value) {
+function strSnake (value) {
 
     return stringSplit(toString(value))
         .split(" ")
@@ -5896,36 +5894,7 @@ _stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.subtract=subtract;function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?toArray(rawGetValue).join("")
-        :rawGetValue;
-
-}
-
-
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
-function swap (firstValue, secondValue, listValue) {
+_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
@@ -5960,6 +5929,35 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+function baseTake (rawList, startIndex, lastIndex) {
+
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
+
+    var rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
+
+}
+
+
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 function templates (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {

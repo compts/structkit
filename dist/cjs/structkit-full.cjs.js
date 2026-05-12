@@ -1,4 +1,20 @@
 const _stk = exports;
+const __p = "@argument/place";
+
+const __=__p;
+
+/**
+ * Placeholder of argument
+ *
+ * @since 1.4.8
+ * @category String
+ * @example
+ *
+ * __
+ * // => @argument/place
+ */
+
+_stk.__=__;
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -40,10 +56,6 @@ function _has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-
-const __p = "@argument/place";
-
-const __=__p;
 
 /**
  * Create your curry function
@@ -275,20 +287,6 @@ function add (value1, value2) {
 }
 
 _stk.add=add;
-
-
-/**
- * Placeholder of argument
- *
- * @since 1.4.8
- * @category String
- * @example
- *
- * __
- * // => @argument/place
- */
-
-_stk.__=__;
 
 
 /**
@@ -524,82 +522,6 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
-
-/**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    const typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
 
 /**
  * Counting the lenght in array, json or string
@@ -1232,6 +1154,51 @@ function empty (value) {
 }
 
 /**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    const typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+/**
  * To map the value of json or array
  *
  * @since 1.4.8
@@ -1506,6 +1473,37 @@ function allValid (...arg) {
 }
 
 _stk.allValid=allValid;
+
+
+/**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 
 
 /**
@@ -2694,31 +2692,6 @@ _stk.count=count;
 
 
 /**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    const argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
-
-
-/**
  * Decrement value
  *
  * @since 1.4.8
@@ -2751,6 +2724,31 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    const argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
 
 
 /**
@@ -2796,9 +2794,9 @@ _stk.divide=divide;
 
 _stk.each=each;
 
-_stk.empty=empty;
-
 _stk.equal=equal;
+
+_stk.empty=empty;
 
 
 /**
@@ -3027,6 +3025,9 @@ function getData (split_str, objectValue, isStrict) {
     ], two);
 
 }
+
+_stk.getData=getData;
+
 
 /**
  * Looking the data in JSON and Array base on object value
@@ -3604,32 +3605,7 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.getData=getData;
-
 _stk.getKey=getKey;
-
-_stk.getTypeof=getTypeof;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
 /**
  * Generate unique value id
  *
@@ -3666,6 +3642,29 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
+
+_stk.getTypeof=getTypeof;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -3774,6 +3773,8 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
+
+_stk.has=has;
 
 
 /**
@@ -3901,15 +3902,13 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.has=has;
-
 _stk.inc=inc;
 
 _stk.indexOf=indexOf;
 
-_stk.indexOfExist=indexOfExist;
-
 _stk.indexOfNotExist=indexOfNotExist;
+
+_stk.indexOfExist=indexOfExist;
 
 
 /**
@@ -3957,6 +3956,8 @@ _stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
 
+_stk.isJson=isJson;
+
 _stk.isExactbyRegExp=isExactbyRegExp;
 
 
@@ -3979,8 +3980,6 @@ function last (objectValue) {
 }
 
 _stk.last=last;
-
-_stk.isJson=isJson;
 
 
 /**
@@ -4369,9 +4368,9 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.multiply=multiply;
-
 _stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -7179,43 +7178,6 @@ _stk.parseString=parseString;
 
 
 /**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const ran_min=has(minValue)
-        ?minValue
-        :zero;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-
-/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
@@ -7255,6 +7217,43 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const ran_min=has(minValue)
+        ?minValue
+        :zero;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
 _stk.range=range;
 
 _stk.reduce=reduce;
@@ -7279,6 +7278,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
 
 
 /**
@@ -7311,8 +7312,6 @@ function repeat (value, valueRepetion) {
 }
 
 _stk.repeat=repeat;
-
-_stk.remove=remove;
 
 
 /**
@@ -7822,6 +7821,8 @@ function strEscape (value, type) {
 
 _stk.strEscape=strEscape;
 
+_stk.strLower=strLower;
+
 
 /**
  * String Kebab case
@@ -7844,8 +7845,6 @@ function strKebab (value) {
 }
 
 _stk.strKebab=strKebab;
-
-_stk.strLower=strLower;
 
 
 /**
@@ -7896,6 +7895,58 @@ function strUpper (value) {
 _stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
+
+
+/**
+ * Swapping the value either string or array in there specific position
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        let cloneRawListValueReturn = rawListValue;
+        let isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        const cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 
 /**
@@ -7955,58 +8006,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-
-/**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        let cloneRawListValueReturn = rawListValue;
-        let isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        const cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
 
 
 /**
