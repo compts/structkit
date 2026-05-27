@@ -38,7 +38,8 @@
     "validate": "npm run style && npm run test",
     "test:conv": "jest --coverage --no-cache",
     "test:watch": "jest --watch",
-    "scan:func": "node ./review/scan_func.mjs"
+    "scan:func": "node ./review/scan_func.mjs",
+    "scan:web_func": "node ./review/scan_structure_inweb.mjs"
   },
   "repository": {
     "type": "git",

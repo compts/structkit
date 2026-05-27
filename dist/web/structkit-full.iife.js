@@ -16,6 +16,8 @@ __=__p
  */
 
 _stk.__=__;
+
+
 var negOne = -1;
 var zero = 0;
 var one = 1;
@@ -262,35 +264,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
 
 /**
  * Check if object has value or null or undefined
@@ -1639,6 +1612,8 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
+_stk.arraySlice=arraySlice;
+
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -1733,8 +1708,32 @@ function arrayRepeat (value, valueRepetion) {
 
 _stk.arrayRepeat=arrayRepeat;
 
-_stk.arraySlice=arraySlice;
 
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -2709,6 +2708,33 @@ _stk.count=count;
 
 
 /**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
+
+_stk.add=add;
+
+
+/**
  * Decrement value
  *
  * @since 1.4.8
@@ -2741,31 +2767,6 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 
 
 /**
@@ -2809,11 +2810,11 @@ _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
 
+_stk.empty=empty;
+
 _stk.each=each;
 
 _stk.equal=equal;
-
-_stk.empty=empty;
 
 
 /**
@@ -3042,9 +3043,6 @@ function getData (split_str, objectValue, isStrict) {
     ], two);
 
 }
-
-_stk.getData=getData;
-
 
 /**
  * Looking the data in JSON and Array base on object value
@@ -3622,7 +3620,11 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
+_stk.getData=getData;
+
 _stk.getKey=getKey;
+
+_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -3659,8 +3661,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-_stk.getTypeof=getTypeof;
 
 
 /**
@@ -3791,8 +3791,6 @@ function gte (value1, value2) {
 
 _stk.gte=gte;
 
-_stk.has=has;
-
 
 /**
  * Reduce function
@@ -3921,13 +3919,15 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
+_stk.has=has;
+
 _stk.inc=inc;
+
+_stk.indexOfExist=indexOfExist;
 
 _stk.indexOf=indexOf;
 
 _stk.indexOfNotExist=indexOfNotExist;
-
-_stk.indexOfExist=indexOfExist;
 
 
 /**
@@ -3973,11 +3973,11 @@ _stk.insert=insert;
 
 _stk.isEmpty=isEmpty;
 
-_stk.isExact=isExact;
-
 _stk.isJson=isJson;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
+
+_stk.isExact=isExact;
 
 
 /**
@@ -4030,35 +4030,6 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-
-
-/**
- * Searching the data either in array or json object to get similar value of data
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
- * @param {any} objectValue Json or Array
- * @returns {any} Return either Json to Array.
- * @example
- *
- * like({"s1":1}, {"s1":1,"s2":1})
- *=>{s1: 1, s2: 1}
- */
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
-
-    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
 
 
 /**
@@ -4122,32 +4093,32 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
+ * Searching the data either in array or json object to get similar value of data
  *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValueWhere Data you want to search that is identical to key of object or array
+ * @param {any} objectValue Json or Array
+ * @returns {any} Return either Json to Array.
  * @example
  *
- * lt(1, 2)
- * // => true
+ * like({"s1":1}, {"s1":1,"s2":1})
+ *=>{s1: 1, s2: 1}
  */
-function lt (value1, value2) {
+function like (objectValueWhere, objectValue) {
 
-    return curryArg(function (aa, bb) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return aa < bb;
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');
 
     }, [
-        value1,
-        value2
+        objectValueWhere,
+        objectValue
     ], two);
 
 }
 
-_stk.lt=lt;
+_stk.like=like;
 
 
 /**
@@ -4238,6 +4209,35 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -6583,17 +6583,13 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
  * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
- * @param {any} ob_str String that contain the struct you want to get
- * @param {any} count Count of the current position in the string
- * @param {any} ob_type Define the type of struct you want to get, either json or array
- * @param {any} valChar Character that is being validated
  * @returns {string} Return JSON string
  * @example
  *
  * validateBacklastHasChar("'" )
  *=>"\\'"
  */
-function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction) {
 
     var slashValue = (/[^\\]$/g).test(last_str.trim());
 
@@ -6613,34 +6609,12 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
                 "close_obj"
             ].indexOf(currentAction) >= zero) {
 
-                var check_next_str = strSubs(ob_str, count+one);
+                slashValue = false;
+                var last_str_split = last_str.trim().split("");
 
-                slashValue = (/[\s\r\n]{0,}[\\]["'`]{1}/g).test(check_next_str.trim());
-                if (slashValue === false && check_next_str.trim().split("").length === zero) {
+                if (last_str_split.length > zero) {
 
-                    slashValue = true;
-
-                } else {
-
-                    var isValidCloseNonQoute = (/^[\s\r\n]{0,}["'`]{0}/g).test(check_next_str.trim());
-
-                    if (currentAction ==="close_obj" && ob_type==="json" && valChar ==="}" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
-
-                        slashValue = true;
-
-                    }
-
-                    if (currentAction ==="close_obj" && ob_type==="array" && valChar ==="]" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
-
-                        slashValue = true;
-
-                    }
-
-                    if (slashValue === false && currentAction ==="separator" && (/[\\]{0}$/g).test(last_str.trim())) {
-
-                        slashValue = true;
-
-                    }
+                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one];
 
                 }
 
@@ -6689,7 +6663,7 @@ function getStructVal (ob_str, ob_type) {
 
         if (isOpen) {
 
-            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar);
+            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction);
 
             var str_append_last = "";
 
@@ -6771,7 +6745,7 @@ function getStructVal (ob_str, ob_type) {
             if (continue_vali) {
 
                 isOpen = false;
-                appen_str+=last_str+str_append_last;
+                appen_str+=last_str.replace(/^[`']/, '"')+str_append_last;
                 last_str = "";
 
             } else {
@@ -6796,7 +6770,7 @@ function getStructVal (ob_str, ob_type) {
                 continue_vali = false;
                 rawCount +=one;
                 isOpen = true;
-                last_str = '"';
+                last_str = valChar;
                 firstFindAction = currentAction;
                 lastAction = "none";
 
@@ -6849,7 +6823,6 @@ function getStructVal (ob_str, ob_type) {
 function constrJson (ob_str) {
 
     var ass = ob_str
-        .replace(/([^//]:)\//gmi)
         .split("");
     var count = 0;
     var rawCounter = 1;
@@ -7244,6 +7217,8 @@ function pipe () {
 
 _stk.pipe=pipe;
 
+_stk.range=range;
+
 
 /**
  * To create single random value from array
@@ -7280,8 +7255,6 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-
-_stk.range=range;
 
 _stk.reduce=reduce;
 
@@ -8464,9 +8437,9 @@ function trim (value, remove_value) {
 
 _stk.trim=trim;
 
-_stk.trimEnd=trimEnd;
-
 _stk.trimStart=trimStart;
+
+_stk.trimEnd=trimEnd;
 
 
 /**

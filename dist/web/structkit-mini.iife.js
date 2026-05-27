@@ -5,7 +5,8 @@ __=__p
 
 
 _stk.__=__;
-var negOne = -1;var zero = 0;var one = 1;
+var negOne = -1;var zero = 0;
+var one = 1;
 var two = 2;
 var three = 3;
 var ten = 10;
@@ -214,23 +215,11 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
 function has () {
 
-    var args=arguments;    return curryArg(function (aa, bb) {
+    var args=arguments;
+
+    return curryArg(function (aa, bb) {
 
         return _has(aa, bb);
 
@@ -1214,7 +1203,7 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
-function range (maxValue, minValue, step) {
+_stk.arraySlice=arraySlice;function range (maxValue, minValue, step) {
 
     var incrementValue=has(step)
         ?Number(step)
@@ -1279,9 +1268,23 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-_stk.arraySlice=arraySlice;function isEmpty (value) {
+function add (value1, value2) {
 
-    var typeofvalue = getTypeofInternal(value);    var invalidList = [
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
+function isEmpty (value) {
+
+    var typeofvalue = getTypeofInternal(value);
+
+    var invalidList = [
         'null',
         'undefined'
     ];
@@ -1970,7 +1973,15 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function dec (value, default_value) {
+_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
+_stk.add=add;function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -1989,14 +2000,6 @@ _stk.clone=clone;_stk.count=count;function dec (value, default_value) {
 }
 
 _stk.dec=dec;
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
 function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2020,7 +2023,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;_stk.equal=equal;_stk.empty=empty;function filter (func, objectValue) {
+_stk.divide=divide;_stk.empty=empty;_stk.each=each;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2182,14 +2185,16 @@ function getData (split_str, objectValue, isStrict) {
 
 }
 
-_stk.getData=getData;
+
 function isExact (whereValue, objectValue1, isExist) {
 
     return curryArg(function (rawWhereValue, rawObjectValue1, rawIsExist) {
 
         if (rawObjectValue1 === null) {
 
-            return false;        }
+            return false;
+
+        }
 
         var local_is_exist=has(rawIsExist)&&getTypeofInternal(rawIsExist) === "boolean"
             ?rawIsExist
@@ -2647,7 +2652,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getKey=getKey;function getUniq (option) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2669,7 +2674,7 @@ _stk.getKey=getKey;function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-_stk.getTypeof=getTypeof;function getValue (objectValue) {
+function getValue (objectValue) {
 
     return getKeyVal(objectValue, "value");}
 
@@ -2731,7 +2736,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-_stk.has=has;function reduce (func, defaultValue, listData) {
+function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2828,7 +2833,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;_stk.indexOfExist=indexOfExist;function insert (objectValue, value) {
+_stk.has=has;_stk.inc=inc;_stk.indexOfExist=indexOfExist;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2853,7 +2858,7 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;_stk.inde
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isJson=isJson;_stk.isExactbyRegExp=isExactbyRegExp;function last (objectValue) {
+_stk.isEmpty=isEmpty;_stk.isJson=isJson;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isExact=isExact;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -2872,18 +2877,6 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
 function limit (objectValue, minValue, maxValue, func) {
 
     var cnt=0;    var glo_jsn={};
@@ -2926,18 +2919,18 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-function lt (value1, value2) {
+function like (objectValueWhere, objectValue) {
 
-    return curryArg(function (aa, bb) {
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
-        return aa < bb;    }, [
-        value1,
-        value2
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
+        objectValueWhere,
+        objectValue
     ], two);
 
 }
 
-_stk.lt=lt;
+_stk.like=like;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2991,6 +2984,18 @@ _stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
@@ -4956,7 +4961,7 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 }
 
 
-function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction) {
 
     var slashValue = (/[^\\]$/g).test(last_str.trim());
 
@@ -4976,34 +4981,12 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
                 "close_obj"
             ].indexOf(currentAction) >= zero) {
 
-                var check_next_str = strSubs(ob_str, count+one);
+                slashValue = false;
+                var last_str_split = last_str.trim().split("");
 
-                slashValue = (/[\s\r\n]{0,}[\\]["'`]{1}/g).test(check_next_str.trim());
-                if (slashValue === false && check_next_str.trim().split("").length === zero) {
+                if (last_str_split.length > zero) {
 
-                    slashValue = true;
-
-                } else {
-
-                    var isValidCloseNonQoute = (/^[\s\r\n]{0,}["'`]{0}/g).test(check_next_str.trim());
-
-                    if (currentAction ==="close_obj" && ob_type==="json" && valChar ==="}" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
-
-                        slashValue = true;
-
-                    }
-
-                    if (currentAction ==="close_obj" && ob_type==="array" && valChar ==="]" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
-
-                        slashValue = true;
-
-                    }
-
-                    if (slashValue === false && currentAction ==="separator" && (/[\\]{0}$/g).test(last_str.trim())) {
-
-                        slashValue = true;
-
-                    }
+                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one];
 
                 }
 
@@ -5040,7 +5023,7 @@ function getStructVal (ob_str, ob_type) {
 
         if (isOpen) {
 
-            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar);
+            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction);
 
             var str_append_last = "";
 
@@ -5122,7 +5105,7 @@ function getStructVal (ob_str, ob_type) {
             if (continue_vali) {
 
                 isOpen = false;
-                appen_str+=last_str+str_append_last;
+                appen_str+=last_str.replace(/^[`']/, '"')+str_append_last;
                 last_str = "";
 
             } else {
@@ -5147,7 +5130,7 @@ function getStructVal (ob_str, ob_type) {
                 continue_vali = false;
                 rawCount +=one;
                 isOpen = true;
-                last_str = '"';
+                last_str = valChar;
                 firstFindAction = currentAction;
                 lastAction = "none";
 
@@ -5189,7 +5172,6 @@ function getStructVal (ob_str, ob_type) {
 function constrJson (ob_str) {
 
     var ass = ob_str
-        .replace(/([^//]:)\//gmi)
         .split("");
     var count = 0;
     var rawCounter = 1;
@@ -5515,7 +5497,7 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
-function random (valueArray, minValue, maxValue) {
+_stk.range=range;function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
         ?minValue
@@ -5535,7 +5517,7 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
@@ -6261,7 +6243,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.trimStart=trimStart;_stk.trimEnd=trimEnd;function union () {
 
     var arg=arguments;    return curryArg(function () {
 

@@ -40,3 +40,4 @@ jobs:
     - run: npm install
     - run: npm install -g eslint
     - run: npm run scan:func
+    - run: npm run scan:web_func

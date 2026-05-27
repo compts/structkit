@@ -174,17 +174,13 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
  * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
- * @param {any} ob_str String that contain the struct you want to get
- * @param {any} count Count of the current position in the string
- * @param {any} ob_type Define the type of struct you want to get, either json or array
- * @param {any} valChar Character that is being validated
  * @returns {string} Return JSON string
  * @example
  *
  * validateBacklastHasChar("'" )
  *=>"\\'"
  */
-function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction) {
 
     let slashValue = (/[^\\]$/g).test(last_str.trim());
 
@@ -206,41 +202,18 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
                 "close_obj"
             ].indexOf(currentAction) >= zero) {
 
-                const check_next_str = strSubs(ob_str, count+one);
+                slashValue = false;
+                const last_str_split = last_str.trim().split("");
 
-                slashValue = (/[\s\r\n]{0,}[\\]["'`]{1}/g).test(check_next_str.trim());
-                if (slashValue === false && check_next_str.trim().split("").length === zero) {
+                if (last_str_split.length > zero) {
 
-                    slashValue = true;
-
-                } else {
-
-                    const isValidCloseNonQoute = (/^[\s\r\n]{0,}["'`]{0}/g).test(check_next_str.trim());
-
-                    if (currentAction ==="close_obj" && ob_type==="json" && valChar ==="}" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
-
-                        slashValue = true;
-
-                    }
-
-                    if (currentAction ==="close_obj" && ob_type==="array" && valChar ==="]" && (/[\\]{0}$/g).test(last_str.trim()) && isValidCloseNonQoute) {
-
-                        slashValue = true;
-
-                    }
-
-                    if (slashValue === false && currentAction ==="separator" && (/[\\]{0}$/g).test(last_str.trim())) {
-
-                        slashValue = true;
-
-                    }
+                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one];
 
                 }
 
             }
 
         }
-
 
     }
 
@@ -287,7 +260,7 @@ function getStructVal (ob_str, ob_type) {
         if (isOpen) {
 
 
-            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, ob_str, count, ob_type, valChar);
+            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction);
 
             let str_append_last = "";
 
@@ -375,7 +348,7 @@ function getStructVal (ob_str, ob_type) {
             if (continue_vali) {
 
                 isOpen = false;
-                appen_str+=last_str+str_append_last;
+                appen_str+=last_str.replace(/^[`']/, '"')+str_append_last;
                 last_str = "";
 
             } else {
@@ -400,7 +373,7 @@ function getStructVal (ob_str, ob_type) {
                 continue_vali = false;
                 rawCount +=one;
                 isOpen = true;
-                last_str = '"';
+                last_str = valChar;
                 firstFindAction = currentAction;
                 lastAction = "none";
 
@@ -455,7 +428,6 @@ function getStructVal (ob_str, ob_type) {
 function constrJson (ob_str) {
 
     const ass = ob_str
-        .replace(/([^//]:)\//gmi)
         .split("");
     let count = 0;
     let rawCounter = 1;
