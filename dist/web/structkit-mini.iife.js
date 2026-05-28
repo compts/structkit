@@ -1098,19 +1098,6 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1203,7 +1190,20 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
-_stk.arraySlice=arraySlice;function range (maxValue, minValue, step) {
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+function range (maxValue, minValue, step) {
 
     var incrementValue=has(step)
         ?Number(step)
@@ -1268,278 +1268,7 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-
-function isEmpty (value) {
-
-    var typeofvalue = getTypeofInternal(value);
-
-    var invalidList = [
-        'null',
-        'undefined'
-    ];
-
-    if (typeofvalue === "json" || typeofvalue === "array") {
-
-        return count(value, typeofvalue === "json") === zero;
-
-    }
-    if (typeofvalue === "number") {
-
-        return value === zero;
-
-    }
-
-    if (indexOfExist(typeofvalue, invalidList)) {
-
-        return true;
-
-    }
-
-    if (indexOfExist(typeofvalue, [
-        "uint16Array",
-        "uint8Array"
-    ])) {
-
-        return value.length ===zero;
-
-    }
-    if (indexOfExist(typeofvalue, [
-        "set",
-        "map"
-    ])) {
-
-        return value.size ===zero;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
-
-
-function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
-
-    var regp=regexp;
-    var intr=defaultVariable;
-
-    if (regp.test(nullReplacement.toString())) {
-
-        intr=nullReplacement;
-
-    }
-
-    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
-
-        intr=defaultVariable;
-
-    }
-    if (getTypeof(intr) === "string") {
-
-        intr = intr.replace(/[^\d.]/g, "");
-
-    }
-
-    return intr;
-
-}
-
-
-function getKey (objectValue) {
-
-    return getKeyVal(objectValue, "key");
-
-}
-
-
-function indexOfNotExist (value, arrayObject) {
-
-    return curryArg(function (rawValue, rawObjectValue) {
-
-        return indexOf(rawValue, rawObjectValue) === negOne;
-
-    }, [
-        value,
-        arrayObject
-    ], two);
-
-}
-
-
-function toString (value) {
-
-    var notInList = [
-        "object",
-        "json",
-        "promise"
-    ];
-
-    var gettypeof = getTypeof(value);
-
-    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
-
-        return value.toString();
-
-    }
-
-    return '';
-
-}
-
-
-function strLower (value) {
-
-    return toString(value).toLowerCase();
-
-}
-
-
-function varExtend (objectValue, objectValueReplace) {
-
-    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
-
-        var jsn_bool={
-            "false": false,
-            "true": true
-        };
-
-        var listValid = [
-            "json",
-            "object"
-        ];
-
-        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
-
-            var jsn_s={};
-
-            for (var key in rawObjectValue) {
-
-                if (has(rawObjectValue, key)) {
-
-                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
-
-                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
-
-                    } else {
-
-                        jsn_s[key]=rawObjectValue[key];
-
-                    }
-
-                }
-
-            }
-
-            for (var key in rawObjectValueReplace) {
-
-                if (has(jsn_s, key)) {
-
-                    if (getTypeof(jsn_s[key]) === "json") {
-
-                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
-
-                    } else {
-
-                        jsn_s[key]=rawObjectValueReplace[key];
-
-                    }
-
-                }
-
-            }
-
-            return jsn_s;
-
-        }
-
-        return objectValue;
-
-    }, [
-        objectValue,
-        objectValueReplace
-    ]);
-
-}
-
-
-function replaceValue (objectValue, objectValueReplace) {
-
-    for (var key in objectValueReplace) {
-
-        if (getTypeof(objectValue[key]) === "json") {
-
-            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
-
-        } else {
-
-            objectValue[key] = objectValueReplace[key];
-
-        }
-
-    }
-
-    return objectValue;
-
-}
-
-
-function toDouble (value, config) {
-
-    var zero = 0.00;
-
-    var defaultConfig = varExtend({"decSeparator": "."}, config);
-
-    if (defaultConfig.decSeparator !== ".") {
-
-        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
-
-        value = value.replace(sepRegexp, ".");
-
-    }
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-
-function roundDecimal (value, precision) {
-
-    var jsn=toDouble(value);
-
-    var multiplier = ten**precision;
-
-    return Math.trunc(jsn * multiplier) / multiplier;
-
-}
-
-
-function arraySum (arrayObject, precision) {
-
-    var arrayObjects=arrayObject||[];
-    var precisions=precision||zero;
-
-    var sum = baseReduce(add, zero, arrayObjects);
-
-    return isEmpty(precisions)
-        ? parseInt(sum)
-        :roundDecimal(sum, precisions);
-
-}
-
-_stk.arraySum=arraySum;
-function asyncReplace (value, search, toReplace) {
+_stk.arraySlice=arraySlice;function asyncReplace (value, search, toReplace) {
 
     return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
@@ -1586,11 +1315,32 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
+function getKey (objectValue) {
+
+    return getKeyVal(objectValue, "key");}
+
+
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
 function divide (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return Number(aa) / Number(bb);    }, [
+        return Number(aa) / Number(bb);
+
+    }, [
         value1,
         value2
     ], two);
@@ -1973,7 +1723,257 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+function isEmpty (value) {
+
+    var typeofvalue = getTypeofInternal(value);    var invalidList = [
+        'null',
+        'undefined'
+    ];
+
+    if (typeofvalue === "json" || typeofvalue === "array") {
+
+        return count(value, typeofvalue === "json") === zero;
+
+    }
+    if (typeofvalue === "number") {
+
+        return value === zero;
+
+    }
+
+    if (indexOfExist(typeofvalue, invalidList)) {
+
+        return true;
+
+    }
+
+    if (indexOfExist(typeofvalue, [
+        "uint16Array",
+        "uint8Array"
+    ])) {
+
+        return value.length ===zero;
+
+    }
+    if (indexOfExist(typeofvalue, [
+        "set",
+        "map"
+    ])) {
+
+        return value.size ===zero;
+
+    }
+
+    return (/^\s*$/gmi).test(value);
+
+}
+
+
+function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
+
+    var regp=regexp;
+    var intr=defaultVariable;
+
+    if (regp.test(nullReplacement.toString())) {
+
+        intr=nullReplacement;
+
+    }
+
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
+
+        intr=defaultVariable;
+
+    }
+    if (getTypeof(intr) === "string") {
+
+        intr = intr.replace(/[^\d.]/g, "");
+
+    }
+
+    return intr;
+
+}
+
+
+function indexOfNotExist (value, arrayObject) {
+
+    return curryArg(function (rawValue, rawObjectValue) {
+
+        return indexOf(rawValue, rawObjectValue) === negOne;
+
+    }, [
+        value,
+        arrayObject
+    ], two);
+
+}
+
+
+function toString (value) {
+
+    var notInList = [
+        "object",
+        "json",
+        "promise"
+    ];
+
+    var gettypeof = getTypeof(value);
+
+    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
+
+        return value.toString();
+
+    }
+
+    return '';
+
+}
+
+
+function strLower (value) {
+
+    return toString(value).toLowerCase();
+
+}
+
+
+function varExtend (objectValue, objectValueReplace) {
+
+    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
+
+        var jsn_bool={
+            "false": false,
+            "true": true
+        };
+
+        var listValid = [
+            "json",
+            "object"
+        ];
+
+        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
+
+            var jsn_s={};
+
+            for (var key in rawObjectValue) {
+
+                if (has(rawObjectValue, key)) {
+
+                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
+
+                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValue[key];
+
+                    }
+
+                }
+
+            }
+
+            for (var key in rawObjectValueReplace) {
+
+                if (has(jsn_s, key)) {
+
+                    if (getTypeof(jsn_s[key]) === "json") {
+
+                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValueReplace[key];
+
+                    }
+
+                }
+
+            }
+
+            return jsn_s;
+
+        }
+
+        return objectValue;
+
+    }, [
+        objectValue,
+        objectValueReplace
+    ]);
+
+}
+
+
+function replaceValue (objectValue, objectValueReplace) {
+
+    for (var key in objectValueReplace) {
+
+        if (getTypeof(objectValue[key]) === "json") {
+
+            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
+
+        } else {
+
+            objectValue[key] = objectValueReplace[key];
+
+        }
+
+    }
+
+    return objectValue;
+
+}
+
+
+function toDouble (value, config) {
+
+    var zero = 0.00;
+
+    var defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
+
+}
+
+
+function roundDecimal (value, precision) {
+
+    var jsn=toDouble(value);
+
+    var multiplier = ten**precision;
+
+    return Math.trunc(jsn * multiplier) / multiplier;
+
+}
+
+
+function arraySum (arrayObject, precision) {
+
+    var arrayObjects=arrayObject||[];
+    var precisions=precision||zero;
+
+    var sum = baseReduce(add, zero, arrayObjects);
+
+    return isEmpty(precisions)
+        ? parseInt(sum)
+        :roundDecimal(sum, precisions);
+
+}
+
+_stk.arraySum=arraySum;
+_stk.count=count;_stk.clone=clone;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -1981,7 +1981,7 @@ _stk.clone=clone;_stk.count=count;function curry (fun, num) {
 }
 
 _stk.curry=curry;
-_stk.add=add;function dec (value, default_value) {
+function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2023,7 +2023,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.empty=empty;_stk.each=each;_stk.equal=equal;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2736,7 +2736,7 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-function reduce (func, defaultValue, listData) {
+_stk.has=has;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2833,7 +2833,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.has=has;_stk.inc=inc;_stk.indexOfExist=indexOfExist;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;_stk.isEmpty=isEmpty;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2858,7 +2858,7 @@ _stk.has=has;_stk.inc=inc;_stk.indexOfExist=indexOfExist;_stk.indexOf=indexOf;_s
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isJson=isJson;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isExact=isExact;function last (objectValue) {
+_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -2877,6 +2877,18 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
+function like (objectValueWhere, objectValue) {
+
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
+        objectValueWhere,
+        objectValue
+    ], two);
+
+}
+
+_stk.like=like;
 function limit (objectValue, minValue, maxValue, func) {
 
     var cnt=0;    var glo_jsn={};
@@ -2919,18 +2931,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-function like (objectValueWhere, objectValue) {
-
-    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
-
-        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'like');    }, [
-        objectValueWhere,
-        objectValue
-    ], two);
-
-}
-
-_stk.like=like;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2984,18 +2984,6 @@ _stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
@@ -3198,6 +3186,18 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 var defaultOptionDelay = {
 
     "autoStart": true
@@ -3320,7 +3320,7 @@ ClassSequence.prototype.start = function () {
 };
 
 _stk.onSequence=onSequence;
-var getWindow = function () {
+_stk.add=add;var getWindow = function () {
 
     if (typeof window !== 'undefined') {
 
@@ -4874,13 +4874,14 @@ function parseJson (value, config) {
         return defaultConfig.invalidDefaultValue;
 
     }
-    if (defaultConfig.disableCorrection) {
-
-        return JSON.parse(value);
-
-    }
 
     try {
+
+        if (defaultConfig.disableCorrection) {
+
+            return JSON.parse(value);
+
+        }
 
         var stripValue = constrJson(strUnEscape(value));
 
@@ -4914,9 +4915,9 @@ function escapeQuotesJson (str) {
 
     each(str_split, function (value, key) {
 
-        if (key>zero && key<str_split.length-one) {
+        if (key>zero && key<str_split.length) {
 
-            if (str_split[key] === '"' && (/^\\/g).test(strSubs(str_split.join(""), key-one)) === false) {
+            if (str_split[key] === '"') {
 
                 str_split[key] = '\\"';
 
@@ -4978,7 +4979,8 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
 
             if ([
                 "separator",
-                "close_obj"
+                "close_obj",
+                "open_obj"
             ].indexOf(currentAction) >= zero) {
 
                 slashValue = false;
@@ -4986,7 +4988,7 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
 
                 if (last_str_split.length > zero) {
 
-                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one];
+                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one] && strSubs(last_str.trim(), last_str_split.length-two) !=='\\"';
 
                 }
 
@@ -5497,7 +5499,7 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
-_stk.range=range;function random (valueArray, minValue, maxValue) {
+function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
         ?minValue
@@ -5517,7 +5519,7 @@ _stk.range=range;function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
@@ -5857,14 +5859,14 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
-_stk.strLower=strLower;function strKebab (value) {
+function strKebab (value) {
 
     return stringSplit(toString(value))
         .split(" ")
         .join("-");}
 
 _stk.strKebab=strKebab;
-function strSnake (value) {
+_stk.strLower=strLower;function strSnake (value) {
 
     return stringSplit(toString(value))
         .split(" ")
@@ -6243,7 +6245,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimStart=trimStart;_stk.trimEnd=trimEnd;function union () {
+_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
 
     var arg=arguments;    return curryArg(function () {
 

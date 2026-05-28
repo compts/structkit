@@ -2,7 +2,7 @@ import strUnEscape from './strUnEscape.mjs';
 
 import strSubs from './strSubs.mjs';
 
-import {zero, one, negOne} from '../variable/defaultValue.mjs';
+import {zero, one, negOne, two} from '../variable/defaultValue.mjs';
 
 import varExtend from './varExtend.mjs';
 
@@ -53,13 +53,14 @@ function parseJson (value, config) {
         return defaultConfig.invalidDefaultValue;
 
     }
-    if (defaultConfig.disableCorrection) {
-
-        return JSON.parse(value);
-
-    }
 
     try {
+
+        if (defaultConfig.disableCorrection) {
+
+            return JSON.parse(value);
+
+        }
 
         const stripValue = constrJson(strUnEscape(value));
 
@@ -104,9 +105,9 @@ function escapeQuotesJson (str) {
 
     each(str_split, function (value, key) {
 
-        if (key>zero && key<str_split.length-one) {
+        if (key>zero && key<str_split.length) {
 
-            if (str_split[key] === '"' && (/^\\/g).test(strSubs(str_split.join(""), key-one)) === false) {
+            if (str_split[key] === '"') {
 
                 str_split[key] = '\\"';
 
@@ -195,7 +196,8 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
 
             if ([
                 "separator",
-                "close_obj"
+                "close_obj",
+                "open_obj"
             ].indexOf(currentAction) >= zero) {
 
                 slashValue = false;
@@ -203,7 +205,7 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
 
                 if (last_str_split.length > zero) {
 
-                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one];
+                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one] && strSubs(last_str.trim(), last_str_split.length-two) !=='\\"';
 
                 }
 
