@@ -12,6 +12,8 @@ import getTypeof from './getTypeof.mjs';
 
 import each from './each.mjs';
 
+import getUniq from './getUniq.mjs';
+
 const ObjOpen = {
     "[": {
         "close": "]",
@@ -139,7 +141,16 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 
     if (validValidation) {
 
-        last_str = last_str.replace(/\\/g, "");
+        const newLineSecCode = "##"+getUniq()+"##";
+
+        last_str = last_str.toString()
+            .replace(/\n/g, newLineSecCode)
+            .replace(/\\n/g, newLineSecCode)
+            .replace(/\s/g, " ")
+            .replace(/\t/g, "   ")
+            .replace(/\\s/g, " ")
+            .replace(/\\/g, "");
+        last_str = last_str.toString().replace(newLineSecCode.toString(), "\\n");
         if (firstFindAction === "char_obj") {
 
             last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';

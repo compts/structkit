@@ -5,8 +5,7 @@ __=__p
 
 
 _stk.__=__;
-var negOne = -1;var zero = 0;
-var one = 1;
+var negOne = -1;var zero = 0;var one = 1;
 var two = 2;
 var three = 3;
 var ten = 10;
@@ -406,10 +405,68 @@ function getTypeofInternal (objectValue) {
 }
 
 
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
+
+}
+
+
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
 function count (objectValue, json_is_empty_check) {
 
-    var cnt=zero;
-    var json_is_empty_check_default=json_is_empty_check||false;
+    var cnt=zero;    var json_is_empty_check_default=json_is_empty_check||false;
     var get_json=getTypeofInternal(objectValue);
 
     if (has(objectValue) === false) {
@@ -809,26 +866,6 @@ GlobalEach.prototype.isContinue = function (value) {
 };
 
 
-function baseReduce (func, defaultValue, listData) {
-
-    var that = this;
-
-    each(listData, function (av, ak, localGlobal) {
-
-        defaultValue = func.apply(that, [
-            defaultValue,
-            av,
-            ak,
-            localGlobal
-        ]);
-
-    });
-
-    return defaultValue;
-
-}
-
-
 function empty (value) {
 
     if (getTypeofInternal(value) === "json") {
@@ -875,38 +912,6 @@ function empty (value) {
     }
 
     return value;
-
-}
-
-
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
 
 }
 
@@ -1035,6 +1040,152 @@ function getTypeof () {
 }
 
 
+function range (maxValue, minValue, step) {
+
+    var incrementValue=has(step)
+        ?Number(step)
+        :one;
+    var minValueRef=has(minValue)
+        ?Number(minValue)
+        :one;
+    var maxValueRef=has(maxValue)
+        ?Number(maxValue)
+        :ten;
+    var output=[];
+
+    for (var inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "string") {
+
+            output.push(inc);
+
+            var render = new Function('inc', "return "+inc+incrementValue);
+
+            inc = render.call(inc);
+
+        }
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<zero) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+
+        return map(function () {
+
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
+_stk.arrayRepeat=arrayRepeat;
+function arraySlice (objectValue, min, max) {
+
+    var ran_var=[];    var defaultValueZero=0;
+    var defaultValueNegativeOne=-1;
+    var ran_min=has(min)
+        ?min
+        :defaultValueZero;
+    var ran_max=has(max)
+        ?max
+        :count(objectValue);
+
+    if (has(min)) {
+
+        if (defaultValueZero > min) {
+
+            ran_min = defaultValueZero;
+            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+
+        }
+
+    }
+
+    if (has(max)) {
+
+        if (defaultValueZero > max) {
+
+            var raw_ran_min = defaultValueZero > min
+                ?count(objectValue) + (defaultValueNegativeOne+ min)
+                :min;
+            var raw_ran_max =count(objectValue) + max;
+
+            if (raw_ran_min < raw_ran_max) {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_max;
+
+            } else {
+
+                ran_min = raw_ran_min;
+                ran_max = raw_ran_min;
+
+            }
+
+        }
+
+    }
+
+    each(objectValue, function (value, key) {
+
+        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+
+            ran_var.push(value);
+
+        }
+
+    });
+
+    return ran_var;
+
+}
+
+_stk.arraySlice=arraySlice;
+function baseReduce (func, defaultValue, listData) {
+
+    var that = this;    each(listData, function (av, ak, localGlobal) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak,
+            localGlobal
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+
 function toArray (value) {
 
     var return_val = value;
@@ -1098,177 +1249,264 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-function arraySlice (objectValue, min, max) {
+function isEmpty (value) {
 
-    var ran_var=[];    var defaultValueZero=0;
-    var defaultValueNegativeOne=-1;
-    var ran_min=has(min)
-        ?min
-        :defaultValueZero;
-    var ran_max=has(max)
-        ?max
-        :count(objectValue);
+    var typeofvalue = getTypeofInternal(value);    var invalidList = [
+        'null',
+        'undefined'
+    ];
 
-    if (has(min)) {
+    if (typeofvalue === "json" || typeofvalue === "array") {
 
-        if (defaultValueZero > min) {
+        return count(value, typeofvalue === "json") === zero;
 
-            ran_min = defaultValueZero;
-            ran_max = count(objectValue) + (defaultValueNegativeOne+ min);
+    }
+    if (typeofvalue === "number") {
 
-        }
+        return value === zero;
 
     }
 
-    if (has(max)) {
+    if (indexOfExist(typeofvalue, invalidList)) {
 
-        if (defaultValueZero > max) {
-
-            var raw_ran_min = defaultValueZero > min
-                ?count(objectValue) + (defaultValueNegativeOne+ min)
-                :min;
-            var raw_ran_max =count(objectValue) + max;
-
-            if (raw_ran_min < raw_ran_max) {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_max;
-
-            } else {
-
-                ran_min = raw_ran_min;
-                ran_max = raw_ran_min;
-
-            }
-
-        }
+        return true;
 
     }
 
-    each(objectValue, function (value, key) {
+    if (indexOfExist(typeofvalue, [
+        "uint16Array",
+        "uint8Array"
+    ])) {
 
-        if (ran_min <= parseInt(key) && ran_max >= parseInt(key)) {
+        return value.length ===zero;
 
-            ran_var.push(value);
+    }
+    if (indexOfExist(typeofvalue, [
+        "set",
+        "map"
+    ])) {
 
-        }
+        return value.size ===zero;
 
-    });
+    }
 
-    return ran_var;
+    return (/^\s*$/gmi).test(value);
 
 }
 
 
-function arrayConcat () {
+function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
 
-    var arg=arguments;
+    var regp=regexp;
+    var intr=defaultVariable;
 
-    return curryArg(function () {
+    if (regp.test(nullReplacement.toString())) {
 
-    var argsub=arguments;
+        intr=nullReplacement;
 
-        if (argsub.length < one) {
+    }
 
-            return [];
+    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
 
-        }
+        intr=defaultVariable;
 
-        var return_val=toArray(first(argsub));
-        var arrayValue = toArray(arraySlice(argsub, one));
+    }
+    if (getTypeof(intr) === "string") {
 
-        each(arrayValue, function (value) {
+        intr = intr.replace(/[^\d.]/g, "");
 
-            return_val = return_val.concat(toArray(value));
+    }
 
-        });
-
-        return return_val;
-
-    }, arg);
+    return intr;
 
 }
 
-_stk.arrayConcat=arrayConcat;
-function append (objectValue, val, key) {
 
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+function getKey (objectValue) {
 
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
+    return getKeyVal(objectValue, "key");
+
+}
+
+
+function indexOfNotExist (value, arrayObject) {
+
+    return curryArg(function (rawValue, rawObjectValue) {
+
+        return indexOf(rawValue, rawObjectValue) === negOne;
+
+    }, [
+        value,
+        arrayObject
     ], two);
 
 }
 
-_stk.append=append;
-function range (maxValue, minValue, step) {
 
-    var incrementValue=has(step)
-        ?Number(step)
-        :one;    var minValueRef=has(minValue)
-        ?Number(minValue)
-        :one;
-    var maxValueRef=has(maxValue)
-        ?Number(maxValue)
-        :ten;
-    var output=[];
+function toString (value) {
 
-    for (var inc=minValueRef; inc <= maxValueRef;) {
+    var notInList = [
+        "object",
+        "json",
+        "promise"
+    ];
 
-        if (getTypeof(incrementValue) === "string") {
+    var gettypeof = getTypeof(value);
 
-            output.push(inc);
+    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
 
-            var render = new Function('inc', "return "+inc+incrementValue);
+        return value.toString();
 
-            inc = render.call(inc);
+    }
 
-        }
-        if (getTypeof(incrementValue) === "number") {
+    return '';
 
-            output.push(inc);
-            if (incrementValue<zero) {
+}
 
-                inc -= incrementValue;
 
-            } else {
+function strLower (value) {
 
-                inc += incrementValue;
+    return toString(value).toLowerCase();
+
+}
+
+
+function varExtend (objectValue, objectValueReplace) {
+
+    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
+
+        var jsn_bool={
+            "false": false,
+            "true": true
+        };
+
+        var listValid = [
+            "json",
+            "object"
+        ];
+
+        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
+
+            var jsn_s={};
+
+            for (var key in rawObjectValue) {
+
+                if (has(rawObjectValue, key)) {
+
+                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
+
+                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValue[key];
+
+                    }
+
+                }
 
             }
+
+            for (var key in rawObjectValueReplace) {
+
+                if (has(jsn_s, key)) {
+
+                    if (getTypeof(jsn_s[key]) === "json") {
+
+                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
+
+                    } else {
+
+                        jsn_s[key]=rawObjectValueReplace[key];
+
+                    }
+
+                }
+
+            }
+
+            return jsn_s;
+
+        }
+
+        return objectValue;
+
+    }, [
+        objectValue,
+        objectValueReplace
+    ]);
+
+}
+
+
+function replaceValue (objectValue, objectValueReplace) {
+
+    for (var key in objectValueReplace) {
+
+        if (getTypeof(objectValue[key]) === "json") {
+
+            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
+
+        } else {
+
+            objectValue[key] = objectValueReplace[key];
 
         }
 
     }
 
-    return output;
+    return objectValue;
 
 }
 
 
-function arrayRepeat (value, valueRepetion) {
+function toDouble (value, config) {
 
-    return curryArg(function (rawValue, rawValueRepetion) {
+    var zero = 0.00;
 
-        var nm_rpt=rawValueRepetion||zero;
+    var defaultConfig = varExtend({"decSeparator": "."}, config);
 
-        return map(function () {
+    if (defaultConfig.decSeparator !== ".") {
 
-            return rawValue;
+        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
 
-        }, range(nm_rpt));
+        value = value.replace(sepRegexp, ".");
 
-    }, [
-        value,
-        valueRepetion
-    ], one);
+    }
+
+    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
+        ?zero
+        :value));
 
 }
 
-_stk.arrayRepeat=arrayRepeat;
-_stk.arraySlice=arraySlice;function asyncReplace (value, search, toReplace) {
+
+function roundDecimal (value, precision) {
+
+    var jsn=toDouble(value);
+
+    var multiplier = ten**precision;
+
+    return Math.trunc(jsn * multiplier) / multiplier;
+
+}
+
+
+function arraySum (arrayObject, precision) {
+
+    var arrayObjects=arrayObject||[];
+    var precisions=precision||zero;
+
+    var sum = baseReduce(add, zero, arrayObjects);
+
+    return isEmpty(precisions)
+        ? parseInt(sum)
+        :roundDecimal(sum, precisions);
+
+}
+
+_stk.arraySum=arraySum;
+function asyncReplace (value, search, toReplace) {
 
     return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
@@ -1315,32 +1553,74 @@ _stk.arraySlice=arraySlice;function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
-function getKey (objectValue) {
+function arrayConcat () {
 
-    return getKeyVal(objectValue, "key");}
+    var arg=arguments;    return curryArg(function () {
 
+    var argsub=arguments;
 
-function add (value1, value2) {
+        if (argsub.length < one) {
 
-    return curryArg(function (aa, bb) {
+            return [];
 
-        return Number(aa) + Number(bb);
+        }
 
-    }, [
-        value1,
-        value2
-    ], two);
+        var return_val=toArray(first(argsub));
+        var arrayValue = toArray(arraySlice(argsub, one));
+
+        each(arrayValue, function (value) {
+
+            return_val = return_val.concat(toArray(value));
+
+        });
+
+        return return_val;
+
+    }, arg);
 
 }
 
+_stk.arrayConcat=arrayConcat;
+function clone (objectValue) {
 
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
+
+        var variable=empty(objectValue);        each(objectValue, function (value, key) {
+
+            variable = append(variable, value, key);
+
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
+
+}
+
+_stk.clone=clone;
 function divide (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return Number(aa) / Number(bb);
-
-    }, [
+        return Number(aa) / Number(bb);    }, [
         value1,
         value2
     ], two);
@@ -1372,43 +1652,6 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
-
-}
-
-
-function clone (objectValue) {
-
-    if (indexOfExist(getTypeofInternal(objectValue), [
-        "json",
-        "array",
-        "object",
-        "arguments",
-        "set",
-        "map"
-    ])) {
-
-        var variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
-
-            variable = append(variable, value, key);
-
-        });
-
-        return variable;
-
-    }
-
-    switch (getTypeofInternal(objectValue)) {
-
-    case 'date':
-        return new Date(objectValue.valueOf());
-    case 'uint16Array':
-    case 'uint8Array':
-        return objectValue.slice();
-    default: return objectValue;
-
-    }
 
 }
 
@@ -1723,257 +1966,7 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-function isEmpty (value) {
-
-    var typeofvalue = getTypeofInternal(value);    var invalidList = [
-        'null',
-        'undefined'
-    ];
-
-    if (typeofvalue === "json" || typeofvalue === "array") {
-
-        return count(value, typeofvalue === "json") === zero;
-
-    }
-    if (typeofvalue === "number") {
-
-        return value === zero;
-
-    }
-
-    if (indexOfExist(typeofvalue, invalidList)) {
-
-        return true;
-
-    }
-
-    if (indexOfExist(typeofvalue, [
-        "uint16Array",
-        "uint8Array"
-    ])) {
-
-        return value.length ===zero;
-
-    }
-    if (indexOfExist(typeofvalue, [
-        "set",
-        "map"
-    ])) {
-
-        return value.size ===zero;
-
-    }
-
-    return (/^\s*$/gmi).test(value);
-
-}
-
-
-function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
-
-    var regp=regexp;
-    var intr=defaultVariable;
-
-    if (regp.test(nullReplacement.toString())) {
-
-        intr=nullReplacement;
-
-    }
-
-    if (!has(nullReplacement) || nullReplacement.toString() === "NaN") {
-
-        intr=defaultVariable;
-
-    }
-    if (getTypeof(intr) === "string") {
-
-        intr = intr.replace(/[^\d.]/g, "");
-
-    }
-
-    return intr;
-
-}
-
-
-function indexOfNotExist (value, arrayObject) {
-
-    return curryArg(function (rawValue, rawObjectValue) {
-
-        return indexOf(rawValue, rawObjectValue) === negOne;
-
-    }, [
-        value,
-        arrayObject
-    ], two);
-
-}
-
-
-function toString (value) {
-
-    var notInList = [
-        "object",
-        "json",
-        "promise"
-    ];
-
-    var gettypeof = getTypeof(value);
-
-    if (has(value) && indexOfNotExist(gettypeof, notInList)) {
-
-        return value.toString();
-
-    }
-
-    return '';
-
-}
-
-
-function strLower (value) {
-
-    return toString(value).toLowerCase();
-
-}
-
-
-function varExtend (objectValue, objectValueReplace) {
-
-    return curryArg(function (rawObjectValue, rawObjectValueReplace) {
-
-        var jsn_bool={
-            "false": false,
-            "true": true
-        };
-
-        var listValid = [
-            "json",
-            "object"
-        ];
-
-        if (indexOfExist(getTypeof(rawObjectValue), listValid) && indexOfExist(getTypeof(rawObjectValueReplace), listValid)) {
-
-            var jsn_s={};
-
-            for (var key in rawObjectValue) {
-
-                if (has(rawObjectValue, key)) {
-
-                    if (indexOfExist(strLower(rawObjectValue[key]), getKey(jsn_bool))) {
-
-                        jsn_s[key]=jsn_bool[strLower(rawObjectValue[key])];
-
-                    } else {
-
-                        jsn_s[key]=rawObjectValue[key];
-
-                    }
-
-                }
-
-            }
-
-            for (var key in rawObjectValueReplace) {
-
-                if (has(jsn_s, key)) {
-
-                    if (getTypeof(jsn_s[key]) === "json") {
-
-                        jsn_s[key]=replaceValue(jsn_s[key], rawObjectValueReplace[key]);
-
-                    } else {
-
-                        jsn_s[key]=rawObjectValueReplace[key];
-
-                    }
-
-                }
-
-            }
-
-            return jsn_s;
-
-        }
-
-        return objectValue;
-
-    }, [
-        objectValue,
-        objectValueReplace
-    ]);
-
-}
-
-
-function replaceValue (objectValue, objectValueReplace) {
-
-    for (var key in objectValueReplace) {
-
-        if (getTypeof(objectValue[key]) === "json") {
-
-            objectValue[key] =replaceValue(objectValue[key], objectValueReplace[key]);
-
-        } else {
-
-            objectValue[key] = objectValueReplace[key];
-
-        }
-
-    }
-
-    return objectValue;
-
-}
-
-
-function toDouble (value, config) {
-
-    var zero = 0.00;
-
-    var defaultConfig = varExtend({"decSeparator": "."}, config);
-
-    if (defaultConfig.decSeparator !== ".") {
-
-        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
-
-        value = value.replace(sepRegexp, ".");
-
-    }
-
-    return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
-        ?zero
-        :value));
-
-}
-
-
-function roundDecimal (value, precision) {
-
-    var jsn=toDouble(value);
-
-    var multiplier = ten**precision;
-
-    return Math.trunc(jsn * multiplier) / multiplier;
-
-}
-
-
-function arraySum (arrayObject, precision) {
-
-    var arrayObjects=arrayObject||[];
-    var precisions=precision||zero;
-
-    var sum = baseReduce(add, zero, arrayObjects);
-
-    return isEmpty(precisions)
-        ? parseInt(sum)
-        :roundDecimal(sum, precisions);
-
-}
-
-_stk.arraySum=arraySum;
-_stk.count=count;_stk.clone=clone;function curry (fun, num) {
+_stk.count=count;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -2679,6 +2672,30 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");}
 
 _stk.getValue=getValue;
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+function gte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa >= bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gte=gte;
 function groupBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -2712,31 +2729,7 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
-function gte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa >= bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gte=gte;
-_stk.has=has;function reduce (func, defaultValue, listData) {
+_stk.has=has;_stk.indexOf=indexOf;_stk.inc=inc;_stk.indexOfExist=indexOfExist;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
 
@@ -2833,7 +2826,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;_stk.isEmpty=isEmpty;function insert (objectValue, value) {
+_stk.indexOfNotExist=indexOfNotExist;_stk.isExact=isExact;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2858,12 +2851,12 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNot
 }
 
 _stk.insert=insert;
-_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
+_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
 _stk.last=last;
-function lastIndexOf (value, objectValue) {
+_stk.isEmpty=isEmpty;function lastIndexOf (value, objectValue) {
 
     return curryArg(function (rawValue, rawObjectValue) {
 
@@ -3320,7 +3313,7 @@ ClassSequence.prototype.start = function () {
 };
 
 _stk.onSequence=onSequence;
-_stk.add=add;var getWindow = function () {
+var getWindow = function () {
 
     if (typeof window !== 'undefined') {
 
@@ -3550,162 +3543,6 @@ function parseTypeVal (typeValue, value) {
 }
 
 _stk.pSerialize=pSerialize;
-function pUnSerialize (value) {
-
-    return curryArg(function (rawValue) {
-
-        return parseTypeValObj(rawValue);    }, [value], one);
-
-}
-
-
-function getObjectValue (value) {
-
-    var splitOpen = value.split("{");
-    var splitClose = reduce(function (total, mVal) {
-
-        var rawVal = mVal;
-
-        if (rawVal.match(/;(\})[a-z]:\d:(.*)/)) {
-
-            var spltRawVal = rawVal.split("}");
-
-            rawVal = spltRawVal.join("};");
-
-        }
-        total.push(rawVal);
-
-        return total;
-
-    }, [], arraySlice(splitOpen, one)).join("{")
-        .replace(/\}[;]{1,}$/g, "");
-
-    return splitClose;
-
-}
-
-
-function getObjectType (value) {
-
-    var getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
-
-    if (getMatch !== null) {
-
-        return {
-            "is_valid": true,
-            "matches": getMatch
-        };
-
-    }
-
-    return {
-        "is_valid": false,
-        "matches": []
-    };
-
-}
-
-
-function parseTypeValObj (value) {
-
-    if (value === "N;") {
-
-        return null;
-
-    }
-
-    var getMatch = getObjectType(value);
-
-    if (getMatch.is_valid) {
-
-        var splitValue = getMatch.matches[zero].split(":");
-
-        if (splitValue[zero] === "s") {
-
-            var stringSplit = value.split(";");
-            var slitGetStr = first(stringSplit).split(":");
-
-            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
-
-        }
-
-        if (splitValue[zero] === "O") {
-
-            var stringSplit = value.split(";");
-            var slitGetStr = first(stringSplit).split(":");
-
-            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
-
-        }
-
-        if (splitValue[zero] === "i") {
-
-            return convertValue(splitValue[one]);
-
-        }
-
-        if (splitValue[zero] === "a") {
-
-            var objValue = getObjectValue(value).split(";");
-
-            var argVal = {};
-            // This will help as check if the deep type was in array or json
-            var isArrayValue = true;
-            var counterArrayValue =zero;
-
-            each(range(convertValue(splitValue[one]) - one, zero), function () {
-
-                var refobjKey = parseTypeValObj(objValue[zero]+";");
-
-                if (isArrayValue && refobjKey !== counterArrayValue) {
-
-                    isArrayValue = false;
-
-                }
-
-                var refobjVal = "";
-                var isValidObject = false;
-                var rawCount = one;
-
-                if (objValue[one].match(/[a-z]:[0-9]+:\{[a-z]:[0-9]/g)) {
-
-                    rawCount = indexOf("}", objValue);
-                    refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
-                    isValidObject = true;
-
-                }
-
-                refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
-
-                argVal[refobjKey] = refobjVal;
-
-                if (isValidObject) {
-
-                    objValue = arraySlice(objValue, rawCount + one);
-                    counterArrayValue += rawCount;
-
-                } else {
-
-                    objValue = arraySlice(objValue, two);
-                    counterArrayValue += one;
-
-                }
-
-            });
-
-            return isArrayValue
-                ?toArray(getValue(argVal))
-                :argVal;
-
-        }
-
-    }
-
-    return null;
-
-}
-
-_stk.pUnSerialize=pUnSerialize;
 var entity = [
     {
         "decimal": "&#160;",
@@ -4833,13 +4670,158 @@ function strUnEscape (value, type) {
 }
 
 
+function parseString (value, config) {
+
+    var defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "throwError": false,
+        "unscapeEntity": false}, config);
+
+    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
+
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
+
+        }
+
+        return '';
+
+    }
+
+    var data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = strUnEscape(data);
+
+    }
+
+    return data.toString();
+
+}
+
+
+function escapeQuotesStr (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
+
+
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        var prepStr = "";
+
+        if (has(rawCount === zero
+            ?validTypeJson
+            :remove(validTypeJson, "object"), getTypeof(value))) {
+
+            var getTypeDetails = validTypeJson[getTypeof(value)];
+
+            var inc=zero;
+
+            each(value, function (ev, ek) {
+
+                var delimeter=inc<count(value)-one
+                    ?","
+                    :"";
+
+                if (getTypeDetails.isKey) {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
+
+                } else {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
+
+                }
+
+                inc += one;
+
+            });
+
+            return getTypeDetails.start+prepStr+getTypeDetails.end;
+
+        }
+
+        var parseValue = convertValue(value);
+
+        if (getTypeof(parseValue) === "string") {
+
+            return '"'+escapeQuotesStr(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "undefined") {
+
+            return '"undefined"';
+
+        }
+        if (getTypeof(parseValue) === "date") {
+
+            return '"'+toString(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "regexp") {
+
+            return '"new RegExp(' + value.source +','+ value.flags+')"';
+
+        }
+
+        if (getTypeof(parseValue) === "number") {
+
+            if (isNaN(parseValue)) {
+
+                return '"NaN"';
+
+            }
+
+            if (Infinity === parseValue) {
+
+                return '"Infinity"';
+
+            }
+
+            return value;
+
+        }
+
+        if (getTypeof(value) === "object") {
+
+            return '"'+value+'"';
+
+        }
+
+        if (getTypeof(parseValue) === "function") {
+
+            if (refConfig.ignoreFunction) {
+
+                return null;
+
+            }
+
+            return '"'+parseValue+'"';
+
+        }
+
+        return parseValue;
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+_stk.parseString=parseString;
 function strSubs (value, minValue, maxValue) {
 
     if (has(maxValue)) {
 
-        return toString(value).substring(minValue, maxValue);
-
-    }
+        return toString(value).substring(minValue, maxValue);    }
 
     return toString(value).substring(minValue);
 
@@ -4936,7 +4918,16 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 
     if (validValidation) {
 
-        last_str = last_str.replace(/\\/g, "");
+        var newLineSecCode = "##"+getUniq()+"##";
+
+        last_str = last_str.toString()
+            .replace(/\n/g, newLineSecCode)
+            .replace(/\\n/g, newLineSecCode)
+            .replace(/\s/g, " ")
+            .replace(/\t/g, "   ")
+            .replace(/\\s/g, " ")
+            .replace(/\\/g, "");
+        last_str = last_str.toString().replace(newLineSecCode.toString(), "\\n");
         if (firstFindAction === "char_obj") {
 
             last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
@@ -5325,151 +5316,182 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
-function parseString (value, config) {
+function pUnSerialize (value) {
 
-    var defaultConfig = varExtend({"ignoreFunction": true,
-        "isJson": false,
-        "throwError": false,
-        "unscapeEntity": false}, config);    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
+    return curryArg(function (rawValue) {
 
-        if (defaultConfig.throwError) {
+        return parseTypeValObj(rawValue);    }, [value], one);
 
-            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
+}
+
+
+function getObjectValue (value) {
+
+    var splitOpen = value.split("{");
+    var splitClose = reduce(function (total, mVal) {
+
+        var rawVal = mVal;
+
+        if (rawVal.match(/;(\})[a-z]:\d:(.*)/)) {
+
+            var spltRawVal = rawVal.split("}");
+
+            rawVal = spltRawVal.join("};");
+
+        }
+        total.push(rawVal);
+
+        return total;
+
+    }, [], arraySlice(splitOpen, one)).join("{")
+        .replace(/\}[;]{1,}$/g, "");
+
+    return splitClose;
+
+}
+
+
+function getObjectType (value) {
+
+    var getMatch = value.match(/\b([a-z]){1}:([0-9]+)\b/g);
+
+    if (getMatch !== null) {
+
+        return {
+            "is_valid": true,
+            "matches": getMatch
+        };
+
+    }
+
+    return {
+        "is_valid": false,
+        "matches": []
+    };
+
+}
+
+
+function parseTypeValObj (value) {
+
+    if (value === "N;") {
+
+        return null;
+
+    }
+
+    var getMatch = getObjectType(value);
+
+    if (getMatch.is_valid) {
+
+        var splitValue = getMatch.matches[zero].split(":");
+
+        if (splitValue[zero] === "s") {
+
+            var stringSplit = value.split(";");
+            var slitGetStr = first(stringSplit).split(":");
+
+            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
 
         }
 
-        return '';
+        if (splitValue[zero] === "O") {
 
-    }
+            var stringSplit = value.split(";");
+            var slitGetStr = first(stringSplit).split(":");
 
-    var data = parseStringCore(zero, defaultConfig, value);
+            return slitGetStr[two].replace(/^"/g, "").replace(/"$/g, "");
 
-    if (defaultConfig.unscapeEntity) {
+        }
 
-        data = strUnEscape(data);
+        if (splitValue[zero] === "i") {
 
-    }
+            return convertValue(splitValue[one]);
 
-    return data.toString();
+        }
 
-}
+        if (splitValue[zero] === "a") {
 
+            var objValue = getObjectValue(value).split(";");
 
-function escapeQuotesStr (str) {
+            var argVal = {};
+            // This will help as check if the deep type was in array or json
+            var isArrayValue = true;
+            var counterArrayValue =zero;
 
-    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+            each(range(convertValue(splitValue[one]) - one, zero), function () {
 
-}
+                var refobjKey = parseTypeValObj(objValue[zero]+";");
 
+                if (isArrayValue && refobjKey !== counterArrayValue) {
 
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        var prepStr = "";
-
-        if (has(rawCount === zero
-            ?validTypeJson
-            :remove(validTypeJson, "object"), getTypeof(value))) {
-
-            var getTypeDetails = validTypeJson[getTypeof(value)];
-
-            var inc=zero;
-
-            each(value, function (ev, ek) {
-
-                var delimeter=inc<count(value)-one
-                    ?","
-                    :"";
-
-                if (getTypeDetails.isKey) {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
-
-                } else {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
+                    isArrayValue = false;
 
                 }
 
-                inc += one;
+                var refobjVal = "";
+                var isValidObject = false;
+                var rawCount = one;
+
+                if (objValue[one].match(/[a-z]:[0-9]+:\{[a-z]:[0-9]/g)) {
+
+                    rawCount = indexOf("}", objValue);
+                    refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+                    isValidObject = true;
+
+                }
+
+                refobjVal = parseTypeValObj(arraySlice(objValue, one).join(";")+";");
+
+                argVal[refobjKey] = refobjVal;
+
+                if (isValidObject) {
+
+                    objValue = arraySlice(objValue, rawCount + one);
+                    counterArrayValue += rawCount;
+
+                } else {
+
+                    objValue = arraySlice(objValue, two);
+                    counterArrayValue += one;
+
+                }
 
             });
 
-            return getTypeDetails.start+prepStr+getTypeDetails.end;
+            return isArrayValue
+                ?toArray(getValue(argVal))
+                :argVal;
 
         }
 
-        var parseValue = convertValue(value);
+    }
 
-        if (getTypeof(parseValue) === "string") {
-
-            return '"'+escapeQuotesStr(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "undefined") {
-
-            return '"undefined"';
-
-        }
-        if (getTypeof(parseValue) === "date") {
-
-            return '"'+toString(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "regexp") {
-
-            return '"new RegExp(' + value.source +','+ value.flags+')"';
-
-        }
-
-        if (getTypeof(parseValue) === "number") {
-
-            if (isNaN(parseValue)) {
-
-                return '"NaN"';
-
-            }
-
-            if (Infinity === parseValue) {
-
-                return '"Infinity"';
-
-            }
-
-            return value;
-
-        }
-
-        if (getTypeof(value) === "object") {
-
-            return '"'+value+'"';
-
-        }
-
-        if (getTypeof(parseValue) === "function") {
-
-            if (refConfig.ignoreFunction) {
-
-                return null;
-
-            }
-
-            return '"'+parseValue+'"';
-
-        }
-
-        return parseValue;
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
+    return null;
 
 }
 
-_stk.parseString=parseString;
+_stk.pUnSerialize=pUnSerialize;
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
 function pipe () {
 
     var arg=arguments;    var pipeConst = first(arg);
@@ -5499,27 +5521,7 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
@@ -5630,6 +5632,19 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
+function someValid () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 function shuffle (objectValue) {
 
     var output=[];    var rawObjectValue = clone(objectValue);
@@ -5659,19 +5674,6 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
-function someValid () {
-
-    var arg=arguments;    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
 function baseSort (objectValue, func) {
 
     var jsonn=objectValue;    var js_m=getTypeofInternal(jsonn) === "json"
@@ -5768,7 +5770,7 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
-function sortBy (func, objectValue) {
+_stk.range=range;function sortBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -6186,7 +6188,7 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
-_stk.toString=toString;function trimStart (value, remove_value) {
+function trimStart (value, remove_value) {
 
     var rx = new RegExp('^[' + whitespace + ']*');    var rawValue = toString(value).replace(rx, "");
 
@@ -6245,7 +6247,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.toString=toString;_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
 
     var arg=arguments;    return curryArg(function () {
 
