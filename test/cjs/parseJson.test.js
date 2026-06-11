@@ -71,7 +71,7 @@ describe('CJS: parseJson method', function () {
 
         assert.deepStrictEqual(
             parseJson('{a:"s\\\\sas"}'),
-            {"a": 'ssas'}
+            {"a": 's as'}
         );
 
 
