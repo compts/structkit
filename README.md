@@ -9,8 +9,7 @@ Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_G
 
 ---
 
-[![NPM version][npm-image]][npm-url] 
-[![NPM version][npm-ts-image]][npm-url-ts] 
+[![NPM version][npm-image]][npm-url]
 [![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
 [![NPM Downloads](https://img.shields.io/npm/dm/structkit?logo=npm&style=flat-square)](https://npmtrends.com/structkit)
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://jsr.io/@compts/structkit)
@@ -83,10 +82,7 @@ test("1")
 In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-url-ts]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit-1.4.9-brightgreen
-
-[npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.87-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.9.rc0-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function
