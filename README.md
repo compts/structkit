@@ -3,7 +3,7 @@ JS/TS functional tool to simplify JS Developer
 
 ---
 # ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
-**Version 1.4.9.rc0 is a major rewrite with numerous breaking changes.**
+**Version 1.4.9-rc0 is a major rewrite with numerous breaking changes.**
 
 Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_GUIDE.md) carefully before proceeding. The changes are substantial and will likely affect existing implementations.
 
