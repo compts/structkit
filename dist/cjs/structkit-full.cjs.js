@@ -15,8 +15,6 @@ const __=__p;
  */
 
 _stk.__=__;
-
-
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -261,6 +259,35 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.add=add;
+
 
 /**
  * Check if object has value or null or undefined
@@ -1477,35 +1504,6 @@ function append (objectValue, val, key) {
 }
 
 _stk.append=append;
-
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
 
 
 /**
@@ -2752,8 +2750,6 @@ function dec (value, default_value) {
 
 _stk.dec=dec;
 
-_stk.divide=divide;
-
 
 /**
  *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
@@ -2794,9 +2790,11 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
+_stk.divide=divide;
 
 _stk.empty=empty;
+
+_stk.equal=equal;
 
 
 /**
@@ -2853,9 +2851,11 @@ function filter (func, objectValue) {
 
 _stk.filter=filter;
 
-_stk.equal=equal;
-
 _stk.first=first;
+
+_stk.each=each;
+
+_stk.flatten=flatten;
 
 
 /**
@@ -3602,8 +3602,6 @@ function getDepthValue (value) {
 
 _stk.fromPairs=fromPairs;
 
-_stk.flatten=flatten;
-
 _stk.getData=getData;
 
 _stk.getKey=getKey;
@@ -3669,35 +3667,6 @@ _stk.getValue=getValue;
 
 
 /**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
-
-
-/**
  * To group the value of json or array
  *
  * @since 1.4.8
@@ -3748,6 +3717,35 @@ _stk.groupBy=groupBy;
 
 
 /**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+
+
+/**
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
@@ -3776,10 +3774,6 @@ function gte (value1, value2) {
 _stk.gte=gte;
 
 _stk.has=has;
-
-_stk.inc=inc;
-
-_stk.indexOf=indexOf;
 
 
 /**
@@ -3907,6 +3901,10 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
+_stk.inc=inc;
+
+_stk.indexOf=indexOf;
+
 _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
@@ -3958,8 +3956,6 @@ _stk.isEmpty=isEmpty;
 _stk.isExact=isExact;
 
 _stk.isJson=isJson;
-
-_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -4042,6 +4038,8 @@ function like (objectValueWhere, objectValue) {
 
 _stk.like=like;
 
+_stk.isExactbyRegExp=isExactbyRegExp;
+
 
 /**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
@@ -4101,35 +4099,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
 
 _stk.map=map;
 
@@ -4191,6 +4160,64 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
+
+
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -4340,36 +4367,9 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
 _stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -4480,37 +4480,6 @@ function not (func) {
 
 _stk.not=not;
 
-_stk.multiply=multiply;
-
-
-/**
- * To check if its not equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any value type
- * @param {any} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * noteq('as', 'as')
- * // => false
- */
-function noteq (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa !== bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.noteq=noteq;
-
 
 const defaultOptionDelay = {
 
@@ -4605,6 +4574,35 @@ ClassDelay.prototype.start = function () {
 };
 
 _stk.onDelay=onDelay;
+
+
+/**
+ * To check if its not equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any value type
+ * @param {any} value2 Any value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * noteq('as', 'as')
+ * // => false
+ */
+function noteq (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa !== bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.noteq=noteq;
 
 
 const defaultOption = {
@@ -6234,7 +6232,7 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
             .replace(/\t/g, "   ")
             .replace(/\\s/g, " ")
             .replace(/\\/g, "");
-        last_str = last_str.toString().replace(newLineSecCode.toString(), "\\n");
+        last_str = last_str.toString().replaceAll(newLineSecCode.toString(), "\\n");
         if (firstFindAction === "char_obj") {
 
             last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
@@ -6940,6 +6938,8 @@ _stk.range=range;
 
 _stk.reduce=reduce;
 
+_stk.remove=remove;
+
 
 /**
  * Regex Count Group number
@@ -6960,8 +6960,6 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
 
 
 /**
@@ -7555,6 +7553,8 @@ _stk.strSubs=strSubs;
 
 _stk.strUnEscape=strUnEscape;
 
+_stk.subtract=subtract;
+
 
 /**
  * String Upper case case
@@ -7576,66 +7576,57 @@ function strUpper (value) {
 
 _stk.strUpper=strUpper;
 
-_stk.subtract=subtract;
-
 
 /**
- * Get the value from index zero until the last value
+ * Swapping the value either string or array in there specific position
  *
  * @since 1.4.86
- * @category Math
- * @param {any[]|string} rawList List data
- * @param {number} startIndex Start index number
- * @param {number} lastIndex Last index number
- * @returns {any} Returns array
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
  * @example
  *
- * baseTake(1, 1)
- * // => 1
+ * swap(0, 2, 'foo')
+ *=> off
  */
-function baseTake (rawList, startIndex, lastIndex) {
+function swap (firstValue, secondValue, listValue) {
 
-    const refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
-    const varLimit = limit(refRawList, startIndex, lastIndex);
+        let cloneRawListValueReturn = rawListValue;
+        let isSplit = false;
 
-    const rawGetValue = getValue(varLimit);
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
 
-    return getTypeofInternal(rawList) === "string"
-        ?toArray(rawGetValue).join("")
-        :rawGetValue;
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
 
-}
+        }
 
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Array
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns choice index value in list.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-function take (value, valueList) {
+        const cloneRawListValue = clone(cloneRawListValueReturn);
 
-    return curryArg(function (rawValue, rawList) {
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
 
-        return baseTake(rawList, zero, rawValue-one);
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
 
     }, [
-        value,
-        valueList
-    ], two);
+        firstValue,
+        secondValue,
+        listValue
+    ]);
 
 }
 
-_stk.take=take;
+_stk.swap=swap;
 
 
 /**
@@ -7869,6 +7860,65 @@ _stk.templates=templates;
 
 _stk.toArray=toArray;
 
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {any[]|string} rawList List data
+ * @param {number} startIndex Start index number
+ * @param {number} lastIndex Last index number
+ * @returns {any} Returns array
+ * @example
+ *
+ * baseTake(1, 1)
+ * // => 1
+ */
+function baseTake (rawList, startIndex, lastIndex) {
+
+    const refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;
+
+    const varLimit = limit(refRawList, startIndex, lastIndex);
+
+    const rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
+
+}
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
+
 _stk.toBoolean=toBoolean;
 
 _stk.toDouble=toDouble;
@@ -7898,55 +7948,68 @@ _stk.toInteger=toInteger;
 
 
 /**
- * Swapping the value either string or array in there specific position
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
  *
- * @since 1.4.86
+ * @since 1.4.87
  * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
+ * @param {any} value First number
+ * @returns {any[]} Returns array
  * @example
  *
- * swap(0, 2, 'foo')
- *=> off
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
  */
-function swap (firstValue, secondValue, listValue) {
+function toPairs (value) {
 
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+    if (getTypeofInternal(value) !== "json") {
 
-        let cloneRawListValueReturn = rawListValue;
-        let isSplit = false;
+        throw new Error("Value must be an json");
 
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
+    }
 
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
+    return baseReduce(function (total, subValue, subKey) {
 
-        }
+        const subArray = [];
 
-        const cloneRawListValue = clone(cloneRawListValueReturn);
+        subArray.push(subKey);
+        setDepthValue(subArray, subValue);
+        total.push(subArray);
 
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+        return total;
 
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
+    }, [], value);
 
 }
 
-_stk.swap=swap;
+/**
+ * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arryData First number
+ * @param {number} value First number
+ * @returns {null} Returns array
+ * @example
+ *
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
+ */
+function setDepthValue (arryData, value) {
+
+    if (getTypeofInternal(value) === "json") {
+
+        arryData.push(getKey(value));
+        setDepthValue(arryData, getValue(value));
+
+    } else {
+
+        arryData.push(value);
+
+    }
+
+}
+
+_stk.toPairs=toPairs;
 
 _stk.toString=toString;
 
@@ -8049,71 +8112,6 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-
-
-/**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
- * @example
- *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
- */
-function toPairs (value) {
-
-    if (getTypeofInternal(value) !== "json") {
-
-        throw new Error("Value must be an json");
-
-    }
-
-    return baseReduce(function (total, subValue, subKey) {
-
-        const subArray = [];
-
-        subArray.push(subKey);
-        setDepthValue(subArray, subValue);
-        total.push(subArray);
-
-        return total;
-
-    }, [], value);
-
-}
-
-/**
- * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arryData First number
- * @param {number} value First number
- * @returns {null} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-function setDepthValue (arryData, value) {
-
-    if (getTypeofInternal(value) === "json") {
-
-        arryData.push(getKey(value));
-        setDepthValue(arryData, getValue(value));
-
-    } else {
-
-        arryData.push(value);
-
-    }
-
-}
-
-_stk.toPairs=toPairs;
 
 _stk.trimEnd=trimEnd;
 

@@ -148,7 +148,7 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
             .replace(/\t/g, "   ")
             .replace(/\\s/g, " ")
             .replace(/\\/g, "");
-        last_str = last_str.toString().replace(newLineSecCode.toString(), "\\n");
+        last_str = last_str.toString().replaceAll(newLineSecCode.toString(), "\\n");
         if (firstFindAction === "char_obj") {
 
             last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
