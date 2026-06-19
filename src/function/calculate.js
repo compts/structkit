@@ -320,20 +320,18 @@ function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
 
-    // Case 1: An explicit nth-root with a leading number (e.g., 3√var-name)
+    // Case 1: nth-root with a leading number (e.g., 3√var-name)
 
-    // By changing * to +, CodeQL sees that digits MUST precede the √, eliminating zero-matching ambiguity.
-    formula = formula.replace(/(\d+)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
+    // The variable block is strictly structured to avoid overlapping matches
+    formula = formula.replace(/(\d+)\u221A([a-zA-Z][a-zA-Z0-9_-]*|\d+)/gu, function (match, m1, m2) {
 
         // eslint-disable-next-line no-extra-parens
         return "(" + m2 + "**" + (one / Number(m1)) + ")";
 
     });
 
-    // Case 2: A standard square root with no leading number (e.g., √var-name)
-
-    // This pattern has no leading digit group, making it mathematically impossible to trigger a ReDoS.
-    formula = formula.replace(/\u221A([a-zA-Z0-9_-]+)/gu, function (match, m2) {
+    // Case 2: Standard square root with no leading number (e.g., √var-name)
+    formula = formula.replace(/\u221A([a-zA-Z][a-zA-Z0-9_-]*|\d+)/gu, function (match, m2) {
 
         // eslint-disable-next-line no-extra-parens
         return "(" + m2 + "**" + (one / two) + ")";
