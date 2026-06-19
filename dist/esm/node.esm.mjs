@@ -106,6 +106,24 @@ import {default as arraySlice_module} from './src/function/arraySlice.mjs';
  */
 export const arraySlice = arraySlice_module;
 
+import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
+
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+export const arrayRepeat = arrayRepeat_module;
+
 import {default as arraySum_module} from './src/function/arraySum.mjs';
 
 
@@ -125,24 +143,6 @@ import {default as arraySum_module} from './src/function/arraySum.mjs';
  * // => 3
  */
 export const arraySum = arraySum_module;
-
-import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
-
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-export const arrayRepeat = arrayRepeat_module;
 
 import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
 
@@ -200,24 +200,6 @@ import {default as clone_module} from './src/function/clone.mjs';
  */
 export const clone = clone_module;
 
-import {default as curry_module} from './src/function/curry.mjs';
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-export const curry = curry_module;
-
 import {default as count_module} from './src/function/count.mjs';
 
 
@@ -238,6 +220,24 @@ import {default as count_module} from './src/function/count.mjs';
  * // => 2
  */
 export const count = count_module;
+
+import {default as curry_module} from './src/function/curry.mjs';
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+export const curry = curry_module;
 
 import {default as dec_module} from './src/function/dec.mjs';
 
@@ -293,6 +293,23 @@ import {default as divide_module} from './src/function/divide.mjs';
  */
 export const divide = divide_module;
 
+import {default as empty_module} from './src/function/empty.mjs';
+
+
+/**
+ * Ge the empty value of specify argument type
+ *
+ * @since 1.0.1
+ * @category Function
+ * @param {any} value Any value type that you want an empty return
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * empty([])
+ * => []
+ */
+export const empty = empty_module;
+
 import {default as each_module} from './src/function/each.mjs';
 
 
@@ -310,23 +327,6 @@ import {default as each_module} from './src/function/each.mjs';
  *
  */
 export const each = each_module;
-
-import {default as empty_module} from './src/function/empty.mjs';
-
-
-/**
- * Ge the empty value of specify argument type
- *
- * @since 1.0.1
- * @category Function
- * @param {any} value Any value type that you want an empty return
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * empty([])
- * => []
- */
-export const empty = empty_module;
 
 import {default as equal_module} from './src/function/equal.mjs';
 
@@ -873,25 +873,6 @@ import {default as map_module} from './src/function/map.mjs';
  */
 export const map = map_module;
 
-import {default as mapGetData_module} from './src/function/mapGetData.mjs';
-
-
-/**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
- * @example
- *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
- */
-export const mapGetData = mapGetData_module;
-
 import {default as lt_module} from './src/function/lt.mjs';
 
 
@@ -910,24 +891,24 @@ import {default as lt_module} from './src/function/lt.mjs';
  */
 export const lt = lt_module;
 
-import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
+import {default as mapGetData_module} from './src/function/mapGetData.mjs';
 
 
 /**
- * Merging two.mjson/array object with the help of where clause
+ * A Function to map the data either an array or an object using getData function.
  *
- * @since 1.4.8.1
+ * @since 1.3.1
  * @category Collection
- * @param {any} whereValue where clause for you to merge the two set of data, where clause at `$1`  for `objectValue` and `$2`  for `mergeValue`
- * @param {any} objectValue The data you want to map
- * @param {any} mergeValue data that you want to merge
- * @returns {any} Return map either JSON or Array
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
  * @example
  *
- * mergeInWhere({"$1.id":"$2.id","$2.title":"test only"}, [{"s":23,"id":1}],[{"id":1,"title":"test only"}])
- *=> [{ "id":1, "s":23, "title":"test only"}]
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
  */
-export const mergeInWhere = mergeInWhere_module;
+export const mapGetData = mapGetData_module;
 
 import {default as mergeWithKey_module} from './src/function/mergeWithKey.mjs';
 
@@ -964,6 +945,25 @@ import {default as multiply_module} from './src/function/multiply.mjs';
  * // => 1
  */
 export const multiply = multiply_module;
+
+import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
+
+
+/**
+ * Merging two.mjson/array object with the help of where clause
+ *
+ * @since 1.4.8.1
+ * @category Collection
+ * @param {any} whereValue where clause for you to merge the two set of data, where clause at `$1`  for `objectValue` and `$2`  for `mergeValue`
+ * @param {any} objectValue The data you want to map
+ * @param {any} mergeValue data that you want to merge
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * mergeInWhere({"$1.id":"$2.id","$2.title":"test only"}, [{"s":23,"id":1}],[{"id":1,"title":"test only"}])
+ *=> [{ "id":1, "s":23, "title":"test only"}]
+ */
+export const mergeInWhere = mergeInWhere_module;
 
 import {default as not_module} from './src/function/not.mjs';
 
@@ -1020,24 +1020,6 @@ import {default as onSequence_module} from './src/function/onSequence.mjs';
  */
 export const onSequence = onSequence_module;
 
-import {default as onWait_module} from './src/function/onWait.mjs';
-
-
-/**
- * On wait
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @returns {object} Returns the total.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-export const onWait = onWait_module;
-
 import {default as once_module} from './src/function/once.mjs';
 
 
@@ -1054,6 +1036,23 @@ import {default as once_module} from './src/function/once.mjs';
  * // => 1
  */
 export const once = once_module;
+
+import {default as pipe_module} from './src/function/pipe.mjs';
+
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+export const pipe = pipe_module;
 
 import {default as parseJson_module} from './src/function/parseJson.mjs';
 
@@ -1090,23 +1089,6 @@ import {default as parseString_module} from './src/function/parseString.mjs';
  *=>'{}'
  */
 export const parseString = parseString_module;
-
-import {default as pipe_module} from './src/function/pipe.mjs';
-
-
-/**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-export const pipe = pipe_module;
 
 import {default as random_module} from './src/function/random.mjs';
 
@@ -1164,6 +1146,24 @@ import {default as reduce_module} from './src/function/reduce.mjs';
  * // => 5
  */
 export const reduce = reduce_module;
+
+import {default as onWait_module} from './src/function/onWait.mjs';
+
+
+/**
+ * On wait
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @returns {object} Returns the total.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+export const onWait = onWait_module;
 
 import {default as regexCountGroup_module} from './src/function/regexCountGroup.mjs';
 
@@ -1309,23 +1309,6 @@ import {default as shuffle_module} from './src/function/shuffle.mjs';
  */
 export const shuffle = shuffle_module;
 
-import {default as someValid_module} from './src/function/someValid.mjs';
-
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-export const someValid = someValid_module;
-
 import {default as sort_module} from './src/function/sort.mjs';
 
 
@@ -1469,24 +1452,6 @@ import {default as strSnake_module} from './src/function/strSnake.mjs';
  */
 export const strSnake = strSnake_module;
 
-import {default as strUnEscape_module} from './src/function/strUnEscape.mjs';
-
-
-/**
- * String Unescape
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns unescape string
- * @example
- *
- * strUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
- *=>"yahii & adad ^ss"
- */
-export const strUnEscape = strUnEscape_module;
-
 import {default as strSubs_module} from './src/function/strSubs.mjs';
 
 
@@ -1505,6 +1470,24 @@ import {default as strSubs_module} from './src/function/strSubs.mjs';
  *=> fish is goad   with Goat-1ss
  */
 export const strSubs = strSubs_module;
+
+import {default as strUnEscape_module} from './src/function/strUnEscape.mjs';
+
+
+/**
+ * String Unescape
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns unescape string
+ * @example
+ *
+ * strUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ *=>"yahii & adad ^ss"
+ */
+export const strUnEscape = strUnEscape_module;
 
 import {default as strUpper_module} from './src/function/strUpper.mjs';
 
@@ -1683,6 +1666,23 @@ import {default as toPairs_module} from './src/function/toPairs.mjs';
  */
 export const toPairs = toPairs_module;
 
+import {default as toString_module} from './src/function/toString.mjs';
+
+
+/**
+ * To String
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
+ * @example
+ *
+ * toString(1)
+ *=> '1'
+ */
+export const toString = toString_module;
+
 import {default as trim_module} from './src/function/trim.mjs';
 
 
@@ -1700,23 +1700,6 @@ import {default as trim_module} from './src/function/trim.mjs';
  *=> 'The fish is goad   with Goat-1ss'
  */
 export const trim = trim_module;
-
-import {default as toString_module} from './src/function/toString.mjs';
-
-
-/**
- * To String
- *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
- * @example
- *
- * toString(1)
- *=> '1'
- */
-export const toString = toString_module;
 
 import {default as trimEnd_module} from './src/function/trimEnd.mjs';
 
@@ -2223,4 +2206,21 @@ import {default as zip_module} from './src/function/zip.mjs';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
+
+import {default as someValid_module} from './src/function/someValid.mjs';
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+export const someValid = someValid_module;
 

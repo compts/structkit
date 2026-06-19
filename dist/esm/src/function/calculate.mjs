@@ -315,14 +315,18 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    formula = formula.replace(/(\d*?)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
-
-        const power = m1 === ""
-            ? two
-            : Number(m1);
+    formula = formula.replace(/(\d+)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
 
         // eslint-disable-next-line no-extra-parens
-        return "(" + m2 + "**" + (one / power) + ")";
+        return "(" + m2 + "**" + (one / Number(m1)) + ")";
+
+    });
+
+    // Case 2: Handle standard square roots with no leading degree, e.g., √x
+    formula = formula.replace(/\u221A([a-zA-Z0-9_-]+)/gu, function (match, m2) {
+
+        // eslint-disable-next-line no-extra-parens
+        return "(" + m2 + "**" + (one / two) + ")";
 
     });
 
