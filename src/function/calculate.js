@@ -357,7 +357,7 @@ function algbraicExpr (formula) {
 
 
     // Handle formula like this 3x
-    formula = formula.replace(/\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g, "($1 * $2)");
+    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
 
 
     // Handle formula like this (1)(2)
