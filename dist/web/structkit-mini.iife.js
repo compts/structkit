@@ -642,13 +642,13 @@ function convertValue (value) {
 
     if (getTypeofInternal(value) === "string") {
 
-        if ((/^[0-9]{1,}$/g).test(value)) {
+        if ((/^\d+$/).test(value)) {
 
-            return parseInt(value);
+            return parseInt(value, 10);
 
         }
 
-        if ((/^[0-9]{1,}[.]{1}[0-9]{1,}$/g).test(value)) {
+        if ((/^\d+\.\d+$/).test(value)) {
 
             return parseFloat(value);
 
@@ -1917,53 +1917,30 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    var regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
+    formula = formula.replace(/(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu, function (mm, m1, m2) {
 
-    if (regNumberSqrt.test(formula)) {
+        var power = two;
 
-        formula = formula.replace(regNumberSqrt, function (mm, m1, m2) {
+        if (m1 !== "") {
 
-            var power = two;
+            power = m1;
 
-            if (m1 !== "") {
+        }
 
-                power = m1;
+        // eslint-disable-next-line no-mixed-operators, no-extra-parens
+        return "("+m2+"**"+(one/power)+")";
 
-            }
-
-            // eslint-disable-next-line no-mixed-operators, no-extra-parens
-            return "("+m2+"**"+(one/power)+")";
-
-        });
-
-    }
+    });
 
     // Handle formula like this 3x
-    var regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
-
-    if (regNumberVariable1.test(formula)) {
-
-        formula = formula.replace(regNumberVariable1, "($1 * $2)");
-
-    }
+    formula = formula.replace(/\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g, "($1 * $2)");
 
     // Handle formula like this (1)(2)
-    var regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
-
-    if (regNumberVariable2.test(formula)) {
-
-        formula = formula.replace(regNumberVariable2, ") * (");
-
-    }
+    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
 
     // Handle formula like this 100-10%
-    var regNumberVariable4 = /([a-zA-Z0-9]+)\s{0,}([\\*\-+x])\s{0,}([a-zA-Z0-9]+)%/g;
 
-    if (regNumberVariable4.test(formula)) {
-
-        formula = formula.replace(regNumberVariable4, "($1$2($1*($3/$1)))");
-
-    }
+    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
 
     return formula;
 
@@ -2020,7 +1997,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.equal=equal;_stk.empty=empty;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2058,7 +2035,7 @@ _stk.divide=divide;_stk.empty=empty;_stk.equal=equal;function filter (func, obje
 }
 
 _stk.filter=filter;
-_stk.first=first;_stk.each=each;_stk.flatten=flatten;function inc (value, default_value) {
+_stk.first=first;_stk.flatten=flatten;function inc (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2086,15 +2063,15 @@ function schemaSplitData (data) {
     }
 
     var splitSign = "($^&^$)";
-    var split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {
+    var split_strReplace= toString(data).replace(/(\\?[.:])/g, function (mm, mm1) {
 
-        if ((/^(\\\.)$/g).test(mm1)) {
+        if (mm1.trim() === "\\.") {
 
             return ".";
 
         }
 
-        if ((/^(\\:)$/g).test(mm1)) {
+        if (mm1.trim() === "\\:") {
 
             return ":";
 
@@ -2649,7 +2626,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
+_stk.getData=getData;_stk.getTypeof=getTypeof;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2676,7 +2653,7 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");}
 
 _stk.getValue=getValue;
-function groupBy (func, objectValue) {
+_stk.getKey=getKey;function groupBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2830,7 +2807,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;_stk.isEmpty=isEmpty;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2855,7 +2832,7 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNot
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isJson=isJson;function last (objectValue) {
+_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -2886,7 +2863,7 @@ function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
-_stk.isExactbyRegExp=isExactbyRegExp;function limit (objectValue, minValue, maxValue, func) {
+function limit (objectValue, minValue, maxValue, func) {
 
     var cnt=0;    var glo_jsn={};
     var glo_indtfd = null;
@@ -2928,7 +2905,19 @@ _stk.isExactbyRegExp=isExactbyRegExp;function limit (objectValue, minValue, maxV
 }
 
 _stk.limit=limit;
-_stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
+function mapGetData (valueFormat, objectValue, isStrict) {
 
     return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
 
@@ -2969,31 +2958,7 @@ _stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-function mergeWithKey (objectValue, mergeValue) {
+_stk.map=map;function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
 
@@ -3099,6 +3064,18 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 _stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
@@ -5105,7 +5082,56 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
-function parseString (value, config) {
+function pipe () {
+
+    var arg=arguments;    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+_stk.range=range;function parseString (value, config) {
 
     var defaultConfig = varExtend({"ignoreFunction": true,
         "isJson": false,
@@ -5250,61 +5276,12 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 }
 
 _stk.parseString=parseString;
-function pipe () {
-
-    var arg=arguments;    var pipeConst = first(arg);
-    var varLimit = limit(arg, one);
-    var that = this;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-_stk.range=range;_stk.reduce=reduce;_stk.remove=remove;function regexCountGroup (value) {
+_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-function repeat (value, valueRepetion) {
+_stk.remove=remove;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5475,79 +5452,6 @@ function baseSort (objectValue, func) {
 }
 
 
-function sort (objectValue, order, type) {
-
-    return curryArg(function (rawObjectValue, rawOrder, rawType) {
-
-        var asc=true;
-        var types='any';
-
-        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
-
-            asc= rawOrder;
-
-        }
-
-        if (has(rawType) && getTypeof(rawType) === 'string') {
-
-            types= rawType;
-
-        }
-
-        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            var sortOrderA = orderA;
-            var sortOrderB = orderB;
-
-            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-                if (isEmpty(types) === false) {
-
-                    if (types === 'any') {
-
-                        sortOrderA =orderA.charCodeAt();
-                        sortOrderB= orderB.charCodeAt();
-
-                    }
-                    if (types === 'lowercase') {
-
-                        sortOrderA =orderA.toLowerCase().charCodeAt();
-                        sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                    }
-
-                    if (types === 'uppercase') {
-
-                        sortOrderA =orderA.toUpperCase().charCodeAt();
-                        sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                    }
-
-                }
-
-            }
-
-            if (asc) {
-
-                return sortOrderA - sortOrderB;
-
-            }
-
-            return sortOrderB - sortOrderA;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        objectValue,
-        order,
-        type
-    ], one);
-
-}
-
-_stk.sort=sort;
 function sortBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -5556,7 +5460,9 @@ function sortBy (func, objectValue) {
 
             if (has(func) && getTypeof(func) === 'function') {
 
-                return rawFunc(orderA, orderB);            }
+                return rawFunc(orderA, orderB);
+
+            }
 
             return orderA - orderB;
 
@@ -5575,9 +5481,9 @@ _stk.sortBy=sortBy;
 function stringSplit (value) {
 
     return value.trim()
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/([A-Z])([a-z])/g, '$1 $2')
-        .replace(/([-_.\s]{1,})/g, ' ')
+        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+        .replace(/([-_.\s]+)/g, ' ')
         .toLowerCase();}
 
 
@@ -5653,12 +5559,12 @@ _stk.strLower=strLower;function strSnake (value) {
         .join("_");}
 
 _stk.strSnake=strSnake;
-_stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;_stk.subtract=subtract;function strUpper (value) {
+_stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
 
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-function swap (firstValue, secondValue, listValue) {
+_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
@@ -5693,6 +5599,35 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+function baseTake (rawList, startIndex, lastIndex) {
+
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
+
+    var rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
+
+}
+
+
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 function templates (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
@@ -5893,40 +5828,11 @@ function syntaxCleanup (data, option) {
 }
 
 _stk.templates=templates;
-_stk.toArray=toArray;function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?toArray(rawGetValue).join("")
-        :rawGetValue;
-
-}
-
-
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
-_stk.toBoolean=toBoolean;_stk.toDouble=toDouble;function toInteger (value) {
+_stk.toArray=toArray;_stk.toBoolean=toBoolean;_stk.toDouble=toDouble;function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
-        :value));}
+        :value), 10);}
 
 _stk.toInteger=toInteger;
 function toPairs (value) {
@@ -6277,4 +6183,75 @@ _stk.isUndefined=isUndefined;function zip () {
 _stk.zip=zip;
 
 
- })(typeof window !== "undefined" ? window : this);
+ })(typeof window !== "undefined" ? window : this);function sort (objectValue, order, type) {
+
+    return curryArg(function (rawObjectValue, rawOrder, rawType) {
+
+        var asc=true;        var types='any';
+
+        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
+
+            asc= rawOrder;
+
+        }
+
+        if (has(rawType) && getTypeof(rawType) === 'string') {
+
+            types= rawType;
+
+        }
+
+        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            var sortOrderA = orderA;
+            var sortOrderB = orderB;
+
+            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+                if (isEmpty(types) === false) {
+
+                    if (types === 'any') {
+
+                        sortOrderA =orderA.charCodeAt();
+                        sortOrderB= orderB.charCodeAt();
+
+                    }
+                    if (types === 'lowercase') {
+
+                        sortOrderA =orderA.toLowerCase().charCodeAt();
+                        sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                    }
+
+                    if (types === 'uppercase') {
+
+                        sortOrderA =orderA.toUpperCase().charCodeAt();
+                        sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                    }
+
+                }
+
+            }
+
+            if (asc) {
+
+                return sortOrderA - sortOrderB;
+
+            }
+
+            return sortOrderB - sortOrderA;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        objectValue,
+        order,
+        type
+    ], one);
+
+}
+
+_stk.sort=sort;

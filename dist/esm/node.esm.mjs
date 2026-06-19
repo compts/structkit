@@ -13,23 +13,6 @@ import {default as ___module} from './src/function/__.mjs';
  */
 export const __ = ___module;
 
-import {default as allValid_module} from './src/function/allValid.mjs';
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-export const allValid = allValid_module;
-
 import {default as add_module} from './src/function/add.mjs';
 
 
@@ -47,6 +30,23 @@ import {default as add_module} from './src/function/add.mjs';
  * // => 2
  */
 export const add = add_module;
+
+import {default as allValid_module} from './src/function/allValid.mjs';
+
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+export const allValid = allValid_module;
 
 import {default as append_module} from './src/function/append.mjs';
 
@@ -144,25 +144,6 @@ import {default as arraySum_module} from './src/function/arraySum.mjs';
  */
 export const arraySum = arraySum_module;
 
-import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
-
-
-/**
- * Async replace regexp argument
- *
- * @since 1.3.1
- * @category Function
- * @param {any} value String data
- * @param {any} search Regexp or string to look for match
- * @param {Function|String=} toReplace Replace value.
- * @returns {Promise<string>} String in promise function
- * @example
- *
- * asyncReplace("asd",/s/g,"@")
- * // => Promise{<fulfilled>: 'a@d'}
- */
-export const asyncReplace = asyncReplace_module;
-
 import {default as calculate_module} from './src/function/calculate.mjs';
 
 
@@ -183,6 +164,25 @@ import {default as calculate_module} from './src/function/calculate.mjs';
  */
 export const calculate = calculate_module;
 
+import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
+
+
+/**
+ * Async replace regexp argument
+ *
+ * @since 1.3.1
+ * @category Function
+ * @param {any} value String data
+ * @param {any} search Regexp or string to look for match
+ * @param {Function|String=} toReplace Replace value.
+ * @returns {Promise<string>} String in promise function
+ * @example
+ *
+ * asyncReplace("asd",/s/g,"@")
+ * // => Promise{<fulfilled>: 'a@d'}
+ */
+export const asyncReplace = asyncReplace_module;
+
 import {default as clone_module} from './src/function/clone.mjs';
 
 
@@ -199,45 +199,6 @@ import {default as clone_module} from './src/function/clone.mjs';
  * // => [1,2]
  */
 export const clone = clone_module;
-
-import {default as count_module} from './src/function/count.mjs';
-
-
-/**
- * Counting the lenght in array,.mjson or string
- *
- * @since 1.0.1
- * @category Math
- * @param {any=} objectValue Json or array that you want to cound
- * @param {boolean=}.mjson_is_empty_check If data is.mjson, it will check its map data
- * @returns {number} Returns the total.
- * @example
- *
- * count([1,2])
- * // => 2
- *
- * count({"s" :1, "s2": 2}, true)// Counting the object inside, you must this to true
- * // => 2
- */
-export const count = count_module;
-
-import {default as dec_module} from './src/function/dec.mjs';
-
-
-/**
- * Decrement value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * dec(1)
- *=>0
- */
-export const dec = dec_module;
 
 import {default as curry_module} from './src/function/curry.mjs';
 
@@ -293,23 +254,23 @@ import {default as divide_module} from './src/function/divide.mjs';
  */
 export const divide = divide_module;
 
-import {default as each_module} from './src/function/each.mjs';
+import {default as dec_module} from './src/function/dec.mjs';
 
 
 /**
- * Each or for loop function you are familiar with
+ * Decrement value
  *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Array or.mjson.
- * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
- * @returns {any} Array or.mjson
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
  * @example
  *
- * each([1,2],(value,key,localGlobal)=>{ })
- *
+ * dec(1)
+ *=>0
  */
-export const each = each_module;
+export const dec = dec_module;
 
 import {default as empty_module} from './src/function/empty.mjs';
 
@@ -327,6 +288,24 @@ import {default as empty_module} from './src/function/empty.mjs';
  * => []
  */
 export const empty = empty_module;
+
+import {default as each_module} from './src/function/each.mjs';
+
+
+/**
+ * Each or for loop function you are familiar with
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Array or.mjson.
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @returns {any} Array or.mjson
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+export const each = each_module;
 
 import {default as equal_module} from './src/function/equal.mjs';
 
@@ -439,6 +418,23 @@ import {default as fromPairs_module} from './src/function/fromPairs.mjs';
  */
 export const fromPairs = fromPairs_module;
 
+import {default as getKey_module} from './src/function/getKey.mjs';
+
+
+/**
+ * Get key Array or JSON
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array type
+ * @returns {any|any[]} Returns it respective key or index
+ * @example
+ *
+ * getKey({"s":1})
+ * => s
+ */
+export const getKey = getKey_module;
+
 import {default as getTypeof_module} from './src/function/getTypeof.mjs';
 
 
@@ -458,22 +454,22 @@ import {default as getTypeof_module} from './src/function/getTypeof.mjs';
  */
 export const getTypeof = getTypeof_module;
 
-import {default as getKey_module} from './src/function/getKey.mjs';
+import {default as getUniq_module} from './src/function/getUniq.mjs';
 
 
 /**
- * Get key Array or JSON
+ * Generate unique value id
  *
  * @since 1.0.1
  * @category String
- * @param {any} objectValue Either JSON or Array type
- * @returns {any|any[]} Returns it respective key or index
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
  * @example
  *
- * getKey({"s":1})
- * => s
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
  */
-export const getKey = getKey_module;
+export const getUniq = getUniq_module;
 
 import {default as getValue_module} from './src/function/getValue.mjs';
 
@@ -491,23 +487,6 @@ import {default as getValue_module} from './src/function/getValue.mjs';
  * => 1
  */
 export const getValue = getValue_module;
-
-import {default as getUniq_module} from './src/function/getUniq.mjs';
-
-
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-export const getUniq = getUniq_module;
 
 import {default as groupBy_module} from './src/function/groupBy.mjs';
 
@@ -580,24 +559,6 @@ import {default as has_module} from './src/function/has.mjs';
  */
 export const has = has_module;
 
-import {default as inc_module} from './src/function/inc.mjs';
-
-
-/**
- * To Increment value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * inc(1)
- *=>2
- */
-export const inc = inc_module;
-
 import {default as ifElse_module} from './src/function/ifElse.mjs';
 
 
@@ -635,6 +596,24 @@ import {default as indexOf_module} from './src/function/indexOf.mjs';
  */
 export const indexOf = indexOf_module;
 
+import {default as inc_module} from './src/function/inc.mjs';
+
+
+/**
+ * To Increment value
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
+ * @example
+ *
+ * inc(1)
+ *=>2
+ */
+export const inc = inc_module;
+
 import {default as indexOfExist_module} from './src/function/indexOfExist.mjs';
 
 
@@ -670,6 +649,27 @@ import {default as indexOfNotExist_module} from './src/function/indexOfNotExist.
  * // => true
  */
 export const indexOfNotExist = indexOfNotExist_module;
+
+import {default as count_module} from './src/function/count.mjs';
+
+
+/**
+ * Counting the lenght in array,.mjson or string
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {any=} objectValue Json or array that you want to cound
+ * @param {boolean=}.mjson_is_empty_check If data is.mjson, it will check its map data
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * count([1,2])
+ * // => 2
+ *
+ * count({"s" :1, "s2": 2}, true)// Counting the object inside, you must this to true
+ * // => 2
+ */
+export const count = count_module;
 
 import {default as insert_module} from './src/function/insert.mjs';
 
@@ -781,24 +781,6 @@ import {default as last_module} from './src/function/last.mjs';
  */
 export const last = last_module;
 
-import {default as lastIndexOf_module} from './src/function/lastIndexOf.mjs';
-
-
-/**
- * Get the last index Of array
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} value Value you are searching for
- * @param {any} objectValue Array
- * @returns {any} Return get the index or array
- * @example
- *
- * lastIndexOf(1, [1,2])
- * // => 0
- */
-export const lastIndexOf = lastIndexOf_module;
-
 import {default as like_module} from './src/function/like.mjs';
 
 
@@ -816,6 +798,24 @@ import {default as like_module} from './src/function/like.mjs';
  *=>{s1: 1, s2: 1}
  */
 export const like = like_module;
+
+import {default as lastIndexOf_module} from './src/function/lastIndexOf.mjs';
+
+
+/**
+ * Get the last index Of array
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} value Value you are searching for
+ * @param {any} objectValue Array
+ * @returns {any} Return get the index or array
+ * @example
+ *
+ * lastIndexOf(1, [1,2])
+ * // => 0
+ */
+export const lastIndexOf = lastIndexOf_module;
 
 import {default as limit_module} from './src/function/limit.mjs';
 
@@ -911,24 +911,6 @@ import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
  */
 export const mergeInWhere = mergeInWhere_module;
 
-import {default as lt_module} from './src/function/lt.mjs';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
-
 import {default as mergeWithKey_module} from './src/function/mergeWithKey.mjs';
 
 
@@ -964,6 +946,24 @@ import {default as multiply_module} from './src/function/multiply.mjs';
  * // => 1
  */
 export const multiply = multiply_module;
+
+import {default as lt_module} from './src/function/lt.mjs';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as not_module} from './src/function/not.mjs';
 
@@ -1010,16 +1010,6 @@ import {default as onDelay_module} from './src/function/onDelay.mjs';
  */
 export const onDelay = onDelay_module;
 
-import {default as onSequence_module} from './src/function/onSequence.mjs';
-
-
-/**
- * @typedef {Object} SequenceResult
- * @property {function(): void} cancel - Cancels the sequence
- * @property {function(): void} start - Starts the sequence
- */
-export const onSequence = onSequence_module;
-
 import {default as onWait_module} from './src/function/onWait.mjs';
 
 
@@ -1037,6 +1027,16 @@ import {default as onWait_module} from './src/function/onWait.mjs';
  *=>'11'
  */
 export const onWait = onWait_module;
+
+import {default as onSequence_module} from './src/function/onSequence.mjs';
+
+
+/**
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+export const onSequence = onSequence_module;
 
 import {default as once_module} from './src/function/once.mjs';
 
@@ -1182,24 +1182,6 @@ import {default as regexCountGroup_module} from './src/function/regexCountGroup.
  */
 export const regexCountGroup = regexCountGroup_module;
 
-import {default as repeat_module} from './src/function/repeat.mjs';
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-export const repeat = repeat_module;
-
 import {default as remove_module} from './src/function/remove.mjs';
 
 
@@ -1218,6 +1200,24 @@ import {default as remove_module} from './src/function/remove.mjs';
  *=>[2, 3]
  */
 export const remove = remove_module;
+
+import {default as repeat_module} from './src/function/repeat.mjs';
+
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+export const repeat = repeat_module;
 
 import {default as roundDecimal_module} from './src/function/roundDecimal.mjs';
 
@@ -1254,6 +1254,23 @@ import {default as selectInData_module} from './src/function/selectInData.mjs';
  *=> {"ss":1}
  */
 export const selectInData = selectInData_module;
+
+import {default as reverse_module} from './src/function/reverse.mjs';
+
+
+/**
+ * Return reverse order of array
+ *
+ * @since 1.4.9
+ * @category Array
+ * @param {any[]|string} value First number, our first index will start at zero
+ * @returns {any} Returns it reverse order.
+ * @example
+ *
+ * reverse([1,2,3,4])
+ * // => [4,3,2,1]
+ */
+export const reverse = reverse_module;
 
 import {default as setData_module} from './src/function/setData.mjs';
 
@@ -1346,6 +1363,23 @@ import {default as sortBy_module} from './src/function/sortBy.mjs';
  */
 export const sortBy = sortBy_module;
 
+import {default as strCamel_module} from './src/function/strCamel.mjs';
+
+
+/**
+ * String Camel case
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @returns {string} Returns camel sting data
+ * @example
+ *
+ * strCamel('the fish is goad   with goat-1ss')
+ *=> 'theFishIsGoadWithGoat1ss'
+ */
+export const strCamel = strCamel_module;
+
 import {default as strCapitalize_module} from './src/function/strCapitalize.mjs';
 
 
@@ -1384,22 +1418,22 @@ import {default as strEscape_module} from './src/function/strEscape.mjs';
  */
 export const strEscape = strEscape_module;
 
-import {default as strCamel_module} from './src/function/strCamel.mjs';
+import {default as strKebab_module} from './src/function/strKebab.mjs';
 
 
 /**
- * String Camel case
+ * String Kebab case
  *
  * @since 1.3.1
  * @category String
  * @param {string} value String data
- * @returns {string} Returns camel sting data
+ * @returns {string} Returns Kebab sting data
  * @example
  *
- * strCamel('the fish is goad   with goat-1ss')
- *=> 'theFishIsGoadWithGoat1ss'
+ * strKebab('the fish is goad   with goat-1ss')
+ *=> 'the-fish-is-goad-with-goat-1ss'
  */
-export const strCamel = strCamel_module;
+export const strKebab = strKebab_module;
 
 import {default as strLower_module} from './src/function/strLower.mjs';
 
@@ -1417,23 +1451,6 @@ import {default as strLower_module} from './src/function/strLower.mjs';
  *=> 'the fish is goad   with goat-1ss
  */
 export const strLower = strLower_module;
-
-import {default as strKebab_module} from './src/function/strKebab.mjs';
-
-
-/**
- * String Kebab case
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @returns {string} Returns Kebab sting data
- * @example
- *
- * strKebab('the fish is goad   with goat-1ss')
- *=> 'the-fish-is-goad-with-goat-1ss'
- */
-export const strKebab = strKebab_module;
 
 import {default as strSnake_module} from './src/function/strSnake.mjs';
 
@@ -1561,6 +1578,23 @@ import {default as take_module} from './src/function/take.mjs';
  */
 export const take = take_module;
 
+import {default as toArray_module} from './src/function/toArray.mjs';
+
+
+/**
+ * To convert any data type(except the data has been already been an array) into array type
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * toArray(1)
+ *=>[1]
+ */
+export const toArray = toArray_module;
+
 import {default as templates_module} from './src/function/templates.mjs';
 
 
@@ -1580,23 +1614,6 @@ import {default as templates_module} from './src/function/templates.mjs';
  */
 export const templates = templates_module;
 
-import {default as toArray_module} from './src/function/toArray.mjs';
-
-
-/**
- * To convert any data type(except the data has been already been an array) into array type
- *
- * @since 1.0.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * toArray(1)
- *=>[1]
- */
-export const toArray = toArray_module;
-
 import {default as toBoolean_module} from './src/function/toBoolean.mjs';
 
 
@@ -1613,6 +1630,23 @@ import {default as toBoolean_module} from './src/function/toBoolean.mjs';
  *=>true
  */
 export const toBoolean = toBoolean_module;
+
+import {default as toInteger_module} from './src/function/toInteger.mjs';
+
+
+/**
+ * To extract number in string and convert to , it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger("11d")
+ *=>11
+ */
+export const toInteger = toInteger_module;
 
 import {default as toDouble_module} from './src/function/toDouble.mjs';
 
@@ -1632,23 +1666,6 @@ import {default as toDouble_module} from './src/function/toDouble.mjs';
  */
 export const toDouble = toDouble_module;
 
-import {default as toInteger_module} from './src/function/toInteger.mjs';
-
-
-/**
- * To extract number in string and convert to , it will also remove all none numeric
- *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
- * @example
- *
- * toInteger("11d")
- *=>11
- */
-export const toInteger = toInteger_module;
-
 import {default as toPairs_module} from './src/function/toPairs.mjs';
 
 
@@ -1665,23 +1682,6 @@ import {default as toPairs_module} from './src/function/toPairs.mjs';
  * // => [["s",1],["ss",["a",2]]]
  */
 export const toPairs = toPairs_module;
-
-import {default as toString_module} from './src/function/toString.mjs';
-
-
-/**
- * To String
- *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
- * @example
- *
- * toString(1)
- *=> '1'
- */
-export const toString = toString_module;
 
 import {default as trim_module} from './src/function/trim.mjs';
 
@@ -1701,24 +1701,6 @@ import {default as trim_module} from './src/function/trim.mjs';
  */
 export const trim = trim_module;
 
-import {default as trimEnd_module} from './src/function/trimEnd.mjs';
-
-
-/**
- * String trim at the end only
- *
- * @since 1.4.86
- * @category String
- * @param {string} value String data that you want to trim
- * @param {any=} remove_value Replace preferred value to remove
- * @returns {string} Returns trim data in end of string
- * @example
- *
- * trimEnd(' The fish is goad   with Goat-1ss ')
- *=> ' The fish is goad   with Goat-1ss'
- */
-export const trimEnd = trimEnd_module;
-
 import {default as trimStart_module} from './src/function/trimStart.mjs';
 
 
@@ -1736,6 +1718,24 @@ import {default as trimStart_module} from './src/function/trimStart.mjs';
  *=> 'The fish is goad   with Goat-1ss '
  */
 export const trimStart = trimStart_module;
+
+import {default as trimEnd_module} from './src/function/trimEnd.mjs';
+
+
+/**
+ * String trim at the end only
+ *
+ * @since 1.4.86
+ * @category String
+ * @param {string} value String data that you want to trim
+ * @param {any=} remove_value Replace preferred value to remove
+ * @returns {string} Returns trim data in end of string
+ * @example
+ *
+ * trimEnd(' The fish is goad   with Goat-1ss ')
+ *=> ' The fish is goad   with Goat-1ss'
+ */
+export const trimEnd = trimEnd_module;
 
 import {default as union_module} from './src/function/union.mjs';
 
@@ -1770,6 +1770,24 @@ import {default as unique_module} from './src/function/unique.mjs';
  *=>[1,2,3]
  */
 export const unique = unique_module;
+
+import {default as varExtend_module} from './src/function/varExtend.mjs';
+
+
+/**
+ * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
+ * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
+ * @returns {any} Return Json or Array or Object.
+ * @example
+ *
+ * varExtend({"s1":1},{"s1":2})
+ *=>{"s1":2}
+ */
+export const varExtend = varExtend_module;
 
 import {default as where_module} from './src/function/where.mjs';
 
@@ -2189,38 +2207,20 @@ import {default as zip_module} from './src/function/zip.mjs';
  */
 export const zip = zip_module;
 
-import {default as varExtend_module} from './src/function/varExtend.mjs';
+import {default as toString_module} from './src/function/toString.mjs';
 
 
 /**
- * Var extend was use in replacing from `objectValueReplace` if not existed at objectValue
+ * To String
  *
- * @since 1.0.1
- * @category Collection
- * @param {object} objectValue Json or Array that this serve as your default value if `objectValueReplace` does not exist
- * @param {object} objectValueReplace Json, Array or Object that you want to assign to `objectValue`
- * @returns {any} Return Json or Array or Object.
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
  * @example
  *
- * varExtend({"s1":1},{"s1":2})
- *=>{"s1":2}
+ * toString(1)
+ *=> '1'
  */
-export const varExtend = varExtend_module;
-
-import {default as reverse_module} from './src/function/reverse.mjs';
-
-
-/**
- * Return reverse order of array
- *
- * @since 1.4.9
- * @category Array
- * @param {any[]|string} value First number, our first index will start at zero
- * @returns {any} Returns it reverse order.
- * @example
- *
- * reverse([1,2,3,4])
- * // => [4,3,2,1]
- */
-export const reverse = reverse_module;
+export const toString = toString_module;
 

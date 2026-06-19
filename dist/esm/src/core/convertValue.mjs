@@ -16,13 +16,13 @@ function convertValue (value) {
 
     if (getTypeofInternal(value) === "string") {
 
-        if ((/^[0-9]{1,}$/g).test(value)) {
+        if ((/^\d+$/).test(value)) {
 
-            return parseInt(value);
+            return parseInt(value, 10);
 
         }
 
-        if ((/^[0-9]{1,}[.]{1}[0-9]{1,}$/g).test(value)) {
+        if ((/^\d+\.\d+$/).test(value)) {
 
             return parseFloat(value);
 

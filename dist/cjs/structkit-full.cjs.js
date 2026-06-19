@@ -838,13 +838,13 @@ function convertValue (value) {
 
     if (getTypeofInternal(value) === "string") {
 
-        if ((/^[0-9]{1,}$/g).test(value)) {
+        if ((/^\d+$/).test(value)) {
 
-            return parseInt(value);
+            return parseInt(value, 10);
 
         }
 
-        if ((/^[0-9]{1,}[.]{1}[0-9]{1,}$/g).test(value)) {
+        if ((/^\d+\.\d+$/).test(value)) {
 
             return parseFloat(value);
 
@@ -2632,53 +2632,30 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    const regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
+    formula = formula.replace(/(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu, function (mm, m1, m2) {
 
-    if (regNumberSqrt.test(formula)) {
+        let power = two;
 
-        formula = formula.replace(regNumberSqrt, function (mm, m1, m2) {
+        if (m1 !== "") {
 
-            let power = two;
+            power = m1;
 
-            if (m1 !== "") {
+        }
 
-                power = m1;
+        // eslint-disable-next-line no-mixed-operators, no-extra-parens
+        return "("+m2+"**"+(one/power)+")";
 
-            }
-
-            // eslint-disable-next-line no-mixed-operators, no-extra-parens
-            return "("+m2+"**"+(one/power)+")";
-
-        });
-
-    }
+    });
 
     // Handle formula like this 3x
-    const regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
-
-    if (regNumberVariable1.test(formula)) {
-
-        formula = formula.replace(regNumberVariable1, "($1 * $2)");
-
-    }
+    formula = formula.replace(/\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g, "($1 * $2)");
 
     // Handle formula like this (1)(2)
-    const regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
-
-    if (regNumberVariable2.test(formula)) {
-
-        formula = formula.replace(regNumberVariable2, ") * (");
-
-    }
+    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
 
     // Handle formula like this 100-10%
-    const regNumberVariable4 = /([a-zA-Z0-9]+)\s{0,}([\\*\-+x])\s{0,}([a-zA-Z0-9]+)%/g;
 
-    if (regNumberVariable4.test(formula)) {
-
-        formula = formula.replace(regNumberVariable4, "($1$2($1*($3/$1)))");
-
-    }
+    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
 
     return formula;
 
@@ -2792,9 +2769,11 @@ _stk.defaultTo=defaultTo;
 
 _stk.divide=divide;
 
-_stk.empty=empty;
+_stk.each=each;
 
 _stk.equal=equal;
+
+_stk.empty=empty;
 
 
 /**
@@ -2852,8 +2831,6 @@ function filter (func, objectValue) {
 _stk.filter=filter;
 
 _stk.first=first;
-
-_stk.each=each;
 
 _stk.flatten=flatten;
 
@@ -2914,15 +2891,15 @@ function schemaSplitData (data) {
     }
 
     const splitSign = "($^&^$)";
-    const split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {
+    const split_strReplace= toString(data).replace(/(\\?[.:])/g, function (mm, mm1) {
 
-        if ((/^(\\\.)$/g).test(mm1)) {
+        if (mm1.trim() === "\\.") {
 
             return ".";
 
         }
 
-        if ((/^(\\:)$/g).test(mm1)) {
+        if (mm1.trim() === "\\:") {
 
             return ":";
 
@@ -3604,8 +3581,6 @@ _stk.fromPairs=fromPairs;
 
 _stk.getData=getData;
 
-_stk.getKey=getKey;
-
 _stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
@@ -3664,6 +3639,8 @@ function getValue (objectValue) {
 }
 
 _stk.getValue=getValue;
+
+_stk.getKey=getKey;
 
 
 /**
@@ -3909,6 +3886,8 @@ _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
+_stk.isEmpty=isEmpty;
+
 
 /**
  * Insert value in Json object or array
@@ -3951,9 +3930,9 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isEmpty=isEmpty;
-
 _stk.isExact=isExact;
+
+_stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
 
@@ -4038,8 +4017,6 @@ function like (objectValueWhere, objectValue) {
 
 _stk.like=like;
 
-_stk.isExactbyRegExp=isExactbyRegExp;
-
 
 /**
  * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
@@ -4100,7 +4077,34 @@ function limit (objectValue, minValue, maxValue, func) {
 
 _stk.limit=limit;
 
-_stk.map=map;
+
+/**
+ * To check if the two arguments are less than to equal
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lte(1, 2)
+ * // => true
+ */
+function lte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa <= bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lte=lte;
 
 
 /**
@@ -4161,63 +4165,7 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 
 _stk.mapGetData=mapGetData;
 
-
-/**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-function lte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa <= bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lte=lte;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
+_stk.map=map;
 
 
 /**
@@ -4366,6 +4314,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -6672,6 +6649,86 @@ _stk.parseJson=parseJson;
 
 
 /**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {...any?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+function pipe (...arg) {
+
+    const pipeConst = first(arg);
+    const varLimit = limit(arg, one);
+    const that = this;
+
+    return curryArg(function (...rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    const ran_min=has(minValue)
+        ?minValue
+        :zero;
+    const ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    const math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
+_stk.range=range;
+
+
+/**
  * Parse from JSON object to String
  *
  * @since 1.4.86
@@ -6856,89 +6913,7 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
 _stk.parseString=parseString;
 
-
-/**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {...any?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-function pipe (...arg) {
-
-    const pipeConst = first(arg);
-    const varLimit = limit(arg, one);
-    const that = this;
-
-    return curryArg(function (...rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-
-
-/**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    const ran_min=has(minValue)
-        ?minValue
-        :zero;
-    const ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    const math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-_stk.range=range;
-
 _stk.reduce=reduce;
-
-_stk.remove=remove;
 
 
 /**
@@ -6960,6 +6935,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
 
 
 /**
@@ -7245,95 +7222,6 @@ function baseSort (objectValue, func) {
 }
 
 /**
- * Sort array
- *
- * @since 1.0.1
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-function sort (objectValue, order, type) {
-
-    return curryArg(function (rawObjectValue, rawOrder, rawType) {
-
-        let asc=true;
-        let types='any';
-
-        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
-
-            asc= rawOrder;
-
-        }
-
-        if (has(rawType) && getTypeof(rawType) === 'string') {
-
-            types= rawType;
-
-        }
-
-        const finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            let sortOrderA = orderA;
-            let sortOrderB = orderB;
-
-            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
-
-                if (isEmpty(types) === false) {
-
-                    if (types === 'any') {
-
-                        sortOrderA =orderA.charCodeAt();
-                        sortOrderB= orderB.charCodeAt();
-
-                    }
-                    if (types === 'lowercase') {
-
-                        sortOrderA =orderA.toLowerCase().charCodeAt();
-                        sortOrderB= orderB.toLowerCase().charCodeAt();
-
-                    }
-
-                    if (types === 'uppercase') {
-
-                        sortOrderA =orderA.toUpperCase().charCodeAt();
-                        sortOrderB= orderB.toUpperCase().charCodeAt();
-
-                    }
-
-                }
-
-            }
-
-            if (asc) {
-
-                return sortOrderA - sortOrderB;
-
-            }
-
-            return sortOrderB - sortOrderA;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        objectValue,
-        order,
-        type
-    ], one);
-
-}
-
-_stk.sort=sort;
-
-
-/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -7387,9 +7275,9 @@ _stk.sortBy=sortBy;
 function stringSplit (value) {
 
     return value.trim()
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/([A-Z])([a-z])/g, '$1 $2')
-        .replace(/([-_.\s]{1,})/g, ' ')
+        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+        .replace(/([-_.\s]+)/g, ' ')
         .toLowerCase();
 
 }
@@ -7553,8 +7441,6 @@ _stk.strSubs=strSubs;
 
 _stk.strUnEscape=strUnEscape;
 
-_stk.subtract=subtract;
-
 
 /**
  * String Upper case case
@@ -7575,6 +7461,8 @@ function strUpper (value) {
 }
 
 _stk.strUpper=strUpper;
+
+_stk.subtract=subtract;
 
 
 /**
@@ -7627,6 +7515,65 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {any[]|string} rawList List data
+ * @param {number} startIndex Start index number
+ * @param {number} lastIndex Last index number
+ * @returns {any} Returns array
+ * @example
+ *
+ * baseTake(1, 1)
+ * // => 1
+ */
+function baseTake (rawList, startIndex, lastIndex) {
+
+    const refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;
+
+    const varLimit = limit(refRawList, startIndex, lastIndex);
+
+    const rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
+
+}
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 
 
 /**
@@ -7860,65 +7807,6 @@ _stk.templates=templates;
 
 _stk.toArray=toArray;
 
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {any[]|string} rawList List data
- * @param {number} startIndex Start index number
- * @param {number} lastIndex Last index number
- * @returns {any} Returns array
- * @example
- *
- * baseTake(1, 1)
- * // => 1
- */
-function baseTake (rawList, startIndex, lastIndex) {
-
-    const refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;
-
-    const varLimit = limit(refRawList, startIndex, lastIndex);
-
-    const rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?toArray(rawGetValue).join("")
-        :rawGetValue;
-
-}
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Array
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns choice index value in list.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
-
 _stk.toBoolean=toBoolean;
 
 _stk.toDouble=toDouble;
@@ -7940,7 +7828,7 @@ function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
-        :value));
+        :value), 10);
 
 }
 
@@ -8625,3 +8513,91 @@ _stk.zip=zip;
 
 
  //end of file
+
+/**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, order, type) {
+
+    return curryArg(function (rawObjectValue, rawOrder, rawType) {
+
+        let asc=true;
+        let types='any';
+
+        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
+
+            asc= rawOrder;
+
+        }
+
+        if (has(rawType) && getTypeof(rawType) === 'string') {
+
+            types= rawType;
+
+        }
+
+        const finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            let sortOrderA = orderA;
+            let sortOrderB = orderB;
+
+            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+                if (isEmpty(types) === false) {
+
+                    if (types === 'any') {
+
+                        sortOrderA =orderA.charCodeAt();
+                        sortOrderB= orderB.charCodeAt();
+
+                    }
+                    if (types === 'lowercase') {
+
+                        sortOrderA =orderA.toLowerCase().charCodeAt();
+                        sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                    }
+
+                    if (types === 'uppercase') {
+
+                        sortOrderA =orderA.toUpperCase().charCodeAt();
+                        sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                    }
+
+                }
+
+            }
+
+            if (asc) {
+
+                return sortOrderA - sortOrderB;
+
+            }
+
+            return sortOrderB - sortOrderA;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        objectValue,
+        order,
+        type
+    ], one);
+
+}
+
+_stk.sort=sort;

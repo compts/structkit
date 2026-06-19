@@ -26,15 +26,15 @@ function schemaSplitData (data) {
     }
 
     const splitSign = "($^&^$)";
-    const split_strReplace= toString(data).replace(/([\\.:]+)/g, function (mm, mm1) {
+    const split_strReplace= toString(data).replace(/(\\?[.:])/g, function (mm, mm1) {
 
-        if ((/^(\\\.)$/g).test(mm1)) {
+        if (mm1.trim() === "\\.") {
 
             return ".";
 
         }
 
-        if ((/^(\\:)$/g).test(mm1)) {
+        if (mm1.trim() === "\\:") {
 
             return ":";
 

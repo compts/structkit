@@ -319,58 +319,33 @@ function algbraicExpr (formula) {
 
 
     // Handle formula like this 3√s2
-    const regNumberSqrt = /(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu;
+    formula = formula.replace(/(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu, function (mm, m1, m2) {
 
-    if (regNumberSqrt.test(formula)) {
+        let power = two;
 
+        if (m1 !== "") {
 
-        formula = formula.replace(regNumberSqrt, function (mm, m1, m2) {
+            power = m1;
 
-            let power = two;
+        }
 
-            if (m1 !== "") {
+        // eslint-disable-next-line no-mixed-operators, no-extra-parens
+        return "("+m2+"**"+(one/power)+")";
 
-                power = m1;
+    });
 
-            }
-
-            // eslint-disable-next-line no-mixed-operators, no-extra-parens
-            return "("+m2+"**"+(one/power)+")";
-
-        });
-
-
-    }
 
     // Handle formula like this 3x
-    const regNumberVariable1 = /\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g;
-
-    if (regNumberVariable1.test(formula)) {
-
-        formula = formula.replace(regNumberVariable1, "($1 * $2)");
-
-    }
+    formula = formula.replace(/\b([0-9]+[.]{0,1}[0-9]{0,})([a-zA-Z]{1,}[0-9]{0,})\b/g, "($1 * $2)");
 
 
     // Handle formula like this (1)(2)
-    const regNumberVariable2 = /\b(\)\s{0,}\()\b/g;
+    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
 
-    if (regNumberVariable2.test(formula)) {
-
-        formula = formula.replace(regNumberVariable2, ") * (");
-
-    }
 
     // Handle formula like this 100-10%
-    const regNumberVariable4 = /([a-zA-Z0-9]+)\s{0,}([\\*\-+x])\s{0,}([a-zA-Z0-9]+)%/g;
 
-    if (regNumberVariable4.test(formula)) {
-
-
-        formula = formula.replace(regNumberVariable4, "($1$2($1*($3/$1)))");
-
-
-    }
+    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
 
 
     return formula;

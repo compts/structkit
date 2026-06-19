@@ -18,7 +18,7 @@ function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
-        :value));
+        :value), 10);
 
 }
 export default toInteger;
