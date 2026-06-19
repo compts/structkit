@@ -1917,18 +1917,15 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    formula = formula.replace(/(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu, function (mm, m1, m2) {
+    formula = formula.replace(/(\d*)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
 
-        var power = two;
+        var power = m1 === ""
+            ? two
+            : Number(m1);
 
-        if (m1 !== "") {
-
-            power = m1;
-
-        }
-
-        // eslint-disable-next-line no-mixed-operators, no-extra-parens
-        return "("+m2+"**"+(one/power)+")";
+        // Added an extra wrap around (1 / power) to isolate the math operator from string concatenation
+        // eslint-disable-next-line no-extra-parens
+        return "(" + m2 + "**"+(one / power)+ ")";
 
     });
 
@@ -1997,7 +1994,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;_stk.equal=equal;_stk.empty=empty;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2626,7 +2623,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getData=getData;_stk.getTypeof=getTypeof;function getUniq (option) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -2653,7 +2650,7 @@ function getValue (objectValue) {
     return getKeyVal(objectValue, "value");}
 
 _stk.getValue=getValue;
-_stk.getKey=getKey;function groupBy (func, objectValue) {
+function groupBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2807,7 +2804,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;_stk.isEmpty=isEmpty;function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2832,7 +2829,7 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNot
 }
 
 _stk.insert=insert;
-_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -2905,6 +2902,18 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2917,7 +2926,7 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
-function mapGetData (valueFormat, objectValue, isStrict) {
+_stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
 
     return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
 
@@ -2958,7 +2967,7 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
-_stk.map=map;function mergeWithKey (objectValue, mergeValue) {
+function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
 
@@ -3064,19 +3073,76 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-function lt (value1, value2) {
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function noteq (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa < bb;    }, [
+        return aa !== bb;    }, [
         value1,
         value2
     ], two);
 
 }
 
-_stk.lt=lt;
-_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
+_stk.noteq=noteq;
+var defaultOptionDelay = {
+
+    "autoStart": true
+};function onDelay (func, wait, option) {
+
+    var extend = varExtend(defaultOptionDelay, option);
+
+    var sequence = new ClassDelay(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+
+function ClassDelay (extend, wait, func) {
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.timeout = null;
+
+    this.returned = null;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+ClassDelay.prototype.start = function () {
+
+    this.extend = varExtend(defaultOptionDelay, this.extend);
+    var valueWaited = this.wait || zero;
+
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    this.timeout = setTimeout(function () {
+
+        main.returned = main.func();
+
+    }, valueWaited);
+
+};
+
+_stk.onDelay=onDelay;
+function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -3160,75 +3226,6 @@ function not (func) {
 }
 
 _stk.not=not;
-var defaultOptionDelay = {
-
-    "autoStart": true
-};function onDelay (func, wait, option) {
-
-    var extend = varExtend(defaultOptionDelay, option);
-
-    var sequence = new ClassDelay(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-
-function ClassDelay (extend, wait, func) {
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.timeout = null;
-
-    this.returned = null;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-ClassDelay.prototype.start = function () {
-
-    this.extend = varExtend(defaultOptionDelay, this.extend);
-    var valueWaited = this.wait || zero;
-
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    this.timeout = setTimeout(function () {
-
-        main.returned = main.func();
-
-    }, valueWaited);
-
-};
-
-_stk.onDelay=onDelay;
-function noteq (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa !== bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.noteq=noteq;
 var defaultOption = {
 
     "autoStart": true,
@@ -5082,56 +5079,7 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
-function pipe () {
-
-    var arg=arguments;    var pipeConst = first(arg);
-    var varLimit = limit(arg, one);
-    var that = this;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-_stk.range=range;function parseString (value, config) {
+function parseString (value, config) {
 
     var defaultConfig = varExtend({"ignoreFunction": true,
         "isJson": false,
@@ -5276,7 +5224,56 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 }
 
 _stk.parseString=parseString;
-_stk.reduce=reduce;function regexCountGroup (value) {
+function pipe () {
+
+    var arg=arguments;    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
@@ -5320,7 +5317,7 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
-_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
+_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5387,7 +5384,7 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-function shuffle (objectValue) {
+_stk.roundDecimal=roundDecimal;function shuffle (objectValue) {
 
     var output=[];    var rawObjectValue = clone(objectValue);
     var valueType=[
@@ -5452,6 +5449,79 @@ function baseSort (objectValue, func) {
 }
 
 
+function sort (objectValue, order, type) {
+
+    return curryArg(function (rawObjectValue, rawOrder, rawType) {
+
+        var asc=true;
+        var types='any';
+
+        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
+
+            asc= rawOrder;
+
+        }
+
+        if (has(rawType) && getTypeof(rawType) === 'string') {
+
+            types= rawType;
+
+        }
+
+        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            var sortOrderA = orderA;
+            var sortOrderB = orderB;
+
+            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+                if (isEmpty(types) === false) {
+
+                    if (types === 'any') {
+
+                        sortOrderA =orderA.charCodeAt();
+                        sortOrderB= orderB.charCodeAt();
+
+                    }
+                    if (types === 'lowercase') {
+
+                        sortOrderA =orderA.toLowerCase().charCodeAt();
+                        sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                    }
+
+                    if (types === 'uppercase') {
+
+                        sortOrderA =orderA.toUpperCase().charCodeAt();
+                        sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                    }
+
+                }
+
+            }
+
+            if (asc) {
+
+                return sortOrderA - sortOrderB;
+
+            }
+
+            return sortOrderB - sortOrderA;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        objectValue,
+        order,
+        type
+    ], one);
+
+}
+
+_stk.sort=sort;
 function sortBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -5460,9 +5530,7 @@ function sortBy (func, objectValue) {
 
             if (has(func) && getTypeof(func) === 'function') {
 
-                return rawFunc(orderA, orderB);
-
-            }
+                return rawFunc(orderA, orderB);            }
 
             return orderA - orderB;
 
@@ -5628,206 +5696,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-function templates (templateString, data, option) {
-
-    return curryArg(function (rawTemplateString, rawData, rawOption) {
-
-        var default_option = varExtend({
-            "close_tag": "!>",
-            "open_tag": "<!",
-            "throwError": false
-        }, rawOption);        var temp = syntaxCleanup(rawTemplateString, default_option);
-
-        var tag_replace={
-            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
-            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
-        };
-
-        var regexp = new RegExp([
-            tag_replace.evaluate,
-            tag_replace.interpolate
-        ].join("|")+"|$", "g");
-
-        var source = "__p += '";
-        var index = 0;
-
-        var escapes = {
-            '\n': 'n',
-            '\r': 'r',
-            "'": "'",
-            '\\': '\\',
-            '\u2028': 'u2028',
-            '\u2029': 'u2029'
-        };
-
-        var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-
-        var escapeChar = function (match) {
-
-            return '\\' + escapes[match];
-
-        };
-
-        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
-
-            source += temp.slice(index, offset).replace(escaper, escapeChar);
-
-            index = offset+match.length;
-
-            if (evaluate) {
-
-                source += "';\n"+evaluate+"\n__p += '";
-
-            }
-
-            if (interpolate) {
-
-                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-            }
-
-            return match;
-
-        });
-
-        var sourceData = reduce(function (total, vv, kk) {
-
-            // eslint-disable-next-line no-nested-ternary
-            return total+"var "+toString(kk)+" = "+(isJson(vv)
-                ?parseString(vv)
-                :getTypeof(vv) === "string"
-                    ?'"'+vv+'"'
-                    :vv)+";\n";
-
-        }, "", rawData);
-
-        source += "';\n";
-
-        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
-
-        try {
-
-            var render = new Function('obj', source);
-
-            return render.call(this, rawData, templates);
-
-        } catch (error) {
-
-            if (default_option.throwError) {
-
-                throw new Error(error);
-
-            }
-
-            return "";
-
-        }
-
-    }, [
-        templateString,
-        data,
-        option
-    ], two);
-
-}
-
-
-function syntaxCleanup (data, option) {
-
-    var str_split = data.split("");
-    var openSplit = option.open_tag.split("");
-
-    var closeSplit = option.close_tag.split("");
-
-    var commentCounter = 0;
-
-    var errorMessage = "";
-
-    if (option.open_tag.length <= one) {
-
-        errorMessage = "Open tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.close_tag.length <= one) {
-
-        errorMessage = "Close tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.throwError && errorMessage !=="") {
-
-        throw new Error(errorMessage);
-
-    }
-
-    return reduce(function (total, vv, kk) {
-
-        if (kk>one) {
-
-            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
-
-                if (commentCounter>zero) {
-
-                    commentCounter += one;
-
-                }
-                if (vv === "=") {
-
-                    if (commentCounter===zero) {
-
-                        return total+vv+" ";
-
-                    }
-
-                }
-                if (vv === "#") {
-
-                    commentCounter += one;
-                    if (commentCounter>zero) {
-
-                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
-
-                    }
-
-                }
-                if (vv !== " ") {
-
-                    if (commentCounter===zero) {
-
-                        return total+" "+vv;
-
-                    }
-
-                }
-
-            }
-
-            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
-
-                commentCounter -= one;
-
-            }
-
-            if (commentCounter>zero) {
-
-                return total;
-
-            }
-
-        }
-
-        return total+vv;
-
-    }, "", str_split);
-
-}
-
-_stk.templates=templates;
 _stk.toArray=toArray;_stk.toBoolean=toBoolean;_stk.toDouble=toDouble;function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
@@ -6183,50 +6051,178 @@ _stk.isUndefined=isUndefined;function zip () {
 _stk.zip=zip;
 
 
- })(typeof window !== "undefined" ? window : this);function sort (objectValue, order, type) {
+ })(typeof window !== "undefined" ? window : this);function templates (templateString, data, option) {
 
-    return curryArg(function (rawObjectValue, rawOrder, rawType) {
+    return curryArg(function (rawTemplateString, rawData, rawOption) {
 
-        var asc=true;        var types='any';
+        var default_option = varExtend({
+            "close_tag": "!>",
+            "open_tag": "<!",
+            "throwError": false
+        }, rawOption);        var temp = syntaxCleanup(rawTemplateString, default_option);
 
-        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
+        var tag_replace={
+            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+        };
 
-            asc= rawOrder;
+        var regexp = new RegExp([
+            tag_replace.evaluate,
+            tag_replace.interpolate
+        ].join("|")+"|$", "g");
+
+        var source = "__p += '";
+        var index = 0;
+
+        var escapes = {
+            '\n': 'n',
+            '\r': 'r',
+            "'": "'",
+            '\\': '\\',
+            '\u2028': 'u2028',
+            '\u2029': 'u2029'
+        };
+
+        var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+        var escapeChar = function (match) {
+
+            return '\\' + escapes[match];
+
+        };
+
+        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
+
+            source += temp.slice(index, offset).replace(escaper, escapeChar);
+
+            index = offset+match.length;
+
+            if (evaluate) {
+
+                source += "';\n"+evaluate+"\n__p += '";
+
+            }
+
+            if (interpolate) {
+
+                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
+
+            }
+
+            return match;
+
+        });
+
+        var sourceData = reduce(function (total, vv, kk) {
+
+            // eslint-disable-next-line no-nested-ternary
+            return total+"var "+toString(kk)+" = "+(isJson(vv)
+                ?parseString(vv)
+                :getTypeof(vv) === "string"
+                    ?'"'+vv+'"'
+                    :vv)+";\n";
+
+        }, "", rawData);
+
+        source += "';\n";
+
+        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
+
+        try {
+
+            var render = new Function('obj', source);
+
+            return render.call(this, rawData, templates);
+
+        } catch (error) {
+
+            if (default_option.throwError) {
+
+                throw new Error(error);
+
+            }
+
+            return "";
 
         }
 
-        if (has(rawType) && getTypeof(rawType) === 'string') {
+    }, [
+        templateString,
+        data,
+        option
+    ], two);
 
-            types= rawType;
+}
 
-        }
 
-        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+function syntaxCleanup (data, option) {
 
-            var sortOrderA = orderA;
-            var sortOrderB = orderB;
+    var str_split = data.split("");
+    var openSplit = option.open_tag.split("");
 
-            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+    var closeSplit = option.close_tag.split("");
 
-                if (isEmpty(types) === false) {
+    var commentCounter = 0;
 
-                    if (types === 'any') {
+    var errorMessage = "";
 
-                        sortOrderA =orderA.charCodeAt();
-                        sortOrderB= orderB.charCodeAt();
+    if (option.open_tag.length <= one) {
+
+        errorMessage = "Open tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.close_tag.length <= one) {
+
+        errorMessage = "Close tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.throwError && errorMessage !=="") {
+
+        throw new Error(errorMessage);
+
+    }
+
+    return reduce(function (total, vv, kk) {
+
+        if (kk>one) {
+
+            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
+
+                if (commentCounter>zero) {
+
+                    commentCounter += one;
+
+                }
+                if (vv === "=") {
+
+                    if (commentCounter===zero) {
+
+                        return total+vv+" ";
 
                     }
-                    if (types === 'lowercase') {
 
-                        sortOrderA =orderA.toLowerCase().charCodeAt();
-                        sortOrderB= orderB.toLowerCase().charCodeAt();
+                }
+                if (vv === "#") {
+
+                    commentCounter += one;
+                    if (commentCounter>zero) {
+
+                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
 
                     }
 
-                    if (types === 'uppercase') {
+                }
+                if (vv !== " ") {
 
-                        sortOrderA =orderA.toUpperCase().charCodeAt();
-                        sortOrderB= orderB.toUpperCase().charCodeAt();
+                    if (commentCounter===zero) {
+
+                        return total+" "+vv;
 
                     }
 
@@ -6234,24 +6230,24 @@ _stk.zip=zip;
 
             }
 
-            if (asc) {
+            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
 
-                return sortOrderA - sortOrderB;
+                commentCounter -= one;
 
             }
 
-            return sortOrderB - sortOrderA;
+            if (commentCounter>zero) {
 
-        });
+                return total;
 
-        return finalResponse;
+            }
 
-    }, [
-        objectValue,
-        order,
-        type
-    ], one);
+        }
+
+        return total+vv;
+
+    }, "", str_split);
 
 }
 
-_stk.sort=sort;
+_stk.templates=templates;

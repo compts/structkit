@@ -2649,18 +2649,15 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    formula = formula.replace(/(\d{0,})\u221A([a-zA-Z0-9_-]{1,})/gu, function (mm, m1, m2) {
+    formula = formula.replace(/(\d*)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
 
-        var power = two;
+        var power = m1 === ""
+            ? two
+            : Number(m1);
 
-        if (m1 !== "") {
-
-            power = m1;
-
-        }
-
-        // eslint-disable-next-line no-mixed-operators, no-extra-parens
-        return "("+m2+"**"+(one/power)+")";
+        // Added an extra wrap around (1 / power) to isolate the math operator from string concatenation
+        // eslint-disable-next-line no-extra-parens
+        return "(" + m2 + "**"+(one / power)+ ")";
 
     });
 
@@ -2788,9 +2785,9 @@ _stk.divide=divide;
 
 _stk.each=each;
 
-_stk.equal=equal;
-
 _stk.empty=empty;
+
+_stk.equal=equal;
 
 
 /**
@@ -3598,6 +3595,8 @@ _stk.fromPairs=fromPairs;
 
 _stk.getData=getData;
 
+_stk.getKey=getKey;
+
 _stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
@@ -3656,8 +3655,6 @@ function getValue (objectValue) {
 }
 
 _stk.getValue=getValue;
-
-_stk.getKey=getKey;
 
 
 /**
@@ -3905,8 +3902,6 @@ _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
 
-_stk.isEmpty=isEmpty;
-
 
 /**
  * Insert value in Json object or array
@@ -3948,6 +3943,8 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
+
+_stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
 
@@ -4098,6 +4095,35 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -4124,6 +4150,8 @@ function lte (value1, value2) {
 }
 
 _stk.lte=lte;
+
+_stk.map=map;
 
 
 /**
@@ -4183,8 +4211,6 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
-
-_stk.map=map;
 
 
 /**
@@ -4334,25 +4360,29 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
+_stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
+
 
 /**
- * To check if the two arguments are less
+ * To check if its not equal
  *
  * @since 1.4.8
  * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
+ * @param {any} value1 Any value type
+ * @param {any} value2 Any value type
+ * @returns {boolean} Returns true or false.
  * @example
  *
- * lt(1, 2)
- * // => true
+ * noteq('as', 'as')
+ * // => false
  */
-function lt (value1, value2) {
+function noteq (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa < bb;
+        return aa !== bb;
 
     }, [
         value1,
@@ -4361,11 +4391,102 @@ function lt (value1, value2) {
 
 }
 
-_stk.lt=lt;
+_stk.noteq=noteq;
 
-_stk.mergeWithKey=mergeWithKey;
 
-_stk.multiply=multiply;
+var defaultOptionDelay = {
+
+    "autoStart": true
+};
+
+/**
+ * @typedef {Object} DelayResult
+ * @property {function(): void} cancel - Cancels the delay
+ * @property {function(): void} start - Starts the delay
+ */
+
+/**
+ * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {DelayResult} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var extend = varExtend(defaultOptionDelay, option);
+
+    var sequence = new ClassDelay(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+/**
+ * On delay class
+ *
+ * @since 1.0.1
+ * @category Seq
+ *
+ * @param {object} extend option for delay
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function ClassDelay (extend, wait, func) {
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.timeout = null;
+
+    this.returned = null;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+ClassDelay.prototype.start = function () {
+
+    this.extend = varExtend(defaultOptionDelay, this.extend);
+    var valueWaited = this.wait || zero;
+
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    this.timeout = setTimeout(function () {
+
+        main.returned = main.func();
+
+    }, valueWaited);
+
+};
+
+_stk.onDelay=onDelay;
 
 
 /**
@@ -4477,130 +4598,6 @@ function not (func) {
 }
 
 _stk.not=not;
-
-
-var defaultOptionDelay = {
-
-    "autoStart": true
-};
-
-/**
- * @typedef {Object} DelayResult
- * @property {function(): void} cancel - Cancels the delay
- * @property {function(): void} start - Starts the delay
- */
-
-/**
- * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {DelayResult} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function onDelay (func, wait, option) {
-
-    var extend = varExtend(defaultOptionDelay, option);
-
-    var sequence = new ClassDelay(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-/**
- * On delay class
- *
- * @since 1.0.1
- * @category Seq
- *
- * @param {object} extend option for delay
- * @param {any} wait timer for delay
- * @param {any} func The function to execute
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function ClassDelay (extend, wait, func) {
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.timeout = null;
-
-    this.returned = null;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-ClassDelay.prototype.start = function () {
-
-    this.extend = varExtend(defaultOptionDelay, this.extend);
-    var valueWaited = this.wait || zero;
-
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    this.timeout = setTimeout(function () {
-
-        main.returned = main.func();
-
-    }, valueWaited);
-
-};
-
-_stk.onDelay=onDelay;
-
-
-/**
- * To check if its not equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any value type
- * @param {any} value2 Any value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * noteq('as', 'as')
- * // => false
- */
-function noteq (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa !== bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.noteq=noteq;
 
 
 var defaultOption = {
@@ -6672,90 +6669,6 @@ _stk.parseJson=parseJson;
 
 
 /**
- * Perform left to right function composition. first arguemnt will be default value
- *
- * @since 1.4.86
- * @category Function
- * @param {?} arg Arguments in function
- * @returns {any} Returns any value.
- * @example
- *
- * pipe(Math.pow,add(1))(11,2)
- * // => 122
- */
-function pipe () {
-
-    var arg=arguments;
-
-    var pipeConst = first(arg);
-    var varLimit = limit(arg, one);
-    var that = this;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
-
-
-/**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-_stk.range=range;
-
-
-/**
  * Parse from JSON object to String
  *
  * @since 1.4.86
@@ -6940,6 +6853,90 @@ function parseStringCore (rawCount, rawConfig, rawValue) {
 
 _stk.parseString=parseString;
 
+
+/**
+ * Perform left to right function composition. first arguemnt will be default value
+ *
+ * @since 1.4.86
+ * @category Function
+ * @param {?} arg Arguments in function
+ * @returns {any} Returns any value.
+ * @example
+ *
+ * pipe(Math.pow,add(1))(11,2)
+ * // => 122
+ */
+function pipe () {
+
+    var arg=arguments;
+
+    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
+
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
+_stk.range=range;
+
 _stk.reduce=reduce;
 
 
@@ -7034,8 +7031,6 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
-
-_stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
 
@@ -7139,6 +7134,8 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
+
+_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -7251,6 +7248,95 @@ function baseSort (objectValue, func) {
     return finalResponse;
 
 }
+
+/**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+function sort (objectValue, order, type) {
+
+    return curryArg(function (rawObjectValue, rawOrder, rawType) {
+
+        var asc=true;
+        var types='any';
+
+        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
+
+            asc= rawOrder;
+
+        }
+
+        if (has(rawType) && getTypeof(rawType) === 'string') {
+
+            types= rawType;
+
+        }
+
+        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            var sortOrderA = orderA;
+            var sortOrderB = orderB;
+
+            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+
+                if (isEmpty(types) === false) {
+
+                    if (types === 'any') {
+
+                        sortOrderA =orderA.charCodeAt();
+                        sortOrderB= orderB.charCodeAt();
+
+                    }
+                    if (types === 'lowercase') {
+
+                        sortOrderA =orderA.toLowerCase().charCodeAt();
+                        sortOrderB= orderB.toLowerCase().charCodeAt();
+
+                    }
+
+                    if (types === 'uppercase') {
+
+                        sortOrderA =orderA.toUpperCase().charCodeAt();
+                        sortOrderB= orderB.toUpperCase().charCodeAt();
+
+                    }
+
+                }
+
+            }
+
+            if (asc) {
+
+                return sortOrderA - sortOrderB;
+
+            }
+
+            return sortOrderB - sortOrderA;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        objectValue,
+        order,
+        type
+    ], one);
+
+}
+
+_stk.sort=sort;
+
 
 /**
  * Sort By function is used to sort an array of values.
@@ -7605,236 +7691,6 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
-
-
-/**
- * Template value
- *
- * @since 1.0.1
- * @category String
- * @param {string} templateString Template string
- * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  template("<!= test !>", {"test": 11})
- *=>'11'
- */
-function templates (templateString, data, option) {
-
-    return curryArg(function (rawTemplateString, rawData, rawOption) {
-
-        var default_option = varExtend({
-            "close_tag": "!>",
-            "open_tag": "<!",
-            "throwError": false
-        }, rawOption);
-
-        var temp = syntaxCleanup(rawTemplateString, default_option);
-
-        var tag_replace={
-            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
-            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
-        };
-
-        var regexp = new RegExp([
-            tag_replace.evaluate,
-            tag_replace.interpolate
-        ].join("|")+"|$", "g");
-
-        var source = "__p += '";
-        var index = 0;
-
-        var escapes = {
-            '\n': 'n',
-            '\r': 'r',
-            "'": "'",
-            '\\': '\\',
-            '\u2028': 'u2028',
-            '\u2029': 'u2029'
-        };
-
-        var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-
-        var escapeChar = function (match) {
-
-            return '\\' + escapes[match];
-
-        };
-
-        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
-
-            source += temp.slice(index, offset).replace(escaper, escapeChar);
-
-            index = offset+match.length;
-
-            if (evaluate) {
-
-                source += "';\n"+evaluate+"\n__p += '";
-
-            }
-
-            if (interpolate) {
-
-                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-            }
-
-            return match;
-
-        });
-
-        var sourceData = reduce(function (total, vv, kk) {
-
-            // eslint-disable-next-line no-nested-ternary
-            return total+"var "+toString(kk)+" = "+(isJson(vv)
-                ?parseString(vv)
-                :getTypeof(vv) === "string"
-                    ?'"'+vv+'"'
-                    :vv)+";\n";
-
-        }, "", rawData);
-
-        source += "';\n";
-
-        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
-
-        try {
-
-            var render = new Function('obj', source);
-
-            return render.call(this, rawData, templates);
-
-        } catch (error) {
-
-            if (default_option.throwError) {
-
-                throw new Error(error);
-
-            }
-
-            return "";
-
-        }
-
-    }, [
-        templateString,
-        data,
-        option
-    ], two);
-
-}
-
-/**
- * Syntax cleanup
- *
- * @since 1.0.1
- * @category String
- * @param {string} data Template string
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  syntaxCleanup("<!- test !>", {"test": 11})
- *=>'11'
- */
-function syntaxCleanup (data, option) {
-
-    var str_split = data.split("");
-    var openSplit = option.open_tag.split("");
-
-    var closeSplit = option.close_tag.split("");
-
-    var commentCounter = 0;
-
-    var errorMessage = "";
-
-    if (option.open_tag.length <= one) {
-
-        errorMessage = "Open tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.close_tag.length <= one) {
-
-        errorMessage = "Close tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.throwError && errorMessage !=="") {
-
-        throw new Error(errorMessage);
-
-    }
-
-    return reduce(function (total, vv, kk) {
-
-        if (kk>one) {
-
-            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
-
-                if (commentCounter>zero) {
-
-                    commentCounter += one;
-
-                }
-                if (vv === "=") {
-
-                    if (commentCounter===zero) {
-
-                        return total+vv+" ";
-
-                    }
-
-                }
-                if (vv === "#") {
-
-                    commentCounter += one;
-                    if (commentCounter>zero) {
-
-                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
-
-                    }
-
-                }
-                if (vv !== " ") {
-
-                    if (commentCounter===zero) {
-
-                        return total+" "+vv;
-
-                    }
-
-                }
-
-            }
-
-            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
-
-                commentCounter -= one;
-
-            }
-
-            if (commentCounter>zero) {
-
-                return total;
-
-            }
-
-        }
-
-        return total+vv;
-
-    }, "", str_split);
-
-}
-
-_stk.templates=templates;
 
 _stk.toArray=toArray;
 
@@ -8554,64 +8410,205 @@ _stk.zip=zip;
  })(typeof window !== "undefined" ? window : this);
 
 /**
- * Sort array
+ * Template value
  *
  * @since 1.0.1
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
- * @returns {any[]} Returns the total.
+ * @category String
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
  * @example
  *
- * sort([2,3,1])
- *=>[1,2,3]
+ *  template("<!= test !>", {"test": 11})
+ *=>'11'
  */
-function sort (objectValue, order, type) {
+function templates (templateString, data, option) {
 
-    return curryArg(function (rawObjectValue, rawOrder, rawType) {
+    return curryArg(function (rawTemplateString, rawData, rawOption) {
 
-        var asc=true;
-        var types='any';
+        var default_option = varExtend({
+            "close_tag": "!>",
+            "open_tag": "<!",
+            "throwError": false
+        }, rawOption);
 
-        if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
+        var temp = syntaxCleanup(rawTemplateString, default_option);
 
-            asc= rawOrder;
+        var tag_replace={
+            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+        };
+
+        var regexp = new RegExp([
+            tag_replace.evaluate,
+            tag_replace.interpolate
+        ].join("|")+"|$", "g");
+
+        var source = "__p += '";
+        var index = 0;
+
+        var escapes = {
+            '\n': 'n',
+            '\r': 'r',
+            "'": "'",
+            '\\': '\\',
+            '\u2028': 'u2028',
+            '\u2029': 'u2029'
+        };
+
+        var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+        var escapeChar = function (match) {
+
+            return '\\' + escapes[match];
+
+        };
+
+        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
+
+            source += temp.slice(index, offset).replace(escaper, escapeChar);
+
+            index = offset+match.length;
+
+            if (evaluate) {
+
+                source += "';\n"+evaluate+"\n__p += '";
+
+            }
+
+            if (interpolate) {
+
+                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
+
+            }
+
+            return match;
+
+        });
+
+        var sourceData = reduce(function (total, vv, kk) {
+
+            // eslint-disable-next-line no-nested-ternary
+            return total+"var "+toString(kk)+" = "+(isJson(vv)
+                ?parseString(vv)
+                :getTypeof(vv) === "string"
+                    ?'"'+vv+'"'
+                    :vv)+";\n";
+
+        }, "", rawData);
+
+        source += "';\n";
+
+        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
+
+        try {
+
+            var render = new Function('obj', source);
+
+            return render.call(this, rawData, templates);
+
+        } catch (error) {
+
+            if (default_option.throwError) {
+
+                throw new Error(error);
+
+            }
+
+            return "";
 
         }
 
-        if (has(rawType) && getTypeof(rawType) === 'string') {
+    }, [
+        templateString,
+        data,
+        option
+    ], two);
 
-            types= rawType;
+}
 
-        }
+/**
+ * Syntax cleanup
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string} data Template string
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  syntaxCleanup("<!- test !>", {"test": 11})
+ *=>'11'
+ */
+function syntaxCleanup (data, option) {
 
-        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+    var str_split = data.split("");
+    var openSplit = option.open_tag.split("");
 
-            var sortOrderA = orderA;
-            var sortOrderB = orderB;
+    var closeSplit = option.close_tag.split("");
 
-            if (getTypeof(orderA) === "string" && getTypeof(orderB) === "string") {
+    var commentCounter = 0;
 
-                if (isEmpty(types) === false) {
+    var errorMessage = "";
 
-                    if (types === 'any') {
+    if (option.open_tag.length <= one) {
 
-                        sortOrderA =orderA.charCodeAt();
-                        sortOrderB= orderB.charCodeAt();
+        errorMessage = "Open tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.close_tag.length <= one) {
+
+        errorMessage = "Close tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.throwError && errorMessage !=="") {
+
+        throw new Error(errorMessage);
+
+    }
+
+    return reduce(function (total, vv, kk) {
+
+        if (kk>one) {
+
+            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
+
+                if (commentCounter>zero) {
+
+                    commentCounter += one;
+
+                }
+                if (vv === "=") {
+
+                    if (commentCounter===zero) {
+
+                        return total+vv+" ";
 
                     }
-                    if (types === 'lowercase') {
 
-                        sortOrderA =orderA.toLowerCase().charCodeAt();
-                        sortOrderB= orderB.toLowerCase().charCodeAt();
+                }
+                if (vv === "#") {
+
+                    commentCounter += one;
+                    if (commentCounter>zero) {
+
+                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
 
                     }
 
-                    if (types === 'uppercase') {
+                }
+                if (vv !== " ") {
 
-                        sortOrderA =orderA.toUpperCase().charCodeAt();
-                        sortOrderB= orderB.toUpperCase().charCodeAt();
+                    if (commentCounter===zero) {
+
+                        return total+" "+vv;
 
                     }
 
@@ -8619,24 +8616,24 @@ function sort (objectValue, order, type) {
 
             }
 
-            if (asc) {
+            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
 
-                return sortOrderA - sortOrderB;
+                commentCounter -= one;
 
             }
 
-            return sortOrderB - sortOrderA;
+            if (commentCounter>zero) {
 
-        });
+                return total;
 
-        return finalResponse;
+            }
 
-    }, [
-        objectValue,
-        order,
-        type
-    ], one);
+        }
+
+        return total+vv;
+
+    }, "", str_split);
 
 }
 
-_stk.sort=sort;
+_stk.templates=templates;
