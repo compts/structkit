@@ -2649,15 +2649,14 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    formula = formula.replace(/(\d*)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
+    formula = formula.replace(/(\d*?)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
 
         var power = m1 === ""
             ? two
             : Number(m1);
 
-        // Added an extra wrap around (1 / power) to isolate the math operator from string concatenation
         // eslint-disable-next-line no-extra-parens
-        return "(" + m2 + "**"+(one / power)+ ")";
+        return "(" + m2 + "**" + (one / power) + ")";
 
     });
 
@@ -3708,35 +3707,6 @@ _stk.groupBy=groupBy;
 
 
 /**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
-
-
-/**
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
@@ -3763,6 +3733,35 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
+
+
+/**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
 
 _stk.has=has;
 
@@ -4155,65 +4154,6 @@ _stk.map=map;
 
 
 /**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
- * @example
- *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
- */
-function mapGetData (valueFormat, objectValue, isStrict) {
-
-    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
-
-        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
-            ? true
-            :rawIsStrict;
-
-        var typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            var rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            var validData = getData(rawValueFormat, typeObjectValue === "json"
-                ?rawbj
-                :value, refIsStrict);
-
-            if (isEmpty(validData) === false) {
-
-                total = append(total, validData);
-
-            }
-
-            return total;
-
-        }, [], objectValue);
-
-    }, [
-        valueFormat,
-        objectValue,
-        isStrict
-    ], two);
-
-}
-
-_stk.mapGetData=mapGetData;
-
-
-/**
  * Merging two json object
  *
  * @since 1.4.8.1
@@ -4394,101 +4334,6 @@ function noteq (value1, value2) {
 _stk.noteq=noteq;
 
 
-var defaultOptionDelay = {
-
-    "autoStart": true
-};
-
-/**
- * @typedef {Object} DelayResult
- * @property {function(): void} cancel - Cancels the delay
- * @property {function(): void} start - Starts the delay
- */
-
-/**
- * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {DelayResult} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function onDelay (func, wait, option) {
-
-    var extend = varExtend(defaultOptionDelay, option);
-
-    var sequence = new ClassDelay(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-/**
- * On delay class
- *
- * @since 1.0.1
- * @category Seq
- *
- * @param {object} extend option for delay
- * @param {any} wait timer for delay
- * @param {any} func The function to execute
- * @returns {object} Returns object.
- * @example
- *
- *  onDelay(()=>{})
- *=>'11'
- */
-function ClassDelay (extend, wait, func) {
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.timeout = null;
-
-    this.returned = null;
-
-}
-
-ClassDelay.prototype.cancel = function () {
-
-    clearTimeout(this.timeout);
-
-};
-
-ClassDelay.prototype.start = function () {
-
-    this.extend = varExtend(defaultOptionDelay, this.extend);
-    var valueWaited = this.wait || zero;
-
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    this.timeout = setTimeout(function () {
-
-        main.returned = main.func();
-
-    }, valueWaited);
-
-};
-
-_stk.onDelay=onDelay;
-
-
 /**
  * To extract string invalid boolean and convert to boolean
  *
@@ -4598,6 +4443,101 @@ function not (func) {
 }
 
 _stk.not=not;
+
+
+var defaultOptionDelay = {
+
+    "autoStart": true
+};
+
+/**
+ * @typedef {Object} DelayResult
+ * @property {function(): void} cancel - Cancels the delay
+ * @property {function(): void} start - Starts the delay
+ */
+
+/**
+ * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {DelayResult} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function onDelay (func, wait, option) {
+
+    var extend = varExtend(defaultOptionDelay, option);
+
+    var sequence = new ClassDelay(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+/**
+ * On delay class
+ *
+ * @since 1.0.1
+ * @category Seq
+ *
+ * @param {object} extend option for delay
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onDelay(()=>{})
+ *=>'11'
+ */
+function ClassDelay (extend, wait, func) {
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.timeout = null;
+
+    this.returned = null;
+
+}
+
+ClassDelay.prototype.cancel = function () {
+
+    clearTimeout(this.timeout);
+
+};
+
+ClassDelay.prototype.start = function () {
+
+    this.extend = varExtend(defaultOptionDelay, this.extend);
+    var valueWaited = this.wait || zero;
+
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    this.timeout = setTimeout(function () {
+
+        main.returned = main.func();
+
+    }, valueWaited);
+
+};
+
+_stk.onDelay=onDelay;
 
 
 var defaultOption = {
@@ -6068,6 +6008,229 @@ function strUnEscape (value, type) {
 }
 
 /**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseString (value, config) {
+
+    var defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "throwError": false,
+        "unscapeEntity": false}, config);
+
+    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
+
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
+
+        }
+
+        return '';
+
+    }
+
+    var data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = strUnEscape(data);
+
+    }
+
+    return data.toString();
+
+}
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesStr (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} rawCount This will define deep was nested
+ * @param {any} rawConfig The config by user
+ * @param {any} rawValue The data that you want to covert to a string from json/array
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        var prepStr = "";
+
+        if (has(rawCount === zero
+            ?validTypeJson
+            :remove(validTypeJson, "object"), getTypeof(value))) {
+
+            var getTypeDetails = validTypeJson[getTypeof(value)];
+
+            var inc=zero;
+
+            each(value, function (ev, ek) {
+
+                var delimeter=inc<count(value)-one
+                    ?","
+                    :"";
+
+                if (getTypeDetails.isKey) {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
+
+                } else {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
+
+                }
+
+                inc += one;
+
+            });
+
+            return getTypeDetails.start+prepStr+getTypeDetails.end;
+
+        }
+
+        var parseValue = convertValue(value);
+
+        if (getTypeof(parseValue) === "string") {
+
+            return '"'+escapeQuotesStr(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "undefined") {
+
+            return '"undefined"';
+
+        }
+        if (getTypeof(parseValue) === "date") {
+
+            return '"'+toString(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "regexp") {
+
+            return '"new RegExp(' + value.source +','+ value.flags+')"';
+
+        }
+
+        if (getTypeof(parseValue) === "number") {
+
+            if (isNaN(parseValue)) {
+
+                return '"NaN"';
+
+            }
+
+            if (Infinity === parseValue) {
+
+                return '"Infinity"';
+
+            }
+
+            return value;
+
+        }
+
+        if (getTypeof(value) === "object") {
+
+            return '"'+value+'"';
+
+        }
+
+        if (getTypeof(parseValue) === "function") {
+
+            if (refConfig.ignoreFunction) {
+
+                return null;
+
+            }
+
+            return '"'+parseValue+'"';
+
+        }
+
+        return parseValue;
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+_stk.parseString=parseString;
+
+
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
+
+/**
  * String Substr
  *
  * @since 1.4.5
@@ -6667,191 +6830,7 @@ function charType (valChar) {
 
 _stk.parseJson=parseJson;
 
-
-/**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in json format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in json format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value, config) {
-
-    var defaultConfig = varExtend({"ignoreFunction": true,
-        "isJson": false,
-        "throwError": false,
-        "unscapeEntity": false}, config);
-
-    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
-
-        if (defaultConfig.throwError) {
-
-            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
-
-        }
-
-        return '';
-
-    }
-
-    var data = parseStringCore(zero, defaultConfig, value);
-
-    if (defaultConfig.unscapeEntity) {
-
-        data = strUnEscape(data);
-
-    }
-
-    return data.toString();
-
-}
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-function escapeQuotesStr (str) {
-
-    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
-
-}
-
-/**
- * Parse String
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} rawCount This will define deep was nested
- * @param {any} rawConfig The config by user
- * @param {any} rawValue The data that you want to covert to a string from json/array
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        var prepStr = "";
-
-        if (has(rawCount === zero
-            ?validTypeJson
-            :remove(validTypeJson, "object"), getTypeof(value))) {
-
-            var getTypeDetails = validTypeJson[getTypeof(value)];
-
-            var inc=zero;
-
-            each(value, function (ev, ek) {
-
-                var delimeter=inc<count(value)-one
-                    ?","
-                    :"";
-
-                if (getTypeDetails.isKey) {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
-
-                } else {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
-
-                }
-
-                inc += one;
-
-            });
-
-            return getTypeDetails.start+prepStr+getTypeDetails.end;
-
-        }
-
-        var parseValue = convertValue(value);
-
-        if (getTypeof(parseValue) === "string") {
-
-            return '"'+escapeQuotesStr(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "undefined") {
-
-            return '"undefined"';
-
-        }
-        if (getTypeof(parseValue) === "date") {
-
-            return '"'+toString(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "regexp") {
-
-            return '"new RegExp(' + value.source +','+ value.flags+')"';
-
-        }
-
-        if (getTypeof(parseValue) === "number") {
-
-            if (isNaN(parseValue)) {
-
-                return '"NaN"';
-
-            }
-
-            if (Infinity === parseValue) {
-
-                return '"Infinity"';
-
-            }
-
-            return value;
-
-        }
-
-        if (getTypeof(value) === "object") {
-
-            return '"'+value+'"';
-
-        }
-
-        if (getTypeof(parseValue) === "function") {
-
-            if (refConfig.ignoreFunction) {
-
-                return null;
-
-            }
-
-            return '"'+parseValue+'"';
-
-        }
-
-        return parseValue;
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
-
-}
-
-_stk.parseString=parseString;
+_stk.range=range;
 
 
 /**
@@ -6898,46 +6877,9 @@ function pipe () {
 
 _stk.pipe=pipe;
 
-
-/**
- * To create single random value from array
- *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
- * @example
- *
- * random([10,20,30],0,3 )
- *=>'[20]'
- */
-function random (valueArray, minValue, maxValue) {
-
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
-
-    if (math_random< count(valueArray) && math_random >=zero) {
-
-        return toArray(valueArray[math_random]);
-
-    }
-
-    return toArray(valueArray[math_random % count(valueArray)]);
-
-}
-
-_stk.random=random;
-
-_stk.range=range;
-
 _stk.reduce=reduce;
+
+_stk.remove=remove;
 
 
 /**
@@ -6959,8 +6901,6 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
 
 
 /**
@@ -7031,6 +6971,8 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
+
+_stk.roundDecimal=roundDecimal;
 
 _stk.selectInData=selectInData;
 
@@ -7134,8 +7076,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-
-_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -7579,6 +7519,65 @@ function strUpper (value) {
 
 _stk.strUpper=strUpper;
 
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
+ * @example
+ *
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+function mapGetData (valueFormat, objectValue, isStrict) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
+
+        var refIsStrict = getTypeofInternal(rawIsStrict) === "undefind"
+            ? true
+            :rawIsStrict;
+
+        var typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            var rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            var validData = getData(rawValueFormat, typeObjectValue === "json"
+                ?rawbj
+                :value, refIsStrict);
+
+            if (isEmpty(validData) === false) {
+
+                total = append(total, validData);
+
+            }
+
+            return total;
+
+        }, [], objectValue);
+
+    }, [
+        valueFormat,
+        objectValue,
+        isStrict
+    ], two);
+
+}
+
+_stk.mapGetData=mapGetData;
+
 _stk.subtract=subtract;
 
 
@@ -7691,6 +7690,236 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
+
+
+/**
+ * Template value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string} templateString Template string
+ * @param {any} data Parameter to replace
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  template("<!= test !>", {"test": 11})
+ *=>'11'
+ */
+function templates (templateString, data, option) {
+
+    return curryArg(function (rawTemplateString, rawData, rawOption) {
+
+        var default_option = varExtend({
+            "close_tag": "!>",
+            "open_tag": "<!",
+            "throwError": false
+        }, rawOption);
+
+        var temp = syntaxCleanup(rawTemplateString, default_option);
+
+        var tag_replace={
+            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
+            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
+        };
+
+        var regexp = new RegExp([
+            tag_replace.evaluate,
+            tag_replace.interpolate
+        ].join("|")+"|$", "g");
+
+        var source = "__p += '";
+        var index = 0;
+
+        var escapes = {
+            '\n': 'n',
+            '\r': 'r',
+            "'": "'",
+            '\\': '\\',
+            '\u2028': 'u2028',
+            '\u2029': 'u2029'
+        };
+
+        var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+        var escapeChar = function (match) {
+
+            return '\\' + escapes[match];
+
+        };
+
+        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
+
+            source += temp.slice(index, offset).replace(escaper, escapeChar);
+
+            index = offset+match.length;
+
+            if (evaluate) {
+
+                source += "';\n"+evaluate+"\n__p += '";
+
+            }
+
+            if (interpolate) {
+
+                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
+
+            }
+
+            return match;
+
+        });
+
+        var sourceData = reduce(function (total, vv, kk) {
+
+            // eslint-disable-next-line no-nested-ternary
+            return total+"var "+toString(kk)+" = "+(isJson(vv)
+                ?parseString(vv)
+                :getTypeof(vv) === "string"
+                    ?'"'+vv+'"'
+                    :vv)+";\n";
+
+        }, "", rawData);
+
+        source += "';\n";
+
+        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
+
+        try {
+
+            var render = new Function('obj', source);
+
+            return render.call(this, rawData, templates);
+
+        } catch (error) {
+
+            if (default_option.throwError) {
+
+                throw new Error(error);
+
+            }
+
+            return "";
+
+        }
+
+    }, [
+        templateString,
+        data,
+        option
+    ], two);
+
+}
+
+/**
+ * Syntax cleanup
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string} data Template string
+ * @param {any=} option The second number in an addition.
+ * @returns {string} Returns the total.
+ * @example
+ *
+ *  syntaxCleanup("<!- test !>", {"test": 11})
+ *=>'11'
+ */
+function syntaxCleanup (data, option) {
+
+    var str_split = data.split("");
+    var openSplit = option.open_tag.split("");
+
+    var closeSplit = option.close_tag.split("");
+
+    var commentCounter = 0;
+
+    var errorMessage = "";
+
+    if (option.open_tag.length <= one) {
+
+        errorMessage = "Open tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.close_tag.length <= one) {
+
+        errorMessage = "Close tag must greater or equal to two";
+
+        return data;
+
+    }
+
+    if (option.throwError && errorMessage !=="") {
+
+        throw new Error(errorMessage);
+
+    }
+
+    return reduce(function (total, vv, kk) {
+
+        if (kk>one) {
+
+            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
+
+                if (commentCounter>zero) {
+
+                    commentCounter += one;
+
+                }
+                if (vv === "=") {
+
+                    if (commentCounter===zero) {
+
+                        return total+vv+" ";
+
+                    }
+
+                }
+                if (vv === "#") {
+
+                    commentCounter += one;
+                    if (commentCounter>zero) {
+
+                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
+
+                    }
+
+                }
+                if (vv !== " ") {
+
+                    if (commentCounter===zero) {
+
+                        return total+" "+vv;
+
+                    }
+
+                }
+
+            }
+
+            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
+
+                commentCounter -= one;
+
+            }
+
+            if (commentCounter>zero) {
+
+                return total;
+
+            }
+
+        }
+
+        return total+vv;
+
+    }, "", str_split);
+
+}
+
+_stk.templates=templates;
 
 _stk.toArray=toArray;
 
@@ -7977,8 +8206,6 @@ function unique (value) {
 }
 
 _stk.unique=unique;
-
-_stk.varExtend=varExtend;
 
 _stk.where=where;
 
@@ -8363,6 +8590,8 @@ _stk.isUint16Array=isUint16Array;
 _stk.isUint32Array=isUint32Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
+_stk.varExtend=varExtend;
+
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
@@ -8408,232 +8637,3 @@ _stk.zip=zip;
 
 
  })(typeof window !== "undefined" ? window : this);
-
-/**
- * Template value
- *
- * @since 1.0.1
- * @category String
- * @param {string} templateString Template string
- * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  template("<!= test !>", {"test": 11})
- *=>'11'
- */
-function templates (templateString, data, option) {
-
-    return curryArg(function (rawTemplateString, rawData, rawOption) {
-
-        var default_option = varExtend({
-            "close_tag": "!>",
-            "open_tag": "<!",
-            "throwError": false
-        }, rawOption);
-
-        var temp = syntaxCleanup(rawTemplateString, default_option);
-
-        var tag_replace={
-            "evaluate": default_option.open_tag+"[^=\\#]([\\s\\S]+?)"+default_option.close_tag,
-            "interpolate": default_option.open_tag+"=([\\s\\S]+?)"+default_option.close_tag
-        };
-
-        var regexp = new RegExp([
-            tag_replace.evaluate,
-            tag_replace.interpolate
-        ].join("|")+"|$", "g");
-
-        var source = "__p += '";
-        var index = 0;
-
-        var escapes = {
-            '\n': 'n',
-            '\r': 'r',
-            "'": "'",
-            '\\': '\\',
-            '\u2028': 'u2028',
-            '\u2029': 'u2029'
-        };
-
-        var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-
-        var escapeChar = function (match) {
-
-            return '\\' + escapes[match];
-
-        };
-
-        temp.replace(regexp, function (match, evaluate, interpolate, offset) {
-
-            source += temp.slice(index, offset).replace(escaper, escapeChar);
-
-            index = offset+match.length;
-
-            if (evaluate) {
-
-                source += "';\n"+evaluate+"\n__p += '";
-
-            }
-
-            if (interpolate) {
-
-                source += "'+\n((__t=("+interpolate+")) == null?'':__t)+\n'";
-
-            }
-
-            return match;
-
-        });
-
-        var sourceData = reduce(function (total, vv, kk) {
-
-            // eslint-disable-next-line no-nested-ternary
-            return total+"var "+toString(kk)+" = "+(isJson(vv)
-                ?parseString(vv)
-                :getTypeof(vv) === "string"
-                    ?'"'+vv+'"'
-                    :vv)+";\n";
-
-        }, "", rawData);
-
-        source += "';\n";
-
-        source = "var __t,__p='';" + sourceData+source + " return __p;\n";
-
-        try {
-
-            var render = new Function('obj', source);
-
-            return render.call(this, rawData, templates);
-
-        } catch (error) {
-
-            if (default_option.throwError) {
-
-                throw new Error(error);
-
-            }
-
-            return "";
-
-        }
-
-    }, [
-        templateString,
-        data,
-        option
-    ], two);
-
-}
-
-/**
- * Syntax cleanup
- *
- * @since 1.0.1
- * @category String
- * @param {string} data Template string
- * @param {any=} option The second number in an addition.
- * @returns {string} Returns the total.
- * @example
- *
- *  syntaxCleanup("<!- test !>", {"test": 11})
- *=>'11'
- */
-function syntaxCleanup (data, option) {
-
-    var str_split = data.split("");
-    var openSplit = option.open_tag.split("");
-
-    var closeSplit = option.close_tag.split("");
-
-    var commentCounter = 0;
-
-    var errorMessage = "";
-
-    if (option.open_tag.length <= one) {
-
-        errorMessage = "Open tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.close_tag.length <= one) {
-
-        errorMessage = "Close tag must greater or equal to two";
-
-        return data;
-
-    }
-
-    if (option.throwError && errorMessage !=="") {
-
-        throw new Error(errorMessage);
-
-    }
-
-    return reduce(function (total, vv, kk) {
-
-        if (kk>one) {
-
-            if (str_split[kk-two]===openSplit[zero] && str_split[kk-one] === openSplit[one]) {
-
-                if (commentCounter>zero) {
-
-                    commentCounter += one;
-
-                }
-                if (vv === "=") {
-
-                    if (commentCounter===zero) {
-
-                        return total+vv+" ";
-
-                    }
-
-                }
-                if (vv === "#") {
-
-                    commentCounter += one;
-                    if (commentCounter>zero) {
-
-                        return total.replace(new RegExp(option.open_tag+"$", "g"), "");
-
-                    }
-
-                }
-                if (vv !== " ") {
-
-                    if (commentCounter===zero) {
-
-                        return total+" "+vv;
-
-                    }
-
-                }
-
-            }
-
-            if (str_split[kk-two]===closeSplit[zero] && str_split[kk-one] === closeSplit[one] && commentCounter>zero) {
-
-                commentCounter -= one;
-
-            }
-
-            if (commentCounter>zero) {
-
-                return total;
-
-            }
-
-        }
-
-        return total+vv;
-
-    }, "", str_split);
-
-}
-
-_stk.templates=templates;

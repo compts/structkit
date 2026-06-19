@@ -315,15 +315,14 @@ function convert (b1) {
 function algbraicExpr (formula) {
 
     // Handle formula like this 3√s2
-    formula = formula.replace(/(\d*)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
+    formula = formula.replace(/(\d*?)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
 
         const power = m1 === ""
             ? two
             : Number(m1);
 
-        // Added an extra wrap around (1 / power) to isolate the math operator from string concatenation
         // eslint-disable-next-line no-extra-parens
-        return "(" + m2 + "**"+(one / power)+ ")";
+        return "(" + m2 + "**" + (one / power) + ")";
 
     });
 

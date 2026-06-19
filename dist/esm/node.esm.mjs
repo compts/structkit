@@ -84,24 +84,6 @@ import {default as arrayConcat_module} from './src/function/arrayConcat.mjs';
  */
 export const arrayConcat = arrayConcat_module;
 
-import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
-
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-export const arrayRepeat = arrayRepeat_module;
-
 import {default as arraySlice_module} from './src/function/arraySlice.mjs';
 
 
@@ -143,6 +125,24 @@ import {default as arraySum_module} from './src/function/arraySum.mjs';
  * // => 3
  */
 export const arraySum = arraySum_module;
+
+import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
+
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+export const arrayRepeat = arrayRepeat_module;
 
 import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
 
@@ -200,6 +200,24 @@ import {default as clone_module} from './src/function/clone.mjs';
  */
 export const clone = clone_module;
 
+import {default as curry_module} from './src/function/curry.mjs';
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+export const curry = curry_module;
+
 import {default as count_module} from './src/function/count.mjs';
 
 
@@ -220,24 +238,6 @@ import {default as count_module} from './src/function/count.mjs';
  * // => 2
  */
 export const count = count_module;
-
-import {default as curry_module} from './src/function/curry.mjs';
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-export const curry = curry_module;
 
 import {default as dec_module} from './src/function/dec.mjs';
 
@@ -311,6 +311,23 @@ import {default as each_module} from './src/function/each.mjs';
  */
 export const each = each_module;
 
+import {default as empty_module} from './src/function/empty.mjs';
+
+
+/**
+ * Ge the empty value of specify argument type
+ *
+ * @since 1.0.1
+ * @category Function
+ * @param {any} value Any value type that you want an empty return
+ * @returns {any} Returns empty either Json or Array
+ * @example
+ *
+ * empty([])
+ * => []
+ */
+export const empty = empty_module;
+
 import {default as equal_module} from './src/function/equal.mjs';
 
 
@@ -347,23 +364,6 @@ import {default as filter_module} from './src/function/filter.mjs';
  * => [2, 34]
  */
 export const filter = filter_module;
-
-import {default as empty_module} from './src/function/empty.mjs';
-
-
-/**
- * Ge the empty value of specify argument type
- *
- * @since 1.0.1
- * @category Function
- * @param {any} value Any value type that you want an empty return
- * @returns {any} Returns empty either Json or Array
- * @example
- *
- * empty([])
- * => []
- */
-export const empty = empty_module;
 
 import {default as first_module} from './src/function/first.mjs';
 
@@ -492,6 +492,23 @@ import {default as getUniq_module} from './src/function/getUniq.mjs';
  */
 export const getUniq = getUniq_module;
 
+import {default as getValue_module} from './src/function/getValue.mjs';
+
+
+/**
+ * Get value of.mjson or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+export const getValue = getValue_module;
+
 import {default as groupBy_module} from './src/function/groupBy.mjs';
 
 
@@ -509,23 +526,6 @@ import {default as groupBy_module} from './src/function/groupBy.mjs';
  *=> {0:[2,4,6], 1:[1,3,5,7]}
  */
 export const groupBy = groupBy_module;
-
-import {default as getValue_module} from './src/function/getValue.mjs';
-
-
-/**
- * Get value of.mjson or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-export const getValue = getValue_module;
 
 import {default as gt_module} from './src/function/gt.mjs';
 
@@ -617,24 +617,6 @@ import {default as inc_module} from './src/function/inc.mjs';
  */
 export const inc = inc_module;
 
-import {default as indexOfExist_module} from './src/function/indexOfExist.mjs';
-
-
-/**
- * Check index of array is Exist or not
- *
- * @since 1.3.1
- * @category Predicate
- * @param {any=} value Value for array lookup
- * @param {any[]=} arrayObject Array
- * @returns {boolean} Return boolean.
- * @example
- *
- * indexOfExist(32, [312])
- * // => false
- */
-export const indexOfExist = indexOfExist_module;
-
 import {default as indexOf_module} from './src/function/indexOf.mjs';
 
 
@@ -652,6 +634,24 @@ import {default as indexOf_module} from './src/function/indexOf.mjs';
  * // => 0
  */
 export const indexOf = indexOf_module;
+
+import {default as indexOfExist_module} from './src/function/indexOfExist.mjs';
+
+
+/**
+ * Check index of array is Exist or not
+ *
+ * @since 1.3.1
+ * @category Predicate
+ * @param {any=} value Value for array lookup
+ * @param {any[]=} arrayObject Array
+ * @returns {boolean} Return boolean.
+ * @example
+ *
+ * indexOfExist(32, [312])
+ * // => false
+ */
+export const indexOfExist = indexOfExist_module;
 
 import {default as indexOfNotExist_module} from './src/function/indexOfNotExist.mjs';
 
@@ -746,23 +746,6 @@ import {default as isExactbyRegExp_module} from './src/function/isExactbyRegExp.
  */
 export const isExactbyRegExp = isExactbyRegExp_module;
 
-import {default as last_module} from './src/function/last.mjs';
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-export const last = last_module;
-
 import {default as isJson_module} from './src/function/isJson.mjs';
 
 
@@ -780,6 +763,23 @@ import {default as isJson_module} from './src/function/isJson.mjs';
  *=> true
  */
 export const isJson = isJson_module;
+
+import {default as last_module} from './src/function/last.mjs';
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+export const last = last_module;
 
 import {default as lastIndexOf_module} from './src/function/lastIndexOf.mjs';
 
@@ -873,24 +873,6 @@ import {default as map_module} from './src/function/map.mjs';
  */
 export const map = map_module;
 
-import {default as lt_module} from './src/function/lt.mjs';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
-
 import {default as mapGetData_module} from './src/function/mapGetData.mjs';
 
 
@@ -909,6 +891,24 @@ import {default as mapGetData_module} from './src/function/mapGetData.mjs';
  *=>[1]
  */
 export const mapGetData = mapGetData_module;
+
+import {default as lt_module} from './src/function/lt.mjs';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
 
@@ -1272,24 +1272,6 @@ import {default as selectInData_module} from './src/function/selectInData.mjs';
  */
 export const selectInData = selectInData_module;
 
-import {default as shuffle_module} from './src/function/shuffle.mjs';
-
-
-/**
- * Shuffle data in array
- *
- * @since 1.0.1
- * @update 1.4.86
- * @category Array
- * @param {any[]} objectValue Array argmuments that you want to shuffle
- * @returns {any[]} Shuffle return value in array
- * @example
- *
- * shuffle([1,2,3])
- *=>[2,3,1]
- */
-export const shuffle = shuffle_module;
-
 import {default as setData_module} from './src/function/setData.mjs';
 
 
@@ -1308,6 +1290,24 @@ import {default as setData_module} from './src/function/setData.mjs';
  *=> 2
  */
 export const setData = setData_module;
+
+import {default as shuffle_module} from './src/function/shuffle.mjs';
+
+
+/**
+ * Shuffle data in array
+ *
+ * @since 1.0.1
+ * @update 1.4.86
+ * @category Array
+ * @param {any[]} objectValue Array argmuments that you want to shuffle
+ * @returns {any[]} Shuffle return value in array
+ * @example
+ *
+ * shuffle([1,2,3])
+ *=>[2,3,1]
+ */
+export const shuffle = shuffle_module;
 
 import {default as someValid_module} from './src/function/someValid.mjs';
 
@@ -1469,6 +1469,24 @@ import {default as strSnake_module} from './src/function/strSnake.mjs';
  */
 export const strSnake = strSnake_module;
 
+import {default as strUnEscape_module} from './src/function/strUnEscape.mjs';
+
+
+/**
+ * String Unescape
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} type Configuration
+ * @returns {string} Returns unescape string
+ * @example
+ *
+ * strUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
+ *=>"yahii & adad ^ss"
+ */
+export const strUnEscape = strUnEscape_module;
+
 import {default as strSubs_module} from './src/function/strSubs.mjs';
 
 
@@ -1487,24 +1505,6 @@ import {default as strSubs_module} from './src/function/strSubs.mjs';
  *=> fish is goad   with Goat-1ss
  */
 export const strSubs = strSubs_module;
-
-import {default as strUnEscape_module} from './src/function/strUnEscape.mjs';
-
-
-/**
- * String Unescape
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} type Configuration
- * @returns {string} Returns unescape string
- * @example
- *
- * strUnEscape('yahii&nbsp;&amp;&nbsp;adad&nbsp;&circ;ss')
- *=>"yahii & adad ^ss"
- */
-export const strUnEscape = strUnEscape_module;
 
 import {default as strUpper_module} from './src/function/strUpper.mjs';
 
@@ -1683,23 +1683,6 @@ import {default as toPairs_module} from './src/function/toPairs.mjs';
  */
 export const toPairs = toPairs_module;
 
-import {default as toString_module} from './src/function/toString.mjs';
-
-
-/**
- * To String
- *
- * @since 1.4.5
- * @category String
- * @param {any=} value Value you to convert in double
- * @returns {string} Return in double.
- * @example
- *
- * toString(1)
- *=> '1'
- */
-export const toString = toString_module;
-
 import {default as trim_module} from './src/function/trim.mjs';
 
 
@@ -1717,6 +1700,23 @@ import {default as trim_module} from './src/function/trim.mjs';
  *=> 'The fish is goad   with Goat-1ss'
  */
 export const trim = trim_module;
+
+import {default as toString_module} from './src/function/toString.mjs';
+
+
+/**
+ * To String
+ *
+ * @since 1.4.5
+ * @category String
+ * @param {any=} value Value you to convert in double
+ * @returns {string} Return in double.
+ * @example
+ *
+ * toString(1)
+ *=> '1'
+ */
+export const toString = toString_module;
 
 import {default as trimEnd_module} from './src/function/trimEnd.mjs';
 
@@ -1736,23 +1736,6 @@ import {default as trimEnd_module} from './src/function/trimEnd.mjs';
  */
 export const trimEnd = trimEnd_module;
 
-import {default as union_module} from './src/function/union.mjs';
-
-
-/**
- * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
- *
- * @since 1.4.7
- * @category Collection
- * @param {...any?} arg First number
- * @returns {any[]} Returns true or false.
- * @example
- *
- * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
- * // => [1, 2, 3, 4, 7, 5, 6, 8]
- */
-export const union = union_module;
-
 import {default as trimStart_module} from './src/function/trimStart.mjs';
 
 
@@ -1770,6 +1753,23 @@ import {default as trimStart_module} from './src/function/trimStart.mjs';
  *=> 'The fish is goad   with Goat-1ss '
  */
 export const trimStart = trimStart_module;
+
+import {default as union_module} from './src/function/union.mjs';
+
+
+/**
+ * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
+ *
+ * @since 1.4.7
+ * @category Collection
+ * @param {...any?} arg First number
+ * @returns {any[]} Returns true or false.
+ * @example
+ *
+ * union([1,2,3,4,7],[1,2,3,4,5,6,7,8])
+ * // => [1, 2, 3, 4, 7, 5, 6, 8]
+ */
+export const union = union_module;
 
 import {default as unique_module} from './src/function/unique.mjs';
 
