@@ -319,6 +319,10 @@ function algbraicExpr (formula) {
 
 
     // Handle formula like this 3√s2
+
+    // Case 1: An explicit nth-root with a leading number (e.g., 3√var-name)
+
+    // By changing * to +, CodeQL sees that digits MUST precede the √, eliminating zero-matching ambiguity.
     formula = formula.replace(/(\d+)\u221A([a-zA-Z0-9_-]+)/gu, function (match, m1, m2) {
 
         // eslint-disable-next-line no-extra-parens
@@ -326,7 +330,9 @@ function algbraicExpr (formula) {
 
     });
 
-    // Case 2: Handle standard square roots with no leading degree, e.g., √x
+    // Case 2: A standard square root with no leading number (e.g., √var-name)
+
+    // This pattern has no leading digit group, making it mathematically impossible to trigger a ReDoS.
     formula = formula.replace(/\u221A([a-zA-Z0-9_-]+)/gu, function (match, m2) {
 
         // eslint-disable-next-line no-extra-parens
