@@ -319,24 +319,41 @@ function algbraicExpr (formula) {
 
 
     // Handle formula like this 3√s2
+    while (formula.includes("\u221A")) {
 
-    // Case 1: nth-root with a leading number (e.g., 3√var-name)
+        const rootIndex = formula.indexOf("\u221A");
 
-    // The variable block is strictly structured to avoid overlapping matches
-    formula = formula.replace(/(\d+)\u221A([a-zA-Z][a-zA-Z0-9_-]*|\d+)/gu, function (match, m1, m2) {
+        // 1. Scan left to extract the root power/degree digits
+        let leftIndex = rootIndex - one;
 
+        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
+
+            leftIndex-=one;
+
+        }
+        const m1 = formula.slice(leftIndex + one, rootIndex);
+        const power = m1 === ""
+            ? two
+            : Number(m1);
+
+        // 2. Scan right to extract the alphanumeric/dash variable name
+        let rightIndex = rootIndex + one;
+
+        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
+
+            rightIndex+=one;
+
+        }
+        const m2 = formula.slice(rootIndex + one, rightIndex);
+
+        // 3. Perform a safe literal string replacement
+        const targetText = m1 + "\u221A" + m2;
         // eslint-disable-next-line no-extra-parens
-        return "(" + m2 + "**" + (one / Number(m1)) + ")";
+        const replacementText = "(" + m2 + "**" + (one / power) + ")";
 
-    });
+        formula = formula.replace(targetText, replacementText);
 
-    // Case 2: Standard square root with no leading number (e.g., √var-name)
-    formula = formula.replace(/\u221A([a-zA-Z][a-zA-Z0-9_-]*|\d+)/gu, function (match, m2) {
-
-        // eslint-disable-next-line no-extra-parens
-        return "(" + m2 + "**" + (one / two) + ")";
-
-    });
+    }
 
 
     // Handle formula like this 3x

@@ -102,6 +102,28 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
  */
 export const arrayRepeat = arrayRepeat_module;
 
+import {default as arraySlice_module} from './src/function/arraySlice.mjs';
+
+
+/**
+ * To return the value selected either start or start to end index
+ *
+ * @since 1.3.1
+ * @category Array
+ * @param {any} objectValue Array
+ * @param {number=} min Minumum of 2
+ * @param {number=} max Maximum base on array count
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * arraySlice([1,2],1)
+ * // => [2]
+ *
+ * arraySlice([1,2,3,4],2,4)
+ * // => [3, 4]
+ */
+export const arraySlice = arraySlice_module;
+
 import {default as arraySum_module} from './src/function/arraySum.mjs';
 
 
@@ -141,45 +163,6 @@ import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
  */
 export const asyncReplace = asyncReplace_module;
 
-import {default as arraySlice_module} from './src/function/arraySlice.mjs';
-
-
-/**
- * To return the value selected either start or start to end index
- *
- * @since 1.3.1
- * @category Array
- * @param {any} objectValue Array
- * @param {number=} min Minumum of 2
- * @param {number=} max Maximum base on array count
- * @returns {any[]} Returns the total.
- * @example
- *
- * arraySlice([1,2],1)
- * // => [2]
- *
- * arraySlice([1,2,3,4],2,4)
- * // => [3, 4]
- */
-export const arraySlice = arraySlice_module;
-
-import {default as clone_module} from './src/function/clone.mjs';
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-export const clone = clone_module;
-
 import {default as calculate_module} from './src/function/calculate.mjs';
 
 
@@ -199,6 +182,41 @@ import {default as calculate_module} from './src/function/calculate.mjs';
  *=> 2
  */
 export const calculate = calculate_module;
+
+import {default as clone_module} from './src/function/clone.mjs';
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+export const clone = clone_module;
+
+import {default as curry_module} from './src/function/curry.mjs';
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+export const curry = curry_module;
 
 import {default as count_module} from './src/function/count.mjs';
 
@@ -221,23 +239,23 @@ import {default as count_module} from './src/function/count.mjs';
  */
 export const count = count_module;
 
-import {default as curry_module} from './src/function/curry.mjs';
+import {default as dec_module} from './src/function/dec.mjs';
 
 
 /**
- * Create your own curry for your onw function
+ * Decrement value
  *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
  * @example
  *
- * asd = curry((test) =>{})
- * // => (test) =>{}
+ * dec(1)
+ *=>0
  */
-export const curry = curry_module;
+export const dec = dec_module;
 
 import {default as defaultTo_module} from './src/function/defaultTo.mjs';
 
@@ -256,24 +274,6 @@ import {default as defaultTo_module} from './src/function/defaultTo.mjs';
  * // => 2
  */
 export const defaultTo = defaultTo_module;
-
-import {default as dec_module} from './src/function/dec.mjs';
-
-
-/**
- * Decrement value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * dec(1)
- *=>0
- */
-export const dec = dec_module;
 
 import {default as divide_module} from './src/function/divide.mjs';
 
@@ -837,6 +837,24 @@ import {default as limit_module} from './src/function/limit.mjs';
  */
 export const limit = limit_module;
 
+import {default as lt_module} from './src/function/lt.mjs';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
+
 import {default as lte_module} from './src/function/lte.mjs';
 
 
@@ -891,24 +909,6 @@ import {default as mapGetData_module} from './src/function/mapGetData.mjs';
  *=>[1]
  */
 export const mapGetData = mapGetData_module;
-
-import {default as lt_module} from './src/function/lt.mjs';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
 
@@ -1055,24 +1055,6 @@ import {default as once_module} from './src/function/once.mjs';
  */
 export const once = once_module;
 
-import {default as parseString_module} from './src/function/parseString.mjs';
-
-
-/**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in.mjson format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in.mjson format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-export const parseString = parseString_module;
-
 import {default as parseJson_module} from './src/function/parseJson.mjs';
 
 
@@ -1090,6 +1072,24 @@ import {default as parseJson_module} from './src/function/parseJson.mjs';
  *=>{}
  */
 export const parseJson = parseJson_module;
+
+import {default as parseString_module} from './src/function/parseString.mjs';
+
+
+/**
+ * Parse from JSON object to String
+ *
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in.mjson format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in.mjson format.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+export const parseString = parseString_module;
 
 import {default as pipe_module} from './src/function/pipe.mjs';
 
@@ -1165,6 +1165,23 @@ import {default as reduce_module} from './src/function/reduce.mjs';
  */
 export const reduce = reduce_module;
 
+import {default as regexCountGroup_module} from './src/function/regexCountGroup.mjs';
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category Function
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+export const regexCountGroup = regexCountGroup_module;
+
 import {default as remove_module} from './src/function/remove.mjs';
 
 
@@ -1183,23 +1200,6 @@ import {default as remove_module} from './src/function/remove.mjs';
  *=>[2, 3]
  */
 export const remove = remove_module;
-
-import {default as regexCountGroup_module} from './src/function/regexCountGroup.mjs';
-
-
-/**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category Function
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-export const regexCountGroup = regexCountGroup_module;
 
 import {default as repeat_module} from './src/function/repeat.mjs';
 
@@ -1253,6 +1253,24 @@ import {default as roundDecimal_module} from './src/function/roundDecimal.mjs';
  *=>11.111
  */
 export const roundDecimal = roundDecimal_module;
+
+import {default as selectInData_module} from './src/function/selectInData.mjs';
+
+
+/**
+ * Selecting multiple search data using `getData` logic in the loop
+ *
+ * @since 1.4.8.1
+ * @category Collection
+ * @param {any} whereValue Collection or.mjson where `key` as suggested name of the key then `value` your target data, take a note on `value` it also supported nested key structure
+ * @param {any} objectValue The data you want to map
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * selectInData({"ss":"s"}, {"s":1})
+ *=> {"ss":1}
+ */
+export const selectInData = selectInData_module;
 
 import {default as setData_module} from './src/function/setData.mjs';
 
@@ -2205,22 +2223,4 @@ import {default as zip_module} from './src/function/zip.mjs';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
-
-import {default as selectInData_module} from './src/function/selectInData.mjs';
-
-
-/**
- * Selecting multiple search data using `getData` logic in the loop
- *
- * @since 1.4.8.1
- * @category Collection
- * @param {any} whereValue Collection or.mjson where `key` as suggested name of the key then `value` your target data, take a note on `value` it also supported nested key structure
- * @param {any} objectValue The data you want to map
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * selectInData({"ss":"s"}, {"s":1})
- *=> {"ss":1}
- */
-export const selectInData = selectInData_module;
 
