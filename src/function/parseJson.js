@@ -129,7 +129,6 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
             .replace(/(\\+[snt]{0})/g, "");
 
 
-
         if (firstFindAction === "char_obj") {
 
             last_str = '"'+escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
@@ -198,7 +197,8 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
             ].indexOf(currentAction) >= zero) {
 
                 slashValue = false;
-                const last_str_split = last_str.trim().replace(/\\"/g, "").split("");
+                const last_str_split = last_str.trim().replace(/\\"/g, "")
+                    .split("");
                 const countQoute = filter(function (value) {
 
                     return value === '"';
@@ -269,7 +269,7 @@ function getStructVal (ob_str, ob_type) {
 
         if (isOpen) {
 
-            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+1) );
+            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+one));
 
             let str_append_last = "";
 

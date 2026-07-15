@@ -13,6 +13,23 @@ import {default as ___module} from './src/function/__.mjs';
  */
 export const __ = ___module;
 
+import {default as allValid_module} from './src/function/allValid.mjs';
+
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+export const allValid = allValid_module;
+
 import {default as add_module} from './src/function/add.mjs';
 
 
@@ -30,6 +47,23 @@ import {default as add_module} from './src/function/add.mjs';
  * // => 2
  */
 export const add = add_module;
+
+import {default as arrayConcat_module} from './src/function/arrayConcat.mjs';
+
+
+/**
+ * Array Concat
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {...any?} arg Multiple arguments of array that you want to concat
+ * @returns {any[]} Returns the array.
+ * @example
+ *
+ * arrayConcat([1], 2)
+ * // => [1,2]
+ */
+export const arrayConcat = arrayConcat_module;
 
 import {default as append_module} from './src/function/append.mjs';
 
@@ -50,40 +84,6 @@ import {default as append_module} from './src/function/append.mjs';
  */
 export const append = append_module;
 
-import {default as arrayConcat_module} from './src/function/arrayConcat.mjs';
-
-
-/**
- * Array Concat
- *
- * @since 1.0.1
- * @category Array
- * @param {...any?} arg Multiple arguments of array that you want to concat
- * @returns {any[]} Returns the array.
- * @example
- *
- * arrayConcat([1], 2)
- * // => [1,2]
- */
-export const arrayConcat = arrayConcat_module;
-
-import {default as allValid_module} from './src/function/allValid.mjs';
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-export const allValid = allValid_module;
-
 import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
 
 
@@ -101,26 +101,6 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
  *=>['s','s']
  */
 export const arrayRepeat = arrayRepeat_module;
-
-import {default as arraySum_module} from './src/function/arraySum.mjs';
-
-
-/**
- * Array sum of value
- *
- * @since 1.0.1
- * @category Math
- * @param {number[]} arrayObject Array of number
- * @param {number=} precision decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- * arraySum([1,2])
- * // => 3
- */
-export const arraySum = arraySum_module;
 
 import {default as arraySlice_module} from './src/function/arraySlice.mjs';
 
@@ -144,6 +124,26 @@ import {default as arraySlice_module} from './src/function/arraySlice.mjs';
  */
 export const arraySlice = arraySlice_module;
 
+import {default as arraySum_module} from './src/function/arraySum.mjs';
+
+
+/**
+ * Array sum of value
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number[]} arrayObject Array of number
+ * @param {number=} precision decimal point and default value is 0
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ * arraySum([1,2])
+ * // => 3
+ */
+export const arraySum = arraySum_module;
+
 import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
 
 
@@ -162,6 +162,23 @@ import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
  * // => Promise{<fulfilled>: 'a@d'}
  */
 export const asyncReplace = asyncReplace_module;
+
+import {default as clone_module} from './src/function/clone.mjs';
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+export const clone = clone_module;
 
 import {default as calculate_module} from './src/function/calculate.mjs';
 
@@ -203,23 +220,6 @@ import {default as count_module} from './src/function/count.mjs';
  * // => 2
  */
 export const count = count_module;
-
-import {default as clone_module} from './src/function/clone.mjs';
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-export const clone = clone_module;
 
 import {default as curry_module} from './src/function/curry.mjs';
 
@@ -563,23 +563,6 @@ import {default as gte_module} from './src/function/gte.mjs';
  */
 export const gte = gte_module;
 
-import {default as has_module} from './src/function/has.mjs';
-
-
-/**
- * Check if object has value or null or undefined
- *
- * @since 1.0.1
- * @category Predicate
- * @param {...any?} args Either JSON or Array
- * @returns {boolean} Returns true or false.
- * @example
- *
- * has({'as':1}, 'as')
- * // => true
- */
-export const has = has_module;
-
 import {default as ifElse_module} from './src/function/ifElse.mjs';
 
 
@@ -598,6 +581,23 @@ import {default as ifElse_module} from './src/function/ifElse.mjs';
  * // => 1
  */
 export const ifElse = ifElse_module;
+
+import {default as has_module} from './src/function/has.mjs';
+
+
+/**
+ * Check if object has value or null or undefined
+ *
+ * @since 1.0.1
+ * @category Predicate
+ * @param {...any?} args Either JSON or Array
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * has({'as':1}, 'as')
+ * // => true
+ */
+export const has = has_module;
 
 import {default as inc_module} from './src/function/inc.mjs';
 
@@ -837,24 +837,6 @@ import {default as limit_module} from './src/function/limit.mjs';
  */
 export const limit = limit_module;
 
-import {default as lte_module} from './src/function/lte.mjs';
-
-
-/**
- * To check if the two arguments are less than to equal
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lte(1, 2)
- * // => true
- */
-export const lte = lte_module;
-
 import {default as map_module} from './src/function/map.mjs';
 
 
@@ -873,30 +855,11 @@ import {default as map_module} from './src/function/map.mjs';
  */
 export const map = map_module;
 
-import {default as mapGetData_module} from './src/function/mapGetData.mjs';
+import {default as lte_module} from './src/function/lte.mjs';
 
 
 /**
- * A Function to map the data either an array or an object using getData function.
- *
- * @since 1.3.1
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
- * @example
- *
- * mapGetData("Asd", [{"Asd":1}])
- *=>[1]
- */
-export const mapGetData = mapGetData_module;
-
-import {default as lt_module} from './src/function/lt.mjs';
-
-
-/**
- * To check if the two arguments are less
+ * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
  * @category Predicate
@@ -905,10 +868,10 @@ import {default as lt_module} from './src/function/lt.mjs';
  * @returns {boolean|any} Returns true or false.
  * @example
  *
- * lt(1, 2)
+ * lte(1, 2)
  * // => true
  */
-export const lt = lt_module;
+export const lte = lte_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
 
@@ -929,6 +892,25 @@ import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
  */
 export const mergeInWhere = mergeInWhere_module;
 
+import {default as mapGetData_module} from './src/function/mapGetData.mjs';
+
+
+/**
+ * A Function to map the data either an array or an object using getData function.
+ *
+ * @since 1.3.1
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
+ * @example
+ *
+ * mapGetData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+export const mapGetData = mapGetData_module;
+
 import {default as mergeWithKey_module} from './src/function/mergeWithKey.mjs';
 
 
@@ -946,6 +928,24 @@ import {default as mergeWithKey_module} from './src/function/mergeWithKey.mjs';
  *=> {"s":1,"ss":1}
  */
 export const mergeWithKey = mergeWithKey_module;
+
+import {default as lt_module} from './src/function/lt.mjs';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as multiply_module} from './src/function/multiply.mjs';
 
@@ -1038,23 +1038,6 @@ import {default as onWait_module} from './src/function/onWait.mjs';
  */
 export const onWait = onWait_module;
 
-import {default as once_module} from './src/function/once.mjs';
-
-
-/**
- * Check if data was executed once
- *
- * @since 1.4.9
- * @category Logic
- * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
- * @returns {any} Returns filled value from its index
- * @example
- *
- * once('as','as2',{'as':1})
- * // => 1
- */
-export const once = once_module;
-
 import {default as parseJson_module} from './src/function/parseJson.mjs';
 
 
@@ -1072,6 +1055,23 @@ import {default as parseJson_module} from './src/function/parseJson.mjs';
  *=>{}
  */
 export const parseJson = parseJson_module;
+
+import {default as once_module} from './src/function/once.mjs';
+
+
+/**
+ * Check if data was executed once
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * once('as','as2',{'as':1})
+ * // => 1
+ */
+export const once = once_module;
 
 import {default as parseString_module} from './src/function/parseString.mjs';
 
@@ -1146,6 +1146,23 @@ import {default as range_module} from './src/function/range.mjs';
  */
 export const range = range_module;
 
+import {default as regexCountGroup_module} from './src/function/regexCountGroup.mjs';
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category Function
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+export const regexCountGroup = regexCountGroup_module;
+
 import {default as reduce_module} from './src/function/reduce.mjs';
 
 
@@ -1164,23 +1181,6 @@ import {default as reduce_module} from './src/function/reduce.mjs';
  * // => 5
  */
 export const reduce = reduce_module;
-
-import {default as regexCountGroup_module} from './src/function/regexCountGroup.mjs';
-
-
-/**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category Function
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-export const regexCountGroup = regexCountGroup_module;
 
 import {default as remove_module} from './src/function/remove.mjs';
 
@@ -1309,42 +1309,6 @@ import {default as shuffle_module} from './src/function/shuffle.mjs';
  */
 export const shuffle = shuffle_module;
 
-import {default as someValid_module} from './src/function/someValid.mjs';
-
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-export const someValid = someValid_module;
-
-import {default as sort_module} from './src/function/sort.mjs';
-
-
-/**
- * Sort array
- *
- * @since 1.0.1
- * @category Array
- * @param {any[]} objectValue List of array you want to sort
- * @param {boolean=} order True for ascend then false for descend
- * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
- * @returns {any[]} Returns the total.
- * @example
- *
- * sort([2,3,1])
- *=>[1,2,3]
- */
-export const sort = sort_module;
-
 import {default as sortBy_module} from './src/function/sortBy.mjs';
 
 
@@ -1363,6 +1327,23 @@ import {default as sortBy_module} from './src/function/sortBy.mjs';
  */
 export const sortBy = sortBy_module;
 
+import {default as someValid_module} from './src/function/someValid.mjs';
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+export const someValid = someValid_module;
+
 import {default as strCamel_module} from './src/function/strCamel.mjs';
 
 
@@ -1379,26 +1360,6 @@ import {default as strCamel_module} from './src/function/strCamel.mjs';
  *=> 'theFishIsGoadWithGoat1ss'
  */
 export const strCamel = strCamel_module;
-
-import {default as strCapitalize_module} from './src/function/strCapitalize.mjs';
-
-
-/**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * strCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * strCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-export const strCapitalize = strCapitalize_module;
 
 import {default as strEscape_module} from './src/function/strEscape.mjs';
 
@@ -1434,6 +1395,26 @@ import {default as strKebab_module} from './src/function/strKebab.mjs';
  *=> 'the-fish-is-goad-with-goat-1ss'
  */
 export const strKebab = strKebab_module;
+
+import {default as strCapitalize_module} from './src/function/strCapitalize.mjs';
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * strCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * strCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+export const strCapitalize = strCapitalize_module;
 
 import {default as strLower_module} from './src/function/strLower.mjs';
 
@@ -1560,24 +1541,6 @@ import {default as swap_module} from './src/function/swap.mjs';
  */
 export const swap = swap_module;
 
-import {default as take_module} from './src/function/take.mjs';
-
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Array
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns choice index value in list.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-export const take = take_module;
-
 import {default as templates_module} from './src/function/templates.mjs';
 
 
@@ -1596,6 +1559,24 @@ import {default as templates_module} from './src/function/templates.mjs';
  *=>'11'
  */
 export const templates = templates_module;
+
+import {default as take_module} from './src/function/take.mjs';
+
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Array
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns choice index value in list.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+export const take = take_module;
 
 import {default as toArray_module} from './src/function/toArray.mjs';
 
@@ -2224,4 +2205,23 @@ import {default as zip_module} from './src/function/zip.mjs';
  * // => [[1,2,3]]
  */
 export const zip = zip_module;
+
+import {default as sort_module} from './src/function/sort.mjs';
+
+
+/**
+ * Sort array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any[]} objectValue List of array you want to sort
+ * @param {boolean=} order True for ascend then false for descend
+ * @param {string=} type Callback function or sort type [any, lowercase, uppercase] default `any`
+ * @returns {any[]} Returns the total.
+ * @example
+ *
+ * sort([2,3,1])
+ *=>[1,2,3]
+ */
+export const sort = sort_module;
 

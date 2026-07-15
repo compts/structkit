@@ -1109,19 +1109,6 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1214,6 +1201,19 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 function range (maxValue, minValue, step) {
 
     var incrementValue=has(step)
@@ -1593,46 +1593,6 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
-function divide (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) / Number(bb);    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-
-function multiply (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) * Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-
-function subtract (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) - Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-
 function clone (objectValue) {
 
     if (indexOfExist(getTypeofInternal(objectValue), [
@@ -1644,9 +1604,7 @@ function clone (objectValue) {
         "map"
     ])) {
 
-        var variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
+        var variable=empty(objectValue);        each(objectValue, function (value, key) {
 
             variable = append(variable, value, key);
 
@@ -1669,316 +1627,8 @@ function clone (objectValue) {
 
 }
 
-
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
-
-}
-
-var operationType = [
-    [
-        "^",
-        "**"
-    ],
-    [
-        "x",
-        "*",
-        "/"
-    ],
-    [
-        "+",
-        "-"
-    ]
-];
-
-
-function calculate (formula, args) {
-
-    return curryArg(function (rawFormula, rawArgs) {
-
-        rawFormula = algbraicExpr(rawFormula);
-
-        if (getTypeof(rawArgs) === "json") {
-
-            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
-
-            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
-
-                return rawArgs[m1];
-
-            });
-
-        }
-
-        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
-
-            return init_group(m1);
-
-        });
-
-        return Number(init_group(strFormula));
-
-    }, [
-        formula,
-        args
-    ]);
-
-}
-
-
-function init_group (formula) {
-
-    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
-    var matches = formula.match(regexpNumber);
-
-    if (matches[zero] === "-") {
-
-        matches.splice(zero, two, "-"+matches[one]);
-
-    }
-
-    var flattenOps = flatten(operationType);
-
-    for (var ii = one; ii< matches.length; ii +=one) {
-
-        if (has(matches, ii+one)) {
-
-            if (indexOfExist(matches[ii], flattenOps)) {
-
-                if (matches[ii+one] === "-") {
-
-                    matches.splice(ii+one, two, "-"+matches[ii+two]);
-
-                }
-
-            }
-
-        }
-
-    }
-
-    if (count(matches) === one) {
-
-        return convert(matches[zero]);
-
-    }
-
-    if (count(matches) < three) {
-
-        throw new Error("Invalid formula");
-
-    }
-
-    return compute(matches, zero);
-
-}
-
-/**
- * Build computational format
- *
- * @since 1.4.9
- * @category Math
- * @param {string[]} formula The second number in an addition.
- * @param {number} priority The priority sequence
- * @returns {number} Returns the total.
- * @example
- *
- * compute("1+1")
- *=> 2
- */
-function compute (formula, priority) {
-
-    var counter = one;
-    var counterOne = zero;
-
-    var result = zero;
-    var execPriority = operationType[priority];
-    var formulaLen = Math.ceil(count(formula)/three);
-    var cloneFormula = clone(formula);
-
-    for (var ii = zero; ii< formulaLen; ii +=one) {
-
-        if (has(cloneFormula, counter+one) ===false) {
-
-            throw new Error("Invalid formula");
-
-        }
-
-        if (indexOfExist(cloneFormula[counter], execPriority)) {
-
-            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
-
-            cloneFormula.splice(counterOne*two, three, result);
-
-        } else {
-
-            counter += two;
-            counterOne +=one;
-
-        }
-
-    }
-
-    if (cloneFormula.length === one) {
-
-        return cloneFormula[zero];
-
-    }
-
-    return operationType.length-one === priority
-        ? zero
-        : compute(cloneFormula, priority+one);
-
-}
-
-
-function process (a1, operator, b1) {
-
-    switch (operator) {
-
-    case '+':
-        return add(Number(a1), Number(b1));
-    case '-':
-        return subtract(Number(a1), Number(b1));
-    case 'x':
-    case '*':
-        return multiply(Number(a1), Number(b1));
-    case '/':
-        return divide(Number(a1), Number(b1));
-    case '%':
-        return Number(a1) % Number(b1);
-    case '^':
-    case '**':
-        return Number(a1) ** Number(b1);
-    default:
-        break;
-
-    }
-    throw new Error("Invalid operator");
-
-}
-
-
-function convert (b1) {
-
-    if ((/^(-\d{1,})$/).test(b1)) {
-
-        return Number(b1);
-
-    }
-
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
-
-        return Number(b1.replace(/%/g, "")/ oneHundred);
-
-    }
-
-    if ((/^(\d{1,})!$/).test(b1)) {
-
-        var value = Number(b1.replace(/!/g, ""));
-
-        var inc = one;
-
-        for (var vv = one; vv <= value;) {
-
-            inc *= vv;
-            vv+=one;
-
-        }
-
-        return inc;
-
-    }
-
-    if ((/^|(\d{1,})|$/).test(b1)) {
-
-        return Math.abs(b1);
-
-    }
-
-    return b1;
-
-}
-
-
-function algbraicExpr (formula) {
-
-    // Handle formula like this 3√s2
-    while (formula.includes("\u221A")) {
-
-        var rootIndex = formula.indexOf("\u221A");
-
-        // 1. Scan left to extract the root power/degree digits
-        var leftIndex = rootIndex - one;
-
-        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
-
-            leftIndex-=one;
-
-        }
-        var m1 = formula.slice(leftIndex + one, rootIndex);
-        var power = m1 === ""
-            ? two
-            : Number(m1);
-
-        // 2. Scan right to extract the alphanumeric/dash variable name
-        var rightIndex = rootIndex + one;
-
-        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
-
-            rightIndex+=one;
-
-        }
-        var m2 = formula.slice(rootIndex + one, rightIndex);
-
-        // 3. Perform a safe literal string replacement
-        var targetText = m1 + "\u221A" + m2;
-        // eslint-disable-next-line no-extra-parens
-        var replacementText = "(" + m2 + "**" + (one / power) + ")";
-
-        formula = formula.replace(targetText, replacementText);
-
-    }
-
-    // Handle formula like this 3x
-    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
-
-    // Handle formula like this (1)(2)
-    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
-
-    // Handle formula like this 100-10%
-
-    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
-
-    return formula;
-
-}
-
-_stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+_stk.clone=clone;
+_stk.count=count;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -2028,7 +1678,19 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+function divide (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) / Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.divide=divide;
+_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2066,7 +1728,34 @@ _stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function fil
 }
 
 _stk.filter=filter;
-_stk.first=first;_stk.flatten=flatten;function inc (value, default_value) {
+_stk.first=first;function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+_stk.flatten=flatten;
+function inc (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2657,7 +2346,29 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getValue (objectValue) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
+
+    var optionValue = option||"default";    if (optionValue === "default") {
+
+        var defaultRandomValue=2;
+        var defaultSubstrValue=36;
+        var str_rand1=Math
+            .random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue)+Math.random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue);
+
+        return str_rand1;
+
+    }
+
+    return "";
+
+}
+
+_stk.getUniq=getUniq;
+function getValue (objectValue) {
 
     return getKeyVal(objectValue, "value");}
 
@@ -2707,28 +2418,6 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
-function getUniq (option) {
-
-    var optionValue = option||"default";    if (optionValue === "default") {
-
-        var defaultRandomValue=2;
-        var defaultSubstrValue=36;
-        var str_rand1=Math
-            .random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue)+Math.random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue);
-
-        return str_rand1;
-
-    }
-
-    return "";
-
-}
-
-_stk.getUniq=getUniq;
 function gte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2838,7 +2527,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;_stk.isEmpty=isEmpty;function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2863,7 +2552,7 @@ _stk.inc=inc;_stk.indexOf=indexOf;_stk.indexOfExist=indexOfExist;_stk.indexOfNot
 }
 
 _stk.insert=insert;
-_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -2936,6 +2625,18 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3095,19 +2796,19 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-function lt (value1, value2) {
+_stk.mergeWithKey=mergeWithKey;function multiply (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa < bb;    }, [
+        return Number(aa) * Number(bb);    }, [
         value1,
         value2
     ], two);
 
 }
 
-_stk.lt=lt;
-_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
+_stk.multiply=multiply;
+function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -3260,6 +2961,71 @@ ClassDelay.prototype.start = function () {
 };
 
 _stk.onDelay=onDelay;
+var defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};function onSequence (func, wait, option) {
+
+    var extend = varExtend(defaultOption, option);
+
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.returned = null;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    this.extend = varExtend(defaultOption, this.extend);
+    var valueWaited = this.wait || zero;
+    var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    main.interval = setInterval(function () {
+
+        main.returned = main.func();
+
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
+
+    }, valueWaited);
+
+};
+
+_stk.onSequence=onSequence;
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3330,71 +3096,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-var defaultOption = {
-
-    "autoStart": true,
-    "limitCounterClear": zero
-};function onSequence (func, wait, option) {
-
-    var extend = varExtend(defaultOption, option);
-
-    var sequence = new ClassSequence(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-
-function ClassSequence (extend, wait, func) {
-
-    this.interval = null;
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.returned = null;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-ClassSequence.prototype.start = function () {
-
-    this.extend = varExtend(defaultOption, this.extend);
-    var valueWaited = this.wait || zero;
-    var counter = zero;
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    main.interval = setInterval(function () {
-
-        main.returned = main.func();
-
-        counter += one;
-        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
-
-            clearInterval(main.interval);
-
-        }
-
-    }, valueWaited);
-
-};
-
-_stk.onSequence=onSequence;
 function once (func) {
 
     var reserve = null;    return curryArg(function (rawFunc) {
@@ -4751,7 +4452,8 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
             ].indexOf(currentAction) >= zero) {
 
                 slashValue = false;
-                var last_str_split = last_str.trim().replace(/\\"/g, "").split("");
+                var last_str_split = last_str.trim().replace(/\\"/g, "")
+                    .split("");
                 var countQoute = filter(function (value) {
 
                     return value === '"';
@@ -4807,7 +4509,7 @@ function getStructVal (ob_str, ob_type) {
 
         if (isOpen) {
 
-            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+1) );
+            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+one));
 
             var str_append_last = "";
 
@@ -5307,7 +5009,7 @@ _stk.range=range;function regexCountGroup (value) {
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.reduce=reduce;_stk.remove=remove;function repeat (value, valueRepetion) {
+_stk.remove=remove;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5661,7 +5363,19 @@ _stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
+_stk.reduce=reduce;function subtract (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) - Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.subtract=subtract;
+function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
@@ -6278,6 +5992,283 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
+var operationType = [
+    [
+        "^",
+        "**"
+    ],
+    [
+        "x",
+        "*",
+        "/"
+    ],
+    [
+        "+",
+        "-"
+    ]
+];function calculate (formula, args) {
+
+    return curryArg(function (rawFormula, rawArgs) {
+
+        rawFormula = algbraicExpr(rawFormula);
+
+        if (getTypeof(rawArgs) === "json") {
+
+            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
+
+            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
+
+                return rawArgs[m1];
+
+            });
+
+        }
+
+        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
+
+            return init_group(m1);
+
+        });
+
+        return Number(init_group(strFormula));
+
+    }, [
+        formula,
+        args
+    ]);
+
+}
+
+
+function init_group (formula) {
+
+    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
+    var matches = formula.match(regexpNumber);
+
+    if (matches[zero] === "-") {
+
+        matches.splice(zero, two, "-"+matches[one]);
+
+    }
+
+    var flattenOps = flatten(operationType);
+
+    for (var ii = one; ii< matches.length; ii +=one) {
+
+        if (has(matches, ii+one)) {
+
+            if (indexOfExist(matches[ii], flattenOps)) {
+
+                if (matches[ii+one] === "-") {
+
+                    matches.splice(ii+one, two, "-"+matches[ii+two]);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    if (count(matches) === one) {
+
+        return convert(matches[zero]);
+
+    }
+
+    if (count(matches) < three) {
+
+        throw new Error("Invalid formula");
+
+    }
+
+    return compute(matches, zero);
+
+}
+
+/**
+ * Build computational format
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string[]} formula The second number in an addition.
+ * @param {number} priority The priority sequence
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 2
+ */
+function compute (formula, priority) {
+
+    var counter = one;
+    var counterOne = zero;
+
+    var result = zero;
+    var execPriority = operationType[priority];
+    var formulaLen = Math.ceil(count(formula)/three);
+    var cloneFormula = clone(formula);
+
+    for (var ii = zero; ii< formulaLen; ii +=one) {
+
+        if (has(cloneFormula, counter+one) ===false) {
+
+            throw new Error("Invalid formula");
+
+        }
+
+        if (indexOfExist(cloneFormula[counter], execPriority)) {
+
+            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
+
+            cloneFormula.splice(counterOne*two, three, result);
+
+        } else {
+
+            counter += two;
+            counterOne +=one;
+
+        }
+
+    }
+
+    if (cloneFormula.length === one) {
+
+        return cloneFormula[zero];
+
+    }
+
+    return operationType.length-one === priority
+        ? zero
+        : compute(cloneFormula, priority+one);
+
+}
+
+
+function process (a1, operator, b1) {
+
+    switch (operator) {
+
+    case '+':
+        return add(Number(a1), Number(b1));
+    case '-':
+        return subtract(Number(a1), Number(b1));
+    case 'x':
+    case '*':
+        return multiply(Number(a1), Number(b1));
+    case '/':
+        return divide(Number(a1), Number(b1));
+    case '%':
+        return Number(a1) % Number(b1);
+    case '^':
+    case '**':
+        return Number(a1) ** Number(b1);
+    default:
+        break;
+
+    }
+    throw new Error("Invalid operator");
+
+}
+
+
+function convert (b1) {
+
+    if ((/^(-\d{1,})$/).test(b1)) {
+
+        return Number(b1);
+
+    }
+
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
+
+        return Number(b1.replace(/%/g, "")/ oneHundred);
+
+    }
+
+    if ((/^(\d{1,})!$/).test(b1)) {
+
+        var value = Number(b1.replace(/!/g, ""));
+
+        var inc = one;
+
+        for (var vv = one; vv <= value;) {
+
+            inc *= vv;
+            vv+=one;
+
+        }
+
+        return inc;
+
+    }
+
+    if ((/^|(\d{1,})|$/).test(b1)) {
+
+        return Math.abs(b1);
+
+    }
+
+    return b1;
+
+}
+
+
+function algbraicExpr (formula) {
+
+    // Handle formula like this 3√s2
+    while (formula.includes("\u221A")) {
+
+        var rootIndex = formula.indexOf("\u221A");
+
+        // 1. Scan left to extract the root power/degree digits
+        var leftIndex = rootIndex - one;
+
+        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
+
+            leftIndex-=one;
+
+        }
+        var m1 = formula.slice(leftIndex + one, rootIndex);
+        var power = m1 === ""
+            ? two
+            : Number(m1);
+
+        // 2. Scan right to extract the alphanumeric/dash variable name
+        var rightIndex = rootIndex + one;
+
+        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
+
+            rightIndex+=one;
+
+        }
+        var m2 = formula.slice(rootIndex + one, rightIndex);
+
+        // 3. Perform a safe literal string replacement
+        var targetText = m1 + "\u221A" + m2;
+        // eslint-disable-next-line no-extra-parens
+        var replacementText = "(" + m2 + "**" + (one / power) + ")";
+
+        formula = formula.replace(targetText, replacementText);
+
+    }
+
+    // Handle formula like this 3x
+    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
+
+    // Handle formula like this (1)(2)
+    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
+
+    // Handle formula like this 100-10%
+
+    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
+
+    return formula;
+
+}
+
+_stk.calculate=calculate;
 
 
  })(typeof window !== "undefined" ? window : this);
