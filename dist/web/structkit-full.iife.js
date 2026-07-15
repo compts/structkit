@@ -529,82 +529,6 @@ function getTypeofInternal (objectValue) {
 }
 
 /**
- * Append data for json and array
- *
- * @since 1.4.8
- * @category Any
- * @param {any} objectValue The data either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * baseAppend({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function baseAppend (objectValue, val, key) {
-
-    var typeofs=getTypeofInternal(objectValue);
-
-    if (typeofs === "json") {
-
-        objectValue[key]=val;
-
-    }
-    if (typeofs === "array") {
-
-        objectValue.push(val);
-
-    }
-
-    if (typeofs === "set") {
-
-        objectValue.add(val);
-
-    }
-
-    if (typeofs === "map") {
-
-        objectValue.set(key, val);
-
-    }
-
-    return objectValue;
-
-}
-
-/**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
-
-
-/**
  * Counting the lenght in array, json or string
  *
  * @since 1.0.1
@@ -1141,6 +1065,39 @@ GlobalEach.prototype.isContinue = function (value) {
 };
 
 /**
+ * Base reduce
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} func The data you want to reduce in function
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @returns {any} Returns the aggregrated.
+ * @example
+ *
+ * baseReduce((total,value)=>total+value, 2,[1,2])
+ * // => 5
+ */
+function baseReduce (func, defaultValue, listData) {
+
+    var that = this;
+
+    each(listData, function (av, ak, localGlobal) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak,
+            localGlobal
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+/**
  * Ge the empty value of specify argument type
  *
  * @since 1.0.1
@@ -1198,6 +1155,51 @@ function empty (value) {
     }
 
     return value;
+
+}
+
+/**
+ * Append data for json and array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any} objectValue The data either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseAppend({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function baseAppend (objectValue, val, key) {
+
+    var typeofs=getTypeofInternal(objectValue);
+
+    if (typeofs === "json") {
+
+        objectValue[key]=val;
+
+    }
+    if (typeofs === "array") {
+
+        objectValue.push(val);
+
+    }
+
+    if (typeofs === "set") {
+
+        objectValue.add(val);
+
+    }
+
+    if (typeofs === "map") {
+
+        objectValue.set(key, val);
+
+    }
+
+    return objectValue;
 
 }
 
@@ -1410,6 +1412,110 @@ function toArray (value) {
     return return_val;
 
 }
+
+/**
+ * Counting the true in list of array
+ *
+ * @since 1.4.8
+ * @category Any
+ * @param {any[]} objectValue The data is array
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * baseCountValidList([true,true])
+ * // => 2
+ */
+function baseCountValidList (objectValue) {
+
+    return baseReduce(function (total, value) {
+
+        var values = toArray(value);
+
+        total +=baseReduce(function (subtotal, subvalue) {
+
+            if (subvalue && getTypeofInternal(subvalue) === "boolean") {
+
+                return subtotal +one;
+
+            }
+
+            return subtotal;
+
+        }, zero, values);
+
+        return total;
+
+    }, zero, objectValue);
+
+}
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+function allValid () {
+
+    var arg=arguments;
+
+    var mapCount = baseReduce(function (total, value) {
+
+        total+= count(toArray(value));
+
+        return total;
+
+    }, zero, arg);
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) === mapCount;
+
+}
+
+_stk.allValid=allValid;
+
+
+/**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
 
 /**
  * To return the value selected either start or start to end index
@@ -1779,13 +1885,18 @@ function indexOfNotExist (value, arrayObject) {
  * @since 1.4.5
  * @category String
  * @param {any=} value Value you to convert in double
+ * @param {any=} option Additional options for conversion
  * @returns {string} Return in double.
  * @example
  *
  * toString(1)
  *=> '1'
  */
-function toString (value) {
+function toString (value, option) {
+
+    var defaultOption = varExtend({
+        "raw": false
+    }, option);
 
     var notInList = [
         "object",
@@ -1796,6 +1907,12 @@ function toString (value) {
     var gettypeof = getTypeof(value);
 
     if (has(value) && indexOfNotExist(gettypeof, notInList)) {
+
+        if (defaultOption.raw) {
+
+            return String.raw({"raw": [value]});
+
+        }
 
         return value.toString();
 
@@ -1993,39 +2110,6 @@ function roundDecimal (value, precision) {
 }
 
 /**
- * Base reduce
- *
- * @since 1.4.8
- * @category Core
- * @param {any} func The data you want to reduce in function
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @returns {any} Returns the aggregrated.
- * @example
- *
- * baseReduce((total,value)=>total+value, 2,[1,2])
- * // => 5
- */
-function baseReduce (func, defaultValue, listData) {
-
-    var that = this;
-
-    each(listData, function (av, ak, localGlobal) {
-
-        defaultValue = func.apply(that, [
-            defaultValue,
-            av,
-            ak,
-            localGlobal
-        ]);
-
-    });
-
-    return defaultValue;
-
-}
-
-/**
  * Array sum of value
  *
  * @since 1.0.1
@@ -2122,159 +2206,6 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    if (indexOfExist(getTypeofInternal(objectValue), [
-        "json",
-        "array",
-        "object",
-        "arguments",
-        "set",
-        "map"
-    ])) {
-
-        var variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
-
-            variable = append(variable, value, key);
-
-        });
-
-        return variable;
-
-    }
-
-    switch (getTypeofInternal(objectValue)) {
-
-    case 'date':
-        return new Date(objectValue.valueOf());
-    case 'uint16Array':
-    case 'uint8Array':
-        return objectValue.slice();
-    default: return objectValue;
-
-    }
-
-}
-
-_stk.clone=clone;
-
-_stk.count=count;
-
-
-/**
- * Create your own curry for your onw function
- *
- * @since 1.4.9
- * @category Function
- * @param {any=} fun Callback function
- * @param {number=} num Number of default arguments
- * @returns {any} Returns expected value from callback
- * @example
- *
- * asd = curry((test) =>{})
- * // => (test) =>{}
- */
-function curry (fun, num) {
-
-    // eslint-disable-next-line no-undefined
-    var argDummy = arrayRepeat(undefined, num || fun.length);
-
-    return curryArg(fun, argDummy, count(argDummy));
-
-}
-
-_stk.curry=curry;
-
-
-/**
- *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
- *
- * @since 1.4.87
- * @category Logic
- * @param {any} defaultValue Any first value type
- * @param {any=} value2 Any first value type
- * @returns {any} Returns true or false.
- * @example
- *
- * defaultTo(1,2)
- * // => 2
- */
-function defaultTo (defaultValue, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
-
-            return aa;
-
-        }
-        if (_has(bb) === false) {
-
-            return aa;
-
-        }
-
-        return bb;
-
-    }, [
-        defaultValue,
-        value2
-    ], two);
-
-}
-
-_stk.defaultTo=defaultTo;
-
-
-/**
- * Decrement value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * dec(1)
- *=>0
- */
-function dec (value, default_value) {
-
-    var return_val = value;
-    var inc_n = getTypeof(default_value) === "number"
-        ? default_value
-        : one;
-
-    if (getTypeof(return_val) === "number") {
-
-        return_val -= inc_n;
-
-        return return_val;
-
-    }
-
-    return zero;
-
-}
-
-_stk.dec=dec;
-
-
-/**
  * Divide logic in satisfying two argument
  *
  * @since 1.4.8
@@ -2299,13 +2230,6 @@ function divide (value1, value2) {
     ], two);
 
 }
-
-_stk.divide=divide;
-
-_stk.each=each;
-
-_stk.empty=empty;
-
 
 /**
  * Multiply logic in satisfying two argument
@@ -2356,6 +2280,54 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
+
+}
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
+
+        var variable=empty(objectValue);
+
+        each(objectValue, function (value, key) {
+
+            variable = append(variable, value, key);
+
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
 
 }
 
@@ -2739,6 +2711,116 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
+
+_stk.clone=clone;
+
+_stk.count=count;
+
+
+/**
+ * Create your own curry for your onw function
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {any=} fun Callback function
+ * @param {number=} num Number of default arguments
+ * @returns {any} Returns expected value from callback
+ * @example
+ *
+ * asd = curry((test) =>{})
+ * // => (test) =>{}
+ */
+function curry (fun, num) {
+
+    // eslint-disable-next-line no-undefined
+    var argDummy = arrayRepeat(undefined, num || fun.length);
+
+    return curryArg(fun, argDummy, count(argDummy));
+
+}
+
+_stk.curry=curry;
+
+
+/**
+ * Decrement value
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
+ * @example
+ *
+ * dec(1)
+ *=>0
+ */
+function dec (value, default_value) {
+
+    var return_val = value;
+    var inc_n = getTypeof(default_value) === "number"
+        ? default_value
+        : one;
+
+    if (getTypeof(return_val) === "number") {
+
+        return_val -= inc_n;
+
+        return return_val;
+
+    }
+
+    return zero;
+
+}
+
+_stk.dec=dec;
+
+
+/**
+ *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
+ *
+ * @since 1.4.87
+ * @category Logic
+ * @param {any} defaultValue Any first value type
+ * @param {any=} value2 Any first value type
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * defaultTo(1,2)
+ * // => 2
+ */
+function defaultTo (defaultValue, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
+
+            return aa;
+
+        }
+        if (_has(bb) === false) {
+
+            return aa;
+
+        }
+
+        return bb;
+
+    }, [
+        defaultValue,
+        value2
+    ], two);
+
+}
+
+_stk.defaultTo=defaultTo;
+
+_stk.divide=divide;
+
+_stk.each=each;
+
+_stk.empty=empty;
 
 _stk.equal=equal;
 
@@ -3551,42 +3633,6 @@ _stk.getData=getData;
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
-/**
- * Generate unique value id
- *
- * @since 1.0.1
- * @category String
- * @param {any=} option type unique id
- * @returns {string} Get Unique Key.
- * @example
- *
- * getUniq()
- * => dur82ht126uqgszn62j04a
- */
-function getUniq (option) {
-
-    var optionValue = option||"default";
-
-    if (optionValue === "default") {
-
-        var defaultRandomValue=2;
-        var defaultSubstrValue=36;
-        var str_rand1=Math
-            .random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue)+Math.random()
-            .toString(defaultSubstrValue)
-            .substring(defaultRandomValue);
-
-        return str_rand1;
-
-    }
-
-    return "";
-
-}
-
-_stk.getUniq=getUniq;
 
 
 /**
@@ -3608,35 +3654,6 @@ function getValue (objectValue) {
 }
 
 _stk.getValue=getValue;
-
-
-/**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
 
 
 /**
@@ -3687,6 +3704,71 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
+
+
+/**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+/**
+ * Generate unique value id
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any=} option type unique id
+ * @returns {string} Get Unique Key.
+ * @example
+ *
+ * getUniq()
+ * => dur82ht126uqgszn62j04a
+ */
+function getUniq (option) {
+
+    var optionValue = option||"default";
+
+    if (optionValue === "default") {
+
+        var defaultRandomValue=2;
+        var defaultSubstrValue=36;
+        var str_rand1=Math
+            .random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue)+Math.random()
+            .toString(defaultSubstrValue)
+            .substring(defaultRandomValue);
+
+        return str_rand1;
+
+    }
+
+    return "";
+
+}
+
+_stk.getUniq=getUniq;
 
 
 /**
@@ -3847,13 +3929,15 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.indexOf=indexOf;
-
 _stk.inc=inc;
+
+_stk.indexOf=indexOf;
 
 _stk.indexOfExist=indexOfExist;
 
 _stk.indexOfNotExist=indexOfNotExist;
+
+_stk.isEmpty=isEmpty;
 
 
 /**
@@ -3899,11 +3983,30 @@ _stk.insert=insert;
 
 _stk.isExact=isExact;
 
-_stk.isEmpty=isEmpty;
-
 _stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
+
+
+/**
+ * Get the last value of array or JSON
+ *
+ * @since 1.0.1
+ * @category Relation
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns last value of `objectValue`.
+ * @example
+ *
+ * last([1,2] )
+ *=>2
+ */
+function last (objectValue) {
+
+    return getKeyVal(objectValue, "last_index").value;
+
+}
+
+_stk.last=last;
 
 
 /**
@@ -4024,35 +4127,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 
 
 /**
@@ -4291,6 +4365,35 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 _stk.mergeWithKey=mergeWithKey;
 
@@ -4531,108 +4634,6 @@ ClassDelay.prototype.start = function () {
 
 _stk.onDelay=onDelay;
 
-
-var defaultOption = {
-
-    "autoStart": true,
-    "limitCounterClear": zero
-};
-
-/**
- * @typedef {Object} SequenceResult
- * @property {function(): void} cancel - Cancels the sequence
- * @property {function(): void} start - Starts the sequence
- */
-
-/**
- * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {SequenceResult} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var extend = varExtend(defaultOption, option);
-
-    var sequence = new ClassSequence(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-/**
- * On sequence class
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} extend The second number in an addition.
- * @param {any} wait timer for delay
- * @param {any} func The function to execute
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (extend, wait, func) {
-
-    this.interval = null;
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.returned = null;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-ClassSequence.prototype.start = function () {
-
-    this.extend = varExtend(defaultOption, this.extend);
-    var valueWaited = this.wait || zero;
-    var counter = zero;
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    main.interval = setInterval(function () {
-
-        main.returned = main.func();
-
-        counter += one;
-        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
-
-            clearInterval(main.interval);
-
-        }
-
-    }, valueWaited);
-
-};
-
-_stk.onSequence=onSequence;
-
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -4737,6 +4738,108 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+
+var defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};
+
+/**
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+
+/**
+ * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {SequenceResult} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var extend = varExtend(defaultOption, option);
+
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+/**
+ * On sequence class
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} extend The second number in an addition.
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.returned = null;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    this.extend = varExtend(defaultOption, this.extend);
+    var valueWaited = this.wait || zero;
+    var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    main.interval = setInterval(function () {
+
+        main.returned = main.func();
+
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
+
+    }, valueWaited);
+
+};
+
+_stk.onSequence=onSequence;
 
 
 /**
@@ -4856,27 +4959,6 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 }
 
 _stk.once=once;
-
-
-/**
- * Get the last value of array or JSON
- *
- * @since 1.0.1
- * @category Relation
- * @param {any} objectValue The data is array
- * @returns {any} Returns last value of `objectValue`.
- * @example
- *
- * last([1,2] )
- *=>2
- */
-function last (objectValue) {
-
-    return getKeyVal(objectValue, "last_index").value;
-
-}
-
-_stk.last=last;
 
 
 /* eslint-disable sort-keys */
@@ -6021,192 +6103,6 @@ function strUnEscape (value, type) {
 }
 
 /**
- * Parse from JSON object to String
- *
- * @since 1.4.86
- * @category
- * @param {any} value The Object that you want to convert to string in json format.
- * @param {any=} config Option you want to set in this function.
- * @returns {string} Returns the string in json format.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseString (value, config) {
-
-    var defaultConfig = varExtend({"ignoreFunction": true,
-        "isJson": false,
-        "throwError": false,
-        "unscapeEntity": false}, config);
-
-    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
-
-        if (defaultConfig.throwError) {
-
-            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
-
-        }
-
-        return '';
-
-    }
-
-    var data = parseStringCore(zero, defaultConfig, value);
-
-    if (defaultConfig.unscapeEntity) {
-
-        data = strUnEscape(data);
-
-    }
-
-    return data.toString();
-
-}
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-function escapeQuotesStr (str) {
-
-    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
-
-}
-
-/**
- * Parse String
- *
- * @since 1.0.1
- * @category Seq
- * @param {number} rawCount This will define deep was nested
- * @param {any} rawConfig The config by user
- * @param {any} rawValue The data that you want to covert to a string from json/array
- * @returns {string} Returns the total.
- * @example
- *
- * parseString({} )
- *=>'{}'
- */
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        var prepStr = "";
-
-        if (has(rawCount === zero
-            ?validTypeJson
-            :remove(validTypeJson, "object"), getTypeof(value))) {
-
-            var getTypeDetails = validTypeJson[getTypeof(value)];
-
-            var inc=zero;
-
-            each(value, function (ev, ek) {
-
-                var delimeter=inc<count(value)-one
-                    ?","
-                    :"";
-
-                if (getTypeDetails.isKey) {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
-
-                } else {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
-
-                }
-
-                inc += one;
-
-            });
-
-            return getTypeDetails.start+prepStr+getTypeDetails.end;
-
-        }
-
-        var parseValue = convertValue(value);
-
-        if (getTypeof(parseValue) === "string") {
-
-            return '"'+escapeQuotesStr(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "undefined") {
-
-            return '"undefined"';
-
-        }
-        if (getTypeof(parseValue) === "date") {
-
-            return '"'+toString(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "regexp") {
-
-            return '"new RegExp(' + value.source +','+ value.flags+')"';
-
-        }
-
-        if (getTypeof(parseValue) === "number") {
-
-            if (isNaN(parseValue)) {
-
-                return '"NaN"';
-
-            }
-
-            if (Infinity === parseValue) {
-
-                return '"Infinity"';
-
-            }
-
-            return value;
-
-        }
-
-        if (getTypeof(value) === "object") {
-
-            return '"'+value+'"';
-
-        }
-
-        if (getTypeof(parseValue) === "function") {
-
-            if (refConfig.ignoreFunction) {
-
-                return null;
-
-            }
-
-            return '"'+parseValue+'"';
-
-        }
-
-        return parseValue;
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
-
-}
-
-_stk.parseString=parseString;
-
-
-/**
  * String Substr
  *
  * @since 1.4.5
@@ -6309,35 +6205,19 @@ function parseJson (value, config) {
  *
  * @since 1.4.9
  * @category Collection
- * @param {any} str Object you want to convert to JSON string
+ * @param {any} lastStr Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example
  *
  * escapeQuotesJson("'" )
  *=>"\\'"
  */
-function escapeQuotesJson (str) {
+function escapeQuotesJson (lastStr) {
 
-    str = str.replace(/&quot;/g, "&bsol;&quot;");
+    var result = toString(lastStr, {"raw": true})
+        .replace(/(?<=.)(\\{0,}?["]{1}|["])/g, '\\"');
 
-    str= str.replace(/&apos;/g, "&bsol;&quot;");
-    var str_split = str.trim().split("");
-
-    each(str_split, function (value, key) {
-
-        if (key>zero && key<str_split.length) {
-
-            if (str_split[key] === '"') {
-
-                str_split[key] = '\\"';
-
-            }
-
-        }
-
-    });
-
-    return str_split.join("");
+    return result;
 
 }
 
@@ -6359,19 +6239,14 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 
     if (validValidation) {
 
-        var newLineSecCode = "##"+getUniq()+"##";
+        last_str = toString(last_str, {"raw": true})
+            .replace(/(\\+?[n]|[\n])/g, "\\n")
+            .replace(/(\\+?[s])/g, " ")
+            .replace(/(\\+[snt]{0})/g, "");
 
-        last_str = last_str.toString()
-            .replace(/\n/g, newLineSecCode)
-            .replace(/\\n/g, newLineSecCode)
-            .replace(/\s/g, " ")
-            .replace(/\t/g, "   ")
-            .replace(/\\s/g, " ")
-            .replace(/\\/g, "");
-        last_str = last_str.toString().replaceAll(newLineSecCode.toString(), "\\n");
         if (firstFindAction === "char_obj") {
 
-            last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
+            last_str = '"'+escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
 
         } else if (firstFindAction === "qoute") {
 
@@ -6402,13 +6277,14 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
  * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} remainStr Remaining string that is being validated
  * @returns {string} Return JSON string
  * @example
  *
  * validateBacklastHasChar("'" )
  *=>"\\'"
  */
-function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, remainStr) {
 
     var slashValue = (/[^\\]$/g).test(last_str.trim());
 
@@ -6430,11 +6306,26 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
             ].indexOf(currentAction) >= zero) {
 
                 slashValue = false;
-                var last_str_split = last_str.trim().split("");
+                var last_str_split = last_str.trim().replace(/\\"/g, "").split("");
+                var countQoute = filter(function (value) {
+
+                    return value === '"';
+
+                }, last_str_split);
 
                 if (last_str_split.length > zero) {
 
                     slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one] && strSubs(last_str.trim(), last_str_split.length-two) !=='\\"';
+
+                }
+
+                if (countQoute.length % two !== zero && slashValue) {
+
+                    if (remainStr !== "") {
+
+                        slashValue = false;
+
+                    }
 
                 }
 
@@ -6483,7 +6374,7 @@ function getStructVal (ob_str, ob_type) {
 
         if (isOpen) {
 
-            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction);
+            var slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+1) );
 
             var str_append_last = "";
 
@@ -6698,6 +6589,7 @@ function constrJson (ob_str) {
                 append_str += ",";
 
             }
+
             op_c +=one;
             append_str += vales;
 
@@ -6808,40 +6700,189 @@ _stk.parseJson=parseJson;
 
 
 /**
- * To create single random value from array
+ * Parse from JSON object to String
  *
- * @since 1.0.1
- * @category Array
- * @param {any} valueArray Array
- * @param {number} minValue Minimum value base on index
- * @param {number} maxValue  Max value base on index
- * @returns {string|number} Return string or number in array
+ * @since 1.4.86
+ * @category
+ * @param {any} value The Object that you want to convert to string in json format.
+ * @param {any=} config Option you want to set in this function.
+ * @returns {string} Returns the string in json format.
  * @example
  *
- * random([10,20,30],0,3 )
- *=>'[20]'
+ * parseString({} )
+ *=>'{}'
  */
-function random (valueArray, minValue, maxValue) {
+function parseString (value, config) {
 
-    var ran_min=has(minValue)
-        ?minValue
-        :zero;
-    var ran_max=has(maxValue)
-        ?maxValue+ran_min
-        :count(valueArray);
-    var math_random = Math.round(Math.random()*ran_max);
+    var defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "throwError": false,
+        "unscapeEntity": false}, config);
 
-    if (math_random< count(valueArray) && math_random >=zero) {
+    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
 
-        return toArray(valueArray[math_random]);
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
+
+        }
+
+        return '';
 
     }
 
-    return toArray(valueArray[math_random % count(valueArray)]);
+    var data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = strUnEscape(data);
+
+    }
+
+    return data.toString();
 
 }
 
-_stk.random=random;
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function escapeQuotesStr (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
+
+/**
+ * Parse String
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {number} rawCount This will define deep was nested
+ * @param {any} rawConfig The config by user
+ * @param {any} rawValue The data that you want to covert to a string from json/array
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * parseString({} )
+ *=>'{}'
+ */
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        var prepStr = "";
+
+        if (has(rawCount === zero
+            ?validTypeJson
+            :remove(validTypeJson, "object"), getTypeof(value))) {
+
+            var getTypeDetails = validTypeJson[getTypeof(value)];
+
+            var inc=zero;
+
+            each(value, function (ev, ek) {
+
+                var delimeter=inc<count(value)-one
+                    ?","
+                    :"";
+
+                if (getTypeDetails.isKey) {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
+
+                } else {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
+
+                }
+
+                inc += one;
+
+            });
+
+            return getTypeDetails.start+prepStr+getTypeDetails.end;
+
+        }
+
+        var parseValue = convertValue(value);
+
+        if (getTypeof(parseValue) === "string") {
+
+            return '"'+escapeQuotesStr(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "undefined") {
+
+            return '"undefined"';
+
+        }
+        if (getTypeof(parseValue) === "date") {
+
+            return '"'+toString(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "regexp") {
+
+            return '"new RegExp(' + value.source +','+ value.flags+')"';
+
+        }
+
+        if (getTypeof(parseValue) === "number") {
+
+            if (isNaN(parseValue)) {
+
+                return '"NaN"';
+
+            }
+
+            if (Infinity === parseValue) {
+
+                return '"Infinity"';
+
+            }
+
+            return value;
+
+        }
+
+        if (getTypeof(value) === "object") {
+
+            return '"'+value+'"';
+
+        }
+
+        if (getTypeof(parseValue) === "function") {
+
+            if (refConfig.ignoreFunction) {
+
+                return null;
+
+            }
+
+            return '"'+parseValue+'"';
+
+        }
+
+        return parseValue;
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+_stk.parseString=parseString;
 
 
 /**
@@ -6888,9 +6929,44 @@ function pipe () {
 
 _stk.pipe=pipe;
 
-_stk.range=range;
 
-_stk.reduce=reduce;
+/**
+ * To create single random value from array
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {any} valueArray Array
+ * @param {number} minValue Minimum value base on index
+ * @param {number} maxValue  Max value base on index
+ * @returns {string|number} Return string or number in array
+ * @example
+ *
+ * random([10,20,30],0,3 )
+ *=>'[20]'
+ */
+function random (valueArray, minValue, maxValue) {
+
+    var ran_min=has(minValue)
+        ?minValue
+        :zero;
+    var ran_max=has(maxValue)
+        ?maxValue+ran_min
+        :count(valueArray);
+    var math_random = Math.round(Math.random()*ran_max);
+
+    if (math_random< count(valueArray) && math_random >=zero) {
+
+        return toArray(valueArray[math_random]);
+
+    }
+
+    return toArray(valueArray[math_random % count(valueArray)]);
+
+}
+
+_stk.random=random;
+
+_stk.range=range;
 
 
 /**
@@ -6912,6 +6988,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.reduce=reduce;
 
 _stk.remove=remove;
 
@@ -7135,42 +7213,6 @@ function shuffle (objectValue) {
 
 _stk.shuffle=shuffle;
 
-
-/**
- * Counting the true in list of array
- *
- * @since 1.4.8
- * @category Any
- * @param {any[]} objectValue The data is array
- * @returns {any} Returns the total.
- * @example
- *
- * baseCountValidList([true,true])
- * // => 2
- */
-function baseCountValidList (objectValue) {
-
-    return baseReduce(function (total, value) {
-
-        var values = toArray(value);
-
-        total +=baseReduce(function (subtotal, subvalue) {
-
-            if (subvalue && getTypeofInternal(subvalue) === "boolean") {
-
-                return subtotal +one;
-
-            }
-
-            return subtotal;
-
-        }, zero, values);
-
-        return total;
-
-    }, zero, objectValue);
-
-}
 
 /**
  * In array, you need to check all value atleast one true
@@ -7681,8 +7723,6 @@ function take (value, valueList) {
 
 _stk.take=take;
 
-_stk.toArray=toArray;
-
 
 /**
  * Template value
@@ -7691,7 +7731,7 @@ _stk.toArray=toArray;
  * @category String
  * @param {string} templateString Template string
  * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
+ * @param {any=} option Control of how are interpolated.
  * @returns {string} Returns the total.
  * @example
  *
@@ -7912,6 +7952,8 @@ function syntaxCleanup (data, option) {
 }
 
 _stk.templates=templates;
+
+_stk.toArray=toArray;
 
 _stk.toBoolean=toBoolean;
 
@@ -8624,43 +8666,6 @@ function zip () {
 }
 
 _stk.zip=zip;
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-function allValid () {
-
-    var arg=arguments;
-
-    var mapCount = baseReduce(function (total, value) {
-
-        total+= count(toArray(value));
-
-        return total;
-
-    }, zero, arg);
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) === mapCount;
-
-}
-
-_stk.allValid=allValid;
 
 
  })(typeof window !== "undefined" ? window : this);

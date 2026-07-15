@@ -10,9 +10,9 @@ import indexOfExist from './indexOfExist.mjs';
 
 import getTypeof from './getTypeof.mjs';
 
-import each from './each.mjs';
+import filter from './filter.mjs';
 
-import getUniq from './getUniq.mjs';
+import toString from './toString.mjs';
 
 const ObjOpen = {
     "[": {
@@ -91,35 +91,19 @@ function parseJson (value, config) {
  *
  * @since 1.4.9
  * @category Collection
- * @param {any} str Object you want to convert to JSON string
+ * @param {any} lastStr Object you want to convert to JSON string
  * @returns {string} Return JSON string
  * @example
  *
  * escapeQuotesJson("'" )
  *=>"\\'"
  */
-function escapeQuotesJson (str) {
+function escapeQuotesJson (lastStr) {
 
-    str = str.replace(/&quot;/g, "&bsol;&quot;");
+    const result = toString(lastStr, {"raw": true})
+        .replace(/(?<=.)(\\{0,}?["]{1}|["])/g, '\\"');
 
-    str= str.replace(/&apos;/g, "&bsol;&quot;");
-    const str_split = str.trim().split("");
-
-    each(str_split, function (value, key) {
-
-        if (key>zero && key<str_split.length) {
-
-            if (str_split[key] === '"') {
-
-                str_split[key] = '\\"';
-
-            }
-
-        }
-
-    });
-
-    return str_split.join("");
+    return result;
 
 }
 
@@ -141,19 +125,14 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
 
     if (validValidation) {
 
-        const newLineSecCode = "##"+getUniq()+"##";
+        last_str = toString(last_str, {"raw": true})
+            .replace(/(\\+?[n]|[\n])/g, "\\n")
+            .replace(/(\\+?[s])/g, " ")
+            .replace(/(\\+[snt]{0})/g, "");
 
-        last_str = last_str.toString()
-            .replace(/\n/g, newLineSecCode)
-            .replace(/\\n/g, newLineSecCode)
-            .replace(/\s/g, " ")
-            .replace(/\t/g, "   ")
-            .replace(/\\s/g, " ")
-            .replace(/\\/g, "");
-        last_str = last_str.toString().replaceAll(newLineSecCode.toString(), "\\n");
         if (firstFindAction === "char_obj") {
 
-            last_str = '"'+last_str.trim().replace(/['`"]$/g, '')+'"';
+            last_str = '"'+escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
 
         } else if (firstFindAction === "qoute") {
 
@@ -184,13 +163,14 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
  * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
  * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} remainStr Remaining string that is being validated
  * @returns {string} Return JSON string
  * @example
  *
  * validateBacklastHasChar("'" )
  *=>"\\'"
  */
-function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction) {
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, remainStr) {
 
     let slashValue = (/[^\\]$/g).test(last_str.trim());
 
@@ -212,11 +192,26 @@ function validateBacklastHasChar (last_str, firstFindAction, lastAction, current
             ].indexOf(currentAction) >= zero) {
 
                 slashValue = false;
-                const last_str_split = last_str.trim().split("");
+                const last_str_split = last_str.trim().replace(/\\"/g, "").split("");
+                const countQoute = filter(function (value) {
+
+                    return value === '"';
+
+                }, last_str_split);
 
                 if (last_str_split.length > zero) {
 
                     slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one] && strSubs(last_str.trim(), last_str_split.length-two) !=='\\"';
+
+                }
+
+                if (countQoute.length % two !== zero && slashValue) {
+
+                    if (remainStr !== "") {
+
+                        slashValue = false;
+
+                    }
 
                 }
 
@@ -265,7 +260,7 @@ function getStructVal (ob_str, ob_type) {
 
         if (isOpen) {
 
-            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction);
+            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+1) );
 
             let str_append_last = "";
 
@@ -480,6 +475,7 @@ function constrJson (ob_str) {
                 append_str += ",";
 
             }
+
             op_c +=one;
             append_str += vales;
 

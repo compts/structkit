@@ -21,7 +21,7 @@ const {one, two, zero} = require("../variable/defaultValue");
  * @category String
  * @param {string} templateString Template string
  * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
+ * @param {any=} option Control of how are interpolated.
  * @returns {string} Returns the total.
  * @example
  *

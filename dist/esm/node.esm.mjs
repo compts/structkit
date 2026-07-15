@@ -31,23 +31,6 @@ import {default as add_module} from './src/function/add.mjs';
  */
 export const add = add_module;
 
-import {default as allValid_module} from './src/function/allValid.mjs';
-
-
-/**
- * In array, you need to check all value is true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if all true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * allValid(true, false)
- * // => false
- */
-export const allValid = allValid_module;
-
 import {default as append_module} from './src/function/append.mjs';
 
 
@@ -84,6 +67,23 @@ import {default as arrayConcat_module} from './src/function/arrayConcat.mjs';
  */
 export const arrayConcat = arrayConcat_module;
 
+import {default as allValid_module} from './src/function/allValid.mjs';
+
+
+/**
+ * In array, you need to check all value is true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if all true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * allValid(true, false)
+ * // => false
+ */
+export const allValid = allValid_module;
+
 import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
 
 
@@ -101,6 +101,26 @@ import {default as arrayRepeat_module} from './src/function/arrayRepeat.mjs';
  *=>['s','s']
  */
 export const arrayRepeat = arrayRepeat_module;
+
+import {default as arraySum_module} from './src/function/arraySum.mjs';
+
+
+/**
+ * Array sum of value
+ *
+ * @since 1.0.1
+ * @category Math
+ * @param {number[]} arrayObject Array of number
+ * @param {number=} precision decimal point and default value is 0
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * arraySum([1,2], 2)
+ * // => 3.00
+ * arraySum([1,2])
+ * // => 3
+ */
+export const arraySum = arraySum_module;
 
 import {default as arraySlice_module} from './src/function/arraySlice.mjs';
 
@@ -123,26 +143,6 @@ import {default as arraySlice_module} from './src/function/arraySlice.mjs';
  * // => [3, 4]
  */
 export const arraySlice = arraySlice_module;
-
-import {default as arraySum_module} from './src/function/arraySum.mjs';
-
-
-/**
- * Array sum of value
- *
- * @since 1.0.1
- * @category Math
- * @param {number[]} arrayObject Array of number
- * @param {number=} precision decimal point and default value is 0
- * @returns {number} Returns the total.
- * @example
- *
- * arraySum([1,2], 2)
- * // => 3.00
- * arraySum([1,2])
- * // => 3
- */
-export const arraySum = arraySum_module;
 
 import {default as asyncReplace_module} from './src/function/asyncReplace.mjs';
 
@@ -183,23 +183,6 @@ import {default as calculate_module} from './src/function/calculate.mjs';
  */
 export const calculate = calculate_module;
 
-import {default as clone_module} from './src/function/clone.mjs';
-
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-export const clone = clone_module;
-
 import {default as count_module} from './src/function/count.mjs';
 
 
@@ -220,6 +203,23 @@ import {default as count_module} from './src/function/count.mjs';
  * // => 2
  */
 export const count = count_module;
+
+import {default as clone_module} from './src/function/clone.mjs';
+
+
+/**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+export const clone = clone_module;
 
 import {default as curry_module} from './src/function/curry.mjs';
 
@@ -399,6 +399,24 @@ import {default as flatten_module} from './src/function/flatten.mjs';
  */
 export const flatten = flatten_module;
 
+import {default as fromPairs_module} from './src/function/fromPairs.mjs';
+
+
+/**
+ * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any} value First number
+ * @param {number=} deepLimit First number
+ * @returns {any} Returns array
+ * @example
+ *
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
+ */
+export const fromPairs = fromPairs_module;
+
 import {default as getData_module} from './src/function/getData.mjs';
 
 
@@ -420,24 +438,6 @@ import {default as getData_module} from './src/function/getData.mjs';
  *=> {a: 2}
  */
 export const getData = getData_module;
-
-import {default as fromPairs_module} from './src/function/fromPairs.mjs';
-
-
-/**
- * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
- *
- * @since 1.4.87
- * @category Array
- * @param {any} value First number
- * @param {number=} deepLimit First number
- * @returns {any} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-export const fromPairs = fromPairs_module;
 
 import {default as getKey_module} from './src/function/getKey.mjs';
 
@@ -635,6 +635,24 @@ import {default as indexOf_module} from './src/function/indexOf.mjs';
  */
 export const indexOf = indexOf_module;
 
+import {default as indexOfExist_module} from './src/function/indexOfExist.mjs';
+
+
+/**
+ * Check index of array is Exist or not
+ *
+ * @since 1.3.1
+ * @category Predicate
+ * @param {any=} value Value for array lookup
+ * @param {any[]=} arrayObject Array
+ * @returns {boolean} Return boolean.
+ * @example
+ *
+ * indexOfExist(32, [312])
+ * // => false
+ */
+export const indexOfExist = indexOfExist_module;
+
 import {default as indexOfNotExist_module} from './src/function/indexOfNotExist.mjs';
 
 
@@ -670,24 +688,6 @@ import {default as insert_module} from './src/function/insert.mjs';
  * // => {A: 1, as: 1}
  */
 export const insert = insert_module;
-
-import {default as indexOfExist_module} from './src/function/indexOfExist.mjs';
-
-
-/**
- * Check index of array is Exist or not
- *
- * @since 1.3.1
- * @category Predicate
- * @param {any=} value Value for array lookup
- * @param {any[]=} arrayObject Array
- * @returns {boolean} Return boolean.
- * @example
- *
- * indexOfExist(32, [312])
- * // => false
- */
-export const indexOfExist = indexOfExist_module;
 
 import {default as isEmpty_module} from './src/function/isEmpty.mjs';
 
@@ -837,24 +837,6 @@ import {default as limit_module} from './src/function/limit.mjs';
  */
 export const limit = limit_module;
 
-import {default as lt_module} from './src/function/lt.mjs';
-
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-export const lt = lt_module;
-
 import {default as lte_module} from './src/function/lte.mjs';
 
 
@@ -909,6 +891,24 @@ import {default as mapGetData_module} from './src/function/mapGetData.mjs';
  *=>[1]
  */
 export const mapGetData = mapGetData_module;
+
+import {default as lt_module} from './src/function/lt.mjs';
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+export const lt = lt_module;
 
 import {default as mergeInWhere_module} from './src/function/mergeInWhere.mjs';
 
@@ -965,6 +965,23 @@ import {default as multiply_module} from './src/function/multiply.mjs';
  */
 export const multiply = multiply_module;
 
+import {default as not_module} from './src/function/not.mjs';
+
+
+/**
+ * Check if data was not equal to true and 1
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} func Any type , take a note that it also supported curry, then please check it properly use in our doc
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * not(false)
+ * // => true
+ */
+export const not = not_module;
+
 import {default as noteq_module} from './src/function/noteq.mjs';
 
 
@@ -982,23 +999,6 @@ import {default as noteq_module} from './src/function/noteq.mjs';
  * // => false
  */
 export const noteq = noteq_module;
-
-import {default as not_module} from './src/function/not.mjs';
-
-
-/**
- * Check if data was not equal to true and 1
- *
- * @since 1.4.9
- * @category Logic
- * @param {any} func Any type , take a note that it also supported curry, then please check it properly use in our doc
- * @returns {any} Returns filled value from its index
- * @example
- *
- * not(false)
- * // => true
- */
-export const not = not_module;
 
 import {default as onDelay_module} from './src/function/onDelay.mjs';
 
@@ -1020,23 +1020,6 @@ import {default as onSequence_module} from './src/function/onSequence.mjs';
  */
 export const onSequence = onSequence_module;
 
-import {default as once_module} from './src/function/once.mjs';
-
-
-/**
- * Check if data was executed once
- *
- * @since 1.4.9
- * @category Logic
- * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
- * @returns {any} Returns filled value from its index
- * @example
- *
- * once('as','as2',{'as':1})
- * // => 1
- */
-export const once = once_module;
-
 import {default as onWait_module} from './src/function/onWait.mjs';
 
 
@@ -1054,6 +1037,23 @@ import {default as onWait_module} from './src/function/onWait.mjs';
  *=>'11'
  */
 export const onWait = onWait_module;
+
+import {default as once_module} from './src/function/once.mjs';
+
+
+/**
+ * Check if data was executed once
+ *
+ * @since 1.4.9
+ * @category Logic
+ * @param {any} func Any value type, take a note that it also supported curry, then please check it properly use in our doc
+ * @returns {any} Returns filled value from its index
+ * @example
+ *
+ * once('as','as2',{'as':1})
+ * // => 1
+ */
+export const once = once_module;
 
 import {default as parseJson_module} from './src/function/parseJson.mjs';
 
@@ -1588,7 +1588,7 @@ import {default as templates_module} from './src/function/templates.mjs';
  * @category String
  * @param {string} templateString Template string
  * @param {any} data Parameter to replace
- * @param {any=} option The second number in an addition.
+ * @param {any=} option Control of how are interpolated.
  * @returns {string} Returns the total.
  * @example
  *
@@ -1692,6 +1692,7 @@ import {default as toString_module} from './src/function/toString.mjs';
  * @since 1.4.5
  * @category String
  * @param {any=} value Value you to convert in double
+ * @param {any=} option Additional options for conversion
  * @returns {string} Return in double.
  * @example
  *
