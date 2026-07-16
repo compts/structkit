@@ -3,7 +3,7 @@ JS/TS functional tool to simplify JS Developer
 
 ---
 # ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
-**Version 1.4.9-rc0 is a major rewrite with numerous breaking changes.**
+**Version 1.4.9-rc.0 is a major rewrite with numerous breaking changes.**
 
 Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_GUIDE.md) carefully before proceeding. The changes are substantial and will likely affect existing implementations.
 
@@ -82,7 +82,7 @@ test("1")
 In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-image]: https://img.shields.io/badge/structkit-1.4.9.rc0-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.9.rc.0-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function

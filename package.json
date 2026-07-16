@@ -1,6 +1,6 @@
 {
   "name": "structkit",
-  "version": "1.4.9-rc0",
+  "version": "1.4.9-rc.0",
   "description": "JS/TS functional tool to simplify JS Developer",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.mjs",

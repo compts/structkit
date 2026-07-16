@@ -1,0 +1,84 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - release
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      #- run: npm ci
+      - run: npm install
+      - run: npm run es_linter
+      - run: npm run test_esm
+      - run: npm run test_cjs
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+      #- run: npm ci
+      - run: npm install
+
+      - name: Validate semver
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
+            echo "::error::Invalid semver version: $VERSION"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Determine npm dist-tag
+        id: npm_tag
+        run: |
+          if [[ "${{ steps.version.outputs.version }}" == *"-rc"* ]]; then
+            echo "tag=rc" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to npm
+        run: npm publish --tag ${{ steps.npm_tag.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+
+      - name: Create git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "${{ steps.version.outputs.version }}" == *"-rc"* ]]; then
+            gh release create "v${{ steps.version.outputs.version }}" \
+              --prerelease \
+              --title "v${{ steps.version.outputs.version }}" \
+              --generate-notes
+          else
+            gh release create "v${{ steps.version.outputs.version }}" \
+              --title "v${{ steps.version.outputs.version }}" \
+              --generate-notes
+          fi
