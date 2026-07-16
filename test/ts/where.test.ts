@@ -1,5 +1,5 @@
 
-import {where ,lt} from "../../dist/esm/node.esm";
+import {where ,lt} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 const one = 1;
@@ -10,18 +10,18 @@ describe('TS: where method', function () {
 
 
         assert.deepStrictEqual(
-            where({"s1": 1,
-                "s2": 1}, {"s1": 1}),
+            where({"s1": 1}, {"s1": 1,
+                "s2": 1}),
             {"s1": 1,
                 "s2": 1}
         );
 
-        assert.deepStrictEqual(where([
+        assert.deepStrictEqual(where({"s1": 1}, [
             {"s1": 1,
                 "s2": 1},
             {"s1": 2,
                 "s2": 2}
-        ], {"s1": 1}), [
+        ]), [
             {"s1": 1,
                 "s2": 1}
         ]);
@@ -32,11 +32,11 @@ describe('TS: where method', function () {
     it('check if value is less', function () {
 
         assert.deepStrictEqual(where(
+            {"d": lt(one)},
             [
                 {"d": 1},
                 {"d": 2}
-            ],
-            {"d": lt(one)}
+            ]
         ), [
             {
                 "d": 2
@@ -47,12 +47,12 @@ describe('TS: where method', function () {
 
     it('check expected type', async function () {
        
-        expectType<any>(where([
+        expectType<any>(where({"s1": 1}, [
             {"s1": 1,
                 "s2": 1},
             {"s1": 2,
                 "s2": 2}
-        ], {"s1": 1}));
+        ]));
   
     });
 

@@ -1,5 +1,7 @@
 const map = require('./map');
 const range = require('./range');
+const curryArg = require("../core/curryArg");
+const {zero, one} = require("../variable/defaultValue");
 
 /**
  * Repeat value in array
@@ -7,7 +9,7 @@ const range = require('./range');
  * @since 1.4.7
  * @category Array
  * @param {any} value String you want to duplicate
- * @param {number} valueRepetion how many times you want to repeate
+ * @param {number=} valueRepetion how many times you want to repeate
  * @returns {any[]} Return in string or number.
  * @example
  *
@@ -16,14 +18,20 @@ const range = require('./range');
  */
 function arrayRepeat (value, valueRepetion) {
 
-    const emptyDefaultValue=0;
-    const nm_rpt=valueRepetion||emptyDefaultValue;
+    return curryArg(function (rawValue, rawValueRepetion) {
 
-    return map(range(nm_rpt), function () {
+        const nm_rpt=rawValueRepetion||zero;
 
-        return value;
+        return map(function () {
 
-    });
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
 
 }
 module.exports=arrayRepeat;

@@ -1,4 +1,4 @@
-import {reduce} from "../../dist/esm/node.esm";
+import {reduce} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
@@ -13,26 +13,26 @@ describe('TS: reduce method', function () {
 
     it('check reduce array sum', function () {
 
-        assert.deepStrictEqual(reduce(zero, [
-            one,
-            two
-        ], function (total, value) {
+        assert.deepStrictEqual(reduce(function (total: number, value: number) {
 
             return total+value;
 
-        }), three);
+        }, zero, [
+            one,
+            two
+        ]), three);
 
     });
     it('check expected type', function () {
        
-        expectType<number>(reduce(three, [
-            one,
-            two
-        ], function (total, value) {
+        expectType<number>(reduce(function (total: number, value: number) {
 
             return total-value;
 
-        }));
+        }, three, [
+            one,
+            two
+        ]));
   
       });
 

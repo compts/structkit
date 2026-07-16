@@ -1,28 +1,37 @@
 
 const count = require('./count');
-
+const curryArg = require("../core/curryArg");
 const {getIndexOf} = require('../core/getIndexOf');
+const {two} = require("../variable/defaultValue");
 
 /**
  * Index of array
  *
  * @since 1.0.1
- * @category Array
- * @param {any} objectValue Array
- * @param {any} value Value in array
+ * @category Logic
+ * @param {any=} value Value in array
+ * @param {any[]=} objectValue Array
  * @returns {number} Returns the index.
  * @example
  *
- * indexOf([1,2], 1)
+ * indexOf(1, [1,2])
  * // => 0
  */
-function indexOf (objectValue, value) {
+function indexOf (value, objectValue) {
 
-    const start = 0;
+    return curryArg(function (rawValue, rawObjectValue) {
 
-    const indexValue = getIndexOf(objectValue, value, start, count(objectValue), false);
+        const start = 0;
 
-    return indexValue;
+        const indexValue = getIndexOf(rawObjectValue, rawValue, start, count(rawObjectValue), false);
+
+        return indexValue;
+
+    }, [
+        value,
+        objectValue
+    ], two);
+
 
 }
 module.exports=indexOf;

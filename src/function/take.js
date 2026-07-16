@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {one, two, zero} = require("../core/defaultValue");
+const {one, two, zero} = require("../variable/defaultValue");
 const baseTake = require("../core/baseTake");
 
 
@@ -7,10 +7,10 @@ const baseTake = require("../core/baseTake");
  * Get the value from index zero until the last value
  *
  * @since 1.4.86
- * @category Math
+ * @category Array
  * @param {number} value First number, our first index will start at zero
  * @param {any[]|string} valueList Second number
- * @returns {any} Returns true or false.
+ * @returns {any} Returns choice index value in list.
  * @example
  *
  * take(1, [1])

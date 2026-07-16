@@ -1,7 +1,7 @@
-const stringLowerCase = require("./stringLowerCase");
+const strLower = require("./strLower");
 const getTypeof = require("./getTypeof");
 const indexOfExist = require("./indexOfExist");
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 /**
  * To extract string invalid boolean and convert to boolean
@@ -19,20 +19,20 @@ function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
-        return indexOfExist([
+        return indexOfExist(strLower(value), [
             'true',
             't',
             'yes',
             'y',
             'on',
             '1'
-        ], stringLowerCase(value));
+        ]);
 
     }
 
     if (getTypeof(value) === "number") {
 
-        return indexOfExist([one], value);
+        return indexOfExist(value, [one]);
 
     }
 

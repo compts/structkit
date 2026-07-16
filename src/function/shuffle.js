@@ -3,10 +3,10 @@ const getTypeof = require('./getTypeof');
 const count = require('./count');
 const clone = require('./clone');
 const first = require('./first');
-
+const {zero, one} = require("../variable/defaultValue");
 const indexOf = require('./indexOf');
 const random = require('./random');
-const removeFromKey = require('./removeFromKey');
+const remove = require('./remove');
 
 /**
  * Shuffle data in array
@@ -23,8 +23,6 @@ const removeFromKey = require('./removeFromKey');
  */
 function shuffle (objectValue) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
     const output=[];
     let rawObjectValue = clone(objectValue);
     const valueType=[
@@ -32,17 +30,17 @@ function shuffle (objectValue) {
         "json"
     ];
 
-    if (indexOf(valueType, getTypeof(objectValue))>-onceDefaultValue) {
+    if (indexOf(getTypeof(objectValue), valueType)>-one) {
 
-        const counts=count(objectValue)-onceDefaultValue;
+        const counts=count(objectValue)-one;
 
-        for (let currentIndex=counts; currentIndex>=emptyDefaultValue;) {
+        for (let currentIndex=counts; currentIndex>=zero;) {
 
             const rowValue = random(rawObjectValue);
 
-            rawObjectValue = clone(removeFromKey(rawObjectValue, indexOf(rawObjectValue, first(rowValue))));
+            rawObjectValue = clone(remove(rawObjectValue, indexOf(first(rowValue), rawObjectValue)));
             output.push(first(rowValue));
-            currentIndex -= onceDefaultValue;
+            currentIndex -= one;
 
         }
 

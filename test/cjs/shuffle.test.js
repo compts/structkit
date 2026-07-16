@@ -16,7 +16,7 @@ const nine = 9;
 const ten = 10;
 const fourtytwo = 42;
 
-describe('shuffle', function () {
+describe('CJS: shuffle method', function () {
 
     it('should return an array of the same length', function () {
 

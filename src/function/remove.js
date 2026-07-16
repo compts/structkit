@@ -48,6 +48,14 @@ function remove (objectValue, value, value2) {
 
                 }
 
+            } else if (has(value2) === false) {
+
+                if (parseInt(ak) !== value) {
+
+                    reslt.push(av);
+
+                }
+
             } else {
 
                 if (value === lastRow) {
@@ -81,15 +89,18 @@ function remove (objectValue, value, value2) {
         reslt={};
         const jsn_vw=[];
 
-        each(objectValue, function () {
+        if (getTypeof(value) === "json") {
 
-            where(objectValue, value, function (jk) {
+            const whereData = where(value, objectValue);
+
+            each(whereData, function (jk) {
 
                 jsn_vw.push(jk);
 
             });
 
-        });
+        }
+
 
         each(objectValue, function (av, ak) {
 
@@ -101,9 +112,17 @@ function remove (objectValue, value, value2) {
 
                 }
 
+            } else if (getTypeof(value) === "string") {
+
+                if (ak !== value) {
+
+                    reslt[ak]=av;
+
+                }
+
             } else {
 
-                if (indexOfExist(jsn_vw, av) === false) {
+                if (indexOfExist(av, jsn_vw) === false) {
 
                     reslt[ak]=av;
 

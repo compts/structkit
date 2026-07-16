@@ -1,5 +1,8 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
+const indexOfExist = require('./indexOfExist');
+const {zero, one} = require("../variable/defaultValue");
 
+const convertValue = require("../core/convertValue");
 const has = require('./has');
 
 /**
@@ -17,65 +20,75 @@ const has = require('./has');
  */
 function each (objectValue, func) {
 
-    let re_loop=[];
+    const re_loop=[];
 
     const typeofs=getTypeofInternal(objectValue);
 
     const localGlobal = new GlobalEach();
 
-    if (typeofs === "json"||typeofs === "array"||typeofs === "object"||typeofs === "arguments") {
+    if (indexOfExist(typeofs, [
+        "json",
+        "array",
+        "object",
+        "arguments"
+    ])) {
 
 
         for (const ins in objectValue) {
 
             if (has(objectValue, ins)) {
 
+                if (localGlobal.continue === false) {
+
+                    break;
+
+                }
+
+                callbackEach(convertValue(ins), objectValue, localGlobal, re_loop, func, true);
+
+            }
+
+
+        }
+
+        return re_loop;
+
+    }
+
+    if (indexOfExist(typeofs, ["set"])) {
+
+        let key = zero;
+
+        for (const ins of objectValue) {
+
+            if (has(objectValue, ins)) {
 
                 if (localGlobal.continue === false) {
 
                     break;
 
                 }
-                let bool_func = true;
-
-                if (getTypeofInternal(objectValue[ins]) === "function") {
-
-                    if ((/\b_/g).test(ins)) {
-
-                        bool_func= false;
-
-                    }
-
-                }
-                if (bool_func) {
-
-                    try {
-
-                        if (has(func)) {
-
-                            func(objectValue[ins], ins, localGlobal);
-
-                        } else {
-
-                            re_loop[ins]=objectValue[ins];
-
-                        }
-
-                    } catch (error) {
-
-                        console.log(error);
-
-                    }
-
-                } else {
-
-                    re_loop=null;
-
-                }
+                callbackEach(key, ins, localGlobal, re_loop, func, false);
+                key += one;
 
             }
 
         }
+
+        return re_loop;
+
+    }
+    if (indexOfExist(typeofs, ["map"])) {
+
+        objectValue.forEach(function (value, key) {
+
+            if (localGlobal.continue) {
+
+                callbackEach(convertValue(key), value, localGlobal, re_loop, func, false);
+
+            }
+
+        });
 
         return re_loop;
 
@@ -85,6 +98,86 @@ function each (objectValue, func) {
 
 }
 
+
+/**
+ * Create a callback function for each that will be used in the loop
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} ins Index.
+ * @param {any} objectValue Index of the objectValue.
+ * @param {any} localGlobal Global variable to control the loop.
+ * @param {any} re_loop Re loop array or json.
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @param {boolean} notSetMap Is set or Map data
+ * @returns {any} Array or json
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) {
+
+
+    let bool_func = true;
+
+    if (getTypeofInternal(notSetMap
+        ? objectValue[ins]
+        : objectValue) === "function") {
+
+        if ((/\b_/g).test(ins)) {
+
+            bool_func= false;
+
+        }
+
+    }
+    if (bool_func) {
+
+        try {
+
+            if (has(func)) {
+
+                if (notSetMap) {
+
+                    func(objectValue[ins], ins, localGlobal);
+
+                } else {
+
+                    func(objectValue, ins, localGlobal);
+
+                }
+
+            } else {
+
+                if (notSetMap) {
+
+                    re_loop[ins]=objectValue[ins];
+
+                } else {
+
+                    re_loop[ins]=objectValue;
+
+                }
+
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    } else {
+
+        re_loop=null;
+
+    }
+
+}
+
+
 /**
  * GlobalEach
  * @category Seq
@@ -93,7 +186,11 @@ function each (objectValue, func) {
  */
 function GlobalEach () {
 
+    this.external_execution_from = null;
     this.continue = true;
+    this.action = null;
+    this.pass_value = null;
+    this.is_true = true;
 
 }
 

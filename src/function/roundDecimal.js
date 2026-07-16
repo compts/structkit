@@ -1,4 +1,5 @@
-const count = require('./count');
+const toDouble = require('./toDouble');
+const {ten} = require("../variable/defaultValue");
 
 /**
  * Random Decimal
@@ -6,37 +7,22 @@ const count = require('./count');
  * @since 1.0.1
  * @category Math
  * @param {number} value Int or Double value type
- * @param {number=} maxValue limit decimal
+ * @param {number=} precision limit decimal
  * @returns {number} Returns the total.
  * @example
  *
  * roundDecimal(11.1111111,3 )
- *=>11.11
+ *=>11.111
  */
-function roundDecimal (value, maxValue) {
+function roundDecimal (value, precision) {
 
-    const emptyDefaultValue=0;
-    const onceDefaultValue=1;
-    const twoDefaultValue=2;
-    const tenDefaultValue=10;
-    const jsn=value||emptyDefaultValue;
-    const str_dec=jsn.toString().split(".");
-    const s_dmin=0;
-    const s_dmax=maxValue||twoDefaultValue;
+    const jsn=toDouble(value);
 
-    if (count(str_dec) === twoDefaultValue) {
 
-        const p_cnts=count(str_dec[onceDefaultValue].toString().split(""));
-        const delmts=p_cnts <= s_dmin
-            ?s_dmin
-            :s_dmax;
-        const dec_s=tenDefaultValue**delmts;
+    const multiplier = ten**precision;
 
-        return Math.round(parseFloat(jsn*dec_s))/dec_s;
+    return Math.trunc(jsn * multiplier) / multiplier;
 
-    }
-
-    return jsn;
 
 }
 module.exports=roundDecimal;

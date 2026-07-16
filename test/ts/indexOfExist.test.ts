@@ -1,5 +1,5 @@
 
-import {indexOfExist} from "../../dist/esm/node.esm";
+import {indexOfExist} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
@@ -19,7 +19,7 @@ describe('TS: indexOfExist', function () {
 
     it('check if value exist', function () {
 
-        assert.deepStrictEqual(indexOfExist([
+        assert.deepStrictEqual(indexOfExist(one, [
             one,
             two,
             three,
@@ -30,10 +30,10 @@ describe('TS: indexOfExist', function () {
             eight,
             nine,
             ten
-        ], one), true);
+        ]), true);
 
 
-        assert.deepStrictEqual(indexOfExist([
+        assert.deepStrictEqual(indexOfExist(seven, [
             one,
             two,
             three,
@@ -44,13 +44,13 @@ describe('TS: indexOfExist', function () {
             eight,
             nine,
             ten
-        ], seven), true);
+        ]), true);
 
     });
 
     it('check if value not exist', function () {
 
-        assert.deepStrictEqual(indexOfExist([
+        assert.deepStrictEqual(indexOfExist(zero, [
             one,
             two,
             three,
@@ -61,14 +61,14 @@ describe('TS: indexOfExist', function () {
             eight,
             nine,
             ten
-        ], zero), false);
+        ]), false);
 
 
     });
 
     it('check expected type', function () {
        
-        expectType<boolean>(indexOfExist([
+        expectType<boolean>(indexOfExist(zero, [
             one,
             two,
             three,
@@ -79,7 +79,7 @@ describe('TS: indexOfExist', function () {
             eight,
             nine,
             ten
-        ], zero));
+        ]));
   
     });
 });

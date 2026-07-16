@@ -1,5 +1,5 @@
 
-import {clone} from "../../dist/esm/node.esm";
+import {clone} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 

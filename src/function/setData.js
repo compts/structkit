@@ -7,7 +7,7 @@ const {getTypeofInternal} = require('../core/getTypeOf');
 const empty = require('./empty');
 const first = require('../function/first');
 const isEmpty = require('../function/isEmpty');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 const remove = require('../function/remove');
 
 
@@ -16,24 +16,24 @@ const remove = require('../function/remove');
  *
  * @since 1.4.87
  * @category Collection
- * @param {any=} objectValue Either Json or Array data.
  * @param {any=} split_str Search key or index.
+ * @param {any=} objectValue Either Json or Array data.
  * @param {any=} updateValue Value to update the data.
  * @returns {any} Returns the total.
  * @example
  *
- * setData({"s":1},"s",2)
+ * setData("s", {"s":1},2)
  *=> 2
  */
-function setData (objectValue, split_str, updateValue) {
+function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
-        return empty(objectValue);
+        return {};
 
     }
 
-    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
+    return curryArg(function (rawSplit_str, rawObjectValue, rawUpdateValue) {
 
         if (isEmpty(rawSplit_str)) {
 
@@ -41,9 +41,10 @@ function setData (objectValue, split_str, updateValue) {
 
         }
 
+
         const spl= schemaSplitData(rawSplit_str);
 
-        return baseReduce(rawObjectValue, [spl], function (total, value) {
+        return baseReduce(function (total, value) {
 
             if (getTypeofInternal(total) === "json") {
 
@@ -61,11 +62,11 @@ function setData (objectValue, split_str, updateValue) {
 
             return total;
 
-        });
+        }, rawObjectValue, [spl]);
 
     }, [
-        objectValue,
         split_str,
+        objectValue,
         updateValue
     ]);
 

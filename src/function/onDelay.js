@@ -1,14 +1,26 @@
 const varExtend = require('./varExtend');
 
+const {zero} = require("../variable/defaultValue");
+const defaultOptionDelay = {
+
+    "autoStart": true
+};
+
 /**
- * On delay
+ * @typedef {Object} DelayResult
+ * @property {function(): void} cancel - Cancels the delay
+ * @property {function(): void} start - Starts the delay
+ */
+
+/**
+ * On delay function, it calls the callback after the specified delay. setTimeout is used to schedule the callback execution, and clearTimeout is used to stop it when necessary.
  *
  * @since 1.4.1
  * @category Function
  * @param {any} func a Callback function
  * @param {number=} wait timer for delay
  * @param {object=} option option for delay
- * @returns {object} Returns object.
+ * @returns {DelayResult} Returns object.
  * @example
  *
  *  onDelay(()=>{})
@@ -16,43 +28,47 @@ const varExtend = require('./varExtend');
  */
 function onDelay (func, wait, option) {
 
-    const zero = 0;
-    const extend = varExtend({
-        "limitCounterClear": 0
-    }, option);
+    const extend = varExtend(defaultOptionDelay, option);
 
-    const valueWaited = wait || zero;
 
-    const timeout = setTimeout(function () {
+    const sequence = new ClassDelay(extend, wait, func);
 
-        func();
+    if (extend.autoStart) {
 
-    }, valueWaited);
+        sequence.start();
 
-    const sequence = new ClassDelay(timeout, extend);
+    }
 
     return sequence;
 
 }
 
 /**
- * On wait
+ * On delay class
  *
  * @since 1.0.1
  * @category Seq
- * @param {any} timeout timer for delay
+ *
  * @param {object} extend option for delay
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
  * @returns {object} Returns object.
  * @example
  *
- *  onWait(()=>{})
+ *  onDelay(()=>{})
  *=>'11'
  */
-function ClassDelay (timeout, extend) {
-
-    this.timeout = timeout;
+function ClassDelay (extend, wait, func) {
 
     this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.timeout = null;
+
+    this.returned = null;
 
 }
 
@@ -62,4 +78,22 @@ ClassDelay.prototype.cancel = function () {
 
 };
 
+
+ClassDelay.prototype.start = function () {
+
+    this.extend = varExtend(defaultOptionDelay, this.extend);
+    const valueWaited = this.wait || zero;
+
+    // eslint-disable-next-line consistent-this
+    const main = this;
+
+    this.timeout = setTimeout(function () {
+
+        main.returned = main.func();
+
+    }, valueWaited);
+
+};
+
 module.exports = onDelay;
+

@@ -3,7 +3,7 @@ const map = require("./map");
 const first = require("./first");
 const count = require("./count");
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {one} = require("../core/defaultValue");
+const {one} = require("../variable/defaultValue");
 
 /**
  * Get type of the variable
@@ -21,11 +21,11 @@ const {one} = require("../core/defaultValue");
  */
 function getTypeof (...args) {
 
-    const getTypes = map(args, function (value) {
+    const getTypes = map(function (value) {
 
         return getTypeofInternal(value);
 
-    });
+    }, args);
 
     return count(getTypes) === one
         ?first(getTypes)

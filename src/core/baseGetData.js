@@ -1,5 +1,6 @@
 const toString = require("../function/toString");
 const each = require('../function/each');
+const {getTypeofInternal} = require('./getTypeOf');
 
 /**
  * Get Data in array or json using string to search the data either by its key or index
@@ -10,18 +11,40 @@ const each = require('../function/each');
  * @returns {any} Returns the total.
  * @example
  *
- * getData({"s":1},"s")
- *=> 1
+ * schemaSplitData("s")
+ *=> ["s"]
  * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
- *=> {a: 2}
+ * schemaSplitData("a:a")
+ *=> ["a","a"]
  */
 function schemaSplitData (data) {
 
-    const split_strReplace= toString(data).replace(/([.]{1,})/g, ":");
+    if (getTypeofInternal(data) === "array") {
 
+        return data;
 
-    const spl_len= split_strReplace.split(":");
+    }
+
+    const splitSign = "($^&^$)";
+    const split_strReplace= toString(data).replace(/(\\?[.:])/g, function (mm, mm1) {
+
+        if (mm1.trim() === "\\.") {
+
+            return ".";
+
+        }
+
+        if (mm1.trim() === "\\:") {
+
+            return ":";
+
+        }
+
+        return splitSign;
+
+    });
+
+    const spl_len= split_strReplace.split(splitSign);
     const spl=[];
 
     each(spl_len, function (value) {

@@ -1,7 +1,6 @@
-const count = require("../function/count");
-const each = require("../function/each");
-const has = require("../function/has");
+const equal = require("../function/equal");
 
+const {negOne, one} = require("../variable/defaultValue");
 const {getTypeofInternal} = require("./getTypeOf");
 
 /**
@@ -10,7 +9,7 @@ const {getTypeofInternal} = require("./getTypeOf");
  * @since 1.0.1
  * @category Seq
  * @param {array|object} objectValue Array
- * @param {number} value key of array
+ * @param {any} value key of array
  * @param {number} start The first index in array
  * @param {number} end The last index in array
  * @param {boolean} isGetLast If True first index if False last index
@@ -22,10 +21,7 @@ const {getTypeofInternal} = require("./getTypeOf");
  */
 function getIndexOf (objectValue, value, start, end, isGetLast) {
 
-    const indexOfDefaultValue=-1;
-    const incrementDefaultValue=1;
-
-    let referenceValue = -1;
+    let referenceValue = negOne;
 
     if (getTypeofInternal(objectValue) === "array") {
 
@@ -35,7 +31,15 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             if (getTypeofInternal(value) === "json") {
 
-                isValidMatch = searchValueInJson(objectValue[inc], value);
+                isValidMatch = equal(objectValue[inc], value);
+
+            } else if (getTypeofInternal(value) === "array") {
+
+                isValidMatch = equal(objectValue[inc], value);
+
+            } else if (getTypeofInternal(value) === "function") {
+
+                isValidMatch = value(objectValue[inc]);
 
             } else {
 
@@ -58,52 +62,17 @@ function getIndexOf (objectValue, value, start, end, isGetLast) {
 
             }
 
-            inc += incrementDefaultValue;
+            inc += one;
 
         }
 
     }
 
     return isGetLast === false
-        ?indexOfDefaultValue
+        ?negOne
         :referenceValue;
 
 }
 
-/**
- * Index Of array
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} objectValue Array
- * @param {number} searchValue key of array
- * @returns {boolean} Returns the total.
- * @example
- *
- * searchValueInJson([1,2], 1)
- * // => 0
- */
-function searchValueInJson (objectValue, searchValue) {
-
-    let counter = 0;
-    const increment = 1;
-
-    each(objectValue, function (value, key) {
-
-        if (has(searchValue, key)) {
-
-            if (searchValue[key] === value) {
-
-                counter += increment;
-
-            }
-
-        }
-
-    });
-
-    return count(objectValue) === counter;
-
-}
 exports.getIndexOf=getIndexOf;
 

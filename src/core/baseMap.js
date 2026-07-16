@@ -2,7 +2,7 @@ const has = require('./_has');
 const each = require('../function/each');
 const empty = require('../function/empty');
 const baseAppend = require("./baseAppend");
-const {zero, one} = require("./defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 
 
 /**
@@ -10,22 +10,24 @@ const {zero, one} = require("./defaultValue");
  *
  * @since 1.4.8
  * @category Collection
- * @param {any} objectValue The data you want to map
  * @param {any=} func Callback function
+ * @param {any} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *
  * baseMap([1,2],function(value) { return value+2 } )
  *=> [3, 4]
  */
-function baseMap (objectValue, func) {
+function baseMap (func, objectValue) {
 
     let value_arry=empty(objectValue);
     let cnt=zero;
 
     const that = this;
 
-    each(objectValue, function (value, key) {
+    each(objectValue, function (value, key, localGlobal) {
+
+        localGlobal.action = "map";
 
         if (has(func)) {
 
@@ -34,7 +36,8 @@ function baseMap (objectValue, func) {
                 [
                     value,
                     key,
-                    cnt
+                    cnt,
+                    localGlobal
                 ]
             );
 

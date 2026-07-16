@@ -1,11 +1,11 @@
 
-import {arraySum} from "../../dist/esm/node.esm";
+import {arraySum} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
 const one =1,
     three=3,
-    three_dec="3.00",
+    three_dec=3.00,
     two =2;
 
 

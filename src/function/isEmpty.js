@@ -1,15 +1,13 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {zero} = require("../core/defaultValue");
-
+const {zero} = require("../variable/defaultValue");
 const count = require('./count');
-
 const indexOfExist = require('./indexOfExist');
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
  *
  * @since 1.0.1
- * @category Relation
+ * @category Predicate
  * @param {any} value JSON , Array and String
  * @returns {boolean} Returns true or false
  * @example
@@ -37,20 +35,26 @@ function isEmpty (value) {
 
     }
 
-    if (indexOfExist(invalidList, typeofvalue)) {
+    if (indexOfExist(typeofvalue, invalidList)) {
 
         return true;
 
     }
 
-    if (typeofvalue === "uint16Array") {
+    if (indexOfExist(typeofvalue, [
+        "uint16Array",
+        "uint8Array"
+    ])) {
 
         return value.length ===zero;
 
     }
-    if (typeofvalue === "uint8Array") {
+    if (indexOfExist(typeofvalue, [
+        "set",
+        "map"
+    ])) {
 
-        return value.length ===zero;
+        return value.size ===zero;
 
     }
 

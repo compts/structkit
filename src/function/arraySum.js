@@ -1,7 +1,7 @@
 const add = require('./add');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 const isEmpty = require('./isEmpty');
-
+const roundDecimal = require("./roundDecimal");
 
 const baseReduce = require("../core/baseReduce");
 
@@ -11,7 +11,7 @@ const baseReduce = require("../core/baseReduce");
  * @since 1.0.1
  * @category Math
  * @param {number[]} arrayObject Array of number
- * @param {number=} delimeter decimal point and default value is 0
+ * @param {number=} precision decimal point and default value is 0
  * @returns {number} Returns the total.
  * @example
  *
@@ -20,18 +20,18 @@ const baseReduce = require("../core/baseReduce");
  * arraySum([1,2])
  * // => 3
  */
-function arraySum (arrayObject, delimeter) {
+function arraySum (arrayObject, precision) {
 
-    const defaultLimitDecimal = 0;
     const arrayObjects=arrayObject||[];
-    const delimeters=delimeter||defaultLimitDecimal;
+    const precisions=precision||zero;
 
-    const sum = baseReduce(zero, arrayObjects, add);
+    const sum = baseReduce(add, zero, arrayObjects);
 
-    return isEmpty(delimeters)
+    return isEmpty(precisions)
         ? parseInt(sum)
-        :sum.toFixed(delimeters);
+        :roundDecimal(sum, precisions);
 
 }
+
 module.exports=arraySum;
 

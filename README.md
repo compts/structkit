@@ -1,8 +1,15 @@
 # Structkit
-Javascript framework is a utility tool, that helps you simplify in dealing data issue in your projects
+JS/TS functional tool to simplify JS Developer
 
-[![NPM version][npm-image]][npm-url] 
-[![NPM version][npm-ts-image]][npm-url-ts] 
+---
+# ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
+**Version 1.4.9-rc.0 is a major rewrite with numerous breaking changes.**
+
+Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_GUIDE.md) carefully before proceeding. The changes are substantial and will likely affect existing implementations.
+
+---
+
+[![NPM version][npm-image]][npm-url]
 [![Build Status](https://github.com/compts/structkit/actions/workflows/cicd.yaml/badge.svg?branch=main)](https://github.com/compts/structkit/actions)
 [![NPM Downloads](https://img.shields.io/npm/dm/structkit?logo=npm&style=flat-square)](https://npmtrends.com/structkit)
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://jsr.io/@compts/structkit)
@@ -12,7 +19,7 @@ Javascript framework is a utility tool, that helps you simplify in dealing data 
 [Docs](https://structkit.codehyouka.xyz/api) |
 
 ## Why Structkit
-A Javascript library that make easier in working with arrays, number,object, String and etc.
+A Javascript functional that make easier in working with arrays, number,object, String and etc.
 
 ## Download
 
@@ -24,9 +31,10 @@ Using npm to install in your project folder:
 $ npm i structkit
 ```
 
-Due to conflict in Typescript and ES, it was decided to separate in separate package for typescript(Still working in progess)
+If you want to try to Deno
 ```shell
-$ npm i structkit-ts
+$ deno add jsr:@compts/structkit
+
 ```
 
 
@@ -74,10 +82,7 @@ test("1")
 In the example you noticed that we can apply and arguments if we are unsure of possible that you need to pass as well no need to create a function just for value only
 
 [npm-url]: https://www.npmjs.com/package/structkit
-[npm-url-ts]: https://www.npmjs.com/package/structkit-ts
-[npm-image]: https://img.shields.io/badge/structkit-1.4.873-brightgreen
-
-[npm-ts-image]: https://img.shields.io/badge/structkit:ts-1.4.87-brightgreen
+[npm-image]: https://img.shields.io/badge/structkit-1.4.9.rc.0-brightgreen
 
 
 ## Partial sampe you can use as your utitlity function

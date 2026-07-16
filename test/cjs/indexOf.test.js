@@ -1,5 +1,5 @@
 
-const {indexOf}= require("../../dist/cjs/structkit-full.cjs");
+const {indexOf, isExact}= require("../../dist/cjs/structkit-full.cjs");
 const assert = require("assert");
 
 const eight=8,
@@ -18,7 +18,7 @@ describe('CJS: IndexOf', function () {
 
     it('check if value exist', function () {
 
-        assert.deepStrictEqual(indexOf([
+        assert.deepStrictEqual(indexOf(one, [
             one,
             two,
             three,
@@ -29,10 +29,10 @@ describe('CJS: IndexOf', function () {
             eight,
             nine,
             ten
-        ], one), zero);
+        ]), zero);
 
 
-        assert.deepStrictEqual(indexOf([
+        assert.deepStrictEqual(indexOf(seven, [
             one,
             two,
             three,
@@ -43,31 +43,71 @@ describe('CJS: IndexOf', function () {
             eight,
             nine,
             ten
-        ], seven), six);
+        ]), six);
 
     });
 
 
     it('check if value exist in JSON object', function () {
 
-        assert.deepStrictEqual(indexOf([
+        assert.deepStrictEqual(indexOf({"s1": "32"}, [
             {"s1": "sd"},
             {"s1": "32"},
             {"s1": "32"}
-        ], {"s1": "32"}), one);
+        ]), one);
 
     });
 
     it('check if value exist in JSON object in array value', function () {
 
-        assert.deepStrictEqual(indexOf([
+        assert.deepStrictEqual(indexOf({"s1": [
+            "32",
+            "23"
+        ]}, [
             {"s1": ["sd"]},
             {"s1": ["32"]},
             {"s1": ["322"]}
-        ], {"s1": [
-            "32",
-            "23"
-        ]}), -one);
+        ]), -one);
+
+        assert.deepStrictEqual(indexOf({"s1": ["32"]}, [
+            {"s1": ["sd"]},
+            {"s1": ["32"]},
+            {"s1": ["322"]}
+        ]), one);
+
+    });
+
+    it('check if value exist in array object in array value', function () {
+
+        assert.deepStrictEqual(indexOf(["2"], [
+            ["1"],
+            ["2"],
+            ["3"]
+        ]), one);
+
+        assert.deepStrictEqual(indexOf(["22"], [
+            ["1"],
+            ["2"],
+            ["3"]
+        ]), -one);
+
+
+    });
+
+
+    it('check if value exist in curry to validate object in array value', function () {
+
+        assert.deepStrictEqual(indexOf(isExact({"a\\:c": "b1"}), [
+            {"a:b1": "b1"},
+            {"a:b": "b1"},
+            {"a:c": "b1"}
+        ]), two);
+
+        assert.deepStrictEqual(indexOf(isExact({"a\\:c": "b11"}), [
+            {"a:b1": "b1"},
+            {"a:b": "b1"},
+            {"a:c": "b1"}
+        ]), -one);
 
     });
 

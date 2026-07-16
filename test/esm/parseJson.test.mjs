@@ -1,0 +1,178 @@
+/* eslint-disable no-magic-numbers */
+
+import {parseJson} from "../../dist/esm/node.esm.mjs";
+import assert from 'assert';
+
+describe('ESM: parseJson method', function () {
+
+    it('check if key and value has type conversion', function () {
+
+
+        assert.deepStrictEqual(parseJson("{'a': 1}"), {
+            "a": 1
+        });
+
+        assert.deepStrictEqual(parseJson("{`a`: 1}"), {
+            "a": 1
+        });
+
+        assert.deepStrictEqual(parseJson("{`a`: `1`}"), {
+            "a": "1"
+        });
+
+        assert.deepStrictEqual(parseJson("{a: `1`}"), {
+            "a": "1"
+        });
+
+    });
+
+
+    it('check if key has no qoute', function () {
+
+
+        assert.deepStrictEqual(parseJson("[{ss:1},{a: 1}]"), [
+            {"ss": 1},
+            {"a": 1}
+        ]);
+
+        assert.deepStrictEqual(
+            parseJson("[asd,asd ]"),
+            [
+                "asd",
+                "asd"
+            ]
+        );
+
+        assert.deepStrictEqual(
+            parseJson("[1,2,3,4]"),
+            [
+                1,
+                2,
+                3,
+                4
+            ]
+        );
+
+
+    });
+
+    it('check if key has qoute inside', function () {
+
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s"sas"}'),
+            {"a": 's"sas'}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s\\"sas"}'),
+            {"a": 's"sas'}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s\\\\sas"}'),
+            {"a": 's as'}
+        );
+
+
+    });
+    it('check if repetion is correct with dict and array', function () {
+
+        assert.deepStrictEqual(parseJson('{"a": ["1","2" ]}'), {"a": [
+            "1",
+            "2"
+        ]});
+
+        assert.deepStrictEqual(parseJson("[1,2,3{'asd':1},[asdm,s]]"), [
+            1,
+            2,
+            3,
+            {'asd': 1},
+            [
+                "asdm",
+                "s"
+            ]
+        ]);
+
+        assert.deepStrictEqual(parseJson("[1,2,3,{'asd':1}]"), [
+            1,
+            2,
+            3,
+            {"asd": 1}
+        ]);
+
+        assert.deepStrictEqual(parseJson("[1,2,3,{'asd':1},[asdm,s]]"), [
+            1,
+            2,
+            3,
+            {"asd": 1},
+            [
+                "asdm",
+                "s"
+            ]
+        ]);
+
+    });
+
+    it('check if semicolon is present in url format inside qoute', function () {
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"https://sdfsf.com","fddd":"https://sdfsf.com"}`), {
+            "example": 'https://sdfsf.com',
+            "fddd": 'https://sdfsf.com',
+            "name": 'arrayRepeat'
+        });
+
+    });
+
+    it('check if repetion is correct with html entity', function () {
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeat(&quot;s&quot;\\,2 )=>['s'\\,'s']","comment":"Repeat value in array","return":"Return in string or number.","arguments":[{"comment":"String you want to duplicate","name":"value","type":"any"},{"comment":"how many times you want to repeate","name":"valueRepetion","type":"number"}]}`), {
+            "arguments": [
+                {"comment": "String you want to duplicate",
+                    "name": "value",
+                    "type": "any"},
+                {"comment": "how many times you want to repeate",
+                    "name": "valueRepetion",
+                    "type": "number"}
+            ],
+            "comment": "Repeat value in array",
+            "example": "arrayRepeat(\"s\",2 )=>['s','s']",
+            "name": "arrayRepeat",
+            "return": "Return in string or number."
+        });
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeatss(\\"s\\"\\,2)=>\\[sa,s\\]\\}"}`), {"example": 'arrayRepeatss("s",2)=>[sa,s]}',
+            "name": 'arrayRepeat'});
+
+    });
+
+    it('check if empty str argument', function () {
+
+        assert.deepStrictEqual(parseJson(''), null);
+
+    });
+    it('check if null argument', function () {
+
+        assert.deepStrictEqual(parseJson(null), null);
+
+    });
+    it('check if undefined argument', function () {
+
+        // eslint-disable-next-line no-undefined
+        assert.deepStrictEqual(parseJson(undefined), null);
+
+    });
+    it('check if number argument', function () {
+
+        assert.deepStrictEqual(parseJson(11), null);
+
+    });
+
+    it('check if string argument', function () {
+
+        assert.deepStrictEqual(parseJson("11"), null);
+
+    });
+
+
+});

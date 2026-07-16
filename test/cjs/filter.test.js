@@ -8,15 +8,33 @@ describe('CJS: filter method', function () {
 
     it('check array if filter', function () {
 
-        assert.deepStrictEqual(filter([
-            {"s1": 1},
-            {"s1": 2},
-            {"s1": 1}
-        ], function (value) {
+        assert.deepStrictEqual(filter(function (value) {
 
             return value.s1 === one;
 
-        }), [
+        }, [
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]), [
+            {"s1": 1},
+            {"s1": 1}
+        ]);
+
+    });
+
+
+    it('check array if filter in curry', function () {
+
+        assert.deepStrictEqual(filter(function (value) {
+
+            return value.s1 === one;
+
+        })([
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]), [
             {"s1": 1},
             {"s1": 1}
         ]);
@@ -25,11 +43,11 @@ describe('CJS: filter method', function () {
 
     it('check array if filter arg is invalid json or array', function () {
 
-        assert.deepStrictEqual(filter(one, function (value) {
+        assert.deepStrictEqual(filter(function (value) {
 
             return value.s1 === one;
 
-        }), []);
+        }, one), []);
 
     });
 

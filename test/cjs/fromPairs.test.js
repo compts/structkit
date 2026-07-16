@@ -4,9 +4,9 @@ const assert = require("assert");
 const five = 5;
 const six = 6;
 
-describe('CJS: flatten method', function () {
+describe('CJS: fromPairs method', function () {
 
-    it('check if flatten n basic format', function () {
+    it('check if fromPairs n basic format', function () {
 
         assert.deepStrictEqual(fromPairs([
             [
@@ -25,7 +25,7 @@ describe('CJS: flatten method', function () {
     });
 
 });
-describe('CJS: flatten method with empty array', function () {
+describe('CJS: fromPairs method with empty array', function () {
 
     it('check if fromPairs with empty array returns empty object', function () {
 
@@ -35,7 +35,7 @@ describe('CJS: flatten method with empty array', function () {
 
 });
 // FromPairs test with single pair
-describe('CJS: flatten method with single pair', function () {
+describe('CJS: fromPairs method with single pair', function () {
 
     it('check if fromPairs with single pair returns object with one key-value pair', function () {
 
@@ -50,7 +50,7 @@ describe('CJS: flatten method with single pair', function () {
 
 });
 // FromPairs test with non-array input
-describe('CJS: flatten method with non-array input', function () {
+describe('CJS: fromPairs method with non-array input', function () {
 
     it('check if fromPairs with non-array input throws an error', function () {
 
@@ -67,7 +67,7 @@ describe('CJS: flatten method with non-array input', function () {
 
 });
 // FromPairs test with mixed types
-describe('CJS: flatten method with mixed types', function () {
+describe('CJS: fromPairs method with mixed types', function () {
 
     it('check if fromPairs with mixed types returns object with mixed key-value pairs', function () {
 

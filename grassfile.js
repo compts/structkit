@@ -6,13 +6,16 @@ const list_package_utility_js1 = ["src/*/*.js"];
 
 const listOfType = {
     "array": "[]",
+    "bigint": "BigInt(10)",
     "boolean": "true",
     "date": "new Date()",
     "error": "new Error()",
+    "map": "new Map([['hello', 'world']])",
     "null": "null",
     "number": "1",
     "object": "{}",
     "regexp": "/(1)/g",
+    "set": 'new Set(["a","b","c"])',
     "string": "'string'",
     "undefined": "undefined"
 };
@@ -36,19 +39,19 @@ function isTypeFunction (objectCallTypeAll, suffix) {
 
     structkit.each(objectCallTypeAll, (value) => {
 
-        const name = 'is'+structkit.stringCapitalize(value);
+        const name = 'is'+structkit.strCapitalize(value);
 
         stringCnt += `
 /**
  *  Get the type if ${value}
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * ${name}(${structkit.ifUndefined(listOfType, value, '')})
+ * ${name}(${listOfType[value]})
  *=> true
  */
 `;
@@ -65,7 +68,8 @@ function isTypeFunction (objectCallTypeAll, suffix) {
 exports.module=function (grassconf) {
 
     const grass_concat = grassconf.require("grass_concat");
-    const {convertIifeFunction} = grassconf.require("pack-extract");
+    const {convertIifeFunction, scriptComment} = grassconf.require("pack-extract");
+
 
     const packpier = grassconf.require("packpier");
 
@@ -89,7 +93,9 @@ exports.module=function (grassconf) {
             }
         )
             .pipe(grassconf.dest("dist/esm", {
-                "lsFileType": "path"
+                "lsFileType": "path",
+                "savePathReplace": {"from": ".js",
+                    "to": ".mjs"}
             }));
 
     });
@@ -122,23 +128,35 @@ exports.module=function (grassconf) {
             const getData = data.readData();
 
 
-            if (data.path === 'src/function/whereNot.js') {
+            if (data.path === 'src/function/where.js') {
 
+                data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
-                data.writeData(getData+""+isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
-
-                    const name = 'is'+structkit.stringCapitalize(value);
+                    const name = 'is'+structkit.strCapitalize(value);
 
                     return "export const "+name+"="+name+"_default;";
 
-                }).join("\n")+"\n");
+                }, objectCallTypeAll).join("\n")+"\n");
 
             }
 
             data.done();
 
         }))
-            .pipe(grass_concat("dist/esm/node.esm.js", {
+            .pipe(grassconf.streamPipe(function (data) {
+
+                let getData = data.readData();
+
+                getData = getData.replace(/(.js)/g, ".mjs");
+
+                data.writeData(getData);
+
+
+                data.done();
+
+            }))
+
+            .pipe(grass_concat("dist/esm/node.esm.mjs", {
                 "istruncate": true
             }));
 
@@ -161,13 +179,13 @@ exports.module=function (grassconf) {
                         "name": "webIIfe",
                         "transform": () => null,
                         "transformFirstFile": () => null,
-                        "transformLastFile": () => isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(objectCallTypeAll, function (value) {
+                        "transformLastFile": () => isTypeFunction(objectCallTypeAll, '_default')+"\n"+ structkit.map(function (value) {
 
-                            const name = 'is'+structkit.stringCapitalize(value);
+                            const name = 'is'+structkit.strCapitalize(value);
 
                             return "exports."+name+"="+name+"_default;";
 
-                        }).join("\n")+"\n"
+                        }, objectCallTypeAll).join("\n")+"\n"
 
                     },
                     cjsFileNameOnlyImportOnly({
@@ -199,15 +217,15 @@ exports.module=function (grassconf) {
                         "name": "webIIfes",
                         "transform": (config) => {
 
-                            if (config.currentPath === 'src/function/whereNot.js') {
+                            if (config.currentPath === 'src/function/where.js') {
 
-                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(objectCallTypeAll, function (value) {
+                                return config.content+'\n'+isTypeFunction(objectCallTypeAll, '')+"\n"+structkit.map(function (value) {
 
-                                    const name = 'is'+structkit.stringCapitalize(value);
+                                    const name = 'is'+structkit.strCapitalize(value);
 
                                     return "_stk."+name+"="+name+";";
 
-                                }).join("\n");
+                                }, objectCallTypeAll).join("\n");
 
                             }
 
@@ -248,6 +266,26 @@ exports.module=function (grassconf) {
 
             }))
             .pipe(grass_concat("dist/web/structkit-full.iife.js", {
+                "istruncate": true
+            }))
+            .pipe(grassconf.streamPipe(function (data) {
+
+                const getComment = scriptComment(data.readData());
+                let writeData = data.readData();
+
+                structkit.each(getComment, function (val) {
+
+                    writeData = writeData.replace(val.content, "");
+
+                });
+                writeData = writeData.replace(/\n+/, "");
+                writeData = writeData.replace(/;\n+/, ";");
+
+                data.writeData(writeData);
+                data.done();
+
+            }))
+            .pipe(grass_concat("dist/web/structkit-mini.iife.js", {
                 "istruncate": true
             }));
 

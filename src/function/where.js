@@ -1,13 +1,14 @@
 const whereLoopExecution = require('../core/whereLoopExecution');
+const curryArg = require("../core/curryArg");
+const {two} = require("../variable/defaultValue");
 
 /**
  * Get the value in array the value in json given the search value was in json
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue Json to Array
  * @param {any} objectValueWhere Data you want to search in key
- * @param {Function=} func Function
+ * @param {any=} objectValue Json to Array
  * @returns {any} Return either Json to Array.
  * @example
  *
@@ -16,9 +17,16 @@ const whereLoopExecution = require('../core/whereLoopExecution');
  * where([{"s1":{"s2":2}},{"s1":{"s2":3}}],{"s1.s2":2})
  *=>[{"s1":{"s2":2}}]
  */
-function where (objectValue, objectValueWhere, func) {
+function where (objectValueWhere, objectValue) {
 
-    return whereLoopExecution(objectValue, objectValueWhere, func, true, 'where');
+    return curryArg(function (rawObjectValueWhere, rawObjectValue) {
+
+        return whereLoopExecution(rawObjectValueWhere, rawObjectValue, true, 'where');
+
+    }, [
+        objectValueWhere,
+        objectValue
+    ], two);
 
 }
 module.exports=where;

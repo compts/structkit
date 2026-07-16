@@ -1,9 +1,9 @@
 {
   "name": "@compts/structkit",
   "description": "JS/TS utility tool that offers your wide varity of function to simplify your problem with the data",
-  "version": "0.1.16",
+  "version": "0.1.18",
   "license": "MIT",
-  "exports": "./dist/esm/node.esm.js",
+  "exports": "./dist/esm/node.esm.mjs",
   "publish": {
     "exclude": [
       "./src",

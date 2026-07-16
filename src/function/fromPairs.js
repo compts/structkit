@@ -1,6 +1,6 @@
 const baseReduce = require("../core/baseReduce");
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {zero, one, two} = require("../core/defaultValue");
+const {zero, one, two} = require("../variable/defaultValue");
 const append = require('./append');
 const remove = require('./remove');
 const defaultTo = require('./defaultTo');
@@ -11,7 +11,7 @@ const first = require('./first');
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
  *
  * @since 1.4.87
- * @category Condition
+ * @category Array
  * @param {any} value First number
  * @param {number=} deepLimit First number
  * @returns {any} Returns array
@@ -30,13 +30,13 @@ function fromPairs (value, deepLimit) {
 
     }
 
-    return baseReduce({}, value, function (total, subBalue) {
+    return baseReduce(function (total, subBalue) {
 
         if (getTypeofInternal(subBalue) === "array") {
 
             if (subBalue.length > one) {
 
-                const depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit)));
+                const depthValue = getDepthValue(remove(subBalue, zero, defineDeepLimit(deepLimit || null)));
 
                 append(total, depthValue, subBalue[zero]);
 
@@ -46,7 +46,7 @@ function fromPairs (value, deepLimit) {
 
         return total;
 
-    });
+    }, {}, value);
 
 }
 

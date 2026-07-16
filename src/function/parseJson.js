@@ -1,352 +1,31 @@
-const stringUnEscape = require('./stringUnEscape');
-const each = require('./each');
-const {two, one, zero} = require("../core/defaultValue");
+const strUnEscape = require('./strUnEscape');
+const strSubs = require("./strSubs");
+const {zero, one, negOne, two} = require("../variable/defaultValue");
 const varExtend = require('./varExtend');
+const indexOfExist = require('./indexOfExist');
+const getTypeof = require('./getTypeof');
+const filter = require('./filter');
+const toString = require("./toString");
 
-
-/**
- * String escape qoutes
- *
- * @since 1.4.872
- * @category Collection
- * @param {any} str Object you want to convert to JSON string
- * @returns {string} Return JSON string
- * @example
- *
- * escapeQuotesStr("'" )
- *=>"\\'"
- */
-function escapeQuotesJson (str) {
-
-    return str.replace(/&quot;/g, "&bsol;&quot;");
-
-}
-
-/**
- * Cleanup unnecessary character
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function cleanValue (value) {
-
-    let refValue = value;
-
-    refValue = refValue.replace(/[\t\n\r\s]+$/g, "");
-    refValue = refValue.replace(/^[\t\n\r\s]+/g, "");
-
-    return refValue;
-
-}
-
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} value The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * getTagVal('{}' )
- *=>{}
- */
-function getTagVal (value) {
-
-    if ((/^\{/gmi).test(value) && (/\}$/).test(value)) {
-
-        return {
-
-            "ret_value": cleanValue(value.replace(/^\{/g, "").replace(/\}$/g, "")),
-            "tag_close": "}",
-            "tag_open": "{",
-            "type": "json"
-        };
-
+const ObjOpen = {
+    "[": {
+        "close": "]",
+        "type": "array"
+    },
+    "{": {
+        "close": "}",
+        "type": "json"
     }
-    if ((/^\[/gmi).test(value) && (/\]$/gmi).test(value)) {
-
-        return {
-            "ret_value": cleanValue(value.replace(/^\[/g, "").replace(/\]$/g, "")),
-            "tag_close": "]",
-            "tag_open": "[",
-            "type": "array"
-        };
-
-    }
-
-
-    return {
-        "ret_value": "",
-        "tag_close": "",
-        "tag_open": "",
-        "type": "none"
-    };
-
-}
-
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} values The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function encodeStripValueQoute (values) {
-
-    let str_call = "";
-    let reserv_str = "";
-    const arg_call_list = [];
-
-    let str_type = "";
-    let last_str_value = "";
-    let counter_double_qoute = 0;
-    let counter_single_qoute = 0;
-
-    each(values.split(""), function (value) {
-
-        const value_indx=value;
-
-        let row_str_type = "-";
-
-        if (value_indx === '"') {
-
-            if (counter_single_qoute %two === zero && last_str_value !== "\\") {
-
-                row_str_type = "double_qoute";
-
-            }
-
-            counter_double_qoute += one;
-
-        }
-        if (value_indx === "'") {
-
-            if (counter_double_qoute %two === zero) {
-
-                row_str_type = "single_qoute";
-
-            }
-            counter_single_qoute += one;
-
-
-        }
-
-        if (str_type === "") {
-
-            // eslint-disable-next-line no-negated-condition
-            if (row_str_type !== '-') {
-
-                str_type = row_str_type;
-                str_call += "#@"+arg_call_list.length+"@#";
-
-            } else {
-
-                str_call += value_indx;
-
-            }
-
-        } else {
-
-            if (row_str_type ==="-") {
-
-                reserv_str += value_indx;
-
-            }
-
-            if (str_type === row_str_type) {
-
-                arg_call_list.push({
-                    "arg": reserv_str,
-                    "qoute_type": str_type
-                });
-                str_type = "";
-                reserv_str = "";
-
-            }
-
-        }
-        last_str_value = value;
-
-    });
-
-    return {
-        arg_call_list,
-        str_call
-    };
-
-}
+};
 
 
 /**
- * Parse Json object
+ * Parse string to JSON object with type conversion and correction
  *
  * @since 1.4.86
  * @category Collection
- * @param {any} str_call String you want to convert to
- * @param {any} arg_call_list The second number in an addition.
- * @param {boolean} keyOnly The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function decodeStripValueQoute (str_call, arg_call_list, keyOnly) {
-
-    let count = 0;
-
-    let repl= str_call.replace(/#@([0-9]{1,})@#/gi, function (__, va1) {
-
-        const getObj = arg_call_list[va1];
-
-        count +=one;
-
-        return '"'+ getObj.arg +'"';
-
-    });
-
-    if (count===zero && keyOnly) {
-
-        repl = '"'+repl+'"';
-
-    }
-
-    return repl;
-
-}
-
-/**
- * Parse Json object
- *
- * @since 1.4.86
- * @category Collection
- * @param {any} glb String you want to convert to
- * @param {any} config The second number in an addition.
- * @returns {any} Returns the json.
- * @example
- *
- * parseJson('{}' )
- *=>{}
- */
-function callbackParse (glb, config) {
-
-    if (glb.type === 'json') {
-
-        const encodeStr = encodeStripValueQoute(glb.ret_value);
-
-        const splitKeyValue = encodeStr.str_call.split(":");
-
-        if (splitKeyValue.length <two) {
-
-            throw new Error("No Key found");
-
-        }
-
-        const reviewSubValue = getTagVal(decodeStripValueQoute(cleanValue(splitKeyValue.splice(one).join(": ")), encodeStr.arg_call_list, false));
-
-        if (reviewSubValue.type !== "none") {
-
-            return glb.tag_open+decodeStripValueQoute(cleanValue(splitKeyValue[zero]), encodeStr.arg_call_list, true)+": "+callbackParse(reviewSubValue, config) +glb.tag_close;
-
-        }
-
-        const valueSplit = encodeStr.str_call.split(",");
-
-        const list_obj = [];
-
-        each(valueSplit, function (value) {
-
-            const value_split = value.split(":");
-
-            if (value_split.length <two) {
-
-                throw new Error("No Key found");
-
-            }
-            const argValueJoin =value_split.splice(one).join(": ");
-            const objSubVal = decodeStripValueQoute(cleanValue(argValueJoin), encodeStr.arg_call_list, false);
-            const tagVal = getTagVal(objSubVal);
-
-
-            if (tagVal.type === 'none') {
-
-                list_obj.push(decodeStripValueQoute(cleanValue(value_split[zero]), encodeStr.arg_call_list, true).toString()+ ": "+ objSubVal);
-
-            } else {
-
-                list_obj.push(decodeStripValueQoute(cleanValue(value_split[zero]), encodeStr.arg_call_list, true).toString()+ ": "+ callbackParse(tagVal, config));
-
-            }
-
-
-        });
-
-
-        return glb.tag_open+ list_obj.join(", ") +glb.tag_close;
-
-    }
-
-    if (glb.type === 'array') {
-
-        const encodeStr = encodeStripValueQoute(glb.ret_value);
-
-        const valueSplit = encodeStr.str_call.split(",");
-
-        const reviewSubValue = getTagVal(glb.ret_value);
-
-        if (reviewSubValue.type !== "none") {
-
-            return glb.tag_open+callbackParse(reviewSubValue, config) +glb.tag_close;
-
-        }
-
-        const list_obj = [];
-
-        each(valueSplit, function (value) {
-
-            const objSubVal = decodeStripValueQoute(cleanValue(value), encodeStr.arg_call_list, false);
-            const tagVal = getTagVal(objSubVal);
-
-            if (tagVal.type === 'none') {
-
-                list_obj.push(objSubVal);
-
-            } else {
-
-                list_obj.push(callbackParse(tagVal, config));
-
-            }
-
-        });
-
-
-        return glb.tag_open+ list_obj.join(", ") +glb.tag_close;
-
-    }
-
-    return "";
-
-}
-
-/**
- * Parse from String to JSON object
- *
- * @since 1.4.86
- * @category Collection
- * @param {string} value String you want to convert to json object
- * @param {any=} config Option you want to set in this function.
+ * @param {any} value Any type you want to convert to json object
+ * @param {any=} config Option for parse json, it has disableCorrection to disable the correction and validation of json string, invalidDefaultValue to set default value if the string is invalid or not string and throwError to determine if it will throw error or just return default value if the string is invalid or not string
  * @returns {any} Returns the json object.
  * @example
  *
@@ -355,37 +34,579 @@ function callbackParse (glb, config) {
  */
 function parseJson (value, config) {
 
-    const defaultConfig = varExtend({"disableCorrection": false}, config);
+    const defaultConfig = varExtend({"disableCorrection": false,
+        "invalidDefaultValue": null,
+        "throwError": false}, config);
 
+    if (getTypeof(value) !== "string") {
 
-    if (defaultConfig.disableCorrection) {
+        if (defaultConfig.throwError) {
 
-        const rawValue = cleanValue(value);
-
-        if (rawValue === "") {
-
-            return null;
+            throw new Error("Allow only string to parse to json");
 
         }
 
-        return JSON.parse(rawValue);
+        return defaultConfig.invalidDefaultValue;
 
     }
-    const stripValue=cleanValue(stringUnEscape(escapeQuotesJson(value)));
 
-    const tagVal = getTagVal(stripValue);
 
-    const obgM = callbackParse(tagVal, defaultConfig);
+    try {
 
-    if (obgM === "") {
+        if (defaultConfig.disableCorrection) {
 
-        return null;
+
+            return JSON.parse(value);
+
+        }
+
+        const stripValue = constrJson(strUnEscape(value));
+
+
+        return JSON.parse(stripValue, function (__, revValue) {
+
+            return revValue;
+
+        });
+
+    } catch (err) {
+
+        if (defaultConfig.throwError) {
+
+            throw err;
+
+        }
+
+        return defaultConfig.invalidDefaultValue;
 
     }
-    const dataObj = JSON.parse(obgM);
-
-    return dataObj;
-
 
 }
+
+/**
+ * String escape qoutes
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} lastStr Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesJson("'" )
+ *=>"\\'"
+ */
+function escapeQuotesJson (lastStr) {
+
+    const result = toString(lastStr, {"raw": true})
+        .replace(/(?<=.)(\\{0,}?["]{1}|["])/g, '\\"');
+
+    return result;
+
+}
+
+
+/**
+ * Validate last str and add qoutes if needed
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {boolean} validValidation Value that determine if the last str is valid and need to be added with qoutes or not
+ * @param {str} firstFindAction first action that is being found in the string, either qoute, char_obj, number or none
+ * @param {str} last_str last string that is being validated
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * validationLastStr("'" )
+ *=>"\\'"
+ */
+function validationLastStr (validValidation, firstFindAction, last_str) {
+
+    if (validValidation) {
+
+        last_str = toString(last_str, {"raw": true})
+            .replace(/(\\+?[n]|[\n])/g, "\\n")
+            .replace(/(\\+?[s])/g, " ")
+            .replace(/(\\+[snt]{0})/g, "");
+
+
+        if (firstFindAction === "char_obj") {
+
+            last_str = '"'+escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
+
+
+        } else if (firstFindAction === "qoute") {
+
+            last_str = escapeQuotesJson(last_str.trim().replace(/['`"]$/g, ''))+'"';
+
+
+        } else if (firstFindAction === "number") {
+
+            last_str = last_str.trim();
+
+
+        } else {
+
+            last_str = escapeQuotesJson(last_str.trim());
+
+        }
+
+    }
+
+    return last_str;
+
+}
+
+
+/**
+ * Validate last str and add slash if pass for delimiter or closing object
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} last_str Last string that is being validated
+ * @param {any} firstFindAction First action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} lastAction Last action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} currentAction Current action that is being found in the string, either qoute, char_obj, number or none
+ * @param {any} remainStr Remaining string that is being validated
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * validateBacklastHasChar("'" )
+ *=>"\\'"
+ */
+function validateBacklastHasChar (last_str, firstFindAction, lastAction, currentAction, remainStr) {
+
+    let slashValue = (/[^\\]$/g).test(last_str.trim());
+
+
+    if (slashValue && firstFindAction === "qoute") {
+
+
+        slashValue = false;
+
+        if (firstFindAction === lastAction) {
+
+            slashValue = true;
+
+        }
+        if (slashValue) {
+
+            if ([
+                "separator",
+                "close_obj",
+                "open_obj"
+            ].indexOf(currentAction) >= zero) {
+
+                slashValue = false;
+                const last_str_split = last_str.trim().replace(/\\"/g, "")
+                    .split("");
+                const countQoute = filter(function (value) {
+
+                    return value === '"';
+
+                }, last_str_split);
+
+
+                if (last_str_split.length > zero) {
+
+                    slashValue = last_str_split[zero] === last_str_split[last_str_split.length-one] && strSubs(last_str.trim(), last_str_split.length-two) !=='\\"';
+
+                }
+
+                if (countQoute.length % two !== zero && slashValue) {
+
+                    if (remainStr !== "") {
+
+                        slashValue = false;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return slashValue;
+
+}
+
+
+/**
+ * Get struct value and count of how many char it has
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} ob_str String that contain the struct you want to get
+ * @param {any} ob_type Define the type of struct you want to get, either json or array
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotesStr("'" )
+ *=>"\\'"
+ */
+function getStructVal (ob_str, ob_type) {
+
+    const ass = ob_str.split("");
+    let appen_str = "";
+    let last_str = "";
+    let firstFindAction = "none";
+    let lastAction = "none";
+    let keyValType = ob_type==="json"
+        ? "key"
+        :"value";
+    let isOpen = false;
+    let count = 0;
+    let rawCount = 0;
+    let continue_vali = true;
+
+
+    while (count< ass.length) {
+
+        const valChar = ass[count];
+        const currentAction = charType(valChar);
+
+        if (isOpen) {
+
+            const slashValue = validateBacklastHasChar(last_str, firstFindAction, lastAction, currentAction, strSubs(ob_str.trim(), count+one));
+
+            let str_append_last = "";
+
+
+            if (currentAction !== firstFindAction && slashValue) {
+
+                if (firstFindAction==="number" && currentAction==="char_obj" && valChar !==",") {
+
+                    firstFindAction = "char_obj";
+
+                }
+
+            }
+
+
+            if (currentAction !=="none") {
+
+                lastAction = currentAction;
+
+            }
+
+
+            if (currentAction === "open_obj" && slashValue) {
+
+                continue_vali = true;
+                count = ass.length+one;
+
+
+            }
+            let validValidation = false;
+
+            if (keyValType === "key" && continue_vali === false) {
+
+                if (valChar===":" && slashValue) {
+
+                    last_str = last_str.replace(/\\/g, "");
+                    if (firstFindAction === "qoute") {
+
+                        last_str = last_str.trim().replace(/['`]$/g, '"')+'';
+
+                    } else {
+
+                        last_str = '"'+last_str.trim().replace(/['`]$/g, '')+'"';
+
+                    }
+                    rawCount +=one;
+
+                    str_append_last=":";
+                    continue_vali = true;
+                    keyValType = "value";
+                    validValidation = false;
+
+                }
+
+            }
+            if (keyValType === "value" && continue_vali === false) {
+
+
+                if (currentAction === "close_obj" && slashValue) {
+
+                    keyValType = ob_type==="json"
+                        ? "key"
+                        :"value";
+                    validValidation = true;
+                    continue_vali = true;
+                    isOpen = true;
+
+                }
+                if (currentAction === "separator" && slashValue) {
+
+                    rawCount +=one;
+                    str_append_last=",";
+                    continue_vali = true;
+                    validValidation = true;
+                    keyValType = ob_type==="json"
+                        ? "key"
+                        :"value";
+
+
+                }
+
+
+            }
+            last_str = validationLastStr(validValidation, firstFindAction, last_str);
+
+            if (continue_vali) {
+
+                isOpen = false;
+                appen_str+=last_str.replace(/^[`']/, '"')+str_append_last;
+                last_str = "";
+
+            } else {
+
+                last_str+=valChar;
+                rawCount +=one;
+
+            }
+
+        } else {
+
+            if ([
+                "open_obj",
+                "close_obj"
+            ].indexOf(currentAction) >=zero) {
+
+                count = ass.length+one;
+                firstFindAction = currentAction;
+
+            } else if (currentAction === "qoute") {
+
+                continue_vali = false;
+                rawCount +=one;
+                isOpen = true;
+                last_str = valChar;
+                firstFindAction = currentAction;
+                lastAction = "none";
+
+            } else {
+
+                rawCount +=one;
+                if (currentAction !== "none") {
+
+                    isOpen = true;
+                    last_str = valChar;
+                    continue_vali = false;
+                    firstFindAction = currentAction;
+                    lastAction = "none";
+
+                }
+
+            }
+
+        }
+
+        count+=one;
+
+    }
+
+    if ((/[,]{1,}[\s\t\n]{0,}$/g).test(appen_str)) {
+
+        rawCount -=one;
+
+    }
+
+    return {
+        "count": rawCount-one,
+        "word": appen_str.replace(/[,]{1,}[\s\t\n]{0,}$/g, "")
+    };
+
+}
+
+
+/**
+ * Construct JSON string with type correction and validation
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} ob_str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * constrJson("'" )
+ *=>"\\'"
+ */
+function constrJson (ob_str) {
+
+    const ass = ob_str
+        .split("");
+    let count = 0;
+    let rawCounter = 1;
+    let op_c = 0;
+    let structCount = 0;
+    let type_c = "";
+
+    let append_str = "";
+    let firstExpectedClose = "";
+
+    while (count< ass.length) {
+
+        const vales = ass[count];
+
+
+        if (op_c >zero) {
+
+            if (type_c !== "") {
+
+                const cntntStr = strSubs(ob_str, count);
+                const valStruct = getStructVal(cntntStr, type_c);
+
+                append_str += valStruct.word;
+                rawCounter += valStruct.count;
+                structCount = rawCounter;
+
+                if (rawCounter<=zero) {
+
+                    structCount = zero;
+                    rawCounter =one;
+
+                }
+
+                type_c = "";
+
+            }
+
+
+        }
+
+        if (indexOfExist(vales, [
+            "[",
+            "{"
+        ])) {
+
+
+            type_c = ObjOpen[vales].type;
+            if (op_c ===zero) {
+
+                firstExpectedClose = ObjOpen[vales].close;
+
+            }
+
+            if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
+
+                append_str += ",";
+
+            }
+
+            op_c +=one;
+            append_str += vales;
+
+        }
+
+
+        if (indexOfExist(vales, [
+            "]",
+            "}"
+        ])) {
+
+            op_c -=one;
+
+            if (op_c >=zero) {
+
+                append_str += vales;
+
+            }
+
+        }
+
+
+        count +=rawCounter;
+        rawCounter = one;
+
+    }
+
+    if (op_c ===one && firstExpectedClose !== "") {
+
+        op_c -=one;
+        append_str+=firstExpectedClose;
+
+    }
+
+    if (op_c >zero) {
+
+
+        throw new Error("Invalid JSON string");
+
+
+    }
+
+
+    return append_str;
+
+}
+
+
+/**
+ * Get struct value and count of how many char it has
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} valChar Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * charType("'" )
+ *=>"\\'"
+ */
+function charType (valChar) {
+
+    let currentAction = "none";
+
+    if ([
+        "[",
+        '{'
+    ].indexOf(valChar) >=zero) {
+
+        currentAction = "open_obj";
+
+    } else if ([
+        "]",
+        '}'
+    ].indexOf(valChar) >=zero) {
+
+        currentAction = "close_obj";
+
+    } else if ([","].indexOf(valChar) >=zero) {
+
+        currentAction = "separator";
+
+    } else if ([
+        "'",
+        '"',
+        '`'
+    ].indexOf(valChar) >=zero) {
+
+        currentAction = "qoute";
+
+    } else if ((/[0-9]/g).test(valChar)) {
+
+        currentAction = "number";
+
+    } else if ([
+        "'",
+        '"',
+        '`'
+    ].indexOf(valChar) === negOne && (/[\s\t\t]/g).test(valChar) ===false) {
+
+        currentAction = "char_obj";
+
+    } else {
+
+        currentAction = "none";
+
+    }
+
+    return currentAction;
+
+}
+
+
 module.exports=parseJson;

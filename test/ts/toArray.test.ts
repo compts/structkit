@@ -1,5 +1,5 @@
 
-import {toArray} from "../../dist/esm/node.esm";
+import {toArray} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 const ten=10;

@@ -1,4 +1,4 @@
-import {arraySlice} from "../../dist/esm/node.esm";
+import {arraySlice} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 const three =3;

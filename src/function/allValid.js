@@ -3,13 +3,13 @@ const curryArg = require("../core/curryArg");
 const count = require('./count');
 const baseReduce = require("../core/baseReduce");
 const toArray = require("./toArray");
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 /**
  * In array, you need to check all value is true
  *
  * @since 1.4.8
- * @category Condition
+ * @category Predicate
  * @param {...any?} arg List of value you need to check if all true
  * @returns {boolean} Returns true or false.
  * @example
@@ -19,13 +19,13 @@ const {zero} = require("../core/defaultValue");
  */
 function allValid (...arg) {
 
-    const mapCount = baseReduce(zero, arg, function (total, value) {
+    const mapCount = baseReduce(function (total, value) {
 
         total+= count(toArray(value));
 
         return total;
 
-    });
+    }, zero, arg);
 
     return curryArg(function (...rawValue) {
 

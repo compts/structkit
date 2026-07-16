@@ -1,4 +1,4 @@
-import {groupBy} from "../../dist/esm/node.esm";
+import {groupBy} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
@@ -7,15 +7,15 @@ describe('TS: groupBy method', function () {
 
     it('Group your data', function () {
 
-        assert.deepStrictEqual(groupBy([
-            {"s1": 1},
-            {"s1": 2},
-            {"s1": 1}
-        ], function (value) {
+        assert.deepStrictEqual(groupBy(function (value:any) {
 
             return value.s1;
 
-        }), {"1": [
+        }, [
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]), {"1": [
             {"s1": 1},
             {"s1": 1}
         ],
@@ -27,15 +27,15 @@ describe('TS: groupBy method', function () {
 
     it('check expected type', function () {
        
-        expectType<any>(groupBy([
-            {"s1": 1},
-            {"s1": 2},
-            {"s1": 1}
-        ], function (value) {
+        expectType<any>(groupBy( function (value:any) {
 
             return value.s1;
 
-        }));
+        }, [
+            {"s1": 1},
+            {"s1": 2},
+            {"s1": 1}
+        ]));
   
       });
 });

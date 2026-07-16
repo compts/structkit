@@ -1,5 +1,5 @@
 const {getTypeofInternal} = require('../core/getTypeOf');
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 /**
  * Ge the empty value of specify argument type
@@ -46,6 +46,16 @@ function empty (value) {
     if (getTypeofInternal(value) === "uint8Array") {
 
         return Uint8Array.from([]);
+
+    }
+    if (getTypeofInternal(value) === "set") {
+
+        return new Set();
+
+    }
+    if (getTypeofInternal(value) === "map") {
+
+        return new Map();
 
     }
 

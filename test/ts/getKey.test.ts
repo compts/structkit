@@ -1,10 +1,11 @@
-import {getKey} from "../../dist/esm/node.esm";
+import {getKey} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
 const three =3;
 const two =2;
 const one =1;
+const zero =0;
 
 describe('TS: getKey method', function () {
 
@@ -18,9 +19,9 @@ describe('TS: getKey method', function () {
                 three
             ]),
             [
-                "0",
-                "1",
-                "2"
+                zero,
+                one,
+                two
 
             ]
         );

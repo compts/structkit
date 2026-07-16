@@ -1,5 +1,5 @@
 const indexOfExist = require('../function/indexOfExist');
-const {zero, one} = require("../core/defaultValue");
+const {zero, one} = require("../variable/defaultValue");
 const each = require('../function/each');
 
 const count = require('../function/count');
@@ -33,10 +33,10 @@ function getKeyVal (jsn, typ) {
         });
 
     });
-    if (indexOfExist([
+    if (indexOfExist(typ, [
         "key",
         "value"
-    ], typ)) {
+    ])) {
 
         const ars=typ === "key"
             ?ky

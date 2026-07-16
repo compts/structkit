@@ -1,19 +1,19 @@
 const has = require('./has');
 const {objectCallType} = require("../variable/types");
-const {zero} = require("../core/defaultValue");
+const {zero} = require("../variable/defaultValue");
 
 
 /**
  * Is Json valid format
  *
  * @since 1.3.1
- * @category Relation
+ * @category Predicate
  * @param {any} value Value you want to check JSON is Valid
  * @param {string=} valueType Get value type
  * @returns {any} Returns true or false if valid json format
  * @example
  *
- * isJson('{}' )
+ * isJson({})
  *=> true
  */
 function isJson (value, valueType) {

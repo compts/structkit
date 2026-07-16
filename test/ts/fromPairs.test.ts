@@ -1,13 +1,13 @@
-import {fromPairs} from "../../dist/esm/node.esm";
+import {fromPairs} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 // FromPairs test
 const five = 5;
 const six = 6;
 
-describe('TS: flatten method', function () {
+describe('TS: fromPairs method', function () {
 
-    it('check if flatten n basic format', function () {
+    it('check if fromPairs n basic format', function () {
 
         assert.deepStrictEqual(fromPairs([
             [
@@ -27,7 +27,7 @@ describe('TS: flatten method', function () {
 
 });
 // FromPairs test with empty array
-describe('TS: flatten method with empty array', function () {
+describe('TS: fromPairs method with empty array', function () {
 
     it('check if fromPairs with empty array returns empty object', function () {
 
@@ -37,7 +37,7 @@ describe('TS: flatten method with empty array', function () {
 
 });
 // FromPairs test with single pair
-describe('TS: flatten method with single pair', function () {
+describe('TS: fromPairs method with single pair', function () {
 
     it('check if fromPairs with single pair returns object with one key-value pair', function () {
 
@@ -52,7 +52,7 @@ describe('TS: flatten method with single pair', function () {
 
 });
 // FromPairs test with non-array input
-describe('TS: flatten method with non-array input', function () {
+describe('TS: fromPairs method with non-array input', function () {
 
     it('check if fromPairs with non-array input throws an error', function () {
 
@@ -69,7 +69,7 @@ describe('TS: flatten method with non-array input', function () {
 
 });
 // FromPairs test with mixed types
-describe('TS: flatten method with mixed types', function () {
+describe('TS: fromPairs method with mixed types', function () {
 
     it('check if fromPairs with mixed types returns object with mixed key-value pairs', function () {
 
@@ -98,7 +98,7 @@ describe('TS: flatten method with mixed types', function () {
 
 });
 // FromPairs test with nested arrays
-describe('TS: flatten method with nested arrays', function () {
+describe('TS: fromPairs method with nested arrays', function () {
     it('check if fromPairs with nested arrays returns object with nested structure', function () {
 
         assert.deepStrictEqual(fromPairs([
@@ -125,7 +125,7 @@ describe('TS: flatten method with nested arrays', function () {
 }
 );
 // FromPairs test with duplicate keys
-describe('TS: flatten method with duplicate keys', function () {
+describe('TS: fromPairs method with duplicate keys', function () {
     it('check if fromPairs with duplicate keys returns last value for duplicate keys', function () {
 
         assert.deepStrictEqual(fromPairs([
@@ -146,7 +146,7 @@ describe('TS: flatten method with duplicate keys', function () {
 }
 );
 // FromPairs test with complex objects
-describe('TS: flatten method with complex objects', function () {
+describe('TS: fromPairs method with complex objects', function () {
     it('check if fromPairs with complex objects returns object with complex structure', function () {
 
         assert.deepStrictEqual(fromPairs([
@@ -175,7 +175,7 @@ describe('TS: flatten method with complex objects', function () {
 }
 );
 
-describe('TS: flatten method', function () {
+describe('TS: fromPairs method', function () {
     
     it('check expected type', function () {
 

@@ -1,0 +1,29 @@
+
+import {not, where} from "../../dist/esm/node.esm.mjs";
+import assert from 'assert';
+
+describe('ESM: not method', function () {
+
+    it('check if value exist', function () {
+
+
+        assert.deepStrictEqual(
+            where(not({"s1": 2}), {"s1": 1,
+                "s2": 1}),
+            {"s1": 1,
+                "s2": 1}
+        );
+
+        assert.deepStrictEqual(where(not({"s1": 2}), [
+            {"s1": 1,
+                "s2": 1},
+            {"s1": 2,
+                "s2": 2}
+        ]), [
+            {"s1": 1,
+                "s2": 1}
+        ]);
+
+    });
+
+});

@@ -1,4 +1,5 @@
 const has = require('./has');
+const curryArg = require("../core/curryArg");
 
 const each = require('./each');
 
@@ -13,38 +14,45 @@ const append = require('./append');
  *
  * @since 1.4.8
  * @category Collection
- * @param {any} objectValue The data you want to map
  * @param {any=} func Callback function
+ * @param {any=} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *
- * groupBy([1,2,3,4,5,6,7], function (value) { return value % 2})
+ * groupBy(function (value) { return value % 2}, [1,2,3,4,5,6,7])
  *=> {0:[2,4,6], 1:[1,3,5,7]}
  */
-function groupBy (objectValue, func) {
+function groupBy (func, objectValue) {
 
-    const value_arry=clone(empty(objectValue));
+    return curryArg(function (rawFunc, rawObjectValue) {
 
-    const groupData = {};
+        const value_arry=clone(empty(rawObjectValue));
 
-    each(objectValue, function (value, key) {
+        const groupData = {};
 
-        if (has(func)) {
+        each(rawObjectValue, function (value, key) {
 
-            const dataFunc = func(value, key);
+            if (has(rawFunc)) {
 
-            if (!has(groupData, dataFunc)) {
+                const dataFunc = rawFunc(value, key);
 
-                groupData[dataFunc] = value_arry;
+                if (!has(groupData, dataFunc)) {
+
+                    groupData[dataFunc] = value_arry;
+
+                }
+                groupData[dataFunc] = append(clone(groupData[dataFunc]), value, key);
 
             }
-            groupData[dataFunc] = append(clone(groupData[dataFunc]), value, key);
 
-        }
+        });
 
-    });
+        return groupData;
 
-    return groupData;
+    }, [
+        func,
+        objectValue
+    ]);
 
 }
 module.exports=groupBy;

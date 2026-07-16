@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 
 /**
  * Multiply logic in satisfying two argument
@@ -18,7 +18,7 @@ function multiply (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return aa * bb;
+        return Number(aa) * Number(bb);
 
     }, [
         value1,

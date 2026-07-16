@@ -1,5 +1,5 @@
 const curryArg = require("../core/curryArg");
-const {two} = require("../core/defaultValue");
+const {two} = require("../variable/defaultValue");
 const _has = require("../core/_has");
 const {getTypeofInternal} = require('../core/getTypeOf');
 

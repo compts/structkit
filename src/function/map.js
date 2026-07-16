@@ -1,29 +1,30 @@
 const curryArg = require("../core/curryArg");
 const baseMap = require("../core/baseMap");
+const {two} = require("../variable/defaultValue");
 
 /**
  * To map the value of json or array
  *
  * @since 1.0.1
  * @category Collection
- * @param {any} objectValue The data you want to map
  * @param {any=} func Callback function
+ * @param {any=} objectValue The data you want to map
  * @returns {any} Return map either JSON or Array
  * @example
  *
- * map([1,2],function(value) { return value+2 } )
+ * map(function(value) { return value+2 } ,[1,2])
  *=> [3, 4]
  */
-function map (objectValue, func) {
+function map (func, objectValue) {
 
-    return curryArg(function (rawObjectValue, rawFunc) {
+    return curryArg(function (rawFunc, rawObjectValue) {
 
-        return baseMap(rawObjectValue, rawFunc);
+        return baseMap(rawFunc, rawObjectValue);
 
     }, [
-        objectValue,
-        func
-    ]);
+        func,
+        objectValue
+    ], two);
 
 }
 module.exports=map;

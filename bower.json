@@ -1,0 +1,26 @@
+{
+  "name": "structkit",
+  "main": "dist/web/structkit-full.iife.js",
+  "homepage": "https://github.com/compts/structkit",
+  "authors": [
+    "(CodeHyouka <dev.codehyouka@gmail.com>)"
+  ],
+  "description": "JS/TS functional tool to simplify JS Developer.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "functional"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    ".clover",
+    "src",
+    "script",
+    "test"
+  ]
+}

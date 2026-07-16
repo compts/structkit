@@ -1,11 +1,11 @@
-import {shuffle} from "../../dist/esm/node.esm";
+import {shuffle} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
 // TS
 
 
-describe('shuffle', function () {
+describe('TS: shuffle method', function () {
 
     it('should return an array of the same length', function () {
 
@@ -55,7 +55,7 @@ describe('shuffle', function () {
 
     it('should return an empty array when input is empty', function () {
 
-        const arr = [];
+        const arr: number[] = [];
         const result = shuffle(arr);
 
         assert.deepStrictEqual(result, []);

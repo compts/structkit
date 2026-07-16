@@ -4,6 +4,9 @@ const count = require('./count');
 
 const toArray = require('./toArray');
 
+const {zero} = require("../variable/defaultValue");
+
+
 /**
  * To create single random value from array
  *
@@ -20,16 +23,15 @@ const toArray = require('./toArray');
  */
 function random (valueArray, minValue, maxValue) {
 
-    const emptyDefaultValue=0;
     const ran_min=has(minValue)
         ?minValue
-        :emptyDefaultValue;
+        :zero;
     const ran_max=has(maxValue)
         ?maxValue+ran_min
         :count(valueArray);
     const math_random = Math.round(Math.random()*ran_max);
 
-    if (math_random< count(valueArray) && math_random >=emptyDefaultValue) {
+    if (math_random< count(valueArray) && math_random >=zero) {
 
         return toArray(valueArray[math_random]);
 

@@ -2,6 +2,8 @@ const curryArg = require("../core/curryArg");
 const getTypeof = require('./getTypeof');
 const clone = require("./clone");
 const toString = require("./toString");
+const toArray = require("./toArray");
+
 
 /**
  * Swapping the value either string or array in there specific position
@@ -39,7 +41,7 @@ function swap (firstValue, secondValue, listValue) {
 
         if (isSplit) {
 
-            cloneRawListValueReturn = cloneRawListValueReturn.join("");
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
 
         }
 

@@ -1,10 +1,10 @@
-import {multiply} from "../../dist/esm/node.esm";
+import {multiply} from "../../dist/esm/node.esm.mjs";
 import assert from 'assert';
 import {expectType} from 'tsd';
 
 const one =1;
 
-describe('ESM: multiply method', function () {
+describe('TS: multiply method', function () {
 
     it('check if multiply result', function () {
 

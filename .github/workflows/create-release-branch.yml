@@ -1,0 +1,52 @@
+name: Create Release Branch
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Set branch name
+        id: branch
+        run: echo "name=release/v${{ steps.get_version.outputs.version }}" >> "$GITHUB_OUTPUT"
+
+      - name: Check if release branch already exists
+        id: check_branch
+        run: |
+          if git ls-remote --exit-code --heads origin ${{ steps.branch.outputs.name }}; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create and push release branch
+        if: steps.check_branch.outputs.exists == 'false'
+        run: |
+          git checkout -b ${{ steps.branch.outputs.name }}
+          git push origin ${{ steps.branch.outputs.name }}
+
+      - name: Open PR into release branch
+        if: steps.check_branch.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base release \
+            --head ${{ steps.branch.outputs.name }} \
+            --title "Release v${{ steps.get_version.outputs.version }}" \
+            --body "Automated release PR for version ${{ steps.get_version.outputs.version }}"

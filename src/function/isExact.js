@@ -11,7 +11,7 @@ const isEmpty = require('./isEmpty');
 const getData = require('./getData');
 const indexOfExist = require('./indexOfExist');
 const indexOfNotExist = require('./indexOfNotExist');
-const {two} = require("../core/defaultValue");
+const {zero, one, two} = require("../variable/defaultValue");
 const curryArg = require("../core/curryArg");
 
 
@@ -19,17 +19,17 @@ const curryArg = require("../core/curryArg");
  * Looking the data in JSON and Array base on object value
  *
  * @since 1.0.1
- * @category Relation
+ * @category Predicate
  * @param {any} whereValue Json or Array
- * @param {any} objectValue1 Json or Array for lookup to whereValue
+ * @param {any=} objectValue1 Json or Array for lookup to whereValue
  * @param {boolean=} isExist Default value is True
  * @returns {boolean|any} Returns the boolean if the has the value you are looking at.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
+ * isExact({"test2": 11},{"test": 11,"test2": 11})
  * // => true
  *
- * isExact({"s1":{"s2":2}},{"s1:s2":2})
+ * isExact({"s1:s2":2}, {"s1":{"s2":2}})
  * // => true
  */
 function isExact (whereValue, objectValue1, isExist) {
@@ -51,15 +51,15 @@ function isExact (whereValue, objectValue1, isExist) {
         const key_s=(/(json|array|object)/g).test(getTypeofInternal(rawObjectValue1))
             ?rawObjectValue1
             :[rawObjectValue1];
-        let cnt=0;
-        const incrementDefaultValue=1;
+        let cnt=zero;
+        const incrementDefaultValue=one;
 
         each(key_s, function (kv, kk) {
 
-            if (indexOfExist([
+            if (indexOfExist(getTypeofInternal(rawWhereValue), [
                 "json",
                 "object"
-            ], getTypeofInternal(rawWhereValue))) {
+            ])) {
 
                 if (has(val_s, kk)) {
 
@@ -79,8 +79,8 @@ function isExact (whereValue, objectValue1, isExist) {
             if (getTypeofInternal(rawWhereValue) === "array") {
 
                 const local_is_valid = local_is_exist
-                    ?indexOfExist(val_s, kv)
-                    :indexOfNotExist(val_s, kv);
+                    ?indexOfExist(kv, val_s)
+                    :indexOfNotExist(kv, val_s);
 
                 if (local_is_valid) {
 
@@ -96,12 +96,12 @@ function isExact (whereValue, objectValue1, isExist) {
 
             each(val_s, function (kv, kk) {
 
-                if (indexOfExist([
+                if (indexOfExist(getTypeofInternal(rawWhereValue), [
                     "json",
                     "object"
-                ], getTypeofInternal(rawWhereValue))) {
+                ])) {
 
-                    const gdata = getData(key_s, kk);
+                    const gdata = getData(kk, key_s);
 
                     if (!isEmpty(gdata)) {
 

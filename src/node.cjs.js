@@ -2,13 +2,13 @@ const __p = require('./core/__.js');
 
 exports.__p = __p;
 
-const _has = require('./core/_has.js');
-
-exports._has = _has;
-
 const baseAppend = require('./core/baseAppend.js');
 
 exports.baseAppend = baseAppend;
+
+const _has = require('./core/_has.js');
+
+exports._has = _has;
 
 const baseCountValidList = require('./core/baseCountValidList.js');
 
@@ -17,6 +17,10 @@ exports.baseCountValidList = baseCountValidList;
 const baseMap = require('./core/baseMap.js');
 
 exports.baseMap = baseMap;
+
+const baseReduce = require('./core/baseReduce.js');
+
+exports.baseReduce = baseReduce;
 
 const schemaSplitData = require('./core/baseGetData.js');
 
@@ -30,25 +34,21 @@ const baseSort = require('./core/baseSort.js');
 
 exports.baseSort = baseSort;
 
-const baseReduce = require('./core/baseReduce.js');
+const convertValue = require('./core/convertValue.js');
 
-exports.baseReduce = baseReduce;
+exports.convertValue = convertValue;
 
 const curryArg = require('./core/curryArg.js');
 
 exports.curryArg = curryArg;
 
-const curryArgReview = require('./core/curryArgReview.js');
+const getIndexOf = require('./core/getIndexOf.js');
 
-exports.curryArgReview = curryArgReview;
+exports.getIndexOf = getIndexOf;
 
 const dataNumberFormat = require('./core/dataTypeFormat.js');
 
 exports.dataNumberFormat = dataNumberFormat;
-
-const negOne = require('./core/defaultValue.js');
-
-exports.negOne = negOne;
 
 const getKeyVal = require('./core/getKeyVal.js');
 
@@ -66,37 +66,29 @@ const stringSplit = require('./core/stringSplit.js');
 
 exports.stringSplit = stringSplit;
 
-const getIndexOf = require('./core/getIndexOf.js');
+const whereLoopExecution = require('./core/whereLoopExecution.js');
 
-exports.getIndexOf = getIndexOf;
-
-const __ = require('./function/__.js');
-
-exports.__ = __;
+exports.whereLoopExecution = whereLoopExecution;
 
 const add = require('./function/add.js');
 
 exports.add = add;
 
-const allValid = require('./function/allValid.js');
+const __ = require('./function/__.js');
 
-exports.allValid = allValid;
+exports.__ = __;
 
 const append = require('./function/append.js');
 
 exports.append = append;
 
-const appendIsArrayExist = require('./function/appendIsArrayExist.js');
+const allValid = require('./function/allValid.js');
 
-exports.appendIsArrayExist = appendIsArrayExist;
+exports.allValid = allValid;
 
 const arrayConcat = require('./function/arrayConcat.js');
 
 exports.arrayConcat = arrayConcat;
-
-const whereLoopExecution = require('./core/whereLoopExecution.js');
-
-exports.whereLoopExecution = whereLoopExecution;
 
 const arrayRepeat = require('./function/arrayRepeat.js');
 
@@ -118,21 +110,25 @@ const calculate = require('./function/calculate.js');
 
 exports.calculate = calculate;
 
-const count = require('./function/count.js');
-
-exports.count = count;
-
 const clone = require('./function/clone.js');
 
 exports.clone = clone;
 
-const defaultTo = require('./function/defaultTo.js');
+const count = require('./function/count.js');
 
-exports.defaultTo = defaultTo;
+exports.count = count;
+
+const curry = require('./function/curry.js');
+
+exports.curry = curry;
 
 const dec = require('./function/dec.js');
 
 exports.dec = dec;
+
+const defaultTo = require('./function/defaultTo.js');
+
+exports.defaultTo = defaultTo;
 
 const divide = require('./function/divide.js');
 
@@ -150,6 +146,10 @@ const equal = require('./function/equal.js');
 
 exports.equal = equal;
 
+const filter = require('./function/filter.js');
+
+exports.filter = filter;
+
 const first = require('./function/first.js');
 
 exports.first = first;
@@ -157,10 +157,6 @@ exports.first = first;
 const flatten = require('./function/flatten.js');
 
 exports.flatten = flatten;
-
-const filter = require('./function/filter.js');
-
-exports.filter = filter;
 
 const fromPairs = require('./function/fromPairs.js');
 
@@ -202,21 +198,21 @@ const has = require('./function/has.js');
 
 exports.has = has;
 
-const ifUndefined = require('./function/ifUndefined.js');
+const inc = require('./function/inc.js');
 
-exports.ifUndefined = ifUndefined;
+exports.inc = inc;
 
 const indexOf = require('./function/indexOf.js');
 
 exports.indexOf = indexOf;
 
-const inc = require('./function/inc.js');
-
-exports.inc = inc;
-
 const indexOfExist = require('./function/indexOfExist.js');
 
 exports.indexOfExist = indexOfExist;
+
+const ifElse = require('./function/ifElse.js');
+
+exports.ifElse = ifElse;
 
 const indexOfNotExist = require('./function/indexOfNotExist.js');
 
@@ -238,45 +234,37 @@ const isExactbyRegExp = require('./function/isExactbyRegExp.js');
 
 exports.isExactbyRegExp = isExactbyRegExp;
 
-const isJson = require('./function/isJson.js');
-
-exports.isJson = isJson;
-
-const jsonToArray = require('./function/jsonToArray.js');
-
-exports.jsonToArray = jsonToArray;
-
-const lastIndexOf = require('./function/lastIndexOf.js');
-
-exports.lastIndexOf = lastIndexOf;
-
 const last = require('./function/last.js');
 
 exports.last = last;
-
-const limit = require('./function/limit.js');
-
-exports.limit = limit;
-
-const lte = require('./function/lte.js');
-
-exports.lte = lte;
 
 const like = require('./function/like.js');
 
 exports.like = like;
 
-const map = require('./function/map.js');
+const lastIndexOf = require('./function/lastIndexOf.js');
 
-exports.map = map;
+exports.lastIndexOf = lastIndexOf;
+
+const limit = require('./function/limit.js');
+
+exports.limit = limit;
+
+const isJson = require('./function/isJson.js');
+
+exports.isJson = isJson;
+
+const lte = require('./function/lte.js');
+
+exports.lte = lte;
 
 const mapGetData = require('./function/mapGetData.js');
 
 exports.mapGetData = mapGetData;
 
-const lt = require('./function/lt.js');
+const map = require('./function/map.js');
 
-exports.lt = lt;
+exports.map = map;
 
 const mergeInWhere = require('./function/mergeInWhere.js');
 
@@ -286,9 +274,21 @@ const mergeWithKey = require('./function/mergeWithKey.js');
 
 exports.mergeWithKey = mergeWithKey;
 
+const lt = require('./function/lt.js');
+
+exports.lt = lt;
+
 const multiply = require('./function/multiply.js');
 
 exports.multiply = multiply;
+
+const not = require('./function/not.js');
+
+exports.not = not;
+
+const noteq = require('./function/noteq.js');
+
+exports.noteq = noteq;
 
 const onDelay = require('./function/onDelay.js');
 
@@ -302,9 +302,9 @@ const onWait = require('./function/onWait.js');
 
 exports.onWait = onWait;
 
-const noteq = require('./function/noteq.js');
+const once = require('./function/once.js');
 
-exports.noteq = noteq;
+exports.once = once;
 
 const parseJson = require('./function/parseJson.js');
 
@@ -314,6 +314,10 @@ const parseString = require('./function/parseString.js');
 
 exports.parseString = parseString;
 
+const pipe = require('./function/pipe.js');
+
+exports.pipe = pipe;
+
 const random = require('./function/random.js');
 
 exports.random = random;
@@ -321,10 +325,6 @@ exports.random = random;
 const range = require('./function/range.js');
 
 exports.range = range;
-
-const pipe = require('./function/pipe.js');
-
-exports.pipe = pipe;
 
 const reduce = require('./function/reduce.js');
 
@@ -338,77 +338,77 @@ const remove = require('./function/remove.js');
 
 exports.remove = remove;
 
-const removeFromKey = require('./function/removeFromKey.js');
-
-exports.removeFromKey = removeFromKey;
-
 const repeat = require('./function/repeat.js');
 
 exports.repeat = repeat;
+
+const reverse = require('./function/reverse.js');
+
+exports.reverse = reverse;
 
 const roundDecimal = require('./function/roundDecimal.js');
 
 exports.roundDecimal = roundDecimal;
 
-const setData = require('./function/setData.js');
-
-exports.setData = setData;
-
 const selectInData = require('./function/selectInData.js');
 
 exports.selectInData = selectInData;
+
+const setData = require('./function/setData.js');
+
+exports.setData = setData;
 
 const shuffle = require('./function/shuffle.js');
 
 exports.shuffle = shuffle;
 
-const sort = require('./function/sort.js');
-
-exports.sort = sort;
-
 const someValid = require('./function/someValid.js');
 
 exports.someValid = someValid;
+
+const sort = require('./function/sort.js');
+
+exports.sort = sort;
 
 const sortBy = require('./function/sortBy.js');
 
 exports.sortBy = sortBy;
 
-const stringCamelCase = require('./function/stringCamelCase.js');
+const strCamel = require('./function/strCamel.js');
 
-exports.stringCamelCase = stringCamelCase;
+exports.strCamel = strCamel;
 
-const stringCapitalize = require('./function/stringCapitalize.js');
+const strCapitalize = require('./function/strCapitalize.js');
 
-exports.stringCapitalize = stringCapitalize;
+exports.strCapitalize = strCapitalize;
 
-const stringEscape = require('./function/stringEscape.js');
+const strEscape = require('./function/strEscape.js');
 
-exports.stringEscape = stringEscape;
+exports.strEscape = strEscape;
 
-const stringKebabCase = require('./function/stringKebabCase.js');
+const strKebab = require('./function/strKebab.js');
 
-exports.stringKebabCase = stringKebabCase;
+exports.strKebab = strKebab;
 
-const stringLowerCase = require('./function/stringLowerCase.js');
+const strLower = require('./function/strLower.js');
 
-exports.stringLowerCase = stringLowerCase;
+exports.strLower = strLower;
 
-const stringSnakeCase = require('./function/stringSnakeCase.js');
+const strSnake = require('./function/strSnake.js');
 
-exports.stringSnakeCase = stringSnakeCase;
+exports.strSnake = strSnake;
 
-const stringUnEscape = require('./function/stringUnEscape.js');
+const strSubs = require('./function/strSubs.js');
 
-exports.stringUnEscape = stringUnEscape;
+exports.strSubs = strSubs;
 
-const stringUpperCase = require('./function/stringUpperCase.js');
+const strUnEscape = require('./function/strUnEscape.js');
 
-exports.stringUpperCase = stringUpperCase;
+exports.strUnEscape = strUnEscape;
 
-const stringSubs = require('./function/stringSubs.js');
+const strUpper = require('./function/strUpper.js');
 
-exports.stringSubs = stringSubs;
+exports.strUpper = strUpper;
 
 const subtract = require('./function/subtract.js');
 
@@ -422,9 +422,13 @@ const take = require('./function/take.js');
 
 exports.take = take;
 
-const templateValue = require('./function/templateValue.js');
+const templates = require('./function/templates.js');
 
-exports.templateValue = templateValue;
+exports.templates = templates;
+
+const toArray = require('./function/toArray.js');
+
+exports.toArray = toArray;
 
 const toBoolean = require('./function/toBoolean.js');
 
@@ -434,6 +438,10 @@ const toDouble = require('./function/toDouble.js');
 
 exports.toDouble = toDouble;
 
+const toInteger = require('./function/toInteger.js');
+
+exports.toInteger = toInteger;
+
 const toPairs = require('./function/toPairs.js');
 
 exports.toPairs = toPairs;
@@ -441,10 +449,6 @@ exports.toPairs = toPairs;
 const toString = require('./function/toString.js');
 
 exports.toString = toString;
-
-const toInteger = require('./function/toInteger.js');
-
-exports.toInteger = toInteger;
 
 const trim = require('./function/trim.js');
 
@@ -466,41 +470,37 @@ const unique = require('./function/unique.js');
 
 exports.unique = unique;
 
-const toArray = require('./function/toArray.js');
-
-exports.toArray = toArray;
-
 const varExtend = require('./function/varExtend.js');
 
 exports.varExtend = varExtend;
+
+const zip = require('./function/zip.js');
+
+exports.zip = zip;
 
 const where = require('./function/where.js');
 
 exports.where = where;
 
-const whereNot = require('./function/whereNot.js');
+const negOne = require('./variable/defaultValue.js');
 
-exports.whereNot = whereNot;
+exports.negOne = negOne;
 
-const whereOnce = require('./function/whereOnce.js');
+const objectCallType = require('./variable/types.js');
 
-exports.whereOnce = whereOnce;
-
-const zip = require('./function/zip.js');
-
-exports.zip = zip;
+exports.objectCallType = objectCallType;
 
 
 /**
  *  Get the type if arguments
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isArguments()
+ * isArguments(undefined)
  *=> true
  */
 function isArguments_default (value) {
@@ -514,7 +514,7 @@ function isArguments_default (value) {
  *  Get the type if array
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -530,10 +530,29 @@ function isArray_default (value) {
 
 
 /**
+ *  Get the type if bigInt
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isBigInt(undefined)
+ *=> true
+ */
+function isBigInt_default (value) {
+
+    return getTypeof(value) === "bigInt";
+
+}
+
+
+/**
  *  Get the type if boolean
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -552,7 +571,7 @@ function isBoolean_default (value) {
  *  Get the type if date
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -571,7 +590,7 @@ function isDate_default (value) {
  *  Get the type if error
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -590,12 +609,12 @@ function isError_default (value) {
  *  Get the type if function
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isFunction()
+ * isFunction(undefined)
  *=> true
  */
 function isFunction_default (value) {
@@ -606,10 +625,29 @@ function isFunction_default (value) {
 
 
 /**
+ *  Get the type if map
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isMap(new Map([['hello', 'world']]))
+ *=> true
+ */
+function isMap_default (value) {
+
+    return getTypeof(value) === "map";
+
+}
+
+
+/**
  *  Get the type if null
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -628,7 +666,7 @@ function isNull_default (value) {
  *  Get the type if number
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -647,7 +685,7 @@ function isNumber_default (value) {
  *  Get the type if object
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -666,12 +704,12 @@ function isObject_default (value) {
  *  Get the type if promise
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isPromise()
+ * isPromise(undefined)
  *=> true
  */
 function isPromise_default (value) {
@@ -685,7 +723,7 @@ function isPromise_default (value) {
  *  Get the type if regexp
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -701,10 +739,29 @@ function isRegexp_default (value) {
 
 
 /**
+ *  Get the type if set
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isSet(new Set(["a","b","c"]))
+ *=> true
+ */
+function isSet_default (value) {
+
+    return getTypeof(value) === "set";
+
+}
+
+
+/**
  *  Get the type if string
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -723,12 +780,12 @@ function isString_default (value) {
  *  Get the type if uint16Array
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isUint16Array()
+ * isUint16Array(undefined)
  *=> true
  */
 function isUint16Array_default (value) {
@@ -739,15 +796,34 @@ function isUint16Array_default (value) {
 
 
 /**
- *  Get the type if uint8Array
+ *  Get the type if uint32Array
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
  *
- * isUint8Array()
+ * isUint32Array(undefined)
+ *=> true
+ */
+function isUint32Array_default (value) {
+
+    return getTypeof(value) === "uint32Array";
+
+}
+
+
+/**
+ *  Get the type if uint8Array
+ *
+ * @since 1.4.7
+ * @category Predicate
+ * @param {any} value Pass any value to check its type
+ * @returns {boolean} Return either Json to Array.
+ * @example
+ *
+ * isUint8Array(undefined)
  *=> true
  */
 function isUint8Array_default (value) {
@@ -761,7 +837,7 @@ function isUint8Array_default (value) {
  *  Get the type if undefined
  *
  * @since 1.4.7
- * @category Collection
+ * @category Predicate
  * @param {any} value Pass any value to check its type
  * @returns {boolean} Return either Json to Array.
  * @example
@@ -778,20 +854,20 @@ function isUndefined_default (value) {
 
 exports.isArguments=isArguments_default;
 exports.isArray=isArray_default;
+exports.isBigInt=isBigInt_default;
 exports.isBoolean=isBoolean_default;
 exports.isDate=isDate_default;
 exports.isError=isError_default;
 exports.isFunction=isFunction_default;
+exports.isMap=isMap_default;
 exports.isNull=isNull_default;
 exports.isNumber=isNumber_default;
 exports.isObject=isObject_default;
 exports.isPromise=isPromise_default;
 exports.isRegexp=isRegexp_default;
+exports.isSet=isSet_default;
 exports.isString=isString_default;
 exports.isUint16Array=isUint16Array_default;
+exports.isUint32Array=isUint32Array_default;
 exports.isUint8Array=isUint8Array_default;
 exports.isUndefined=isUndefined_default;
-const entity = require('./variable/htmlentity.js');
-
-exports.entity = entity;
-
