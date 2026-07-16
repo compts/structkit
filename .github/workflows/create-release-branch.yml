@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Get version from package.json
@@ -37,10 +38,12 @@ jobs:
       - name: Create and push release branch
         if: steps.check_branch.outputs.exists == 'false'
         run: |
-          git checkout -b ${{ steps.branch.outputs.name }}
+          git fetch origin main
+          git checkout main
+          git checkout -b ${{ steps.branch.outputs.name }} origin/main
           git push origin ${{ steps.branch.outputs.name }}
 
-      - name: Open PR into release branch
+      - name: Create Pull Request into release
         if: steps.check_branch.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
