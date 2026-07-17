@@ -135,7 +135,11 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
             .replace(/(\\+?[n]|[\n])/g, "\\n")
             .replace(/(\\+?[s])/g, " ")
             .replace(/\\(?=[[\]{}"'`,:])/g, "")
-            .replace(/\\(?![\\/"bfnrtu])/g, "");
+            .replace(/\\(?![\\/"bfnrtu])/g, "")
+
+            .replace(/(\\{1,}?[n]|[\n])/g, "\\n")
+            .replace(/(\\{1,}?[s])/g, " ")
+            .replace(/(\\{1,}[snt]{0})/g, "");
 
         if (firstFindAction === "char_obj") {
 
