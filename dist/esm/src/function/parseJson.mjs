@@ -101,6 +101,8 @@ function parseJson (value, config) {
 function escapeQuotesJson (lastStr) {
 
     const result = toString(lastStr, {"raw": true})
+        .replace(/(?<!\\)\\(['`])/g, "$1")
+        .replace(/\\(?=[,'`"])/g, "")
         .replace(/(?<=.)(\\{0,}?["]{1}|["])/g, '\\"');
 
     return result;
@@ -126,6 +128,12 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
     if (validValidation) {
 
         last_str = toString(last_str, {"raw": true})
+            // Normalize actual newlines and carriage returns to \n
+            .replace(/\r\n|\r|\n/g, "\\n")
+            // Normalize tabs to \t
+            .replace(/\t/g, "\\t")
+            // Replace other whitespace characters (excluding normal space) with a single space
+            .replace(/[\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g, " ")
             .replace(/(\\+?[n]|[\n])/g, "\\n")
             .replace(/(\\+?[s])/g, " ")
             .replace(/(\\+[snt]{0})/g, "");
@@ -474,6 +482,14 @@ function constrJson (ob_str) {
             if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
 
                 append_str += ",";
+
+            } else {
+
+                if (op_c>zero && (/[^:][\s\t\n]{0,}$/g).test(append_str) && (/[\s\t\n]{0,}[\]}]$/g).test(append_str)) {
+
+                    append_str += ",";
+
+                }
 
             }
 

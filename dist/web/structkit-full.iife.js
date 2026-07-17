@@ -1487,6 +1487,37 @@ _stk.allValid=allValid;
 
 
 /**
+ * Append data for json, array, set and map type
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Value either json or array
+ * @param {any} val Value for array index and json
+ * @param {any=} key Json key
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);
+
+    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
+
+
+/**
  * To return the value selected either start or start to end index
  *
  * @since 1.3.1
@@ -1607,37 +1638,6 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
-
-
-/**
- * Append data for json, array, set and map type
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Value either json or array
- * @param {any} val Value for array index and json
- * @param {any=} key Json key
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);
-
-    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 
 
 /**
@@ -2206,6 +2206,84 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
+ * Divide logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for divided value
+ * @example
+ *
+ * divide(1, 1)
+ * // => 1
+ */
+function divide (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) / Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+/**
+ * Multiply logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for mutiplied value
+ * @example
+ *
+ * multiply(1, 1)
+ * // => 1
+ */
+function multiply (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) * Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+/**
+ * Subtract logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} value1 First number
+ * @param {number=} value2 Second number
+ * @returns {number|any} Returns number for subtracted value
+ * @example
+ *
+ * subtract(1, 1)
+ * // => 0
+ */
+function subtract (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) - Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+/**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
@@ -2253,9 +2331,388 @@ function clone (objectValue) {
 
 }
 
-_stk.clone=clone;
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
 
-_stk.count=count;
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+var operationType = [
+    [
+        "^",
+        "**"
+    ],
+    [
+        "x",
+        "*",
+        "/"
+    ],
+    [
+        "+",
+        "-"
+    ]
+];
+
+/**
+ * Logic in convert string to compute, similar on how the calculator works, using pemdas concept and also support for factorial, percentage, absolute value and square root or any algebraic expression that can be represented in string. It also support for variable in formula, you just need to fill the variable with value in the second argument as json.
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
+ * @param {any=} args Object argument that to fill in variable define at algbraic expression
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * calculate('1+1')
+ *=> 2
+ * calculate('1+as',{as:1})
+ *=> 2
+ */
+function calculate (formula, args) {
+
+    return curryArg(function (rawFormula, rawArgs) {
+
+        rawFormula = algbraicExpr(rawFormula);
+
+        if (getTypeof(rawArgs) === "json") {
+
+            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
+
+            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
+
+                return rawArgs[m1];
+
+            });
+
+        }
+
+        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
+
+            return init_group(m1);
+
+        });
+
+        return Number(init_group(strFormula));
+
+    }, [
+        formula,
+        args
+    ]);
+
+}
+
+/**
+ * Before executing, need to make a grouping
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string} formula The second number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * init_group("1+1")
+ *=> 2
+ */
+function init_group (formula) {
+
+    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
+    var matches = formula.match(regexpNumber);
+
+    if (matches[zero] === "-") {
+
+        matches.splice(zero, two, "-"+matches[one]);
+
+    }
+
+    var flattenOps = flatten(operationType);
+
+    for (var ii = one; ii< matches.length; ii +=one) {
+
+        if (has(matches, ii+one)) {
+
+            if (indexOfExist(matches[ii], flattenOps)) {
+
+                if (matches[ii+one] === "-") {
+
+                    matches.splice(ii+one, two, "-"+matches[ii+two]);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    if (count(matches) === one) {
+
+        return convert(matches[zero]);
+
+    }
+
+    if (count(matches) < three) {
+
+        throw new Error("Invalid formula");
+
+    }
+
+    return compute(matches, zero);
+
+}
+
+/**
+ * Build computational format
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string[]} formula The second number in an addition.
+ * @param {number} priority The priority sequence
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 2
+ */
+function compute (formula, priority) {
+
+    var counter = one;
+    var counterOne = zero;
+
+    var result = zero;
+    var execPriority = operationType[priority];
+    var formulaLen = Math.ceil(count(formula)/three);
+    var cloneFormula = clone(formula);
+
+    for (var ii = zero; ii< formulaLen; ii +=one) {
+
+        if (has(cloneFormula, counter+one) ===false) {
+
+            throw new Error("Invalid formula");
+
+        }
+
+        if (indexOfExist(cloneFormula[counter], execPriority)) {
+
+            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
+
+            cloneFormula.splice(counterOne*two, three, result);
+
+        } else {
+
+            counter += two;
+            counterOne +=one;
+
+        }
+
+    }
+
+    if (cloneFormula.length === one) {
+
+        return cloneFormula[zero];
+
+    }
+
+    return operationType.length-one === priority
+        ? zero
+        : compute(cloneFormula, priority+one);
+
+}
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {number} a1 The second number in an addition.
+ * @param {string} operator The second number in an addition.
+ * @param {number} b1 The second number in an addition.
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * process(1,+, 1)
+ *=> 1
+ */
+function process (a1, operator, b1) {
+
+    switch (operator) {
+
+    case '+':
+        return add(Number(a1), Number(b1));
+    case '-':
+        return subtract(Number(a1), Number(b1));
+    case 'x':
+    case '*':
+        return multiply(Number(a1), Number(b1));
+    case '/':
+        return divide(Number(a1), Number(b1));
+    case '%':
+        return Number(a1) % Number(b1);
+    case '^':
+    case '**':
+        return Number(a1) ** Number(b1);
+    default:
+        break;
+
+    }
+    throw new Error("Invalid operator");
+
+}
+
+/**
+ * Logic in convert string or number to valid number
+ *
+ * @since 1.4.8
+ * @category math
+ * @param {string} b1 The second number in an addition.
+ * @returns {number|any} Returns the total.
+ * @example
+ *
+ * convert(1)
+ *=> 1
+ */
+function convert (b1) {
+
+    if ((/^(-\d{1,})$/).test(b1)) {
+
+        return Number(b1);
+
+    }
+
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
+
+        return Number(b1.replace(/%/g, "")/ oneHundred);
+
+    }
+
+    if ((/^(\d{1,})!$/).test(b1)) {
+
+        var value = Number(b1.replace(/!/g, ""));
+
+        var inc = one;
+
+        for (var vv = one; vv <= value;) {
+
+            inc *= vv;
+            vv+=one;
+
+        }
+
+        return inc;
+
+    }
+
+    if ((/^|(\d{1,})|$/).test(b1)) {
+
+        return Math.abs(b1);
+
+    }
+
+    return b1;
+
+}
+
+/**
+ * Define the formula represented in algebra
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string} formula The second number in an addition.
+ * @returns {boolean|any} Returns the total.
+ * @example
+ *
+ * algbraicExpr("1+1")
+ *=> 1
+ */
+function algbraicExpr (formula) {
+
+    // Handle formula like this 3√s2
+    while (formula.includes("\u221A")) {
+
+        var rootIndex = formula.indexOf("\u221A");
+
+        // 1. Scan left to extract the root power/degree digits
+        var leftIndex = rootIndex - one;
+
+        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
+
+            leftIndex-=one;
+
+        }
+        var m1 = formula.slice(leftIndex + one, rootIndex);
+        var power = m1 === ""
+            ? two
+            : Number(m1);
+
+        // 2. Scan right to extract the alphanumeric/dash variable name
+        var rightIndex = rootIndex + one;
+
+        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
+
+            rightIndex+=one;
+
+        }
+        var m2 = formula.slice(rootIndex + one, rightIndex);
+
+        // 3. Perform a safe literal string replacement
+        var targetText = m1 + "\u221A" + m2;
+        // eslint-disable-next-line no-extra-parens
+        var replacementText = "(" + m2 + "**" + (one / power) + ")";
+
+        formula = formula.replace(targetText, replacementText);
+
+    }
+
+    // Handle formula like this 3x
+    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
+
+    // Handle formula like this (1)(2)
+    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
+
+    // Handle formula like this 100-10%
+
+    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
+
+    return formula;
+
+}
+
+_stk.calculate=calculate;
+
+_stk.clone=clone;
 
 
 /**
@@ -2357,40 +2814,13 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-
-/**
- * Divide logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for divided value
- * @example
- *
- * divide(1, 1)
- * // => 1
- */
-function divide (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) / Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
+_stk.count=count;
 
 _stk.divide=divide;
 
 _stk.each=each;
 
 _stk.empty=empty;
-
-_stk.equal=equal;
 
 
 /**
@@ -2447,50 +2877,11 @@ function filter (func, objectValue) {
 
 _stk.filter=filter;
 
-_stk.first=first;
-
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Array
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
-
-}
+_stk.equal=equal;
 
 _stk.flatten=flatten;
+
+_stk.first=first;
 
 
 /**
@@ -3739,35 +4130,6 @@ _stk.limit=limit;
 
 
 /**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
-/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -4004,27 +4366,25 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 
 _stk.mergeInWhere=mergeInWhere;
 
-_stk.mergeWithKey=mergeWithKey;
-
 
 /**
- * Multiply logic in satisfying two argument
+ * To check if the two arguments are less
  *
  * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for mutiplied value
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
  * @example
  *
- * multiply(1, 1)
- * // => 1
+ * lt(1, 2)
+ * // => true
  */
-function multiply (value1, value2) {
+function lt (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return Number(aa) * Number(bb);
+        return aa < bb;
 
     }, [
         value1,
@@ -4032,6 +4392,10 @@ function multiply (value1, value2) {
     ], two);
 
 }
+
+_stk.lt=lt;
+
+_stk.mergeWithKey=mergeWithKey;
 
 _stk.multiply=multiply;
 
@@ -5851,6 +6215,8 @@ function parseJson (value, config) {
 function escapeQuotesJson (lastStr) {
 
     var result = toString(lastStr, {"raw": true})
+        .replace(/(?<!\\)\\(['`])/g, "$1")
+        .replace(/\\(?=[,'`"])/g, "")
         .replace(/(?<=.)(\\{0,}?["]{1}|["])/g, '\\"');
 
     return result;
@@ -5876,6 +6242,12 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
     if (validValidation) {
 
         last_str = toString(last_str, {"raw": true})
+            // Normalize actual newlines and carriage returns to \n
+            .replace(/\r\n|\r|\n/g, "\\n")
+            // Normalize tabs to \t
+            .replace(/\t/g, "\\t")
+            // Replace other whitespace characters (excluding normal space) with a single space
+            .replace(/[\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g, " ")
             .replace(/(\\+?[n]|[\n])/g, "\\n")
             .replace(/(\\+?[s])/g, " ")
             .replace(/(\\+[snt]{0})/g, "");
@@ -6224,6 +6596,14 @@ function constrJson (ob_str) {
             if (structCount > zero && (/[^:][\s\t\n]{0,}$/g).test(append_str)) {
 
                 append_str += ",";
+
+            } else {
+
+                if (op_c>zero && (/[^:][\s\t\n]{0,}$/g).test(append_str) && (/[\s\t\n]{0,}[\]}]$/g).test(append_str)) {
+
+                    append_str += ",";
+
+                }
 
             }
 
@@ -6605,6 +6985,8 @@ _stk.random=random;
 
 _stk.range=range;
 
+_stk.reduce=reduce;
+
 
 /**
  * Regex Count Group number
@@ -6625,40 +7007,6 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-        var nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
 
 
 /**
@@ -6698,9 +7046,9 @@ function reverse (value) {
 
 _stk.reverse=reverse;
 
-_stk.roundDecimal=roundDecimal;
-
 _stk.selectInData=selectInData;
+
+_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -6848,34 +7196,7 @@ function shuffle (objectValue) {
 
 _stk.shuffle=shuffle;
 
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
+_stk.remove=remove;
 
 
 /**
@@ -7005,6 +7326,35 @@ _stk.sort=sort;
 
 
 /**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
+
+
+/**
  * Sort By function is used to sort an array of values.
  *
  * @since 1.4.87
@@ -7094,44 +7444,6 @@ _stk.strCamel=strCamel;
 
 
 /**
- * String Capitalize
- *
- * @since 1.3.1
- * @category String
- * @param {string} value String data
- * @param {string=} option Type of captalize optional
- * @returns {string} Returns Capitalize sting data
- * @example
- *
- * strCapitalize('the fish is goad   with goat-1ss','all')
- *=> 'The Fish Is Goad   With Goat-1ss'
- * strCapitalize('the fish is goad   with goat-1ss')
- *=> 'The fish is goad   with goat-1ss'
- */
-function strCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();
-
-        });
-
-    }
-
-    return toString(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.strCapitalize=strCapitalize;
-
-
-/**
  * String Escape
  *
  * @since 1.3.1
@@ -7172,6 +7484,8 @@ function strEscape (value, type) {
 
 _stk.strEscape=strEscape;
 
+_stk.strLower=strLower;
+
 
 /**
  * String Kebab case
@@ -7195,7 +7509,37 @@ function strKebab (value) {
 
 _stk.strKebab=strKebab;
 
-_stk.strLower=strLower;
+
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+        var nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
 
 
 /**
@@ -7220,9 +7564,49 @@ function strSnake (value) {
 
 _stk.strSnake=strSnake;
 
-_stk.strSubs=strSubs;
-
 _stk.strUnEscape=strUnEscape;
+
+_stk.subtract=subtract;
+
+
+/**
+ * String Capitalize
+ *
+ * @since 1.3.1
+ * @category String
+ * @param {string} value String data
+ * @param {string=} option Type of captalize optional
+ * @returns {string} Returns Capitalize sting data
+ * @example
+ *
+ * strCapitalize('the fish is goad   with goat-1ss','all')
+ *=> 'The Fish Is Goad   With Goat-1ss'
+ * strCapitalize('the fish is goad   with goat-1ss')
+ *=> 'The fish is goad   with goat-1ss'
+ */
+function strCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();
+
+        });
+
+    }
+
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.strCapitalize=strCapitalize;
+
+_stk.strSubs=strSubs;
 
 
 /**
@@ -7244,89 +7628,6 @@ function strUpper (value) {
 }
 
 _stk.strUpper=strUpper;
-
-_stk.reduce=reduce;
-
-
-/**
- * Subtract logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for subtracted value
- * @example
- *
- * subtract(1, 1)
- * // => 0
- */
-function subtract (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) - Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.subtract=subtract;
-
-
-/**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        var cloneRawListValueReturn = rawListValue;
-        var isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
 
 
 /**
@@ -7386,6 +7687,58 @@ function take (value, valueList) {
 }
 
 _stk.take=take;
+
+
+/**
+ * Swapping the value either string or array in there specific position
+ *
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
+ * @example
+ *
+ * swap(0, 2, 'foo')
+ *=> off
+ */
+function swap (firstValue, secondValue, listValue) {
+
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        var cloneRawListValueReturn = rawListValue;
+        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
 
 
 /**
@@ -7903,8 +8256,6 @@ function unique (value) {
 
 _stk.unique=unique;
 
-_stk.varExtend=varExtend;
-
 _stk.where=where;
 
 
@@ -8331,347 +8682,7 @@ function zip () {
 
 _stk.zip=zip;
 
-
-var operationType = [
-    [
-        "^",
-        "**"
-    ],
-    [
-        "x",
-        "*",
-        "/"
-    ],
-    [
-        "+",
-        "-"
-    ]
-];
-
-/**
- * Logic in convert string to compute, similar on how the calculator works, using pemdas concept and also support for factorial, percentage, absolute value and square root or any algebraic expression that can be represented in string. It also support for variable in formula, you just need to fill the variable with value in the second argument as json.
- *
- * @since 1.4.8
- * @category Math
- * @param {string} formula Formula you want to execution, it follows the idea of algebraic expression concept
- * @param {any=} args Object argument that to fill in variable define at algbraic expression
- * @returns {number|any} Returns the total.
- * @example
- *
- * calculate('1+1')
- *=> 2
- * calculate('1+as',{as:1})
- *=> 2
- */
-function calculate (formula, args) {
-
-    return curryArg(function (rawFormula, rawArgs) {
-
-        rawFormula = algbraicExpr(rawFormula);
-
-        if (getTypeof(rawArgs) === "json") {
-
-            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
-
-            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
-
-                return rawArgs[m1];
-
-            });
-
-        }
-
-        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
-
-            return init_group(m1);
-
-        });
-
-        return Number(init_group(strFormula));
-
-    }, [
-        formula,
-        args
-    ]);
-
-}
-
-/**
- * Before executing, need to make a grouping
- *
- * @since 1.4.9
- * @category Math
- * @param {string} formula The second number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * init_group("1+1")
- *=> 2
- */
-function init_group (formula) {
-
-    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
-    var matches = formula.match(regexpNumber);
-
-    if (matches[zero] === "-") {
-
-        matches.splice(zero, two, "-"+matches[one]);
-
-    }
-
-    var flattenOps = flatten(operationType);
-
-    for (var ii = one; ii< matches.length; ii +=one) {
-
-        if (has(matches, ii+one)) {
-
-            if (indexOfExist(matches[ii], flattenOps)) {
-
-                if (matches[ii+one] === "-") {
-
-                    matches.splice(ii+one, two, "-"+matches[ii+two]);
-
-                }
-
-            }
-
-        }
-
-    }
-
-    if (count(matches) === one) {
-
-        return convert(matches[zero]);
-
-    }
-
-    if (count(matches) < three) {
-
-        throw new Error("Invalid formula");
-
-    }
-
-    return compute(matches, zero);
-
-}
-
-/**
- * Build computational format
- *
- * @since 1.4.9
- * @category Math
- * @param {string[]} formula The second number in an addition.
- * @param {number} priority The priority sequence
- * @returns {number} Returns the total.
- * @example
- *
- * compute("1+1")
- *=> 2
- */
-function compute (formula, priority) {
-
-    var counter = one;
-    var counterOne = zero;
-
-    var result = zero;
-    var execPriority = operationType[priority];
-    var formulaLen = Math.ceil(count(formula)/three);
-    var cloneFormula = clone(formula);
-
-    for (var ii = zero; ii< formulaLen; ii +=one) {
-
-        if (has(cloneFormula, counter+one) ===false) {
-
-            throw new Error("Invalid formula");
-
-        }
-
-        if (indexOfExist(cloneFormula[counter], execPriority)) {
-
-            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
-
-            cloneFormula.splice(counterOne*two, three, result);
-
-        } else {
-
-            counter += two;
-            counterOne +=one;
-
-        }
-
-    }
-
-    if (cloneFormula.length === one) {
-
-        return cloneFormula[zero];
-
-    }
-
-    return operationType.length-one === priority
-        ? zero
-        : compute(cloneFormula, priority+one);
-
-}
-
-/**
- * Logic in convert string or number to valid number
- *
- * @since 1.4.8
- * @category Math
- * @param {number} a1 The second number in an addition.
- * @param {string} operator The second number in an addition.
- * @param {number} b1 The second number in an addition.
- * @returns {number|any} Returns the total.
- * @example
- *
- * process(1,+, 1)
- *=> 1
- */
-function process (a1, operator, b1) {
-
-    switch (operator) {
-
-    case '+':
-        return add(Number(a1), Number(b1));
-    case '-':
-        return subtract(Number(a1), Number(b1));
-    case 'x':
-    case '*':
-        return multiply(Number(a1), Number(b1));
-    case '/':
-        return divide(Number(a1), Number(b1));
-    case '%':
-        return Number(a1) % Number(b1);
-    case '^':
-    case '**':
-        return Number(a1) ** Number(b1);
-    default:
-        break;
-
-    }
-    throw new Error("Invalid operator");
-
-}
-
-/**
- * Logic in convert string or number to valid number
- *
- * @since 1.4.8
- * @category math
- * @param {string} b1 The second number in an addition.
- * @returns {number|any} Returns the total.
- * @example
- *
- * convert(1)
- *=> 1
- */
-function convert (b1) {
-
-    if ((/^(-\d{1,})$/).test(b1)) {
-
-        return Number(b1);
-
-    }
-
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
-
-        return Number(b1.replace(/%/g, "")/ oneHundred);
-
-    }
-
-    if ((/^(\d{1,})!$/).test(b1)) {
-
-        var value = Number(b1.replace(/!/g, ""));
-
-        var inc = one;
-
-        for (var vv = one; vv <= value;) {
-
-            inc *= vv;
-            vv+=one;
-
-        }
-
-        return inc;
-
-    }
-
-    if ((/^|(\d{1,})|$/).test(b1)) {
-
-        return Math.abs(b1);
-
-    }
-
-    return b1;
-
-}
-
-/**
- * Define the formula represented in algebra
- *
- * @since 1.4.9
- * @category Math
- * @param {string} formula The second number in an addition.
- * @returns {boolean|any} Returns the total.
- * @example
- *
- * algbraicExpr("1+1")
- *=> 1
- */
-function algbraicExpr (formula) {
-
-    // Handle formula like this 3√s2
-    while (formula.includes("\u221A")) {
-
-        var rootIndex = formula.indexOf("\u221A");
-
-        // 1. Scan left to extract the root power/degree digits
-        var leftIndex = rootIndex - one;
-
-        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
-
-            leftIndex-=one;
-
-        }
-        var m1 = formula.slice(leftIndex + one, rootIndex);
-        var power = m1 === ""
-            ? two
-            : Number(m1);
-
-        // 2. Scan right to extract the alphanumeric/dash variable name
-        var rightIndex = rootIndex + one;
-
-        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
-
-            rightIndex+=one;
-
-        }
-        var m2 = formula.slice(rootIndex + one, rightIndex);
-
-        // 3. Perform a safe literal string replacement
-        var targetText = m1 + "\u221A" + m2;
-        // eslint-disable-next-line no-extra-parens
-        var replacementText = "(" + m2 + "**" + (one / power) + ")";
-
-        formula = formula.replace(targetText, replacementText);
-
-    }
-
-    // Handle formula like this 3x
-    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
-
-    // Handle formula like this (1)(2)
-    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
-
-    // Handle formula like this 100-10%
-
-    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
-
-    return formula;
-
-}
-
-_stk.calculate=calculate;
+_stk.varExtend=varExtend;
 
 
  })(typeof window !== "undefined" ? window : this);

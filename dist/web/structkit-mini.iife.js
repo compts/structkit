@@ -1109,6 +1109,19 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
+function append (objectValue, val, key) {
+
+    return curryArg(function (rawObjectValue, rawVal, rawKey) {
+
+        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
+        objectValue,
+        val,
+        key
+    ], two);
+
+}
+
+_stk.append=append;
 function arraySlice (objectValue, min, max) {
 
     var ran_var=[];    var defaultValueZero=0;
@@ -1201,19 +1214,6 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
-function append (objectValue, val, key) {
-
-    return curryArg(function (rawObjectValue, rawVal, rawKey) {
-
-        return baseAppend(rawObjectValue, rawVal, rawKey);    }, [
-        objectValue,
-        val,
-        key
-    ], two);
-
-}
-
-_stk.append=append;
 function range (maxValue, minValue, step) {
 
     var incrementValue=has(step)
@@ -1593,6 +1593,46 @@ function asyncReplace (value, search, toReplace) {
 }
 
 _stk.asyncReplace=asyncReplace;
+function divide (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) / Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
+function multiply (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) * Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
+function subtract (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) - Number(bb);
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
 function clone (objectValue) {
 
     if (indexOfExist(getTypeofInternal(objectValue), [
@@ -1604,7 +1644,9 @@ function clone (objectValue) {
         "map"
     ])) {
 
-        var variable=empty(objectValue);        each(objectValue, function (value, key) {
+        var variable=empty(objectValue);
+
+        each(objectValue, function (value, key) {
 
             variable = append(variable, value, key);
 
@@ -1627,8 +1669,316 @@ function clone (objectValue) {
 
 }
 
-_stk.clone=clone;
-_stk.count=count;function curry (fun, num) {
+
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "array") {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+var operationType = [
+    [
+        "^",
+        "**"
+    ],
+    [
+        "x",
+        "*",
+        "/"
+    ],
+    [
+        "+",
+        "-"
+    ]
+];
+
+
+function calculate (formula, args) {
+
+    return curryArg(function (rawFormula, rawArgs) {
+
+        rawFormula = algbraicExpr(rawFormula);
+
+        if (getTypeof(rawArgs) === "json") {
+
+            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
+
+            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
+
+                return rawArgs[m1];
+
+            });
+
+        }
+
+        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
+
+            return init_group(m1);
+
+        });
+
+        return Number(init_group(strFormula));
+
+    }, [
+        formula,
+        args
+    ]);
+
+}
+
+
+function init_group (formula) {
+
+    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
+    var matches = formula.match(regexpNumber);
+
+    if (matches[zero] === "-") {
+
+        matches.splice(zero, two, "-"+matches[one]);
+
+    }
+
+    var flattenOps = flatten(operationType);
+
+    for (var ii = one; ii< matches.length; ii +=one) {
+
+        if (has(matches, ii+one)) {
+
+            if (indexOfExist(matches[ii], flattenOps)) {
+
+                if (matches[ii+one] === "-") {
+
+                    matches.splice(ii+one, two, "-"+matches[ii+two]);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    if (count(matches) === one) {
+
+        return convert(matches[zero]);
+
+    }
+
+    if (count(matches) < three) {
+
+        throw new Error("Invalid formula");
+
+    }
+
+    return compute(matches, zero);
+
+}
+
+/**
+ * Build computational format
+ *
+ * @since 1.4.9
+ * @category Math
+ * @param {string[]} formula The second number in an addition.
+ * @param {number} priority The priority sequence
+ * @returns {number} Returns the total.
+ * @example
+ *
+ * compute("1+1")
+ *=> 2
+ */
+function compute (formula, priority) {
+
+    var counter = one;
+    var counterOne = zero;
+
+    var result = zero;
+    var execPriority = operationType[priority];
+    var formulaLen = Math.ceil(count(formula)/three);
+    var cloneFormula = clone(formula);
+
+    for (var ii = zero; ii< formulaLen; ii +=one) {
+
+        if (has(cloneFormula, counter+one) ===false) {
+
+            throw new Error("Invalid formula");
+
+        }
+
+        if (indexOfExist(cloneFormula[counter], execPriority)) {
+
+            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
+
+            cloneFormula.splice(counterOne*two, three, result);
+
+        } else {
+
+            counter += two;
+            counterOne +=one;
+
+        }
+
+    }
+
+    if (cloneFormula.length === one) {
+
+        return cloneFormula[zero];
+
+    }
+
+    return operationType.length-one === priority
+        ? zero
+        : compute(cloneFormula, priority+one);
+
+}
+
+
+function process (a1, operator, b1) {
+
+    switch (operator) {
+
+    case '+':
+        return add(Number(a1), Number(b1));
+    case '-':
+        return subtract(Number(a1), Number(b1));
+    case 'x':
+    case '*':
+        return multiply(Number(a1), Number(b1));
+    case '/':
+        return divide(Number(a1), Number(b1));
+    case '%':
+        return Number(a1) % Number(b1);
+    case '^':
+    case '**':
+        return Number(a1) ** Number(b1);
+    default:
+        break;
+
+    }
+    throw new Error("Invalid operator");
+
+}
+
+
+function convert (b1) {
+
+    if ((/^(-\d{1,})$/).test(b1)) {
+
+        return Number(b1);
+
+    }
+
+    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
+
+        return Number(b1.replace(/%/g, "")/ oneHundred);
+
+    }
+
+    if ((/^(\d{1,})!$/).test(b1)) {
+
+        var value = Number(b1.replace(/!/g, ""));
+
+        var inc = one;
+
+        for (var vv = one; vv <= value;) {
+
+            inc *= vv;
+            vv+=one;
+
+        }
+
+        return inc;
+
+    }
+
+    if ((/^|(\d{1,})|$/).test(b1)) {
+
+        return Math.abs(b1);
+
+    }
+
+    return b1;
+
+}
+
+
+function algbraicExpr (formula) {
+
+    // Handle formula like this 3√s2
+    while (formula.includes("\u221A")) {
+
+        var rootIndex = formula.indexOf("\u221A");
+
+        // 1. Scan left to extract the root power/degree digits
+        var leftIndex = rootIndex - one;
+
+        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
+
+            leftIndex-=one;
+
+        }
+        var m1 = formula.slice(leftIndex + one, rootIndex);
+        var power = m1 === ""
+            ? two
+            : Number(m1);
+
+        // 2. Scan right to extract the alphanumeric/dash variable name
+        var rightIndex = rootIndex + one;
+
+        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
+
+            rightIndex+=one;
+
+        }
+        var m2 = formula.slice(rootIndex + one, rightIndex);
+
+        // 3. Perform a safe literal string replacement
+        var targetText = m1 + "\u221A" + m2;
+        // eslint-disable-next-line no-extra-parens
+        var replacementText = "(" + m2 + "**" + (one / power) + ")";
+
+        formula = formula.replace(targetText, replacementText);
+
+    }
+
+    // Handle formula like this 3x
+    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
+
+    // Handle formula like this (1)(2)
+    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
+
+    // Handle formula like this 100-10%
+
+    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
+
+    return formula;
+
+}
+
+_stk.calculate=calculate;
+_stk.clone=clone;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -1678,19 +2028,7 @@ function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-function divide (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) / Number(bb);    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.divide=divide;
-_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
+_stk.count=count;_stk.divide=divide;_stk.each=each;_stk.empty=empty;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -1728,34 +2066,7 @@ _stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectVa
 }
 
 _stk.filter=filter;
-_stk.first=first;function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "array") {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
-
-}
-
-_stk.flatten=flatten;
-function inc (value, default_value) {
+_stk.equal=equal;_stk.flatten=flatten;_stk.first=first;function inc (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2625,18 +2936,6 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -2796,19 +3095,19 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-_stk.mergeWithKey=mergeWithKey;function multiply (value1, value2) {
+function lt (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
-        return Number(aa) * Number(bb);    }, [
+        return aa < bb;    }, [
         value1,
         value2
     ], two);
 
 }
 
-_stk.multiply=multiply;
-function toBoolean (value) {
+_stk.lt=lt;
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -4389,6 +4688,8 @@ function parseJson (value, config) {
 function escapeQuotesJson (lastStr) {
 
     var result = toString(lastStr, {"raw": true})
+        .replace(/(?<!\\)\\(['`])/g, "$1")
+        .replace(/\\(?=[,'`"])/g, "")
         .replace(/(?<=.)(\\{0,}?["]{1}|["])/g, '\\"');
 
     return result;
@@ -4401,6 +4702,12 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
     if (validValidation) {
 
         last_str = toString(last_str, {"raw": true})
+            // Normalize actual newlines and carriage returns to \n
+            .replace(/\r\n|\r|\n/g, "\\n")
+            // Normalize tabs to \t
+            .replace(/\t/g, "\\t")
+            // Replace other whitespace characters (excluding normal space) with a single space
+            .replace(/[\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g, " ")
             .replace(/(\\+?[n]|[\n])/g, "\\n")
             .replace(/(\\+?[s])/g, " ")
             .replace(/(\\+[snt]{0})/g, "");
@@ -4712,6 +5019,14 @@ function constrJson (ob_str) {
 
                 append_str += ",";
 
+            } else {
+
+                if (op_c>zero && (/[^:][\s\t\n]{0,}$/g).test(append_str) && (/[\s\t\n]{0,}[\]}]$/g).test(append_str)) {
+
+                    append_str += ",";
+
+                }
+
             }
 
             op_c +=one;
@@ -5004,27 +5319,11 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;function regexCountGroup (value) {
+_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;        var nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
 function reverse (value) {
 
     return curryArg(function (rawValue) {
@@ -5048,7 +5347,7 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
-_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
+_stk.selectInData=selectInData;_stk.roundDecimal=roundDecimal;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5144,20 +5443,7 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
-function someValid () {
-
-    var arg=arguments;    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-function baseSort (objectValue, func) {
+_stk.remove=remove;function baseSort (objectValue, func) {
 
     var jsonn=objectValue;    var js_m=getTypeofInternal(jsonn) === "json"
         ?each(jsonn)
@@ -5253,6 +5539,19 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+function someValid () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 function sortBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -5300,25 +5599,6 @@ function strCamel (value) {
 }
 
 _stk.strCamel=strCamel;
-function strCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();        });
-
-    }
-
-    return toString(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.strCapitalize=strCapitalize;
 function strEscape (value, type) {
 
     var typeVal = type || "entity";    if (indexOfNotExist(typeVal, listType)) {
@@ -5344,37 +5624,89 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
-function strKebab (value) {
+_stk.strLower=strLower;function strKebab (value) {
 
     return stringSplit(toString(value))
         .split(" ")
         .join("-");}
 
 _stk.strKebab=strKebab;
-_stk.strLower=strLower;function strSnake (value) {
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;        var nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+function strSnake (value) {
 
     return stringSplit(toString(value))
         .split(" ")
         .join("_");}
 
 _stk.strSnake=strSnake;
-_stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
+_stk.strUnEscape=strUnEscape;_stk.subtract=subtract;function strCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();        });
+
+    }
+
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.strCapitalize=strCapitalize;
+_stk.strSubs=strSubs;function strUpper (value) {
 
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.reduce=reduce;function subtract (value1, value2) {
+function baseTake (rawList, startIndex, lastIndex) {
 
-    return curryArg(function (aa, bb) {
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
 
-        return Number(aa) - Number(bb);    }, [
-        value1,
-        value2
+    var rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?toArray(rawGetValue).join("")
+        :rawGetValue;
+
+}
+
+
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
     ], two);
 
 }
 
-_stk.subtract=subtract;
+_stk.take=take;
 function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
@@ -5410,35 +5742,6 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
-function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?toArray(rawGetValue).join("")
-        :rawGetValue;
-
-}
-
-
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
 function templates (templateString, data, option) {
 
     return curryArg(function (rawTemplateString, rawData, rawOption) {
@@ -5796,7 +6099,7 @@ function unique (value) {
 }
 
 _stk.unique=unique;
-_stk.varExtend=varExtend;_stk.where=where;function isArguments (value) {
+_stk.where=where;function isArguments (value) {
 
     return getTypeof(value) === "arguments";
 
@@ -5992,283 +6295,4 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
-var operationType = [
-    [
-        "^",
-        "**"
-    ],
-    [
-        "x",
-        "*",
-        "/"
-    ],
-    [
-        "+",
-        "-"
-    ]
-];function calculate (formula, args) {
-
-    return curryArg(function (rawFormula, rawArgs) {
-
-        rawFormula = algbraicExpr(rawFormula);
-
-        if (getTypeof(rawArgs) === "json") {
-
-            var argsKey = new RegExp("\\b("+toArray(getKey(rawArgs)).join("|")+")\\b", "g");
-
-            rawFormula = rawFormula.replace(argsKey, function (mm, m1) {
-
-                return rawArgs[m1];
-
-            });
-
-        }
-
-        var strFormula = rawFormula.replace(/\((.*?)\)/g, function (mm, m1) {
-
-            return init_group(m1);
-
-        });
-
-        return Number(init_group(strFormula));
-
-    }, [
-        formula,
-        args
-    ]);
-
-}
-
-
-function init_group (formula) {
-
-    var regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
-    var matches = formula.match(regexpNumber);
-
-    if (matches[zero] === "-") {
-
-        matches.splice(zero, two, "-"+matches[one]);
-
-    }
-
-    var flattenOps = flatten(operationType);
-
-    for (var ii = one; ii< matches.length; ii +=one) {
-
-        if (has(matches, ii+one)) {
-
-            if (indexOfExist(matches[ii], flattenOps)) {
-
-                if (matches[ii+one] === "-") {
-
-                    matches.splice(ii+one, two, "-"+matches[ii+two]);
-
-                }
-
-            }
-
-        }
-
-    }
-
-    if (count(matches) === one) {
-
-        return convert(matches[zero]);
-
-    }
-
-    if (count(matches) < three) {
-
-        throw new Error("Invalid formula");
-
-    }
-
-    return compute(matches, zero);
-
-}
-
-/**
- * Build computational format
- *
- * @since 1.4.9
- * @category Math
- * @param {string[]} formula The second number in an addition.
- * @param {number} priority The priority sequence
- * @returns {number} Returns the total.
- * @example
- *
- * compute("1+1")
- *=> 2
- */
-function compute (formula, priority) {
-
-    var counter = one;
-    var counterOne = zero;
-
-    var result = zero;
-    var execPriority = operationType[priority];
-    var formulaLen = Math.ceil(count(formula)/three);
-    var cloneFormula = clone(formula);
-
-    for (var ii = zero; ii< formulaLen; ii +=one) {
-
-        if (has(cloneFormula, counter+one) ===false) {
-
-            throw new Error("Invalid formula");
-
-        }
-
-        if (indexOfExist(cloneFormula[counter], execPriority)) {
-
-            result = process(convert(cloneFormula[counter-one]), cloneFormula[counter], convert(cloneFormula[counter+one]));
-
-            cloneFormula.splice(counterOne*two, three, result);
-
-        } else {
-
-            counter += two;
-            counterOne +=one;
-
-        }
-
-    }
-
-    if (cloneFormula.length === one) {
-
-        return cloneFormula[zero];
-
-    }
-
-    return operationType.length-one === priority
-        ? zero
-        : compute(cloneFormula, priority+one);
-
-}
-
-
-function process (a1, operator, b1) {
-
-    switch (operator) {
-
-    case '+':
-        return add(Number(a1), Number(b1));
-    case '-':
-        return subtract(Number(a1), Number(b1));
-    case 'x':
-    case '*':
-        return multiply(Number(a1), Number(b1));
-    case '/':
-        return divide(Number(a1), Number(b1));
-    case '%':
-        return Number(a1) % Number(b1);
-    case '^':
-    case '**':
-        return Number(a1) ** Number(b1);
-    default:
-        break;
-
-    }
-    throw new Error("Invalid operator");
-
-}
-
-
-function convert (b1) {
-
-    if ((/^(-\d{1,})$/).test(b1)) {
-
-        return Number(b1);
-
-    }
-
-    if ((/^(\d{1,}|\d{1,}\.\d{1,})%$/).test(b1)) {
-
-        return Number(b1.replace(/%/g, "")/ oneHundred);
-
-    }
-
-    if ((/^(\d{1,})!$/).test(b1)) {
-
-        var value = Number(b1.replace(/!/g, ""));
-
-        var inc = one;
-
-        for (var vv = one; vv <= value;) {
-
-            inc *= vv;
-            vv+=one;
-
-        }
-
-        return inc;
-
-    }
-
-    if ((/^|(\d{1,})|$/).test(b1)) {
-
-        return Math.abs(b1);
-
-    }
-
-    return b1;
-
-}
-
-
-function algbraicExpr (formula) {
-
-    // Handle formula like this 3√s2
-    while (formula.includes("\u221A")) {
-
-        var rootIndex = formula.indexOf("\u221A");
-
-        // 1. Scan left to extract the root power/degree digits
-        var leftIndex = rootIndex - one;
-
-        while (leftIndex >= zero && formula[leftIndex] >= '0' && formula[leftIndex] <= '9') {
-
-            leftIndex-=one;
-
-        }
-        var m1 = formula.slice(leftIndex + one, rootIndex);
-        var power = m1 === ""
-            ? two
-            : Number(m1);
-
-        // 2. Scan right to extract the alphanumeric/dash variable name
-        var rightIndex = rootIndex + one;
-
-        while (rightIndex < formula.length && (/[a-zA-Z0-9_-]/).test(formula[rightIndex])) {
-
-            rightIndex+=one;
-
-        }
-        var m2 = formula.slice(rootIndex + one, rightIndex);
-
-        // 3. Perform a safe literal string replacement
-        var targetText = m1 + "\u221A" + m2;
-        // eslint-disable-next-line no-extra-parens
-        var replacementText = "(" + m2 + "**" + (one / power) + ")";
-
-        formula = formula.replace(targetText, replacementText);
-
-    }
-
-    // Handle formula like this 3x
-    formula = formula.replace(/\b(\d+(?:\.\d+)?)([a-zA-Z]+\d*)\b/g, "($1 * $2)");
-
-    // Handle formula like this (1)(2)
-    formula = formula.replace(/\b(\)\s*\()\b/g, ") * (");
-
-    // Handle formula like this 100-10%
-
-    formula = formula.replace(/([a-zA-Z0-9]+)\s*([*\-+x])\s*([a-zA-Z0-9]+)%/g, "($1$2($1*($3/$1)))");
-
-    return formula;
-
-}
-
-_stk.calculate=calculate;
-
-
- })(typeof window !== "undefined" ? window : this);
+_stk.varExtend=varExtend; })(typeof window !== "undefined" ? window : this);
