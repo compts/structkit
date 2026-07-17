@@ -75,6 +75,19 @@ describe('CJS: parseJson method', function () {
         );
 
         assert.deepStrictEqual(
+            parseJson('{a:"s\\\\nas"}'),
+            {"a": 's\nas'}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s\nas"}'),
+            {"a": 's\nas'}
+        );
+        assert.deepStrictEqual(
+            parseJson('{a:"s\tas"}'),
+            {"a": 's\tas'}
+        );
+        assert.deepStrictEqual(
             parseJson('{"value":"hello\\qworld"}'),
             {"value": 'helloqworld'}
         );
@@ -136,6 +149,9 @@ describe('CJS: parseJson method', function () {
         });
 
         assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeatss(\\"s\\"\\,2)=>\\[sa,s\\]\\}"}`), {"example": 'arrayRepeatss("s",2)=>[sa,s]}',
+            "name": 'arrayRepeat'});
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeatss(\\"s\\"\\,2)=>\n\\[sa,s\\\\\\n;]\\}"}`), {"example": 'arrayRepeatss("s",2)=>\n[sa,s\n;]}',
             "name": 'arrayRepeat'});
 
     });
