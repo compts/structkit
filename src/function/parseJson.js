@@ -134,7 +134,7 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
             .replace(/[\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g, " ")
             .replace(/(\\+?[n]|[\n])/g, "\\n")
             .replace(/(\\+?[s])/g, " ")
-            .replace(/(\\+[snt]{0})/g, "");
+            .replace(/(\\+[st]{0})/g, "");
 
         if (firstFindAction === "char_obj") {
 
