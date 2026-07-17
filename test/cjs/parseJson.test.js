@@ -90,6 +90,29 @@ describe('CJS: parseJson method', function () {
         assert.deepStrictEqual(
             parseJson('{"value":"hello\\qworld"}'),
             {"value": 'helloqworld'}
+        ); 
+        assert.deepStrictEqual(
+            parseJson('{"example":"[1\\,1]"}'),
+            {"example": "[1,1]"}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{"data":{"getProjectList":[{"name":"add","example":"add(1\\, 1)\\/\\/ => 2\\/"}]}}'),
+            {
+                "data": {
+                    "getProjectList": [
+                        {
+                            "name": "add",
+                            "example": "add(1, 1)// => 2/"
+                        }
+                    ]
+                }
+            }
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{"example":"a\\/b"}'),
+            {"example": "a/b"}
         );
 
     });
