@@ -1,5 +1,11 @@
-(function(global){global._stk={};var negOne = -1;
-var zero = 0;
+(function(global){global._stk={};var __p = "@argument/place";
+
+__=__p
+
+
+
+_stk.__=__;
+var negOne = -1;var zero = 0;
 var one = 1;
 var two = 2;
 var three = 3;
@@ -27,10 +33,6 @@ function _has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
-
-var __p = "@argument/place";
-
-__=__p
 
 
 function curryArg (fn, args, NoDefaultArgs) {
@@ -213,23 +215,11 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
 }
 
 
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
 function has () {
 
-    var args=arguments;    return curryArg(function (aa, bb) {
+    var args=arguments;
+
+    return curryArg(function (aa, bb) {
 
         return _has(aa, bb);
 
@@ -1278,9 +1268,23 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
-_stk.arraySlice=arraySlice;function isEmpty (value) {
+_stk.arraySlice=arraySlice;function add (value1, value2) {
 
-    var typeofvalue = getTypeofInternal(value);    var invalidList = [
+    return curryArg(function (aa, bb) {
+
+        return Number(aa) + Number(bb);    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+
+function isEmpty (value) {
+
+    var typeofvalue = getTypeofInternal(value);
+
+    var invalidList = [
         'null',
         'undefined'
     ];
@@ -1977,7 +1981,7 @@ function algbraicExpr (formula) {
 }
 
 _stk.calculate=calculate;
-_stk.clone=clone;_stk.count=count;function curry (fun, num) {
+_stk.clone=clone;function curry (fun, num) {
 
     // eslint-disable-next-line no-undefined
     var argDummy = arrayRepeat(undefined, num || fun.length);    return curryArg(fun, argDummy, count(argDummy));
@@ -1985,7 +1989,7 @@ _stk.clone=clone;_stk.count=count;function curry (fun, num) {
 }
 
 _stk.curry=curry;
-function dec (value, default_value) {
+_stk.count=count;function dec (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2728,6 +2732,18 @@ function gt (value1, value2) {
 }
 
 _stk.gt=gt;
+function gte (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa >= bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gte=gte;
 _stk.has=has;function reduce (func, defaultValue, listData) {
 
     return curryArg(function (rawFunc, rawDefaultValue, rawListData) {
@@ -2825,19 +2841,7 @@ function ifElse (cond, ifFunc, elseFunc) {
 }
 
 _stk.ifElse=ifElse;
-_stk.indexOf=indexOf;_stk.inc=inc;_stk.indexOfExist=indexOfExist;_stk.indexOfNotExist=indexOfNotExist;function gte (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa >= bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gte=gte;
-function insert (objectValue, value) {
+_stk.inc=inc;_stk.indexOfExist=indexOfExist;_stk.indexOf=indexOf;_stk.indexOfNotExist=indexOfNotExist;function insert (objectValue, value) {
 
     if (has(objectValue)) {
 
@@ -2862,7 +2866,7 @@ function insert (objectValue, value) {
 }
 
 _stk.insert=insert;
-_stk.isEmpty=isEmpty;_stk.__=__;_stk.isExact=isExact;_stk.isExactbyRegExp=isExactbyRegExp;function last (objectValue) {
+_stk.isEmpty=isEmpty;_stk.isExactbyRegExp=isExactbyRegExp;_stk.isExact=isExact;_stk.isJson=isJson;function last (objectValue) {
 
     return getKeyVal(objectValue, "last_index").value;}
 
@@ -2935,7 +2939,7 @@ function limit (objectValue, minValue, maxValue, func) {
 }
 
 _stk.limit=limit;
-_stk.isJson=isJson;function lte (value1, value2) {
+function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -2947,7 +2951,7 @@ _stk.isJson=isJson;function lte (value1, value2) {
 }
 
 _stk.lte=lte;
-function mapGetData (valueFormat, objectValue, isStrict) {
+_stk.map=map;function mapGetData (valueFormat, objectValue, isStrict) {
 
     return curryArg(function (rawValueFormat, rawObjectValue, rawIsStrict) {
 
@@ -2988,7 +2992,7 @@ function mapGetData (valueFormat, objectValue, isStrict) {
 }
 
 _stk.mapGetData=mapGetData;
-_stk.map=map;function mergeWithKey (objectValue, mergeValue) {
+function mergeWithKey (objectValue, mergeValue) {
 
     return curryArg(function (rawObjectValue, rawMergeValue) {
 
@@ -3106,7 +3110,7 @@ _stk.mergeWithKey=mergeWithKey;function lt (value1, value2) {
 }
 
 _stk.lt=lt;
-function toBoolean (value) {
+_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -4611,187 +4615,13 @@ function strUnEscape (value, type) {
 }
 
 
-function parseString (value, config) {
-
-    var defaultConfig = varExtend({"ignoreFunction": true,
-        "isJson": false,
-        "throwError": false,
-        "unscapeEntity": false}, config);
-
-    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
-
-        if (defaultConfig.throwError) {
-
-            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
-
-        }
-
-        return '';
-
-    }
-
-    var data = parseStringCore(zero, defaultConfig, value);
-
-    if (defaultConfig.unscapeEntity) {
-
-        data = strUnEscape(data);
-
-    }
-
-    return data.toString();
-
-}
-
-
-function escapeQuotesStr (str) {
-
-    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
-
-}
-
-
-function parseStringCore (rawCount, rawConfig, rawValue) {
-
-    return curryArg(function (refCount, refConfig, value) {
-
-        var prepStr = "";
-
-        if (has(rawCount === zero
-            ?validTypeJson
-            :remove(validTypeJson, "object"), getTypeof(value))) {
-
-            var getTypeDetails = validTypeJson[getTypeof(value)];
-
-            var inc=zero;
-
-            each(value, function (ev, ek) {
-
-                var delimeter=inc<count(value)-one
-                    ?","
-                    :"";
-
-                if (getTypeDetails.isKey) {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
-
-                } else {
-
-                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
-
-                }
-
-                inc += one;
-
-            });
-
-            return getTypeDetails.start+prepStr+getTypeDetails.end;
-
-        }
-
-        var parseValue = convertValue(value);
-
-        if (getTypeof(parseValue) === "string") {
-
-            return '"'+escapeQuotesStr(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "undefined") {
-
-            return '"undefined"';
-
-        }
-        if (getTypeof(parseValue) === "date") {
-
-            return '"'+toString(parseValue)+'"';
-
-        }
-        if (getTypeof(parseValue) === "regexp") {
-
-            return '"new RegExp(' + value.source +','+ value.flags+')"';
-
-        }
-
-        if (getTypeof(parseValue) === "number") {
-
-            if (isNaN(parseValue)) {
-
-                return '"NaN"';
-
-            }
-
-            if (Infinity === parseValue) {
-
-                return '"Infinity"';
-
-            }
-
-            return value;
-
-        }
-
-        if (getTypeof(value) === "object") {
-
-            return '"'+value+'"';
-
-        }
-
-        if (getTypeof(parseValue) === "function") {
-
-            if (refConfig.ignoreFunction) {
-
-                return null;
-
-            }
-
-            return '"'+parseValue+'"';
-
-        }
-
-        return parseValue;
-
-    }, [
-        rawCount,
-        rawConfig,
-        rawValue
-    ], two);
-
-}
-
-_stk.parseString=parseString;
-_stk.multiply=multiply;function pipe () {
-
-    var arg=arguments;    var pipeConst = first(arg);
-    var varLimit = limit(arg, one);
-    var that = this;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(value) === "function") {
-
-                total = value.call(that, total);
-
-            }
-
-            return total;
-
-        }, pipeConst.apply(that, rawValue), varLimit);
-
-    // eslint-disable-next-line padded-blocks
-    // eslint-disable-next-line no-undefined
-    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
-
-}
-
-_stk.pipe=pipe;
 function strSubs (value, minValue, maxValue) {
 
     if (has(maxValue)) {
 
-        return toString(value).substring(minValue, maxValue);    }
+        return toString(value).substring(minValue, maxValue);
+
+    }
 
     return toString(value).substring(minValue);
 
@@ -5302,6 +5132,180 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
+function parseString (value, config) {
+
+    var defaultConfig = varExtend({"ignoreFunction": true,
+        "isJson": false,
+        "throwError": false,
+        "unscapeEntity": false}, config);    if (indexOfNotExist(getTypeof(value), getKey(validTypeJson))) {
+
+        if (defaultConfig.throwError) {
+
+            throw new Error("Allow only " +toArray(getKey(validTypeJson)).join(","));
+
+        }
+
+        return '';
+
+    }
+
+    var data = parseStringCore(zero, defaultConfig, value);
+
+    if (defaultConfig.unscapeEntity) {
+
+        data = strUnEscape(data);
+
+    }
+
+    return data.toString();
+
+}
+
+
+function escapeQuotesStr (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
+
+
+function parseStringCore (rawCount, rawConfig, rawValue) {
+
+    return curryArg(function (refCount, refConfig, value) {
+
+        var prepStr = "";
+
+        if (has(rawCount === zero
+            ?validTypeJson
+            :remove(validTypeJson, "object"), getTypeof(value))) {
+
+            var getTypeDetails = validTypeJson[getTypeof(value)];
+
+            var inc=zero;
+
+            each(value, function (ev, ek) {
+
+                var delimeter=inc<count(value)-one
+                    ?","
+                    :"";
+
+                if (getTypeDetails.isKey) {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ek)+":"+parseStringCore(one, rawConfig, ev)+delimeter;
+
+                } else {
+
+                    prepStr += parseStringCore(rawCount+one, rawConfig, ev)+delimeter;
+
+                }
+
+                inc += one;
+
+            });
+
+            return getTypeDetails.start+prepStr+getTypeDetails.end;
+
+        }
+
+        var parseValue = convertValue(value);
+
+        if (getTypeof(parseValue) === "string") {
+
+            return '"'+escapeQuotesStr(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "undefined") {
+
+            return '"undefined"';
+
+        }
+        if (getTypeof(parseValue) === "date") {
+
+            return '"'+toString(parseValue)+'"';
+
+        }
+        if (getTypeof(parseValue) === "regexp") {
+
+            return '"new RegExp(' + value.source +','+ value.flags+')"';
+
+        }
+
+        if (getTypeof(parseValue) === "number") {
+
+            if (isNaN(parseValue)) {
+
+                return '"NaN"';
+
+            }
+
+            if (Infinity === parseValue) {
+
+                return '"Infinity"';
+
+            }
+
+            return value;
+
+        }
+
+        if (getTypeof(value) === "object") {
+
+            return '"'+value+'"';
+
+        }
+
+        if (getTypeof(parseValue) === "function") {
+
+            if (refConfig.ignoreFunction) {
+
+                return null;
+
+            }
+
+            return '"'+parseValue+'"';
+
+        }
+
+        return parseValue;
+
+    }, [
+        rawCount,
+        rawConfig,
+        rawValue
+    ], two);
+
+}
+
+_stk.parseString=parseString;
+function pipe () {
+
+    var arg=arguments;    var pipeConst = first(arg);
+    var varLimit = limit(arg, one);
+    var that = this;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(value) === "function") {
+
+                total = value.call(that, total);
+
+            }
+
+            return total;
+
+        }, pipeConst.apply(that, rawValue), varLimit);
+
+    // eslint-disable-next-line padded-blocks
+    // eslint-disable-next-line no-undefined
+    }, arrayRepeat(undefined, pipeConst.length), pipeConst.length);
+
+}
+
+_stk.pipe=pipe;
 function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
@@ -5322,7 +5326,12 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function repeat (value, valueRepetion) {
+_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+
+    return new RegExp(toString(value) + '|').exec('').length - one;}
+
+_stk.regexCountGroup=regexCountGroup;
+_stk.remove=remove;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5361,79 +5370,7 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
-function regexCountGroup (value) {
-
-    return new RegExp(toString(value) + '|').exec('').length - one;}
-
-_stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
-
-    if (!has(objectValue)) {
-
-        return {};    }
-
-    return curryArg(function (rawSplit_str, rawObjectValue, rawUpdateValue) {
-
-        if (isEmpty(rawSplit_str)) {
-
-            return empty(rawObjectValue);
-
-        }
-
-        var spl= schemaSplitData(rawSplit_str);
-
-        return baseReduce(function (total, value) {
-
-            if (getTypeofInternal(total) === "json") {
-
-                valueToUpdate(total, value, rawUpdateValue);
-
-            }
-            if (getTypeofInternal(total) === "array") {
-
-                var rawTotal = first(total);
-
-                valueToUpdate(rawTotal, value, rawUpdateValue);
-                total = [rawTotal];
-
-            }
-
-            return total;
-
-        }, rawObjectValue, [spl]);
-
-    }, [
-        split_str,
-        objectValue,
-        updateValue
-    ]);
-
-}
-
-
-function valueToUpdate (objectValue, whereStr, updateValue) {
-
-    var getRmoveValue = remove(whereStr, zero);
-
-    if (isEmpty(getRmoveValue)) {
-
-        objectValue[first(whereStr)] = updateValue;
-
-    } else {
-
-        if (has(objectValue, first(whereStr)) === false) {
-
-            objectValue[first(whereStr)] = {};
-
-        }
-        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
-
-    }
-
-}
-
-_stk.setData=setData;
-function shuffle (objectValue) {
+_stk.roundDecimal=roundDecimal;function shuffle (objectValue) {
 
     var output=[];    var rawObjectValue = clone(objectValue);
     var valueType=[
@@ -5498,37 +5435,12 @@ function baseSort (objectValue, func) {
 }
 
 
-function sortBy (func, objectValue) {
-
-    return curryArg(function (rawFunc, rawObjectValue) {
-
-        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
-
-            if (has(func) && getTypeof(func) === 'function') {
-
-                return rawFunc(orderA, orderB);
-
-            }
-
-            return orderA - orderB;
-
-        });
-
-        return finalResponse;
-
-    }, [
-        func,
-        objectValue
-    ]);
-
-}
-
-_stk.sortBy=sortBy;
 function sort (objectValue, order, type) {
 
     return curryArg(function (rawObjectValue, rawOrder, rawType) {
 
-        var asc=true;        var types='any';
+        var asc=true;
+        var types='any';
 
         if (has(rawOrder) && getTypeof(rawOrder) === 'boolean') {
 
@@ -5596,6 +5508,30 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+function sortBy (func, objectValue) {
+
+    return curryArg(function (rawFunc, rawObjectValue) {
+
+        var finalResponse=baseSort(rawObjectValue, function (orderA, orderB) {
+
+            if (has(func) && getTypeof(func) === 'function') {
+
+                return rawFunc(orderA, orderB);            }
+
+            return orderA - orderB;
+
+        });
+
+        return finalResponse;
+
+    }, [
+        func,
+        objectValue
+    ]);
+
+}
+
+_stk.sortBy=sortBy;
 function stringSplit (value) {
 
     return value.trim()
@@ -5619,6 +5555,25 @@ function strCamel (value) {
 }
 
 _stk.strCamel=strCamel;
+function strCapitalize (value, option) {
+
+    if (option === "all") {
+
+        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
+
+            return ss1.toUpperCase();        });
+
+    }
+
+    return toString(value).replace(/([a-z]{1})/, function (ss1) {
+
+        return ss1.toUpperCase();
+
+    });
+
+}
+
+_stk.strCapitalize=strCapitalize;
 function strEscape (value, type) {
 
     var typeVal = type || "entity";    if (indexOfNotExist(typeVal, listType)) {
@@ -5644,25 +5599,6 @@ function strEscape (value, type) {
 }
 
 _stk.strEscape=strEscape;
-function strCapitalize (value, option) {
-
-    if (option === "all") {
-
-        return toString(value).replace(/(\s[a-z]|\b[a-z])/g, function (ss1) {
-
-            return ss1.toUpperCase();        });
-
-    }
-
-    return toString(value).replace(/([a-z]{1})/, function (ss1) {
-
-        return ss1.toUpperCase();
-
-    });
-
-}
-
-_stk.strCapitalize=strCapitalize;
 function strKebab (value) {
 
     return stringSplit(toString(value))
@@ -5717,6 +5653,73 @@ _stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
+function setData (split_str, objectValue, updateValue) {
+
+    if (!has(objectValue)) {
+
+        return {};    }
+
+    return curryArg(function (rawSplit_str, rawObjectValue, rawUpdateValue) {
+
+        if (isEmpty(rawSplit_str)) {
+
+            return empty(rawObjectValue);
+
+        }
+
+        var spl= schemaSplitData(rawSplit_str);
+
+        return baseReduce(function (total, value) {
+
+            if (getTypeofInternal(total) === "json") {
+
+                valueToUpdate(total, value, rawUpdateValue);
+
+            }
+            if (getTypeofInternal(total) === "array") {
+
+                var rawTotal = first(total);
+
+                valueToUpdate(rawTotal, value, rawUpdateValue);
+                total = [rawTotal];
+
+            }
+
+            return total;
+
+        }, rawObjectValue, [spl]);
+
+    }, [
+        split_str,
+        objectValue,
+        updateValue
+    ]);
+
+}
+
+
+function valueToUpdate (objectValue, whereStr, updateValue) {
+
+    var getRmoveValue = remove(whereStr, zero);
+
+    if (isEmpty(getRmoveValue)) {
+
+        objectValue[first(whereStr)] = updateValue;
+
+    } else {
+
+        if (has(objectValue, first(whereStr)) === false) {
+
+            objectValue[first(whereStr)] = {};
+
+        }
+        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
+
+    }
+
+}
+
+_stk.setData=setData;
 function baseTake (rawList, startIndex, lastIndex) {
 
     var refRawList = getTypeofInternal(rawList) === "string"
@@ -5946,51 +5949,14 @@ function syntaxCleanup (data, option) {
 }
 
 _stk.templates=templates;
-_stk.toBoolean=toBoolean;function toInteger (value) {
+_stk.toArray=toArray;_stk.toBoolean=toBoolean;_stk.add=add;function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
         :value), 10);}
 
 _stk.toInteger=toInteger;
-function toPairs (value) {
-
-    if (getTypeofInternal(value) !== "json") {
-
-        throw new Error("Value must be an json");    }
-
-    return baseReduce(function (total, subValue, subKey) {
-
-        var subArray = [];
-
-        subArray.push(subKey);
-        setDepthValue(subArray, subValue);
-        total.push(subArray);
-
-        return total;
-
-    }, [], value);
-
-}
-
-
-function setDepthValue (arryData, value) {
-
-    if (getTypeofInternal(value) === "json") {
-
-        arryData.push(getKey(value));
-        setDepthValue(arryData, getValue(value));
-
-    } else {
-
-        arryData.push(value);
-
-    }
-
-}
-
-_stk.toPairs=toPairs;
-_stk.toArray=toArray;_stk.toDouble=toDouble;_stk.toString=toString;function trimStart (value, remove_value) {
+_stk.toString=toString;function trimStart (value, remove_value) {
 
     var rx = new RegExp('^[' + whitespace + ']*');    var rawValue = toString(value).replace(rx, "");
 
@@ -6049,7 +6015,44 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.trimEnd=trimEnd;function toPairs (value) {
+
+    if (getTypeofInternal(value) !== "json") {
+
+        throw new Error("Value must be an json");    }
+
+    return baseReduce(function (total, subValue, subKey) {
+
+        var subArray = [];
+
+        subArray.push(subKey);
+        setDepthValue(subArray, subValue);
+        total.push(subArray);
+
+        return total;
+
+    }, [], value);
+
+}
+
+
+function setDepthValue (arryData, value) {
+
+    if (getTypeofInternal(value) === "json") {
+
+        arryData.push(getKey(value));
+        setDepthValue(arryData, getValue(value));
+
+    } else {
+
+        arryData.push(value);
+
+    }
+
+}
+
+_stk.toPairs=toPairs;
+_stk.trimStart=trimStart;function union () {
 
     var arg=arguments;    return curryArg(function () {
 
@@ -6299,6 +6302,4 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
-
-
- })(typeof window !== "undefined" ? window : this);
+_stk.toDouble=toDouble; })(typeof window !== "undefined" ? window : this);_stk.selectInData=selectInData;
