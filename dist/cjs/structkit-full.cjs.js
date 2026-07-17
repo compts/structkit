@@ -1,7 +1,7 @@
 const _stk = exports;
 const __p = "@argument/place";
 
-__=__p
+const __=__p;
 
 /**
  * Placeholder of argument
@@ -2189,6 +2189,57 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
+ * Cloning the data either in JSON or array that be used as different property
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue data you want to clone
+ * @returns {any} Returns clone data
+ * @example
+ *
+ * clone([1,2])
+ * // => [1,2]
+ */
+function clone (objectValue) {
+
+    if (indexOfExist(getTypeofInternal(objectValue), [
+        "json",
+        "array",
+        "object",
+        "arguments",
+        "set",
+        "map"
+    ])) {
+
+        let variable=empty(objectValue);
+
+        each(objectValue, function (value, key) {
+
+            variable = append(variable, value, key);
+
+        });
+
+        return variable;
+
+    }
+
+    switch (getTypeofInternal(objectValue)) {
+
+    case 'date':
+        return new Date(objectValue.valueOf());
+    case 'uint16Array':
+    case 'uint8Array':
+        return objectValue.slice();
+    default: return objectValue;
+
+    }
+
+}
+
+_stk.clone=clone;
+
+
+/**
  * Divide logic in satisfying two argument
  *
  * @since 1.4.8
@@ -2263,54 +2314,6 @@ function subtract (value1, value2) {
         value1,
         value2
     ], two);
-
-}
-
-/**
- * Cloning the data either in JSON or array that be used as different property
- *
- * @since 1.0.1
- * @category Collection
- * @param {any} objectValue data you want to clone
- * @returns {any} Returns clone data
- * @example
- *
- * clone([1,2])
- * // => [1,2]
- */
-function clone (objectValue) {
-
-    if (indexOfExist(getTypeofInternal(objectValue), [
-        "json",
-        "array",
-        "object",
-        "arguments",
-        "set",
-        "map"
-    ])) {
-
-        let variable=empty(objectValue);
-
-        each(objectValue, function (value, key) {
-
-            variable = append(variable, value, key);
-
-        });
-
-        return variable;
-
-    }
-
-    switch (getTypeofInternal(objectValue)) {
-
-    case 'date':
-        return new Date(objectValue.valueOf());
-    case 'uint16Array':
-    case 'uint8Array':
-        return objectValue.slice();
-    default: return objectValue;
-
-    }
 
 }
 
@@ -2695,8 +2698,6 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
-_stk.clone=clone;
-
 _stk.count=count;
 
 
@@ -2799,13 +2800,13 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
+_stk.divide=divide;
+
 _stk.each=each;
 
 _stk.empty=empty;
 
 _stk.equal=equal;
-
-_stk.divide=divide;
 
 
 /**
@@ -3034,6 +3035,13 @@ function getData (split_str, objectValue, isStrict) {
     ], two);
 
 }
+
+_stk.getData=getData;
+
+_stk.getTypeof=getTypeof;
+
+_stk.getKey=getKey;
+
 
 /**
  * Looking the data in JSON and Array base on object value
@@ -3610,12 +3618,6 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-
-_stk.getKey=getKey;
-
-_stk.getData=getData;
-
-_stk.getTypeof=getTypeof;
 /**
  * Generate unique value id
  *
@@ -3652,56 +3654,6 @@ function getUniq (option) {
 }
 
 _stk.getUniq=getUniq;
-
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-_stk.getValue=getValue;
-
-
-/**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
 
 
 /**
@@ -3752,6 +3704,56 @@ function groupBy (func, objectValue) {
 }
 
 _stk.groupBy=groupBy;
+
+
+/**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+
+
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+_stk.getValue=getValue;
 
 
 /**
@@ -3910,13 +3912,13 @@ function ifElse (cond, ifFunc, elseFunc) {
 
 _stk.ifElse=ifElse;
 
-_stk.inc=inc;
-
 _stk.indexOf=indexOf;
 
-_stk.indexOfNotExist=indexOfNotExist;
+_stk.inc=inc;
 
 _stk.indexOfExist=indexOfExist;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -3960,9 +3962,9 @@ function insert (objectValue, value) {
 
 _stk.insert=insert;
 
-_stk.isEmpty=isEmpty;
-
 _stk.isExact=isExact;
+
+_stk.isEmpty=isEmpty;
 
 _stk.isExactbyRegExp=isExactbyRegExp;
 
@@ -6227,7 +6229,8 @@ function validationLastStr (validValidation, firstFindAction, last_str) {
             .replace(/[\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g, " ")
             .replace(/(\\+?[n]|[\n])/g, "\\n")
             .replace(/(\\+?[s])/g, " ")
-            .replace(/\\(?=[[\]{}"'`,:])/g, "");
+            .replace(/\\(?=[[\]{}"'`,:])/g, "")
+            .replace(/\\(?![\\/"bfnrtu])/g, "");
 
         if (firstFindAction === "char_obj") {
 
@@ -6919,6 +6922,8 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
+_stk.range=range;
+
 
 /**
  * To create single random value from array
@@ -6955,8 +6960,6 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-
-_stk.range=range;
 
 _stk.reduce=reduce;
 
@@ -7709,6 +7712,8 @@ function take (value, valueList) {
 
 _stk.take=take;
 
+_stk.toArray=toArray;
+
 
 /**
  * Template value
@@ -7939,8 +7944,6 @@ function syntaxCleanup (data, option) {
 
 _stk.templates=templates;
 
-_stk.toArray=toArray;
-
 _stk.toBoolean=toBoolean;
 
 _stk.toDouble=toDouble;
@@ -7967,8 +7970,6 @@ function toInteger (value) {
 }
 
 _stk.toInteger=toInteger;
-
-_stk.toString=toString;
 
 
 /**
@@ -8034,6 +8035,8 @@ function setDepthValue (arryData, value) {
 }
 
 _stk.toPairs=toPairs;
+
+_stk.toString=toString;
 
 
 /**
@@ -8141,45 +8144,6 @@ _stk.trimStart=trimStart;
 
 
 /**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        const uniqArrData = [];
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
-
-
-/**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
@@ -8220,6 +8184,45 @@ function union (...arg) {
 }
 
 _stk.union=union;
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        const uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
 
 _stk.varExtend=varExtend;
 

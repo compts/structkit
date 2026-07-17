@@ -74,6 +74,10 @@ describe('CJS: parseJson method', function () {
             {"a": 's as'}
         );
 
+        assert.deepStrictEqual(
+            parseJson('{"value":"hello\\qworld"}'),
+            {"value": 'helloqworld'}
+        );
 
     });
     it('check if repetion is correct with dict and array', function () {
