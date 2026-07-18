@@ -103,8 +103,9 @@ describe('ESM: parseJson method', function () {
                 "data": {
                     "getProjectList": [
                         {
-                            "name": "add",
-                            "example": "add(1, 1)// => 2/"
+
+                            "example": "add(1, 1)// => 2/",
+                            "name": "add"
                         }
                     ]
                 }

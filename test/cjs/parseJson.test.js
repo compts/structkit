@@ -90,7 +90,7 @@ describe('CJS: parseJson method', function () {
         assert.deepStrictEqual(
             parseJson('{"value":"hello\\qworld"}'),
             {"value": 'helloqworld'}
-        ); 
+        );
         assert.deepStrictEqual(
             parseJson('{"example":"[1\\,1]"}'),
             {"example": "[1,1]"}
@@ -102,8 +102,8 @@ describe('CJS: parseJson method', function () {
                 "data": {
                     "getProjectList": [
                         {
-                            "name": "add",
-                            "example": "add(1, 1)// => 2/"
+                            "example": "add(1, 1)// => 2/",
+                            "name": "add"
                         }
                     ]
                 }
