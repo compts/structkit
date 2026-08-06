@@ -1,5 +1,5 @@
 # Structkit
-JS/TS functional tool to simplify JS Developer
+StructKit is a lightweight, functional utility library that simplifies working with arrays, objects, strings, numbers, and more in JavaScript and TypeScript. It provides a consistent, composable API that works in both Node.js and browser environments.
 
 ---
 # ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
@@ -18,8 +18,27 @@ Please read the complete [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE_G
 [Site](https://structkit.codehyouka.xyz/) |
 [Docs](https://structkit.codehyouka.xyz/api) |
 
+
+
 ## Why Structkit
 A Javascript functional that make easier in working with arrays, number,object, String and etc.
+
+### Functional Programming First
+- Full support for currying and partial application
+- Placeholder (__) support for flexible argument ordering
+- Pure functions that don't mutate your data
+- Composable utilities for building complex logic
+
+### Safe & Robust
+- Null-safe operations with defaultTo and has
+- Deep equality checks with equal
+- Safe nested data access with getData
+- Type checking with getTypeof
+
+### Lightweight & Tree-Shakeable
+- Small bundle size – import only what you need
+- Zero dependencies
+- Fully tree-shakeable for modern bundlers
 
 ## Download
 
