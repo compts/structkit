@@ -61,7 +61,7 @@
     "curried",
     "data"
   ],
-  "author": "Pein Freccs",
+  "author": "Codehyouka",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/compts/structkit/issues"
@@ -99,7 +99,7 @@
       "html"
     ],
     "collectCoverageFrom": [
-      "dist/esm/**/*.js"
+      "dist/esm/**/*.mjs"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
