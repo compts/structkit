@@ -202,13 +202,13 @@ const ifElse = require('./function/ifElse.js');
 
 exports.ifElse = ifElse;
 
-const inc = require('./function/inc.js');
-
-exports.inc = inc;
-
 const indexOf = require('./function/indexOf.js');
 
 exports.indexOf = indexOf;
+
+const inc = require('./function/inc.js');
+
+exports.inc = inc;
 
 const indexOfExist = require('./function/indexOfExist.js');
 
@@ -270,10 +270,6 @@ const mergeWithKey = require('./function/mergeWithKey.js');
 
 exports.mergeWithKey = mergeWithKey;
 
-const lt = require('./function/lt.js');
-
-exports.lt = lt;
-
 const multiply = require('./function/multiply.js');
 
 exports.multiply = multiply;
@@ -289,6 +285,10 @@ exports.noteq = noteq;
 const onDelay = require('./function/onDelay.js');
 
 exports.onDelay = onDelay;
+
+const lt = require('./function/lt.js');
+
+exports.lt = lt;
 
 const onSequence = require('./function/onSequence.js');
 
@@ -310,13 +310,13 @@ const parseString = require('./function/parseString.js');
 
 exports.parseString = parseString;
 
-const pickData = require('./function/pickData.js');
-
-exports.pickData = pickData;
-
 const pipe = require('./function/pipe.js');
 
 exports.pipe = pipe;
+
+const pickData = require('./function/pickData.js');
+
+exports.pickData = pickData;
 
 const random = require('./function/random.js');
 
@@ -326,10 +326,6 @@ const range = require('./function/range.js');
 
 exports.range = range;
 
-const reduce = require('./function/reduce.js');
-
-exports.reduce = reduce;
-
 const regexCountGroup = require('./function/regexCountGroup.js');
 
 exports.regexCountGroup = regexCountGroup;
@@ -337,6 +333,10 @@ exports.regexCountGroup = regexCountGroup;
 const remove = require('./function/remove.js');
 
 exports.remove = remove;
+
+const reduce = require('./function/reduce.js');
+
+exports.reduce = reduce;
 
 const repeat = require('./function/repeat.js');
 
@@ -426,10 +426,6 @@ const templates = require('./function/templates.js');
 
 exports.templates = templates;
 
-const toArray = require('./function/toArray.js');
-
-exports.toArray = toArray;
-
 const toBoolean = require('./function/toBoolean.js');
 
 exports.toBoolean = toBoolean;
@@ -450,17 +446,13 @@ const toString = require('./function/toString.js');
 
 exports.toString = toString;
 
-const trim = require('./function/trim.js');
-
-exports.trim = trim;
-
-const trimEnd = require('./function/trimEnd.js');
-
-exports.trimEnd = trimEnd;
-
 const trimStart = require('./function/trimStart.js');
 
 exports.trimStart = trimStart;
+
+const trim = require('./function/trim.js');
+
+exports.trim = trim;
 
 const union = require('./function/union.js');
 
@@ -470,25 +462,33 @@ const unique = require('./function/unique.js');
 
 exports.unique = unique;
 
-const varExtend = require('./function/varExtend.js');
+const trimEnd = require('./function/trimEnd.js');
 
-exports.varExtend = varExtend;
+exports.trimEnd = trimEnd;
 
 const where = require('./function/where.js');
 
 exports.where = where;
 
+const varExtend = require('./function/varExtend.js');
+
+exports.varExtend = varExtend;
+
 const zip = require('./function/zip.js');
 
 exports.zip = zip;
+
+const entity = require('./variable/htmlentity.js');
+
+exports.entity = entity;
 
 const negOne = require('./variable/defaultValue.js');
 
 exports.negOne = negOne;
 
-const entity = require('./variable/htmlentity.js');
+const objectCallType = require('./variable/types.js');
 
-exports.entity = entity;
+exports.objectCallType = objectCallType;
 
 
 /**
