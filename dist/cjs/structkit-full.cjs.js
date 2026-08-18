@@ -1,20 +1,6 @@
 const _stk = exports;
-const __p = "@argument/place";
 
-const __=__p;
 
-/**
- * Placeholder of argument
- *
- * @since 1.4.8
- * @category String
- * @example
- *
- * __
- * // => @argument/place
- */
-
-_stk.__=__;
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -56,6 +42,10 @@ function _has (value, key) {
     return Object.prototype.hasOwnProperty.call(value, key);
 
 }
+
+const __p = "@argument/place";
+
+const __ = __p;
 
 /**
  * Create your curry function
@@ -259,35 +249,6 @@ function argumentUndefinedCounter (args, isPlaceHolder) {
     return counter;
 
 }
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) + Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.add=add;
-
 
 /**
  * Check if object has value or null or undefined
@@ -522,6 +483,243 @@ function getTypeofInternal (objectValue) {
     return typeof objectValue;
 
 }
+
+/**
+ * Convert date to its preferred value
+ *
+ * @since 1.4.9
+ * @category Function
+ * @param {string} value String to split
+ * @returns {string} Returns the total.
+ * @example
+ *
+ * convertValue("split-this-string")
+ *=>"split this string"
+ */
+function convertValue (value) {
+
+    if (getTypeofInternal(value) === "string") {
+
+        if ((/^\d+$/).test(value)) {
+
+            return parseInt(value, 10);
+
+        }
+
+        if ((/^\d+\.\d+$/).test(value)) {
+
+            return parseFloat(value);
+
+        }
+
+        return value;
+
+    }
+
+    return value;
+
+}
+
+/**
+ * Each or for loop function you are familiar with
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} objectValue Array or json.
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @returns {any} Array or json
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+function each (objectValue, func) {
+
+    const re_loop=[];
+
+    const typeofs=getTypeofInternal(objectValue);
+
+    const localGlobal = new GlobalEach();
+
+    if (indexOfExist(typeofs, [
+        "json",
+        "array",
+        "object",
+        "arguments"
+    ])) {
+
+        for (const ins in objectValue) {
+
+            if (has(objectValue, ins)) {
+
+                if (localGlobal.continue === false) {
+
+                    break;
+
+                }
+
+                callbackEach(convertValue(ins), objectValue, localGlobal, re_loop, func, true);
+
+            }
+
+        }
+
+        return re_loop;
+
+    }
+
+    if (indexOfExist(typeofs, ["set"])) {
+
+        let key = zero;
+
+        for (const ins of objectValue) {
+
+            if (has(objectValue, ins)) {
+
+                if (localGlobal.continue === false) {
+
+                    break;
+
+                }
+                callbackEach(key, ins, localGlobal, re_loop, func, false);
+                key += one;
+
+            }
+
+        }
+
+        return re_loop;
+
+    }
+    if (indexOfExist(typeofs, ["map"])) {
+
+        objectValue.forEach(function (value, key) {
+
+            if (localGlobal.continue) {
+
+                callbackEach(convertValue(key), value, localGlobal, re_loop, func, false);
+
+            }
+
+        });
+
+        return re_loop;
+
+    }
+
+    return null;
+
+}
+
+/**
+ * Create a callback function for each that will be used in the loop
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {any} ins Index.
+ * @param {any} objectValue Index of the objectValue.
+ * @param {any} localGlobal Global variable to control the loop.
+ * @param {any} re_loop Re loop array or json.
+ * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
+ * @param {boolean} notSetMap Is set or Map data
+ * @returns {any} Array or json
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) {
+
+    let bool_func = true;
+
+    if (getTypeofInternal(notSetMap
+        ? objectValue[ins]
+        : objectValue) === "function") {
+
+        if ((/\b_/g).test(ins)) {
+
+            bool_func= false;
+
+        }
+
+    }
+    if (bool_func) {
+
+        try {
+
+            if (has(func)) {
+
+                if (notSetMap) {
+
+                    func(objectValue[ins], ins, localGlobal);
+
+                } else {
+
+                    func(objectValue, ins, localGlobal);
+
+                }
+
+            } else {
+
+                if (notSetMap) {
+
+                    re_loop[ins]=objectValue[ins];
+
+                } else {
+
+                    re_loop[ins]=objectValue;
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    } else {
+
+        re_loop=null;
+
+    }
+
+}
+
+/**
+ * GlobalEach
+ * @category Seq
+ * @class
+ * @name getKit
+ */
+function GlobalEach () {
+
+    this.external_execution_from = null;
+    this.continue = true;
+    this.action = null;
+    this.pass_value = null;
+    this.is_true = true;
+
+}
+
+/**
+ * Each or for loop function you are familiar with
+ *
+ * @since 1.0.1
+ * @category Collection
+ * @param {boolean} value Array or json.
+ * @returns {null} Null return
+ * @example
+ *
+ * each([1,2],(value,key,localGlobal)=>{ })
+ *
+ */
+GlobalEach.prototype.isContinue = function (value) {
+
+    this.continue = value;
+
+};
 
 /**
  * Counting the lenght in array, json or string
@@ -823,125 +1021,61 @@ function indexOfExist (value, arrayObject) {
 }
 
 /**
- * Convert date to its preferred value
- *
- * @since 1.4.9
- * @category Function
- * @param {string} value String to split
- * @returns {string} Returns the total.
- * @example
- *
- * convertValue("split-this-string")
- *=>"split this string"
- */
-function convertValue (value) {
-
-    if (getTypeofInternal(value) === "string") {
-
-        if ((/^\d+$/).test(value)) {
-
-            return parseInt(value, 10);
-
-        }
-
-        if ((/^\d+\.\d+$/).test(value)) {
-
-            return parseFloat(value);
-
-        }
-
-        return value;
-
-    }
-
-    return value;
-
-}
-
-/**
- * Each or for loop function you are familiar with
+ * Get key value
  *
  * @since 1.0.1
- * @category Collection
- * @param {any} objectValue Array or json.
- * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
- * @returns {any} Array or json
+ * @category Seq
+ * @param {object} jsn Json or Array
+ * @param {boolean} typ Types of instruction
+ * @returns {array|object} Expected return from instruction
  * @example
  *
- * each([1,2],(value,key,localGlobal)=>{ })
- *
+ * getKeyVal([1,2],"first_index")
+ *=>{"key":1,"value":1}
  */
-function each (objectValue, func) {
+function getKeyVal (jsn, typ) {
 
-    const re_loop=[];
+    const ky=[],
+        vl=[];
+    const list_raw = [];
 
-    const typeofs=getTypeofInternal(objectValue);
+    each(jsn, function (vv, kk) {
 
-    const localGlobal = new GlobalEach();
-
-    if (indexOfExist(typeofs, [
-        "json",
-        "array",
-        "object",
-        "arguments"
-    ])) {
-
-        for (const ins in objectValue) {
-
-            if (has(objectValue, ins)) {
-
-                if (localGlobal.continue === false) {
-
-                    break;
-
-                }
-
-                callbackEach(convertValue(ins), objectValue, localGlobal, re_loop, func, true);
-
-            }
-
-        }
-
-        return re_loop;
-
-    }
-
-    if (indexOfExist(typeofs, ["set"])) {
-
-        let key = zero;
-
-        for (const ins of objectValue) {
-
-            if (has(objectValue, ins)) {
-
-                if (localGlobal.continue === false) {
-
-                    break;
-
-                }
-                callbackEach(key, ins, localGlobal, re_loop, func, false);
-                key += one;
-
-            }
-
-        }
-
-        return re_loop;
-
-    }
-    if (indexOfExist(typeofs, ["map"])) {
-
-        objectValue.forEach(function (value, key) {
-
-            if (localGlobal.continue) {
-
-                callbackEach(convertValue(key), value, localGlobal, re_loop, func, false);
-
-            }
-
+        ky.push(kk);
+        vl.push(vv);
+        list_raw.push({
+            "key": kk,
+            "value": vv
         });
 
-        return re_loop;
+    });
+    if (indexOfExist(typ, [
+        "key",
+        "value"
+    ])) {
+
+        const ars=typ === "key"
+            ?ky
+            :vl;
+
+        return count(ars) === one
+
+            ?ars[zero]
+            :ars;
+
+    }
+    if (typ === "first_index") {
+
+        return count(list_raw)>zero
+            ?list_raw[zero]
+            :{"value": ''};
+
+    }
+    if (typ === "last_index") {
+
+        return count(list_raw)>zero
+            ?list_raw[count(list_raw)-one]
+            :{"value": ''};
 
     }
 
@@ -950,145 +1084,95 @@ function each (objectValue, func) {
 }
 
 /**
- * Create a callback function for each that will be used in the loop
+ * Get value of json or array
  *
  * @since 1.0.1
- * @category Collection
- * @param {any} ins Index.
- * @param {any} objectValue Index of the objectValue.
- * @param {any} localGlobal Global variable to control the loop.
- * @param {any} re_loop Re loop array or json.
- * @param {Function=} func Function to execute the loop with callback value,key (value,key) =>{}.
- * @param {boolean} notSetMap Is set or Map data
- * @returns {any} Array or json
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
  * @example
  *
- * each([1,2],(value,key,localGlobal)=>{ })
- *
+ * getValue({"s":1})
+ * => 1
  */
-function callbackEach (ins, objectValue, localGlobal, re_loop, func, notSetMap) {
+function getValue (objectValue) {
 
-    let bool_func = true;
+    return getKeyVal(objectValue, "value");
 
-    if (getTypeofInternal(notSetMap
-        ? objectValue[ins]
-        : objectValue) === "function") {
+}
 
-        if ((/\b_/g).test(ins)) {
+/**
+ * Get the first value of array
+ *
+ * @since 1.0.1
+ * @category Any
+ * @param {any} objectValue The data is array
+ * @returns {any} Returns first value of `objectValue`.
+ * @example
+ *
+ * first([1,2,3])
+ *=> 1
+ */
+function first (objectValue) {
 
-            bool_func= false;
+    return getKeyVal(objectValue, "first_index").value;
 
-        }
+}
 
-    }
-    if (bool_func) {
+/**
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number=} maxValue Maximum value
+ * @param {Function=} func Callback function
+ * @returns {any} Returns the object.
+ * @example
+ *
+ * limit([1,2],1,2 )
+ *=>{'1':2}
+ */
+function limit (objectValue, minValue, maxValue, func) {
 
-        try {
+    let cnt=0;
+    const glo_jsn={};
+    let glo_indtfd = null;
+    const minValueReserve=has(minValue)
+        ?minValue
+        :zero;
+    const maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+
+    each(objectValue, function (meth, key) {
+
+        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
 
             if (has(func)) {
 
-                if (notSetMap) {
+                glo_indtfd=func(meth, key);
 
-                    func(objectValue[ins], ins, localGlobal);
+                if (has(glo_indtfd)) {
 
-                } else {
-
-                    func(objectValue, ins, localGlobal);
+                    glo_jsn[key]=glo_indtfd;
 
                 }
 
             } else {
 
-                if (notSetMap) {
-
-                    re_loop[ins]=objectValue[ins];
-
-                } else {
-
-                    re_loop[ins]=objectValue;
-
-                }
+                glo_jsn[key]=meth;
 
             }
 
-        } catch (error) {
-
-            console.log(error);
-
         }
 
-    } else {
-
-        re_loop=null;
-
-    }
-
-}
-
-/**
- * GlobalEach
- * @category Seq
- * @class
- * @name getKit
- */
-function GlobalEach () {
-
-    this.external_execution_from = null;
-    this.continue = true;
-    this.action = null;
-    this.pass_value = null;
-    this.is_true = true;
-
-}
-
-/**
- * Each or for loop function you are familiar with
- *
- * @since 1.0.1
- * @category Collection
- * @param {boolean} value Array or json.
- * @returns {null} Null return
- * @example
- *
- * each([1,2],(value,key,localGlobal)=>{ })
- *
- */
-GlobalEach.prototype.isContinue = function (value) {
-
-    this.continue = value;
-
-};
-
-/**
- * Base reduce
- *
- * @since 1.4.8
- * @category Core
- * @param {any} func The data you want to reduce in function
- * @param {any} defaultValue Array in number
- * @param {any[]} listData decimal point and default value is
- * @returns {any} Returns the aggregrated.
- * @example
- *
- * baseReduce((total,value)=>total+value, 2,[1,2])
- * // => 5
- */
-function baseReduce (func, defaultValue, listData) {
-
-    const that = this;
-
-    each(listData, function (av, ak, localGlobal) {
-
-        defaultValue = func.apply(that, [
-            defaultValue,
-            av,
-            ak,
-            localGlobal
-        ]);
+        cnt += one;
 
     });
 
-    return defaultValue;
+    return glo_jsn;
 
 }
 
@@ -1272,87 +1356,6 @@ function map (func, objectValue) {
 }
 
 /**
- * Get key value
- *
- * @since 1.0.1
- * @category Seq
- * @param {object} jsn Json or Array
- * @param {boolean} typ Types of instruction
- * @returns {array|object} Expected return from instruction
- * @example
- *
- * getKeyVal([1,2],"first_index")
- *=>{"key":1,"value":1}
- */
-function getKeyVal (jsn, typ) {
-
-    const ky=[],
-        vl=[];
-    const list_raw = [];
-
-    each(jsn, function (vv, kk) {
-
-        ky.push(kk);
-        vl.push(vv);
-        list_raw.push({
-            "key": kk,
-            "value": vv
-        });
-
-    });
-    if (indexOfExist(typ, [
-        "key",
-        "value"
-    ])) {
-
-        const ars=typ === "key"
-            ?ky
-            :vl;
-
-        return count(ars) === one
-
-            ?ars[zero]
-            :ars;
-
-    }
-    if (typ === "first_index") {
-
-        return count(list_raw)>zero
-            ?list_raw[zero]
-            :{"value": ''};
-
-    }
-    if (typ === "last_index") {
-
-        return count(list_raw)>zero
-            ?list_raw[count(list_raw)-one]
-            :{"value": ''};
-
-    }
-
-    return null;
-
-}
-
-/**
- * Get the first value of array
- *
- * @since 1.0.1
- * @category Any
- * @param {any} objectValue The data is array
- * @returns {any} Returns first value of `objectValue`.
- * @example
- *
- * first([1,2,3])
- *=> 1
- */
-function first (objectValue) {
-
-    return getKeyVal(objectValue, "first_index").value;
-
-}
-
-/**
  * Get type of the variable
  *
  * @since 1.0.1
@@ -1405,6 +1408,260 @@ function toArray (value) {
     return return_val;
 
 }
+
+/**
+ * Base reduce
+ *
+ * @since 1.4.8
+ * @category Core
+ * @param {any} func The data you want to reduce in function
+ * @param {any} defaultValue Array in number
+ * @param {any[]} listData decimal point and default value is
+ * @returns {any} Returns the aggregrated.
+ * @example
+ *
+ * baseReduce((total,value)=>total+value, 2,[1,2])
+ * // => 5
+ */
+function baseReduce (func, defaultValue, listData) {
+
+    const that = this;
+
+    each(listData, function (av, ak, localGlobal) {
+
+        defaultValue = func.apply(that, [
+            defaultValue,
+            av,
+            ak,
+            localGlobal
+        ]);
+
+    });
+
+    return defaultValue;
+
+}
+
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (indexOfExist(getTypeofInternal(value), [
+                "array",
+                "arguments"
+            ])) {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+/**
+ * Generate array of data from specific limit or where the index to start
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue, step) {
+
+    const incrementValue=has(step)
+        ?Number(step)
+        :one;
+    const minValueRef=has(minValue)
+        ?Number(minValue)
+        :one;
+    const maxValueRef=has(maxValue)
+        ?Number(maxValue)
+        :ten;
+    const output=[];
+
+    for (let inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "string") {
+
+            output.push(inc);
+
+            const render = new Function('inc', "return "+inc+incrementValue);
+
+            inc = render.call(inc);
+
+        }
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<zero) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+
+        return map(function () {
+
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
+/**
+ * To map the value of json or array
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} option Callback function
+ * @returns {number} Return map either JSON or Array
+ * @example
+ *
+ * baseMap([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
+ */
+function baseOperation (option) {
+
+    // eslint-disable-next-line prefer-destructuring
+    const arg = option.arg;
+    // eslint-disable-next-line prefer-destructuring
+    const operation = option.operation;
+
+    return curryArg(function (...rawArg) {
+
+        const firstNum = first(rawArg);
+
+        return baseReduce(function (total, value) {
+
+            if (operation === "add") {
+
+                total += Number(value);
+
+            }
+
+            if (operation === "multiply") {
+
+                total *= Number(value);
+
+            }
+
+            if (operation === "subtract") {
+
+                total -= Number(value);
+
+            }
+
+            if (operation === "divide") {
+
+                total /= Number(value);
+
+            }
+
+            return total;
+
+        }, firstNum, toArray(getValue(limit(rawArg, one))));
+
+    }, flatten([
+        arg,
+        // eslint-disable-next-line no-undefined
+        arrayRepeat(undefined, arg.length <= two
+            ? two - arg.length
+            : zero)
+    ]), two);
+
+}
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {...number?} arg First number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add (...arg) {
+
+    return baseOperation({
+        arg,
+        "operation": "add"
+    });
+
+}
+
+_stk.add=add;
+
 
 /**
  * Counting the true in list of array
@@ -1623,98 +1880,6 @@ function arrayConcat (...arg) {
 }
 
 _stk.arrayConcat=arrayConcat;
-
-
-/**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Array
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue, step) {
-
-    const incrementValue=has(step)
-        ?Number(step)
-        :one;
-    const minValueRef=has(minValue)
-        ?Number(minValue)
-        :one;
-    const maxValueRef=has(maxValue)
-        ?Number(maxValue)
-        :ten;
-    const output=[];
-
-    for (let inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            const render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<zero) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-
-        return map(function () {
-
-            return rawValue;
-
-        }, range(nm_rpt));
-
-    }, [
-        value,
-        valueRepetion
-    ], one);
-
-}
 
 _stk.arrayRepeat=arrayRepeat;
 
@@ -2114,7 +2279,11 @@ function arraySum (arrayObject, precision) {
     const arrayObjects=arrayObject||[];
     const precisions=precision||zero;
 
-    const sum = baseReduce(add, zero, arrayObjects);
+    const sum = baseReduce(function (total, value) {
+
+        return add(total, value);
+
+    }, zero, arrayObjects);
 
     return isEmpty(precisions)
         ? parseInt(sum)
@@ -2189,84 +2358,6 @@ _stk.asyncReplace=asyncReplace;
 
 
 /**
- * Divide logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for divided value
- * @example
- *
- * divide(1, 1)
- * // => 1
- */
-function divide (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) / Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-/**
- * Multiply logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for mutiplied value
- * @example
- *
- * multiply(1, 1)
- * // => 1
- */
-function multiply (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) * Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-/**
- * Subtract logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
- * @returns {number|any} Returns number for subtracted value
- * @example
- *
- * subtract(1, 1)
- * // => 0
- */
-function subtract (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) - Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-/**
  * Cloning the data either in JSON or array that be used as different property
  *
  * @since 1.0.1
@@ -2314,43 +2405,69 @@ function clone (objectValue) {
 
 }
 
+_stk.clone=clone;
+
+
 /**
- * Flatten an array to a single level.
+ * Divide logic in satisfying two argument
  *
- * @since 1.4.87
- * @category Array
- * @param {any} arg First number
- * @returns {any} Returns true or false.
+ * @since 1.4.8
+ * @category Math
+ * @param {...number?} arg First number
+ * @returns {number|any} Returns number for divided value
  * @example
  *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
+ * divide(1, 1)
+ * // => 1
  */
-function flatten (arg) {
+function divide (...arg) {
 
-    return curryArg(function (rawValue) {
+    return baseOperation({
+        arg,
+        "operation": "divide"
+    });
 
-        return baseReduce(function (total, value) {
+}
 
-            if (getTypeofInternal(value) === "array") {
+/**
+ * Multiply logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {...number?} arg First number
+ * @returns {number|any} Returns number for mutiplied value
+ * @example
+ *
+ * multiply(1, 1)
+ * // => 1
+ */
+function multiply (...arg) {
 
-                each(value, function (valEach) {
+    return baseOperation({
+        arg,
+        "operation": "multiply"
+    });
 
-                    total.push(valEach);
+}
 
-                });
+/**
+ * Subtract logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {...number?} arg First number
+ * @returns {number|any} Returns number for subtracted value
+ * @example
+ *
+ * subtract(1, 1)
+ * // => 0
+ */
+function subtract (...arg) {
 
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
+    return baseOperation({
+        arg,
+        "operation": "subtract"
+    });
 
 }
 
@@ -2705,8 +2822,6 @@ function algbraicExpr (formula) {
 
 _stk.calculate=calculate;
 
-_stk.clone=clone;
-
 _stk.count=count;
 
 
@@ -2733,6 +2848,41 @@ function curry (fun, num) {
 }
 
 _stk.curry=curry;
+
+
+/**
+ * Decrement value
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {any} value Value you want to convert in array
+ * @param {any=} default_value Value to want to start counting
+ * @returns {number} Return in number.
+ * @example
+ *
+ * dec(1)
+ *=>0
+ */
+function dec (value, default_value) {
+
+    let return_val = value;
+    const inc_n = getTypeof(default_value) === "number"
+        ? default_value
+        : one;
+
+    if (getTypeof(return_val) === "number") {
+
+        return_val -= inc_n;
+
+        return return_val;
+
+    }
+
+    return zero;
+
+}
+
+_stk.dec=dec;
 
 
 /**
@@ -2777,41 +2927,6 @@ _stk.defaultTo=defaultTo;
 _stk.divide=divide;
 
 _stk.each=each;
-
-
-/**
- * Decrement value
- *
- * @since 1.4.8
- * @category Math
- * @param {any} value Value you want to convert in array
- * @param {any=} default_value Value to want to start counting
- * @returns {number} Return in number.
- * @example
- *
- * dec(1)
- *=>0
- */
-function dec (value, default_value) {
-
-    let return_val = value;
-    const inc_n = getTypeof(default_value) === "number"
-        ? default_value
-        : one;
-
-    if (getTypeof(return_val) === "number") {
-
-        return_val -= inc_n;
-
-        return return_val;
-
-    }
-
-    return zero;
-
-}
-
-_stk.dec=dec;
 
 _stk.empty=empty;
 
@@ -2872,9 +2987,9 @@ function filter (func, objectValue) {
 
 _stk.filter=filter;
 
-_stk.flatten=flatten;
-
 _stk.first=first;
+
+_stk.flatten=flatten;
 
 
 /**
@@ -3663,25 +3778,6 @@ function getUniq (option) {
 
 _stk.getUniq=getUniq;
 
-
-/**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
 _stk.getValue=getValue;
 
 
@@ -3924,9 +4020,9 @@ _stk.inc=inc;
 
 _stk.indexOf=indexOf;
 
-_stk.indexOfNotExist=indexOfNotExist;
-
 _stk.indexOfExist=indexOfExist;
+
+_stk.indexOfNotExist=indexOfNotExist;
 
 
 /**
@@ -3972,9 +4068,9 @@ _stk.insert=insert;
 
 _stk.isEmpty=isEmpty;
 
-_stk.isExact=isExact;
-
 _stk.isExactbyRegExp=isExactbyRegExp;
+
+_stk.isExact=isExact;
 
 _stk.isJson=isJson;
 
@@ -4030,6 +4126,8 @@ function lastIndexOf (value, objectValue) {
 
 _stk.lastIndexOf=lastIndexOf;
 
+_stk.limit=limit;
+
 
 /**
  * Searching the data either in array or json object to get similar value of data
@@ -4058,66 +4156,6 @@ function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
-
-
-/**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Data must be array
- * @param {number} minValue Minimum value
- * @param {number=} maxValue Maximum value
- * @param {Function=} func Callback function
- * @returns {any} Returns the object.
- * @example
- *
- * limit([1,2],1,2 )
- *=>{'1':2}
- */
-function limit (objectValue, minValue, maxValue, func) {
-
-    let cnt=0;
-    const glo_jsn={};
-    let glo_indtfd = null;
-    const minValueReserve=has(minValue)
-        ?minValue
-        :zero;
-    const maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-
-    each(objectValue, function (meth, key) {
-
-        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(meth, key);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt += one;
-
-    });
-
-    return glo_jsn;
-
-}
-
-_stk.limit=limit;
 
 
 /**
@@ -4300,6 +4338,8 @@ _stk.mergeInWhere=mergeInWhere;
 
 _stk.mergeWithKey=mergeWithKey;
 
+_stk.multiply=multiply;
+
 
 /**
  * To check if the two arguments are less
@@ -4328,8 +4368,6 @@ function lt (value1, value2) {
 }
 
 _stk.lt=lt;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -6649,6 +6687,67 @@ _stk.parseJson=parseJson;
 
 
 /**
+ * A Function to pick only the data that you want to get from the array or json using a key format.
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {string} valueFormat Key look up format
+ * @param {any|any[]} objectValue Json in array format
+ * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
+ * @returns {any|any[]} Return array or object.
+ * @example
+ *
+ * pickData("Asd", [{"Asd":1}])
+ *=>[1]
+ */
+function pickData (valueFormat, objectValue) {
+
+    return curryArg(function (rawValueFormat, rawObjectValue) {
+
+        const typeObjectValue = getTypeofInternal(rawObjectValue);
+
+        return reduce(function (total, value, key) {
+
+            const rawbj = {};
+
+            if (typeObjectValue === "json") {
+
+                rawbj[key] = value;
+
+            }
+
+            each(toArray(rawValueFormat), function (formatVal) {
+
+                const schemaSplit = schemaSplitData(formatVal);
+                const validData = getData(schemaSplit, typeObjectValue === "json"
+                    ?rawbj
+                    :value, true);
+
+                if (isEmpty(validData) === false) {
+
+                    total = append(total, validData, last(schemaSplit));
+
+                }
+
+            });
+
+            return total;
+
+        }, typeObjectValue === "json"
+            ?{}
+            :[], rawObjectValue);
+
+    }, [
+        valueFormat,
+        objectValue
+    ], two);
+
+}
+
+_stk.pickData=pickData;
+
+
+/**
  * Parse from JSON object to String
  *
  * @since 1.4.86
@@ -6835,67 +6934,6 @@ _stk.parseString=parseString;
 
 
 /**
- * A Function to pick only the data that you want to get from the array or json using a key format.
- *
- * @since 1.4.9
- * @category Collection
- * @param {string} valueFormat Key look up format
- * @param {any|any[]} objectValue Json in array format
- * @param {boolean=} isStrict to check if delimiter are match in counter, default value is true.
- * @returns {any|any[]} Return array or object.
- * @example
- *
- * pickData("Asd", [{"Asd":1}])
- *=>[1]
- */
-function pickData (valueFormat, objectValue) {
-
-    return curryArg(function (rawValueFormat, rawObjectValue) {
-
-        const typeObjectValue = getTypeofInternal(rawObjectValue);
-
-        return reduce(function (total, value, key) {
-
-            const rawbj = {};
-
-            if (typeObjectValue === "json") {
-
-                rawbj[key] = value;
-
-            }
-
-            each(toArray(rawValueFormat), function (formatVal) {
-
-                const schemaSplit = schemaSplitData(formatVal);
-                const validData = getData(schemaSplit, typeObjectValue === "json"
-                    ?rawbj
-                    :value, true);
-
-                if (isEmpty(validData) === false) {
-
-                    total = append(total, validData, last(schemaSplit));
-
-                }
-
-            });
-
-            return total;
-
-        }, typeObjectValue === "json"
-            ?{}
-            :[], rawObjectValue);
-
-    }, [
-        valueFormat,
-        objectValue
-    ], two);
-
-}
-
-_stk.pickData=pickData;
-
-
-/**
  * Perform left to right function composition. first arguemnt will be default value
  *
  * @since 1.4.86
@@ -6935,65 +6973,6 @@ function pipe (...arg) {
 
 _stk.pipe=pipe;
 
-_stk.range=range;
-
-_stk.reduce=reduce;
-
-
-/**
- * Regex Count Group number
- *
- * @since 1.4.7
- * @category Function
- * @param {any} value Value you want to convert in array
- * @returns {number} Return in array.
- * @example
- *
- * regexCountGroup('/(abs|scs)@0@@1@/')
- *=>[1]
- */
-function regexCountGroup (value) {
-
-    return new RegExp(toString(value) + '|').exec('').length - one;
-
-}
-
-_stk.regexCountGroup=regexCountGroup;
-
-_stk.remove=remove;
-
-
-/**
- * Repeat string value
- *
- * @since 1.0.1
- * @category String
- * @param {string=} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {string} Return in string or number.
- * @example
- *
- * repeat("s",1 )
- *=>'ss'
- */
-function repeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        const nm_rpt=rawValueRepetion||zero;
-        const nm_str=rawValue||"";
-
-        return arrayRepeat(nm_str, nm_rpt).join("");
-
-    }, [
-        value,
-        valueRepetion
-    ]);
-
-}
-
-_stk.repeat=repeat;
-
 
 /**
  * To create single random value from array
@@ -7030,6 +7009,33 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
+
+_stk.reduce=reduce;
+
+_stk.range=range;
+
+
+/**
+ * Regex Count Group number
+ *
+ * @since 1.4.7
+ * @category Function
+ * @param {any} value Value you want to convert in array
+ * @returns {number} Return in array.
+ * @example
+ *
+ * regexCountGroup('/(abs|scs)@0@@1@/')
+ *=>[1]
+ */
+function regexCountGroup (value) {
+
+    return new RegExp(toString(value) + '|').exec('').length - one;
+
+}
+
+_stk.regexCountGroup=regexCountGroup;
+
+_stk.remove=remove;
 
 
 /**
@@ -7070,6 +7076,8 @@ function reverse (value) {
 _stk.reverse=reverse;
 
 _stk.selectInData=selectInData;
+
+_stk.roundDecimal=roundDecimal;
 
 
 /**
@@ -7172,33 +7180,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 
 _stk.setData=setData;
 
-_stk.roundDecimal=roundDecimal;
-
-
-/**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid (...arg) {
-
-    return curryArg(function (...rawValue) {
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
 
 /**
  * Shuffle data in array
@@ -7243,6 +7224,31 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid (...arg) {
+
+    return curryArg(function (...rawValue) {
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 
 
 /**
@@ -7562,9 +7568,39 @@ function strKebab (value) {
 
 _stk.strKebab=strKebab;
 
-_stk.strLower=strLower;
 
-_stk.strSubs=strSubs;
+/**
+ * Repeat string value
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {string=} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {string} Return in string or number.
+ * @example
+ *
+ * repeat("s",1 )
+ *=>'ss'
+ */
+function repeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        const nm_rpt=rawValueRepetion||zero;
+        const nm_str=rawValue||"";
+
+        return arrayRepeat(nm_str, nm_rpt).join("");
+
+    }, [
+        value,
+        valueRepetion
+    ]);
+
+}
+
+_stk.repeat=repeat;
+
+_stk.strLower=strLower;
 
 
 /**
@@ -7588,6 +7624,8 @@ function strSnake (value) {
 }
 
 _stk.strSnake=strSnake;
+
+_stk.strSubs=strSubs;
 
 _stk.strUnEscape=strUnEscape;
 
@@ -7957,9 +7995,9 @@ _stk.templates=templates;
 
 _stk.toArray=toArray;
 
-_stk.toDouble=toDouble;
-
 _stk.toBoolean=toBoolean;
+
+_stk.toDouble=toDouble;
 
 
 /**
@@ -7983,6 +8021,73 @@ function toInteger (value) {
 }
 
 _stk.toInteger=toInteger;
+
+
+/**
+ *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} value First number
+ * @returns {any[]} Returns array
+ * @example
+ *
+ * toPairs({"s":1,"ss":{"a":2}})
+ * // => [["s",1],["ss",["a",2]]]
+ */
+function toPairs (value) {
+
+    if (getTypeofInternal(value) !== "json") {
+
+        throw new Error("Value must be an json");
+
+    }
+
+    return baseReduce(function (total, subValue, subKey) {
+
+        const subArray = [];
+
+        subArray.push(subKey);
+        setDepthValue(subArray, subValue);
+        total.push(subArray);
+
+        return total;
+
+    }, [], value);
+
+}
+
+/**
+ * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
+ *
+ * @since 1.4.87
+ * @category Condition
+ * @param {any} arryData First number
+ * @param {number} value First number
+ * @returns {null} Returns array
+ * @example
+ *
+ * fromPairs([[5,6],[7,2]])
+ * // => {5:6,7:2}
+ */
+function setDepthValue (arryData, value) {
+
+    if (getTypeofInternal(value) === "json") {
+
+        arryData.push(getKey(value));
+        setDepthValue(arryData, getValue(value));
+
+    } else {
+
+        arryData.push(value);
+
+    }
+
+}
+
+_stk.toPairs=toPairs;
+
+_stk.toString=toString;
 
 
 /**
@@ -8596,70 +8701,17 @@ _stk.zip=zip;
 
 
 /**
- *  Converts an object into an array of key-value pairs. if the value is nested object, it will be converted to an array of key-value pairs recursively.
+ * Placeholder of argument
  *
- * @since 1.4.87
- * @category Collection
- * @param {any} value First number
- * @returns {any[]} Returns array
+ * @since 1.4.8
+ * @category String
  * @example
  *
- * toPairs({"s":1,"ss":{"a":2}})
- * // => [["s",1],["ss",["a",2]]]
+ * __
+ * // => @argument/place
  */
-function toPairs (value) {
 
-    if (getTypeofInternal(value) !== "json") {
-
-        throw new Error("Value must be an json");
-
-    }
-
-    return baseReduce(function (total, subValue, subKey) {
-
-        const subArray = [];
-
-        subArray.push(subKey);
-        setDepthValue(subArray, subValue);
-        total.push(subArray);
-
-        return total;
-
-    }, [], value);
-
-}
-
-/**
- * To recursively set the value in an array. If the value is a nested object, it will be converted to an array of key-value pairs recursively.
- *
- * @since 1.4.87
- * @category Condition
- * @param {any} arryData First number
- * @param {number} value First number
- * @returns {null} Returns array
- * @example
- *
- * fromPairs([[5,6],[7,2]])
- * // => {5:6,7:2}
- */
-function setDepthValue (arryData, value) {
-
-    if (getTypeofInternal(value) === "json") {
-
-        arryData.push(getKey(value));
-        setDepthValue(arryData, getValue(value));
-
-    } else {
-
-        arryData.push(value);
-
-    }
-
-}
-
-_stk.toPairs=toPairs;
-
-_stk.toString=toString;
+_stk.__=__;
 
 
  //end of file

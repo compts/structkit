@@ -1,30 +1,23 @@
-import curryArg from '../core/curryArg.mjs';
-
-import {two} from '../variable/defaultValue.mjs';
+import baseOperation from '../core/baseOperation.mjs';
 
 /**
  * Divide logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
+ * @param {...number?} arg First number
  * @returns {number|any} Returns number for divided value
  * @example
  *
  * divide(1, 1)
  * // => 1
  */
-function divide (value1, value2) {
+function divide (...arg) {
 
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) / Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
+    return baseOperation({
+        arg,
+        "operation": "divide"
+    });
 
 }
 export default divide;

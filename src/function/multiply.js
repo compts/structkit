@@ -1,29 +1,23 @@
-const curryArg = require("../core/curryArg");
-const {two} = require("../variable/defaultValue");
+const baseOperation = require("../core/baseOperation");
 
 /**
  * Multiply logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
+ * @param {...number?} arg First number
  * @returns {number|any} Returns number for mutiplied value
  * @example
  *
  * multiply(1, 1)
  * // => 1
  */
-function multiply (value1, value2) {
+function multiply (...arg) {
 
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) * Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
+    return baseOperation({
+        arg,
+        "operation": "multiply"
+    });
 
 }
 module.exports=multiply;

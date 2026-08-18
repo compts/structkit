@@ -28,7 +28,11 @@ function arraySum (arrayObject, precision) {
     const arrayObjects=arrayObject||[];
     const precisions=precision||zero;
 
-    const sum = baseReduce(add, zero, arrayObjects);
+    const sum = baseReduce(function (total, value) {
+
+        return add(total, value);
+
+    }, zero, arrayObjects);
 
     return isEmpty(precisions)
         ? parseInt(sum)

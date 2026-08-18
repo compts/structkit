@@ -6,6 +6,8 @@ import {getTypeofInternal} from '../core/getTypeOf.mjs';
 
 import each from './each.mjs';
 
+import indexOfExist from './indexOfExist.mjs';
+
 /**
  * Flatten an array to a single level.
  *
@@ -24,7 +26,10 @@ function flatten (arg) {
 
         return baseReduce(function (total, value) {
 
-            if (getTypeofInternal(value) === "array") {
+            if (indexOfExist(getTypeofInternal(value), [
+                "array",
+                "arguments"
+            ])) {
 
                 each(value, function (valEach) {
 

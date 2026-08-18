@@ -2,6 +2,7 @@ const curryArg = require("../core/curryArg");
 const baseReduce = require("../core/baseReduce");
 const {getTypeofInternal} = require('../core/getTypeOf');
 const each = require('./each');
+const indexOfExist = require("./indexOfExist");
 
 /**
  * Flatten an array to a single level.
@@ -22,7 +23,10 @@ function flatten (arg) {
 
         return baseReduce(function (total, value) {
 
-            if (getTypeofInternal(value) === "array") {
+            if (indexOfExist(getTypeofInternal(value), [
+                "array",
+                "arguments"
+            ])) {
 
                 each(value, function (valEach) {
 

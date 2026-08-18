@@ -1,30 +1,23 @@
-import curryArg from '../core/curryArg.mjs';
-
-import {two} from '../variable/defaultValue.mjs';
+import baseOperation from '../core/baseOperation.mjs';
 
 /**
  * Subtract logic in satisfying two argument
  *
  * @since 1.4.8
  * @category Math
- * @param {number} value1 First number
- * @param {number=} value2 Second number
+ * @param {...number?} arg First number
  * @returns {number|any} Returns number for subtracted value
  * @example
  *
  * subtract(1, 1)
  * // => 0
  */
-function subtract (value1, value2) {
+function subtract (...arg) {
 
-    return curryArg(function (aa, bb) {
-
-        return Number(aa) - Number(bb);
-
-    }, [
-        value1,
-        value2
-    ], two);
+    return baseOperation({
+        arg,
+        "operation": "subtract"
+    });
 
 }
 export default subtract;
