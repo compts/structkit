@@ -1,6 +1,7 @@
 const curryArg = require("../core/curryArg");
 const arrayRepeat = require('./arrayRepeat');
 const count = require('./count');
+const {getTypeofInternal} = require('../core/getTypeOf');
 
 
 /**
@@ -18,8 +19,21 @@ const count = require('./count');
  */
 function curry (fun, num) {
 
+
+    let refNum = num || fun.length;
+
+    if (getTypeofInternal(fun) === "function") {
+
+        if (getTypeofInternal(fun().__no_args__) === "number" && getTypeofInternal(num) === "undefined") {
+
+            refNum = fun().__no_args__;
+
+        }
+
+    }
+
     // eslint-disable-next-line no-undefined
-    const argDummy = arrayRepeat(undefined, num || fun.length);
+    const argDummy = arrayRepeat(undefined, refNum);
 
     return curryArg(fun, argDummy, count(argDummy));
 

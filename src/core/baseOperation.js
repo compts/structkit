@@ -28,11 +28,11 @@ function baseOperation (option) {
     // eslint-disable-next-line prefer-destructuring
     const operation = option.operation;
 
-    return curryArg(function (...rawArg) {
+    const curryArgFunction = curryArg(function (...rawArg) {
 
         const firstNum = first(rawArg);
 
-        return baseReduce(function (total, value) {
+        const conReduce = baseReduce(function (total, value) {
 
             if (operation === "add") {
 
@@ -63,6 +63,7 @@ function baseOperation (option) {
 
         }, firstNum, toArray(getValue(limit(rawArg, one))));
 
+        return conReduce;
 
     }, flatten([
         arg,
@@ -72,6 +73,8 @@ function baseOperation (option) {
             : zero)
     ]), two);
 
+
+    return curryArgFunction;
 
 }
 
