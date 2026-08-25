@@ -136,6 +136,8 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub, false)) > args.length - argumentUndefinedCounter(argSub)) {
 
+            fnCall.__no_args__ = RefNoDefaultArgs;
+
             return fnCall;
 
         }
@@ -211,6 +213,8 @@ function curryArg (fn, args, NoDefaultArgs) {
         }
 
         if (funcReturnType) {
+
+            fnCall.__no_args__ = RefNoDefaultArgs;
 
             return fnCall;
 
@@ -1613,15 +1617,6 @@ function range (maxValue, minValue, step) {
 
     for (var inc=minValueRef; inc <= maxValueRef;) {
 
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
         if (getTypeof(incrementValue) === "number") {
 
             output.push(inc);
@@ -2945,8 +2940,6 @@ function dec (value, default_value) {
 
 _stk.dec=dec;
 
-_stk.divide=divide;
-
 
 /**
  *  Returns the second argument if it is not null, `undefined` or `NaN`, otherwise returns the first argument.
@@ -2987,13 +2980,13 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
+_stk.divide=divide;
+
 _stk.each=each;
 
 _stk.empty=empty;
 
 _stk.equal=equal;
-
-_stk.first=first;
 
 
 /**
@@ -3049,6 +3042,10 @@ function filter (func, objectValue) {
 }
 
 _stk.filter=filter;
+
+_stk.first=first;
+
+_stk.flatten=flatten;
 
 
 /**
@@ -3800,8 +3797,6 @@ _stk.getData=getData;
 _stk.getKey=getKey;
 
 _stk.getTypeof=getTypeof;
-
-_stk.flatten=flatten;
 /**
  * Generate unique value id
  *
@@ -4189,8 +4184,6 @@ function lastIndexOf (value, objectValue) {
 
 _stk.lastIndexOf=lastIndexOf;
 
-_stk.limit=limit;
-
 
 /**
  * Searching the data either in array or json object to get similar value of data
@@ -4219,6 +4212,37 @@ function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
+
+_stk.limit=limit;
+
+
+/**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 
 
 /**
@@ -4297,6 +4321,11 @@ function mergeWithKey (objectValue, mergeValue) {
     ], two);
 
 }
+
+_stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
+
 
 /**
  * Selecting multiple search data using `getData` logic in the loop
@@ -4398,10 +4427,6 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-
-_stk.mergeWithKey=mergeWithKey;
-
-_stk.multiply=multiply;
 
 
 /**
@@ -4544,35 +4569,6 @@ function noteq (value1, value2) {
 _stk.noteq=noteq;
 
 
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Predicate
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
-
-
 var defaultOptionDelay = {
 
     "autoStart": true
@@ -4666,108 +4662,6 @@ ClassDelay.prototype.start = function () {
 };
 
 _stk.onDelay=onDelay;
-
-
-var defaultOption = {
-
-    "autoStart": true,
-    "limitCounterClear": zero
-};
-
-/**
- * @typedef {Object} SequenceResult
- * @property {function(): void} cancel - Cancels the sequence
- * @property {function(): void} start - Starts the sequence
- */
-
-/**
- * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {SequenceResult} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var extend = varExtend(defaultOption, option);
-
-    var sequence = new ClassSequence(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-/**
- * On sequence class
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} extend The second number in an addition.
- * @param {any} wait timer for delay
- * @param {any} func The function to execute
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (extend, wait, func) {
-
-    this.interval = null;
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.returned = null;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-ClassSequence.prototype.start = function () {
-
-    this.extend = varExtend(defaultOption, this.extend);
-    var valueWaited = this.wait || zero;
-    var counter = zero;
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    main.interval = setInterval(function () {
-
-        main.returned = main.func();
-
-        counter += one;
-        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
-
-            clearInterval(main.interval);
-
-        }
-
-    }, valueWaited);
-
-};
-
-_stk.onSequence=onSequence;
 
 var getWindow = function () {
 
@@ -4873,6 +4767,108 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+
+
+var defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};
+
+/**
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+
+/**
+ * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {SequenceResult} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var extend = varExtend(defaultOption, option);
+
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+/**
+ * On sequence class
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} extend The second number in an addition.
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.returned = null;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    this.extend = varExtend(defaultOption, this.extend);
+    var valueWaited = this.wait || zero;
+    var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    main.interval = setInterval(function () {
+
+        main.returned = main.func();
+
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
+
+    }, valueWaited);
+
+};
+
+_stk.onSequence=onSequence;
 
 
 /**
@@ -7044,6 +7040,8 @@ function pipe () {
 
 _stk.pipe=pipe;
 
+_stk.range=range;
+
 
 /**
  * To create single random value from array
@@ -7080,8 +7078,6 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-
-_stk.range=range;
 
 _stk.reduce=reduce;
 
@@ -7179,6 +7175,8 @@ function reverse (value) {
 _stk.reverse=reverse;
 
 _stk.roundDecimal=roundDecimal;
+
+_stk.selectInData=selectInData;
 
 
 /**
@@ -7280,8 +7278,6 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-
-_stk.selectInData=selectInData;
 
 
 /**
@@ -7725,6 +7721,8 @@ function strUpper (value) {
 
 _stk.strUpper=strUpper;
 
+_stk.subtract=subtract;
+
 
 /**
  * Swapping the value either string or array in there specific position
@@ -7776,8 +7774,6 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
-
-_stk.subtract=subtract;
 
 
 /**
@@ -8072,8 +8068,6 @@ _stk.toArray=toArray;
 
 _stk.toBoolean=toBoolean;
 
-_stk.toDouble=toDouble;
-
 
 /**
  * To extract number in string and convert to , it will also remove all none numeric
@@ -8266,6 +8260,8 @@ _stk.trim=trim;
 
 _stk.trimEnd=trimEnd;
 
+_stk.trimStart=trimStart;
+
 
 /**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
@@ -8314,6 +8310,45 @@ function union () {
 _stk.union=union;
 
 _stk.varExtend=varExtend;
+
+
+/**
+ * Get only the unique data from array
+ *
+ * @since 1.4.1
+ * @category Array
+ * @param {any} value Value you want to convert in array
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * unique([1,2,3,2,3])
+ *=>[1,2,3]
+ */
+function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        var uniqArrData = [];
+
+        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
 
 _stk.where=where;
 
@@ -8698,8 +8733,6 @@ _stk.isUint16Array=isUint16Array;
 _stk.isUint32Array=isUint32Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
-_stk.trimStart=trimStart;
-
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists
@@ -8743,44 +8776,7 @@ function zip () {
 
 _stk.zip=zip;
 
-
-/**
- * Get only the unique data from array
- *
- * @since 1.4.1
- * @category Array
- * @param {any} value Value you want to convert in array
- * @returns {any[]} Return in array.
- * @example
- *
- * unique([1,2,3,2,3])
- *=>[1,2,3]
- */
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        var uniqArrData = [];
-
-        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
+_stk.toDouble=toDouble;
 
 
  })(typeof window !== "undefined" ? window : this);

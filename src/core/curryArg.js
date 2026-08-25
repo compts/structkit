@@ -80,6 +80,8 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub, false)) > args.length - argumentUndefinedCounter(argSub)) {
 
+            fnCall.__no_args__ = RefNoDefaultArgs;
+
             return fnCall;
 
         }
@@ -157,6 +159,8 @@ function curryArg (fn, args, NoDefaultArgs) {
 
 
         if (funcReturnType) {
+
+            fnCall.__no_args__ = RefNoDefaultArgs;
 
             return fnCall;
 

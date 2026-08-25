@@ -97,6 +97,8 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub, false)) > args.length - argumentUndefinedCounter(argSub)) {
 
+            fnCall.__no_args__ = RefNoDefaultArgs;
+
             return fnCall;
 
         }
@@ -172,6 +174,8 @@ function curryArg (fn, args, NoDefaultArgs) {
         }
 
         if (funcReturnType) {
+
+            fnCall.__no_args__ = RefNoDefaultArgs;
 
             return fnCall;
 
@@ -1200,15 +1204,6 @@ function range (maxValue, minValue, step) {
 
     for (var inc=minValueRef; inc <= maxValueRef;) {
 
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            var render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
         if (getTypeof(incrementValue) === "number") {
 
             output.push(inc);
@@ -2131,7 +2126,7 @@ function dec (value, default_value) {
 }
 
 _stk.dec=dec;
-_stk.divide=divide;function defaultTo (defaultValue, value2) {
+function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
@@ -2154,7 +2149,7 @@ _stk.divide=divide;function defaultTo (defaultValue, value2) {
 }
 
 _stk.defaultTo=defaultTo;
-_stk.each=each;_stk.empty=empty;_stk.equal=equal;_stk.first=first;function filter (func, objectValue) {
+_stk.divide=divide;_stk.each=each;_stk.empty=empty;_stk.equal=equal;function filter (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
 
@@ -2192,7 +2187,7 @@ _stk.each=each;_stk.empty=empty;_stk.equal=equal;_stk.first=first;function filte
 }
 
 _stk.filter=filter;
-function inc (value, default_value) {
+_stk.first=first;_stk.flatten=flatten;function inc (value, default_value) {
 
     var return_val = value;    var inc_n = getTypeof(default_value) === "number"
         ? default_value
@@ -2783,7 +2778,7 @@ function getDepthValue (value) {
 }
 
 _stk.fromPairs=fromPairs;
-_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;_stk.flatten=flatten;function getUniq (option) {
+_stk.getData=getData;_stk.getKey=getKey;_stk.getTypeof=getTypeof;function getUniq (option) {
 
     var optionValue = option||"default";    if (optionValue === "default") {
 
@@ -3003,7 +2998,7 @@ function lastIndexOf (value, objectValue) {
 }
 
 _stk.lastIndexOf=lastIndexOf;
-_stk.limit=limit;function like (objectValueWhere, objectValue) {
+function like (objectValueWhere, objectValue) {
 
     return curryArg(function (rawObjectValueWhere, rawObjectValue) {
 
@@ -3015,6 +3010,18 @@ _stk.limit=limit;function like (objectValueWhere, objectValue) {
 }
 
 _stk.like=like;
+_stk.limit=limit;function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
 function lte (value1, value2) {
 
     return curryArg(function (aa, bb) {
@@ -3058,8 +3065,8 @@ _stk.map=map;function mergeWithKey (objectValue, mergeValue) {
 
 }
 
-
-function selectInData (whereValue, objectValue) {
+_stk.mergeWithKey=mergeWithKey;
+_stk.multiply=multiply;function selectInData (whereValue, objectValue) {
 
     return curryArg(function (rawWhereValue, rawObjectValue) {
 
@@ -3067,9 +3074,7 @@ function selectInData (whereValue, objectValue) {
 
             var rawDataToArray = baseMap(function (value2) {
 
-                var rawData = getData(value, value2);
-
-                return isEmpty(rawData)
+                var rawData = getData(value, value2);                return isEmpty(rawData)
                     ?value
                     :rawData;
 
@@ -3133,7 +3138,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
+function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -3229,18 +3234,6 @@ function noteq (value1, value2) {
 }
 
 _stk.noteq=noteq;
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
 var defaultOptionDelay = {
 
     "autoStart": true
@@ -3298,71 +3291,6 @@ ClassDelay.prototype.start = function () {
 };
 
 _stk.onDelay=onDelay;
-var defaultOption = {
-
-    "autoStart": true,
-    "limitCounterClear": zero
-};function onSequence (func, wait, option) {
-
-    var extend = varExtend(defaultOption, option);
-
-    var sequence = new ClassSequence(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-
-function ClassSequence (extend, wait, func) {
-
-    this.interval = null;
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.returned = null;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-ClassSequence.prototype.start = function () {
-
-    this.extend = varExtend(defaultOption, this.extend);
-    var valueWaited = this.wait || zero;
-    var counter = zero;
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    main.interval = setInterval(function () {
-
-        main.returned = main.func();
-
-        counter += one;
-        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
-
-            clearInterval(main.interval);
-
-        }
-
-    }, valueWaited);
-
-};
-
-_stk.onSequence=onSequence;
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3433,6 +3361,71 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
+var defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};function onSequence (func, wait, option) {
+
+    var extend = varExtend(defaultOption, option);
+
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.returned = null;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    this.extend = varExtend(defaultOption, this.extend);
+    var valueWaited = this.wait || zero;
+    var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    main.interval = setInterval(function () {
+
+        main.returned = main.func();
+
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
+
+    }, valueWaited);
+
+};
+
+_stk.onSequence=onSequence;
 function once (func) {
 
     var reserve = null;    return curryArg(function (rawFunc) {
@@ -5384,7 +5377,7 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
-function random (valueArray, minValue, maxValue) {
+_stk.range=range;function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
         ?minValue
@@ -5404,7 +5397,7 @@ function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.range=range;_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.reduce=reduce;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
@@ -5448,7 +5441,7 @@ function reverse (value) {
 }
 
 _stk.reverse=reverse;
-_stk.roundDecimal=roundDecimal;function setData (split_str, objectValue, updateValue) {
+_stk.roundDecimal=roundDecimal;_stk.selectInData=selectInData;function setData (split_str, objectValue, updateValue) {
 
     if (!has(objectValue)) {
 
@@ -5515,7 +5508,7 @@ function valueToUpdate (objectValue, whereStr, updateValue) {
 }
 
 _stk.setData=setData;
-_stk.selectInData=selectInData;function shuffle (objectValue) {
+function shuffle (objectValue) {
 
     var output=[];    var rawObjectValue = clone(objectValue);
     var valueType=[
@@ -5763,7 +5756,7 @@ _stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-function swap (firstValue, secondValue, listValue) {
+_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
 
     return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
@@ -5798,7 +5791,7 @@ function swap (firstValue, secondValue, listValue) {
 }
 
 _stk.swap=swap;
-_stk.subtract=subtract;function baseTake (rawList, startIndex, lastIndex) {
+function baseTake (rawList, startIndex, lastIndex) {
 
     var refRawList = getTypeofInternal(rawList) === "string"
         ?rawList.split("")
@@ -6027,7 +6020,7 @@ function syntaxCleanup (data, option) {
 }
 
 _stk.templates=templates;
-_stk.toArray=toArray;_stk.toBoolean=toBoolean;_stk.toDouble=toDouble;function toInteger (value) {
+_stk.toArray=toArray;_stk.toBoolean=toBoolean;function toInteger (value) {
 
     return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
         ?zero
@@ -6130,7 +6123,7 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;function union () {
+_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
 
     var arg=arguments;    return curryArg(function () {
 
@@ -6161,7 +6154,30 @@ _stk.trimEnd=trimEnd;function union () {
 }
 
 _stk.union=union;
-_stk.varExtend=varExtend;_stk.where=where;function isArguments (value) {
+_stk.varExtend=varExtend;function unique (value) {
+
+    if (getTypeof(value) === "array") {
+
+        var uniqArrData = [];        each(value, function (val) {
+
+            if (indexOfNotExist(val, uniqArrData)) {
+
+                uniqArrData.push(val);
+
+            }
+
+        });
+
+        return uniqArrData;
+
+    }
+
+    return [];
+
+}
+
+_stk.unique=unique;
+_stk.where=where;function isArguments (value) {
 
     return getTypeof(value) === "arguments";
 
@@ -6330,7 +6346,7 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint32Array=isUint32Array;
 _stk.isUint8Array=isUint8Array;
-_stk.isUndefined=isUndefined;_stk.trimStart=trimStart;function zip () {
+_stk.isUndefined=isUndefined;function zip () {
 
     var arg=arguments;    return curryArg(function () {
 
@@ -6357,29 +6373,4 @@ _stk.isUndefined=isUndefined;_stk.trimStart=trimStart;function zip () {
 }
 
 _stk.zip=zip;
-function unique (value) {
-
-    if (getTypeof(value) === "array") {
-
-        var uniqArrData = [];        each(value, function (val) {
-
-            if (indexOfNotExist(val, uniqArrData)) {
-
-                uniqArrData.push(val);
-
-            }
-
-        });
-
-        return uniqArrData;
-
-    }
-
-    return [];
-
-}
-
-_stk.unique=unique;
-
-
- })(typeof window !== "undefined" ? window : this);
+_stk.toDouble=toDouble; })(typeof window !== "undefined" ? window : this);
