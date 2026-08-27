@@ -23,6 +23,7 @@ jobs:
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
+    environment: production   # pauses here until a required reviewer approves
     permissions:
       contents: write
       id-token: write   # required for OIDC trusted publishing
@@ -33,9 +34,7 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm install
-      - name: Build dist from src
-        run: npm run build
-
+      - run: npm run test_cjs
       - name: Ensure npm CLI supports trusted publishing
         run: npm install -g npm@latest
 
