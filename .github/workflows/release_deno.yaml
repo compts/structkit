@@ -25,8 +25,6 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - name: Build dist from src
-        run: npm run build
       - name: Install Deno
         uses: denoland/setup-deno@v2
         with:
