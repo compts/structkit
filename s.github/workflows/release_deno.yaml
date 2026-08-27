@@ -1,0 +1,55 @@
+name: Publish JSR
+
+on:
+  push:
+    branches:
+      - 'release/**'
+      - main
+  # Note: the old `release: types: [published]` trigger was removed.
+  # release_npm.yaml creates a GitHub Release in the same push, which
+  # would have fired this workflow a second time for the same version.
+
+jobs:
+  publish:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read  # Needed to clone the repository
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Build dist from src
+        run: npm run build
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Guard against publishing an RC version from main
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "${{ github.ref_name }}" == "main" && "$VERSION" == *"-rc"* ]]; then
+            echo "::error::main triggered a JSR publish with a pre-release version ($VERSION). Drop the -rc suffix in package.json before merging to main."
+            exit 1
+          fi
+
+      - name: Sync jsr.json version with package.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json'));
+            const jsr = JSON.parse(fs.readFileSync('jsr.json'));
+            jsr.version = pkg.version;
+            fs.writeFileSync('jsr.json', JSON.stringify(jsr, null, 2) + '\n');
+            console.log('jsr.json version set to', pkg.version);
+          "
+
+      - name: Publish to JSR
+        run: npx jsr publish

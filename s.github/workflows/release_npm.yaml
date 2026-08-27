@@ -3,9 +3,11 @@ name: Node.js Package
 on:
   push:
     branches:
-      - release
-  release:
-    types: [created]
+      - 'release/**'
+      - main
+  # Note: the old `release: types: [created]` trigger was removed.
+  # This same job creates a GitHub Release near the end, which would
+  # have fired this workflow a second time against itself.
 
 jobs:
   build:
@@ -15,8 +17,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      #- run: npm ci
       - run: npm install
+      - name: Build dist from src
+        run: npm run build
       - run: npm run test_cjs
 
   publish-npm:
@@ -32,6 +35,8 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm install
+      - name: Build dist from src
+        run: npm run build
 
       - name: Ensure npm CLI supports trusted publishing
         run: npm install -g npm@latest
@@ -45,6 +50,13 @@ jobs:
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Guard against publishing an RC version from main
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" && "${{ steps.version.outputs.version }}" == *"-rc"* ]]; then
+            echo "::error::main triggered a publish with a pre-release version (${{ steps.version.outputs.version }}). Drop the -rc suffix in package.json before merging to main."
+            exit 1
+          fi
 
       - name: Determine npm dist-tag
         id: npm_tag

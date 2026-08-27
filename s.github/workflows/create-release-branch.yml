@@ -3,7 +3,7 @@ name: Create Release Branch
 on:
   push:
     branches:
-      - main
+      - 'dev/**'
 
 permissions:
   contents: write
@@ -15,16 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
 
       - name: Get version from package.json
         id: get_version
-        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+        run: |
+          FULL_VERSION=$(node -p "require('./package.json').version")
+          # Strip any -rc.N (or other prerelease) suffix so every RC iteration
+          # for a version lands on the SAME release branch instead of a new one.
+          BASE_VERSION=$(echo "$FULL_VERSION" | cut -d'-' -f1)
+          echo "full_version=$FULL_VERSION" >> "$GITHUB_OUTPUT"
+          echo "base_version=$BASE_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Set branch name
         id: branch
-        run: echo "name=release/v${{ steps.get_version.outputs.version }}" >> "$GITHUB_OUTPUT"
+        run: echo "name=release/v${{ steps.get_version.outputs.base_version }}" >> "$GITHUB_OUTPUT"
 
       - name: Check if release branch already exists
         id: check_branch
@@ -38,18 +43,16 @@ jobs:
       - name: Create and push release branch
         if: steps.check_branch.outputs.exists == 'false'
         run: |
-          git fetch origin main
-          git checkout main
-          git checkout -b ${{ steps.branch.outputs.name }} origin/main
+          git checkout -b ${{ steps.branch.outputs.name }} ${{ github.ref_name }}
           git push origin ${{ steps.branch.outputs.name }}
 
-      - name: Create Pull Request into release
+      - name: Create Pull Request into main
         if: steps.check_branch.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
-            --base release \
+            --base main \
             --head ${{ steps.branch.outputs.name }} \
-            --title "Release v${{ steps.get_version.outputs.version }}" \
-            --body "Automated release PR for version ${{ steps.get_version.outputs.version }}"
+            --title "Release v${{ steps.get_version.outputs.base_version }}" \
+            --body "Automated release PR for version ${{ steps.get_version.outputs.base_version }}, cut from ${{ github.ref_name }}."
