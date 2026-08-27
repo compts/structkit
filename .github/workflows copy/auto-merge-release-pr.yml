@@ -12,9 +12,7 @@ jobs:
   auto-merge:
     if: >
       github.event.review.state == 'approved' &&
-      github.event.pull_request.base.ref == 'main' &&
-      (startsWith(github.event.pull_request.head.ref, 'release/') ||
-       startsWith(github.event.pull_request.head.ref, 'hotfix/'))
+      github.event.pull_request.base.ref == 'release'
     runs-on: ubuntu-latest
     steps:
       - name: Merge PR
