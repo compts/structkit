@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 /* eslint-disable no-magic-numbers */
 
 import {parseJson} from "../../dist/esm/node.esm.mjs";
@@ -74,6 +75,47 @@ describe('ESM: parseJson method', function () {
             {"a": 's as'}
         );
 
+        assert.deepStrictEqual(
+            parseJson('{a:"s\\\\nas"}'),
+            {"a": 's\nas'}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{a:"s\nas"}'),
+            {"a": 's\nas'}
+        );
+        assert.deepStrictEqual(
+            parseJson('{a:"s\tas"}'),
+            {"a": 's\tas'}
+        );
+        assert.deepStrictEqual(
+            parseJson('{"value":"hello\\qworld"}'),
+            {"value": 'helloqworld'}
+        ); 
+        assert.deepStrictEqual(
+            parseJson('{"example":"[1\\,1]"}'),
+            {"example": "[1,1]"}
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{"data":{"getProjectList":[{"name":"add","example":"add(1\\, 1)\\/\\/ => 2\\/"}]}}'),
+            {
+                "data": {
+                    "getProjectList": [
+                        {
+
+                            "example": "add(1, 1)// => 2/",
+                            "name": "add"
+                        }
+                    ]
+                }
+            }
+        );
+
+        assert.deepStrictEqual(
+            parseJson('{"example":"a\\/b"}'),
+            {"example": "a/b"}
+        );
 
     });
     it('check if repetion is correct with dict and array', function () {
@@ -114,16 +156,6 @@ describe('ESM: parseJson method', function () {
 
     });
 
-    it('check if semicolon is present in url format inside qoute', function () {
-
-        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"https://sdfsf.com","fddd":"https://sdfsf.com"}`), {
-            "example": 'https://sdfsf.com',
-            "fddd": 'https://sdfsf.com',
-            "name": 'arrayRepeat'
-        });
-
-    });
-
     it('check if repetion is correct with html entity', function () {
 
         assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeat(&quot;s&quot;\\,2 )=>['s'\\,'s']","comment":"Repeat value in array","return":"Return in string or number.","arguments":[{"comment":"String you want to duplicate","name":"value","type":"any"},{"comment":"how many times you want to repeate","name":"valueRepetion","type":"number"}]}`), {
@@ -144,6 +176,19 @@ describe('ESM: parseJson method', function () {
         assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeatss(\\"s\\"\\,2)=>\\[sa,s\\]\\}"}`), {"example": 'arrayRepeatss("s",2)=>[sa,s]}',
             "name": 'arrayRepeat'});
 
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"arrayRepeatss(\\"s\\"\\,2)=>\n\\[sa,s\\\\\\n;]\\}"}`), {"example": 'arrayRepeatss("s",2)=>\n[sa,s\n;]}',
+            "name": 'arrayRepeat'});
+
+    });
+
+    it('check if semicolon is present in url format inside qoute', function () {
+
+        assert.deepStrictEqual(parseJson(`{"name":"arrayRepeat","example":"https://sdfsf.com","fddd":"https://sdfsf.com"}`), {
+            "example": 'https://sdfsf.com',
+            "fddd": 'https://sdfsf.com',
+            "name": 'arrayRepeat'
+        });
+
     });
 
     it('check if empty str argument', function () {
@@ -158,7 +203,6 @@ describe('ESM: parseJson method', function () {
     });
     it('check if undefined argument', function () {
 
-        // eslint-disable-next-line no-undefined
         assert.deepStrictEqual(parseJson(undefined), null);
 
     });
@@ -173,6 +217,5 @@ describe('ESM: parseJson method', function () {
         assert.deepStrictEqual(parseJson("11"), null);
 
     });
-
 
 });

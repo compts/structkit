@@ -33,15 +33,6 @@ function range (maxValue, minValue, step) {
 
     for (let inc=minValueRef; inc <= maxValueRef;) {
 
-        if (getTypeof(incrementValue) === "string") {
-
-            output.push(inc);
-
-            const render = new Function('inc', "return "+inc+incrementValue);
-
-            inc = render.call(inc);
-
-        }
         if (getTypeof(incrementValue) === "number") {
 
             output.push(inc);

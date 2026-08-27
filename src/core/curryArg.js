@@ -1,5 +1,4 @@
 const {zero, one} = require("../variable/defaultValue");
-
 const _has = require("./_has");
 const __ = require("./__");
 
@@ -68,15 +67,20 @@ function curryArg (fn, args, NoDefaultArgs) {
 
     if (placholderCounter === zero) {
 
+        fn.__no_args__ = RefNoDefaultArgs;
+
         return fn.apply(this, args);
 
     }
 
-    return function fnCall (...argSub) {
+    // eslint-disable-next-line require-jsdoc
+    function fnCall (...argSub) {
 
         let funcReturnType = false;
 
         if (NoDefaultArgs-(argSub.length- argumentUndefinedCounter(argSub, false)) > args.length - argumentUndefinedCounter(argSub)) {
+
+            fnCall.__no_args__ = RefNoDefaultArgs;
 
             return fnCall;
 
@@ -156,13 +160,19 @@ function curryArg (fn, args, NoDefaultArgs) {
 
         if (funcReturnType) {
 
+            fnCall.__no_args__ = RefNoDefaultArgs;
+
             return fnCall;
 
         }
 
         return fn.apply(this, rawArgument);
 
-    };
+    }
+
+    fnCall.__no_args__ = RefNoDefaultArgs;
+
+    return fnCall;
 
 
 }

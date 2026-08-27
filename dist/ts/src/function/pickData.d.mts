@@ -1,8 +1,8 @@
-export default mapGetData;
+export default pickData;
 /**
- * A Function to map the data either an array or an object using getData function.
+ * A Function to pick only the data that you want to get from the array or json using a key format.
  *
- * @since 1.3.1
+ * @since 1.4.9
  * @category Collection
  * @param {string} valueFormat Key look up format
  * @param {any|any[]} objectValue Json in array format
@@ -10,7 +10,7 @@ export default mapGetData;
  * @returns {any|any[]} Return array or object.
  * @example
  *
- * mapGetData("Asd", [{"Asd":1}])
+ * pickData("Asd", [{"Asd":1}])
  *=>[1]
  */
-declare function mapGetData(valueFormat: string, objectValue: any | any[], isStrict?: boolean | undefined): any | any[];
+declare function pickData(valueFormat: string, objectValue: any | any[]): any | any[];

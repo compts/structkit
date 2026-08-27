@@ -15,6 +15,7 @@ const flatten = require("./flatten");
 
 const operationType = [
     [
+        "%",
         "^",
         "**"
     ],
@@ -95,7 +96,7 @@ function calculate (formula, args) {
 function init_group (formula) {
 
 
-    const regexpNumber = /([\d]+!|[\d.%]+|[//*]{2}|[//*\-+\x^]|\|[\d]+\|)/g;
+    const regexpNumber = /([\d]+!|\d+(?:\.\d+)?%?(?![\d.])|\*\*|[*/x+\-^%]|\|[\d]+\|)/g;
     const matches = formula.match(regexpNumber);
 
     if (matches[zero] === "-") {
@@ -317,6 +318,14 @@ function convert (b1) {
  */
 function algbraicExpr (formula) {
 
+    // The idea is to take the last number after comma, because the first number is usually the index of the array, and the last number is the value of the array
+    const splitNumComma = formula.split(",");
+
+    if (count(splitNumComma) > one) {
+
+        formula = splitNumComma[splitNumComma.length-one];
+
+    }
 
     // Handle formula like this 3√s2
     while (formula.includes("\u221A")) {

@@ -67,7 +67,7 @@ function fromPairs (value, deepLimit) {
  * @returns {any} Returns array
  * @example
  *
- * fromPairs([[5,6],[7,2]])
+ * getDepthValue([[5,6],[7,2]])
  * // => {5:6,7:2}
  */
 function getDepthValue (value) {
