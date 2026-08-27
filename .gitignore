@@ -25,6 +25,7 @@ dist/web/.DS_Store
 .DS_Store
 src/node.cjs.copy_js
 coverage
+notes.txt
 notes
 note_write.txt
 dist/cjs/structkit-full.cjs_backup.js

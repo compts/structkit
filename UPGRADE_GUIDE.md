@@ -1,6 +1,38 @@
 # Upgrade Guide
 In this upcoming release 1.4.9,
 
+
+## Deleted function
+- appendIsArrayExist *(replace by `union`)
+- where_once *(check our new function `once`)
+- jsonToArray *(to replace mapGetData)
+- removeFromKey
+- ifUndefined *(to replace `ifElse`)
+- whereNot *(check our new function `not`)
+
+## Modify function
+- getData
+- setData
+- onDelay
+- onSequence
+- templates *(rename from templateValue, and enhance version)
+- calculate
+- clone
+- each
+- arraySum
+- parseJson
+- parseString
+
+## Additional function
+- ifElse
+- curry
+- isSet
+- isMap
+- isBigInt
+- once
+- not
+- reverse
+
 ## We are changing the order arguments for the following function
 
 - getData
