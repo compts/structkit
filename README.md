@@ -1,5 +1,5 @@
 # Structkit
-JS/TS functional tool to simplify JS Developer
+JS/TS functional functional utility library that simplifies working with arrays, objects, strings, numbers, and more in JavaScript and TypeScript. It provides a consistent, composable API that works in both Node.js and browser environments.
 
 ---
 # ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
