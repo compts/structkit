@@ -1,6 +1,7 @@
 # Structkit
 StructKit is a lightweight, functional utility library that simplifies working with arrays, objects, strings, numbers, and more in JavaScript and TypeScript. It provides a consistent, composable API that works in both Node.js and browser environments.
 
+
 ---
 # ⚠️ WARNING: MASSIVE CHANGES INCOMING ⚠️
 **Version 1.4.9-rc.1 is a major rewrite with numerous breaking changes.**

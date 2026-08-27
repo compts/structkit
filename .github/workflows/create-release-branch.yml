@@ -6,6 +6,7 @@ on:
       - 'dev/**'
       - 'dev-*'
 
+
 permissions:
   contents: write
   pull-requests: write
