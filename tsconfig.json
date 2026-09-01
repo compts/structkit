@@ -20,7 +20,7 @@
       "target": "es2022",
       /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
        "module": "es2022",
-      "outDir": "dist/ts",
+      "outDir": "dist/tsd",
       "rootDir": "dist/esm",
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,

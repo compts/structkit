@@ -16,3 +16,4 @@ cloverrc.yaml
 note_write.txt
 script
 review
+dist/ts

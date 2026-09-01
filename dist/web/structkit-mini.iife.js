@@ -1109,213 +1109,6 @@ function allValid () {
 }
 
 _stk.allValid=allValid;
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");}
-
-
-function limit (objectValue, minValue, maxValue, func) {
-
-    var cnt=0;
-    var glo_jsn={};
-    var glo_indtfd = null;
-    var minValueReserve=has(minValue)
-        ?minValue
-        :zero;
-    var maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-
-    each(objectValue, function (meth, key) {
-
-        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(meth, key);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt += one;
-
-    });
-
-    return glo_jsn;
-
-}
-
-
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (indexOfExist(getTypeofInternal(value), [
-                "array",
-                "arguments"
-            ])) {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
-
-}
-
-
-function range (maxValue, minValue, step) {
-
-    var incrementValue=has(step)
-        ?Number(step)
-        :one;
-    var minValueRef=has(minValue)
-        ?Number(minValue)
-        :one;
-    var maxValueRef=has(maxValue)
-        ?Number(maxValue)
-        :ten;
-    var output=[];
-
-    for (var inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<zero) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-
-function arrayRepeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-
-        return map(function () {
-
-            return rawValue;
-
-        }, range(nm_rpt));
-
-    }, [
-        value,
-        valueRepetion
-    ], one);
-
-}
-
-
-function baseOperation (option) {
-
-    // eslint-disable-next-line prefer-destructuring
-    var arg = option.arg;
-    // eslint-disable-next-line prefer-destructuring
-    var operation = option.operation;
-
-    var curryArgFunction = curryArg(function () {
-
-    var rawArg=arguments;
-
-        var firstNum = first(rawArg);
-
-        var conReduce = baseReduce(function (total, value) {
-
-            if (operation === "add") {
-
-                total += Number(value);
-
-            }
-
-            if (operation === "multiply") {
-
-                total *= Number(value);
-
-            }
-
-            if (operation === "subtract") {
-
-                total -= Number(value);
-
-            }
-
-            if (operation === "divide") {
-
-                total /= Number(value);
-
-            }
-
-            return total;
-
-        }, firstNum, toArray(getValue(limit(rawArg, one))));
-
-        return conReduce;
-
-    }, flatten([
-        arg,
-        // eslint-disable-next-line no-undefined
-        arrayRepeat(undefined, arg.length <= two
-            ? two - arg.length
-            : zero)
-    ]), two);
-
-    return curryArgFunction;
-
-}
-
-
-function add () {
-
-    var arg=arguments;
-
-    return baseOperation({
-        arg,
-        "operation": "add"
-    });
-
-}
-
-_stk.add=add;
 function append (objectValue, val, key) {
 
     return curryArg(function (rawObjectValue, rawVal, rawKey) {
@@ -1421,9 +1214,217 @@ function arrayConcat () {
 }
 
 _stk.arrayConcat=arrayConcat;
-_stk.arrayRepeat=arrayRepeat;_stk.arraySlice=arraySlice;function isEmpty (value) {
+function range (maxValue, minValue, step) {
 
-    var typeofvalue = getTypeofInternal(value);    var invalidList = [
+    var incrementValue=has(step)
+        ?Number(step)
+        :one;    var minValueRef=has(minValue)
+        ?Number(minValue)
+        :one;
+    var maxValueRef=has(maxValue)
+        ?Number(maxValue)
+        :ten;
+    var output=[];
+
+    for (var inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<zero) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+
+        return map(function () {
+
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
+_stk.arrayRepeat=arrayRepeat;
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");}
+
+
+function limit (objectValue, minValue, maxValue, func) {
+
+    var cnt=0;
+    var glo_jsn={};
+    var glo_indtfd = null;
+    var minValueReserve=has(minValue)
+        ?minValue
+        :zero;
+    var maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+
+    each(objectValue, function (meth, key) {
+
+        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
+
+            if (has(func)) {
+
+                glo_indtfd=func(meth, key);
+
+                if (has(glo_indtfd)) {
+
+                    glo_jsn[key]=glo_indtfd;
+
+                }
+
+            } else {
+
+                glo_jsn[key]=meth;
+
+            }
+
+        }
+
+        cnt += one;
+
+    });
+
+    return glo_jsn;
+
+}
+
+
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (indexOfExist(getTypeofInternal(value), [
+                "array",
+                "arguments"
+            ])) {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+
+function baseOperation (option) {
+
+    // eslint-disable-next-line prefer-destructuring
+    var arg = option.arg;
+    // eslint-disable-next-line prefer-destructuring
+    var operation = option.operation;
+
+    var curryArgFunction = curryArg(function () {
+
+    var rawArg=arguments;
+
+        var firstNum = first(rawArg);
+
+        var conReduce = baseReduce(function (total, value) {
+
+            if (operation === "add") {
+
+                total += Number(value);
+
+            }
+
+            if (operation === "multiply") {
+
+                total *= Number(value);
+
+            }
+
+            if (operation === "subtract") {
+
+                total -= Number(value);
+
+            }
+
+            if (operation === "divide") {
+
+                total /= Number(value);
+
+            }
+
+            return total;
+
+        }, firstNum, toArray(getValue(limit(rawArg, one))));
+
+        return conReduce;
+
+    }, flatten([
+        arg,
+        // eslint-disable-next-line no-undefined
+        arrayRepeat(undefined, arg.length <= two
+            ? two - arg.length
+            : zero)
+    ]), two);
+
+    return curryArgFunction;
+
+}
+
+
+function add () {
+
+    var arg=arguments;
+
+    return baseOperation({
+        arg,
+        "operation": "add"
+    });
+
+}
+
+
+function isEmpty (value) {
+
+    var typeofvalue = getTypeofInternal(value);
+
+    var invalidList = [
         'null',
         'undefined'
     ];
@@ -1692,7 +1693,7 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
-function asyncReplace (value, search, toReplace) {
+_stk.arraySlice=arraySlice;function asyncReplace (value, search, toReplace) {
 
     return curryArg(function (rawValue, rawSearch, rawToReplace) {
 
@@ -3065,8 +3066,8 @@ _stk.map=map;function mergeWithKey (objectValue, mergeValue) {
 
 }
 
-_stk.mergeWithKey=mergeWithKey;
-_stk.multiply=multiply;function selectInData (whereValue, objectValue) {
+
+function selectInData (whereValue, objectValue) {
 
     return curryArg(function (rawWhereValue, rawObjectValue) {
 
@@ -3074,7 +3075,9 @@ _stk.multiply=multiply;function selectInData (whereValue, objectValue) {
 
             var rawDataToArray = baseMap(function (value2) {
 
-                var rawData = getData(value, value2);                return isEmpty(rawData)
+                var rawData = getData(value, value2);
+
+                return isEmpty(rawData)
                     ?value
                     :rawData;
 
@@ -3138,7 +3141,7 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
-function toBoolean (value) {
+_stk.mergeWithKey=mergeWithKey;_stk.multiply=multiply;function toBoolean (value) {
 
     if (getTypeof(value) === "string") {
 
@@ -3291,6 +3294,71 @@ ClassDelay.prototype.start = function () {
 };
 
 _stk.onDelay=onDelay;
+var defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};function onSequence (func, wait, option) {
+
+    var extend = varExtend(defaultOption, option);
+
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.returned = null;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    this.extend = varExtend(defaultOption, this.extend);
+    var valueWaited = this.wait || zero;
+    var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    main.interval = setInterval(function () {
+
+        main.returned = main.func();
+
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
+
+    }, valueWaited);
+
+};
+
+_stk.onSequence=onSequence;
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -3361,71 +3429,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-var defaultOption = {
-
-    "autoStart": true,
-    "limitCounterClear": zero
-};function onSequence (func, wait, option) {
-
-    var extend = varExtend(defaultOption, option);
-
-    var sequence = new ClassSequence(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-
-function ClassSequence (extend, wait, func) {
-
-    this.interval = null;
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.returned = null;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-ClassSequence.prototype.start = function () {
-
-    this.extend = varExtend(defaultOption, this.extend);
-    var valueWaited = this.wait || zero;
-    var counter = zero;
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    main.interval = setInterval(function () {
-
-        main.returned = main.func();
-
-        counter += one;
-        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
-
-            clearInterval(main.interval);
-
-        }
-
-    }, valueWaited);
-
-};
-
-_stk.onSequence=onSequence;
 function once (func) {
 
     var reserve = null;    return curryArg(function (rawFunc) {
@@ -3515,7 +3518,7 @@ function validateCallbackEach (arg, rawFunc, reserve) {
 
 }
 
-_stk.once=once;
+
 var entity = [
     {
         "decimal": "&#160;",
@@ -4603,7 +4606,9 @@ var entity = [
         "hex": "&#x2666;"
     }
 
-];var listType = [
+];
+
+var listType = [
     'decimal',
     'entity',
     'hex'
@@ -5160,7 +5165,7 @@ function charType (valChar) {
 }
 
 _stk.parseJson=parseJson;
-function parseString (value, config) {
+_stk.once=once;function parseString (value, config) {
 
     var defaultConfig = varExtend({"ignoreFunction": true,
         "isJson": false,
@@ -5377,7 +5382,7 @@ function pipe () {
 }
 
 _stk.pipe=pipe;
-_stk.range=range;function random (valueArray, minValue, maxValue) {
+function random (valueArray, minValue, maxValue) {
 
     var ran_min=has(minValue)
         ?minValue
@@ -5397,12 +5402,12 @@ _stk.range=range;function random (valueArray, minValue, maxValue) {
 }
 
 _stk.random=random;
-_stk.reduce=reduce;function regexCountGroup (value) {
+_stk.range=range;function regexCountGroup (value) {
 
     return new RegExp(toString(value) + '|').exec('').length - one;}
 
 _stk.regexCountGroup=regexCountGroup;
-_stk.remove=remove;function repeat (value, valueRepetion) {
+_stk.reduce=reduce;_stk.remove=remove;function repeat (value, valueRepetion) {
 
     return curryArg(function (rawValue, rawValueRepetion) {
 
@@ -5537,19 +5542,6 @@ function shuffle (objectValue) {
 }
 
 _stk.shuffle=shuffle;
-function someValid () {
-
-    var arg=arguments;    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
 function baseSort (objectValue, func) {
 
     var jsonn=objectValue;    var js_m=getTypeofInternal(jsonn) === "json"
@@ -5646,6 +5638,19 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+function someValid () {
+
+    var arg=arguments;    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 function sortBy (func, objectValue) {
 
     return curryArg(function (rawFunc, rawObjectValue) {
@@ -5744,54 +5749,19 @@ function strKebab (value) {
         .join("-");}
 
 _stk.strKebab=strKebab;
-_stk.strLower=strLower;function strSnake (value) {
+_stk.strLower=strLower;_stk.add=add;function strSnake (value) {
 
     return stringSplit(toString(value))
         .split(" ")
         .join("_");}
 
 _stk.strSnake=strSnake;
-_stk.strSubs=strSubs;_stk.strUnEscape=strUnEscape;function strUpper (value) {
+_stk.strSubs=strSubs;function strUpper (value) {
 
     return toString(value).toUpperCase();}
 
 _stk.strUpper=strUpper;
-_stk.subtract=subtract;function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        var cloneRawListValueReturn = rawListValue;        var isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
-function baseTake (rawList, startIndex, lastIndex) {
+_stk.subtract=subtract;function baseTake (rawList, startIndex, lastIndex) {
 
     var refRawList = getTypeofInternal(rawList) === "string"
         ?rawList.split("")
@@ -6020,14 +5990,42 @@ function syntaxCleanup (data, option) {
 }
 
 _stk.templates=templates;
-_stk.toArray=toArray;_stk.toBoolean=toBoolean;function toInteger (value) {
+_stk.toArray=toArray;function swap (firstValue, secondValue, listValue) {
 
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value), 10);}
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
 
-_stk.toInteger=toInteger;
-function toPairs (value) {
+        var cloneRawListValueReturn = rawListValue;        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
+
+}
+
+_stk.swap=swap;
+_stk.toBoolean=toBoolean;_stk.toDouble=toDouble;function toPairs (value) {
 
     if (getTypeofInternal(value) !== "json") {
 
@@ -6123,7 +6121,14 @@ function trim (value, remove_value) {
 }
 
 _stk.trim=trim;
-_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
+_stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function toInteger (value) {
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value), 10);}
+
+_stk.toInteger=toInteger;
+function union () {
 
     var arg=arguments;    return curryArg(function () {
 
@@ -6154,7 +6159,7 @@ _stk.trimEnd=trimEnd;_stk.trimStart=trimStart;function union () {
 }
 
 _stk.union=union;
-_stk.varExtend=varExtend;function unique (value) {
+function unique (value) {
 
     if (getTypeof(value) === "array") {
 
@@ -6177,7 +6182,7 @@ _stk.varExtend=varExtend;function unique (value) {
 }
 
 _stk.unique=unique;
-_stk.where=where;function isArguments (value) {
+_stk.varExtend=varExtend;_stk.where=where;function isArguments (value) {
 
     return getTypeof(value) === "arguments";
 
@@ -6373,4 +6378,4 @@ _stk.isUndefined=isUndefined;function zip () {
 }
 
 _stk.zip=zip;
-_stk.toDouble=toDouble; })(typeof window !== "undefined" ? window : this);
+_stk.strUnEscape=strUnEscape; })(typeof window !== "undefined" ? window : this);

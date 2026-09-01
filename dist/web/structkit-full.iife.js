@@ -1471,301 +1471,6 @@ _stk.allValid=allValid;
 
 
 /**
- * Get value of json or array
- *
- * @since 1.0.1
- * @category String
- * @param {any} objectValue Either JSON or Array
- * @returns {any|any[]} Returns it respective value
- * @example
- *
- * getValue({"s":1})
- * => 1
- */
-function getValue (objectValue) {
-
-    return getKeyVal(objectValue, "value");
-
-}
-
-/**
- * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} objectValue Data must be array
- * @param {number} minValue Minimum value
- * @param {number=} maxValue Maximum value
- * @param {Function=} func Callback function
- * @returns {any} Returns the object.
- * @example
- *
- * limit([1,2],1,2 )
- *=>{'1':2}
- */
-function limit (objectValue, minValue, maxValue, func) {
-
-    var cnt=0;
-    var glo_jsn={};
-    var glo_indtfd = null;
-    var minValueReserve=has(minValue)
-        ?minValue
-        :zero;
-    var maxValueReserve=has(maxValue)
-        ?maxValue
-        :count(objectValue);
-
-    each(objectValue, function (meth, key) {
-
-        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
-
-            if (has(func)) {
-
-                glo_indtfd=func(meth, key);
-
-                if (has(glo_indtfd)) {
-
-                    glo_jsn[key]=glo_indtfd;
-
-                }
-
-            } else {
-
-                glo_jsn[key]=meth;
-
-            }
-
-        }
-
-        cnt += one;
-
-    });
-
-    return glo_jsn;
-
-}
-
-/**
- * Flatten an array to a single level.
- *
- * @since 1.4.87
- * @category Array
- * @param {any} arg First number
- * @returns {any} Returns true or false.
- * @example
- *
- * flatten([1,2,3,4,[5,6],7])
- * // => [1,2,3,4,5,6,7]
- */
-function flatten (arg) {
-
-    return curryArg(function (rawValue) {
-
-        return baseReduce(function (total, value) {
-
-            if (indexOfExist(getTypeofInternal(value), [
-                "array",
-                "arguments"
-            ])) {
-
-                each(value, function (valEach) {
-
-                    total.push(valEach);
-
-                });
-
-            } else {
-
-                total.push(value);
-
-            }
-
-            return total;
-
-        }, [], rawValue);
-
-    }, [arg]);
-
-}
-
-/**
- * Generate array of data from specific limit or where the index to start
- *
- * @since 1.0.1
- * @category Array
- * @param {number} maxValue Max value you to generate in array, default value 1
- * @param {number=} minValue Min value you to generate in array , default value 10
- * @param {string|number=} step  Specify the logic of increment or decrement
- * @returns {any[]} Return in array.
- * @example
- *
- * range(10)
- *=>[1,2,3,4,5,6,7,8,9,10]
- */
-function range (maxValue, minValue, step) {
-
-    var incrementValue=has(step)
-        ?Number(step)
-        :one;
-    var minValueRef=has(minValue)
-        ?Number(minValue)
-        :one;
-    var maxValueRef=has(maxValue)
-        ?Number(maxValue)
-        :ten;
-    var output=[];
-
-    for (var inc=minValueRef; inc <= maxValueRef;) {
-
-        if (getTypeof(incrementValue) === "number") {
-
-            output.push(inc);
-            if (incrementValue<zero) {
-
-                inc -= incrementValue;
-
-            } else {
-
-                inc += incrementValue;
-
-            }
-
-        }
-
-    }
-
-    return output;
-
-}
-
-/**
- * Repeat value in array
- *
- * @since 1.4.7
- * @category Array
- * @param {any} value String you want to duplicate
- * @param {number=} valueRepetion how many times you want to repeate
- * @returns {any[]} Return in string or number.
- * @example
- *
- * arrayRepeat("s",2 )
- *=>['s','s']
- */
-function arrayRepeat (value, valueRepetion) {
-
-    return curryArg(function (rawValue, rawValueRepetion) {
-
-        var nm_rpt=rawValueRepetion||zero;
-
-        return map(function () {
-
-            return rawValue;
-
-        }, range(nm_rpt));
-
-    }, [
-        value,
-        valueRepetion
-    ], one);
-
-}
-
-/**
- * To map the value of json or array
- *
- * @since 1.4.9
- * @category Collection
- * @param {any} option Callback function
- * @returns {number} Return map either JSON or Array
- * @example
- *
- * baseMap([1,2],function(value) { return value+2 } )
- *=> [3, 4]
- */
-function baseOperation (option) {
-
-    // eslint-disable-next-line prefer-destructuring
-    var arg = option.arg;
-    // eslint-disable-next-line prefer-destructuring
-    var operation = option.operation;
-
-    var curryArgFunction = curryArg(function () {
-
-    var rawArg=arguments;
-
-        var firstNum = first(rawArg);
-
-        var conReduce = baseReduce(function (total, value) {
-
-            if (operation === "add") {
-
-                total += Number(value);
-
-            }
-
-            if (operation === "multiply") {
-
-                total *= Number(value);
-
-            }
-
-            if (operation === "subtract") {
-
-                total -= Number(value);
-
-            }
-
-            if (operation === "divide") {
-
-                total /= Number(value);
-
-            }
-
-            return total;
-
-        }, firstNum, toArray(getValue(limit(rawArg, one))));
-
-        return conReduce;
-
-    }, flatten([
-        arg,
-        // eslint-disable-next-line no-undefined
-        arrayRepeat(undefined, arg.length <= two
-            ? two - arg.length
-            : zero)
-    ]), two);
-
-    return curryArgFunction;
-
-}
-
-/**
- * Addition logic in satisfying two argument
- *
- * @since 1.4.8
- * @category Math
- * @param {...number?} arg First number
- * @returns {number|any} Returns number for added value
- * @example
- *
- * add(1, 1)
- * // => 2
- */
-function add () {
-
-    var arg=arguments;
-
-    return baseOperation({
-        arg,
-        "operation": "add"
-    });
-
-}
-
-_stk.add=add;
-
-
-/**
  * Append data for json, array, set and map type
  *
  * @since 1.0.1
@@ -1918,10 +1623,301 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
+
+/**
+ * Generate array of data from specific limit or where the index to start
+ *
+ * @since 1.0.1
+ * @category Array
+ * @param {number} maxValue Max value you to generate in array, default value 1
+ * @param {number=} minValue Min value you to generate in array , default value 10
+ * @param {string|number=} step  Specify the logic of increment or decrement
+ * @returns {any[]} Return in array.
+ * @example
+ *
+ * range(10)
+ *=>[1,2,3,4,5,6,7,8,9,10]
+ */
+function range (maxValue, minValue, step) {
+
+    var incrementValue=has(step)
+        ?Number(step)
+        :one;
+    var minValueRef=has(minValue)
+        ?Number(minValue)
+        :one;
+    var maxValueRef=has(maxValue)
+        ?Number(maxValue)
+        :ten;
+    var output=[];
+
+    for (var inc=minValueRef; inc <= maxValueRef;) {
+
+        if (getTypeof(incrementValue) === "number") {
+
+            output.push(inc);
+            if (incrementValue<zero) {
+
+                inc -= incrementValue;
+
+            } else {
+
+                inc += incrementValue;
+
+            }
+
+        }
+
+    }
+
+    return output;
+
+}
+
+/**
+ * Repeat value in array
+ *
+ * @since 1.4.7
+ * @category Array
+ * @param {any} value String you want to duplicate
+ * @param {number=} valueRepetion how many times you want to repeate
+ * @returns {any[]} Return in string or number.
+ * @example
+ *
+ * arrayRepeat("s",2 )
+ *=>['s','s']
+ */
+function arrayRepeat (value, valueRepetion) {
+
+    return curryArg(function (rawValue, rawValueRepetion) {
+
+        var nm_rpt=rawValueRepetion||zero;
+
+        return map(function () {
+
+            return rawValue;
+
+        }, range(nm_rpt));
+
+    }, [
+        value,
+        valueRepetion
+    ], one);
+
+}
+
 _stk.arrayRepeat=arrayRepeat;
 
-_stk.arraySlice=arraySlice;
 
+/**
+ * Get value of json or array
+ *
+ * @since 1.0.1
+ * @category String
+ * @param {any} objectValue Either JSON or Array
+ * @returns {any|any[]} Returns it respective value
+ * @example
+ *
+ * getValue({"s":1})
+ * => 1
+ */
+function getValue (objectValue) {
+
+    return getKeyVal(objectValue, "value");
+
+}
+
+/**
+ * Specify the limit, similar in splice bt the return was object to ensure the order are not shuffle and key is number format
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} objectValue Data must be array
+ * @param {number} minValue Minimum value
+ * @param {number=} maxValue Maximum value
+ * @param {Function=} func Callback function
+ * @returns {any} Returns the object.
+ * @example
+ *
+ * limit([1,2],1,2 )
+ *=>{'1':2}
+ */
+function limit (objectValue, minValue, maxValue, func) {
+
+    var cnt=0;
+    var glo_jsn={};
+    var glo_indtfd = null;
+    var minValueReserve=has(minValue)
+        ?minValue
+        :zero;
+    var maxValueReserve=has(maxValue)
+        ?maxValue
+        :count(objectValue);
+
+    each(objectValue, function (meth, key) {
+
+        if (cnt >= minValueReserve && cnt <= maxValueReserve) {
+
+            if (has(func)) {
+
+                glo_indtfd=func(meth, key);
+
+                if (has(glo_indtfd)) {
+
+                    glo_jsn[key]=glo_indtfd;
+
+                }
+
+            } else {
+
+                glo_jsn[key]=meth;
+
+            }
+
+        }
+
+        cnt += one;
+
+    });
+
+    return glo_jsn;
+
+}
+
+/**
+ * Flatten an array to a single level.
+ *
+ * @since 1.4.87
+ * @category Array
+ * @param {any} arg First number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * flatten([1,2,3,4,[5,6],7])
+ * // => [1,2,3,4,5,6,7]
+ */
+function flatten (arg) {
+
+    return curryArg(function (rawValue) {
+
+        return baseReduce(function (total, value) {
+
+            if (indexOfExist(getTypeofInternal(value), [
+                "array",
+                "arguments"
+            ])) {
+
+                each(value, function (valEach) {
+
+                    total.push(valEach);
+
+                });
+
+            } else {
+
+                total.push(value);
+
+            }
+
+            return total;
+
+        }, [], rawValue);
+
+    }, [arg]);
+
+}
+
+/**
+ * To map the value of json or array
+ *
+ * @since 1.4.9
+ * @category Collection
+ * @param {any} option Callback function
+ * @returns {number} Return map either JSON or Array
+ * @example
+ *
+ * baseMap([1,2],function(value) { return value+2 } )
+ *=> [3, 4]
+ */
+function baseOperation (option) {
+
+    // eslint-disable-next-line prefer-destructuring
+    var arg = option.arg;
+    // eslint-disable-next-line prefer-destructuring
+    var operation = option.operation;
+
+    var curryArgFunction = curryArg(function () {
+
+    var rawArg=arguments;
+
+        var firstNum = first(rawArg);
+
+        var conReduce = baseReduce(function (total, value) {
+
+            if (operation === "add") {
+
+                total += Number(value);
+
+            }
+
+            if (operation === "multiply") {
+
+                total *= Number(value);
+
+            }
+
+            if (operation === "subtract") {
+
+                total -= Number(value);
+
+            }
+
+            if (operation === "divide") {
+
+                total /= Number(value);
+
+            }
+
+            return total;
+
+        }, firstNum, toArray(getValue(limit(rawArg, one))));
+
+        return conReduce;
+
+    }, flatten([
+        arg,
+        // eslint-disable-next-line no-undefined
+        arrayRepeat(undefined, arg.length <= two
+            ? two - arg.length
+            : zero)
+    ]), two);
+
+    return curryArgFunction;
+
+}
+
+/**
+ * Addition logic in satisfying two argument
+ *
+ * @since 1.4.8
+ * @category Math
+ * @param {...number?} arg First number
+ * @returns {number|any} Returns number for added value
+ * @example
+ *
+ * add(1, 1)
+ * // => 2
+ */
+function add () {
+
+    var arg=arguments;
+
+    return baseOperation({
+        arg,
+        "operation": "add"
+    });
+
+}
 
 /**
  * Check if data is empty, null and undefined are now considered as empty
@@ -2329,6 +2325,8 @@ function arraySum (arrayObject, precision) {
 }
 
 _stk.arraySum=arraySum;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -4322,11 +4320,6 @@ function mergeWithKey (objectValue, mergeValue) {
 
 }
 
-_stk.mergeWithKey=mergeWithKey;
-
-_stk.multiply=multiply;
-
-
 /**
  * Selecting multiple search data using `getData` logic in the loop
  *
@@ -4427,6 +4420,10 @@ function mergeInWhere (whereValue, objectValue, mergeValue) {
 }
 
 _stk.mergeInWhere=mergeInWhere;
+
+_stk.mergeWithKey=mergeWithKey;
+
+_stk.multiply=multiply;
 
 
 /**
@@ -4663,6 +4660,108 @@ ClassDelay.prototype.start = function () {
 
 _stk.onDelay=onDelay;
 
+
+var defaultOption = {
+
+    "autoStart": true,
+    "limitCounterClear": zero
+};
+
+/**
+ * @typedef {Object} SequenceResult
+ * @property {function(): void} cancel - Cancels the sequence
+ * @property {function(): void} start - Starts the sequence
+ */
+
+/**
+ * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {number=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {SequenceResult} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var extend = varExtend(defaultOption, option);
+
+    var sequence = new ClassSequence(extend, wait, func);
+
+    if (extend.autoStart) {
+
+        sequence.start();
+
+    }
+
+    return sequence;
+
+}
+
+/**
+ * On sequence class
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} extend The second number in an addition.
+ * @param {any} wait timer for delay
+ * @param {any} func The function to execute
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (extend, wait, func) {
+
+    this.interval = null;
+
+    this.extend = extend;
+
+    this.wait = wait;
+
+    this.func = func;
+
+    this.returned = null;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+ClassSequence.prototype.start = function () {
+
+    this.extend = varExtend(defaultOption, this.extend);
+    var valueWaited = this.wait || zero;
+    var counter = zero;
+    // eslint-disable-next-line consistent-this
+    var main = this;
+
+    main.interval = setInterval(function () {
+
+        main.returned = main.func();
+
+        counter += one;
+        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
+
+            clearInterval(main.interval);
+
+        }
+
+    }, valueWaited);
+
+};
+
+_stk.onSequence=onSequence;
+
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -4767,108 +4866,6 @@ function onWait (func, wait) {
 }
 
 _stk.onWait=onWait;
-
-
-var defaultOption = {
-
-    "autoStart": true,
-    "limitCounterClear": zero
-};
-
-/**
- * @typedef {Object} SequenceResult
- * @property {function(): void} cancel - Cancels the sequence
- * @property {function(): void} start - Starts the sequence
- */
-
-/**
- * On sequence function, it calls the callback repeatedly until canceled or limitCounterClear is reached. setInterval is used to schedule the callback execution, and clearInterval is used to stop it when necessary.
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {number=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {SequenceResult} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var extend = varExtend(defaultOption, option);
-
-    var sequence = new ClassSequence(extend, wait, func);
-
-    if (extend.autoStart) {
-
-        sequence.start();
-
-    }
-
-    return sequence;
-
-}
-
-/**
- * On sequence class
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} extend The second number in an addition.
- * @param {any} wait timer for delay
- * @param {any} func The function to execute
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (extend, wait, func) {
-
-    this.interval = null;
-
-    this.extend = extend;
-
-    this.wait = wait;
-
-    this.func = func;
-
-    this.returned = null;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-ClassSequence.prototype.start = function () {
-
-    this.extend = varExtend(defaultOption, this.extend);
-    var valueWaited = this.wait || zero;
-    var counter = zero;
-    // eslint-disable-next-line consistent-this
-    var main = this;
-
-    main.interval = setInterval(function () {
-
-        main.returned = main.func();
-
-        counter += one;
-        if (main.extend.limitCounterClear >zero && counter >= main.extend.limitCounterClear) {
-
-            clearInterval(main.interval);
-
-        }
-
-    }, valueWaited);
-
-};
-
-_stk.onSequence=onSequence;
 
 
 /**
@@ -4986,9 +4983,6 @@ function validateCallbackEach (arg, rawFunc, reserve) {
     return reserve;
 
 }
-
-_stk.once=once;
-
 
 /* eslint-disable sort-keys */
 var entity = [
@@ -6748,6 +6742,8 @@ function charType (valChar) {
 
 _stk.parseJson=parseJson;
 
+_stk.once=once;
+
 
 /**
  * Parse from JSON object to String
@@ -7040,8 +7036,6 @@ function pipe () {
 
 _stk.pipe=pipe;
 
-_stk.range=range;
-
 
 /**
  * To create single random value from array
@@ -7079,7 +7073,7 @@ function random (valueArray, minValue, maxValue) {
 
 _stk.random=random;
 
-_stk.reduce=reduce;
+_stk.range=range;
 
 
 /**
@@ -7101,6 +7095,8 @@ function regexCountGroup (value) {
 }
 
 _stk.regexCountGroup=regexCountGroup;
+
+_stk.reduce=reduce;
 
 _stk.remove=remove;
 
@@ -7326,35 +7322,6 @@ _stk.shuffle=shuffle;
 
 
 /**
- * In array, you need to check all value atleast one true
- *
- * @since 1.4.8
- * @category Predicate
- * @param {...any?} arg List of value you need to check if some are true
- * @returns {boolean} Returns true or false.
- * @example
- *
- * someValid(true, false)
- * // => true
- */
-function someValid () {
-
-    var arg=arguments;
-
-    return curryArg(function () {
-
-    var rawValue=arguments;
-
-        return baseCountValidList(rawValue);
-
-    }, arg) >= one;
-
-}
-
-_stk.someValid=someValid;
-
-
-/**
  * Sort By
  *
  * @since 1.4.87
@@ -7478,6 +7445,35 @@ function sort (objectValue, order, type) {
 }
 
 _stk.sort=sort;
+
+
+/**
+ * In array, you need to check all value atleast one true
+ *
+ * @since 1.4.8
+ * @category Predicate
+ * @param {...any?} arg List of value you need to check if some are true
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * someValid(true, false)
+ * // => true
+ */
+function someValid () {
+
+    var arg=arguments;
+
+    return curryArg(function () {
+
+    var rawValue=arguments;
+
+        return baseCountValidList(rawValue);
+
+    }, arg) >= one;
+
+}
+
+_stk.someValid=someValid;
 
 
 /**
@@ -7673,6 +7669,8 @@ _stk.strKebab=strKebab;
 
 _stk.strLower=strLower;
 
+_stk.add=add;
+
 
 /**
  * String Snake case
@@ -7698,8 +7696,6 @@ _stk.strSnake=strSnake;
 
 _stk.strSubs=strSubs;
 
-_stk.strUnEscape=strUnEscape;
-
 
 /**
  * String Upper case case
@@ -7722,58 +7718,6 @@ function strUpper (value) {
 _stk.strUpper=strUpper;
 
 _stk.subtract=subtract;
-
-
-/**
- * Swapping the value either string or array in there specific position
- *
- * @since 1.4.86
- * @category Collection
- * @param {number} firstValue The data you want to map
- * @param {number} secondValue data that you want to merge
- * @param {any[]|string} listValue Passing value either array or string
- * @returns {any} Return map either JSON or Array
- * @example
- *
- * swap(0, 2, 'foo')
- *=> off
- */
-function swap (firstValue, secondValue, listValue) {
-
-    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
-
-        var cloneRawListValueReturn = rawListValue;
-        var isSplit = false;
-
-        if (getTypeof(cloneRawListValueReturn) !== "array") {
-
-            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
-            isSplit = true;
-
-        }
-
-        var cloneRawListValue = clone(cloneRawListValueReturn);
-
-        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
-        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
-
-        if (isSplit) {
-
-            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
-
-        }
-
-        return cloneRawListValueReturn;
-
-    }, [
-        firstValue,
-        secondValue,
-        listValue
-    ]);
-
-}
-
-_stk.swap=swap;
 
 
 /**
@@ -8066,30 +8010,61 @@ _stk.templates=templates;
 
 _stk.toArray=toArray;
 
-_stk.toBoolean=toBoolean;
-
 
 /**
- * To extract number in string and convert to , it will also remove all none numeric
+ * Swapping the value either string or array in there specific position
  *
- * @since 1.0.1
- * @category Number
- * @param {any} value Value you to convert in integer
- * @returns {number} Return in integer.
+ * @since 1.4.86
+ * @category Collection
+ * @param {number} firstValue The data you want to map
+ * @param {number} secondValue data that you want to merge
+ * @param {any[]|string} listValue Passing value either array or string
+ * @returns {any} Return map either JSON or Array
  * @example
  *
- * toInteger("11d")
- *=>11
+ * swap(0, 2, 'foo')
+ *=> off
  */
-function toInteger (value) {
+function swap (firstValue, secondValue, listValue) {
 
-    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
-        ?zero
-        :value), 10);
+    return curryArg(function (rawFirstValue, rawSecondValue, rawListValue) {
+
+        var cloneRawListValueReturn = rawListValue;
+        var isSplit = false;
+
+        if (getTypeof(cloneRawListValueReturn) !== "array") {
+
+            cloneRawListValueReturn = toString(cloneRawListValueReturn).split("");
+            isSplit = true;
+
+        }
+
+        var cloneRawListValue = clone(cloneRawListValueReturn);
+
+        cloneRawListValueReturn[rawFirstValue] = cloneRawListValue[rawSecondValue];
+        cloneRawListValueReturn[rawSecondValue] = cloneRawListValue[rawFirstValue];
+
+        if (isSplit) {
+
+            cloneRawListValueReturn = toArray(cloneRawListValueReturn).join("");
+
+        }
+
+        return cloneRawListValueReturn;
+
+    }, [
+        firstValue,
+        secondValue,
+        listValue
+    ]);
 
 }
 
-_stk.toInteger=toInteger;
+_stk.swap=swap;
+
+_stk.toBoolean=toBoolean;
+
+_stk.toDouble=toDouble;
 
 
 /**
@@ -8264,6 +8239,29 @@ _stk.trimStart=trimStart;
 
 
 /**
+ * To extract number in string and convert to , it will also remove all none numeric
+ *
+ * @since 1.0.1
+ * @category Number
+ * @param {any} value Value you to convert in integer
+ * @returns {number} Return in integer.
+ * @example
+ *
+ * toInteger("11d")
+ *=>11
+ */
+function toInteger (value) {
+
+    return parseInt(dataNumberFormat(/(\d)/g, zero, value === null
+        ?zero
+        :value), 10);
+
+}
+
+_stk.toInteger=toInteger;
+
+
+/**
  * To create a new array that is the union of all the arrays passed as arguments. The union will contain only unique values.
  *
  * @since 1.4.7
@@ -8309,8 +8307,6 @@ function union () {
 
 _stk.union=union;
 
-_stk.varExtend=varExtend;
-
 
 /**
  * Get only the unique data from array
@@ -8349,6 +8345,8 @@ function unique (value) {
 }
 
 _stk.unique=unique;
+
+_stk.varExtend=varExtend;
 
 _stk.where=where;
 
@@ -8776,7 +8774,7 @@ function zip () {
 
 _stk.zip=zip;
 
-_stk.toDouble=toDouble;
+_stk.strUnEscape=strUnEscape;
 
 
  })(typeof window !== "undefined" ? window : this);

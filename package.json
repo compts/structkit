@@ -4,15 +4,15 @@
   "description": "JS/TS functional tool to simplify JS Developer",
   "main": "./dist/cjs/structkit-full.cjs.js",
   "module": "./dist/esm/node.esm.mjs",
-  "types": "./dist/ts/node.esm.d.mts",
+  "types": "./dist/tsd/node.esm.d.mts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/esm/node.esm.mjs",
       "require": "./dist/cjs/structkit-full.cjs.js",
       "types": {
-        "require": "./dist/ts/node.esm.d.mts",
-        "default": "./dist/ts/node.esm.d.mts"
+        "require": "./dist/tsd/node.esm.d.mts",
+        "default": "./dist/tsd/node.esm.d.mts"
       },
       "browser": {
         "require": "./dist/cjs/structkit-full.cjs.js",
@@ -82,8 +82,9 @@
     "jsr": "0.13.4",
     "mocha": "^11.7.5",
     "ts-node": "^10.9.1",
+    "tsd": "^0.31.1",
     "tsx": "^4.21.0",
-    "tsd": "^0.31.1"
+    "typescript": "^7.0.2"
   },
   "jest": {
     "testEnvironment": "node",
@@ -91,8 +92,20 @@
       "^.+\\.(t|j)sx?$": "babel-jest",
       "^.+\\.mjs$": "babel-jest"
     },
-    "extensionsToTreatAsEsm": [".ts", ".tsx"],
-    "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "mjs", "json", "node","mts"],
+    "extensionsToTreatAsEsm": [
+      ".ts",
+      ".tsx"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "mjs",
+      "json",
+      "node",
+      "mts"
+    ],
     "collectCoverage": true,
     "coverageReporters": [
       "json",

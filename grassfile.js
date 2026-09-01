@@ -65,6 +65,7 @@ function isTypeFunction (objectCallTypeAll, suffix) {
     return stringCnt;
 
 }
+// eslint-disable-next-line max-lines-per-function
 exports.module=function (grassconf) {
 
     const grass_concat = grassconf.require("grass_concat");
@@ -96,6 +97,29 @@ exports.module=function (grassconf) {
                 "lsFileType": "path",
                 "savePathReplace": {"from": ".js",
                     "to": ".mjs"}
+            }));
+
+    });
+
+
+    grassconf.load("ts", function () {
+
+        return packpier(
+            grassconf.event(),
+            {
+                "input": {
+                    "path": list_package_utility_js1
+                },
+                "output": {
+                    // Esm,cjs,iife,
+                    "type": "ts"
+                }
+            }
+        )
+            .pipe(grassconf.dest("dist/ts", {
+                "lsFileType": "path",
+                "savePathReplace": {"from": ".js",
+                    "to": ".ts"}
             }));
 
     });
@@ -300,6 +324,7 @@ exports.execute=function (lib) {
 
         strm.series("web_iife");
         strm.series("esm");
+        strm.series("ts");
         strm.series("esm_only");
         strm.series("cjs_only");
 
